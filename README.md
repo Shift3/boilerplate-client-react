@@ -1,5 +1,5 @@
 # BoilerplateClientReact
-The Shift3 standard starting point for new React web projects. 
+The Shift3 standard starting point for new React web projects, currently a work in progress. 
 
 ## Staging URL
 TBD
