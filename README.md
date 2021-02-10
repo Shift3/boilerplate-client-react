@@ -1,6 +1,12 @@
 # BoilerplateClientReact
 The Shift3 standard starting point for new React web projects. 
 
+## Project Requirements
+TBD
+
+## Project Setup
+TBD
+
 ## Staging URL
 TBD
 
