@@ -1,7 +1,11 @@
-const App = () => (
-	<>
-		<h1>React Boilerplate</h1>
-	</>
-)
+import React from 'react';
 
-export default App
+function App() {
+  return (
+    <>
+      <h1>React Boilerplate</h1>
+    </>
+  );
+}
+
+export default App;
