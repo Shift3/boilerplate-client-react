@@ -44,3 +44,42 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## Staging URL
+
+<https://boilerplate-client-react.shift3sandbox.com/>
+
+## Deployment
+
+### Terraform
+
+The AWS configuration **for the sandbox** is handled by Terraform. Terraform needs the AWS credentials which developers should already have or can access through Zoho Vault. The Terraform configuration is separated into modules for each cloud service it sets up.
+
+Terraform also needs the project secrets saved in `terraform/terraform.tfvars` with the following structure:
+
+```
+profile = "shift3"
+
+region = "us-west-2"
+
+web_domain_name = ""
+
+```
+
+| Secret          |                                                                                             Note |
+| :-------------- | -----------------------------------------------------------------------------------------------: |
+| profile         |                              This must match the AWS credentials name on the development machine |
+| region          |                                                                      This is usually `us-west-2` |
+| web_domain_name | This will be the web domain name for the project, an example may be: `example.shift3sandbox.com` |
+
+### Local Environment
+
+After provisioning the AWS instance through Terraform, the project environment variables need to be updated with the new server values.
+
+The `apiRoute` property in `environment.staging.ts` will now need to be filled out with the provisioned sandbox instance.
+
+The `package.json` file needs to be updated with the project name and sandbox S3 bucket: `"deploy:staging": "ng build --prod --configuration=staging && aws s3 sync ./dist/<PROJECT_DIRECTORY_PATH> s3://<AWS_SANDBOX_URL> --profile shift3 --delete"` Replace the brackets and placeholder values with the project values.
+
+### AWS
+
+Deploying to AWS requires having AWS credentials on the machine. The script is set to look for a default AWS profile named `shift3`. Once the AWS sandbox setup has been taken care of by Terraform, the deployment is done via `npm run deploy:staging`.
