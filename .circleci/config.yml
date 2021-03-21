@@ -1,0 +1,21 @@
+version: 2.1
+jobs:
+  test:
+    working_directory: ~/boilerplate-client-react
+    docker:
+      - image: 'circleci/node:10-browsers'
+    steps:
+      - checkout
+      - run: sudo apt-get update
+      - run:
+          name: Install, lint, and test frontend
+          command: |
+            export CI=true
+            yarn install
+            yarn build
+            yarn test-ci
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - test
