@@ -1,11 +1,9 @@
-import React from 'react';
+import React from 'react'
 
-function App() {
-  return (
-    <>
-      <h1>React Boilerplate</h1>
-    </>
-  );
-}
+const App = (): JSX.Element => (
+  <>
+    <h1>React Boilerplate</h1>
+  </>
+)
 
-export default App;
+export default App
