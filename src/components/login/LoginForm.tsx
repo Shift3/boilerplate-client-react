@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import Form from 'react-bootstrap/form'
 import Button from 'react-bootstrap/button'
 
-interface Props {
+interface ILoginFormProps {
   onSubmit: (username: string, password: string) => void
 }
 
-const LoginForm: React.FC<Props> = ({ onSubmit }: Props) => {
+const LoginForm: React.FC<ILoginFormProps> = ({ onSubmit }: ILoginFormProps) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 

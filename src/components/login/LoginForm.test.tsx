@@ -1,11 +1,12 @@
-import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import LoginForm from '../LoginForm'
+import React from 'react'
+import LoginForm from './LoginForm'
 
 // Renders Correctly / Test if loginForm has fields
-test('renders learn react link', () => {
+test('renders react boilerplate text', () => {
   render(<LoginForm />)
+
   const username = screen.getByLabelText(/username/i)
   const password = screen.getByLabelText(/password/i)
 
