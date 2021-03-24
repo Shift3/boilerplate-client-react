@@ -7,14 +7,14 @@ function App(): JSX.Element {
   and routing. These are just for testing Sentry's ErrorBoundary component
   fallback behavior.  
   */
-  const [message, setMessage] = useState('Hello World!')
+  const [message, setMessage] = useState<string>('Hello World!')
 
-  const fallbackComponent = () => (
+  const fallbackComponent = () : JSX.Element => (
     <div>
       <h1>Sorry, an error has occurred. Please refresh the page.</h1>
     </div>
   )
-  const ExampleLandingPage = () => {
+  const ExampleLandingPage = () : JSX.Element => {
     const ErrorTestFunction = (str1: string, str2: any) => {
       const newStr = str1 + str2
       setMessage(str2)
