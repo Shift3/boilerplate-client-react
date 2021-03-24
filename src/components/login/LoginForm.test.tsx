@@ -5,7 +5,9 @@ import LoginForm from './LoginForm'
 
 // Renders Correctly / Test if loginForm has fields
 test('renders react boilerplate text', () => {
-  render(<LoginForm />)
+  const onSubmit = jest.fn()
+
+  render(<LoginForm onSubmit={onSubmit} />)
 
   const username = screen.getByLabelText(/username/i)
   const password = screen.getByLabelText(/password/i)
@@ -15,6 +17,8 @@ test('renders react boilerplate text', () => {
 })
 
 describe('input validation', () => {
+  // beforeEach()
+
   test('should not call props.onSubmit if validation fails', () => {
     const testUsername = ''
     const testPassword = ''
@@ -29,7 +33,7 @@ describe('input validation', () => {
     expect(onSubmit).not.toHaveBeenCalled()
   })
 
-  test('shouldd call props.onSubmit with username and password if validation succeeds', () => {
+  test('should call props.onSubmit with username and password if validation succeeds', () => {
     const testUsername = 'test@email.com'
     const testPassword = 'Password123!'
     const onSubmit = jest.fn()
@@ -44,24 +48,101 @@ describe('input validation', () => {
     expect(onSubmit).toHaveBeenCalledWith(testUsername, testPassword)
   })
 
-  // test('should fail validation if username is empty', () => {})
-  // test('should fail validation if password is empty', () => {})
-  // test('should fail validation if password is less than 8 characters long', () => {})
-  // test('should call props.onSubmit if validation passes', () => {
-  // })
+  test('should fail validation if username is empty', () => {
+    const testUsername = ''
+    const testPassword = 'Password123!'
+    const onSubmit = jest.fn()
+
+    render(<LoginForm onSubmit={onSubmit} />)
+
+    userEvent.type(screen.getByLabelText(/username/i), testUsername)
+    userEvent.type(screen.getByLabelText(/password/i), testPassword)
+    userEvent.click(screen.getByRole('button'))
+
+    expect(onSubmit).not.toHaveBeenCalled()
+  })
+
+  test('should fail validation if username is not a valid email', () => {
+    const testUsername = 'testemail'
+    const testPassword = 'Password123!'
+    const onSubmit = jest.fn()
+
+    render(<LoginForm onSubmit={onSubmit} />)
+
+    userEvent.type(screen.getByLabelText(/username/i), testUsername)
+    userEvent.type(screen.getByLabelText(/password/i), testPassword)
+    userEvent.click(screen.getByRole('button'))
+
+    expect(onSubmit).not.toHaveBeenCalled()
+  })
+
+  test('should fail validation if password is empty', () => {
+    const testUsername = 'testemail@test.com'
+    const testPassword = ''
+    const onSubmit = jest.fn()
+
+    render(<LoginForm onSubmit={onSubmit} />)
+
+    userEvent.type(screen.getByLabelText(/username/i), testUsername)
+    userEvent.type(screen.getByLabelText(/password/i), testPassword)
+    userEvent.click(screen.getByRole('button'))
+
+    expect(onSubmit).not.toHaveBeenCalled()
+  })
+
+  test('should fail validation if password does not contain at least 1 uppercase letter', () => {
+    const testUsername = 'testemail@test.com'
+    const testPassword = '1abcdefg!'
+    const onSubmit = jest.fn()
+
+    render(<LoginForm onSubmit={onSubmit} />)
+
+    userEvent.type(screen.getByLabelText(/username/i), testUsername)
+    userEvent.type(screen.getByLabelText(/password/i), testPassword)
+    userEvent.click(screen.getByRole('button'))
+
+    expect(onSubmit).not.toHaveBeenCalled()
+  })
+
+  test('should fail validation if password does not contain at least 1 lowercase letter', () => {
+    const testUsername = 'testemail@test.com'
+    const testPassword = '1ABCDEFG!'
+    const onSubmit = jest.fn()
+
+    render(<LoginForm onSubmit={onSubmit} />)
+
+    userEvent.type(screen.getByLabelText(/username/i), testUsername)
+    userEvent.type(screen.getByLabelText(/password/i), testPassword)
+    userEvent.click(screen.getByRole('button'))
+
+    expect(onSubmit).not.toHaveBeenCalled()
+  })
+
+  test('should fail validation if password does not contain at least 1 number', () => {
+    const testUsername = 'testemail@test.com'
+    const testPassword = 'Aabcdefg!'
+    const onSubmit = jest.fn()
+
+    render(<LoginForm onSubmit={onSubmit} />)
+
+    userEvent.type(screen.getByLabelText(/username/i), testUsername)
+    userEvent.type(screen.getByLabelText(/password/i), testPassword)
+    userEvent.click(screen.getByRole('button'))
+
+    expect(onSubmit).not.toHaveBeenCalled()
+  })
+
+  test('should fail validation if password does not contain at least 1 special character', () => {
+    const testUsername = 'testemail@test.com'
+    const testPassword = 'Aabcdefgh'
+    const onSubmit = jest.fn()
+
+    render(<LoginForm onSubmit={onSubmit} />)
+
+    userEvent.type(screen.getByLabelText(/username/i), testUsername)
+    userEvent.type(screen.getByLabelText(/password/i), testPassword)
+    userEvent.click(screen.getByRole('button'))
+
+    expect(onSubmit).not.toHaveBeenCalled()
+  })
 })
-
-/* Check that input validations work on form submit. 
-- check that inputs are not empty (email, password)
-- check if email is valid/formatted
-*/
-
-// Check that input validation works on form submit.
-
-// Check that the form submits correctly when inputs have content.
-
-// Check that the request works correctly on success.
-
-// Check that request works correctly on error.
-
-// Check that a token is saved to local storage after a successful request.
