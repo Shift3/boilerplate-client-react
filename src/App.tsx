@@ -36,7 +36,7 @@ function App(): JSX.Element {
   https://docs.sentry.io/platforms/javascript/guides/react/components/errorboundary/
   */
   return (
-    <Sentry.ErrorBoundary fallback={fallbackComponent}>
+    <Sentry.ErrorBoundary fallback={fallbackComponent} showDialog>
       <ExampleLandingPage />
     </Sentry.ErrorBoundary>
   )
