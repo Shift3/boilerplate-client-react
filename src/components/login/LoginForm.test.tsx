@@ -3,7 +3,6 @@ import userEvent from '@testing-library/user-event'
 import React from 'react'
 import LoginForm from './LoginForm'
 
-// Renders Correctly / Test if loginForm has fields
 test('renders react boilerplate text', () => {
   const onSubmit = jest.fn()
 
@@ -17,22 +16,6 @@ test('renders react boilerplate text', () => {
 })
 
 describe('input validation', () => {
-  // beforeEach()
-
-  test('should not call props.onSubmit if validation fails', () => {
-    const testUsername = ''
-    const testPassword = ''
-    const onSubmit = jest.fn()
-
-    render(<LoginForm onSubmit={onSubmit} />)
-
-    userEvent.type(screen.getByLabelText(/username/i), testUsername)
-    userEvent.type(screen.getByLabelText(/password/i), testPassword)
-    userEvent.click(screen.getByRole('button'))
-
-    expect(onSubmit).not.toHaveBeenCalled()
-  })
-
   test('should call props.onSubmit with username and password if validation succeeds', () => {
     const testUsername = 'test@email.com'
     const testPassword = 'Password123!'
