@@ -11,14 +11,14 @@ interface ILoginFormValues {
   password: string
 }
 
-const LoginForm = (props: ILoginFormProps) => {
+const LoginForm: React.FC<ILoginFormProps> = ({ onSubmit }: ILoginFormProps) => {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
   const initialValues: ILoginFormValues = {
     username: '',
     password: '',
   }
-
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
@@ -33,13 +33,11 @@ const LoginForm = (props: ILoginFormProps) => {
     <>
       <h1>Login</h1>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        {({ isSubmitting }) => (
-          <Form>
-            <Field name="username" type="text" label="Username" required />
-            <Field name="password" type="password" label="Password" required />
-            <Button type="submit">Submit</Button>
-          </Form>
-        )}
+        <Form>
+          <Field name="username" type="text" label="Username" required />
+          <Field name="password" type="password" label="Password" required />
+          <Button type="submit">Submit</Button>
+        </Form>
       </Formik>
     </>
   )
