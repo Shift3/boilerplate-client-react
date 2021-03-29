@@ -11,6 +11,13 @@ import App from './App'
 */
 Sentry.init({
   dsn: 'https://943bdfd77eed4be6b91a42aa0ce6a29c@o68356.ingest.sentry.io/5622322',
+  beforeSend(event) {
+    if (process.env.NODE_ENV === 'production') {
+      return event
+    }
+
+    return null
+  },
   autoSessionTracking: false,
 })
 
