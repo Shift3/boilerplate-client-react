@@ -6,19 +6,19 @@ interface ILoginFormProps {
   onSubmit: (username: string, password: string) => void
 }
 
-interface ILoginFormValues {
+type ILoginFormValues = {
   username: string
   password: string
 }
 
 const LoginForm: React.FC<ILoginFormProps> = ({ onSubmit }: ILoginFormProps) => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-
   const initialValues: ILoginFormValues = {
     username: '',
     password: '',
   }
+
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
