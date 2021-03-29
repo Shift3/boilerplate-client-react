@@ -20,7 +20,7 @@ function App(): JSX.Element {
     }
     return (
       <div>
-        <h1>React Boilerplate</h1>
+        <h1>Learn React</h1>
         <h2>
           {message} - {message.length}
         </h2>
