@@ -8,16 +8,15 @@ function App(): JSX.Element {
   fallback behavior.  
   */
   const [message, setMessage] = useState<string>('Hello World!')
-
-  const fallbackComponent = () : JSX.Element => (
+  const fallbackComponent = (): JSX.Element => (
     <div>
       <h1>Sorry, an error has occurred. Please refresh the page.</h1>
     </div>
   )
-  const ExampleLandingPage = () : JSX.Element => {
-    const ErrorTestFunction = (str1: string, str2: any) => {
+  const ExampleLandingPage = (): JSX.Element => {
+    const ErrorTestFunction = (str1: string, str2: string | undefined) => {
       const newStr = str1 + str2
-      setMessage(str2)
+      setMessage(newStr)
     }
     return (
       <div>
