@@ -21,9 +21,7 @@ const LoginForm: React.FC<ILoginFormProps> = ({ onSubmit }: ILoginFormProps) => 
     password: '',
   }
 
-  const handleSubmit = (event: React.FormEvent): void => {
-    event.preventDefault()
-
+  const handleSubmit = (): void => {
     if (!username || !password) {
       return
     }

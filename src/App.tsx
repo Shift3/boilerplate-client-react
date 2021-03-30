@@ -1,9 +1,11 @@
+import * as Sentry from '@sentry/react'
 import React from 'react'
+import HomePage from './pages/HomePage'
 
 const App = (): JSX.Element => (
-  <>
-    <h1>React Boilerplate</h1>
-  </>
+  <Sentry.ErrorBoundary>
+    <HomePage />
+  </Sentry.ErrorBoundary>
 )
 
 export default App
