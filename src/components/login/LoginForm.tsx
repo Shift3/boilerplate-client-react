@@ -1,6 +1,7 @@
+import { Form, Formik } from 'formik'
 import React, { useState } from 'react'
 import Button from 'react-bootstrap/button'
-import Form from 'react-bootstrap/form'
+import FormikField from './LoginFormField'
 
 interface ILoginFormProps {
   onSubmit: (username: string, password: string) => void
@@ -31,17 +32,17 @@ const LoginForm: React.FC<ILoginFormProps> = ({ onSubmit }: ILoginFormProps) => 
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="loginFormUsername">
-        <Form.Label>Username</Form.Label>
-        <Form.Control type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
-      </Form.Group>
-      <Form.Group controlId="loginFormPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-      </Form.Group>
-      <Button type="submit">Submit</Button>
-    </Form>
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      {({ dirty, isValid }) => (
+        <Form>
+          <FormikField username="username" label="Username" required />
+          <FormikField username="password" label="Password" required type="password" />
+          <Button disabled={!dirty || !isValid} type="submit">
+            Login
+          </Button>
+        </Form>
+      )}
+    </Formik>
   )
 }
 export default LoginForm
