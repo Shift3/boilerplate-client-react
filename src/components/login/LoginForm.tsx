@@ -1,46 +1,50 @@
-import { Form, Formik } from 'formik'
-import React, { useState } from 'react'
-import Button from 'react-bootstrap/button'
-import FormikField from './LoginFormField'
+import React from 'react'
+import { useForm } from 'react-hook-form'
 
 interface ILoginFormProps {
   onSubmit: (username: string, password: string) => void
 }
 
-interface ILoginFormValues {
-  username: string
-  password: string
+type Login = {
+  firstname: string
+  lastname: string
 }
 
-const LoginForm: React.FC<ILoginFormProps> = ({ onSubmit }: ILoginFormProps) => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+const LoginForm: React.FC<ILoginFormProps> = () => {
+  const { register, handleSubmit } = useForm<Login>()
 
-  const initialValues: ILoginFormValues = {
-    username: '',
-    password: '',
-  }
-
-  const handleSubmit = (): void => {
-    if (!username || !password) {
-      return
-    }
-
-    onSubmit(username, password)
-  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  const onSubmit = handleSubmit((data): void => {})
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      {({ dirty, isValid }) => (
-        <Form>
-          <FormikField username="username" label="Username" required />
-          <FormikField username="password" label="Password" required type="password" />
-          <Button disabled={!dirty || !isValid} type="submit">
-            Login
-          </Button>
-        </Form>
-      )}
-    </Formik>
+    <>
+      <form onSubmit={onSubmit}>
+        <label htmlFor="username">
+          Username
+          <input
+            ref={register({
+              required: true,
+            })}
+            id="username"
+            name="username"
+            type="text"
+          />
+        </label>
+        <label htmlFor="lastname">
+          Last Name
+          <input
+            ref={register({
+              required: true,
+            })}
+            id="password"
+            name="password"
+            type="password"
+          />
+        </label>
+        <button type="submit">Save</button>
+      </form>
+    </>
   )
 }
+
 export default LoginForm
