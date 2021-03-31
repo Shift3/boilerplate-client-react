@@ -6,8 +6,8 @@ interface ILoginFormProps {
 }
 
 type Login = {
-  firstname: string
-  lastname: string
+  username: string
+  password: string
 }
 
 const LoginForm: React.FC<ILoginFormProps> = () => {
@@ -31,7 +31,7 @@ const LoginForm: React.FC<ILoginFormProps> = () => {
           />
         </label>
         <label htmlFor="lastname">
-          Last Name
+          Password
           <input
             ref={register({
               required: true,
@@ -41,7 +41,7 @@ const LoginForm: React.FC<ILoginFormProps> = () => {
             type="password"
           />
         </label>
-        <button type="submit">Save</button>
+        <button type="submit">Login</button>
       </form>
     </>
   )
