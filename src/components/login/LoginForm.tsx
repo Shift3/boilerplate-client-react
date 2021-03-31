@@ -2,10 +2,10 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 
 interface ILoginFormProps {
-  onSubmit: (username: string, password: string) => void
+  onSubmit?: (username: string, password: string) => void
 }
 
-type Login = {
+interface Login {
   username: string
   password: string
 }
@@ -13,12 +13,14 @@ type Login = {
 const LoginForm: React.FC<ILoginFormProps> = () => {
   const { register, handleSubmit } = useForm<Login>()
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  const onSubmit = handleSubmit((data): void => {})
+  const onSubmit = (data: Login): void => {
+    /* eslint-disable no-console */
+    console.log(data)
+  }
 
   return (
     <>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="username">
           Username
           <input
