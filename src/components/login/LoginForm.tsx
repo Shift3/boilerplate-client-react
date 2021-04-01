@@ -26,7 +26,7 @@ export const LoginForm: FC = () => {
   const { register, errors, handleSubmit } = useLoginForm()
 
   const onSubmit = handleSubmit((data) => {
-    //     /* eslint-disable no-console */
+    // eslint-disable-next-line no-console
     console.log(data)
   })
 
