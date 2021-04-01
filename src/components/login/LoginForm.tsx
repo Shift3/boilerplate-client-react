@@ -1,3 +1,4 @@
+import { yupResolver } from '@hookform/resolvers/yup'
 import React, { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
@@ -35,7 +36,7 @@ interface ILogin {
 
 const useLoginForm = () =>
   useForm<ILogin>({
-    // validationSchema: loginSchema,
+    resolver: yupResolver(loginSchema),
   })
 
 export const LoginForm: FC = () => {
@@ -50,14 +51,14 @@ export const LoginForm: FC = () => {
     <form onSubmit={onSubmit}>
       <label htmlFor="username">
         <span>Username</span>
-        <input type="text" name={LoginKey.username} ref={register} />
+        <input id="username" type="text" name={LoginKey.username} ref={register} />
       </label>
-      {errors.username && <p>{errors.username.message}</p>}
+      {errors.username && <p role="alert">{errors.username.message}</p>}
       <label htmlFor="password">
         <span>Password</span>
-        <input type="password" name={LoginKey.password} ref={register} />
+        <input id="password" type="password" name={LoginKey.password} ref={register} />
       </label>
-      {errors.password && <p>{errors.password.message}</p>}
+      {errors.password && <p role="alert">{errors.password.message}</p>}
       <button type="submit">Submit</button>
     </form>
   )
