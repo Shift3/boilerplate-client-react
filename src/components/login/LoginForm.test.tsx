@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React from 'react'
-import LoginForm from './LoginForm'
+import { LoginForm } from './LoginForm'
 
 test('renders react boilerplate text', () => {
   const onSubmit = jest.fn()

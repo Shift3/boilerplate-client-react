@@ -1,52 +1,56 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { useForm } from 'react-hook-form'
+import * as yup from 'yup'
 
-interface ILoginFormProps {
-  onSubmit?: (username: string, password: string) => void
+const LoginKey: { [P in keyof ILogin]: P } = {
+  username: 'username',
+  password: 'password',
 }
 
-interface Login {
+const loginSchema: yup.SchemaOf<ILogin> = yup.object().shape({
+  username: yup.string().required(),
+  password: yup.string().required(),
+})
+
+interface ILogin {
   username: string
   password: string
 }
 
-const LoginForm: React.FC<ILoginFormProps> = () => {
-  const { register, handleSubmit } = useForm<Login>()
+const useLoginForm = () =>
+  useForm<ILogin>({
+    // validationSchema: loginSchema,
+  })
 
-  const onSubmit = (data: Login): void => {
-    /* eslint-disable no-console */
+export const LoginForm: FC = () => {
+  const { register, errors, handleSubmit } = useLoginForm()
+
+  const onSubmit = (data: ILogin): void => {
+    //     /* eslint-disable no-console */
     console.log(data)
   }
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <form className="login-form form" onSubmit={onSubmit}>
+      <div className="form__control">
         <label htmlFor="username">
-          Username
-          <input
-            ref={register({
-              required: true,
-            })}
-            id="username"
-            name="username"
-            type="text"
-          />
+          <span>User Name</span>
+          <input type="text" name={LoginKey.username} ref={register} />
         </label>
-        <label htmlFor="lastname">
-          Password
-          <input
-            ref={register({
-              required: true,
-            })}
-            id="password"
-            name="password"
-            type="password"
-          />
+        {errors.username && <p className="form__error">{errors.username.message}</p>}
+      </div>
+
+      <div className="form__control">
+        <label htmlFor="password">
+          <span>Password</span>
+          <input type="password" name={LoginKey.password} ref={register} />
         </label>
-        <button type="submit">Login</button>
-      </form>
-    </>
+        {errors.password && <p className="form__error">{errors.password.message}</p>}
+      </div>
+
+      <div className="form__control">
+        <button type="submit">Submit</button>
+      </div>
+    </form>
   )
 }
-
-export default LoginForm
