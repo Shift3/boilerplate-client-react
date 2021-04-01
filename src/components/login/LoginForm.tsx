@@ -47,26 +47,18 @@ export const LoginForm: FC = () => {
   })
 
   return (
-    <form className="login-form form" onSubmit={onSubmit}>
-      <div className="form__control">
-        <label htmlFor="username">
-          <span>Username</span>
-          <input type="text" name={LoginKey.username} ref={register} />
-        </label>
-        {errors.username && <p className="form__error">{errors.username.message}</p>}
-      </div>
-
-      <div className="form__control">
-        <label htmlFor="password">
-          <span>Password</span>
-          <input type="password" name={LoginKey.password} ref={register} />
-        </label>
-        {errors.password && <p className="form__error">{errors.password.message}</p>}
-      </div>
-
-      <div className="form__control">
-        <button type="submit">Submit</button>
-      </div>
+    <form onSubmit={onSubmit}>
+      <label htmlFor="username">
+        <span>Username</span>
+        <input type="text" name={LoginKey.username} ref={register} />
+      </label>
+      {errors.username && <p>{errors.username.message}</p>}
+      <label htmlFor="password">
+        <span>Password</span>
+        <input type="password" name={LoginKey.password} ref={register} />
+      </label>
+      {errors.password && <p>{errors.password.message}</p>}
+      <button type="submit">Submit</button>
     </form>
   )
 }
