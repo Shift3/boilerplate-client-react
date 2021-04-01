@@ -25,16 +25,16 @@ const useLoginForm = () =>
 export const LoginForm: FC = () => {
   const { register, errors, handleSubmit } = useLoginForm()
 
-  const onSubmit = (data: ILogin): void => {
+  const onSubmit = handleSubmit((data) => {
     //     /* eslint-disable no-console */
     console.log(data)
-  }
+  })
 
   return (
     <form className="login-form form" onSubmit={onSubmit}>
       <div className="form__control">
         <label htmlFor="username">
-          <span>User Name</span>
+          <span>Username</span>
           <input type="text" name={LoginKey.username} ref={register} />
         </label>
         {errors.username && <p className="form__error">{errors.username.message}</p>}

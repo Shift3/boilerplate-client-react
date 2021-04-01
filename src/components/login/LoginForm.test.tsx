@@ -4,9 +4,7 @@ import React from 'react'
 import { LoginForm } from './LoginForm'
 
 test('renders react boilerplate text', () => {
-  const onSubmit = jest.fn()
-
-  render(<LoginForm onSubmit={onSubmit} />)
+  render(<LoginForm />)
 
   const username = screen.getByLabelText(/username/i)
   const password = screen.getByLabelText(/password/i)
@@ -21,7 +19,7 @@ describe('input validation', () => {
     const testPassword = 'Password123!'
     const onSubmit = jest.fn()
 
-    render(<LoginForm onSubmit={onSubmit} />)
+    render(<LoginForm />)
 
     userEvent.type(screen.getByLabelText(/username/i), testUsername)
     userEvent.type(screen.getByLabelText(/password/i), testPassword)
@@ -36,7 +34,7 @@ describe('input validation', () => {
     const testPassword = 'Password123!'
     const onSubmit = jest.fn()
 
-    render(<LoginForm onSubmit={onSubmit} />)
+    render(<LoginForm />)
 
     userEvent.type(screen.getByLabelText(/username/i), testUsername)
     userEvent.type(screen.getByLabelText(/password/i), testPassword)
@@ -50,7 +48,7 @@ describe('input validation', () => {
     const testPassword = 'Password123!'
     const onSubmit = jest.fn()
 
-    render(<LoginForm onSubmit={onSubmit} />)
+    render(<LoginForm />)
 
     userEvent.type(screen.getByLabelText(/username/i), testUsername)
     userEvent.type(screen.getByLabelText(/password/i), testPassword)
@@ -64,7 +62,7 @@ describe('input validation', () => {
     const testPassword = ''
     const onSubmit = jest.fn()
 
-    render(<LoginForm onSubmit={onSubmit} />)
+    render(<LoginForm />)
 
     userEvent.type(screen.getByLabelText(/username/i), testUsername)
     userEvent.type(screen.getByLabelText(/password/i), testPassword)
@@ -78,7 +76,7 @@ describe('input validation', () => {
     const testPassword = '1abcdefg!'
     const onSubmit = jest.fn()
 
-    render(<LoginForm onSubmit={onSubmit} />)
+    render(<LoginForm />)
 
     userEvent.type(screen.getByLabelText(/username/i), testUsername)
     userEvent.type(screen.getByLabelText(/password/i), testPassword)
@@ -92,7 +90,7 @@ describe('input validation', () => {
     const testPassword = '1ABCDEFG!'
     const onSubmit = jest.fn()
 
-    render(<LoginForm onSubmit={onSubmit} />)
+    render(<LoginForm />)
 
     userEvent.type(screen.getByLabelText(/username/i), testUsername)
     userEvent.type(screen.getByLabelText(/password/i), testPassword)
@@ -106,7 +104,7 @@ describe('input validation', () => {
     const testPassword = 'Aabcdefg!'
     const onSubmit = jest.fn()
 
-    render(<LoginForm onSubmit={onSubmit} />)
+    render(<LoginForm />)
 
     userEvent.type(screen.getByLabelText(/username/i), testUsername)
     userEvent.type(screen.getByLabelText(/password/i), testPassword)
@@ -120,7 +118,7 @@ describe('input validation', () => {
     const testPassword = 'Aabcdefgh'
     const onSubmit = jest.fn()
 
-    render(<LoginForm onSubmit={onSubmit} />)
+    render(<LoginForm />)
 
     userEvent.type(screen.getByLabelText(/username/i), testUsername)
     userEvent.type(screen.getByLabelText(/password/i), testPassword)
