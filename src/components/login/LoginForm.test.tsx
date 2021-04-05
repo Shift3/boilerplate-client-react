@@ -1,129 +1,160 @@
-import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import React from 'react'
+import { act, render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { LoginForm } from './LoginForm'
 
-test('renders react boilerplate text', () => {
-  render(<LoginForm />)
+describe('LoginForm', () => {
+  const validUsername = 'test@email.com'
+  const validPassword = 'Password123!'
 
-  const username = screen.getByLabelText(/username/i)
-  const password = screen.getByLabelText(/password/i)
+  let usernameField: HTMLElement
+  let passwordField: HTMLElement
+  let submitButton: HTMLElement
+  const mockOnSubmit = jest.fn()
 
-  expect(username).toBeInTheDocument()
-  expect(password).toBeInTheDocument()
-})
-
-describe('input validation', () => {
-  test('should call props.onSubmit with username and password if validation succeeds', () => {
-    const testUsername = 'test@email.com'
-    const testPassword = 'Password123!'
-    const onSubmit = jest.fn()
-
-    render(<LoginForm />)
-
-    userEvent.type(screen.getByLabelText(/username/i), testUsername)
-    userEvent.type(screen.getByLabelText(/password/i), testPassword)
-    userEvent.click(screen.getByRole('button'))
-
-    expect(onSubmit).toHaveBeenCalledTimes(1)
-    expect(onSubmit).toHaveBeenCalledWith(testUsername, testPassword)
+  beforeEach(() => {
+    render(<LoginForm onSubmit={mockOnSubmit} />)
+    usernameField = screen.getByLabelText(/username/i)
+    passwordField = screen.getByLabelText(/password/i)
+    submitButton = screen.getByRole('button', {
+      name: /submit/i,
+    })
   })
 
-  test('should fail validation if username is empty', () => {
-    const testUsername = ''
-    const testPassword = 'Password123!'
-    const onSubmit = jest.fn()
-
-    render(<LoginForm />)
-
-    userEvent.type(screen.getByLabelText(/username/i), testUsername)
-    userEvent.type(screen.getByLabelText(/password/i), testPassword)
-    userEvent.click(screen.getByRole('button'))
-
-    expect(onSubmit).not.toHaveBeenCalled()
+  test('should render', () => {
+    expect(usernameField).toBeInTheDocument()
+    expect(passwordField).toBeInTheDocument()
+    expect(submitButton).toBeInTheDocument()
   })
 
-  test('should fail validation if username is not a valid email', () => {
-    const testUsername = 'testemail'
-    const testPassword = 'Password123!'
-    const onSubmit = jest.fn()
+  describe('input validation', () => {
+    test('should call onSubmit with username and password if validation succeeds', async () => {
+      mockOnSubmit.mockReset()
 
-    render(<LoginForm />)
+      userEvent.type(usernameField, validUsername)
+      userEvent.type(passwordField, validPassword)
+      await act(async () => {
+        userEvent.click(submitButton)
+      })
 
-    userEvent.type(screen.getByLabelText(/username/i), testUsername)
-    userEvent.type(screen.getByLabelText(/password/i), testPassword)
-    userEvent.click(screen.getByRole('button'))
+      expect(mockOnSubmit).toHaveBeenCalledTimes(1)
+      expect(mockOnSubmit).toHaveBeenCalledWith(validUsername, validPassword)
+    })
 
-    expect(onSubmit).not.toHaveBeenCalled()
-  })
+    describe('username', () => {
+      test('should fail validation if username is empty', async () => {
+        const testUsername = ''
 
-  test('should fail validation if password is empty', () => {
-    const testUsername = 'testemail@test.com'
-    const testPassword = ''
-    const onSubmit = jest.fn()
+        mockOnSubmit.mockReset()
 
-    render(<LoginForm />)
+        userEvent.type(usernameField, testUsername)
+        userEvent.type(passwordField, validPassword)
+        await act(async () => {
+          userEvent.click(submitButton)
+        })
 
-    userEvent.type(screen.getByLabelText(/username/i), testUsername)
-    userEvent.type(screen.getByLabelText(/password/i), testPassword)
-    userEvent.click(screen.getByRole('button'))
+        expect(mockOnSubmit).not.toHaveBeenCalled()
+      })
 
-    expect(onSubmit).not.toHaveBeenCalled()
-  })
+      test('should fail validation if username is not a valid email', async () => {
+        const testUsername = 'testemail'
 
-  test('should fail validation if password does not contain at least 1 uppercase letter', () => {
-    const testUsername = 'testemail@test.com'
-    const testPassword = '1abcdefg!'
-    const onSubmit = jest.fn()
+        mockOnSubmit.mockReset()
 
-    render(<LoginForm />)
+        userEvent.type(usernameField, testUsername)
+        userEvent.type(passwordField, validPassword)
+        await act(async () => {
+          userEvent.click(submitButton)
+        })
 
-    userEvent.type(screen.getByLabelText(/username/i), testUsername)
-    userEvent.type(screen.getByLabelText(/password/i), testPassword)
-    userEvent.click(screen.getByRole('button'))
+        expect(mockOnSubmit).not.toHaveBeenCalled()
+      })
+    })
 
-    expect(onSubmit).not.toHaveBeenCalled()
-  })
+    describe('password', () => {
+      test('should fail validation if password is empty', async () => {
+        const testPassword = ''
 
-  test('should fail validation if password does not contain at least 1 lowercase letter', () => {
-    const testUsername = 'testemail@test.com'
-    const testPassword = '1ABCDEFG!'
-    const onSubmit = jest.fn()
+        mockOnSubmit.mockReset()
 
-    render(<LoginForm />)
+        userEvent.type(usernameField, validUsername)
+        userEvent.type(passwordField, testPassword)
+        await act(async () => {
+          userEvent.click(submitButton)
+        })
 
-    userEvent.type(screen.getByLabelText(/username/i), testUsername)
-    userEvent.type(screen.getByLabelText(/password/i), testPassword)
-    userEvent.click(screen.getByRole('button'))
+        expect(mockOnSubmit).not.toHaveBeenCalled()
+      })
 
-    expect(onSubmit).not.toHaveBeenCalled()
-  })
+      test('should fail validation if password is less than 8 characters long', async () => {
+        const testPassword = 'Test1!'
 
-  test('should fail validation if password does not contain at least 1 number', () => {
-    const testUsername = 'testemail@test.com'
-    const testPassword = 'Aabcdefg!'
-    const onSubmit = jest.fn()
+        mockOnSubmit.mockReset()
 
-    render(<LoginForm />)
+        userEvent.type(usernameField, validUsername)
+        userEvent.type(passwordField, testPassword)
+        await act(async () => {
+          userEvent.click(submitButton)
+        })
 
-    userEvent.type(screen.getByLabelText(/username/i), testUsername)
-    userEvent.type(screen.getByLabelText(/password/i), testPassword)
-    userEvent.click(screen.getByRole('button'))
+        expect(mockOnSubmit).not.toHaveBeenCalled()
+      })
 
-    expect(onSubmit).not.toHaveBeenCalled()
-  })
+      test('should fail validation if password does not contain at least 1 uppercase letter', async () => {
+        const testPassword = '1abcdefg!'
 
-  test('should fail validation if password does not contain at least 1 special character', () => {
-    const testUsername = 'testemail@test.com'
-    const testPassword = 'Aabcdefgh'
-    const onSubmit = jest.fn()
+        mockOnSubmit.mockReset()
 
-    render(<LoginForm />)
+        userEvent.type(usernameField, validUsername)
+        userEvent.type(passwordField, testPassword)
+        await act(async () => {
+          userEvent.click(submitButton)
+        })
 
-    userEvent.type(screen.getByLabelText(/username/i), testUsername)
-    userEvent.type(screen.getByLabelText(/password/i), testPassword)
-    userEvent.click(screen.getByRole('button'))
+        expect(mockOnSubmit).not.toHaveBeenCalled()
+      })
 
-    expect(onSubmit).not.toHaveBeenCalled()
+      test('should fail validation if password does not contain at least 1 lowercase letter', async () => {
+        const testPassword = '1ABCDEFG!'
+
+        mockOnSubmit.mockReset()
+
+        userEvent.type(usernameField, validUsername)
+        userEvent.type(passwordField, testPassword)
+        await act(async () => {
+          userEvent.click(submitButton)
+        })
+
+        expect(mockOnSubmit).not.toHaveBeenCalled()
+      })
+
+      test('should fail validation if password does not contain at least 1 number', async () => {
+        const testPassword = 'Aabcdefg!'
+
+        mockOnSubmit.mockReset()
+
+        userEvent.type(usernameField, validUsername)
+        userEvent.type(passwordField, testPassword)
+        await act(async () => {
+          userEvent.click(submitButton)
+        })
+
+        expect(mockOnSubmit).not.toHaveBeenCalled()
+      })
+
+      test('should fail validation if password does not contain at least 1 special character', async () => {
+        const testPassword = 'Aabcdefgh'
+
+        mockOnSubmit.mockReset()
+
+        userEvent.type(usernameField, validUsername)
+        userEvent.type(passwordField, testPassword)
+        await act(async () => {
+          userEvent.click(submitButton)
+        })
+
+        expect(mockOnSubmit).not.toHaveBeenCalled()
+      })
+    })
   })
 })
