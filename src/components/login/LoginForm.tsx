@@ -3,6 +3,10 @@ import React, { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
+interface LoginFormProps {
+  onSubmit: (username: string, password: string) => void
+}
+
 const LoginKey: { [P in keyof ILogin]: P } = {
   username: 'username',
   password: 'password',
@@ -14,7 +18,7 @@ const numericRegex = /(?=.*[0-9])/
 const specialCharRegex = /(?=.*\W)/
 
 const loginSchema: yup.SchemaOf<ILogin> = yup.object().shape({
-  username: yup.string().min(6, 'Username must be at least 6 characters.').required(),
+  username: yup.string().email().min(6, 'Username must be at least 6 characters.').required(),
   // password will be verified from backend for login, but the lines below are to demonstrate how Yup validation is working, and will be removed in next PR.
   password: yup
     .string() // Must contain at least 1 uppercase character
@@ -39,12 +43,11 @@ const useLoginForm = () =>
     resolver: yupResolver(loginSchema),
   })
 
-export const LoginForm: FC = () => {
+export const LoginForm: FC<LoginFormProps> = (props) => {
   const { register, errors, handleSubmit } = useLoginForm()
 
   const onSubmit = handleSubmit((data) => {
-    // eslint-disable-next-line no-console
-    console.log(data)
+    props.onSubmit(data.username, data.password)
   })
 
   return (
