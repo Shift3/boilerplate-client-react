@@ -2,12 +2,8 @@ import React from 'react'
 import { LoginForm } from '../components/login/LoginForm'
 
 const HomePage: React.FC = () => {
-  const onLoginFormSubmit = (username: string, password: string) => {
-    // eslint-disable-next-line no-console
-    console.log('username', username)
-    // eslint-disable-next-line no-console
-    console.log('password', password)
-  }
+  // eslint-disable-next-line
+  const onLoginFormSubmit = (username: string, password: string) => {}
 
   return (
     <div>
