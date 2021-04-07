@@ -2,6 +2,7 @@ import React from 'react'
 import { act, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { LoginForm } from './LoginForm'
+import { Constants } from '../../utils/constants'
 
 describe('LoginForm', () => {
   const validUsername = 'test@email.com'
@@ -28,8 +29,8 @@ describe('LoginForm', () => {
     expect(submitButton).toBeInTheDocument()
   })
 
-  describe('input validation', () => {
-    test('should call onSubmit with username and password if validation succeeds', async () => {
+  describe('valid input', () => {
+    test('should call onSubmit once with username and password', async () => {
       userEvent.type(usernameField, validUsername)
       userEvent.type(passwordField, validPassword)
       await act(async () => {
@@ -40,103 +41,68 @@ describe('LoginForm', () => {
       expect(mockOnSubmit).toHaveBeenCalledWith(validUsername, validPassword)
     })
 
-    describe('username', () => {
-      test('should fail validation if username is empty', async () => {
-        const testUsername = ''
-
-        userEvent.type(usernameField, testUsername)
-        userEvent.type(passwordField, validPassword)
-        await act(async () => {
-          userEvent.click(submitButton)
-        })
-
-        expect(mockOnSubmit).not.toHaveBeenCalled()
+    test('should not display error messages', async () => {
+      userEvent.type(usernameField, validUsername)
+      userEvent.type(passwordField, validPassword)
+      await act(async () => {
+        userEvent.click(submitButton)
       })
 
-      test('should fail validation if username is not a valid email', async () => {
-        const testUsername = 'testemail'
+      // screen.getAllByRole should throw an error if no matching elements are found.
+      // For some reason, `expect(getAllByRole('alert')).toThrow()` would not work,
+      // but it seems to work if I manually catch the error.
+      try {
+        screen.getAllByRole('alert')
+      } catch (error) {
+        expect(error).toBeDefined()
+      }
+    })
+  })
 
-        userEvent.type(usernameField, testUsername)
+  describe('invalid input', () => {
+    test('should not call onSubmit', async () => {
+      userEvent.type(usernameField, '')
+      userEvent.type(passwordField, '')
+      await act(async () => {
+        userEvent.click(submitButton)
+      })
+
+      expect(mockOnSubmit).not.toHaveBeenCalled()
+    })
+
+    test('should display error messages', async () => {
+      userEvent.type(usernameField, '')
+      userEvent.type(passwordField, '')
+      await act(async () => {
+        userEvent.click(submitButton)
+      })
+
+      expect(screen.getAllByRole('alert')).toHaveLength(2)
+    })
+
+    describe('invalid email', () => {
+      test('should only display email error message', async () => {
+        userEvent.type(usernameField, '')
         userEvent.type(passwordField, validPassword)
         await act(async () => {
           userEvent.click(submitButton)
         })
 
-        expect(mockOnSubmit).not.toHaveBeenCalled()
+        expect(screen.getAllByRole('alert')).toHaveLength(1)
+        expect(screen.getByRole('alert').innerHTML).toBe(Constants.validationMessages.username.MUST_BE_VALID_EMAIL)
       })
     })
 
-    describe('password', () => {
-      test('should fail validation if password is empty', async () => {
-        const testPassword = ''
-
+    describe('invalid password', () => {
+      test('should only display password error message', async () => {
         userEvent.type(usernameField, validUsername)
-        userEvent.type(passwordField, testPassword)
+        userEvent.type(passwordField, '')
         await act(async () => {
           userEvent.click(submitButton)
         })
 
-        expect(mockOnSubmit).not.toHaveBeenCalled()
-      })
-
-      test('should fail validation if password is less than 8 characters long', async () => {
-        const testPassword = 'Test1!'
-
-        userEvent.type(usernameField, validUsername)
-        userEvent.type(passwordField, testPassword)
-        await act(async () => {
-          userEvent.click(submitButton)
-        })
-
-        expect(mockOnSubmit).not.toHaveBeenCalled()
-      })
-
-      test('should fail validation if password does not contain at least 1 uppercase letter', async () => {
-        const testPassword = '1abcdefg!'
-
-        userEvent.type(usernameField, validUsername)
-        userEvent.type(passwordField, testPassword)
-        await act(async () => {
-          userEvent.click(submitButton)
-        })
-
-        expect(mockOnSubmit).not.toHaveBeenCalled()
-      })
-
-      test('should fail validation if password does not contain at least 1 lowercase letter', async () => {
-        const testPassword = '1ABCDEFG!'
-
-        userEvent.type(usernameField, validUsername)
-        userEvent.type(passwordField, testPassword)
-        await act(async () => {
-          userEvent.click(submitButton)
-        })
-
-        expect(mockOnSubmit).not.toHaveBeenCalled()
-      })
-
-      test('should fail validation if password does not contain at least 1 number', async () => {
-        const testPassword = 'Aabcdefg!'
-
-        userEvent.type(usernameField, validUsername)
-        userEvent.type(passwordField, testPassword)
-        await act(async () => {
-          userEvent.click(submitButton)
-        })
-
-        expect(mockOnSubmit).not.toHaveBeenCalled()
-      })
-
-      test('should fail validation if password does not contain at least 1 special character', async () => {
-        const testPassword = 'Aabcdefgh'
-
-        userEvent.type(usernameField, validUsername)
-        userEvent.type(passwordField, testPassword)
-        await act(async () => {
-          userEvent.click(submitButton)
-        })
-
-        expect(mockOnSubmit).not.toHaveBeenCalled()
+        expect(screen.getAllByRole('alert')).toHaveLength(1)
+        expect(screen.getByRole('alert').innerHTML).toBe(Constants.validationMessages.password.IS_REQUIRED)
       })
     })
   })
