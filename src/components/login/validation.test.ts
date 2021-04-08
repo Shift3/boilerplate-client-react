@@ -1,33 +1,36 @@
+import { ILoginFormData } from './interfaces'
 import { loginFormSchema } from './validation'
 
 describe('loginFormSchema', () => {
   const validUsername = 'test@email.com'
   const validPassword = 'password'
 
-  const testValidInput = {
+  const testValidInput: ILoginFormData = {
     username: validUsername,
     password: validPassword,
   }
 
-  const testMissingUsername = {
+  const testMissingUsername: Partial<ILoginFormData> = {
+    username: undefined,
     password: validPassword,
   }
 
-  const testEmptyUsername = {
+  const testEmptyUsername: ILoginFormData = {
     username: '',
     password: validPassword,
   }
 
-  const testInvalidUsernameFormat = {
+  const testInvalidUsernameFormat: ILoginFormData = {
     username: 'username',
     password: validPassword,
   }
 
-  const testMissingPassword = {
+  const testMissingPassword: Partial<ILoginFormData> = {
     username: validUsername,
+    password: undefined,
   }
 
-  const testEmptyPassword = {
+  const testEmptyPassword: ILoginFormData = {
     username: validUsername,
     password: '',
   }
