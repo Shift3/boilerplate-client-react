@@ -48,14 +48,7 @@ describe('LoginForm', () => {
         userEvent.click(submitButton)
       })
 
-      // screen.getAllByRole should throw an error if no matching elements are found.
-      // For some reason, `expect(getAllByRole('alert')).toThrow()` would not work,
-      // but it seems to work if I manually catch the error.
-      try {
-        screen.getAllByRole('alert')
-      } catch (error) {
-        expect(error).toBeDefined()
-      }
+      expect(screen.queryAllByRole('alert')).toHaveLength(0)
     })
   })
 
