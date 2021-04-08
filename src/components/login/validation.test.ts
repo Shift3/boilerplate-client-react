@@ -35,8 +35,10 @@ describe('loginFormSchema', () => {
     password: '',
   }
 
-  test('should pass validation', () => {
-    expect(loginFormSchema.isValidSync(testValidInput)).toBeTruthy()
+  describe('valid inputs', () => {
+    test('should pass validation', () => {
+      expect(loginFormSchema.isValidSync(testValidInput)).toBeTruthy()
+    })
   })
 
   describe('username', () => {
