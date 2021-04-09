@@ -1,7 +1,7 @@
-import React, { FC } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
+import React, { FC } from 'react'
 import { useForm } from 'react-hook-form'
-import { ILoginFormData } from './interfaces'
+import { ILoginFormData } from '../../interfaces'
 import { loginFormSchema } from './validation'
 
 interface LoginFormProps {
