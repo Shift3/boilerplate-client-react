@@ -22,7 +22,7 @@ const LoginFormContainer = styled.div`
   z-index: 2;
 `
 
-const HomePage: React.FC = () => {
+export const LoginPage: React.FC = () => {
   // eslint-disable-next-line
   const onLoginFormSubmit = (username: string, password: string) => {}
 
@@ -36,5 +36,3 @@ const HomePage: React.FC = () => {
     </LoginWrapper>
   )
 }
-
-export default HomePage
