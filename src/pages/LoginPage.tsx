@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { LoginForm } from '../components/login/LoginForm'
 
@@ -22,7 +23,7 @@ const LoginFormContainer = styled.div`
   z-index: 2;
 `
 
-export const LoginPage: React.FC = () => {
+const LoginPage: React.FC = () => {
   // eslint-disable-next-line
   const onLoginFormSubmit = (username: string, password: string) => {}
 
@@ -31,8 +32,11 @@ export const LoginPage: React.FC = () => {
       <LoginGrid>
         <LoginFormContainer>
           <LoginForm onSubmit={onLoginFormSubmit} />
+          <Link to="/auth/forgot-password">Forgot Password?</Link>
         </LoginFormContainer>
       </LoginGrid>
     </LoginWrapper>
   )
 }
+
+export default LoginPage
