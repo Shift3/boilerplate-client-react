@@ -1,3 +1,4 @@
-export * from './login.interfaces'
-export * from './auth.interfaces'
-export * from './context.interfaces'
+export * from './login.interface';
+export * from './auth.interfaces';
+export * from './context.interface';
+export * from './flashMessage.interface';

@@ -4,10 +4,15 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import LoginPage from './pages/LoginPage'
 import ResetPassword from './pages/ResetPasswordPage'
 import { Provider as AuthProvider } from './context/auth.context'
+import { Provider as FlashMessageProvider } from './context/flashMessage.context'
+import FlashMessage from './components/flashMessage/FlashMessage'
 
 export const App: FC = () => (
   <ErrorBoundary>
     <AuthProvider>
+      <FlashMessageProvider>
+        <FlashMessage/>
+      </FlashMessageProvider>
       <Router>
         <Switch>
           <Route exact path="/" component={LoginPage} />
