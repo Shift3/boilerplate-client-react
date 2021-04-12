@@ -1,8 +1,8 @@
+import * as Sentry from '@sentry/react'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import * as Sentry from '@sentry/react'
+import { App } from './App'
 import reportWebVitals from './reportWebVitals'
-import App from './App'
 
 /* TODO: - CMS 3/23/21
 - Add in configuration for toggling autoSesssionTracking
