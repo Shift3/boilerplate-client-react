@@ -1,8 +1,7 @@
+import { DispatchAction, IAction } from './context.interface';
+
 export interface IAuthState {
     token: string | null
 }
-  
-export interface IAuthAction {
-    type: string
-    payload: any
-}
+
+export type LogoutUser = (dispatch: DispatchAction) => Promise<IAction>;

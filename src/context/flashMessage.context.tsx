@@ -1,7 +1,7 @@
 import createDataContext from "./index.context";
 import Types from "./types";
 import { setFlashMessage } from './actions/flashMessage.actions';
-import { IFlashMessage } from '../interfaces';
+import { IFlashMessage, IAction } from '../interfaces';
 
 const initialState: { flashMessage: IFlashMessage | null } = {
   flashMessage: {
@@ -11,7 +11,7 @@ const initialState: { flashMessage: IFlashMessage | null } = {
   }
 };
 
-const flashMessageReducer = (state: any, action: any) => {
+const flashMessageReducer = (state: Record<string, unknown>, action: IAction) => {
   switch (action.type) {
 
     case Types.SET_FLASH_MESSAGE:

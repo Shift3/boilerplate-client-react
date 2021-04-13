@@ -1,10 +1,13 @@
-import { createContext, useReducer } from 'react';
-import { IContextProps } from '../interfaces';
+import { createContext, useReducer, ReactNode } from 'react';
+import { IContextProps, IAction } from '../interfaces';
 
-const createDataContext = (reducer: any, actions: any, initialState: any) => {
+export type Reducer = (state: Record<string, unknown>, action: IAction) => (Record<string, unknown>);
+
+// eslint-disable-next-line
+const createDataContext = (reducer: Reducer, actions: Record<string, any>, initialState: Record<string, unknown>) => {
   const Context = createContext<Partial<IContextProps>>({});
 
-  const Provider = ({ children }: any) => {
+  const Provider = ({ children }: Record<string, ReactNode>) => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
     const boundActions = Object.keys(actions).reduce((actionsObj, key) => (
