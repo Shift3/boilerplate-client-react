@@ -1,9 +1,9 @@
 import createDataContext from "./index.context";
-import Types from "./types";
+import Types from "./action.types";
 import { setFlashMessage } from './actions/flashMessage.actions';
-import { IFlashMessage, IAction } from '../interfaces';
+import { IFlashMessageState, IAction } from '../interfaces';
 
-const initialState: { flashMessage: IFlashMessage | null } = {
+const initialState: IFlashMessageState = {
   flashMessage: {
       message: 'test',
       variant: 'success',

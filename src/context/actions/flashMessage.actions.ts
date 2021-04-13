@@ -1,8 +1,9 @@
-import Types from '../types';
-import { IFlashMessage, DispatchAction, SetFlashMessage } from '../../interfaces';
+import { Dispatch } from 'react';
+import Types from '../action.types';
+import { IFlashMessage, SetFlashMessageAction, IAction } from '../../interfaces';
 
-export const setFlashMessage: SetFlashMessage = (dispatch: DispatchAction, payload: IFlashMessage) => async () => {
+export const setFlashMessage: SetFlashMessageAction = (dispatch: Dispatch<IAction>) => async (payload: IFlashMessage) => {
     dispatch({ type: Types.SET_FLASH_MESSAGE, payload });
 
-    setTimeout(() => dispatch({ type: Types.CLEAR_FLASH_MESSAGE, payload: null }), payload.timeout);
+    setTimeout(() => dispatch({ type: Types.CLEAR_FLASH_MESSAGE, payload }), payload.timeout);
 }
