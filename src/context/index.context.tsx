@@ -1,7 +1,7 @@
-import { createContext, useReducer, ReactNode, ReducerWithoutAction } from 'react';
+import { createContext, useReducer, ReactNode } from 'react';
 import { IContextProps, Actions, CreateContext, ContextState, Reducer } from '../interfaces';
 
-const createDataContext: CreateContext = (reducer: ReducerWithoutAction<any> | Reducer, actions: Actions, initialState: ContextState) => {
+const createDataContext: CreateContext = (reducer: Reducer, actions: Actions, initialState: ContextState) => {
   const Context = createContext<Partial<IContextProps>>({});
 
   const Provider = ({ children }: Record<string, ReactNode>) => {

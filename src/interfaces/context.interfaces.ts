@@ -15,7 +15,7 @@ export interface IContextProps {
 
 export type ContextState = Record<string, unknown> | IFlashMessageState | IAuthState
 
-export type Reducer = (state: Record<string, unknown>, action: IAction) => (Record<string, unknown>);
+export type Reducer = ReducerWithoutAction<any> | ((state: Record<string, unknown>, action: IAction) => (Record<string, unknown>));
 
 export type DispatchAction = ({ type, payload }: IAction) => (IAction);
 
