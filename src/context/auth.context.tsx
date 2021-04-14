@@ -15,7 +15,7 @@ const authReducer = (state: Record<string, unknown>, action: IAction) => {
       return { ...state, ...action.payload }
 
     case Types.LOGOUT_USER:
-      return { ...state, token: null };
+      return { ...state, user: null, token: null };
 
     default:
       return state;
