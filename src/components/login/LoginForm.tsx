@@ -1,18 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { loginFormSchema } from './validation';
-import { Context as AuthContext } from '../../context/auth.context';
 import { ILoginFormData, ILoginFormProps } from './types';
 
-const LoginForm: FC<ILoginFormProps> = () => {
-  const { loginUser } = useContext(AuthContext);
-
+export const LoginForm: FC<ILoginFormProps> = (props) => {
   const { register, handleSubmit, errors } = useForm<ILoginFormData>({
     resolver: yupResolver(loginFormSchema),
   })
 
-  const onSubmit = handleSubmit((formData: ILoginFormData) => loginUser(formData));
+  const onSubmit = handleSubmit((formData: ILoginFormData) => props.onSubmit(formData));
 
   return (
     <form onSubmit={onSubmit}>
@@ -30,5 +27,3 @@ const LoginForm: FC<ILoginFormProps> = () => {
     </form>
   )
 }
-
-export default LoginForm;

@@ -1,5 +1,3 @@
 import { FC } from 'react'
 
-const Logout: FC = () => <h1>Logout Button</h1>
-
-export default Logout;
+export const Logout: FC = () => <h2>Logout Button</h2>

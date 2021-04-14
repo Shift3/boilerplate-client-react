@@ -3,5 +3,5 @@ export interface ILoginFormData {
     password: string
   }
   export interface ILoginFormProps {
-    onSubmit: (username: string, password: string) => void
+    onSubmit: (formData: ILoginFormData) => void
   }

@@ -1,11 +1,16 @@
-import { ErrorBoundary } from '@sentry/react'
 import { FC } from 'react'
+import { ErrorBoundary } from '@sentry/react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import LoginPage from './pages/LoginPage'
-import ResetPassword from './pages/ResetPasswordPage'
+
+// Context
 import { Provider as AuthProvider } from './context/auth.context'
 import { Provider as FlashMessageProvider } from './context/flashMessage.context'
-import FlashMessage from './components/flashMessage/FlashMessage'
+
+// Components
+import { HomePage } from './pages/HomePage'
+import { LoginPage } from './pages/LoginPage'
+import { ResetPasswordPage } from './pages/ResetPasswordPage'
+import { FlashMessage } from './components/flashMessage/FlashMessage'
 
 export const App: FC = () => (
   <ErrorBoundary>
@@ -15,8 +20,9 @@ export const App: FC = () => (
       </FlashMessageProvider>
       <Router>
         <Switch>
-          <Route exact path="/" component={LoginPage} />
-          <Route exact path="/auth/forgot-password" component={ResetPassword} />
+          <Route exact path="/" component={ HomePage } />
+          <Route exact path="/" component={ LoginPage } />
+          <Route exact path="/auth/forgot-password" component={ ResetPasswordPage } />
         </Switch>
       </Router>
     </AuthProvider>

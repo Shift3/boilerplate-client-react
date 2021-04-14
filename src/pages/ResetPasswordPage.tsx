@@ -1,5 +1,3 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 
-const ResetPasswordPage: FC = () => <h2>test</h2>
-
-export default ResetPasswordPage
+export const ResetPasswordPage: FC = () => <h2>test</h2>
