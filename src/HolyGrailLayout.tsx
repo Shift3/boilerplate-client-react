@@ -11,11 +11,11 @@ const HolyGrailWrapper = styled.div`
   }
 `
 
-const Header = styled.header`
+const HolyGrailHeader = styled.header`
   border: 2px solid green;
   width: 100%;
 `
-const Main = styled.main`
+const HolyGrailMain = styled.main`
   border: 2px solid blue;
   @media all and (min-width: 768px) {
     flex: 2;
@@ -24,7 +24,7 @@ const Main = styled.main`
   }
 `
 
-const LeftNav = styled.aside`
+const HolyGrailLeftNav = styled.aside`
   border: 2px solid red;
   @media all and (min-width: 768px) {
     order: 1;
@@ -32,7 +32,7 @@ const LeftNav = styled.aside`
   }
 `
 
-const Footer = styled.footer`
+const HolyGrailFooter = styled.footer`
   border: 2px solid gray;
   width: 100%;
   order: 4;
@@ -46,13 +46,13 @@ const Footer = styled.footer`
 
 export const HolyGrailLayout: FC = () => (
   <HolyGrailWrapper>
-    <Header>
+    <HolyGrailHeader>
       <h1>Header</h1>
-    </Header>
-    <LeftNav>Side Nav</LeftNav>
-    <Main>Main Content</Main>
-    <Footer>
+    </HolyGrailHeader>
+    <HolyGrailLeftNav>Side Nav</HolyGrailLeftNav>
+    <HolyGrailMain>Main Content</HolyGrailMain>
+    <HolyGrailFooter>
       <h2>Footer</h2>
-    </Footer>
+    </HolyGrailFooter>
   </HolyGrailWrapper>
 )
