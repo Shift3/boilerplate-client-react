@@ -3,7 +3,7 @@ import Alert from 'react-bootstrap/Alert';
 import { Context as FlashMessageContext } from '../../context/flashMessage.context';
 
 const FlashMessage: FC = () => {
-    const { flashMessage } = useContext(FlashMessageContext);
+    const { state: { flashMessage } } = useContext(FlashMessageContext);
 
     return (
         <>

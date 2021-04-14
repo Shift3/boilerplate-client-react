@@ -7,8 +7,10 @@ export type Reducer = ReducerWithoutAction<any> | ((state: Record<string, unknow
 
 export type ContextState = Record<string, unknown> | IFlashMessageState | IAuthState;
 
+
 export type CreateContext = (reducer: Reducer, actions: Actions, initialState: ContextState) => {
-  Context: React.Context<Record<string, unknown>>;
+  // eslint-disable-next-line
+  Context: React.Context<Record<string, any>>;
   Provider: ({ children }: Record<string, ReactNode>) => JSX.Element;
 }
 
