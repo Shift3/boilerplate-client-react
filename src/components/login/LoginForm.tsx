@@ -1,11 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FC, useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { ILoginFormData, ILoginFormProps } from '../../interfaces';
 import { loginFormSchema } from './validation';
 import { Context as AuthContext } from '../../context/auth.context';
+import { ILoginFormData, ILoginFormProps } from './types';
 
-export const LoginForm: FC<ILoginFormProps> = () => {
+const LoginForm: FC<ILoginFormProps> = () => {
   const { loginUser } = useContext(AuthContext);
 
   const { register, handleSubmit, errors } = useForm<ILoginFormData>({
@@ -30,3 +30,5 @@ export const LoginForm: FC<ILoginFormProps> = () => {
     </form>
   )
 }
+
+export default LoginForm;

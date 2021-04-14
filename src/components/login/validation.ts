@@ -1,6 +1,6 @@
 import * as yup from 'yup'
-import { ILoginFormData } from '../../interfaces'
 import { loginPasswordSchema, usernameSchema } from '../../utils/validation/schemas'
+import { ILoginFormData } from './types'
 
 export const loginFormSchema: yup.SchemaOf<ILoginFormData> = yup
   .object()

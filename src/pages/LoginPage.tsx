@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { LoginForm } from '../components/login/LoginForm'
+import LoginForm from '../components/login/LoginForm'
 
 const LoginWrapper = styled.div`
   display: grid;

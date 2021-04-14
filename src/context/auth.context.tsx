@@ -1,7 +1,7 @@
 import createDataContext from "./index.context";
 import Types from "./action.types";
-import { logoutUser } from './actions/auth.actions';
-import { IAction } from '../interfaces'; 
+import { logoutUser, loginUser } from './actions/auth.actions';
+import { IAction } from './actions/types'; 
 
 const initialState = {
   token: null,
@@ -22,4 +22,4 @@ const authReducer = (state: Record<string, unknown>, action: IAction) => {
   }
 };
 
-export const { Context, Provider } = createDataContext(authReducer, { logoutUser }, initialState);
+export const { Context, Provider } = createDataContext(authReducer, { logoutUser, loginUser }, initialState);
