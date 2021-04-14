@@ -1,4 +1,4 @@
-import { ILoginFormData } from './interfaces'
+import { ILoginFormData } from '../../interfaces'
 import { loginFormSchema } from './validation'
 
 describe('loginFormSchema', () => {

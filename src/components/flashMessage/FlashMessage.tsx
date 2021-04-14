@@ -2,15 +2,14 @@ import { FC, useContext } from "react";
 import Alert from 'react-bootstrap/Alert';
 import { Context as FlashMessageContext } from '../../context/flashMessage.context';
 
-
 const FlashMessage: FC = () => {
-    const { state } = useContext(FlashMessageContext);
+    const { flashMessage } = useContext(FlashMessageContext);
 
     return (
         <>
             { 
-                state.flashMessage && 
-                    <Alert variant={ state.flashMessage.variant }>{ state.flashMessage.message }</Alert> 
+                flashMessage && 
+                    <Alert variant={ flashMessage.variant }>{ flashMessage.message }</Alert> 
             }
         </>
     )

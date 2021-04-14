@@ -9,7 +9,7 @@ export interface ILoginResponse {
     user: Record<string, unknown>
 }
 
-export type LogoutUserAction = (dispatch: Dispatch<IAction>) => (payload: null) => Promise<void>;
-export type LoginuserAction = (dispatch: Dispatch<IAction>) => (payload: ILoginResponse) => Promise<void>
+export type LogoutUserAction = (dispatch: Dispatch<IAction>) => (payload: null) => void;
+export type LoginUserAction = (dispatch: Dispatch<IAction>) => (payload: ILoginResponse) => Promise<void>
 
 
