@@ -30,15 +30,20 @@ describe('LoginForm', () => {
   })
 
   describe('valid input', () => {
-    test('should call onSubmit once with username and password', async () => {
+    test('should call onSubmit once formData object including username and password', async () => {
       userEvent.type(usernameField, validUsername)
       userEvent.type(passwordField, validPassword)
       await act(async () => {
         userEvent.click(submitButton)
       })
 
+      const formData = {
+        username: validUsername, 
+        password: validPassword
+      }
+
       expect(mockOnSubmit).toHaveBeenCalledTimes(1)
-      expect(mockOnSubmit).toHaveBeenCalledWith(validUsername, validPassword)
+      expect(mockOnSubmit).toHaveBeenCalledWith(formData)
     })
 
     test('should not display error messages', async () => {
