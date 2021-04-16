@@ -14,17 +14,17 @@ import { FlashMessage } from './components/flashMessage/FlashMessage'
 
 export const App: FC = () => (
   <ErrorBoundary>
-    <FlashMessageProvider>
-      <FlashMessage/>
-    </FlashMessageProvider>
     <AuthProvider>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={ HomePage } />
-          <Route exact path="/auth/login" component={ LoginPage } />
-          <Route exact path="/auth/forgot-password" component={ ResetPasswordPage } />
-        </Switch>
-      </Router>
+      <FlashMessageProvider>
+        <FlashMessage/>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={ HomePage } />
+            <Route exact path="/auth/login" component={ LoginPage } />
+            <Route exact path="/auth/forgot-password" component={ ResetPasswordPage } />
+          </Switch>
+        </Router>
+      </FlashMessageProvider>
     </AuthProvider>
   </ErrorBoundary>
 )
