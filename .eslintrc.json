@@ -36,16 +36,9 @@
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "import/prefer-default-export": "off",
+    "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
-    "object-curly-newline": [
-      "error",
-      {
-        "ObjectExpression": "always",
-        "ObjectPattern": { "multiline": true },
-        "ImportDeclaration": "never",
-        "ExportDeclaration": { "multiline": true, "minProperties": 1 }
-      }
-    ],
+    "object-curly-newline": "off",
     "import/no-extraneous-dependencies": [
       "error",
       {

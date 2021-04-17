@@ -1,21 +1,15 @@
-import React, { FC } from 'react'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { useForm } from 'react-hook-form'
-import { ILoginFormData } from './interfaces'
-import { loginFormSchema } from './validation'
+import { yupResolver } from '@hookform/resolvers/yup';
+import { FC } from 'react';
+import { useForm } from 'react-hook-form';
+import { loginFormSchema } from './validation';
+import { ILoginFormData, ILoginFormProps } from './types';
 
-interface LoginFormProps {
-  onSubmit: (username: string, password: string) => void
-}
-
-export const LoginForm: FC<LoginFormProps> = (props) => {
+export const LoginForm: FC<ILoginFormProps> = (props) => {
   const { register, handleSubmit, errors } = useForm<ILoginFormData>({
     resolver: yupResolver(loginFormSchema),
   })
 
-  const onSubmit = handleSubmit((formData: ILoginFormData) => {
-    props.onSubmit(formData.username, formData.password)
-  })
+  const onSubmit = handleSubmit((formData: ILoginFormData) => props.onSubmit(formData));
 
   return (
     <form onSubmit={onSubmit}>

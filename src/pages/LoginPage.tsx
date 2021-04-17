@@ -1,7 +1,8 @@
-import React, { FC } from 'react'
+import { FC, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { LoginForm } from '../components/login/LoginForm'
+import { Context as AuthContext } from '../context/auth.context';
 
 const LoginWrapper = styled.div`
   display: grid;
@@ -24,14 +25,13 @@ const LoginFormContainer = styled.div`
 `
 
 export const LoginPage: FC = () => {
-  // eslint-disable-next-line
-  const onLoginFormSubmit = (username: string, password: string) => {}
+  const { loginUser } = useContext(AuthContext);
 
   return (
     <LoginWrapper>
       <LoginGrid>
         <LoginFormContainer>
-          <LoginForm onSubmit={onLoginFormSubmit} />
+          <LoginForm onSubmit={loginUser} />
           <Link to="/auth/forgot-password">Forgot Password?</Link>
         </LoginFormContainer>
       </LoginGrid>

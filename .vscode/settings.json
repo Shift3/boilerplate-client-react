@@ -1,3 +1,4 @@
 {
-  "json.schemas": []
+  "json.schemas": [],
+  "html.format.preserveNewLines": false
 }
