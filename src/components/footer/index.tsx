@@ -1,11 +1,5 @@
 import { FC } from 'react'
-import styled from 'styled-components'
-
-const FooterWrapper = styled.div`
-  width: 100%;
-  text-align: center;
-  border-top: 2px solid black;
-`
+import { FooterWrapper } from './styled'
 
 const copyrightDate = () => {
   const creationYear = 2021
