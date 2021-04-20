@@ -1,5 +1,7 @@
 export interface HolyGrailLayoutProps {
-  mainContent?: JSX.Element
   leftSidebar?: JSX.Element
   footer?: JSX.Element
+  children?: JSX.Element[]
 }
+
+export type HolyGrail = ({ leftSidebar, footer, children }: HolyGrailLayoutProps) => JSX.Element
