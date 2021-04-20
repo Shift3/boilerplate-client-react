@@ -2,39 +2,33 @@ import { FC, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { LoginForm } from '../components/login/LoginForm'
-import { Context as AuthContext } from '../context/auth.context';
+import { Context as AuthContext } from '../context/auth.context'
 
-const LoginWrapper = styled.div`
-  display: grid;
-  grid-template: 15vh 70vh 15vh / 20% auto 20%;
-`
-const LoginGrid = styled.main`
-  display: grid;
-  grid-template: 40vh / 33.3% 66.6%;
-  grid-area: 2 / 2 / 2 / 2;
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.28);
-  border: 2px solid #175f6e;
+const LoginContainer = styled.div`
+  display: flex;
+  background: #175f6e;
+  border-radius: 0.25rem;
+  height: 100vh;
+  margin: 20px 20px 20px 20px;
 `
 const LoginFormContainer = styled.div`
+  border: 2px solid red;
   display: flex;
+  width: 50%;
+  height: 50%;
   justify-content: center;
   align-items: center;
-  z-index: 2;
 `
 
 export const LoginPage: FC = () => {
-  const { loginUser } = useContext(AuthContext);
+  const { loginUser } = useContext(AuthContext)
 
   return (
-    <LoginWrapper>
-      <LoginGrid>
-        <LoginFormContainer>
-          <LoginForm onSubmit={loginUser} />
-          <Link to="/auth/forgot-password">Forgot Password?</Link>
-        </LoginFormContainer>
-      </LoginGrid>
-    </LoginWrapper>
+    <LoginContainer>
+      <LoginFormContainer>
+        <LoginForm onSubmit={loginUser} />
+        <Link to="/auth/forgot-password">Forgot Password?</Link>
+      </LoginFormContainer>
+    </LoginContainer>
   )
 }

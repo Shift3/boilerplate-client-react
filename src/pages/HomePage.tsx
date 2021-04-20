@@ -3,7 +3,7 @@ import { Logout } from '../components/logout/Logout'
 
 export const HomePage: React.FC = () => (
   <div>
-    <h2>Dashboard</h2>
+    <h3>Dashboard</h3>
     <Logout />
   </div>
 )
