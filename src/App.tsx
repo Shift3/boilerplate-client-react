@@ -7,9 +7,9 @@ import { Provider as AuthProvider } from './context/auth.context'
 import { Provider as FlashMessageProvider } from './context/flashMessage.context'
 
 // Components
-import { HomePage } from './pages/HomePage'
-import { LoginPage } from './pages/LoginPage'
-import { ResetPasswordPage } from './pages/ResetPasswordPage'
+import { HomePage } from './components/homePage/HomePage'
+import { LoginPage } from './components/loginPage/LoginPage'
+import { ResetPasswordPage } from './components/resetPasswordPage/ResetPasswordPage'
 import { FlashMessage } from './components/flashMessage/FlashMessage'
 import { HolyGrailLayout } from './components/holyGrailLayout'
 import { NavBar } from './components/navbar'
@@ -22,7 +22,7 @@ export const App: FC = () => (
         <FlashMessage />
         <Router>
           <Switch>
-            <HolyGrailLayout leftSidebar={<NavBar />} footer={<Footer />}>
+            <HolyGrailLayout navBar={<NavBar />} footer={<Footer />}>
               <Route exact path="/" component={HomePage} />
               <Route exact path="/auth/login" component={LoginPage} />
               <Route exact path="/auth/forgot-password" component={ResetPasswordPage} />

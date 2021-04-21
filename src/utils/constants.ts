@@ -30,6 +30,7 @@ interface IValidationMessages {
 export interface IConstant {
   patterns: IPattern
   validationMessages: IValidationMessages
+  version: string
 }
 
 export const Constants: IConstant = {
@@ -56,4 +57,5 @@ export const Constants: IConstant = {
       MIN_LENGTH_REQUIRED: 'Minimum 8 character required.',
     },
   },
+  version: '0.1.0',
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Logout } from '../components/logout/Logout'
+import { Logout } from '../logout/Logout'
 
 export const HomePage: React.FC = () => (
   <div>

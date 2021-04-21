@@ -1,10 +1,11 @@
-import { HolyGrailWrapper, HolyGrailFooter, HolyGrailNav, HolyGrailMain } from './styled'
+import { HolyGrailWrapper, HolyGrailFooter, HolyGrailNavLeft, HolyGrailNavRight, HolyGrailMain } from './styled'
 import { HolyGrail, HolyGrailLayoutProps } from './types'
 
-export const HolyGrailLayout: HolyGrail = ({ leftSidebar, footer, children }: HolyGrailLayoutProps) => (
+export const HolyGrailLayout: HolyGrail = ({ navBar, footer, children }: HolyGrailLayoutProps) => (
   <HolyGrailWrapper>
+    <HolyGrailNavLeft>{navBar}</HolyGrailNavLeft>
     <HolyGrailMain>{children}</HolyGrailMain>
-    {!!leftSidebar && <HolyGrailNav>{leftSidebar}</HolyGrailNav>}
-    {!!footer && <HolyGrailFooter>{footer}</HolyGrailFooter>}
+    <HolyGrailNavRight />
+    <HolyGrailFooter>{footer}</HolyGrailFooter>
   </HolyGrailWrapper>
 )

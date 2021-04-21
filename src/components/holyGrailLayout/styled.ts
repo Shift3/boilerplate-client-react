@@ -4,6 +4,7 @@ export const HolyGrailWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  height: 100vh;
   @media all and (min-width: 768px) {
     flex-direction: row;
     flex-wrap: wrap;
@@ -11,7 +12,8 @@ export const HolyGrailWrapper = styled.div`
 `
 
 export const HolyGrailMain = styled.main`
-  border: 2px solid blue;
+  flex: 1;
+  order: 2;
   @media all and (min-width: 768px) {
     flex: 2;
     order: 2;
@@ -19,16 +21,21 @@ export const HolyGrailMain = styled.main`
   }
 `
 
-export const HolyGrailNav = styled.aside`
-  border: 2px solid;
+export const HolyGrailNavLeft = styled.aside`
+  flex: 1;
+  order: 1;
+`
+
+export const HolyGrailNavRight = styled.aside`
+  display: none;
   @media all and (min-width: 768px) {
-    order: 1;
+    order: 3;
     flex: 1;
   }
 `
 
 export const HolyGrailFooter = styled.footer`
-  border: 2px solid gray;
+  flex: shrink;
   width: 100vw;
   order: 4;
 `
