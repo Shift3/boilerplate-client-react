@@ -1,5 +1,5 @@
-import { FC } from 'react'
-import { NavBarWrapper, NavLinkStyled, NavLogoWrapper, NavLinkWrapper } from './styled'
+import { FC } from 'react';
+import { NavBarWrapper, NavLinkStyled, NavLogoWrapper, NavLinkWrapper } from './styled';
 
 export const NavBar: FC = () => (
   <NavBarWrapper>
@@ -10,4 +10,4 @@ export const NavBar: FC = () => (
       <NavLinkStyled to="/logout">Log Out</NavLinkStyled>
     </NavLinkWrapper>
   </NavBarWrapper>
-)
+);
