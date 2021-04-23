@@ -8,7 +8,7 @@ export const NavBarWrapper = styled.div`
   justify-items: center;
 `;
 export const NavLogoWrapper = styled.div`
-  padding: 20px 20px 20px 20px;
+  margin-top: 10px;
 `;
 export const NavLinkWrapper = styled.div`
   display: flex;

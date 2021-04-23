@@ -1,49 +1,28 @@
 import styled from 'styled-components';
+import {} from '../../utils/colors';
 
 export const HolyGrailWrapper = styled.div`
-  border: 2px solid red;
   display: grid;
   grid-template-columns: 1fr 2fr;
-  grid-auto-rows: auto;
-`;
-/* grid-template-areas:
-    'nav main side'
-    'nav main side'
-    'footer footer footer';
-  grid-template-columns: '1fr 2fr 1fr';
-  grid-template-rows: auto 1fr auto;
-  min-height: 100vh;
-  flex-direction: column;
+  grid-template-rows: minmax(100px, auto);
   @media (max-width: 768px) {
-    .container {
-      grid-template-areas:
-        'nav'
-        'main'
-        'side'
-        'footer';
-      grid-template-columns: 1fr;
-      grid-template-rows:
-        auto
-        minmax(100px, auto) /* Nav */
-// 1fr /* Content */
-// minmax(100px, auto) /* Sidebar */
-// auto; /* Footer */
-/* } */
-/* } */
+  }
+`;
 
 export const HolyGrailNavLeft = styled.nav`
-  border: 2px solid red;
+  background-color: grey;
   /* grid-area: nav; */
 `;
 
 export const HolyGrailMain = styled.main`
-  border: 2px solid yellow;
-  /* grid-area: main;
   display: flex;
+  flex: 1 1 auto;
+  justify-content: center;
   align-items: center;
-  @media all and (min-width: 768px) {
-    min-height: 80vh;
-  } */
+  background-color: authBackground;
 `;
 
-export const HolyGrailFooter = styled.footer``;
+export const HolyGrailFooter = styled.footer`
+  background-color: pink;
+  grid-column: 1 / -1;
+`;
