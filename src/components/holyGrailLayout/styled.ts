@@ -20,6 +20,7 @@ export const HolyGrailMain = styled.main`
   justify-content: center;
   align-items: center;
   background-color: authBackground;
+  margin: 20px 20px 20px 20px;
 `;
 
 export const HolyGrailFooter = styled.footer`
