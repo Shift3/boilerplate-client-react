@@ -3,6 +3,7 @@ import {} from '../../utils/colors';
 
 export const HolyGrailWrapper = styled.div`
   display: grid;
+  height: 100vh;
   grid-template-columns: 1fr 2fr;
   grid-template-rows: minmax(100px, auto);
   @media (max-width: 768px) {
@@ -11,7 +12,6 @@ export const HolyGrailWrapper = styled.div`
 
 export const HolyGrailNavLeft = styled.nav`
   background-color: grey;
-  /* grid-area: nav; */
 `;
 
 export const HolyGrailMain = styled.main`
@@ -23,6 +23,5 @@ export const HolyGrailMain = styled.main`
 `;
 
 export const HolyGrailFooter = styled.footer`
-  background-color: pink;
   grid-column: 1 / -1;
 `;
