@@ -1,24 +1,24 @@
-export default [
-    {
-        name: 'username',
-        fieldType: 'input',
-        label: 'Username',
-        text: '',
-        placeholder: '',
-        fieldConfig: {
-          inputType: 'email',
-          autocomplete: 'email',
-        }
-    },
-    {
-        name: 'password',
-        fieldType: 'input',
-        label: 'Password',
-        text: '',
-        placeholder: '',
-        fieldConfig: {
-          inputType: 'password',
-          autocomplete: 'current-password',
-        }
-    }
-]
+export default  [
+  {
+    name: "username",
+    inputType: "input",
+    type: "input",
+    label: "Username",
+    text: "",
+    placeholder: "",
+    autocomplete: "email",
+    initialValue: "",
+    required: true
+  },
+  {
+    name: "password",
+    inputType: "input",
+    type: "input",
+    label: "Password",
+    text: "",
+    placeholder: "",
+    autocomplete: "current-password",
+    initialValue: "",
+    required: true
+  }
+];
