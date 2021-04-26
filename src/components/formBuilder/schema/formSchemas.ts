@@ -1,12 +1,12 @@
 import * as yup from 'yup';
-import { GenerateSetPasswordFormSchema, GenerateLoginFormSchema, GenerateRegisterFormSchema, IRegisterFormData, ISetPasswordFormData } from '../types';
+import { GenerateSetPasswordFormSchema, GenerateLoginFormSchema, GenerateRegisterFormSchema, StateRef } from '../types';
 
 export const generateLoginFormSchema: GenerateLoginFormSchema = () => yup.object({
     username: yup.string().email().required(),
     password: yup.string().min(7).max(12).required()
 });
 
-export const generateRegisterFormSchema: GenerateRegisterFormSchema = (stateRef: Record<string, any>) => yup.object({
+export const generateRegisterFormSchema: GenerateRegisterFormSchema = (stateRef: StateRef) => yup.object({
     email: yup.string().email().required(),
     confirmEmail: yup.string().email().required()
         .oneOf([stateRef.email, null], 'Email addresses must match.'),
@@ -14,7 +14,7 @@ export const generateRegisterFormSchema: GenerateRegisterFormSchema = (stateRef:
     lastName: yup.string().min(2).max(10).required()
 });
 
-export const generateSetPasswordFormSchema: GenerateSetPasswordFormSchema = (stateRef: Record<string, any>) => yup.object({
+export const generateSetPasswordFormSchema: GenerateSetPasswordFormSchema = (stateRef: StateRef) => yup.object({
     password: yup.string().min(7).max(12).required(),
     confirmPassword: yup.string().required()
         .oneOf([stateRef.password, null], 'Passwords must match.'),
