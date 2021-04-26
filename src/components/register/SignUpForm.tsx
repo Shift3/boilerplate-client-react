@@ -7,6 +7,11 @@ const registerUser = (formData: Record<string, unknown>) => console.log("formDat
 
 export const RegisterForm: FC = () => (
   <div>
-    <FormBuilder onSubmit={registerUser} config={registerFormConfig} schema={generateRegisterFormSchema} title="Register" />
+    <FormBuilder 
+      onSubmit={registerUser} 
+      config={registerFormConfig} 
+      schemaGenerator={generateRegisterFormSchema} 
+      title="Register" 
+    />
   </div>
 )

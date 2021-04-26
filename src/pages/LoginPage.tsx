@@ -26,8 +26,6 @@ const LoginFormContainer = styled.div`
   z-index: 2;
 `
 
-const registerUser = (formData: Record<string, unknown>) => console.log("formData: ", formData);
-
 export const LoginPage: FC = () => {
   const { loginUser } = useContext(AuthContext);
 
@@ -35,7 +33,12 @@ export const LoginPage: FC = () => {
     <LoginWrapper>
       <LoginGrid>
         <LoginFormContainer>
-          <FormBuilder onSubmit={registerUser} config={loginFormConfig} schemaGenerator={generateLoginFormSchema} title="Login" />
+          <FormBuilder 
+            onSubmit={loginUser} 
+            config={loginFormConfig} 
+            schemaGenerator={generateLoginFormSchema} 
+            title="Login" 
+          />
           <Link to="/auth/forgot-password">Forgot Password?</Link>
         </LoginFormContainer>
       </LoginGrid>
