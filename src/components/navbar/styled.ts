@@ -9,6 +9,7 @@ export const NavBarWrapper = styled.div`
 `;
 export const NavLogoWrapper = styled.div`
   margin-top: 10px;
+  grid-row-start: 1;
 `;
 export const NavLinkWrapper = styled.div`
   display: flex;
@@ -16,7 +17,11 @@ export const NavLinkWrapper = styled.div`
 `;
 
 export const NavLinkStyled = styled(NavLink)`
-  text-align: center;
+  align-self: center;
+  background-color: navLink;
+  font-family: BlinkMacSystemFont;
+  font-size: 1rem;
+  padding: 5px;
   &:hover {
     background-color: #4eb1b8;
   }

@@ -4,25 +4,36 @@ import {} from '../../utils/colors';
 export const HolyGrailWrapper = styled.div`
   display: grid;
   height: 100vh;
-  grid-template-columns: 1fr 2fr;
-  grid-template-rows: minmax(100px, auto);
-  @media (max-width: 768px) {
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: minmax(200px, auto);
+  grid-gap: 1em;
+  @media all and (min-width: 768px) {
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 `;
 
 export const HolyGrailNavLeft = styled.nav`
-  background-color: grey;
+  @media all and (min-width: 768px) {
+    order: 1;
+    flex: 1;
+  }
 `;
 
 export const HolyGrailMain = styled.main`
   display: flex;
-  flex: 1 1 auto;
+  flex: 1;
   justify-content: center;
   align-items: center;
-  background-color: authBackground;
-  margin: 20px 20px 20px 20px;
+  @media all and (min-width: 768px) {
+    flex: 2;
+    order: 2;
+    min-height: 80vh;
+  }
 `;
 
 export const HolyGrailFooter = styled.footer`
   grid-column: 1 / -1;
+  width: 100%;
+  order: 3;
 `;

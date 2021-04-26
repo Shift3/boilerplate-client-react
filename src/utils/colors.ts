@@ -8,4 +8,6 @@ export default {
   accent: '#d44325',
   accentDisabled: 'lighten($accent, 20%)',
   cardHeader: '#c5e6ec',
-}
+  navBackground: '#ffffff',
+  navLink: '#2B373B',
+};

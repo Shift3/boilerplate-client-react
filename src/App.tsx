@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { ErrorBoundary } from '@sentry/react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { GlobalStyle } from './GlobalStyle';
 
 // Context
 import { Provider as AuthProvider } from './context/auth.context';
@@ -31,5 +32,6 @@ export const App: FC = () => (
         </Router>
       </FlashMessageProvider>
     </AuthProvider>
+    <GlobalStyle />
   </ErrorBoundary>
 );
