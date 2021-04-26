@@ -1,4 +1,4 @@
-import React, { useState, useEffect, SyntheticEvent } from 'react';
+import React, { useState, useEffect, useMemo, SyntheticEvent } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import * as _ from 'lodash';
 import * as yup from 'yup';
@@ -7,13 +7,13 @@ import { IFormProps, IInputConfig, IInputData } from './types';
 export const FormBuilder: (props: IFormProps) => JSX.Element = ({ config, onSubmit, schemaGenerator, title }: IFormProps) => {
   const [formData, setFormData] = useState({});
 
-  const initialInputValue: IInputData = { touched: false, value: undefined, error: "", required: false };
+  const initialInputValue: IInputData = useMemo(() => ({ touched: false, value: undefined, error: "", required: false }), []);
 
   useEffect(() => {
     setFormData(config.reduce((initialFormData, { name, required }: IInputConfig) => (
       { ...initialFormData, [name]: { ...initialInputValue, required } }
     ), {}))
-  }, [])
+  }, [config, initialInputValue])
 
   const canSubmit = Object.keys(formData).filter((key) => {
     const { touched, value, error, required } = _.get(formData, `[${key}]`, initialInputValue);
