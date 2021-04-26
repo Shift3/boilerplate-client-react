@@ -23,7 +23,7 @@ export const App: FC = () => (
         <FlashMessage />
         <Router>
           <Switch>
-            <HolyGrailLayout navBar={<NavBar />} footer={<Footer />}>
+            <HolyGrailLayout leftSidebar={<NavBar />} footer={<Footer />}>
               <Route exact path="/" component={HomePage} />
               <Route exact path="/auth/login" component={LoginPage} />
               <Route exact path="/auth/forgot-password" component={ResetPasswordPage} />
