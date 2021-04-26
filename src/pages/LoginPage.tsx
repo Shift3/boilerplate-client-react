@@ -1,7 +1,9 @@
 import { FC, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { LoginForm } from '../components/login/LoginForm'
+import loginFormConfig from '../components/formBuilder/configs/login.formConfig';
+import { generateLoginFormSchema } from '../components/formBuilder/schema/formSchemas';
+import { FormBuilder } from '../components/formBuilder/FormBuilder';
 import { Context as AuthContext } from '../context/auth.context';
 
 const LoginWrapper = styled.div`
@@ -24,6 +26,8 @@ const LoginFormContainer = styled.div`
   z-index: 2;
 `
 
+const registerUser = (formData: Record<string, unknown>) => console.log("formData: ", formData);
+
 export const LoginPage: FC = () => {
   const { loginUser } = useContext(AuthContext);
 
@@ -31,7 +35,7 @@ export const LoginPage: FC = () => {
     <LoginWrapper>
       <LoginGrid>
         <LoginFormContainer>
-          <LoginForm onSubmit={loginUser} />
+          <FormBuilder onSubmit={registerUser} config={loginFormConfig} schemaGenerator={generateLoginFormSchema} title="Login" />
           <Link to="/auth/forgot-password">Forgot Password?</Link>
         </LoginFormContainer>
       </LoginGrid>
