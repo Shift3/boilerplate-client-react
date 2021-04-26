@@ -1,10 +1,9 @@
-import { SetStateAction } from "react";
 import { SchemaOf } from 'yup';
 
 export interface IRegisterFormData {
-  email: string,
-  confirmEmail: string,
-  firstName: string,
+  email: string
+  confirmEmail: string
+  firstName: string
   lastName: string
 }
 
@@ -20,35 +19,34 @@ export interface ISetPasswordFormData {
 
 export interface IInputConfig {
     name: string
-    inputType: "input",
-    type: string,
-    label: string | undefined,
-    text: string,
-    placeholder: string | undefined,
-    initialValue: null
+    inputType: string
+    type: string
+    label: string | undefined
+    text: string
+    placeholder: string | undefined
     required: boolean
-    autocomplete: AutocompleteType
+    autocomplete: string
 }
 
 export interface IInputData {
     touched: boolean
-    value: any,
-    error: string,
+    value: any
+    error: string
     required: boolean
   }
 
 export interface IFormProps {
     schemaGenerator: SchemaGenerator,
     config: IInputConfig[],
-    onSubmit: (formData: Record<string, unknown>) => void
+    onSubmit: (formData: StateRef) => void
     title: string
 }
 
-export type SetFormState = SetStateAction<{ values: Record<string, any>; touched: boolean; errors: never[]; }>
-
-export type GenerateSetPasswordFormSchema = (stateRef: Record<string, any>) => SchemaOf<ISetPasswordFormData>;
+export type GenerateSetPasswordFormSchema = (stateRef: StateRef) => SchemaOf<ISetPasswordFormData>;
 export type GenerateLoginFormSchema = () => SchemaOf<ILoginFormData>
-export type GenerateRegisterFormSchema = (stateRef: Record<string, any>) => SchemaOf<IRegisterFormData>;
+export type GenerateRegisterFormSchema = (stateRef: StateRef) => SchemaOf<IRegisterFormData>;
+
+export type StateRef = Record<string, any>;
 
 export type SchemaGenerator = GenerateLoginFormSchema | GenerateSetPasswordFormSchema | GenerateRegisterFormSchema;
 
