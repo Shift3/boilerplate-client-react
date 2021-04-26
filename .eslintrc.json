@@ -21,6 +21,7 @@
   "plugins": ["react", "@typescript-eslint", "react-hooks"],
   "rules": {
     "no-use-before-define": "off",
+    "no-return-assign": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
     "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }],
     "import/extensions": [
