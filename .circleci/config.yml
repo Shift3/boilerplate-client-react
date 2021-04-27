@@ -16,7 +16,7 @@ jobs:
             yarn test-ci
       - run:
           name: Run Jest and Collect Coverage Reports
-          command: yarn test-cov
+          command: yarn test-cov-ci
       - store_artifacts:
           path: coverage
 workflows:

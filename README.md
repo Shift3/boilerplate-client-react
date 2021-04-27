@@ -19,6 +19,11 @@ You will also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
+### `yarn test-cov`
+
+Runs the test coverage report in interactive watch mode.\
+For more information please refer to the react [Coverage Reporting](https://create-react-app.dev/docs/running-tests/#coverage-reporting) documentation.
+
 ### `yarn build`
 
 Builds the app for production to the `build` folder.\
