@@ -47,7 +47,7 @@ export const LoginPage: FC = () => {
             disabled={false}
             type="button"
             text="CREATE ACCOUNT"
-            width="75%"
+            width="90%"
           />
         </LoginFormRight>
       </LoginFormContainer>

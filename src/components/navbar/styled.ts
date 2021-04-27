@@ -1,23 +1,25 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
-import logo from '../../assets/img/logo.png';
 
 export const NavBarWrapper = styled.div`
   height: 100vh;
   display: grid;
-  grid-area: (3, 1fr);
+  grid-area: 1fr 2fr;
   justify-items: center;
   background-color: ${(props) => props.theme.navBackground};
 `;
 
 export const NavLogo = styled.img`
-  background-image: url(${logo});
+  object-fit: contain;
+  height: 14vh;
+  width: 12vw;
   margin-top: 10px;
   grid-row-start: 1;
 `;
 export const NavLinkWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  padding-bottom: 100px;
 `;
 
 export const NavLinkStyled = styled(NavLink)`
