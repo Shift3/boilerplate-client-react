@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-import {} from '../../utils/colors';
+import {} from '../../utils/styleValues';
 
 export const HolyGrailWrapper = styled.div`
   display: flex;
-  min-height: 80vh;
   flex-direction: column;
 `;
 
@@ -11,6 +10,7 @@ export const HolyGrailMainWrapper = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
+  max-height: calc(100vh - ${(props) => props.theme.footerHeight});
 
   @media (min-width: 768px) {
     flex-direction: row;

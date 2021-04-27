@@ -11,6 +11,7 @@ export const LoginPageContainer = styled.div`
 export const LoginFormContainer = styled.div`
   display: grid;
   grid-template-columns: 2fr 1fr;
+  border-radius: 5px;
   width: 50%;
   background-color: ${(props) => props.theme.primary};
   padding: 50px;

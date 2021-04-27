@@ -1,14 +1,17 @@
 import React, { useState, useEffect, useMemo, SyntheticEvent } from 'react';
-import { Container, Form, Button } from 'react-bootstrap';
+import { Container, Form } from 'react-bootstrap';
 import * as _ from 'lodash';
 import * as yup from 'yup';
+import { CustomButton } from '../button';
 import { IFormProps, IInputConfig, IInputData } from './types';
+import colors from '../../utils/styleValues';
 
 export const FormBuilder: (props: IFormProps) => JSX.Element = ({
   config,
   onSubmit,
   schemaGenerator,
   title,
+  buttonText,
 }: IFormProps) => {
   const [formData, setFormData] = useState({});
 
@@ -89,9 +92,14 @@ export const FormBuilder: (props: IFormProps) => JSX.Element = ({
       {title && <h2>{title}</h2>}
       <Form onSubmit={onFormSubmit}>
         {renderInputs()}
-        <Button type="submit" disabled={!canSubmit}>
-          LOG IN
-        </Button>
+        <CustomButton
+          type="submit"
+          backgroundColor={colors.accent}
+          color="#fff"
+          disabled={!canSubmit}
+          text={buttonText}
+          width="75%"
+        />
       </Form>
     </Container>
   );

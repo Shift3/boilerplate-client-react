@@ -6,7 +6,7 @@ import { LoginFormContainer, LoginPageContainer, LoginFormLeft, LoginFormRight }
 import { FormBuilder } from '../formBuilder';
 import LoginFormConfig from '../formBuilder/configs/login.formConfig';
 import { generateLoginFormSchema } from '../formBuilder/schema/loginForm.schema';
-import colors from '../../utils/colors';
+import colors from '../../utils/styleValues';
 
 export const LoginPage: FC = () => {
   const { loginUser } = useContext(AuthContext);
@@ -31,7 +31,8 @@ export const LoginPage: FC = () => {
             config={LoginFormConfig}
             schemaGenerator={generateLoginFormSchema}
             onSubmit={onSubmit}
-            title="Login"
+            title="Member Log In"
+            buttonText="LOG IN"
           />
           <br />
           <Link to="/auth/forgot-password">Forgot Password?</Link>
@@ -44,6 +45,7 @@ export const LoginPage: FC = () => {
             color="#fff"
             onClick={onCreateAccountClick}
             disabled={false}
+            type="button"
             text="CREATE ACCOUNT"
             width="75%"
           />

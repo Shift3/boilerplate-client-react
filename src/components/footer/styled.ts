@@ -7,4 +7,5 @@ export const FooterWrapper = styled.div`
   position: relative;
   bottom: 0;
   width: 100vw;
+  height: ${(props) => props.theme.footerHeight};
 `;

@@ -3,7 +3,7 @@ import { ErrorBoundary } from '@sentry/react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from './GlobalStyle';
-import AppTheme from './utils/colors';
+import AppTheme from './utils/styleValues';
 
 // Context
 import { Provider as AuthProvider } from './context/auth.context';
@@ -36,6 +36,6 @@ export const App: FC = () => (
         </ThemeProvider>
       </FlashMessageProvider>
     </AuthProvider>
-    {/* <GlobalStyle /> */}
+    <GlobalStyle />
   </ErrorBoundary>
 );

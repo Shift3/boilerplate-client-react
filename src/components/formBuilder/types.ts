@@ -1,49 +1,50 @@
 import { SchemaOf } from 'yup';
 
 export interface IRegisterFormData {
-  email: string
-  confirmEmail: string
-  firstName: string
-  lastName: string
+  email: string;
+  confirmEmail: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface ILoginFormData {
-  username: string,
-  password: string
+  username: string;
+  password: string;
 }
 
 export interface ISetPasswordFormData {
-  password: string,
-  confirmPassword: string
+  password: string;
+  confirmPassword: string;
 }
 
 export interface IInputConfig {
-    name: string
-    inputType: string
-    type: string
-    label: string | undefined
-    text: string
-    placeholder: string | undefined
-    required: boolean
-    autocomplete: string
+  name: string;
+  inputType: string;
+  type: string;
+  label: string | undefined;
+  text: string;
+  placeholder: string | undefined;
+  required: boolean;
+  autocomplete: string;
 }
 
 export interface IInputData {
-    touched: boolean
-    value: any
-    error: string
-    required: boolean
-  }
+  touched: boolean;
+  value: any;
+  error: string;
+  required: boolean;
+}
 
 export interface IFormProps {
-    schemaGenerator: SchemaGenerator,
-    config: IInputConfig[],
-    onSubmit: (formData: StateRef) => void
-    title: string
+  schemaGenerator: SchemaGenerator;
+  config: IInputConfig[];
+  onSubmit: (formData: StateRef) => void;
+  title: string;
+  buttonText: string;
 }
 
 export type GenerateSetPasswordFormSchema = (stateRef: StateRef) => SchemaOf<ISetPasswordFormData>;
-export type GenerateLoginFormSchema = () => SchemaOf<ILoginFormData>
+export type GenerateLoginFormSchema = () => SchemaOf<ILoginFormData>;
 export type GenerateRegisterFormSchema = (stateRef: StateRef) => SchemaOf<IRegisterFormData>;
 
 export type StateRef = Record<string, any>;
