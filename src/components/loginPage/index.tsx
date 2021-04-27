@@ -1,10 +1,12 @@
 import { FC, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { CustomButton } from '../button';
 import { Context as AuthContext } from '../../context/auth.context';
-import { LoginFormContainer } from './styled';
+import { LoginFormContainer, LoginPageContainer, LoginFormLeft, LoginFormRight } from './styled';
 import { FormBuilder } from '../formBuilder';
 import LoginFormConfig from '../formBuilder/configs/login.formConfig';
 import { generateLoginFormSchema } from '../formBuilder/schema/loginForm.schema';
+import colors from '../../utils/colors';
 
 export const LoginPage: FC = () => {
   const { loginUser } = useContext(AuthContext);
@@ -15,15 +17,38 @@ export const LoginPage: FC = () => {
     loginUser(data);
   };
 
+  const history = useHistory();
+
+  const onCreateAccountClick = () => {
+    history.push('/auth/signup');
+  };
+
   return (
-    <LoginFormContainer>
-      <FormBuilder
-        config={LoginFormConfig}
-        schemaGenerator={generateLoginFormSchema}
-        onSubmit={onSubmit}
-        title="Login"
-      />
-      <Link to="/auth/forgot-password">Forgot Password?</Link>
-    </LoginFormContainer>
+    <LoginPageContainer>
+      <LoginFormContainer>
+        <LoginFormLeft>
+          <FormBuilder
+            config={LoginFormConfig}
+            schemaGenerator={generateLoginFormSchema}
+            onSubmit={onSubmit}
+            title="Login"
+          />
+          <br />
+          <Link to="/auth/forgot-password">Forgot Password?</Link>
+        </LoginFormLeft>
+        <LoginFormRight>
+          <h2>Not Registered Yet?</h2>
+          <p>Registering for your account is quick and easy</p>
+          <CustomButton
+            backgroundColor={colors.accent}
+            color="#fff"
+            onClick={onCreateAccountClick}
+            disabled={false}
+            text="CREATE ACCOUNT"
+            width="75%"
+          />
+        </LoginFormRight>
+      </LoginFormContainer>
+    </LoginPageContainer>
   );
 };

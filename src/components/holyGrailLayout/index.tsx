@@ -4,7 +4,7 @@ import {
   HolyGrailLeftAside,
   HolyGrailMain,
   HolyGrailRightAside,
-  HolyGrailFooter,
+  // HolyGrailFooter,
 } from './styled';
 import { HolyGrail, HolyGrailLayoutProps } from './types';
 
@@ -14,7 +14,7 @@ export const HolyGrailLayout: HolyGrail = ({ leftSidebar, children, rightSidebar
       {!!leftSidebar && <HolyGrailLeftAside>{leftSidebar}</HolyGrailLeftAside>}
       {!!children && <HolyGrailMain>{children}</HolyGrailMain>}
       {!!rightSidebar && <HolyGrailRightAside>{rightSidebar}</HolyGrailRightAside>}
-      {!!footer && <HolyGrailFooter>{footer}</HolyGrailFooter>}
     </HolyGrailMainWrapper>
+    {!!footer && footer}
   </HolyGrailWrapper>
 );

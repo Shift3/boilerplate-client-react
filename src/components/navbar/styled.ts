@@ -6,6 +6,7 @@ export const NavBarWrapper = styled.div`
   display: grid;
   grid-area: (3, 1fr);
   justify-items: center;
+  background-color: white;
 `;
 export const NavLogoWrapper = styled.div`
   margin-top: 10px;
@@ -18,7 +19,7 @@ export const NavLinkWrapper = styled.div`
 
 export const NavLinkStyled = styled(NavLink)`
   align-self: center;
-  background-color: navLink;
+  color: ${(props) => props.theme.navLink};
   font-family: BlinkMacSystemFont;
   font-size: 1rem;
   padding: 5px;

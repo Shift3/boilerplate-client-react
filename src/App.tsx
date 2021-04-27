@@ -1,7 +1,9 @@
 import { FC } from 'react';
 import { ErrorBoundary } from '@sentry/react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from './GlobalStyle';
+import AppTheme from './utils/colors';
 
 // Context
 import { Provider as AuthProvider } from './context/auth.context';
@@ -20,18 +22,20 @@ export const App: FC = () => (
   <ErrorBoundary>
     <AuthProvider>
       <FlashMessageProvider>
-        <FlashMessage />
-        <Router>
-          <Switch>
-            <HolyGrailLayout leftSidebar={<NavBar />} footer={<Footer />}>
-              <Route exact path="/" component={HomePage} />
-              <Route exact path="/auth/login" component={LoginPage} />
-              <Route exact path="/auth/forgot-password" component={ResetPasswordPage} />
-            </HolyGrailLayout>
-          </Switch>
-        </Router>
+        <ThemeProvider theme={AppTheme}>
+          <FlashMessage />
+          <Router>
+            <Switch>
+              <HolyGrailLayout leftSidebar={<NavBar />} footer={<Footer />}>
+                <Route exact path="/" component={HomePage} />
+                <Route exact path="/auth/login" component={LoginPage} />
+                <Route exact path="/auth/forgot-password" component={ResetPasswordPage} />
+              </HolyGrailLayout>
+            </Switch>
+          </Router>
+        </ThemeProvider>
       </FlashMessageProvider>
     </AuthProvider>
-    <GlobalStyle />
+    {/* <GlobalStyle /> */}
   </ErrorBoundary>
 );
