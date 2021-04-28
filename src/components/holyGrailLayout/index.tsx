@@ -4,7 +4,6 @@ import {
   HolyGrailLeftAside,
   HolyGrailMain,
   HolyGrailRightAside,
-  // HolyGrailFooter,
 } from './styled';
 import { HolyGrail, HolyGrailLayoutProps } from './types';
 
