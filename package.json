@@ -25,7 +25,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test-ci": "react-scripts test --watchAll=false",
-    "test-cov": "react-scripts test --watchAll=false --coverage",
+    "test-cov": "react-scripts test --coverage",
+    "test-cov-ci": "react-scripts test --watchAll=false --coverage",
     "eject": "react-scripts eject"
   },
   "browserslist": {
