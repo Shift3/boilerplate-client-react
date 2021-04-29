@@ -2,41 +2,46 @@ import styled from 'styled-components';
 import {} from '../../utils/styleValues';
 
 export const HolyGrailWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  border: 1px solid black;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(6, fr);
+  grid-template-areas:
+    'navbar navbar main main main main'
+    'footer footer footer footer footer footer';
 `;
 
-export const HolyGrailMainWrapper = styled.div`
+export const HolyGrailLeftAside1 = styled.aside`
+  grid-area: 'navbar';
+  flex: 1 1 auto;
   display: flex;
-  flex: 1;
-  flex-direction: column;
-  max-height: calc(100vh - ${(props) => props.theme.footerHeight});
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-    flex: 1;
-  }
-`;
-
-export const HolyGrailLeftAside = styled.aside`
-  order: -1;
-  flex: 0 0 12em;
+  justify-content: center;
+  border: 1px solid red;
   @media (min-width: 768px) {
     flex: 0 0 12em;
   }
 `;
 
-export const HolyGrailMain = styled.main`
-  flex: 1;
+export const HolyGrailMain2 = styled.main`
+  grid-area: 'main';
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
   @media (min-width: 768px) {
     flex: 1;
   }
 `;
 
-export const HolyGrailRightAside = styled.aside`
-  flex: 0 0 12em;
-
+export const HolyGrailRightAside3 = styled.aside`
+  border: 1px solid green;
+  grid-area: 'sidebar';
+  border: 1px solid blue;
   @media (min-width: 768px) {
     flex: 0 0 12em;
   }
+`;
+
+export const HolyGrailFooter = styled.div`
+  grid-area: 'footer';
+  border: 1px solid blue;
 `;

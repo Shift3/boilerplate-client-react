@@ -11,14 +11,18 @@ export const GlobalStyle = createGlobalStyle`
 
     html,
     body {
-        height: 100vh;
-        width: 100vw;
+        height: 100%;
+        width: 100%;
     }
 
     body {
-        display: flex;
+        /* display: flex;
         flex-direction: column;
-        box-sizing: border-box;
+        box-sizing: border-box; */
+        grid-template-areas: inherit;
+        width: 100%;
+        height: 100%
+        box-sizing: inherit;
     }
 `;
 
