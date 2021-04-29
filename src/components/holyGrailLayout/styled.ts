@@ -5,10 +5,15 @@ export const HolyGrailWrapper = styled.div`
   border: 1px solid black;
   min-height: 100vh;
   display: grid;
+`;
+
+export const HolyGrailMainWrapper = styled.div`
+  border: 1px solid black;
+  min-height: 100vh;
   grid-template-columns: repeat(6, fr);
   grid-template-areas:
-    'navbar navbar main main main main'
-    'footer footer footer footer footer footer';
+    'navbar main main'
+    'footer footer footer';
 `;
 
 export const HolyGrailLeftAside1 = styled.aside`

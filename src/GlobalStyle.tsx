@@ -21,7 +21,7 @@ export const GlobalStyle = createGlobalStyle`
         box-sizing: border-box; */
         grid-template-areas: inherit;
         width: 100%;
-        height: 100%
+        height: 100%;
         box-sizing: inherit;
     }
 `;
