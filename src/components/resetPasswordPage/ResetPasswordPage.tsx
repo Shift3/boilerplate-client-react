@@ -1,3 +1,6 @@
 import { FC } from 'react'
+import { SetPasswordForm } from '../setPasswordForm'; 
 
-export const ResetPasswordPage: FC = () => <h2>test</h2>
+export const ResetPasswordPage: FC = () => (
+    <SetPasswordForm/>
+)
