@@ -1,6 +1,7 @@
+import { FC } from 'react';
 import { SignupForm } from '../signupForm';
 
-export const SignupPage = () => (
+export const SignupPage: FC = () => (
     <>
         <SignupForm/>
     </>

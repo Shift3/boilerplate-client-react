@@ -11,7 +11,11 @@ export const SignupForm: FC = () => {
         mode: "onChange"
     });
 
-    const onSubmit = (data: ISignupFormData) => console.log(data);
+    const onSubmit = (data: ISignupFormData) => {
+        // @TODO send data off via http call on 200 navigate user to login page on error utilize flashMessage context to display error.
+        // eslint-disable-next-line
+        console.log("signupFormData: ", data);
+    };
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>

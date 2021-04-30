@@ -1,5 +1,5 @@
-import { FC } from 'react'
-;import { useForm } from 'react-hook-form';
+import { FC } from 'react';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form, Button } from 'react-bootstrap';
 import { SetPasswordFormSchema } from './schema';
@@ -12,7 +12,9 @@ export const SetPasswordForm: FC = () => {
     });
 
     const onSubmit = (data: ISetPasswordFormData) => {
-        console.log(data);
+        // @TODO send data off via http call on 200 navigate user to login page on error utilize flashMessage context to display error.
+        // eslint-disable-next-line
+        console.log("setPasswordFormData: ", data);
     }
 
     return (
