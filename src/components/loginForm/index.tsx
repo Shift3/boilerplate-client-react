@@ -1,22 +1,21 @@
+import { useContext } from 'react'; 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form, Button } from 'react-bootstrap';
 import { LoginFormSchema } from './schema';
-import { ILoginFormData, LoginFormType } from './types';
-
+import { LoginFormType } from './types';
+import { Context as AuthContext } from '../../context/auth.context';
+ 
 export const LoginForm: LoginFormType = () => {
+    const { loginUser } = useContext(AuthContext);
+
     const { register, handleSubmit, formState: { errors, isValid } } = useForm({
         resolver: yupResolver(LoginFormSchema),
         mode: "onChange"
     });
 
-    const onSubmit = (data: ILoginFormData) => {
-        // eslint-disable-next-line
-        console.log(data);
-    }
-
     return (
-        <Form onSubmit={ handleSubmit(onSubmit) }>
+        <Form onSubmit={ handleSubmit(loginUser) }>
             <Form.Group>
                 <Form.Label>Email</Form.Label>
                 <Form.Control type="email" { ...register("email") } />
