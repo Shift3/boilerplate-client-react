@@ -1,21 +1,14 @@
-import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form, Button } from 'react-bootstrap';
 import { SignupFormSchema } from './schema';
-import { ISignupFormData } from './types';
+import { SignupFormType } from './types';
 
-export const SignupForm: FC = () => {
+export const SignupForm: SignupFormType = ({ onSubmit }) => {
     const { register, handleSubmit, formState: { errors, isValid } } = useForm({
         resolver: yupResolver(SignupFormSchema),
         mode: "onChange"
     });
-
-    const onSubmit = (data: ISignupFormData) => {
-        // @TODO send data off via http call on 200 navigate user to login page on error utilize flashMessage context to display error.
-        // eslint-disable-next-line
-        console.log("signupFormData: ", data);
-    };
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>

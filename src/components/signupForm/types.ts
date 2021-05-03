@@ -1,5 +1,5 @@
 export interface ISignupFormProps {
-    onFormSubmit: (data: ISignupFormData) => void
+    onSubmit: (data: ISignupFormData) => void
 }
 
 export interface ISignupFormData {
@@ -8,3 +8,5 @@ export interface ISignupFormData {
     firstName: string,
     lastName: string
 }
+
+export type SignupFormType = (props: ISignupFormProps) => JSX.Element;
