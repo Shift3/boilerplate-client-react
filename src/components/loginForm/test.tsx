@@ -68,8 +68,8 @@ describe('LoginForm', () => {
     })
 
     it('should display error messages', async () => {
-      userEvent.type(emailField, '')
-      userEvent.type(passwordField, '')
+      userEvent.type(emailField, 't')
+      userEvent.type(passwordField, 't')
       await act(async () => {
         userEvent.click(submitButton)
       })
