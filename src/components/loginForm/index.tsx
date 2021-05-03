@@ -5,7 +5,7 @@ import { LoginFormSchema } from './schema';
 import { LoginFormType } from './types';
 
  
-export const LoginForm: LoginFormType = (onSubmit) => {
+export const LoginForm: LoginFormType = ({ onSubmit }) => {
     const { register, handleSubmit, formState: { errors, isValid } } = useForm({
         resolver: yupResolver(LoginFormSchema),
         mode: "onChange"
