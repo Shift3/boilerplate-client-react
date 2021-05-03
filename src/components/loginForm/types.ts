@@ -1,5 +1,5 @@
 export interface ILoginFormProps {
-    onFormSubmit: (data: ILoginFormData) => void
+    onSubmit: (data: ILoginFormData) => void
 }
 
 export interface ILoginFormData {
@@ -7,4 +7,4 @@ export interface ILoginFormData {
     password: string
 }
 
-export type LoginFormType = () => JSX.Element;
+export type LoginFormType = (props: ILoginFormProps) => JSX.Element;
