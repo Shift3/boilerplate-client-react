@@ -1,22 +1,15 @@
-import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form, Button } from 'react-bootstrap';
 import { SetPasswordFormSchema } from './schema';
-import { ISetPasswordFormData } from './types';
+import { SetPasswordFormType } from './types';
 
-export const SetPasswordForm: FC = () => {
+export const SetPasswordForm: SetPasswordFormType = ({ onSubmit }) => {
     const { register, handleSubmit, formState: { errors, isValid } } = useForm({
         resolver: yupResolver(SetPasswordFormSchema),
         mode: "onChange"
     });
-
-    const onSubmit = (data: ISetPasswordFormData) => {
-        // @TODO send data off via http call on 200 navigate user to login page on error utilize flashMessage context to display error.
-        // eslint-disable-next-line
-        console.log("setPasswordFormData: ", data);
-    }
-
+    
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Group>
