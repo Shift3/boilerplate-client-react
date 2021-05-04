@@ -13,22 +13,30 @@ export const SetPasswordForm: SetPasswordFormType = ({ onSubmit }) => {
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Group>
-                <Form.Label>Password</Form.Label>
+                <Form.Label htmlFor="password">Password</Form.Label>
                 <Form.Control 
+                    id="password"
                     type="password" 
                     { ...register("password") } 
                 />
-                <span className="danger">{ errors.password?.message }</span>
+                {
+                    errors.password?.message &&
+                    (<span role="alert" className="danger">{ errors.password?.message }</span>)
+                }
             </Form.Group>
             <Form.Group>
-                <Form.Label>Confirm Password</Form.Label>
+                <Form.Label htmlFor="confirmPassword">Confirm Password</Form.Label>
                 <Form.Control 
+                    id="confirmPassword"
                     type="password" 
                     { ...register("confirmPassword") } 
                 />
-                <span className="danger">{ errors.confirmPassword?.message }</span>
+                {
+                    errors.confirmPassword?.message &&
+                    <span role="alert" className="danger">{ errors.confirmPassword?.message }</span>
+                }
             </Form.Group>
-            <Button type="submit" disabled={ !isValid }>Login</Button>
+            <Button type="submit" role="submit" disabled={ !isValid }>Login</Button>
         </Form>
     )
 }
