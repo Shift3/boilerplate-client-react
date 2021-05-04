@@ -13,38 +13,54 @@ export const SignupForm: SignupFormType = ({ onSubmit }) => {
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Group>
-                <Form.Label>Email</Form.Label>
+                <Form.Label htmlFor="email">Email</Form.Label>
                 <Form.Control 
+                    id="email"  
                     type="email" 
                     { ...register("email") } 
                 />
-                <span>{ errors.email?.message }</span>
+                {
+                    errors.email?.message &&
+                    <span role="alert">{ errors.email?.message }</span>
+                }
             </Form.Group>
             <Form.Group>
-                <Form.Label>Confirm Email</Form.Label>
+                <Form.Label htmlFor="confirmEmail">Confirm Email</Form.Label>
                 <Form.Control 
+                    id="confirmEmail"
                     type="email" 
                     { ...register("confirmEmail") } 
                 />
-                <span>{ errors.confirmEmail?.message }</span>
+                {
+                    errors.confirmEmail?.message &&
+                    <span role="alert">{ errors.confirmEmail?.message }</span>
+                }
             </Form.Group>
             <Form.Group>
-                <Form.Label>First Name</Form.Label>
+                <Form.Label htmlFor="firstName">First Name</Form.Label>
                 <Form.Control 
+                    id="firstName"
                     type="text" 
                     { ...register("firstName") } 
                 />
-                <span>{ errors.firstName?.message }</span>
+                {
+                    errors.firstName?.message &&
+                    <span role="alert">{ errors.firstName?.message }</span>
+                }
             </Form.Group>
             <Form.Group>
-                <Form.Label>First Name</Form.Label>
-                <Form.Control 
+                <Form.Label htmlFor="lastName">Last Name</Form.Label>
+                <Form.Control
+                    id="lastName"
                     type="text" 
                     { ...register("lastName") } 
                 />
-                <span>{ errors.lastName?.message }</span>
+                {
+                    errors.lastName?.message &&
+                    <span role="alert">{ errors.lastName?.message }</span>
+                }
             </Form.Group>
-            <Button type="submit" disabled={ !isValid }>Login</Button>
+            <Button role="button" type="submit" disabled={ !isValid }>Login</Button>
         </Form>
     )
 }
