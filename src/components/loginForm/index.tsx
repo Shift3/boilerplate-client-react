@@ -14,16 +14,22 @@ export const LoginForm: LoginFormType = ({ onSubmit }) => {
     return (
         <Form onSubmit={ handleSubmit(onSubmit) }>
             <Form.Group>
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="email" { ...register("email") } />
-                <span role="alert" className="text-danger">{ errors.email?.message }</span>
+                <Form.Label htmlFor="email">Email</Form.Label>
+                <Form.Control id="email" type="email" { ...register("email") } />
+                {
+                    errors.email?.message &&
+                    (<span role="alert" className="text-danger">{ errors.email?.message }</span>)
+                }
             </Form.Group>
             <Form.Group>
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" { ...register("password") } />
-                <span role="alert" className="text-danger">{ errors.password?.message }</span>
+                <Form.Label htmlFor="password">Password</Form.Label>
+                <Form.Control id="password" type="password" { ...register("password") } />
+                {
+                    errors.password?.message &&
+                    (<span role="alert" className="text-danger">{ errors.password?.message }</span>)
+                }
             </Form.Group>
-            <Button type="submit" disabled={ !isValid }>Login</Button>
+            <Button role="submit" type="submit" name="submit" disabled={ !isValid }>Login</Button>
         </Form>
     )
 }
