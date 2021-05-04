@@ -36,7 +36,7 @@ describe('LoginForm', () => {
 
     emailField = getByLabelText('Email');
     passwordField = getByLabelText('Password');
-    submitButton = getByRole('submit');
+    submitButton = getByRole('button');
 
     await setValue(emailField, validEmail);
     await setValue(passwordField, validPassword);

@@ -36,7 +36,7 @@ export const SetPasswordForm: SetPasswordFormType = ({ onSubmit }) => {
                     <span role="alert" className="danger">{ errors.confirmPassword?.message }</span>
                 }
             </Form.Group>
-            <Button type="submit" role="submit" disabled={ !isValid }>Login</Button>
+            <Button type="submit" role="button" disabled={ !isValid }>Login</Button>
         </Form>
     )
 }

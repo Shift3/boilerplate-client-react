@@ -29,7 +29,7 @@ export const LoginForm: LoginFormType = ({ onSubmit }) => {
                     (<span role="alert" className="text-danger">{ errors.password?.message }</span>)
                 }
             </Form.Group>
-            <Button role="submit" type="submit" name="submit" disabled={ !isValid }>Login</Button>
+            <Button role="button" type="submit" name="submit" disabled={ !isValid }>Login</Button>
         </Form>
     )
 }

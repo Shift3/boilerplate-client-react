@@ -39,7 +39,7 @@ describe('LoginForm', () => {
 
     passwordField = getByLabelText('Password');
     confirmPasswordField = getByLabelText('Confirm Password');
-    submitButton = getByRole('submit');
+    submitButton = getByRole('button');
 
     await setValue(passwordField, validPassword);
     await setValue(confirmPasswordField, validPassword);
