@@ -8,8 +8,8 @@ export enum errorMessages {
 
 export const LoginFormSchema = yup.object().shape({
     email: yup.string()
-        .email(errorMessages.INVALID_EMAIL)
-        .required(errorMessages.EMAIL_REQUIRED),
+        .required(errorMessages.EMAIL_REQUIRED)
+        .email(errorMessages.INVALID_EMAIL),
     password: yup.string()
         .required(errorMessages.PASSWORD_REQUIRED),
 });

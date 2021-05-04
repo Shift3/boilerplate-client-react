@@ -1,29 +1,31 @@
 import { LoginFormSchema, errorMessages } from './schema';
 import * as yup from 'yup';
 
-describe('loginFormSchema', () => {
-  const validEmail = 'test@test.com'
-  const validPassword = 'password'
+const { PASSWORD_REQUIRED, INVALID_EMAIL, EMAIL_REQUIRED } = errorMessages;
+
+describe('LoginFormSchema', () => {
+  const validEmail = 'test@test.com';
+  const invalidEmail = 'test.com';
+  const validPassword = 'password';
+
+  const formData = { email: validEmail, password: validPassword };
+
+  const errorMessageCheck = async (field: string, value: string, message: string) => (
+    expect(await yup.reach(LoginFormSchema, field)
+        .validate(value)
+            .catch((err: yup.ValidationError) => err.message)).toEqual(message)
+);
 
   describe('Valid input data', () => {
-    it('Should pass validation', () => {
-      expect(LoginFormSchema.isValidSync({ email: validEmail, password: validPassword })).toBeTruthy()
-    })
+    it('Should pass validation', () => expect(LoginFormSchema.isValidSync(formData)).toBeTruthy());
   })
 
   describe('Email', () => {
-    it('Should be required', () => {
-      expect(yup.reach(LoginFormSchema, "email").validate('').catch((err: yup.ValidationError) => err.message)).toEqual(errorMessages.EMAIL_REQUIRED);
-    })
-
-    it('Should be of a valid email format', () => {
-      expect(yup.reach(LoginFormSchema, "email").validate('email').catch((err: yup.ValidationError) => err.message)).toEqual(errorMessages.INVALID_EMAIL);
-    })
+    it('Should be required', async () => { await errorMessageCheck('email', '', EMAIL_REQUIRED)});
+    it('Should be of a valid email format', async () => await errorMessageCheck('email', invalidEmail, INVALID_EMAIL));
   })
 
   describe('Password', () => {
-    it('Should be required', () => {
-      expect(yup.reach(LoginFormSchema, "password").validate('').catch((err: yup.ValidationError) => err.message)).toEqual(errorMessages.PASSWORD_REQUIRED);
-    })
+    it('Should be required', async () => await errorMessageCheck('password', '', PASSWORD_REQUIRED));
   })
 })
