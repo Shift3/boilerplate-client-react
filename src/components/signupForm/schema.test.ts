@@ -1,109 +1,57 @@
 import { SignupFormSchema, errorMessages } from './schema';
 import * as yup from 'yup';
 
+const {  EMAIL_REQUIRED, INVALID_EMAIL, EMAIL_MATCH, FIRST_NAME_REQUIRED, LAST_NAME_REQUIRED, NAME_LENGTH } = errorMessages;
+
 describe('SignupFormSchema', () => {
     const validEmail = 'test@test.com';
     const invalidEmail = 'test.com';
     const mismatchEmail = 'test@tets.com';
     const validName = 'test';
-    const shortName = "t";
-    const longName = "thisisclearlywaytoolongandisnotavalidnamebecauseitiswelloverfiftycharacters";
+    const shortName = 't';
+    const longName = 'thisisclearlywaytoolongandisnotavalidnamebecauseitiswelloverfiftycharacters';
 
     const formData = { 
         email: validEmail, 
         confirmEmail: validEmail, 
         firstName: validName,
         lastName: validName
-    }
+    };
+
+    const errorMessageCheck = async (field: string, value: string, message: string) => (
+        expect(await yup.reach(SignupFormSchema, field)
+            .validate(value)
+                .catch((err: yup.ValidationError) => err.message))
+                    .toEqual(message)
+    );
+
+    const errorMessageConfirmCheck = async (formData: Record<string, any>, field: string, mismatch: string, message: string) => (
+        expect(await SignupFormSchema.validate({ ...formData, [field]: mismatch }).catch(err => err.message)).toEqual(message)
+    );
 
     describe('Valid input data', () => {
-        it('Should pass validation', () => {
-            expect(SignupFormSchema.isValidSync(formData)).toBeTruthy()
-        })
+        it('Should pass validation', () => expect( SignupFormSchema.isValidSync(formData)).toBeTruthy());
     })
 
     describe('Email', () => {
-        it('Should be required', () => {
-        expect(yup.reach(SignupFormSchema, "email")
-            .validate('')
-                .catch((err: yup.ValidationError) => err.message))
-                    .toEqual(errorMessages.EMAIL_REQUIRED);
-        })
-
-        it('Should be of a valid email format', () => {
-        expect(yup.reach(SignupFormSchema, "email")
-            .validate(invalidEmail)
-                .catch((err: yup.ValidationError) => err.message))
-                    .toEqual(errorMessages.INVALID_EMAIL);
-        })
+        it('Should be required', () => errorMessageCheck('email', '', EMAIL_REQUIRED));
+        it('Should a valid email address', () => errorMessageCheck('email', invalidEmail, INVALID_EMAIL));
     })
 
     describe('Confirm Email', () => {
-        it('Should be required', () => {
-        expect(yup.reach(SignupFormSchema, "confirmEmail")
-            .validate('')
-                .catch((err: yup.ValidationError) => err.message))
-                    .toEqual(errorMessages.EMAIL_REQUIRED);
-        })
-
-        it('Should be of a valid email format', () => {
-        expect(yup.reach(SignupFormSchema, "confirmEmail")
-            .validate(invalidEmail)
-                .catch((err: yup.ValidationError) => err.message))
-                    .toEqual(errorMessages.INVALID_EMAIL);
-        })
-
-        it('Should match email', () => {
-            formData.email = mismatchEmail;
-
-            expect(SignupFormSchema.validate(formData).catch(err => err.message))
-                .toEqual(errorMessages.EMAIL_MATCH);
-        })
+        it('Should be required', () => errorMessageConfirmCheck({ ...formData, email: '' }, 'confirmEmail', '', EMAIL_REQUIRED));
+        it('Should match email', () => errorMessageConfirmCheck(formData, 'confirmEmail', mismatchEmail, EMAIL_MATCH));
     })
 
     describe('First Name', () => {
-        it('Should be required', () => {
-            expect(yup.reach(SignupFormSchema, "firstName")
-                .validate('')
-                    .catch((err: yup.ValidationError) => err.message))
-                        .toEqual(errorMessages.FIRST_NAME_REQUIRED);
-        })
-
-        it('Should be at least 2 characters', () => {
-            expect(yup.reach(SignupFormSchema, "firstName")
-                .validate(shortName)
-                    .catch((err: yup.ValidationError) => err.message))
-                        .toEqual(errorMessages.NAME_LENGTH);
-        })
-
-        it('Should be at most 50 characters', () => {
-            expect(yup.reach(SignupFormSchema, "firstName")
-                .validate(longName)
-                    .catch((err: yup.ValidationError) => err.message))
-                        .toEqual(errorMessages.NAME_LENGTH);
-        })
+        it('Should be required', () => errorMessageCheck('firstName', '', FIRST_NAME_REQUIRED));
+        it('Should be at least 2 characters', () => errorMessageCheck('firstName', shortName, NAME_LENGTH));
+        it('Should be at most 50 characters', () => errorMessageCheck('firstName', longName, NAME_LENGTH));
     })
 
     describe('Last Name', () => {
-        it('Should be required', () => {
-            expect(yup.reach(SignupFormSchema, "lastName")
-                .validate('')
-                    .catch((err: yup.ValidationError) => err.message))
-                        .toEqual(errorMessages.FIRST_NAME_REQUIRED);
-        })
-
-        it('Should be at least 2 characters', () => {
-            expect(yup.reach(SignupFormSchema, "lastName")
-                .validate(shortName)
-                    .catch((err: yup.ValidationError) => err.message))
-                        .toEqual(errorMessages.NAME_LENGTH);
-        })
-
-        it('Should be at most 50 characters', () => {
-            expect(yup.reach(SignupFormSchema, "lastName")
-                .validate(longName)
-                    .catch((err: yup.ValidationError) => err.message))
-                        .toEqual(errorMessages.NAME_LENGTH);
-        })
+        it('Should be required', () => errorMessageCheck('lastName', '', LAST_NAME_REQUIRED));
+        it('Should be at least 2 characters', () => errorMessageCheck('lastName', shortName, NAME_LENGTH));
+        it('Should be at most 50 characters', () => errorMessageCheck('lastName', longName, NAME_LENGTH));
     })
 })

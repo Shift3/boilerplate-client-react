@@ -11,18 +11,17 @@ export enum errorMessages {
 
 export const SignupFormSchema =  yup.object().shape({
     email: yup.string()
-        .email(errorMessages.INVALID_EMAIL)
-        .required(errorMessages.EMAIL_REQUIRED),
+        .required(errorMessages.EMAIL_REQUIRED)
+        .email(errorMessages.INVALID_EMAIL),
     confirmEmail: yup.string()
-        .email(errorMessages.INVALID_EMAIL)
         .required(errorMessages.EMAIL_REQUIRED)
         .oneOf([yup.ref("email"), null], errorMessages.EMAIL_MATCH),
     firstName: yup.string()
+        .required(errorMessages.FIRST_NAME_REQUIRED)
         .min(2, errorMessages.NAME_LENGTH)
-        .max(50, errorMessages.NAME_LENGTH)
-        .required(errorMessages.FIRST_NAME_REQUIRED),
+        .max(50, errorMessages.NAME_LENGTH),
     lastName: yup.string()
+        .required(errorMessages.LAST_NAME_REQUIRED)
         .min(2, errorMessages.NAME_LENGTH)
         .max(50, errorMessages.NAME_LENGTH)
-        .required(errorMessages.LAST_NAME_REQUIRED)
 });
