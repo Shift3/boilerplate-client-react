@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { FooterWrapper } from './styled';
+import { Wrapper } from './Wrapper';
 import { Constants } from '../../utils/constants';
 
 const copyrightDate = () => {
@@ -10,8 +10,8 @@ const copyrightDate = () => {
 };
 
 export const Footer: FC = () => (
-  <FooterWrapper>
+  <Wrapper>
     <span>&copy; Bitwise Technology Constulting - {Constants.version} Staging </span>
     {copyrightDate()}
-  </FooterWrapper>
+  </Wrapper>
 );

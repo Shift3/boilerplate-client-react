@@ -2,51 +2,32 @@ import styled from 'styled-components';
 import {} from '../../utils/styleValues';
 
 export const HolyGrailWrapper = styled.div`
+  background: grey;
+  height: 100%;
+  min-width: 400px;
+  min-height: 600px;
+`;
+
+export const HolyGrailHeader = styled.div`
   border: 1px solid black;
-  min-height: 100vh;
-  display: grid;
+  padding: 20px;
+  text-align: center;
 `;
 
-export const HolyGrailMainWrapper = styled.div`
+export const HolyGrailLeftAside = styled.aside`
   border: 1px solid black;
-  min-height: 100vh;
-  grid-template-columns: repeat(6, fr);
-  grid-template-areas:
-    'navbar main main'
-    'footer footer footer';
+  padding: 20px;
+  text-align: center;
 `;
 
-export const HolyGrailLeftAside1 = styled.aside`
-  grid-area: 'navbar';
-  flex: 1 1 auto;
-  display: flex;
-  justify-content: center;
-  border: 1px solid red;
-  @media (min-width: 768px) {
-    flex: 0 0 12em;
-  }
+export const HolyGrailMain = styled.main`
+  border: 1px solid black;
+  padding: 20px;
+  text-align: center;
 `;
 
-export const HolyGrailMain2 = styled.main`
-  grid-area: 'main';
-  flex: 1 1 auto;
-  display: flex;
-  justify-content: center;
-  @media (min-width: 768px) {
-    flex: 1;
-  }
-`;
-
-export const HolyGrailRightAside3 = styled.aside`
-  border: 1px solid green;
-  grid-area: 'sidebar';
-  border: 1px solid blue;
-  @media (min-width: 768px) {
-    flex: 0 0 12em;
-  }
-`;
-
-export const HolyGrailFooter = styled.div`
-  grid-area: 'footer';
-  border: 1px solid blue;
+export const HolyGrailRightAside = styled.aside`
+  border: 1px solid black;
+  padding: 20px;
+  text-align: center;
 `;

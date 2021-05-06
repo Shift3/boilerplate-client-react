@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { ErrorBoundary } from '@sentry/react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from './GlobalStyle';
 import AppTheme from './utils/styleValues';
 
@@ -18,24 +18,33 @@ import { HolyGrailLayout } from './components/holyGrailLayout';
 import { NavBar } from './components/navbar';
 import { Footer } from './components/footer';
 
+const AppWrapper = styled.div`
+  max-width: 100vw;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+`;
 export const App: FC = () => (
   <ErrorBoundary>
-    <AuthProvider>
-      <FlashMessageProvider>
-        <ThemeProvider theme={AppTheme}>
-          <FlashMessage />
-          <Router>
-            <Switch>
-              <HolyGrailLayout leftSidebar={<NavBar />} footer={<Footer />}>
-                <Route exact path="/" component={HomePage} />
-                <Route exact path="/auth/login" component={LoginPage} />
-                <Route exact path="/auth/forgot-password" component={ResetPasswordPage} />
-              </HolyGrailLayout>
-            </Switch>
-          </Router>
-        </ThemeProvider>
-      </FlashMessageProvider>
-    </AuthProvider>
-    <GlobalStyle />
+    <AppWrapper>
+      <AuthProvider>
+        <FlashMessageProvider>
+          <ThemeProvider theme={AppTheme}>
+            <FlashMessage />
+            <Router>
+              <Switch>
+                <HolyGrailLayout leftSidebar={<NavBar />}>
+                  <Route exact path="/" component={HomePage} />
+                  <Route exact path="/auth/login" component={LoginPage} />
+                  <Route exact path="/auth/forgot-password" component={ResetPasswordPage} />
+                </HolyGrailLayout>
+              </Switch>
+            </Router>
+          </ThemeProvider>
+        </FlashMessageProvider>
+      </AuthProvider>
+      <Footer />
+      <GlobalStyle />
+    </AppWrapper>
   </ErrorBoundary>
 );
