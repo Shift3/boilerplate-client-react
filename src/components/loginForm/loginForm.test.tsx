@@ -43,10 +43,16 @@ describe('LoginForm', () => {
 
     mockOnSubmit.mockReset();
   })
-
-  it('Should render', () => {
+  
+  it('Should render email field', () => {
     expect(emailField).toBeInTheDocument()
+  })
+
+  it('Should render password field', () => {
     expect(passwordField).toBeInTheDocument()
+  })
+
+  it('Should render submit button', () => {
     expect(submitButton).toBeInTheDocument()
   })
 
