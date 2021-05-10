@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 /* TODO: - CMS 3/23/21
 - Add in configuration for toggling autoSesssionTracking
 - Discuss adding in a release option with the team

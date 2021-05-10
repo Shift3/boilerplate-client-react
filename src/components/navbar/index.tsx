@@ -1,9 +1,10 @@
 import { FC } from 'react';
-import { NavBarWrapper, NavLinkStyled, NavLogoWrapper, NavLinkWrapper } from './styled';
+import { NavBarWrapper, NavLinkStyled, NavLogo, NavLinkWrapper } from './styled';
+import logo from '../../assets/img/logo.png';
 
 export const NavBar: FC = () => (
   <NavBarWrapper>
-    <NavLogoWrapper>BTC Logo</NavLogoWrapper>
+    <NavLogo src={logo} alt="Bitwise Technology Consulting" />
     <NavLinkWrapper>
       <NavLinkStyled to="/directory">Directory</NavLinkStyled>
       <NavLinkStyled to="/users">Users</NavLinkStyled>

@@ -1,39 +1,42 @@
 import styled from 'styled-components';
-import {} from '../../utils/colors';
+import {} from '../../utils/styleValues';
 
 export const HolyGrailWrapper = styled.div`
-  display: grid;
-  height: 100vh;
-  grid-template-columns: 1fr 2fr 1fr;
-  grid-template-rows: minmax(200px, auto);
-  grid-gap: 1em;
-  @media all and (min-width: 768px) {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
+  display: flex;
+  flex-direction: column;
 `;
 
-export const HolyGrailNavLeft = styled.nav`
-  @media all and (min-width: 768px) {
-    order: 1;
+export const HolyGrailMainWrapper = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  max-height: calc(100vh - ${(props) => props.theme.footerHeight});
+
+  @media (min-width: 768px) {
+    flex-direction: row;
     flex: 1;
   }
 `;
 
-export const HolyGrailMain = styled.main`
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  @media all and (min-width: 768px) {
-    flex: 2;
-    order: 2;
-    min-height: 80vh;
+export const HolyGrailLeftAside = styled.aside`
+  order: -1;
+  flex: 0 0 12em;
+  @media (min-width: 768px) {
+    flex: 0 0 12em;
   }
 `;
 
-export const HolyGrailFooter = styled.footer`
-  grid-column: 1 / -1;
-  width: 100%;
-  order: 3;
+export const HolyGrailMain = styled.main`
+  flex: 1;
+  @media (min-width: 768px) {
+    flex: 1;
+  }
+`;
+
+export const HolyGrailRightAside = styled.aside`
+  flex: 0 0 12em;
+
+  @media (min-width: 768px) {
+    flex: 0 0 12em;
+  }
 `;

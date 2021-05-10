@@ -39,6 +39,7 @@
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "object-curly-newline": "off",
+    "react/jsx-props-no-spreading": "off",
     "import/no-extraneous-dependencies": [
       "error",
       {

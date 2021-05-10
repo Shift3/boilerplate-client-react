@@ -1,7 +1,10 @@
+import { FC, ReactNode } from "react";
+
 export interface HolyGrailLayoutProps {
-  navBar?: JSX.Element
-  footer?: JSX.Element
-  children?: JSX.Element[]
+  leftSidebar: ReactNode;
+  children?: ReactNode;
+  rightSidebar?: ReactNode;
+  footer?: ReactNode;
 }
 
-export type HolyGrail = ({ navBar, footer, children }: HolyGrailLayoutProps) => JSX.Element
+export type HolyGrailType = FC<HolyGrailLayoutProps>
