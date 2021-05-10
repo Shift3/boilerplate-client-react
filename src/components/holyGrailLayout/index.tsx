@@ -5,9 +5,9 @@ import {
   HolyGrailMain,
   HolyGrailRightAside,
 } from './styled';
-import { HolyGrail, HolyGrailLayoutProps } from './types';
+import { HolyGrailType } from './types';
 
-export const HolyGrailLayout: HolyGrail = ({ leftSidebar, children, rightSidebar, footer }: HolyGrailLayoutProps) => (
+export const HolyGrailLayout: HolyGrailType = ({ leftSidebar, children, rightSidebar, footer }) => (
   <HolyGrailWrapper>
     <HolyGrailMainWrapper>
       {!!leftSidebar && <HolyGrailLeftAside>{leftSidebar}</HolyGrailLeftAside>}
