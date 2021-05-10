@@ -47,12 +47,17 @@ describe('LoginForm', () => {
     mockOnSubmit.mockReset();
   })
 
-  it('should render', () => {
-    expect(passwordField).toBeInTheDocument();
-    expect(confirmPasswordField).toBeInTheDocument();
-    expect(submitButton).toBeInTheDocument();
-  });
+  it('should render password field', () => {
+    expect(passwordField).toBeInTheDocument()
+  })
 
+  it('should render confirm password field', () => {
+    expect(confirmPasswordField).toBeInTheDocument()
+  })
+
+  it('should render submit button', () => {
+    expect(submitButton).toBeInTheDocument()
+  })
 
   describe('valid input', () => {
     it('should call onSubmit once formData object including password and confirmPassword', async () => {
