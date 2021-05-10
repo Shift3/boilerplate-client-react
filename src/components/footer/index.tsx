@@ -4,7 +4,7 @@ import { Constants } from '../../utils/constants';
 
 export const creationYear = 2021;
 
-export const copyrightDate = () => {
+export const copyrightDate: any = () => {
   const currentYear = new Date().getFullYear();
 
   return currentYear > creationYear ? `${creationYear} - ${currentYear}` : (`${creationYear}` as string);
