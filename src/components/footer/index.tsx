@@ -4,6 +4,7 @@ import { Constants } from '../../utils/constants';
 
 export const creationYear = 2021;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const copyrightDate: any = () => {
   const currentYear = new Date().getFullYear();
 

@@ -1,4 +1,4 @@
-import { render, rerender, getByText, screen } from '@testing-library/react';
+import { render, getByText, screen } from '@testing-library/react';
 import { Footer, copyrightDate, creationYear } from './index';
 import { Constants } from '../../utils/constants';
 import { Wrapper } from './styled';
