@@ -1,17 +1,17 @@
 import { FC } from 'react';
-import { Wrapper } from './Wrapper';
+import { Wrapper } from './styled';
 import { Constants } from '../../utils/constants';
 
-const copyrightDate = () => {
+export const copyrightDate = () => {
   const creationYear = 2021;
   const currentYear = new Date().getFullYear();
 
-  return currentYear > creationYear ? `${creationYear} - ${currentYear}` : `${creationYear}`;
+  return currentYear > creationYear ? `${creationYear} - ${currentYear}` : (`${creationYear}` as string);
 };
 
 export const Footer: FC = () => (
   <Wrapper>
-    <span>&copy; Bitwise Technology Constulting - {Constants.version} Staging </span>
+    <span>&copy; Bitwise Technology Constulting - {Constants.version} Staging&nbsp;</span>
     {copyrightDate()}
   </Wrapper>
 );
