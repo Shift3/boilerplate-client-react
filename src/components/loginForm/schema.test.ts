@@ -1,5 +1,5 @@
-import { LoginFormSchema, errorMessages } from './schema';
 import * as yup from 'yup';
+import { LoginFormSchema, errorMessages } from './schema';
 
 const { PASSWORD_REQUIRED, INVALID_EMAIL, EMAIL_REQUIRED } = errorMessages;
 
@@ -21,11 +21,11 @@ describe('LoginFormSchema', () => {
   })
 
   describe('Email', () => {
-    it('Should be required', async () => { await errorMessageCheck('email', '', EMAIL_REQUIRED)});
-    it('Should be of a valid email format', async () => await errorMessageCheck('email', invalidEmail, INVALID_EMAIL));
+    it('Should be required', async () => { await errorMessageCheck('email', '', EMAIL_REQUIRED) })
+    it('Should be of a valid email format', async () => { await errorMessageCheck('email', invalidEmail, INVALID_EMAIL) })
   })
 
   describe('Password', () => {
-    it('Should be required', async () => await errorMessageCheck('password', '', PASSWORD_REQUIRED));
+    it('Should be required', async () => { await errorMessageCheck('password', '', PASSWORD_REQUIRED) })
   })
 })
