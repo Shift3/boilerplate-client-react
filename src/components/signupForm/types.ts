@@ -1,3 +1,5 @@
+import { FC } from "react";
+
 export interface ISignupFormProps {
     onSubmit: (data: ISignupFormData) => void
 }
@@ -9,4 +11,4 @@ export interface ISignupFormData {
     lastName: string
 }
 
-export type SignupFormType = (props: ISignupFormProps) => JSX.Element;
+export type SignupFormType = FC<ISignupFormProps>
