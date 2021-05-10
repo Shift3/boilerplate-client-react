@@ -54,14 +54,25 @@ describe('SignupForm', () => {
         mockOnSubmit.mockReset();
     });
 
+    it('Should render email field', () => {
+        expect(emailField).toBeInTheDocument()
+    })
 
-    it('Should render', () => {
-        expect(emailField).toBeInTheDocument();
-        expect(confirmEmailField).toBeInTheDocument();
-        expect(firstNameField).toBeInTheDocument();
-        expect(lastNameField).toBeInTheDocument();
+    it('Should render confirm email field', () => {
+        expect(confirmEmailField).toBeInTheDocument()
+    })
+
+    it('Should render first name field', () => {
+        expect(firstNameField).toBeInTheDocument()
+    })
+
+    it('Should render last name field', () => {
+        expect(lastNameField).toBeInTheDocument()
+    })
+
+    it('Should render submit button', () => {
         expect(submitButton).toBeInTheDocument();
-    });
+    })
 
     describe('Valid input', () => {
         it('Should call onSubmit once all form data is valid, ', async () => {
