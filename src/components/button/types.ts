@@ -1,19 +1,10 @@
-export interface IButtonProps {
+import { FC } from "react";
+import { ButtonProps } from "react-bootstrap";
+
+export interface IButtonProps extends ButtonProps {
   backgroundColor: string;
   color: string;
-  text: string;
   width: string;
-  onClick?: () => void;
-  type: 'button' | 'reset' | 'submit';
-  disabled: boolean;
 }
 
-export type CustomButtonType = ({
-  backgroundColor,
-  color,
-  onClick,
-  disabled,
-  text,
-  type,
-  width,
-}: IButtonProps) => JSX.Element;
+export type CustomButtonType = FC<IButtonProps>;

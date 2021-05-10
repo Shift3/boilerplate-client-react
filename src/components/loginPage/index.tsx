@@ -32,9 +32,10 @@ export const LoginPage: FC = () => {
             onClick={onCreateAccountClick}
             disabled={false}
             type="button"
-            text="CREATE ACCOUNT"
             width="90%"
-          />
+          >
+            CREATE ACCOUNT
+          </CustomButton>
         </LoginFormRight>
       </LoginFormContainer>
     </LoginPageContainer>
