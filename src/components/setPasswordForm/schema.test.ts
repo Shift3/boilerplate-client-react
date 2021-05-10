@@ -1,14 +1,25 @@
-import { SetPasswordFormSchema, errorMessages } from './schema';
 import * as yup from 'yup';
+import { SetPasswordFormSchema, errorMessages } from './schema';
 
-const { PASSWORD_REQUIRED, PASSWORD_LENGTH, PASSWORD_MATCH } = errorMessages;
+const { 
+    PASSWORD_REQUIRED, 
+    PASSWORD_LENGTH, 
+    PASSWORD_MATCH, 
+    PASSWORD_LOWERCASE,
+    PASSWORD_UPPERCASE,
+    PASSWORD_SPECIAL_CHARACTER,
+    PASSWORD_NUMBER,
+} = errorMessages;
 
 describe('loginFormSchema', () => {
-    const validPassword = 'Password123!';
-    const mismatchPassword = 'Password123';
-    const blankPassword = '';
-    const shortPassword= 'test';
-    const longPassword = 'passwordtoolong';
+    const validPassword = 'Password123!'
+    const mismatchPassword = 'Password123'
+    const blankPassword = ''
+    const shortPassword= 'test'
+    const missingLowerCasePassword = 'PASSWORD123!'
+    const missingUpperCasePassword = 'password123!'
+    const missingSpecialCharPassword = 'Password123'
+    const missingNumberPassword = 'Password!'
 
     const formData = { 
         password: validPassword, 
@@ -29,14 +40,39 @@ describe('loginFormSchema', () => {
     });
 
     describe('Password', () => {
-        it('Should be required', async () => errorMessageCheck('password', '', PASSWORD_REQUIRED));
-        it('Should be at least 7 characters', () => errorMessageCheck('password', shortPassword, PASSWORD_LENGTH));
-        it('Should be at most 12 characters', () => errorMessageCheck('password', longPassword, PASSWORD_LENGTH));
+        it('Should throw validation error with PASSWORD_REQUIRED message if empty', async () => {
+            await errorMessageCheck('password', '', PASSWORD_REQUIRED)
+        })
+
+        it('Should throw validation error with PASSWORD_LENGTH message if password is shorter than 8 characters', async () => {
+            await errorMessageCheck('password', shortPassword, PASSWORD_LENGTH)
+        })
+
+        it('Should throw validation error with PASSWORD_LOWERCASE message if it does not contain at least one lowercase letter', async () => {
+            await errorMessageCheck('password', missingLowerCasePassword, PASSWORD_LOWERCASE)
+        })
+
+        it('Should throw validation error with PASSWORD_UPPERCASE message if it does not contain at least one uppercase letter', async () => {
+            await errorMessageCheck('password', missingUpperCasePassword, PASSWORD_UPPERCASE)
+        })
+
+        it('Should throw validation error with PASSWORD_SPECIAL_CHARACTER message it does not contain at least one special character', async () => {
+            await errorMessageCheck('password', missingSpecialCharPassword, PASSWORD_SPECIAL_CHARACTER)
+        })
+
+        it('Should throw validation error with PASSWORD_NUMBER message if it does not contain at least on number', async () => {
+            await errorMessageCheck('password', missingNumberPassword, PASSWORD_NUMBER);
+        })
     })
 
     describe('ConfirmPassword', () => {
         const updatedFormData = { password: '', confirmPassword: '' };
-        it('Should be required', () => errorMessageConfirmCheck(updatedFormData, 'confirmPassword', blankPassword, PASSWORD_REQUIRED));
-        it('Should match password', () => errorMessageConfirmCheck(formData, "confirmPassword", mismatchPassword, PASSWORD_MATCH));
+        it('Should throw validation error with PASSWORD_REQUIRED message if empty', async () => {
+            await errorMessageConfirmCheck(updatedFormData, 'confirmPassword', blankPassword, PASSWORD_REQUIRED)
+        })
+
+        it('Should throw validation error with PASSWORD_MATCH message if it does not match password', async () => {
+            await errorMessageConfirmCheck(formData, "confirmPassword", mismatchPassword, PASSWORD_MATCH)
+        })
     });
 });
