@@ -2,8 +2,9 @@ import { FC } from 'react';
 import { Wrapper } from './styled';
 import { Constants } from '../../utils/constants';
 
+export const creationYear = 2021;
+
 export const copyrightDate = () => {
-  const creationYear = 2021;
   const currentYear = new Date().getFullYear();
 
   return currentYear > creationYear ? `${creationYear} - ${currentYear}` : (`${creationYear}` as string);
