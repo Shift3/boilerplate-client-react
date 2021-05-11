@@ -8,22 +8,16 @@ export const GlobalStyle = createGlobalStyle`
         padding: 0;
         box-sizing: inherit;
     }
-
     html,
     body {
-        height: 100%;
-        width: 100%;
+        height: 100vh;
+        width: 100vw;
     }
-
     body {
-        /* display: flex;
+        display: flex;
         flex-direction: column;
-        box-sizing: border-box; */
-        grid-template-areas: inherit;
-        width: 100%;
-        height: 100%;
-        box-sizing: inherit;
+        box-sizing: border-box;
     }
->>>>>>> 4d5699f... feat(holy-grail): updated styled.ts
 `;
+
 export default GlobalStyle;

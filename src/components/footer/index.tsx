@@ -13,7 +13,7 @@ export const copyrightDate: any = () => {
 
 export const Footer: FC = () => (
   <Wrapper>
-    <span>&copy; Bitwise Technology Constulting - {Constants.version} Staging&nbsp;</span>
+    <span>&copy; Bitwise Technology Constulting - {Constants.version} Staging </span>
     {copyrightDate()}
   </Wrapper>
 );
