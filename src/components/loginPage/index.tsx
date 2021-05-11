@@ -1,21 +1,13 @@
 import { FC, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { CustomButton } from '../button';
-import { Context as AuthContext } from '../../context/auth.context';
+import { LoginForm } from "../loginForm";
 import { LoginFormContainer, LoginPageContainer, LoginFormLeft, LoginFormRight } from './styled';
-import { FormBuilder } from '../formBuilder';
-import LoginFormConfig from '../formBuilder/configs/login.formConfig';
-import { generateLoginFormSchema } from '../formBuilder/schema/loginForm.schema';
 import colors from '../../utils/styleValues';
+import { Context as AuthContext } from '../../context/auth.context';
 
 export const LoginPage: FC = () => {
   const { loginUser } = useContext(AuthContext);
-
-  const onSubmit = (data: Record<string, unknown>) => {
-    // eslint-disable-next-line no-console
-    console.log('Data: ', data);
-    loginUser(data);
-  };
 
   const history = useHistory();
 
@@ -27,13 +19,7 @@ export const LoginPage: FC = () => {
     <LoginPageContainer>
       <LoginFormContainer>
         <LoginFormLeft>
-          <FormBuilder
-            config={LoginFormConfig}
-            schemaGenerator={generateLoginFormSchema}
-            onSubmit={onSubmit}
-            title="Member Log In"
-            buttonText="LOG IN"
-          />
+          <LoginForm onSubmit={loginUser} />
           <br />
           <Link to="/auth/forgot-password">Forgot Password?</Link>
         </LoginFormLeft>
@@ -46,9 +32,10 @@ export const LoginPage: FC = () => {
             onClick={onCreateAccountClick}
             disabled={false}
             type="button"
-            text="CREATE ACCOUNT"
             width="90%"
-          />
+          >
+            CREATE ACCOUNT
+          </CustomButton>
         </LoginFormRight>
       </LoginFormContainer>
     </LoginPageContainer>

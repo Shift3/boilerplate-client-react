@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Wrapper } from './styled';
+import { Wrapper } from './Wrapper';
 import { Constants } from '../../utils/constants';
 
 export const creationYear = 2021;

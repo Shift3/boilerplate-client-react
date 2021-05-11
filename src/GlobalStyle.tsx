@@ -18,6 +18,5 @@ export const GlobalStyle = createGlobalStyle`
         flex-direction: column;
         box-sizing: border-box;
     }
-`;
-
+    `;
 export default GlobalStyle;

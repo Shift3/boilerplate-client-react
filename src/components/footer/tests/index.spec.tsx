@@ -1,15 +1,15 @@
-import { render, getByText, screen } from '@testing-library/react';
-import { Footer, copyrightDate, creationYear } from './index';
-import { Constants } from '../../utils/constants';
-import { Wrapper } from './styled';
+import { render, screen } from '@testing-library/react';
+import { Footer, copyrightDate, creationYear } from '../index';
+import { Constants } from '../../../utils/constants';
 
-const { version } = Constants;
-const { getByRole } = screen;
+/* Keep comments on 'screen.debug' method as
+reference for futures tests (EE)...
 
 test('screen debug element', () => {
   render(<Footer />);
   screen.debug();
 });
+*/
 
 test('should return element based on its role', () => {
   const { getByRole } = render(<div role="footer" />);
@@ -47,30 +47,3 @@ describe('footer', () => {
     });
   });
 });
-
-// describe('Wrapper', () => {
-//   let wrapper: HTMLElement;
-// });
-//
-// // describe('render()', () => {
-// //   const { container, getByText } = render(<Wrapper />);
-// // });
-
-// class State {
-//   constructor() {
-//     this.questionnaire = new Questionnaire();
-//     this.participants;
-//     this.auth = new Auth();
-//   }
-// }
-// let mock_state = new State();
-
-// jest.mock('react-redux', () => ({
-//   useSelector: jest.fn((fn) => fn(mock_state)),
-//   useEffect: () => jest.fn(),
-//   useDispatch: () => jest.fn(),
-// }));
-// jest.mock('react-router', () => ({
-//   useParams: () => jest.fn(),
-//   useHistory: () => jest.fn(),
-// }))
