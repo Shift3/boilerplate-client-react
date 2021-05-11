@@ -4,7 +4,6 @@ import { Constants } from '../../../utils/constants';
 
 /* Keep comments on 'screen.debug' method as
 reference for futures tests (EE)...
-
 test('screen debug element', () => {
   render(<Footer />);
   screen.debug();
