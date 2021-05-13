@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 declare module 'axios' {
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface, @typescript-eslint/no-explicit-any
   interface AxiosResponse<T = any> extends Promise<T> {}
 }
 
@@ -25,7 +25,7 @@ export class ApiService {
     );
   }
 
-  public async post<T, U>(endpoint: string, payload: U, options?: { headers?: any; params?: any }): Promise<T> {
+  public async post<T, U>(endpoint: string, payload: U, options?: { headers?: unknown; params?: unknown }): Promise<T> {
     const config: AxiosRequestConfig = {
       headers: options?.headers,
       params: options?.params,
@@ -33,7 +33,7 @@ export class ApiService {
     return this.axiosInstance.post<T>(endpoint, payload, config);
   }
 
-  public async put<T, U>(endpoint: string, payload: U, options?: { headers?: any; params?: any }): Promise<T> {
+  public async put<T, U>(endpoint: string, payload: U, options?: { headers?: unknown; params?: unknown }): Promise<T> {
     const config: AxiosRequestConfig = {
       headers: options?.headers,
       params: options?.params,
