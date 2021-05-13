@@ -8,6 +8,7 @@ import AppTheme from './utils/styleValues';
 // Context
 import { Provider as AuthProvider } from './context/auth.context';
 import { Provider as FlashMessageProvider } from './context/flashMessage.context';
+import { Provider as ServiceProvider } from './context/service';
 
 // Components
 import { HomePage } from './components/homePage/HomePage';
@@ -21,23 +22,25 @@ import { Footer } from './components/footer';
 
 export const App: FC = () => (
   <ErrorBoundary>
-    <AuthProvider>
-      <FlashMessageProvider>
-        <ThemeProvider theme={AppTheme}>
-          <FlashMessage />
-          <Router>
-            <Switch>
-              <HolyGrailLayout leftSidebar={<NavBar />} footer={<Footer />}>
-                <Route exact path="/" component={HomePage} />
-                <Route exact path="/auth/login" component={LoginPage} />
-                <Route exact path="/auth/signup" component={SignupPage} />
-                <Route exact path="/auth/forgot-password" component={ResetPasswordPage} />
-              </HolyGrailLayout>
-            </Switch>
-          </Router>
-        </ThemeProvider>
-      </FlashMessageProvider>
-    </AuthProvider>
-    <GlobalStyle />
+    <ServiceProvider>
+      <AuthProvider>
+        <FlashMessageProvider>
+          <ThemeProvider theme={AppTheme}>
+            <FlashMessage />
+            <Router>
+              <Switch>
+                <HolyGrailLayout leftSidebar={<NavBar />} footer={<Footer />}>
+                  <Route exact path="/" component={HomePage} />
+                  <Route exact path="/auth/login" component={LoginPage} />
+                  <Route exact path="/auth/signup" component={SignupPage} />
+                  <Route exact path="/auth/forgot-password" component={ResetPasswordPage} />
+                </HolyGrailLayout>
+              </Switch>
+            </Router>
+          </ThemeProvider>
+        </FlashMessageProvider>
+      </AuthProvider>
+      <GlobalStyle />
+    </ServiceProvider>
   </ErrorBoundary>
 );
