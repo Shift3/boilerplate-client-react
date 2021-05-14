@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Wrapper /> should match the stored snapshot 1`] = `
+<footer
+  className="sc-bdvvaa laMXQC"
+/>
+`;

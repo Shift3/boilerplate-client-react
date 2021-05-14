@@ -2,18 +2,16 @@ import { FC } from 'react';
 import { Wrapper } from './Wrapper';
 import { Constants } from '../../utils/constants';
 
-export const creationYear = 2021;
+const { version, creationYear } = Constants;
+const currentYear = new Date().getFullYear();
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const copyrightDate: any = () => {
-  const currentYear = new Date().getFullYear();
-
-  return currentYear > creationYear ? `${creationYear} - ${currentYear}` : (`${creationYear}` as string);
-};
+export const copyrightDate: string =
+  currentYear > creationYear ? `${creationYear} - ${currentYear}` : (`${creationYear}` as string);
 
 export const Footer: FC = () => (
   <Wrapper>
-    <span>&copy; Bitwise Technology Constulting - {Constants.version} Staging </span>
-    {copyrightDate()}
+    <span data-testid="copyright">
+      &copy; Bitwise Technology Constulting - {version} Staging &nbsp; {copyrightDate}
+    </span>
   </Wrapper>
 );
