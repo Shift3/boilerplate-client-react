@@ -8,18 +8,15 @@ export const GlobalStyle = createGlobalStyle`
         padding: 0;
         box-sizing: inherit;
     }
-
     html,
     body {
         height: 100vh;
         width: 100vw;
     }
-
     body {
         display: flex;
         flex-direction: column;
         box-sizing: border-box;
     }
-`;
-
+    `;
 export default GlobalStyle;

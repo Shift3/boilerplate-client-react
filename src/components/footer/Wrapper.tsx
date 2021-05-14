@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const FooterWrapper = styled.div`
+export const Wrapper = styled.footer`
   text-align: center;
   background-color: #175f6e;
   color: white;

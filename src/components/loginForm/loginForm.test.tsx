@@ -1,6 +1,6 @@
 import { act, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event'
-import { LoginForm } from '.';
+import userEvent from '@testing-library/user-event';
+import { LoginForm } from './index';
 import { errorMessages } from './schema';
 
 const { type, click, clear } = userEvent;
@@ -19,15 +19,16 @@ describe('LoginForm', () => {
 
   const submitClick = () => act(async () => click(submitButton));
 
-  const setValue = (element: HTMLElement, value: string) => act(async () => {
-    clear(element);
-    type(element, value);
-  });
+  const setValue = (element: HTMLElement, value: string) =>
+    act(async () => {
+      clear(element);
+      type(element, value);
+    });
 
   const alertLengthCheck = (length: number) => expect(queryAllByRole('alert')).toHaveLength(length);
 
-  const getAlertMessages = () => getAllByRole('alert')
-  .reduce((messages: string[], alert: HTMLElement) =>  ([ ...messages, alert.innerHTML ]), []);
+  const getAlertMessages = () =>
+    getAllByRole('alert').reduce((messages: string[], alert: HTMLElement) => [...messages, alert.innerHTML], []);
 
   const alertMessageCheck = (message: string) => expect(getAlertMessages().includes(message));
 
@@ -42,19 +43,19 @@ describe('LoginForm', () => {
     await setValue(passwordField, validPassword);
 
     mockOnSubmit.mockReset();
-  })
-  
+  });
+
   it('Should render email field', () => {
-    expect(emailField).toBeInTheDocument()
-  })
+    expect(emailField).toBeInTheDocument();
+  });
 
   it('Should render password field', () => {
-    expect(passwordField).toBeInTheDocument()
-  })
+    expect(passwordField).toBeInTheDocument();
+  });
 
   it('Should render submit button', () => {
-    expect(submitButton).toBeInTheDocument()
-  })
+    expect(submitButton).toBeInTheDocument();
+  });
 
   describe('Valid input', () => {
     it('Should call onSubmit once formData object including username and password', async () => {
@@ -62,29 +63,29 @@ describe('LoginForm', () => {
 
       alertLengthCheck(0);
       expect(mockOnSubmit).toHaveBeenCalled();
-    })
+    });
 
-    it('Should not display error messages', async () => {      
+    it('Should not display error messages', async () => {
       alertLengthCheck(0);
-    })
-  })
+    });
+  });
 
   describe('Invalid input', () => {
     it('should not call onSubmit', async () => {
       await setValue(emailField, '');
       await setValue(passwordField, '');
-      
+
       await submitClick();
 
       expect(mockOnSubmit).not.toHaveBeenCalled();
-    })
+    });
 
     it('Should display error messages', async () => {
       await setValue(emailField, '');
       await setValue(passwordField, '');
 
       alertLengthCheck(2);
-    })
+    });
 
     describe('Invalid email', () => {
       it('Should only display email required error message', async () => {
@@ -92,16 +93,16 @@ describe('LoginForm', () => {
 
         alertLengthCheck(1);
         alertMessageCheck(EMAIL_REQUIRED);
-      })
+      });
 
       it('Should only display invalid email error message', async () => {
-        await setValue(emailField, '')
+        await setValue(emailField, '');
         await setValue(emailField, invalidEmail);
 
         alertLengthCheck(1);
         alertMessageCheck(INVALID_EMAIL);
-      })
-    })
+      });
+    });
 
     describe('Invalid password', () => {
       it('should only display password required error message', async () => {
@@ -109,7 +110,7 @@ describe('LoginForm', () => {
 
         alertLengthCheck(1);
         alertMessageCheck(PASSWORD_REQUIRED);
-      })
-    })
-  })
-})
+      });
+    });
+  });
+});

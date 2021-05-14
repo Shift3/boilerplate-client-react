@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { ButtonProps } from "react-bootstrap";
+import { FC } from 'react';
+import { ButtonProps } from 'react-bootstrap';
 
 export interface IButtonProps extends ButtonProps {
   backgroundColor: string;

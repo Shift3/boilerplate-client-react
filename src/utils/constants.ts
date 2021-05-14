@@ -1,36 +1,37 @@
 // RegExp constatns coppied over from Angular Boilerplate.
 interface IPattern {
-  DIGIT_REGEX: RegExp
-  EMAIL_REGEX: RegExp
-  SYMBOL_REGEX: RegExp
-  US_PHONE_REGEX: RegExp
-  LOWERCASE_REGEX: RegExp
-  UPPERCASE_REGEX: RegExp
+  DIGIT_REGEX: RegExp;
+  EMAIL_REGEX: RegExp;
+  SYMBOL_REGEX: RegExp;
+  US_PHONE_REGEX: RegExp;
+  LOWERCASE_REGEX: RegExp;
+  UPPERCASE_REGEX: RegExp;
 }
 
 interface IUsernamelValidationMessages {
-  IS_REQUIRED: string
-  MUST_BE_VALID_EMAIL: string
+  IS_REQUIRED: string;
+  MUST_BE_VALID_EMAIL: string;
 }
 
 interface IPasswordValidationMessages {
-  IS_REQUIRED: string
-  UPPERCASE_CHARACTER_REQUIRED: string
-  LOWERCASE_CHARACTER_REQUIRED: string
-  NUMBER_REQUIRED: string
-  SPECIAL_CHARACTER_REQUIRED: string
-  MIN_LENGTH_REQUIRED: string
+  IS_REQUIRED: string;
+  UPPERCASE_CHARACTER_REQUIRED: string;
+  LOWERCASE_CHARACTER_REQUIRED: string;
+  NUMBER_REQUIRED: string;
+  SPECIAL_CHARACTER_REQUIRED: string;
+  MIN_LENGTH_REQUIRED: string;
 }
 
 interface IValidationMessages {
-  username: IUsernamelValidationMessages
-  password: IPasswordValidationMessages
+  username: IUsernamelValidationMessages;
+  password: IPasswordValidationMessages;
 }
 
 export interface IConstant {
-  patterns: IPattern
-  validationMessages: IValidationMessages
-  version: string
+  patterns: IPattern;
+  validationMessages: IValidationMessages;
+  version: string;
+  creationYear: number;
 }
 
 export const Constants: IConstant = {
@@ -58,4 +59,5 @@ export const Constants: IConstant = {
     },
   },
   version: '0.1.0',
-}
+  creationYear: 2021,
+};
