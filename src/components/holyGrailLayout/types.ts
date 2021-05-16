@@ -1,10 +1,10 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode } from 'react';
 
 export interface HolyGrailLayoutProps {
-  leftSidebar: ReactNode;
+  leftSidebar?: ReactNode;
   children?: ReactNode;
   rightSidebar?: ReactNode;
   footer?: ReactNode;
 }
 
-export type HolyGrailType = FC<HolyGrailLayoutProps>
+export type HolyGrailType = FC<HolyGrailLayoutProps>;
