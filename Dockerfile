@@ -14,4 +14,8 @@ RUN yarn install
 # copy over the app
 COPY . ./
 
+# Various development settings can be adjusted by setting environment variables.
+# For a full reference see https://create-react-app.dev/docs/advanced-configuration/.
+ENV PORT 4200
+
 CMD yarn start
