@@ -12,7 +12,7 @@ COPY yarn.lock ./
 RUN yarn install
 
 # copy over the app
-COPY . ./
+COPY . .
 
 # Various development settings can be adjusted by setting environment variables.
 # For a full reference see https://create-react-app.dev/docs/advanced-configuration/.
