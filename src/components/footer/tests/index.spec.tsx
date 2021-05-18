@@ -5,6 +5,7 @@ import { Constants } from '../../../utils/constants';
 const { version, creationYear } = Constants;
 const { getByTestId } = screen;
 let copyright: HTMLElement;
+let wrapper: HTMLElement;
 
 describe('footer', () => {
   beforeEach(() => {
@@ -12,6 +13,10 @@ describe('footer', () => {
     copyright = getByTestId('copyright');
   });
   screen.debug();
+  it('Should display the wrapper', () => {
+    wrapper = getByTestId('wrapper');
+    expect(wrapper).toBeInTheDocument();
+  });
   it('Should contain the creationYear', () => {
     expect(copyright).toHaveTextContent(creationYear.toString());
   });

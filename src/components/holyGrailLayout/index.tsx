@@ -11,7 +11,7 @@ export const HolyGrailLayout: HolyGrailType = ({ leftSidebar, children, rightSid
   <HolyGrailWrapper>
     <HolyGrailMainWrapper>
       {!!leftSidebar && <HolyGrailLeftAside>{leftSidebar}</HolyGrailLeftAside>}
-      {!!children && <HolyGrailMain>{children}</HolyGrailMain>}
+      {!!children && <HolyGrailMain data-testid="main">{children}</HolyGrailMain>}
       {!!rightSidebar && <HolyGrailRightAside>{rightSidebar}</HolyGrailRightAside>}
     </HolyGrailMainWrapper>
     {!!footer && footer}
