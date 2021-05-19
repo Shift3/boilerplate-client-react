@@ -1,7 +1,8 @@
-import { render, screen, cleanup } from '@testing-library/react';
+import { render, cleanup, screen } from '@testing-library/react';
 import { Footer } from '../../footer/index';
 import { HolyGrailLayout } from '../index';
 
+const { getByTestId } = screen;
 let HolyGrailWrapper: HTMLElement;
 let HolyGrailMainWrapper: HTMLElement;
 let HolyGrailLeftAside: HTMLElement;
@@ -11,15 +12,15 @@ let HolyGrailRightAside: HTMLElement;
 afterEach(cleanup);
 
 describe('holyGrailLayout', () => {
-  screen.debug();
   it('Should display when props are not present', () => {
-    render(HolyGrail);
-    expect(<HolyGrailLayout />).toBeVisible();
+    render(<HolyGrailLayout />);
+    HolyGrailWrapper = getByTestId('wrapper');
+    expect(HolyGrailWrapper).toBeInTheDocument();
   });
   it('Should display when all props are present', () => {
-    const { rerender } = render(HolyGrail);
+    const { rerender } = render(<HolyGrailLayout />);
     rerender(<HolyGrailLayout leftSidebar={<div />} rightSidebar={<div />} footer={Footer} />);
-    expect(<HolyGrailLayout />).toBeInTheDocument();
+    expect(HolyGrailWrapper).toBeInTheDocument();
   });
   describe('wrappers', () => {
     it('Should render the HolyGrailWrapper', () => {
