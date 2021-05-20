@@ -10,7 +10,7 @@ export interface IAction {
 
 // FLASH MESSAGE
 
-export type SetFlashMessageAction = (dispatch: Dispatch<IAction>) => (payload: IFlashMessage) => Promise<void>;
+export type SetFlashMessageAction = (dispatch: Dispatch<IAction>) => (payload: IFlashMessage) => void;
 
 // AUTH
 

@@ -9,10 +9,10 @@ export const SetPasswordForm: SetPasswordFormType = ({ onSubmit }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors, isValid }
   } = useForm({
     resolver: yupResolver(SetPasswordFormSchema),
-    mode: 'onChange',
+    mode: 'onChange'
   });
 
   return (

@@ -9,10 +9,10 @@ export const SignupForm: SignupFormType = ({ onSubmit }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors, isValid }
   } = useForm({
     resolver: yupResolver(SignupFormSchema),
-    mode: 'onChange',
+    mode: 'onChange'
   });
 
   return (

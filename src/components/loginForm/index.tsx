@@ -10,10 +10,10 @@ export const LoginForm: LoginFormType = ({ onSubmit }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors, isValid }
   } = useForm({
     resolver: yupResolver(LoginFormSchema),
-    mode: 'onChange',
+    mode: 'onChange'
   });
 
   return (
