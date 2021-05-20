@@ -1,63 +1,66 @@
-import { render, cleanup } from '@testing-library/react';
-import { Footer } from '../../footer/index';
+import { render } from '@testing-library/react';
 import { HolyGrailLayout } from '../index';
 
 let HolyGrailWrapper: HTMLElement;
 let HolyGrailMainWrapper: HTMLElement;
-let HolyGrailLeftAside: HTMLElement;
+let HolyGrailLeftAside: HTMLElement | null;
 let HolyGrailMain: HTMLElement;
 let HolyGrailRightAside: HTMLElement;
 
-afterEach(cleanup);
-
-describe('holyGrailLayout', () => {
-  const { getByTestId } = render(<HolyGrailLayout />);
-
+describe('HolyGrailLayout', () => {
   describe('wrappers', () => {
-    it('Should display the HolyGrailWrapper', () => {
-      HolyGrailWrapper = getByTestId('wrapper');
-      expect(HolyGrailWrapper).toBeInTheDocument();
-    });
-    it('Should render the HolyGrailMainWrapper', () => {
-      render(<HolyGrailLayout />);
-      HolyGrailMainWrapper = getByTestId('mainWrapper');
-      expect(HolyGrailMainWrapper).toBeInTheDocument();
-    });
-  });
+    describe('no props are passed in', () => {
+      it('should display HolyGrailWrapper', () => {
+        const { getByTestId } = render(<HolyGrailLayout />);
+        HolyGrailWrapper = getByTestId('wrapper');
+        expect(HolyGrailWrapper).toBeInTheDocument();
+      });
 
-  it('Should display when props are not present', () => {
-    render(<HolyGrailLayout />);
-    HolyGrailWrapper = getByTestId('wrapper');
-    expect(HolyGrailWrapper).toBeInTheDocument();
-  });
-  it('Should display when all props are present', () => {
-    const { rerender } = render(<HolyGrailLayout />);
-    rerender(<HolyGrailLayout leftSidebar={<div />} rightSidebar={<div />} footer={Footer} />);
-    HolyGrailWrapper = getByTestId('wrapper');
-    expect(HolyGrailWrapper).toBeInTheDocument();
+      it('should display the HolyGrailMainWrapper', () => {
+        const { getByTestId } = render(<HolyGrailLayout />);
+        HolyGrailMainWrapper = getByTestId('mainWrapper');
+        expect(HolyGrailMainWrapper).toBeInTheDocument();
+      });
+
+      it('should not display HolyGrailLeftAside', () => {
+        const { queryByTestId } = render(<HolyGrailLayout />);
+        HolyGrailLeftAside = queryByTestId('leftAside');
+        expect(HolyGrailLeftAside).not.toBeInTheDocument();
+      });
+    });
+
+    describe('all props passed in', () => {
+      it('should display HolyGrailWrapper', () => {
+        const { getByTestId } = render(
+          <HolyGrailLayout leftSidebar={<div />} rightSidebar={<div />} footer={<div />} />,
+        );
+        HolyGrailWrapper = getByTestId('wrapper');
+        expect(HolyGrailWrapper).toBeInTheDocument();
+      });
+    });
   });
 
   // describe('leftSideBar', () => {
-  //   it('Should render the leftAside when the leftSidebar prop is present', () => {
+  //   it('should display the left aside when the leftSidebar prop is present', () => {
   //     const { rerender } = render(<HolyGrailLayout />);
   //     rerender(<HolyGrailLayout leftSidebar={<div />} />);
   //     HolyGrailLeftAside = getByTestId('leftAside');
   //     expect(HolyGrailLeftAside).toBeInTheDocument();
   //   });
-  //   it('Should not render the leftAside when the leftSidebar prop is not present', () => {
+  //   it('should not display the left aside when the leftSidebar prop is not present', () => {
   //     render(<HolyGrailLayout />);
   //     HolyGrailLeftAside = getByTestId('leftAside');
   //     expect(HolyGrailLeftAside).not.toBeInTheDocument();
   //   });
   // });
   // describe('rightSideBar', () => {
-  //   it('Should render the rightAside when the rightSidebar prop is present', () => {
+  //   it('should display the right aside when the rightSidebar prop is present', () => {
   //     const { rerender } = render(<HolyGrailLayout />);
   //     rerender(<HolyGrailLayout rightSidebar={<div />} />);
   //     HolyGrailRightAside = getByTestId('rightAside');
   //     expect(HolyGrailRightAside).toBeInTheDocument();
   //   });
-  //   it('Should not render the rightAside when the rightSidebar prop is not present', () => {
+  //   it('should not display the right aside when the rightSidebar prop is not present', () => {
   //     const { rerender } = render(<HolyGrailLayout />);
   //     rerender(<HolyGrailLayout />);
   //     HolyGrailRightAside = getByTestId('rightAside');
@@ -65,19 +68,19 @@ describe('holyGrailLayout', () => {
   //   });
   // });
   // describe('footer', () => {
-  //   it('Should render footer if footer prop is present', () => {
+  //   it('should display if footer prop is present', () => {
   //     const { rerender } = render(<HolyGrailLayout />);
   //     rerender(<HolyGrailLayout footer={Footer} />);
   //     expect(Footer).toBeInTheDocument();
   //   });
-  //   it('Should not render the footer when the footer prop is not present', () => {
+  //   it('should not display when the footer prop is not present', () => {
   //     const { rerender } = render(<HolyGrailLayout />);
   //     rerender(<HolyGrailLayout />);
   //     expect(Footer).not.toBeInTheDocument();
   //   });
   // });
   // describe('children', () => {
-  //   it('Should render HolyGrailMain component when children are present', () => {
+  //   it('should display HolyGrailMain component when children are present', () => {
   //     const { rerender } = render(<HolyGrailLayout />);
   //     rerender(
   //       <HolyGrailLayout>
@@ -87,7 +90,7 @@ describe('holyGrailLayout', () => {
   //     HolyGrailMain = getByTestId('main');
   //     expect(HolyGrailMain).toBeInTheDocument();
   //   });
-  //   it('Should not render HolyGrailMain component when children are not present', () => {
+  //   it('should not display HolyGrailMain component when children are not present', () => {
   //     const { rerender } = render(<HolyGrailLayout />);
   //     rerender(<HolyGrailLayout />);
   //     HolyGrailMain = getByTestId('main');
