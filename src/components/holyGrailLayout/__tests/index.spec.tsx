@@ -40,11 +40,11 @@ describe('HolyGrailLayout', () => {
         HolyGrailRightAside = queryByTestId('rightAside');
         expect(HolyGrailRightAside).not.toBeInTheDocument();
       });
-      //
-      // it('should not display <Footer/>', () => {
-      // render(<HolyGrailLayout />);
-      // expect(Footer).not.toBeInTheDocument();
-      // });
+
+      it('should not display <Footer/>', () => {
+        render(<HolyGrailLayout />);
+        expect(Footer).not.toBeInTheDocument;
+      });
     });
 
     describe('all props passed in', () => {
@@ -90,8 +90,8 @@ describe('HolyGrailLayout', () => {
         expect(HolyGrailRightAside).toBeInTheDocument();
       });
 
-      // it('should display <Footer/>', () => {
-      //   render(<HolyGrailLayout leftSidebar={<div />} rightSidebar={<div />} footer={<div />} />);
+      // it.only('should display <Footer/>', () => {
+      //   render(<HolyGrailLayout footer={<div />} />);
       //   expect(Footer).toBeInTheDocument();
       // });
     });
