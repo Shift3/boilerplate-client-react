@@ -1,16 +1,18 @@
 import createDataContext from './index.context';
 import Types from './action.types';
 import { setFlashMessage } from './actions/flashMessage.actions';
-import { IAction } from './actions/types';
-import { IFlashMessageState } from './types';
+import { IFlashMessageState, ReducerType } from './types';
+import { FlashMessageActionType } from './actions/types';
 
 const { SET_FLASH_MESSAGE, CLEAR_FLASH_MESSAGE } = Types;
+
+const actions = { setFlashMessage };
 
 const initialState: IFlashMessageState = {
   flashMessage: null
 };
 
-const flashMessageReducer = (state: Record<string, unknown>, action: IAction) => {
+const flashMessageReducer: ReducerType = (state, action) => {
   switch (action.type) {
     case SET_FLASH_MESSAGE:
       return { ...state, flashMessage: action.payload };
@@ -23,4 +25,8 @@ const flashMessageReducer = (state: Record<string, unknown>, action: IAction) =>
   }
 };
 
-export const { Context, Provider } = createDataContext(flashMessageReducer, { setFlashMessage }, initialState);
+export const { Context, Provider } = createDataContext<FlashMessageActionType, IFlashMessageState>(
+  flashMessageReducer,
+  actions,
+  initialState
+);
