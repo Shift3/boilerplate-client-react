@@ -90,10 +90,10 @@ describe('HolyGrailLayout', () => {
         expect(HolyGrailRightAside).toBeInTheDocument();
       });
 
-      // it.only('should display <Footer/>', () => {
-      //   render(<HolyGrailLayout footer={<div />} />);
-      //   expect(Footer).toBeInTheDocument();
-      // });
+      it('should display <Footer/>', () => {
+        render(<HolyGrailLayout footer={<div />} />);
+        expect(Footer).toBeInTheDocument;
+      });
     });
   });
 });
