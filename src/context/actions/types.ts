@@ -9,11 +9,11 @@ export interface IAction {
 }
 
 // FLASH MESSAGE
-
 export type SetFlashMessageAction = (dispatch: Dispatch<IAction>) => (payload: IFlashMessage) => void;
 
-// AUTH
+export type FlashMessageActionType = SetFlashMessageAction;
 
+// AUTH
 export interface ILoginResponse {
   token: string;
   user: Record<string, unknown>;
@@ -25,4 +25,7 @@ export interface ILoginFormPayload {
 }
 
 export type LogoutUserAction = (dispatch: Dispatch<IAction>) => (payload: null) => void;
+
 export type LoginUserAction = (dispatch: Dispatch<IAction>) => (payload: ILoginFormPayload) => Promise<void>;
+
+export type AuthActionType = LogoutUserAction | LoginUserAction;
