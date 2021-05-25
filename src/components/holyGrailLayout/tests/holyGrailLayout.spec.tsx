@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { Footer } from 'components/footer';
+import { Footer } from '../../footer/index';
 import { HolyGrailLayout } from '../index';
 
 let HolyGrailWrapper: HTMLElement;
@@ -81,7 +81,7 @@ describe('HolyGrailLayout', () => {
       });
 
       it('should display <Footer/>', () => {
-        render(<HolyGrailLayout footer={<div />} />);
+        render(<HolyGrailLayout leftSidebar={<div />} rightSidebar={<div />} footer={<div />} />);
         expect(Footer).toBeInTheDocument;
       });
     });
