@@ -81,7 +81,7 @@ describe('HolyGrailLayout', () => {
       });
 
       it('should display <Footer/>', () => {
-        render(<HolyGrailLayout footer={<div />} />);
+        render(<HolyGrailLayout leftSidebar={<div />} rightSidebar={<div />} footer={<div />} />);
         expect(Footer).toBeInTheDocument;
       });
     });
