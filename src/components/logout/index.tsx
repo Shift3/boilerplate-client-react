@@ -7,7 +7,7 @@ export const Logout: FC = () => {
 
   return (
     <>
-      <Button variant="link" onClick={logoutUser}>
+      <Button data-testid="lo-btn" variant="link" onClick={logoutUser}>
         Sign Out
       </Button>
     </>
