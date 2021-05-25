@@ -51,6 +51,22 @@ export class ForgotPasswordRequest implements IForgotPasswordRequest {
   }
 }
 
+export interface IResetPasswordRequest {
+  newPassword: string;
+  confirmPassword: string;
+}
+
+export class ResetPasswordRequest implements IResetPasswordRequest {
+  newPassword = '';
+  confirmPassword = '';
+
+  constructor(configOverride?: Partial<IResetPasswordRequest>) {
+    if (configOverride) {
+      Object.assign(this, configOverride);
+    }
+  }
+}
+
 export interface ICreateUserRequest {
   email: string;
   firstName: string;

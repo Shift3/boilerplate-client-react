@@ -5,6 +5,7 @@ import {
   IActivateAccountRequest,
   ICreateUserRequest,
   IForgotPasswordRequest,
+  IResetPasswordRequest,
   ISignupRequest,
   IUserDTO,
 } from 'models/user';
@@ -33,6 +34,11 @@ export class UserService {
   public async forgotPassword(payload: IForgotPasswordRequest): Promise<IMessage> {
     const endpoint = `${this.url}/forgot-password/`;
     return this.apiService.post<IMessage, IForgotPasswordRequest>(endpoint, payload);
+  }
+
+  public async resetPassword(payload: IResetPasswordRequest, token: string): Promise<IUserDTO> {
+    const endpoint = `${this.url}/reset-password/${token}`;
+    return this.apiService.put<IUserDTO, IResetPasswordRequest>(endpoint, payload);
   }
 
   public async createUser(payload: ICreateUserRequest): Promise<IUserDTO> {
