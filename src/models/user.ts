@@ -37,6 +37,20 @@ export class ActivateAccountRequest implements IActivateAccountRequest {
   }
 }
 
+export interface IForgotPasswordRequest {
+  email: string;
+}
+
+export class ForgotPasswordRequest implements IForgotPasswordRequest {
+  email = '';
+
+  constructor(configOverride?: Partial<IForgotPasswordRequest>) {
+    if (configOverride) {
+      Object.assign(this, configOverride);
+    }
+  }
+}
+
 export interface ICreateUserRequest {
   email: string;
   firstName: string;
