@@ -1,4 +1,11 @@
 import styled from 'styled-components';
+import styleValues from '../../utils/styleValues';
+
+export const customButtonStyles = {
+  backgroundColor: styleValues.accent,
+  color: "#fff",
+  width: "90%"
+};
 
 export const LoginPageContainer = styled.div`
   background-color: ${(props) => props.theme.authBackground};
@@ -17,12 +24,12 @@ export const LoginFormContainer = styled.div`
   padding: 50px;
 `;
 
-export const LoginFormLeft = styled.div`
+export const LoginFormContainerLeft = styled.div`
   padding-right: 15px;
   color: white;
 `;
 
-export const LoginFormRight = styled.div`
+export const LoginFormContainerRight = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;

@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
-
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form, Button } from 'react-bootstrap';
@@ -17,7 +15,7 @@ export const LoginForm: LoginFormType = ({ onSubmit }) => {
   });
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form data-testid="lf" onSubmit={handleSubmit(onSubmit)} >
       <Form.Group>
         <Form.Label htmlFor="email">Email</Form.Label>
         <Form.Control id="email" type="email" {...register('email')} />
