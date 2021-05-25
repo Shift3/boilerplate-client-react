@@ -21,16 +21,16 @@ export class SignupRequest implements ISignupRequest {
   }
 }
 
-export interface IResetPasswordRequest {
+export interface IActivateAccountRequest {
   newPassword: string;
   confirmPassword: string;
 }
 
-export class ResetPasswordRequest implements IResetPasswordRequest {
+export class ActivateAccountRequest implements IActivateAccountRequest {
   newPassword = '';
   confirmPassword = '';
 
-  constructor(configOverride?: Partial<IResetPasswordRequest>) {
+  constructor(configOverride?: Partial<IActivateAccountRequest>) {
     if (configOverride) {
       Object.assign(this, configOverride);
     }
