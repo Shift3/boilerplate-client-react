@@ -17,7 +17,7 @@ export class RoleDTO implements IRoleDTO {
   id = '';
   roleName = RoleType.None;
 
-  constructor(configOverride: Partial<IRoleDTO>) {
+  constructor(configOverride?: Partial<IRoleDTO>) {
     if (configOverride) {
       Object.assign(this, configOverride);
     }

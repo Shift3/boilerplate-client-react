@@ -1,7 +1,7 @@
 /* eslint-disable lines-between-class-members */
 /* eslint-disable max-classes-per-file */
-import { IAgencyDTO } from './agency';
-import { IRoleDTO } from './role';
+import { AgencyDTO, IAgencyDTO } from './agency';
+import { IRoleDTO, RoleDTO } from './role';
 
 export interface ISignupRequest {
   email: string;
@@ -31,6 +31,30 @@ export class ActivateAccountRequest implements IActivateAccountRequest {
   confirmPassword = '';
 
   constructor(configOverride?: Partial<IActivateAccountRequest>) {
+    if (configOverride) {
+      Object.assign(this, configOverride);
+    }
+  }
+}
+
+export interface ICreateUserRequest {
+  email: string;
+  firstName: string;
+  lastName: string;
+  profilePicture: string;
+  agency: IAgencyDTO;
+  role: IRoleDTO;
+}
+
+export class CreateUserRequest implements ICreateUserRequest {
+  email = '';
+  firstName = '';
+  lastName = '';
+  profilePicture = '';
+  agency = new AgencyDTO();
+  role = new RoleDTO();
+
+  constructor(configOverride?: Partial<ICreateUserRequest>) {
     if (configOverride) {
       Object.assign(this, configOverride);
     }

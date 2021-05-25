@@ -1,6 +1,6 @@
 /* eslint-disable lines-between-class-members */
 import { environment } from 'environment';
-import { IActivateAccountRequest, ISignupRequest, IUserDTO } from 'models/user';
+import { IActivateAccountRequest, ICreateUserRequest, ISignupRequest, IUserDTO } from 'models/user';
 import { ApiService } from './api.service';
 
 export class UserService {
@@ -21,5 +21,10 @@ export class UserService {
   public async activateAccount(payload: IActivateAccountRequest, token: string): Promise<IUserDTO> {
     const endpoint = `${this.url}/activate-account/${token}`;
     return this.apiService.put<IUserDTO, IActivateAccountRequest>(endpoint, payload);
+  }
+
+  public async createUser(payload: ICreateUserRequest): Promise<IUserDTO> {
+    const endpoint = `${this.url}`;
+    return this.apiService.post<IUserDTO, ICreateUserRequest>(endpoint, payload);
   }
 }
