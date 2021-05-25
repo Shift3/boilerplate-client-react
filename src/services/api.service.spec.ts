@@ -47,7 +47,9 @@ describe('', () => {
           request: {},
           response: {
             data: {
+              error: 'Bad Request',
               message: 'error response',
+              statusCode: 400,
             },
             status: 400,
             statusText: 'Bad Request',
@@ -66,7 +68,7 @@ describe('', () => {
         expect(axiosInstance.interceptors.response.handlers[0].rejected(error)).rejects.toEqual(error.response?.data);
       });
 
-      it('should return a message with a 500 internal server error if error is not axios error', () => {
+      it('should return rejected promise with a 500 Internal Server Error message if error is not axios error', () => {
         const error: AxiosError = {
           name: '',
           message: '',
@@ -91,7 +93,11 @@ describe('', () => {
           toJSON: () => ({}),
         };
 
-        expect(axiosInstance.interceptors.response.handlers[0].rejected(error)).rejects.toEqual(error.response?.data);
+        expect(axiosInstance.interceptors.response.handlers[0].rejected(error)).rejects.toMatchObject({
+          error: 'Internal Server Error',
+          message: error.message,
+          statusCode: 500,
+        });
       });
     });
 
