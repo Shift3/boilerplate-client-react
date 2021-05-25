@@ -1,5 +1,5 @@
 import renderer from 'react-test-renderer';
-import { Wrapper } from '../Wrapper';
+import { Wrapper } from '../styled';
 
 describe('<Wrapper />', () => {
   it('should match the stored snapshot', () => {

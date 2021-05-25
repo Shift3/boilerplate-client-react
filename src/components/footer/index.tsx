@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Wrapper } from './Wrapper';
+import { Wrapper } from './styled';
 import { Constants } from '../../utils/constants';
 
 const { version, creationYear } = Constants;
