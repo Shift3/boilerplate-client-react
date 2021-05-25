@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button Styled Component Should match the stored <CustomButton /> snapshot 1`] = `
+<button
+  className="btn btn-primary"
+  disabled={false}
+  type="button"
+/>
+`;
