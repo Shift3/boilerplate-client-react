@@ -72,16 +72,6 @@ describe('HolyGrailLayout', () => {
         expect(HolyGrailLeftAside).toBeInTheDocument();
       });
 
-      it('should display HolyGrailMain', () => {
-        const { getByTestId } = render(
-          <HolyGrailLayout>
-            <div />
-          </HolyGrailLayout>,
-        );
-        HolyGrailMain = getByTestId('main');
-        expect(HolyGrailMain).toBeInTheDocument();
-      });
-
       it('should display HolyGrailRighttAside', () => {
         const { getByTestId } = render(
           <HolyGrailLayout leftSidebar={<div />} rightSidebar={<div />} footer={<div />} />,
@@ -93,6 +83,17 @@ describe('HolyGrailLayout', () => {
       it('should display <Footer/>', () => {
         render(<HolyGrailLayout footer={<div />} />);
         expect(Footer).toBeInTheDocument;
+      });
+    });
+    describe('with nested children', () => {
+      it('should display HolyGrailMain', () => {
+        const { getByTestId } = render(
+          <HolyGrailLayout>
+            <div />
+          </HolyGrailLayout>,
+        );
+        HolyGrailMain = getByTestId('main');
+        expect(HolyGrailMain).toBeInTheDocument();
       });
     });
   });
