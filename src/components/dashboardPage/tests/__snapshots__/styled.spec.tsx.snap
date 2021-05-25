@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dashboard Page Styled Components Should match the stored <DashboardPageContainer /> snapshot 1`] = `
+.c0 {
+  backgroundColor: #000;
+}
+
+<div
+  className="c0"
+/>
+`;
