@@ -76,7 +76,6 @@
     "no-inline-comments": 0,
     "no-negated-condition": 0,
     "no-plusplus": 0,
-    "no-tabs": 0,
     "no-ternary": 0,
     "nonblock-statement-body-position": 0,
     "object-property-newline": 0,
@@ -98,6 +97,9 @@
     "implicit-arrow-linebreak": 0,
     "no-warning-comments": 0,
     "template-curly-spacing": 0,
+    "comma-dangle": 0,
+    "@typescript-eslint/ban-types": 0,
+    "react/self-closing-comp": 0,
 
     // WARN (1)
     "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
@@ -106,11 +108,10 @@
     "no-debugger": 1,
     "prefer-regex-literals": 1,
     "yoda": 1,
-    "array-bracket-spacing": 1,
+    "array-bracket-spacing": [1, "always"],
     "block-spacing": 1,
     "brace-style": 1,
     "capitalized-comments": 1,
-    "comma-dangle": [1, "never"],
     "comma-spacing": 1,
     "comma-style": 1,
     "computed-property-spacing": [1, "always"],
@@ -155,6 +156,12 @@
     "prefer-template": 1,
     "symbol-description": 1,
     "no-multiple-empty-lines": 1,
+    "no-tabs": 1,
+    "no-extra-parens": [1, "all", {
+      "returnAssign": false,
+      "conditionalAssign": false,
+      "ignoreJSX": "multi-line"
+    }],
 
     // ERROR (2)
     "for-direction": 2,
@@ -171,11 +178,6 @@
     "no-empty": 2,
     "no-empty-character-class": 2,
     "no-ex-assign": 2,
-    "no-extra-parens": [2, "all", { 
-      "returnAssign": false,
-      "conditionalAssign": false,
-      "ignoreJSX": "multi-line"
-    }],
     "no-extra-semi": 2,
     "no-func-assign": 2,
     "no-import-assign": 2,
