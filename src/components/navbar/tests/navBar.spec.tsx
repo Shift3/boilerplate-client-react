@@ -5,148 +5,66 @@ import userEvent from '@testing-library/user-event';
 import { FC } from 'react';
 
 const { click } = userEvent;
-const { getByTestId } = screen;
+const { getByTestId, getByRole } = screen;
 
 const expectInDocByTestId = (id: string) => expect(getByTestId(id)).toBeInTheDocument();
 const clickByTestId = (id: string) => act(() => click(getByTestId(id)));
-
-const mockUsers: FC = () => <div data-testid="users" />;
-const mockDirectory: FC = () => <div data-testid="directory" />;
-const mockLogout: FC = () => <div data-testid="logout" />;
+const genMock: (id: string) => FC = (id) => () => <div data-testid={id}/>;
 
 describe('<NavBar/>', () => {
-  it('Should render the <NavBarWrapper/>', () => {
+  beforeEach(() => {
     render(
       <Router>
         <Switch>
           <Route exact path="/" component={NavBar} />
+          <Route exact path="/logout" component={genMock('logout')} />
+          <Route exact path="/users" component={genMock('users')} />
+          <Route exact path="/directory" component={genMock('directory')} />
         </Switch>
       </Router>
     );
-
-    expectInDocByTestId("nbw");
-
-    cleanup();
   });
 
-  it('Should render the <NavLogo/>', () => {
-    render(
-      <Router>
-        <Switch>
-          <Route exact path="/" component={NavBar} />
-        </Switch>
-      </Router>
-    );
+  describe('Rendering', () => {
+    it('Should render the <NavBarWrapper/>', () => expectInDocByTestId("nbw"));
 
-    expectInDocByTestId("nl");
-
-    cleanup();
+    it('Should render the <NavLogo/>', () => expectInDocByTestId("nl"));
+  
+    it('Should render the <NavLinkWrapper/>', () => expectInDocByTestId("nlw"));
+  
+    it('Should render a <NavLinkStyled/> for directory', () => expectInDocByTestId("nls-d"));
+  
+    it('Should render a <NavLinkStyled/> for users', () => expectInDocByTestId("nls-u"));
+  
+    it('Should render a <NavLinkStyled/> for logout', () => expectInDocByTestId("nls-l"));
   });
 
-  it('Should render the <NavLinkWrapper/>', () => {
-    render(
-      <Router>
-        <Switch>
-          <Route exact path="/" component={NavBar} />
-        </Switch>
-      </Router>
-    );
-
-    expectInDocByTestId("nlw");
-
-    cleanup();
-  });
-
-  it('Should render a <NavLinkStyled/> for directory', () => {
-    render(
-      <Router>
-        <Switch>
-          <Route exact path="/" component={NavBar} />
-        </Switch>
-      </Router>
-    );
-
-    expectInDocByTestId("nls-d");
-
-    cleanup();
-  });
-
-  it('Should render a <NavLinkStyled/> for users', () => {
-    render(
-      <Router>
-        <Switch>
-          <Route exact path="/" component={NavBar} />
-        </Switch>
-      </Router>
-    );
-
-    expectInDocByTestId("nls-u");
-
-    cleanup();
-  });
-
-  it('Should render a <NavLinkStyled/> for logout', () => {
-    render(
-      <Router>
-        <Switch>
-          <Route exact path="/" component={NavBar} />
-        </Switch>
-      </Router>
-    );
-
-    expectInDocByTestId("nls-l");
-
-    cleanup();
-  });
-
-  it('Should navigate to "/directory" when Directory link is clicked', () => {
-    render(
-      <Router>
-        <Switch>
-          <Route exact path="/" component={NavBar} />
-          <Route exact path="/directory" component={mockDirectory} />
-        </Switch>
-      </Router>
-    );
-
-    clickByTestId('nls-d');
-
-    expectInDocByTestId("directory");
-
-    cleanup();
-  });
-
-  it('Should navigate to "/users" when Users link is clicked', () => {
-    render(
-      <Router>
-        <Switch>
-          <Route exact path="/" component={NavBar} />
-          <Route exact path="/users" component={mockUsers} />
-        </Switch>
-      </Router>
-    );
-
-    clickByTestId('nls-u')
-
-    expectInDocByTestId("users");
-
-    cleanup();
-  });
-
-  it('Should navigate to "/logout" when Logout link is clicked', () => {
-    render(
-      <Router>
-        <Switch>
-          <Route exact path="/" component={NavBar} />
-          <Route exact path="/logout" component={mockLogout} />
-        </Switch>
-      </Router>
-    );
-
-    clickByTestId('nls-l');
-
-    expectInDocByTestId("logout");
-
-    cleanup();
+  describe('<NavLink/>', () => {
+    it('Should navigate to "/users" when Users link is clicked', () => {
+      console.log("====== TEST 1 =======");
+      screen.debug();
+      clickByTestId('nls-u');
+      console.log("====== NEW PAGE ======");
+      screen.debug();
+      expectInDocByTestId('users');
+    });
+  
+    it('Should navigate to "/directory" when Directory link is clicked', () => {
+      console.log("====== TEST 2 =======");
+      screen.debug();
+      clickByTestId('nls-d');
+      console.log("====== NEW PAGE ======");
+      screen.debug();
+      expectInDocByTestId('directory');
+    });
+  
+    it('Should navigate to "/logout" when Logout link is clicked', () => {
+      console.log("====== TEST 3 =======");
+      screen.debug();
+      clickByTestId('nls-l');
+      console.log("====== NEW PAGE ======");
+      screen.debug();
+      expectInDocByTestId('logout');
+    });
   });
 });
