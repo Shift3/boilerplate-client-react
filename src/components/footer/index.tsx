@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Wrapper } from './Wrapper';
+import { Wrapper } from './styled';
 import { Constants } from '../../utils/constants';
 
 const { version, creationYear } = Constants;
@@ -9,7 +9,7 @@ export const copyrightDate: string =
   currentYear > creationYear ? `${creationYear} - ${currentYear}` : (`${creationYear}` as string);
 
 export const Footer: FC = () => (
-  <Wrapper>
+  <Wrapper data-testid="wrapper">
     <span data-testid="copyright">
       &copy; Bitwise Technology Constulting - {version} Staging &nbsp; {copyrightDate}
     </span>

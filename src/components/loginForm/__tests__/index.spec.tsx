@@ -1,7 +1,7 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { LoginForm } from './index';
-import { errorMessages } from './schema';
+import { LoginForm } from '../index';
+import { errorMessages } from '../schema';
 
 const { type, click, clear } = userEvent;
 const { getByLabelText, getByRole, getAllByRole, queryAllByRole } = screen;

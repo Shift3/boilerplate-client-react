@@ -3,15 +3,18 @@ import { Footer, copyrightDate } from '../index';
 import { Constants } from '../../../utils/constants';
 
 const { version, creationYear } = Constants;
-const { getByTestId } = screen;
 let copyright: HTMLElement;
+let wrapper: HTMLElement;
 
 describe('footer', () => {
   beforeEach(() => {
     render(<Footer />);
-    copyright = getByTestId('copyright');
+    copyright = screen.getByTestId('copyright');
   });
-  screen.debug();
+  it('Should display the wrapper', () => {
+    wrapper = screen.getByTestId('wrapper');
+    expect(wrapper).toBeInTheDocument();
+  });
   it('Should contain the creationYear', () => {
     expect(copyright).toHaveTextContent(creationYear.toString());
   });
