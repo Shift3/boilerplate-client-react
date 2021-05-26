@@ -23,5 +23,5 @@ export const SetPasswordFormSchema =  yup.object().shape({
     .matches(Constants.patterns.DIGIT_REGEX, errorMessages.PASSWORD_NUMBER),
   confirmPassword: yup.string()
     .required(errorMessages.PASSWORD_REQUIRED)
-    .oneOf([yup.ref("password"), null], errorMessages.PASSWORD_MATCH)
+    .oneOf([ yup.ref("password"), null ], errorMessages.PASSWORD_MATCH)
 });

@@ -18,7 +18,7 @@ export const SignupFormSchema =  yup.object().shape({
     .email(errorMessages.INVALID_EMAIL),
   confirmEmail: yup.string()
     .required(errorMessages.EMAIL_REQUIRED)
-    .oneOf([yup.ref("email"), null], errorMessages.EMAIL_MATCH),
+    .oneOf([ yup.ref("email"), null ], errorMessages.EMAIL_MATCH),
   firstName: yup.string()
     .required(errorMessages.FIRST_NAME_REQUIRED)
     .min(minNameLength, errorMessages.NAME_LENGTH)

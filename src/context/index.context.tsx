@@ -20,7 +20,7 @@ const createDataContext: CreateContext = (reducer: Reducer, actions: Actions, in
   const Context = createContext<Record<string, any>>({});
 
   const Provider = ({ children }: Record<string, ReactNode>) => {
-    const [state, dispatch] = useReducer(reducer, initialState);
+    const [ state, dispatch ] = useReducer(reducer, initialState);
 
     const boundActions: { [ x: string ]: unknown } = Object.keys(actions)
       .reduce((actionsObj: Record<string, unknown>, key: string) => (
