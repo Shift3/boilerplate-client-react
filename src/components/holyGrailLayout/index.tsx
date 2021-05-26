@@ -3,7 +3,7 @@ import {
   HolyGrailMainWrapper,
   HolyGrailLeftAside,
   HolyGrailMain,
-  HolyGrailRightAside,
+  HolyGrailRightAside
 } from './styled';
 import { HolyGrailType } from './types';
 

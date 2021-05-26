@@ -7,6 +7,7 @@ export type Reducer = ReducerWithoutAction<any> | ((state: Record<string, unknow
 
 export type ContextState = Record<string, unknown> | IFlashMessageState | IAuthState;
 
+export type Actions = Record<string, LogoutUserAction | LoginUserAction | SetFlashMessageAction>;
 
 export type CreateContext = (reducer: Reducer, actions: Actions, initialState: ContextState) => {
   // eslint-disable-next-line
@@ -14,18 +15,16 @@ export type CreateContext = (reducer: Reducer, actions: Actions, initialState: C
   Provider: ({ children }: Record<string, ReactNode>) => JSX.Element;
 }
 
-export type Actions = Record<string, LogoutUserAction | LoginUserAction | SetFlashMessageAction>;
-
-
 const createDataContext: CreateContext = (reducer: Reducer, actions: Actions, initialState: ContextState) => {
   // eslint-disable-next-line
   const Context = createContext<Record<string, any>>({});
 
   const Provider = ({ children }: Record<string, ReactNode>) => {
-    const [state, dispatch] = useReducer(reducer, initialState);
+    const [ state, dispatch ] = useReducer(reducer, initialState);
 
-    const boundActions: { [x: string]: unknown } = Object.keys(actions).reduce((actionsObj: Record<string, unknown>, key: string) => (
-        { ...actionsObj, [key]: actions[key](dispatch) }
+    const boundActions: { [ x: string ]: unknown } = Object.keys(actions)
+      .reduce((actionsObj: Record<string, unknown>, key: string) => (
+        { ...actionsObj, [ key ]: actions[ key ](dispatch) }
       ), {});
 
     return (
@@ -34,7 +33,7 @@ const createDataContext: CreateContext = (reducer: Reducer, actions: Actions, in
       </Context.Provider>
     );
   };
-  
+
   return { Context, Provider };
 };
 

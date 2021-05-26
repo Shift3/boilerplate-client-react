@@ -6,7 +6,7 @@ const { version, creationYear } = Constants;
 const currentYear = new Date().getFullYear();
 
 export const copyrightDate: string =
-  currentYear > creationYear ? `${creationYear} - ${currentYear}` : (`${creationYear}` as string);
+  currentYear > creationYear ? `${creationYear} - ${currentYear}` : `${creationYear}` as string;
 
 export const Footer: FC = () => (
   <Wrapper data-testid="wrapper">

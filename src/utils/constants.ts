@@ -42,12 +42,12 @@ export const Constants: IConstant = {
     SYMBOL_REGEX: /[-+_!@#$%^&*,.?]/,
     US_PHONE_REGEX: /(^\d{10}$)/,
     LOWERCASE_REGEX: /(?=.*[a-z])/,
-    UPPERCASE_REGEX: /(?=.*[A-Z])/,
+    UPPERCASE_REGEX: /(?=.*[A-Z])/
   },
   validationMessages: {
     username: {
       IS_REQUIRED: 'Username is required.',
-      MUST_BE_VALID_EMAIL: 'Must be a valid email.',
+      MUST_BE_VALID_EMAIL: 'Must be a valid email.'
     },
     password: {
       IS_REQUIRED: 'Password is required.',
@@ -55,9 +55,9 @@ export const Constants: IConstant = {
       LOWERCASE_CHARACTER_REQUIRED: 'One lower case character required.',
       NUMBER_REQUIRED: 'One number is required.',
       SPECIAL_CHARACTER_REQUIRED: 'One special character is required',
-      MIN_LENGTH_REQUIRED: 'Minimum 8 character required.',
-    },
+      MIN_LENGTH_REQUIRED: 'Minimum 8 character required.'
+    }
   },
   version: '0.1.0',
-  creationYear: 2021,
+  creationYear: 2021
 };
