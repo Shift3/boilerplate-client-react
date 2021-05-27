@@ -27,7 +27,7 @@ export const App: FC = () => (
           <FlashMessage />
           <Router>
             <Switch>
-              <HolyGrailLayout leftSidebar={NavBar} footer={Footer}>
+              <HolyGrailLayout leftSidebar={<NavBar/>} footer={<Footer/>}>
                 <Route exact path="/" component={DashboardPage} />
                 <Route exact path="/auth/login" component={LoginPage} />
                 <Route exact path="/auth/signup" component={SignupPage} />
