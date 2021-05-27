@@ -1,5 +1,5 @@
 import { render, screen, cleanup } from '@testing-library/react';
-import { FlashMessage } from '../';
+import { FlashMessage } from '..';
 const { getByTestId } = screen;
 
 // ---------------- @TODO --------------------

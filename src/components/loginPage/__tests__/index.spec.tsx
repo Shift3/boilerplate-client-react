@@ -1,6 +1,6 @@
 import { act, render, screen, cleanup } from '@testing-library/react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { LoginPage } from '../';
+import { LoginPage } from '..';
 import userEvent from '@testing-library/user-event';
 import { FC } from 'react';
 

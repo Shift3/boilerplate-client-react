@@ -1,7 +1,7 @@
 import { render, screen, cleanup, act } from '@testing-library/react';
 import { Router, Switch, Route } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import { NavBar } from '../';
+import { NavBar } from '..';
 import userEvent from '@testing-library/user-event';
 import { FC } from 'react';
 

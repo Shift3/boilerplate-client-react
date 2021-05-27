@@ -1,6 +1,6 @@
 import { render, screen, cleanup } from '@testing-library/react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { SignupPage } from '../';
+import { SignupPage } from '..';
 import { FC } from 'react';
 
 const { getByTestId } = screen;
