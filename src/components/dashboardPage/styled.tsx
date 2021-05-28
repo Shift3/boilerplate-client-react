@@ -1,5 +1,3 @@
 import styled from 'styled-components';
 
-export const DashboardPageContainer = styled.div`
-    backgroundColor: #000;
-`;
+export const DashboardPageContainer = styled.div``;
