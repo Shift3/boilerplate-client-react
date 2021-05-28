@@ -1,6 +1,6 @@
-import { render, screen, cleanup } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { FlashMessage } from '..';
-const { getByTestId } = screen;
+import { expectInDocByTestId } from '../../../utils/test';
 
 // ---------------- @TODO --------------------
 // -- TEST -- Check that the flash message is not visible.
@@ -13,14 +13,8 @@ const { getByTestId } = screen;
 // -- TEST -- Check that it renders. - REPEAT
 // -- TEST -- (CONDITIONAL) -- After the timeout has completed check that it is not present.
 
-beforeEach(() => {
-    render(<FlashMessage />);
-});
-
-afterEach(cleanup);
-
 describe('<FlashMessage/>', () => {
-    it('Should render the <FlashMessageContainer />', () => {
-        expect(getByTestId('fm-c')).toBeInTheDocument();
-    });
+  render(<FlashMessage/>);
+  it('Should render the <FlashMessageContainer />', () =>
+    expectInDocByTestId('fm-c'));
 });
