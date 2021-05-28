@@ -1,9 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Button Styled Component Should match the stored <CustomButton /> snapshot 1`] = `
+.c0 {
+  background-color: #d44325;
+  border-color: #d44325;
+  color: #fff;
+  width: 90%;
+}
+
+.c0:hover {
+  background-color: #d44325;
+  border-color: #d44325;
+}
+
+.c0:disabled {
+  background-color: #e78b78;
+  border-color: #d44325;
+}
+
 <button
-  className="btn btn-primary"
+  className="c0 btn btn-primary"
   disabled={false}
+  theme={
+    Object {
+      "backgroundColor": "#d44325",
+      "borderColor": "#d44325",
+      "color": "#fff",
+      "disabledBackgroundColor": "#e78b78",
+      "disabledBorderColor": "#d44325",
+      "hoverBackgroundColor": "#d44325",
+      "hoverBorderColor": "#d44325",
+      "width": "90%",
+    }
+  }
   type="button"
 />
 `;
