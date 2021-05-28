@@ -1,27 +1,15 @@
-import { render, screen, cleanup, act } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render} from '@testing-library/react';
 import { Logout } from '..';
-
-const { click } = userEvent;
-const { getByTestId } = screen;
-
-let logoutButton: HTMLElement;
-
-beforeEach(() => {
-    render(<Logout />);
-    logoutButton = getByTestId('lo-btn');
-});
-
-afterEach(cleanup);
+import { expectInDocByRole, expectInnerHTMLByRole } from '../../../utils/test';
 
 describe('Logout Button', () => {
-    it('Should render', () => {
-        expect(logoutButton).toBeInTheDocument();
-    });
+    beforeEach(() => render(<Logout />));
 
-    it('Should have an innerHTML equal to "Sign Out"', () => {
-        expect(logoutButton.innerHTML).toEqual("Sign Out");
-    });
+    it('Should render', () => 
+        expectInDocByRole('button'))
+
+    it('Should have an innerHTML equal to "Sign Out"', () => 
+        expectInnerHTMLByRole('button', 'Sign Out'));
 
     // it('Should sign out the logged in user on click', () => {
     //     act(() => click(logoutButton));
