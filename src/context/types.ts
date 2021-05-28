@@ -1,7 +1,9 @@
-import { LoginUserAction, LogoutUserAction, SetFlashMessageAction } from "./actions/types";
+import { ReducerWithoutAction, ReactNode } from 'react';
+import { LoginUserAction, LogoutUserAction, SetFlashMessageAction, IAction } from "./actions/types";
 
 export interface IAuthState {
-    token: string | null
+    token: string | null,
+    user: Record<string, unknown> | null
 }
 
 export interface IFlashMessage {
@@ -11,8 +13,12 @@ export interface IFlashMessage {
 }
 
 export interface IFlashMessageState { 
-    [key: string]: any
     flashMessage: IFlashMessage | null
+}
+
+export interface IFlashMessageContext {
+    setFlashMessage: SetFlashMessageAction
+    state: IFlashMessageState
 }
 
 export interface IAuthContext {
@@ -21,9 +27,11 @@ export interface IAuthContext {
     state: IAuthState
 }
 
-export interface IFlashMessageContext {
-    setFlashMessage: SetFlashMessageAction
-    state: IFlashMessageState
-}
+export type ProviderType = ({ children }: Record<string, ReactNode>) => JSX.Element
 
-// export type LocalContext = Record<string, unknown> | IAuthContext | IFlashMessageContext;
+export type ReducerType = ReducerWithoutAction<any> | ((state: Record<string, unknown>, action: IAction) => Record<string, unknown>);
+
+export type CreateDataContextType = <ActionType extends Function, StateType>(reducer: ReducerType, actions: Record<string, ActionType>, initialState: StateType) => {
+    Context: React.Context<Record<string, any>>;
+    Provider: ProviderType;
+}
