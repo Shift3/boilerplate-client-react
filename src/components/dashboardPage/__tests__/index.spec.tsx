@@ -1,14 +1,10 @@
-import { render, screen, cleanup } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { DashboardPage } from '..';
-
-const { getByTestId } = screen;
-
-beforeEach(() => render(<DashboardPage />));
-
-afterEach(cleanup);
+import { expectInDocByTestId } from '../../../utils/test';
 
 describe('<DashboardPage/>', () => {
-  it('Should render the <DashboardPageContainer/>', () => {
-    expect(getByTestId("dp-c")).toBeInTheDocument();
-  });
+  render(<DashboardPage/>);
+  
+  it('Should render the <DashboardPageContainer/>', () =>
+    expectInDocByTestId('dp-c'));
 })
