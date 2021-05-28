@@ -17,7 +17,6 @@ import { ResetPasswordPage } from './components/resetPasswordPage';
 import { FlashMessage } from './components/flashMessage';
 import { HolyGrailLayout } from './components/holyGrailLayout';
 import { NavBar } from './components/navbar';
-import { Footer } from './components/footer';
 
 export const App: FC = () => (
   <ErrorBoundary>
@@ -27,7 +26,7 @@ export const App: FC = () => (
           <FlashMessage />
           <Router>
             <Switch>
-              <HolyGrailLayout leftSidebar={<NavBar/>} footer={<Footer/>}>
+              <HolyGrailLayout leftSidebar={<NavBar/>}>
                 <Route exact path="/" component={DashboardPage} />
                 <Route exact path="/auth/login" component={LoginPage} />
                 <Route exact path="/auth/signup" component={SignupPage} />
