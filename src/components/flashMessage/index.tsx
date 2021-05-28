@@ -10,7 +10,7 @@ export const FlashMessage: FC = () => {
     <FlashMessageContainer data-testid="fm-c">
       {
         flashMessage &&
-          <Alert data-testid="fm-a" variant={ flashMessage.variant }>{ flashMessage.message }</Alert>
+          <Alert variant={ flashMessage.variant }>{ flashMessage.message }</Alert>
       }
     </FlashMessageContainer>
   );
