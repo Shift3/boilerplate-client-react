@@ -1,7 +1,7 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Form, Button } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+import { CustomButton } from 'components/button/styled';
 import { SetPasswordFormSchema } from './schema';
 import { SetPasswordFormType } from './types';
 
@@ -35,9 +35,9 @@ export const SetPasswordForm: SetPasswordFormType = ({ onSubmit }) => {
           </span>
         )}
       </Form.Group>
-      <Button type="submit" role="button" disabled={!isValid}>
+      <CustomButton type="submit" name="submit" disabled={!isValid}>
         Login
-      </Button>
+      </CustomButton>
     </Form>
   );
 };
