@@ -88,3 +88,8 @@ The `package.json` file needs to be updated with the project name and sandbox S3
 ### AWS
 
 Deploying to AWS requires having AWS credentials on the machine. The script is set to look for a default AWS profile named `shift3`. Once the AWS sandbox setup has been taken care of by Terraform, the deployment is done via `npm run deploy:staging`.
+
+## Development
+
+### Development Server
+Run `yarn start` to start the development server listening on `port 4200`. You can view the app in the browser by navigating to `http://localhost:4200`. The app will automatically reload if any source files are changed.
