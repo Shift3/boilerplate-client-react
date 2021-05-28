@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Form, Button } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+import { CustomButton } from 'components/button/styled';
 import { LoginFormSchema } from './schema';
 import { LoginFormType } from './types';
 
@@ -34,9 +35,9 @@ export const LoginForm: LoginFormType = ({ onSubmit }) => {
           </span>
         )}
       </Form.Group>
-      <Button role="button" type="submit" name="submit" disabled={!isValid}>
+      <CustomButton type="submit" name="submit" disabled={!isValid}>
         Login
-      </Button>
+      </CustomButton>
     </Form>
   );
 };
