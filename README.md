@@ -91,6 +91,9 @@ Deploying to AWS requires having AWS credentials on the machine. The script is s
 
 ## Development
 
+### Local Development
+To work with the project directly, the development machine needs `node` and `yarn` installed.
+
 ### Development Server
 Run `yarn start` to start the development server listening on port 4200. You can view the app in the browser by navigating to `http://localhost:4200`. The app will automatically reload if any source files are changed.
 
