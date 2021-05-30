@@ -2,16 +2,16 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Form, Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { SignupFormSchema } from './schema';
 import { SignupFormType } from './types';
-import { Title, Wrapper, FieldTitle } from './styled';
+import { Title, Wrapper, FieldTitle, StyledButton } from './styled';
 
 export const SignupForm: SignupFormType = ({ onSubmit }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(SignupFormSchema),
     mode: 'onChange',
@@ -49,9 +49,9 @@ export const SignupForm: SignupFormType = ({ onSubmit }) => {
           <Form.Control id='lastName' type='text' {...register('lastName')} />
           {errors.lastName?.message && <span role='alert'>{errors.lastName?.message}</span>}
         </Form.Group>
-        <Button role='button' type='submit' disabled={!isValid}>
-          Login
-        </Button>
+        <StyledButton role='button' type='submit'>
+          SIGN UP
+        </StyledButton>
       </Form>
     </Wrapper>
   );
