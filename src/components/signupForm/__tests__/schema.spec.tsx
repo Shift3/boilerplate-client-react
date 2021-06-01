@@ -1,3 +1,6 @@
+/* eslint-disable computed-property-spacing */
+/* eslint-disable space-before-function-paren */
+/* eslint-disable no-undef */
 import * as yup from 'yup';
 import { SignupFormSchema, errorMessages } from '../schema';
 
@@ -34,6 +37,7 @@ describe('SignupFormSchema', () => {
     ).toEqual(message);
 
   const errorMessageConfirmCheck = async (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     formData: Record<string, any>,
     field: string,
     mismatch: string,

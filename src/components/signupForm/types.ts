@@ -1,14 +1,14 @@
 import { FC } from 'react';
 
-export interface ISignUpFormData {
+export interface ISignupFormData {
   email: string;
   confirmEmail: string;
   firstName: string;
   lastName: string;
 }
 
-export interface ISignUpFormProps {
-  onSubmit: (data: ISignUpFormData) => void;
+export interface ISignupFormProps {
+  onSubmit: (data: ISignupFormData) => void;
 }
 
-export type SignupFormType = FC<ISignUpFormProps>;
+export type SignupFormType = FC<ISignupFormProps>;

@@ -1,3 +1,9 @@
+/* eslint-disable array-bracket-spacing */
+/* eslint-disable space-before-function-paren */
+/* eslint-disable no-magic-numbers */
+/* eslint-disable no-use-before-define */
+/* eslint-disable require-await */
+/* eslint-disable no-undef */
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { SignupForm } from '../index';
