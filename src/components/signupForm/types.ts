@@ -6,7 +6,6 @@ export interface ISignupFormData {
   firstName: string;
   lastName: string;
 }
-
 export interface ISignupFormProps {
   onSubmit: (data: ISignupFormData) => void;
 }

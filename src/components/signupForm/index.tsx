@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import { SignupFormSchema } from './schema';
 import { SignupFormType } from './types';
-import { Title, Wrapper, FieldTitle, SignUpButton, CancelButton, ButtonWrapper } from './styled';
+import { Title, Wrapper, FieldTitle } from './styled';
 
 export const SignupForm: SignupFormType = ({ onSubmit }) => {
   const {
@@ -50,16 +50,6 @@ export const SignupForm: SignupFormType = ({ onSubmit }) => {
           <Form.Control id='lastName' type='text' {...register('lastName')} />
           {errors.lastName?.message && <span role='alert'>{errors.lastName?.message}</span>}
         </Form.Group>
-        <ButtonWrapper>
-          {/* <Button role="button" type="submit" disabled={!isValid}> */}
-          <CancelButton role='button' type='submit'>
-            CANCEL
-          </CancelButton>
-          {/* <Button role="button" type="submit" disabled={!isValid}> */}
-          <SignUpButton role='button' type='submit'>
-            SIGN UP
-          </SignUpButton>
-        </ButtonWrapper>
       </Form>
     </Wrapper>
   );
