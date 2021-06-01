@@ -13,7 +13,7 @@ export enum errorMessages {
 const minNameLength = 2;
 const maxNameLength = 50;
 
-export const SignUpFormSchema = yup.object().shape({
+export const SignupFormSchema = yup.object().shape({
   email: yup.string().required(errorMessages.EMAIL_REQUIRED).email(errorMessages.INVALID_EMAIL),
   confirmEmail: yup
     .string()
