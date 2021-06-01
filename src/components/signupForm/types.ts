@@ -1,15 +1,15 @@
 import { FC } from 'react';
 
-export interface ISignupFormProps {
+export interface ISignUpFormProps {
   // eslint-disable-next-line no-use-before-define
-  onSubmit: (data: ISignupFormData) => void;
+  onSubmit: (data: ISignUpFormData) => void;
 }
 
-export interface ISignupFormData {
+export interface ISignUpFormData {
   email: string;
   confirmEmail: string;
   firstName: string;
   lastName: string;
 }
 
-export type SignupFormType = FC<ISignupFormProps>;
+export type SignUpFormType = FC<ISignUpFormProps>;

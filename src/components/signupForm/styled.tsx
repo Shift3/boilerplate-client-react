@@ -23,8 +23,20 @@ export const Error = styled.div`
   /* color: white; */
 `;
 
-export const StyledButton = styled(Button)`
+export const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+export const CancelButton = styled(Button)`
   color: white;
-  background: red;
+  background-color: ${(props) => props.theme.primary};
+  border: 1px solid white;
+  margin-right: 20px;
+`;
+
+export const SignUpButton = styled(Button)`
+  color: white;
+  background-color: red;
   border: none;
 `;

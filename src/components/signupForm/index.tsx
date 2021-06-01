@@ -1,19 +1,18 @@
 /* eslint-disable jsx-quotes */
-/* eslint-disable react/jsx-props-no-spreading */
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
-import { SignupFormSchema } from './schema';
-import { SignupFormType } from './types';
-import { Title, Wrapper, FieldTitle, StyledButton } from './styled';
+import { SignUpFormSchema } from './schema';
+import { SignUpFormType } from './types';
+import { Title, Wrapper, FieldTitle, SignUpButton, CancelButton, ButtonWrapper } from './styled';
 
-export const SignupForm: SignupFormType = ({ onSubmit }) => {
+export const SignUpForm: SignUpFormType = ({ onSubmit }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(SignupFormSchema),
+    resolver: yupResolver(SignUpFormSchema),
     mode: 'onChange',
   });
 
@@ -49,12 +48,17 @@ export const SignupForm: SignupFormType = ({ onSubmit }) => {
           <Form.Control id='lastName' type='text' {...register('lastName')} />
           {errors.lastName?.message && <span role='alert'>{errors.lastName?.message}</span>}
         </Form.Group>
-        <StyledButton role='button' type='submit'>
-          SIGN UP
-        </StyledButton>
+        <ButtonWrapper>
+          <CancelButton role='button' type='submit'>
+            CANCEL
+          </CancelButton>
+          <SignUpButton role='button' type='submit'>
+            SIGN UP
+          </SignUpButton>
+        </ButtonWrapper>
       </Form>
     </Wrapper>
   );
 };
 
-export default SignupForm;
+export default SignUpForm;
