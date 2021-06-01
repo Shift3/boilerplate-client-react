@@ -12,13 +12,13 @@ import { Provider as FlashMessageProvider } from './context/flashMessage.context
 
 // Components
 import { HomePage } from './components/homePage/HomePage';
-import { LoginPage } from './components/loginPage';
+import { LoginPage } from './components/loginPage/index';
 import { SignUpPage } from './components/signUpPage/index';
 import { ResetPasswordPage } from './components/resetPasswordPage/ResetPasswordPage';
 import { FlashMessage } from './components/flashMessage/FlashMessage';
-import { HolyGrailLayout } from './components/holyGrailLayout';
-import { NavBar } from './components/navbar';
-import { Footer } from './components/footer';
+import { HolyGrailLayout } from './components/holyGrailLayout/index';
+import { NavBar } from './components/navbar/index';
+import { Footer } from './components/footer/index';
 
 export const App: FC = () => (
   <ErrorBoundary>
