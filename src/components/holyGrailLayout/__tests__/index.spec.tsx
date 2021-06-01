@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { render } from '@testing-library/react';
 import { Footer } from '../../footer';
 import { HolyGrailLayout } from '../index';

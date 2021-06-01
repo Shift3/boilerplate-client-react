@@ -10,7 +10,7 @@ import { SignupForm } from '../index';
 import { errorMessages } from '../schema';
 
 const { type, click, clear } = userEvent;
-const { getByLabelText, getByRole, getAllByRole, queryAllByRole } = screen;
+const { getByLabelText, getAllByRole, queryAllByRole, getByTestId } = screen;
 const {
   EMAIL_REQUIRED,
   INVALID_EMAIL,
@@ -34,7 +34,7 @@ describe('SignupForm', () => {
       type(element, value);
     });
 
-  const submitClick = () => act(async () => click(submitButton));
+  const submitClick = () => act(async () => click(signupButton));
 
   const alertLengthCheck = (length: number) => expect(queryAllByRole('alert')).toHaveLength(length);
 
@@ -47,7 +47,8 @@ describe('SignupForm', () => {
   let confirmEmailField: HTMLElement;
   let firstNameField: HTMLElement;
   let lastNameField: HTMLElement;
-  let submitButton: HTMLElement;
+  let cancelButton: HTMLElement;
+  let signupButton: HTMLElement;
 
   const mockOnSubmit = jest.fn();
 
@@ -58,7 +59,8 @@ describe('SignupForm', () => {
     confirmEmailField = getByLabelText('Confirm Email');
     firstNameField = getByLabelText('First Name');
     lastNameField = getByLabelText('Last Name');
-    submitButton = getByRole('button');
+    cancelButton = getByTestId('Cancel Button');
+    signupButton = getByTestId('Sign Up Button');
 
     await setValue(emailField, validEmail);
     await setValue(confirmEmailField, validEmail);
@@ -84,8 +86,12 @@ describe('SignupForm', () => {
     expect(lastNameField).toBeInTheDocument();
   });
 
-  it('Should render submit button', () => {
-    expect(submitButton).toBeInTheDocument();
+  it('Should render Sign Up button', () => {
+    expect(signupButton).toBeInTheDocument();
+  });
+
+  it('Should render Cancel button', () => {
+    expect(cancelButton).toBeInTheDocument();
   });
 
   describe('Valid input', () => {

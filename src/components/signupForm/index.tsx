@@ -52,10 +52,10 @@ export const SignupForm: SignupFormType = ({ onSubmit }) => {
         </Form.Group>
       </Form>
       <ButtonWrapper>
-        <CancelButton role='button' type='submit'>
+        <CancelButton data-testid='Cancel Button' type='submit'>
           CANCEL
         </CancelButton>
-        <SignUpButton role='button' type='submit'>
+        <SignUpButton data-testid='Sign Up Button' type='submit'>
           SIGN UP
         </SignUpButton>
       </ButtonWrapper>
