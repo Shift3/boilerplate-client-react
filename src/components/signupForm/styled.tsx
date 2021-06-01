@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 
-export const Wrapper = styled.form`
+export const StyledForm = styled(Form)`
   background-color: ${(props) => props.theme.primary};
   padding: 40px;
   border-radius: 5px;

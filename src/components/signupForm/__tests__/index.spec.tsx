@@ -4,8 +4,10 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable require-await */
 /* eslint-disable no-undef */
-import { act, render, screen } from '@testing-library/react';
+import { act, render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { Router } from 'react-router-dom';
+import { createMemoryHistory, MemoryHistory } from 'history';
 import { SignupForm } from '../index';
 import { errorMessages } from '../schema';
 
@@ -61,12 +63,10 @@ describe('SignupForm', () => {
     lastNameField = getByLabelText('Last Name');
     cancelButton = getByTestId('Cancel Button');
     signupButton = getByTestId('Sign Up Button');
-
     await setValue(emailField, validEmail);
     await setValue(confirmEmailField, validEmail);
     await setValue(firstNameField, validName);
     await setValue(lastNameField, validName);
-
     mockOnSubmit.mockReset();
   });
 
@@ -204,6 +204,28 @@ describe('SignupForm', () => {
 
       alertLengthCheck(1);
       alertMessageCheck(NAME_LENGTH);
+    });
+  });
+
+  describe('On Cancel', () => {
+    let history: MemoryHistory;
+
+    beforeEach(() => {
+      cleanup();
+      history = createMemoryHistory();
+      history.push('/');
+
+      render(
+        <Router history={history}>
+          <SignupForm onSubmit={mockOnSubmit} />
+        </Router>,
+      );
+    });
+
+    fit('should navigate back to the previous route', async () => {
+      history.push('/auth/signup');
+      await act(async () => click(cancelButton));
+      expect(history.location.pathname).toBe('/');
     });
   });
 });

@@ -6,7 +6,7 @@ import { Wrapper } from './styled';
 //  eslint-disable-next-line
 const onSubmit = (formData: ISignupFormData) => {};
 
-export const SignUpPage: FC = () => (
+export const SignupPage: FC = () => (
   <Wrapper>
     <SignupForm onSubmit={onSubmit} />
   </Wrapper>

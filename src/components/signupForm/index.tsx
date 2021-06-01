@@ -1,11 +1,12 @@
 /* eslint-disable jsx-quotes */
 /* eslint-disable react/jsx-props-no-spreading */
+import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import { SignupFormSchema } from './schema';
 import { SignupFormType } from './types';
-import { Title, Wrapper, FieldTitle, ButtonWrapper, CancelButton, SignUpButton } from './styled';
+import { Title, FieldTitle, ButtonWrapper, CancelButton, SignUpButton, StyledForm } from './styled';
 
 export const SignupForm: SignupFormType = ({ onSubmit }) => {
   const {
@@ -18,9 +19,12 @@ export const SignupForm: SignupFormType = ({ onSubmit }) => {
     resolver: yupResolver(SignupFormSchema),
     mode: 'onChange',
   });
+
+  const history = useHistory();
+
   return (
-    <Wrapper>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+    <>
+      <StyledForm onSubmit={handleSubmit(onSubmit)}>
         <Title>Sign Up</Title>
         <Form.Group>
           <FieldTitle>
@@ -50,16 +54,22 @@ export const SignupForm: SignupFormType = ({ onSubmit }) => {
           <Form.Control id='lastName' type='text' {...register('lastName')} />
           {errors.lastName?.message && <span role='alert'>{errors.lastName?.message}</span>}
         </Form.Group>
-      </Form>
-      <ButtonWrapper>
-        <CancelButton data-testid='Cancel Button' type='submit'>
-          CANCEL
-        </CancelButton>
-        <SignUpButton data-testid='Sign Up Button' type='submit'>
-          SIGN UP
-        </SignUpButton>
-      </ButtonWrapper>
-    </Wrapper>
+        <ButtonWrapper>
+          <CancelButton
+            data-testid='Cancel Button'
+            onClick={() => {
+              console.log('cancel button clicked', history);
+              history.goBack();
+            }}
+          >
+            CANCEL
+          </CancelButton>
+          <SignUpButton data-testid='Sign Up Button' type='submit'>
+            SIGN UP
+          </SignUpButton>
+        </ButtonWrapper>
+      </StyledForm>
+    </>
   );
 };
 export default SignupForm;

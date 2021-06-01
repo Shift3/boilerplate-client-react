@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-undef */
 import { render } from '@testing-library/react';
 import { Footer } from '../../footer';
