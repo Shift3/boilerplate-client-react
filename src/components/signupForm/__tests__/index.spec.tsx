@@ -222,10 +222,16 @@ describe('SignupForm', () => {
       );
     });
 
-    fit('should navigate back to the previous route', async () => {
-      history.push('/auth/signup');
+    it('should navigate back to the previous route', async () => {
+      history.push('/');
       await act(async () => click(cancelButton));
       expect(history.location.pathname).toBe('/');
+    });
+
+    it('should navigate to sign up page', async () => {
+      history.push('/auth/signup');
+      await act(async () => click(signupButton));
+      expect(history.location.pathname).toBe('/auth/signup');
     });
   });
 });

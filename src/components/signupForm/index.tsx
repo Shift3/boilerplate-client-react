@@ -58,7 +58,6 @@ export const SignupForm: SignupFormType = ({ onSubmit }) => {
           <CancelButton
             data-testid='Cancel Button'
             onClick={() => {
-              console.log('cancel button clicked', history);
               history.goBack();
             }}
           >
