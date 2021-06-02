@@ -7,7 +7,7 @@ import reportWebVitals from './reportWebVitals';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import store from './redux/store'
+import store from './redux/store';
 
 /* TODO: - CMS 3/23/21
 - Add in configuration for toggling autoSesssionTracking
@@ -24,7 +24,7 @@ Sentry.init({
 
     return null;
   },
-  autoSessionTracking: false
+  autoSessionTracking: false,
 });
 
 ReactDOM.render(
@@ -33,7 +33,7 @@ ReactDOM.render(
       <App />
     </Provider>
   </StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 reportWebVitals();
