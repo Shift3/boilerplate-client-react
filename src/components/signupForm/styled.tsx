@@ -7,6 +7,7 @@ export const StyledForm = styled(Form)`
   border-radius: 5px;
   width: 400px;
 `;
+
 export const Title = styled.div`
   color: ${(props) => props.theme.cardHeader};
   font-size: 2em;
@@ -16,21 +17,24 @@ export const Title = styled.div`
 export const FieldTitle = styled.div`
   color: white;
 `;
+
 export const Error = styled.div`
   /* color: white; */
 `;
+
 export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
 `;
+
 export const CancelButton = styled(Button)`
   color: white;
   background-color: ${(props) => props.theme.primary};
   border: 1px solid white;
   margin-right: 20px;
 `;
+
 export const SignUpButton = styled(Button)`
   color: white;
   background-color: red;
-  border: none;
 `;

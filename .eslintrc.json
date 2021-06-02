@@ -357,6 +357,7 @@
     "rest-spread-spacing": 2,
     "react-hooks/rules-of-hooks": 2,
     "import/no-extraneous-dependencies": [
+      0,
       {
         "devDependencies": true
       }
