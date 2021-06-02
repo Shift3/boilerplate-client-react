@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import flashMessageReducer from './slices/flashMessageSlice';
+import flashMessageReducer from './flashMessage/slice';
 
 const store = configureStore({
   reducer: {
