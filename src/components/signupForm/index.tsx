@@ -1,3 +1,4 @@
+/* eslint-disable lines-around-comment */
 /* eslint-disable jsx-quotes */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useHistory } from 'react-router-dom';
@@ -12,7 +13,6 @@ export const SignupForm: SignupFormType = ({ onSubmit }) => {
   const {
     register,
     handleSubmit,
-    // formState: { errors, isValid },
     formState: { errors },
   } = useForm({
     resolver: yupResolver(SignupFormSchema),
