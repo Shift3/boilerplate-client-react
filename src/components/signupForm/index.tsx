@@ -1,7 +1,6 @@
 /* eslint-disable lines-around-comment */
 /* eslint-disable jsx-quotes */
 /* eslint-disable react/jsx-props-no-spreading */
-import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
@@ -9,7 +8,7 @@ import { SignupFormSchema } from './schema';
 import { SignupFormType } from './types';
 import { Title, FieldTitle, ButtonWrapper, CancelButton, SignUpButton, StyledForm, Error } from './styled';
 
-export const SignupForm: SignupFormType = ({ onSubmit }) => {
+export const SignupForm: SignupFormType = ({ onSubmit, onCancel }) => {
   const {
     register,
     handleSubmit,
@@ -18,8 +17,6 @@ export const SignupForm: SignupFormType = ({ onSubmit }) => {
     resolver: yupResolver(SignupFormSchema),
     mode: 'onChange',
   });
-
-  const history = useHistory();
 
   return (
     <>
@@ -56,9 +53,7 @@ export const SignupForm: SignupFormType = ({ onSubmit }) => {
         <ButtonWrapper>
           <CancelButton
             data-testid='Cancel Button'
-            onClick={() => {
-              history.goBack();
-            }}
+            onClick={onCancel}
           >
             CANCEL
           </CancelButton>

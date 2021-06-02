@@ -8,6 +8,7 @@ export interface ISignupFormData {
 }
 export interface ISignupFormProps {
   onSubmit: (data: ISignupFormData) => void;
+  onCancel: () => void;
 }
 
 export type SignupFormType = FC<ISignupFormProps>;
