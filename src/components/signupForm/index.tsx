@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import { SignupFormSchema } from './schema';
 import { SignupFormType } from './types';
-import { Title, FieldTitle, ButtonWrapper, CancelButton, SignUpButton, StyledForm } from './styled';
+import { Title, FieldTitle, ButtonWrapper, CancelButton, SignUpButton, StyledForm, Error } from './styled';
 
 export const SignupForm: SignupFormType = ({ onSubmit }) => {
   const {
@@ -30,28 +30,28 @@ export const SignupForm: SignupFormType = ({ onSubmit }) => {
             <Form.Label htmlFor='email'>Email</Form.Label>{' '}
           </FieldTitle>
           <Form.Control id='email' type='email' {...register('email')} />
-          {errors.email?.message && <span role='alert'>{errors.email?.message}</span>}
+          <Error>{errors.email?.message && <span role='alert'>{errors.email?.message}</span>}</Error>
         </Form.Group>
         <Form.Group>
           <FieldTitle>
             <Form.Label htmlFor='confirmEmail'>Confirm Email</Form.Label>{' '}
           </FieldTitle>
           <Form.Control id='confirmEmail' type='email' {...register('confirmEmail')} />
-          {errors.confirmEmail?.message && <span role='alert'>{errors.confirmEmail?.message}</span>}
+          <Error>{errors.confirmEmail?.message && <span role='alert'>{errors.confirmEmail?.message}</span>}</Error>
         </Form.Group>
         <Form.Group>
           <FieldTitle>
             <Form.Label htmlFor='firstName'>First Name</Form.Label>
           </FieldTitle>
           <Form.Control id='firstName' type='text' {...register('firstName')} />
-          {errors.firstName?.message && <span role='alert'>{errors.firstName?.message}</span>}
+          <Error>{errors.firstName?.message && <span role='alert'>{errors.firstName?.message}</span>}</Error>
         </Form.Group>
         <Form.Group>
           <FieldTitle>
             <Form.Label htmlFor='lastName'>Last Name</Form.Label>
           </FieldTitle>
           <Form.Control id='lastName' type='text' {...register('lastName')} />
-          {errors.lastName?.message && <span role='alert'>{errors.lastName?.message}</span>}
+          <Error>{errors.lastName?.message && <span role='alert'>{errors.lastName?.message}</span>}</Error>
         </Form.Group>
         <ButtonWrapper>
           <CancelButton

@@ -19,7 +19,7 @@ export const FieldTitle = styled.div`
 `;
 
 export const Error = styled.div`
-  /* color: white; */
+  color: lightgrey;
 `;
 
 export const ButtonWrapper = styled.div`
