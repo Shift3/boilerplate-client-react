@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { NavBarWrapper, NavLinkStyled, NavLogo, NavLinkWrapper } from './styled';
+import { NavWrapper, NavLinkStyled, NavLogo, NavLinkWrapper } from './styled';
 import logo from '../../assets/img/logo.png';
 
 export const NavBar: FC = () => (
