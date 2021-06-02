@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { LoginPage } from '..';
-import { expectInDocByTestId, expectInnerHTMLByTestId, clickNavigateByTestId } from '../../../utils/test';
+import { expectInDocByTestId, expectInnerHTMLByTestId, clickNavigateByTestId, expectInnerHTMLByRole } from '../../../utils/test';
 
 const renderInitialTestDOM = () => render(
   <Router>
@@ -25,28 +25,28 @@ describe('<LoginPage/>', () => {
     beforeEach(renderInitialTestDOM);
 
     it('Should render the <LoginPageContainer/>', () =>
-      expectInDocByTestId("lpc"));
+      expectInDocByTestId("loginPageContainer"));
 
     it('Should render the <LoginFormContainer/>', () =>
-      expectInDocByTestId("lfc"));
+      expectInDocByTestId("loginFormContainer"));
 
     it('Should render the <LoginFormContainerRight/>', () =>
-      expectInDocByTestId("lfc-r"));
+      expectInDocByTestId("loginFormContainerRight"));
 
     it('Should render the <LoginFormContainerLeft/>', () =>
-      expectInDocByTestId("lfc-l"));
+      expectInDocByTestId("loginFormContainerLeft"));
 
     it('Should render the <LoginForm/>', () =>
-      expectInDocByTestId("lf"));
+      expectInDocByTestId("LoginForm"));
 
     it('Should render an <h2/> with innerHTML equal to "Not Registered Yet?', () =>
-      expectInnerHTMLByTestId("lfc-r-h2", "Not Registered Yet?"));
+      expectInnerHTMLByTestId("loginPageInfoHeading", "Not Registered Yet?"));
 
     it('Should render a <p/> with innerHTML equal to "Registering for your account is quick and easy', () =>
-      expectInnerHTMLByTestId("lfc-r-p", "Registering for your account is quick and easy"));
+      expectInnerHTMLByTestId("loginPageInfoContent", "Registering for your account is quick and easy"));
 
     it('Should render a <button/> with innerHTML equal to "CREATE ACCOUNT"', () =>
-      expectInnerHTMLByTestId("ca-btn", "CREATE ACCOUNT")); 
+      expectInnerHTMLByRole("createAccountButton", "CREATE ACCOUNT")); 
   });
   
   describe('navigation', () => {
