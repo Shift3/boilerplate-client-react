@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { SetPasswordForm } from '../setPasswordForm';
-import { ISetPasswordFormData } from '../setPasswordForm/types';
+import { SetPasswordForm } from '../resetPasswordForm';
+import { ISetPasswordFormData } from '../resetPasswordForm/types';
 import { Wrapper } from './styled';
 
 //  eslint-disable-next-line
