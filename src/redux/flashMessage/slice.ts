@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IFlashMessage, IFlashMessageState } from './types';
 
 const initialState: IFlashMessageState = {
-  message: {
+  flashMessage: {
     message: 'hello world',
     variant: 'primary',
   },
@@ -14,22 +14,36 @@ const flashMessageSlice = createSlice({
   reducers: {
     setMessage: (state: IFlashMessageState, action: PayloadAction<IFlashMessage>) => {
       // eslint-disable-next-line no-param-reassign
-      state.message = action.payload;
+      state.flashMessage = action.payload;
     },
 
     clearMessage: (state: IFlashMessageState) => {
       // eslint-disable-next-line no-param-reassign
-      state.message = null;
+      state.flashMessage = null;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(
+      // eslint-disable-next-line no-use-before-define
+      setMessageWithTimeout.fulfilled,
+      (state: IFlashMessageState, action: PayloadAction<IFlashMessage>) => {
+        // eslint-disable-next-line no-param-reassign
+        state.flashMessage = action.payload;
+      },
+    );
   },
 });
 
-// export const setMessage = createAsyncThunk('fetchMessage/setMessage', async (message: IFlashMessage, thunkAPI) => {
-//   setTimeout(() => {
-//     thunkAPI.dispatch(flashMessageSlice.actions.clearMessage());
-//   }, message.timeout);
-//   return message;
-// });
+export const setMessageWithTimeout = createAsyncThunk(
+  'fetchMessage/setMessage',
+  (payload: { flashMessage: IFlashMessage; timeout: number }, thunkAPI) => {
+    setTimeout(() => {
+      // eslint-disable-next-line no-use-before-define
+      thunkAPI.dispatch(flashMessageSlice.actions.clearMessage());
+    }, payload.timeout);
+    return payload.flashMessage;
+  },
+);
 
 export const { setMessage, clearMessage } = flashMessageSlice.actions;
 
