@@ -25,16 +25,19 @@ export const Error = styled.div`
 export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
+  padding-top: 10px;
 `;
 
 export const CancelButton = styled(Button)`
   color: white;
   background-color: ${(props) => props.theme.primary};
-  border: 1px solid white;
+  border: 1px solid #679daa;
   margin-right: 20px;
 `;
 
 export const SignUpButton = styled(Button)`
   color: white;
-  background-color: red;
+  background-color: ${(props) => props.theme.accent};
+  border: none;
 `;

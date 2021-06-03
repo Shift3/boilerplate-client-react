@@ -12,7 +12,7 @@ export const SignupForm: SignupFormType = ({ onSubmit, onCancel }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(SignupFormSchema),
     mode: 'onChange',
@@ -51,13 +51,10 @@ export const SignupForm: SignupFormType = ({ onSubmit, onCancel }) => {
           <Error>{errors.lastName?.message && <span role='alert'>{errors.lastName?.message}</span>}</Error>
         </Form.Group>
         <ButtonWrapper>
-          <CancelButton
-            data-testid='Cancel Button'
-            onClick={onCancel}
-          >
+          <CancelButton data-testid='Cancel Button' onClick={onCancel}>
             CANCEL
           </CancelButton>
-          <SignUpButton data-testid='Sign Up Button' type='submit'>
+          <SignUpButton data-testid='Sign Up Button' type='submit' disabled={!isValid}>
             SIGN UP
           </SignUpButton>
         </ButtonWrapper>
