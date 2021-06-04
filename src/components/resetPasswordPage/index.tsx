@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { ResetPasswordForm } from '../resetPasswordForm';
+import { ResetPasswordForm } from '../resetPasswordForm/index';
 import { IResetPasswordFormData } from '../resetPasswordForm/types';
 import { Wrapper } from './styled';
 
