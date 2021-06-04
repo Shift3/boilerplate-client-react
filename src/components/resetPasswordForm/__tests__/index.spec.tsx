@@ -4,7 +4,7 @@
 /* eslint-disable no-magic-numbers */
 /* eslint-disable require-await */
 /* eslint-disable no-undef */
-import { act, render, screen } from '@testing-library/react';
+import { act, getAllByRole, screen } from '@testing-library/react';
 import userEvents from '@testing-library/user-event';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory, MemoryHistory } from 'history';
@@ -13,18 +13,7 @@ import { errorMessages } from '../schema';
 
 const { type, clear, click } = userEvents;
 const { getByLabelText, getByTestId, queryAllByRole } = screen;
-const {   PASSWORD_REQUIRED,
-  PASSWORD_LENGTH,
-  PASSWORD_MATCH,
-  PASSWORD_LOWERCASE,
-  PASSWORD_UPPERCASE,
-  PASSWORD_SPECIAL_CHARACTER,
-  PASSWORD_NUMBER,
-} = errorMessages;
-
-const submitClick = () => act(async () => click(submitButton));
-
-const alertLengthCheck = (length: number) => expect(queryAllByRole('alert')).toHaveLength(length);
+const { PASSWORD_REQUIRED, PASSWORD_LENGTH, PASSWORD_MATCH } = errorMessages;
 
 let currentPasswordField: HTMLElement;
 let newPasswordField: HTMLElement;
@@ -32,20 +21,42 @@ let confirmPasswordField: HTMLElement;
 let cancelButton: HTMLElement;
 let submitButton: HTMLElement;
 
-const mockOnSubmit = jest.fn();
-
 describe('LoginForm', () => {
-  currentPasswordField = getByLabelText('Current Password')
-  newPasswordField = getByLabelText('New Password')
-  confirmPasswordField = getByLabelText('Confirm Password')
-  cancelButton = getByTestId('Cancel Button');
-  submitButton = getByTestId('Sign Up Button');
+  const validPasswprd = '';
+  const invalidPassword = '';
+  const mismatchPassword = '';
 
-  await setValue(currentPasswordField, validPassword);
-  await setValue(newPasswordField, validPassword);
-  await setValue(confirmPasswordField, validPassword);
-  mockOnSubmit.mockReset();
+  const setValue = (element: HTMLElement, value: string) =>
+    act(async () => {
+      clear(element);
+      type(element, value);
+    });
 
+  const submitClick = () => act(async () => click(submitButton));
+
+  const alertLengthCheck = (length: number) => expect(queryAllByRole('alert')).toHaveLength(length);
+
+  const getAlertMessages = () =>
+    getAllByRole('alert').reduce((messages: string[], alert: HTMLElement) => [...messages, alert.innerHTML], []);
+
+  const alertMessageCheck = (message: string) => expect(getAlertMessages().includes(message));
+
+  const mockOnSubmit = jest.fn();
+
+  beforeEach(async () => {
+    render(<ResetPasswordForm onSubmit={mockOnSubmit} />);
+
+    currentPasswordField = getByLabelText('Current Password');
+    newPasswordField = getByLabelText('New Password');
+    confirmPasswordField = getByLabelText('Confirm Password');
+    cancelButton = getByTestId('Cancel Button');
+    submitButton = getByTestId('Sign Up Button');
+
+    await setValue(currentPasswordField, validPassword);
+    await setValue(newPasswordField, validPassword);
+    await setValue(confirmPasswordField, validPassword);
+
+    mockOnSubmit.mockReset();
   });
 
   it('should render current password field', () => {
@@ -56,12 +67,16 @@ describe('LoginForm', () => {
     expect(confirmPasswordField).toBeInTheDocument();
   });
 
-  it('Should render submit button', () => {
+  it('Should render Cancel button', () => {
+    expect(cancelButton).toBeInTheDocument();
+  });
+
+  it('Should render Submit button', () => {
     expect(submitButton).toBeInTheDocument();
   });
 
   describe('valid input', () => {
-    it('should call onSubmit once formData object including password and confirmPassword', async () => {
+    it('Should call onSubmit once all form data is valid, ', async () => {
       await submitClick();
       expect(mockOnSubmit).toHaveBeenCalled();
     });
@@ -73,7 +88,8 @@ describe('LoginForm', () => {
 
   describe('invalid input', () => {
     it('should not call onSubmit', async () => {
-      await setValue(passwordField, '');
+      await setValue(currentPasswordField, '');
+      await setValue(newPasswordField, '');
       await setValue(confirmPasswordField, '');
 
       await submitClick();
@@ -82,15 +98,16 @@ describe('LoginForm', () => {
     });
 
     it('should display error messages', async () => {
-      await setValue(passwordField, '');
-      await setValue(confirmPasswordField, '');
+      await setValue(currentPasswordField, invalidPassword);
+      await setValue(newPasswordField, invalidPassword);
+      await setValue(confirmPasswordField, mismatchPassword);
 
       alertLengthCheck(2);
     });
 
     describe('invalid password', () => {
       it('should only display password required error message', async () => {
-        await setValue(passwordField, '');
+        await setValue(currentPasswordField, '');
 
         alertLengthCheck(1);
         alertMessageCheck(PASSWORD_REQUIRED);

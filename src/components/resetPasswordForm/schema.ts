@@ -1,6 +1,6 @@
 /* eslint-disable array-bracket-spacing */
 import * as yup from 'yup';
-import { Constants } from '../../../utils/constants';
+import { Constants } from '../../utils/constants';
 
 export enum errorMessages {
   PASSWORD_REQUIRED = 'Password is required.',

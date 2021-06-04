@@ -23,6 +23,13 @@ const {
   NAME_LENGTH,
 } = errorMessages;
 
+let emailField: HTMLElement;
+let confirmEmailField: HTMLElement;
+let firstNameField: HTMLElement;
+let lastNameField: HTMLElement;
+let cancelButton: HTMLElement;
+let signupButton: HTMLElement;
+
 describe('SignupForm', () => {
   const validEmail = 'test@test.com';
   const invalidEmail = 'test.com';
@@ -46,13 +53,6 @@ describe('SignupForm', () => {
 
   const alertMessageCheck = (message: string) => expect(getAlertMessages().includes(message));
 
-  let emailField: HTMLElement;
-  let confirmEmailField: HTMLElement;
-  let firstNameField: HTMLElement;
-  let lastNameField: HTMLElement;
-  let cancelButton: HTMLElement;
-  let signupButton: HTMLElement;
-
   const mockOnSubmit = jest.fn();
 
   beforeEach(async () => {
@@ -64,10 +64,12 @@ describe('SignupForm', () => {
     lastNameField = getByLabelText('Last Name');
     cancelButton = getByTestId('Cancel Button');
     signupButton = getByTestId('Sign Up Button');
+
     await setValue(emailField, validEmail);
     await setValue(confirmEmailField, validEmail);
     await setValue(firstNameField, validName);
     await setValue(lastNameField, validName);
+
     mockOnSubmit.mockReset();
   });
 
