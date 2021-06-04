@@ -1,7 +1,8 @@
 import { createContext, useReducer, ReactNode } from 'react';
 import { ProviderType, ReducerType, CreateDataContextType } from './types';
 
-const createDataContext: CreateDataContextType = <ActionType extends Function, StateType> (
+
+const createDataContext: CreateDataContextType = <ActionType extends CallableFunction, StateType> (
   reducer: ReducerType,
   actions: Record<string, ActionType>,
   initialState: StateType
