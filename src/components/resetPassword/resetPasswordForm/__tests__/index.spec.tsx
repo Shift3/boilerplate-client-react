@@ -1,6 +1,11 @@
+/* eslint-disable array-bracket-spacing */
+/* eslint-disable space-before-function-paren */
+/* eslint-disable no-magic-numbers */
+/* eslint-disable require-await */
+/* eslint-disable no-undef */
 import { act, render, screen } from '@testing-library/react';
 import userEvents from '@testing-library/user-event';
-import { SetPasswordForm } from '..';
+import { ResetPasswordForm } from '..';
 import { errorMessages } from '../schema';
 
 const { type, clear, click } = userEvents;
@@ -34,7 +39,7 @@ describe('LoginForm', () => {
   const alertMessageCheck = (message: string) => expect(getAlertMessages().includes(message));
 
   beforeEach(async () => {
-    render(<SetPasswordForm onSubmit={mockOnSubmit} />);
+    render(<ResetPasswordForm onSubmit={mockOnSubmit} />);
 
     passwordField = getByLabelText('Password');
     confirmPasswordField = getByLabelText('Confirm Password');

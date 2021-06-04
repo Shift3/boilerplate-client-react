@@ -1,12 +1,12 @@
-import { FC } from "react";
+import { FC } from 'react';
 
-export interface ISetPasswordFormData {
-    password: string,
-    confirmPassword: string,
+export interface IResetPasswordFormData {
+  password: string;
+  confirmPassword: string;
 }
 
 type ISetPasswordFormProps = {
-    onSubmit: (data: ISetPasswordFormData) => void
+  onSubmit: (data: IResetPasswordFormData) => void;
 };
 
-export type SetPasswordFormType = FC<ISetPasswordFormProps>
+export type ResetPasswordFormType = FC<ISetPasswordFormProps>;

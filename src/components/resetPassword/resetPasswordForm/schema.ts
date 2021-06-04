@@ -1,3 +1,4 @@
+/* eslint-disable array-bracket-spacing */
 import * as yup from 'yup';
 import { Constants } from '../../../utils/constants';
 
@@ -13,7 +14,7 @@ export enum errorMessages {
 
 const minPassLength = 8;
 
-export const SetPasswordFormSchema = yup.object().shape({
+export const ResetPasswordFormSchema = yup.object().shape({
   password: yup
     .string()
     .required(errorMessages.PASSWORD_REQUIRED)

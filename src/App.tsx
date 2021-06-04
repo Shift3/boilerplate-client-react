@@ -14,7 +14,7 @@ import { Provider as FlashMessageProvider } from './context/flashMessage.context
 import { HomePage } from './components/homePage/HomePage';
 import { LoginPage } from './components/loginPage';
 import { SignUpPage } from './components/signupPage';
-import { ResetPasswordPage } from './components/resetPassword/resetPasswordPage/ResetPasswordPage';
+import { ResetPasswordPage } from './components/resetPassword/resetPasswordPage';
 import { FlashMessage } from './components/flashMessage/FlashMessage';
 import { HolyGrailLayout } from './components/holyGrailLayout';
 import { NavBar } from './components/navbar';
