@@ -26,7 +26,8 @@ describe('loginFormSchema', () => {
   const missingNumberPassword = 'Password!';
 
   const formData = {
-    password: validPassword,
+    currentPassword: validPassword,
+    newPassword: validPassword,
     confirmPassword: validPassword,
   };
 

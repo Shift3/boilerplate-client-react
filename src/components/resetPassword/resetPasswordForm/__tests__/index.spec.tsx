@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable array-bracket-spacing */
 /* eslint-disable space-before-function-paren */
 /* eslint-disable no-magic-numbers */
@@ -5,61 +6,53 @@
 /* eslint-disable no-undef */
 import { act, render, screen } from '@testing-library/react';
 import userEvents from '@testing-library/user-event';
-import { ResetPasswordForm } from '..';
+import { Router } from 'react-router-dom';
+import { createMemoryHistory, MemoryHistory } from 'history';
+import { ResetPasswordForm } from '../index';
 import { errorMessages } from '../schema';
 
 const { type, clear, click } = userEvents;
-const { getAllByRole, getByLabelText, getByRole, queryAllByRole } = screen;
-const { PASSWORD_REQUIRED, PASSWORD_LENGTH, PASSWORD_MATCH } = errorMessages;
+const { getByLabelText, getByTestId, queryAllByRole } = screen;
+const { PASSWORD_REQUIRED, PASSWORD_LENGTH, PASSWORD_MATCH,
+describte('ResetPasswordForm', () => {
+  type(element, value);
+});
+
+const submitClick = () => act(async () => click(submitButton));
+
+const alertLengthCheck = (length: number) => expect(queryAllByRole('alert')).toHaveLength(length);
+
+let currentPasswordField: HTMLElement;
+let newPasswordField: HTMLElement;
+let confirmPasswordField: HTMLElement;
+let cancelButton: HTMLElement;
+let submitButton: HTMLElement;
+
+const mockOnSubmit = jest.fn();
 
 describe('LoginForm', () => {
-  const validPassword = 'Password123!';
-  const shortPassword = 'test';
-  const longPassword = 'passwordtoolong';
+  currentPasswordField = getByLabelText('Current Password')
+  newPasswordField = getByLabelText('New Password')
+  confirmPasswordField = getByLabelText('Confirm Password')
+  cancelButton = getByTestId('Cancel Button');
+  submitButton = getByTestId('Sign Up Button');
 
-  let passwordField: HTMLElement;
-  let confirmPasswordField: HTMLElement;
-  let submitButton: HTMLElement;
+  await setValue(currentPasswordField, validPassword);
+  await setValue(newPasswordField, validPassword);
+  await setValue(confirmPasswordField, validPassword);
+  mockOnSubmit.mockReset();
 
-  const mockOnSubmit = jest.fn();
-
-  const submitClick = () => act(async () => click(submitButton));
-
-  const setValue = (element: HTMLElement, value: string) =>
-    act(async () => {
-      clear(element);
-      type(element, value);
-    });
-
-  const alertLengthCheck = (length: number) => expect(queryAllByRole('alert')).toHaveLength(length);
-
-  const getAlertMessages = () =>
-    getAllByRole('alert').reduce((messages: string[], alert: HTMLElement) => [...messages, alert.innerHTML], []);
-
-  const alertMessageCheck = (message: string) => expect(getAlertMessages().includes(message));
-
-  beforeEach(async () => {
-    render(<ResetPasswordForm onSubmit={mockOnSubmit} />);
-
-    passwordField = getByLabelText('Password');
-    confirmPasswordField = getByLabelText('Confirm Password');
-    submitButton = getByRole('button');
-
-    await setValue(passwordField, validPassword);
-    await setValue(confirmPasswordField, validPassword);
-
-    mockOnSubmit.mockReset();
   });
 
-  it('should render password field', () => {
-    expect(passwordField).toBeInTheDocument();
+  it('should render current password field', () => {
+    expect(currentPasswordField).toBeInTheDocument();
   });
 
   it('should render confirm password field', () => {
     expect(confirmPasswordField).toBeInTheDocument();
   });
 
-  it('should render submit button', () => {
+  it('Should render submit button', () => {
     expect(submitButton).toBeInTheDocument();
   });
 

@@ -7,7 +7,7 @@ import { ResetPasswordFormSchema } from './schema';
 import { ResetPasswordFormType } from './types';
 import { FieldTitle, Title, StyledForm, Error, ButtonWrapper, SubmitButton, CancelButton } from './styled';
 
-export const ResetPasswordForm: ResetPasswordFormType = ({ onSubmit }) => {
+export const ResetPasswordForm: ResetPasswordFormType = ({ onSubmit, onCancel }) => {
   const {
     register,
     handleSubmit,
@@ -38,7 +38,6 @@ export const ResetPasswordForm: ResetPasswordFormType = ({ onSubmit }) => {
           <FieldTitle>
             <Form.Label htmlFor='password'>New Password</Form.Label>
           </FieldTitle>
-
           <Form.Control id='newPassword' type='password' {...register('newPassword')} />
           <Error>
             {errors.password?.message && (
@@ -51,21 +50,21 @@ export const ResetPasswordForm: ResetPasswordFormType = ({ onSubmit }) => {
         <Form.Group>
           <FieldTitle>
             <Form.Label htmlFor='confirmPassword'>Confirm Password</Form.Label>
-            <Form.Control id='confirmPassword' type='password' {...register('confirmPassword')} />
-            <Error>
-              {errors.confirmPassword?.message && (
-                <span role='alert' className='danger'>
-                  {errors.confirmPassword?.message}
-                </span>
-              )}
-            </Error>
           </FieldTitle>
+          <Form.Control id='confirmPassword' type='password' {...register('confirmPassword')} />
+          <Error>
+            {errors.confirmPassword?.message && (
+              <span role='alert' className='danger'>
+                {errors.confirmPassword?.message}
+              </span>
+            )}
+          </Error>
         </Form.Group>
         <ButtonWrapper>
-          <CancelButton type='submit' role='button'>
+          <CancelButton data-testid='Cancel Button' onClick={onCancel}>
             Cancel
           </CancelButton>
-          <SubmitButton type='submit' role='button' disabled={!isValid}>
+          <SubmitButton data-testid='Sign Up Button' type='submit' disabled={!isValid}>
             Submit
           </SubmitButton>
         </ButtonWrapper>
