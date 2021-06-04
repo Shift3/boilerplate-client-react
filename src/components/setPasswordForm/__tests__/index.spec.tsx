@@ -1,133 +1,133 @@
-import { act, render, screen } from '@testing-library/react';
-import userEvents from '@testing-library/user-event';
+import { render } from '@testing-library/react';
 import { SetPasswordForm } from '..';
 import { errorMessages } from '../schema';
+import {
+  clickByRoleAsync,
+  expectLengthByRole,
+  setValueByLabelText,
+  expectInnerHTMLByRole,
+  expectMockFunctionNotCalled,
+  expectInDocByLabelText,
+  expectInDocByRole,
+} from 'utils/test';
 
-const { type, clear, click } = userEvents;
-const { getAllByRole, getByLabelText, getByRole, queryAllByRole } = screen;
-const { PASSWORD_REQUIRED, PASSWORD_LENGTH, PASSWORD_MATCH } = errorMessages;
+
+const { 
+  PASSWORD_MATCH,
+  PASSWORD_LENGTH,
+  PASSWORD_NUMBER,
+  PASSWORD_REQUIRED,
+  PASSWORD_LOWERCASE,
+  PASSWORD_UPPERCASE,
+  PASSWORD_SPECIAL_CHARACTER,
+} = errorMessages;
+
+const validPassword = 'Password123!';
+const shortPassword = 'T123!';
+const noSpecialCharPassword= 'Password123';
+const noNumberPassword = 'Password!';
+const noUppercasePassword = 'password123!';
+const noLowercasePassword = 'PASSWORD123!';
+
+const mockOnSubmit = jest.fn();
 
 describe('LoginForm', () => {
-  const validPassword = 'Password123!';
-  const shortPassword = 'test';
-  const longPassword = 'passwordtoolong';
-
-  let passwordField: HTMLElement;
-  let confirmPasswordField: HTMLElement;
-  let submitButton: HTMLElement;
-
-  const mockOnSubmit = jest.fn();
-
-  const submitClick = () => act(async () => click(submitButton));
-
-  const setValue = (element: HTMLElement, value: string) =>
-    act(async () => {
-      clear(element);
-      type(element, value);
-    });
-
-  const alertLengthCheck = (length: number) => expect(queryAllByRole('alert')).toHaveLength(length);
-
-  const getAlertMessages = () =>
-    getAllByRole('alert').reduce((messages: string[], alert: HTMLElement) => [...messages, alert.innerHTML], []);
-
-  const alertMessageCheck = (message: string) => expect(getAlertMessages().includes(message));
-
   beforeEach(async () => {
     render(<SetPasswordForm onSubmit={mockOnSubmit} />);
 
-    passwordField = getByLabelText('Password');
-    confirmPasswordField = getByLabelText('Confirm Password');
-    submitButton = getByRole('button');
-
-    await setValue(passwordField, validPassword);
-    await setValue(confirmPasswordField, validPassword);
-
-    mockOnSubmit.mockReset();
+    await setValueByLabelText('Password', validPassword);
+    await setValueByLabelText('Confirm Password', validPassword);
   });
 
-  it('should render password field', () => {
-    expect(passwordField).toBeInTheDocument();
+  describe('Rendering', () => {
+    it('should render password field', () =>
+      expectInDocByLabelText('Password'));
+
+    it('should render confirm password field', () =>
+      expectInDocByLabelText('Confirm Password'));
+
+    it('should render submit button', () =>
+      expectInDocByRole('button'));
   });
 
-  it('should render confirm password field', () => {
-    expect(confirmPasswordField).toBeInTheDocument();
-  });
-
-  it('should render submit button', () => {
-    expect(submitButton).toBeInTheDocument();
-  });
-
-  describe('valid input', () => {
-    it('should call onSubmit once formData object including password and confirmPassword', async () => {
-      await submitClick();
+  describe('With valid input', () => {
+    it('Should call onSubmit once formData object including password and confirmPassword', async () => {
+      await clickByRoleAsync('button');
       expect(mockOnSubmit).toHaveBeenCalled();
+
+      mockOnSubmit.mockReset();
     });
 
-    it('should not display error messages', async () => {
-      alertLengthCheck(0);
+    it('Should not display error messages', async () => {
+      expectLengthByRole('alert', 0);
     });
   });
 
   describe('invalid input', () => {
-    it('should not call onSubmit', async () => {
-      await setValue(passwordField, '');
-      await setValue(confirmPasswordField, '');
+    it('Should not call onSubmit', async () => {
+      await setValueByLabelText('Password', '');
+      await setValueByLabelText('Confirm Password', '');
+      await clickByRoleAsync('button');
+      expectMockFunctionNotCalled(mockOnSubmit);
 
-      await submitClick();
-
-      expect(mockOnSubmit).not.toHaveBeenCalled();
+      mockOnSubmit.mockReset();
     });
 
-    it('should display error messages', async () => {
-      await setValue(passwordField, '');
-      await setValue(confirmPasswordField, '');
+    it('Should display error messages', async () => {
+      await setValueByLabelText('Password', '');
+      await setValueByLabelText('Confirm Password', '');
 
-      alertLengthCheck(2);
+      expectLengthByRole('alert', 2);
     });
 
     describe('invalid password', () => {
-      it('should only display password required error message', async () => {
-        await setValue(passwordField, '');
-
-        alertLengthCheck(1);
-        alertMessageCheck(PASSWORD_REQUIRED);
+      it('Should only display password required error message', async () => {
+        await setValueByLabelText('Password', '');
+        expectLengthByRole('alert', 1);
+        expectInnerHTMLByRole('alert', PASSWORD_REQUIRED);
       });
 
-      it('should only display confirm password required error message', async () => {
-        await setValue(confirmPasswordField, '');
+      it ('Should only display special character required error message', async () => {
+        await setValueByLabelText('Password', noSpecialCharPassword);
+        expectLengthByRole('alert', 1);
+        expectInnerHTMLByRole('alert', PASSWORD_SPECIAL_CHARACTER);
+      });
 
-        alertLengthCheck(1);
-        alertMessageCheck(PASSWORD_REQUIRED);
+      it ('Should only display number required error message', async () => {
+        await setValueByLabelText('Password', noNumberPassword);
+        expectLengthByRole('alert', 1);
+        expectInnerHTMLByRole('alert', PASSWORD_NUMBER);
+      });
+
+      it ('Should only display uppercase letter required error message', async () => {
+        await setValueByLabelText('Password', noUppercasePassword);
+        expectLengthByRole('alert', 1);
+        expectInnerHTMLByRole('alert', PASSWORD_UPPERCASE);
+      });
+
+      it ('Should only display lowercase letter required error message', async () => {
+        await setValueByLabelText('Password', noLowercasePassword);
+        expectLengthByRole('alert', 1);
+        expectInnerHTMLByRole('alert', PASSWORD_LOWERCASE);
       });
     });
 
     describe('non matching password', () => {
-      it('should only display password mismatch error message', async () => {
-        await setValue(passwordField, validPassword);
-        await setValue(confirmPasswordField, shortPassword);
-
-        alertLengthCheck(1);
-        alertMessageCheck(PASSWORD_MATCH);
+      it('Should only display password mismatch error message', async () => {
+        await setValueByLabelText('Password', validPassword);
+        await setValueByLabelText('Confirm Password', shortPassword);
+        expectLengthByRole('alert', 1);
+        expectInnerHTMLByRole('alert', PASSWORD_MATCH);
       });
     });
   });
 
   describe('invalid password length', () => {
-    it('should only display password length error message', async () => {
-      await setValue(passwordField, shortPassword);
-      await setValue(confirmPasswordField, shortPassword);
-
-      alertLengthCheck(1);
-      alertMessageCheck(PASSWORD_LENGTH);
-    });
-
-    it('should only display password length error message', async () => {
-      await setValue(passwordField, longPassword);
-      await setValue(confirmPasswordField, longPassword);
-
-      alertLengthCheck(1);
-      alertMessageCheck(PASSWORD_LENGTH);
+    it('Should only display password length error message', async () => {
+      await setValueByLabelText('Password', shortPassword);
+      await setValueByLabelText('Confirm Password', shortPassword);
+      expectLengthByRole('alert', 1);
+      expectInnerHTMLByRole('alert', PASSWORD_LENGTH);
     });
   });
 });

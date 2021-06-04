@@ -17,12 +17,12 @@ export const LoginFormContainer = styled.div`
   padding: 50px;
 `;
 
-export const LoginFormLeft = styled.div`
+export const LoginFormContainerLeft = styled.div`
   padding-right: 15px;
   color: white;
 `;
 
-export const LoginFormRight = styled.div`
+export const LoginFormContainerRight = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;

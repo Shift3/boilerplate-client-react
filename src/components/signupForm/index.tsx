@@ -1,7 +1,7 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Form, Button } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+import { CustomButton } from 'components/button/styled';
 import { SignupFormSchema } from './schema';
 import { SignupFormType } from './types';
 
@@ -16,7 +16,7 @@ export const SignupForm: SignupFormType = ({ onSubmit }) => {
   });
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form data-testid="sf" onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
         <Form.Label htmlFor="email">Email</Form.Label>
         <Form.Control id="email" type="email" {...register('email')} />
@@ -37,9 +37,9 @@ export const SignupForm: SignupFormType = ({ onSubmit }) => {
         <Form.Control id="lastName" type="text" {...register('lastName')} />
         {errors.lastName?.message && <span role="alert">{errors.lastName?.message}</span>}
       </Form.Group>
-      <Button role="button" type="submit" disabled={!isValid}>
+      <CustomButton type="submit" name="submit" disabled={!isValid}>
         Login
-      </Button>
+      </CustomButton>
     </Form>
   );
 };
