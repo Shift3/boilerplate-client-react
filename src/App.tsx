@@ -32,7 +32,7 @@ export const App: FC = () => (
                 <Route exact path='/' component={HomePage} />
                 <Route exact path='/auth/login' component={LoginPage} />
                 <Route exact path='/auth/signup' component={SignUpPage} />
-                <Route exact path='/auth/forgot-password' component={ResetPasswordPage} />
+                <Route exact path='/auth/change-password' component={ResetPasswordPage} />
               </HolyGrailLayout>
             </Switch>
           </Router>

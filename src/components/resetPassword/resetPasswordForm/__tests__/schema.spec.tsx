@@ -1,5 +1,9 @@
+/* eslint-disable max-len */
+/* eslint-disable computed-property-spacing */
+/* eslint-disable space-before-function-paren */
+/* eslint-disable no-undef */
 import * as yup from 'yup';
-import { SetPasswordFormSchema, errorMessages } from '../schema';
+import { ResetPasswordFormSchema, errorMessages } from '../schema';
 
 const {
   PASSWORD_REQUIRED,
@@ -29,23 +33,24 @@ describe('loginFormSchema', () => {
   const errorMessageCheck = async (field: string, value: string, message: string) =>
     expect(
       await yup
-        .reach(SetPasswordFormSchema, field)
+        .reach(ResetPasswordFormSchema, field)
         .validate(value)
         .catch((err: yup.ValidationError) => err.message),
     ).toEqual(message);
 
   const errorMessageConfirmCheck = async (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     formData: Record<string, any>,
     field: string,
     mismatch: string,
     message: string,
   ) =>
     expect(
-      await SetPasswordFormSchema.validate({ ...formData, [field]: mismatch }).catch((err) => err.message),
+      await ResetPasswordFormSchema.validate({ ...formData, [field]: mismatch }).catch((err) => err.message),
     ).toEqual(message);
 
   describe('Valid input data', () => {
-    it('Should pass validation', () => expect(SetPasswordFormSchema.isValidSync(formData)).toBeTruthy());
+    it('Should pass validation', () => expect(ResetPasswordFormSchema.isValidSync(formData)).toBeTruthy());
   });
 
   describe('Password', () => {
