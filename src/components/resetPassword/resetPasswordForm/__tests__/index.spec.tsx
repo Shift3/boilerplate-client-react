@@ -13,10 +13,14 @@ import { errorMessages } from '../schema';
 
 const { type, clear, click } = userEvents;
 const { getByLabelText, getByTestId, queryAllByRole } = screen;
-const { PASSWORD_REQUIRED, PASSWORD_LENGTH, PASSWORD_MATCH,
-describte('ResetPasswordForm', () => {
-  type(element, value);
-});
+const {   PASSWORD_REQUIRED,
+  PASSWORD_LENGTH,
+  PASSWORD_MATCH,
+  PASSWORD_LOWERCASE,
+  PASSWORD_UPPERCASE,
+  PASSWORD_SPECIAL_CHARACTER,
+  PASSWORD_NUMBER,
+} = errorMessages;
 
 const submitClick = () => act(async () => click(submitButton));
 
