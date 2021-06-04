@@ -2,9 +2,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Form, Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { ResetPasswordFormSchema } from './schema';
 import { ResetPasswordFormType } from './types';
+import { FieldTitle, Title, StyledForm, Error, ButtonWrapper, SubmitButton, CancelButton } from './styled';
 
 export const ResetPasswordForm: ResetPasswordFormType = ({ onSubmit }) => {
   const {
@@ -17,29 +18,59 @@ export const ResetPasswordForm: ResetPasswordFormType = ({ onSubmit }) => {
   });
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
-      <Form.Group>
-        <Form.Label htmlFor='password'>Password</Form.Label>
-        <Form.Control id='password' type='password' {...register('password')} />
-        {errors.password?.message && (
-          <span role='alert' className='danger'>
-            {errors.password?.message}
-          </span>
-        )}
-      </Form.Group>
-      <Form.Group>
-        <Form.Label htmlFor='confirmPassword'>Confirm Password</Form.Label>
-        <Form.Control id='confirmPassword' type='password' {...register('confirmPassword')} />
-        {errors.confirmPassword?.message && (
-          <span role='alert' className='danger'>
-            {errors.confirmPassword?.message}
-          </span>
-        )}
-      </Form.Group>
-      <Button type='submit' role='button' disabled={!isValid}>
-        Login
-      </Button>
-    </Form>
+    <>
+      <StyledForm onSubmit={handleSubmit(onSubmit)}>
+        <Title>Reset Password</Title>
+        <Form.Group>
+          <FieldTitle>
+            <Form.Label htmlFor='password'>Current Password</Form.Label>
+          </FieldTitle>
+          <Form.Control id='currentPassword' type='password' {...register('currentPassword')} />
+          <Error>
+            {errors.password?.message && (
+              <span role='alert' className='danger'>
+                {errors.currentPassword?.message}
+              </span>
+            )}
+          </Error>
+        </Form.Group>
+        <Form.Group>
+          <FieldTitle>
+            <Form.Label htmlFor='password'>New Password</Form.Label>
+          </FieldTitle>
+
+          <Form.Control id='newPassword' type='password' {...register('newPassword')} />
+          <Error>
+            {errors.password?.message && (
+              <span role='alert' className='danger'>
+                {errors.newPassword?.message}
+              </span>
+            )}
+          </Error>
+        </Form.Group>
+        <Form.Group>
+          <FieldTitle>
+            <Form.Label htmlFor='confirmPassword'>Confirm Password</Form.Label>
+            <Form.Control id='confirmPassword' type='password' {...register('confirmPassword')} />
+            <Error>
+              {errors.confirmPassword?.message && (
+                <span role='alert' className='danger'>
+                  {errors.confirmPassword?.message}
+                </span>
+              )}
+            </Error>
+          </FieldTitle>
+        </Form.Group>
+        <ButtonWrapper>
+          <CancelButton type='submit' role='button'>
+            Cancel
+          </CancelButton>
+          <SubmitButton type='submit' role='button' disabled={!isValid}>
+            Submit
+          </SubmitButton>
+        </ButtonWrapper>
+      </StyledForm>
+    </>
   );
 };
 
