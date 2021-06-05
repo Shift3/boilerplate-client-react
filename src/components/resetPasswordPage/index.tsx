@@ -1,3 +1,4 @@
+/* eslint-disable lines-around-comment */
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ResetPasswordForm } from '../resetPasswordForm/index';
