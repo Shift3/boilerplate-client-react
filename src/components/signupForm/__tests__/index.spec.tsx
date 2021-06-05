@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 /* eslint-disable array-bracket-spacing */
 /* eslint-disable space-before-function-paren */
