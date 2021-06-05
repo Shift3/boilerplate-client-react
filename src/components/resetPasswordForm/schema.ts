@@ -4,6 +4,7 @@ import { Constants } from '../../utils/constants';
 
 export enum errorMessages {
   PASSWORD_REQUIRED = 'Password is required.',
+  INVALID_PASSWORD = 'Please enter a valid password.',
   PASSWORD_LENGTH = 'Password must be at least 8 characters.',
   PASSWORD_LOWERCASE = 'Password must contain at least one lowercase letter',
   PASSWORD_UPPERCASE = 'Password must contain at least one uppercase letter',
