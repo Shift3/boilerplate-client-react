@@ -11,8 +11,23 @@ export const Wrapper = styled.div`
   align-items: center;
 `;
 
-export const FormLeft = styled.div``;
+export const LeftForm = styled.div``;
 
-export const FormRight = styled.div``;
+export const CreateAccount = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: ${(props) => props.theme.primary};
+`;
+
+export const Title = styled.div`
+  color: ${(props) => props.theme.cardHeader};
+  font-size: 2em;
+  font-style: bold;
+  padding-bottom: 10px;
+`;
+
+export const Text = styled.div``;
 
 export const CreateAccountButton = styled(Button)``;

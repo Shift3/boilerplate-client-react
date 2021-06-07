@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { LogInForm } from 'components/logInForm';
 import { Link, useHistory } from 'react-router-dom';
 import { ILogInFormData } from '../logInForm/types';
-import { Wrapper, FormLeft, FormRight, CreateAccountButton } from './styled';
+import { Wrapper, LeftForm, CreateAccount, CreateAccountButton, Title, Text } from './styled';
 
 export const LogInPage: FC = () => {
   const history = useHistory();
@@ -24,15 +24,19 @@ export const LogInPage: FC = () => {
   const navigateToSignup = () => push('/auth/signup');
   return (
     <Wrapper>
-      <FormLeft>
+      <LeftForm>
         <LogInForm onSubmit={onSubmit} onCancel={onCancel} />
         <Link to='/auth/forgot-password'>Forgot Password?</Link>
-      </FormLeft>
-      <FormRight>
-        <h2>Not Registered Yet?</h2>
-        <p>Registering for your account is quick and easy</p>
+      </LeftForm>
+      <CreateAccount>
+        <Title>
+          <h2>Need to Register?</h2>
+        </Title>
+        <Text>
+          <p>Registering for your account is quick and easy</p>
+        </Text>
         <CreateAccountButton onClick={navigateToSignup}> CREATE ACCOUNT</CreateAccountButton>
-      </FormRight>
+      </CreateAccount>
     </Wrapper>
   );
 };
