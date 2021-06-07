@@ -32,6 +32,7 @@ describe('', () => {
           then: jest.fn(),
           catch: jest.fn(),
           finally: jest.fn(),
+          // eslint-disable-next-line computed-property-spacing
           [Symbol.toStringTag]: '',
         };
 

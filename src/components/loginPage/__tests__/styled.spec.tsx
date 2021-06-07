@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import { Wrapper } from '../styled';
+
 import { expectToMatchSnapshot } from '../../../utils/test';
 import 'jest-styled-components';
 

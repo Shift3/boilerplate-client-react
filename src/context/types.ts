@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable max-len */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-trailing-spaces */
+
 import React, { ReducerWithoutAction, ReactNode } from 'react';
 import { LoginUserAction, LogoutUserAction, SetFlashMessageAction, IAction } from './actions/types';
 

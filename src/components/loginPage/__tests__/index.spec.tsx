@@ -23,7 +23,6 @@ const renderNavigationTestDOM = () =>
       </Switch>
     </Router>,
   );
-
 describe('<LoginPage/>', () => {
   describe('Rendering', () => {
     beforeEach(renderInitialTestDOM);
