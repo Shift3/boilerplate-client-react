@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import { ISignupFormData } from 'components/signUpForm/types';
+import { ISignUpFormData } from 'components/signUpForm/types';
 import { SignupForm } from '../signUpForm';
 import { Wrapper } from './styled';
 
 //  eslint-disable-next-line
-const onSubmit = (formData: ISignupFormData) => {};
+const onSubmit = (formData: ISignUpFormData) => {};
 
 export const SignUpPage: FC = () => (
   <Wrapper>
