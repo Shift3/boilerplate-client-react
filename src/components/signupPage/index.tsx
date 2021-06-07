@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { ISignupFormData } from 'components/signupForm/types';
-import { SignupForm } from '../signupForm';
+import { ISignupFormData } from 'components/signUpForm/types';
+import { SignupForm } from '../signUpForm';
 import { Wrapper } from './styled';
 
 //  eslint-disable-next-line

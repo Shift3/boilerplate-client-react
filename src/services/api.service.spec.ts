@@ -1,3 +1,5 @@
+/* eslint-disable computed-property-spacing */
+/* eslint-disable no-undef */
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import { IMessage } from 'models/message';
 import { ApiService } from './api.service';
@@ -30,6 +32,7 @@ describe('', () => {
           then: jest.fn(),
           catch: jest.fn(),
           finally: jest.fn(),
+          // eslint-disable-next-line computed-property-spacing
           [Symbol.toStringTag]: '',
         };
 

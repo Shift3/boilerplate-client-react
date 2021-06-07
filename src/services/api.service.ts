@@ -1,3 +1,4 @@
+/* eslint-disable require-await */
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { environment } from 'environment';
 import { IMessage } from 'models/message';
