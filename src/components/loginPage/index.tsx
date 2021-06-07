@@ -1,7 +1,7 @@
 import { FC } from 'react';
+import { LogInForm } from 'components/logInForm';
 import { useHistory } from 'react-router-dom';
 import { ILogInFormData } from '../logInForm/types';
-import { LogInForm } from '../logInForm';
 import { Wrapper } from '../signupPage/styled';
 
 export const LogInPage: FC = () => {
