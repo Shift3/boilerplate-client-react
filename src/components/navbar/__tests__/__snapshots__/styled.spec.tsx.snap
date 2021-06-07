@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navbar Styled Components Should match the stored <NavBarWrapper /> snapshot 1`] = `
+.c0 {
+  height: 100vh;
+  display: grid;
+  grid-area: 1fr 2fr;
+  justify-items: center;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`Navbar Styled Components Should match the stored <NavLinkWrapper /> snapshot 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  padding-bottom: 100px;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`Navbar Styled Components Should match the stored <NavLogo /> snapshot 1`] = `
+.c0 {
+  object-fit: contain;
+  height: 14vh;
+  width: 12vw;
+  margin-top: 10px;
+  grid-row-start: 1;
+}
+
+<img
+  className="c0"
+/>
+`;

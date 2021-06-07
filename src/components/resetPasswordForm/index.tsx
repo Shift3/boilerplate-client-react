@@ -5,9 +5,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import { ResetPasswordFormSchema } from './schema';
 import { ResetPasswordFormType } from './types';
-import { FieldTitle, Title, StyledForm, Error, ButtonWrapper, SubmitButton, CancelButton } from './styled';
+import { FieldTitle, Title, StyledForm, Error, ButtonWrapper, SubmitButton } from './styled';
 
-export const ResetPasswordForm: ResetPasswordFormType = ({ onSubmit, onCancel }) => {
+export const ResetPasswordForm: ResetPasswordFormType = ({ onSubmit }) => {
   const {
     register,
     handleSubmit,
@@ -61,9 +61,6 @@ export const ResetPasswordForm: ResetPasswordFormType = ({ onSubmit, onCancel })
           </Error>
         </Form.Group>
         <ButtonWrapper>
-          <CancelButton data-testid='Cancel Button' onClick={onCancel}>
-            Cancel
-          </CancelButton>
           <SubmitButton data-testid='Sign Up Button' type='submit' disabled={!isValid}>
             Submit
           </SubmitButton>

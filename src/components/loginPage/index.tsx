@@ -1,9 +1,8 @@
 import { LogInForm } from 'components/logInForm';
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
-
 import { ILogInFormData } from '../logInForm/types';
-import { Wrapper } from '../signupPage/styled';
+import { Wrapper } from './styled';
 
 export const LogInPage: FC = () => {
   const history = useHistory();
