@@ -12,7 +12,7 @@ import { Provider as FlashMessageProvider } from './context/flashMessage.context
 
 // Components
 import { HomePage } from './components/homePage/HomePage';
-import { LoginPage } from './components/loginPage';
+import { LogInPage } from './components/loginPage';
 import { SignUpPage } from './components/signupPage';
 import { ResetPasswordPage } from './components/resetPasswordPage';
 import { FlashMessage } from './components/flashMessage/FlashMessage';
@@ -30,7 +30,7 @@ export const App: FC = () => (
             <Switch>
               <HolyGrailLayout leftSidebar={<NavBar />} footer={<Footer />}>
                 <Route exact path='/' component={HomePage} />
-                <Route exact path='/auth/login' component={LoginPage} />
+                <Route exact path='/auth/login' component={LogInPage} />
                 <Route exact path='/auth/signup' component={SignUpPage} />
                 <Route exact path='/auth/change-password' component={ResetPasswordPage} />
               </HolyGrailLayout>

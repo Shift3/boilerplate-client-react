@@ -1,43 +1,27 @@
-import { FC, useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { CustomButton } from '../button';
-import { LoginForm } from "../loginForm";
-import { LoginFormContainer, LoginPageContainer, LoginFormLeft, LoginFormRight } from './styled';
-import colors from '../../utils/styleValues';
-import { Context as AuthContext } from '../../context/auth.context';
+import { FC } from 'react';
+import { useHistory } from 'react-router-dom';
+import { ILogInFormData } from '../logInForm/types';
+import { LogInForm } from '../logInForm';
+import { Wrapper } from '../signupPage/styled';
 
-export const LoginPage: FC = () => {
-  const { loginUser } = useContext(AuthContext);
-
+export const LogInPage: FC = () => {
   const history = useHistory();
 
-  const onCreateAccountClick = () => {
-    history.push('/auth/signup');
+  // TODO: we need to actually make an API call and handle
+  // success and error cases.
+  history.push('/');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const onSubmit = (formData: ILogInFormData) => {
+    history.push('/');
+  };
+
+  const onCancel = () => {
+    history.push('/');
   };
 
   return (
-    <LoginPageContainer>
-      <LoginFormContainer>
-        <LoginFormLeft>
-          <LoginForm onSubmit={loginUser} />
-          <br />
-          <Link to="/auth/forgot-password">Forgot Password?</Link>
-        </LoginFormLeft>
-        <LoginFormRight>
-          <h2>Not Registered Yet?</h2>
-          <p>Registering for your account is quick and easy</p>
-          <CustomButton
-            backgroundColor={colors.accent}
-            color="#fff"
-            onClick={onCreateAccountClick}
-            disabled={false}
-            type="button"
-            width="90%"
-          >
-            CREATE ACCOUNT
-          </CustomButton>
-        </LoginFormRight>
-      </LoginFormContainer>
-    </LoginPageContainer>
+    <Wrapper>
+      <LogInForm onSubmit={onSubmit} onCancel={onCancel} />
+    </Wrapper>
   );
 };
