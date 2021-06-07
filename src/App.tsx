@@ -12,7 +12,7 @@ import { Provider as FlashMessageProvider } from './context/flashMessage.context
 
 // Components
 import { HomePage } from './components/homePage/HomePage';
-import { LoginPage } from './components/logInPage';
+import { LoginPage } from './components/loginPage';
 import { SignupPage } from './components/signUpPage';
 import { ResetPasswordPage } from './components/resetPasswordPage/ResetPasswordPage';
 import { FlashMessage } from './components/flashMessage/FlashMessage';

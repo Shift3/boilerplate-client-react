@@ -2,7 +2,7 @@
 /* eslint-disable space-before-function-paren */
 /* eslint-disable no-undef */
 import * as yup from 'yup';
-import { SignupFormSchema, errorMessages } from '../schema';
+import { SignUpFormSchema, errorMessages } from '../schema';
 
 const {
   EMAIL_REQUIRED,
@@ -31,7 +31,7 @@ describe('SignupFormSchema', () => {
   const errorMessageCheck = async (field: string, value: string, message: string) =>
     expect(
       await yup
-        .reach(SignupFormSchema, field)
+        .reach(SignUpFormSchema, field)
         .validate(value)
         .catch((err: yup.ValidationError) => err.message),
     ).toEqual(message);
@@ -43,12 +43,12 @@ describe('SignupFormSchema', () => {
     mismatch: string,
     message: string,
   ) =>
-    expect(await SignupFormSchema.validate({ ...formData, [field]: mismatch }).catch((err) => err.message)).toEqual(
+    expect(await SignUpFormSchema.validate({ ...formData, [field]: mismatch }).catch((err) => err.message)).toEqual(
       message,
     );
 
   describe('Valid input data', () => {
-    it('Should pass validation', () => expect(SignupFormSchema.isValidSync(formData)).toBeTruthy());
+    it('Should pass validation', () => expect(SignUpFormSchema.isValidSync(formData)).toBeTruthy());
   });
 
   describe('Email', () => {

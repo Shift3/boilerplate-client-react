@@ -9,7 +9,7 @@ import { act, render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory, MemoryHistory } from 'history';
-import { SignupForm } from '../index';
+import { SignUpForm } from '../index';
 import { errorMessages } from '../schema';
 
 const { type, click, clear } = userEvent;
@@ -55,8 +55,10 @@ describe('SignupForm', () => {
 
   const mockOnSubmit = jest.fn();
 
+  const mockOnCancel = jest.fn();
+
   beforeEach(async () => {
-    render(<SignupForm onSubmit={mockOnSubmit} />);
+    render(<SignUpForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />);
 
     emailField = getByLabelText('Email');
     confirmEmailField = getByLabelText('Confirm Email');
@@ -218,7 +220,7 @@ describe('SignupForm', () => {
 
       render(
         <Router history={history}>
-          <SignupForm onSubmit={mockOnSubmit} />
+          <SignUpForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
         </Router>,
       );
     });
