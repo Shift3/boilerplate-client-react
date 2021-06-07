@@ -1,15 +1,15 @@
 /* eslint-disable lines-around-comment */
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
-import { ISignupFormData } from 'components/signupForm/types';
-import { SignupForm } from '../signupForm';
+import { ISignUpFormData } from 'components/signUpForm/types';
+import { SignUpForm } from '../signUpForm';
 import { Wrapper } from './styled';
 
 export const SignupPage: FC = () => {
   const history = useHistory();
 
   //  eslint-disable-next-line
-  const onSubmit = (formData: ISignupFormData) => {
+  const onSubmit = (formData: ISignUpFormData) => {
     // TODO: we need to actually make an API call and handle
     // success and error cases.
     history.push('/');
@@ -21,7 +21,7 @@ export const SignupPage: FC = () => {
 
   return (
     <Wrapper>
-      <SignupForm onSubmit={onSubmit} onCancel={onCancel} />
+      <SignUpForm onSubmit={onSubmit} onCancel={onCancel} />
     </Wrapper>
   );
 };

@@ -4,17 +4,17 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
-import { SignupFormSchema } from './schema';
-import { SignupFormType } from './types';
+import { SignUpFormSchema } from './schema';
+import { SignUpFormType } from './types';
 import { Title, FieldTitle, ButtonWrapper, CancelButton, SignUpButton, StyledForm, Error } from './styled';
 
-export const SignupForm: SignupFormType = ({ onSubmit, onCancel }) => {
+export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm({
-    resolver: yupResolver(SignupFormSchema),
+    resolver: yupResolver(SignUpFormSchema),
     mode: 'onChange',
   });
 
@@ -62,4 +62,3 @@ export const SignupForm: SignupFormType = ({ onSubmit, onCancel }) => {
     </>
   );
 };
-export default SignupForm;

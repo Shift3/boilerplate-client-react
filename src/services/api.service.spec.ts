@@ -1,3 +1,5 @@
+/* eslint-disable computed-property-spacing */
+/* eslint-disable no-undef */
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import { IMessage } from 'models/message';
 import { ApiService } from './api.service';
