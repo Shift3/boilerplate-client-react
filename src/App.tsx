@@ -8,7 +8,7 @@ import AppTheme from './utils/styleValues';
 
 // Components
 import { HomePage } from './components/homePage/HomePage';
-import { LogInPage } from './components/loginPage';
+import { LogInPage } from './components/logInPage';
 import { SignUpPage } from './components/signupPage';
 import { ResetPasswordPage } from './components/resetPasswordPage';
 import { HolyGrailLayout } from './components/holyGrailLayout';
