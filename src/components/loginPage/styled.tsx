@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Button } from 'react-bootstrap';
 
 export const Wrapper = styled.div`
   height: 100%;
@@ -9,3 +10,9 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+export const FormLeft = styled.div``;
+
+export const FormRight = styled.div``;
+
+export const CreateAccountButton = styled(Button)``;

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import axios, { AxiosInstance } from 'axios';
 import { ApiService } from './api.service';
 import { UserService } from './user.service';
