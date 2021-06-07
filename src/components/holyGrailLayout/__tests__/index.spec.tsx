@@ -1,102 +1,61 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-undef */
 import { render } from '@testing-library/react';
-import { Footer } from '../../footer';
 import { HolyGrailLayout } from '../index';
+import { expectInDocByTestId, expectNotInDocByTestId } from '../../../utils/test';
 
-let HolyGrailWrapper: HTMLElement;
-let HolyGrailMainWrapper: HTMLElement;
-let HolyGrailLeftAside: HTMLElement | null;
-let HolyGrailMain: HTMLElement | null;
-let HolyGrailRightAside: HTMLElement | null;
+const renderWithNoProps = () => render(<HolyGrailLayout/>);
+const renderWithPropsAndChild = () => render(
+  <HolyGrailLayout 
+    leftSidebar={<div />} 
+    rightSidebar={<div />}
+  >
+    <div/> 
+  </HolyGrailLayout>
+);
 
 describe('HolyGrailLayout', () => {
-  describe('wrappers', () => {
-    describe('no props are passed in', () => {
-      it('should display HolyGrailWrapper', () => {
-        const { getByTestId } = render(<HolyGrailLayout />);
-        HolyGrailWrapper = getByTestId('wrapper');
-        expect(HolyGrailWrapper).toBeInTheDocument();
-      });
+  describe('With no props passed in', () => {
+    beforeEach(renderWithNoProps);
 
-      it('should display the HolyGrailMainWrapper', () => {
-        const { getByTestId } = render(<HolyGrailLayout />);
-        HolyGrailMainWrapper = getByTestId('mainWrapper');
-        expect(HolyGrailMainWrapper).toBeInTheDocument();
-      });
+    it('Should display the HolyGrailWrapper', () => 
+      expectInDocByTestId('wrapper'));
 
-      it('should not display HolyGrailLeftAside', () => {
-        const { queryByTestId } = render(<HolyGrailLayout />);
-        HolyGrailLeftAside = queryByTestId('leftAside');
-        expect(HolyGrailLeftAside).not.toBeInTheDocument();
-      });
+    it('Should display the HolyGrailMainWrapper', () => 
+      expectInDocByTestId('mainWrapper'));
 
-      it('should not display HolyGrailMain', () => {
-        const { queryByTestId } = render(<HolyGrailLayout />);
-        HolyGrailMain = queryByTestId('main');
-        expect(HolyGrailMain).not.toBeInTheDocument();
-      });
+    it ('Should display the Footer', () => 
+      expectInDocByTestId('footer'))
 
-      it('should not display HolyGrailRightAside', () => {
-        const { queryByTestId } = render(<HolyGrailLayout />);
-        HolyGrailRightAside = queryByTestId('rightAside');
-        expect(HolyGrailRightAside).not.toBeInTheDocument();
-      });
+    it('Should not display the HolyGrailLeftAside', () => 
+      expectNotInDocByTestId('leftAside'));
 
-      it('should not display <Footer/>', () => {
-        render(<HolyGrailLayout />);
-        expect(Footer).not.toBeInTheDocument;
-      });
-    });
+    it('Should not display the HolyGrailMain', () => 
+      expectNotInDocByTestId('main'));
 
-    describe('all props passed in', () => {
-      it('should display HolyGrailWrapper', () => {
-        const { getByTestId } = render(
-          <HolyGrailLayout leftSidebar={<div />} rightSidebar={<div />} footer={<div />} />,
-        );
-        HolyGrailWrapper = getByTestId('wrapper');
-        expect(HolyGrailWrapper).toBeInTheDocument();
-      });
+    it('Should not display the HolyGrailRightAside', () => 
+      expectNotInDocByTestId('rightAside'));
+  });
 
-      it('should display HolyGrailMainWrapper', () => {
-        const { getByTestId } = render(
-          <HolyGrailLayout leftSidebar={<div />} rightSidebar={<div />} footer={<div />} />,
-        );
-        HolyGrailMainWrapper = getByTestId('mainWrapper');
-        expect(HolyGrailMainWrapper).toBeInTheDocument();
-      });
+  describe('With all props passed in and child present', () => {
+    beforeEach(renderWithPropsAndChild);
 
-      it('should display HolyGrailLeftAside', () => {
-        const { getByTestId } = render(
-          <HolyGrailLayout leftSidebar={<div />} rightSidebar={<div />} footer={<div />} />,
-        );
-        HolyGrailLeftAside = getByTestId('mainWrapper');
-        expect(HolyGrailLeftAside).toBeInTheDocument();
-      });
+    it('Should display the HolyGrailWrapper', () => 
+      expectInDocByTestId('wrapper'));
 
-      it('should display HolyGrailRighttAside', () => {
-        const { getByTestId } = render(
-          <HolyGrailLayout leftSidebar={<div />} rightSidebar={<div />} footer={<div />} />,
-        );
-        HolyGrailRightAside = getByTestId('rightAside');
-        expect(HolyGrailRightAside).toBeInTheDocument();
-      });
+    it('Should display the HolyGrailMainWrapper', () => 
+      expectInDocByTestId('mainWrapper'));
 
-      it('should display <Footer/>', () => {
-        render(<HolyGrailLayout leftSidebar={<div />} rightSidebar={<div />} footer={<div />} />);
-        expect(Footer).toBeInTheDocument;
-      });
-    });
-    describe('with nested children', () => {
-      it('should display HolyGrailMain', () => {
-        const { getByTestId } = render(
-          <HolyGrailLayout>
-            <div />
-          </HolyGrailLayout>,
-        );
-        HolyGrailMain = getByTestId('main');
-        expect(HolyGrailMain).toBeInTheDocument();
-      });
-    });
+    it('Should display the Footer', () => 
+      expectInDocByTestId('footer'));
+
+    it('Should display the HolyGrailLeftAside', () => 
+      expectInDocByTestId('leftAside'));
+
+    it('Should display the HolyGrailRighttAside', () => 
+      expectInDocByTestId('rightAside'));
+
+    it('Should display HolyGrailMain', () => 
+      expectInDocByTestId('main'));
   });
 });

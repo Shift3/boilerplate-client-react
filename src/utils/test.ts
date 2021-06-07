@@ -1,8 +1,11 @@
-/* eslint-disable space-before-function-paren */
 /* eslint-disable array-bracket-spacing */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable max-len */
 /* eslint-disable require-await */
+/* eslint-disable space-before-function-paren */
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable indent */
 /* eslint-disable no-undef */
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';

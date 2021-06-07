@@ -1,8 +1,8 @@
 /* eslint-disable lines-around-comment */
 /* eslint-disable jsx-quotes */
-/* eslint-disable react/jsx-props-no-spreading */
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+
 import { Form } from 'react-bootstrap';
 import { SignUpFormSchema } from './schema';
 import { SignUpFormType } from './types';
