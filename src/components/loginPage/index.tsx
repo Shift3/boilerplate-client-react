@@ -2,7 +2,7 @@
 import { FC } from 'react';
 import { LogInForm } from 'components/logInForm';
 import { Link, useHistory } from 'react-router-dom';
-import { ILogInFormData } from '../logInForm/types';
+import { ILogInFormData } from 'components/logInForm/types';
 import { Wrapper, LeftForm, CreateAccount, CreateAccountButton, Title, Text } from './styled';
 
 export const LogInPage: FC = () => {

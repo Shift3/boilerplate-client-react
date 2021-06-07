@@ -1,23 +1,25 @@
+/* eslint-disable array-bracket-spacing */
+/* eslint-disable max-len */
+/* eslint-disable require-await */
+/* eslint-disable space-before-function-paren */
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable indent */
+/* eslint-disable no-undef */
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { JSXElementConstructor, ReactElement } from 'react';
 import renderer from 'react-test-renderer';
 
-const {
-    getByTestId,
-    getByRole,
-    getByLabelText,
-    queryAllByRole,
-    queryByTestId,
-    getAllByRole
-} = screen;
+const { getByTestId, getByRole, getByLabelText, queryAllByRole, queryByTestId, getAllByRole } = screen;
 
 const { click, clear, type } = userEvent;
 
 type expectToMatchSnapshotType = (component: ReactElement<any, string | JSXElementConstructor<any>>) => void;
 
-export const expectToMatchSnapshot: expectToMatchSnapshotType = (component) => 
-    expect(renderer.create(component).toJSON()).toMatchSnapshot();
+export const expectToMatchSnapshot: expectToMatchSnapshotType = (component) =>
+  expect(renderer.create(component).toJSON()).toMatchSnapshot();
 
 export const expectInDocByTestId = (id: string) => expect(getByTestId(id)).toBeInTheDocument();
 
@@ -37,38 +39,43 @@ export const clickByRoleAsync = (role: string) => act(async () => click(getByRol
 
 export const pathMatch = (path: string) => expect(window.location.pathname).toEqual(path);
 
-export const clickNavigateByTestId = (id: string, path: string) => { 
-    clickByTestId(id);
-    pathMatch(path);
+export const clickNavigateByTestId = (id: string, path: string) => {
+  clickByTestId(id);
+  pathMatch(path);
 };
 export const clickNavigateByRole = (role: string, path: string) => {
-    clickByRole(role);
-    pathMatch(path);
+  clickByRole(role);
+  pathMatch(path);
 };
 
-export const expectTextContentByTestId = (id: string, text: string) => expect(getByTestId(id)).toHaveTextContent(text.toString());
+export const expectTextContentByTestId = (id: string, text: string) =>
+  expect(getByTestId(id)).toHaveTextContent(text.toString());
 
 export const expectInDocByLabelText = (text: string) => expect(getByLabelText(text)).toBeInTheDocument();
 
 export const expectLengthByRole = (role: string, length: number) => expect(queryAllByRole(role)).toHaveLength(length);
 
-export const setValueByLabelText = (text: string, value: string) => act(async () => {
+export const setValueByLabelText = (text: string, value: string) =>
+  act(async () => {
     const element = getByLabelText(text);
     clear(element);
     type(element, value);
-});
+  });
 
 export const formAlertMessageCheck = (message: string) => {
-    const messages = getAllByRole('alert').reduce((messages: string[], alert: HTMLElement) => [...messages, alert.innerHTML], []);
-    expect(messages.includes(message)).toBeTruthy();
-}
+  const messages = getAllByRole('alert').reduce(
+    (messages: string[], alert: HTMLElement) => [...messages, alert.innerHTML],
+    [],
+  );
+  expect(messages.includes(message)).toBeTruthy();
+};
 
 export const expectMockFunctionCalled = (mockFunction: jest.Mock<any, any>) => expect(mockFunction).toHaveBeenCalled();
 
-export const expectMockFunctionNotCalled = (mockFunction: jest.Mock<any, any>) => expect(mockFunction).not.toHaveBeenCalled();
+export const expectMockFunctionNotCalled = (mockFunction: jest.Mock<any, any>) =>
+  expect(mockFunction).not.toHaveBeenCalled();
 
 export const clickExpectByTestId = (clickId: string, expectId: string) => {
-    clickByTestId(clickId);
-    expectInDocByTestId(expectId);
-}
-
+  clickByTestId(clickId);
+  expectInDocByTestId(expectId);
+};
