@@ -20,7 +20,7 @@ export const ResetPasswordPage: FC = () => {
 
   return (
     <Wrapper>
-      <ResetPasswordForm onSubmit={onSubmit} onCancel={onCancel} />;
+      <ResetPasswordForm onSubmit={onSubmit} onCancel={onCancel} />
     </Wrapper>
   );
 };
