@@ -16,5 +16,5 @@ import { expectInDocByTestId } from '../../../utils/test';
 describe('<FlashMessage/>', () => {
   render(<FlashMessage/>);
   it('Should render the <FlashMessageContainer />', () =>
-    expectInDocByTestId('fm-c'));
+    expectInDocByTestId('flashMessageContainer'));
 });

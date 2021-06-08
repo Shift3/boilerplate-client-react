@@ -16,7 +16,7 @@ export const SetPasswordForm: SetPasswordFormType = ({ onSubmit }) => {
   });
 
   return (
-    <Form data-testid="spf" onSubmit={handleSubmit(onSubmit)}>
+    <Form data-testid="setPasswordForm" onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
         <Form.Label htmlFor="password">Password</Form.Label>
         <Form.Control id="password" type="password" {...register('password')} />

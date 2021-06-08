@@ -16,7 +16,7 @@ export const LoginForm: LoginFormType = ({ onSubmit }) => {
   });
 
   return (
-    <Form data-testid="lf" onSubmit={handleSubmit(onSubmit)} >
+    <Form data-testid="loginForm" onSubmit={handleSubmit(onSubmit)} >
       <Form.Group>
         <Form.Label htmlFor="email">Email</Form.Label>
         <Form.Control id="email" type="email" {...register('email')} />

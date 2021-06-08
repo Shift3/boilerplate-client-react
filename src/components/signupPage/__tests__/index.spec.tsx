@@ -22,11 +22,11 @@ beforeEach(() => render(
 
 describe('<SignupPage/>', () => {
   it('Should render the <SignupPageContainer/>', () => 
-    expectInDocByTestId("spc"));
+    expectInDocByTestId("signupPageContainer"));
 
   it('Should render the <SignupFormContainer/>', () => 
-    expectInDocByTestId("sfc"));
+    expectInDocByTestId("signupFormContainer"));
 
   it('Should render the <SignupForm/>', () => 
-    expectInDocByTestId("sf"));
+    expectInDocByTestId("signupForm"));
 });

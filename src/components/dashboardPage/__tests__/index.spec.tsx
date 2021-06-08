@@ -6,5 +6,5 @@ describe('<DashboardPage/>', () => {
   render(<DashboardPage/>);
   
   it('Should render the <DashboardPageContainer/>', () =>
-    expectInDocByTestId('dp-c'));
+    expectInDocByTestId('dashboardPageContainer'));
 })

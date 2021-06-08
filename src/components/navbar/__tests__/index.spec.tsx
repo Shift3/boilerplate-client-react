@@ -17,33 +17,33 @@ describe('<NavBar/>', () => {
   ));
 
   describe('Rendering', () => {
-    it('Should render the <NavBarWrapper/>', () =>
-      expectInDocByTestId("nbw"));
+    it('Should render the <NavWrapper/>', () =>
+      expectInDocByTestId("navWrapper"));
 
     it('Should render the <NavLogo/>', () =>
-      expectInDocByTestId("nl"));
+      expectInDocByTestId("navLogo"));
 
     it('Should render the <NavLinkWrapper/>', () =>
-      expectInDocByTestId("nlw"));
+      expectInDocByTestId("navLinkWrapper"));
 
     it('Should render a <NavLinkStyled/> for users', () =>
-      expectInDocByTestId("nls-u"));
+      expectInDocByTestId("usersLink"));
 
     it('Should render a <NavLinkStyled/> for logout', () =>
-      expectInDocByTestId("nls-l"));
+      expectInDocByTestId("logoutLink"));
 
     it('Should render a <NavLinkStyled/> for directory', () =>
-      expectInDocByTestId("nls-d"));
+      expectInDocByTestId("directoryLink"));
   });
 
   describe('<NavLink/>', () => {
     it('Should navigate to "/users" when Users link is clicked', () =>
-      clickExpectByTestId('nls-u', 'users'));
+      clickExpectByTestId('usersLink', 'users'));
 
     it('Should navigate to "/logout" when Logout link is clicked', () =>
-      clickExpectByTestId('nls-l', 'logout'));
+      clickExpectByTestId('logoutLink', 'logout'));
 
     it('Should navigate to "/directory" when Directory link is clicked', () =>
-      clickExpectByTestId('nls-d', 'directory'));
+      clickExpectByTestId('directoryLink', 'directory'));
   });
 });

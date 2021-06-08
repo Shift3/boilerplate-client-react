@@ -7,8 +7,8 @@ import { ResetPasswordFormContainer, ResetPasswordPageContainer } from './styled
 const onSubmit = (formData: ISetPasswordFormData) => {};
 
 export const ResetPasswordPage: FC = () => (
-  <ResetPasswordPageContainer data-testid="rppc">
-    <ResetPasswordFormContainer data-testid="rpfc">
+  <ResetPasswordPageContainer data-testid="resetPasswordPageContainer">
+    <ResetPasswordFormContainer data-testid="resetPasswordFormContainer">
       <SetPasswordForm onSubmit={onSubmit} />
     </ResetPasswordFormContainer>
   </ResetPasswordPageContainer>

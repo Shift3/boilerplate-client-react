@@ -25,34 +25,34 @@ describe('<LoginPage/>', () => {
     beforeEach(renderInitialTestDOM);
 
     it('Should render the <LoginPageContainer/>', () =>
-      expectInDocByTestId("lpc"));
+      expectInDocByTestId("loginPageContainer"));
 
     it('Should render the <LoginFormContainer/>', () =>
-      expectInDocByTestId("lfc"));
+      expectInDocByTestId("loginFormContainer"));
 
     it('Should render the <LoginFormContainerRight/>', () =>
-      expectInDocByTestId("lfc-r"));
+      expectInDocByTestId("loginFormContainerRight"));
 
     it('Should render the <LoginFormContainerLeft/>', () =>
-      expectInDocByTestId("lfc-l"));
+      expectInDocByTestId("loginFormContainerLeft"));
 
     it('Should render the <LoginForm/>', () =>
-      expectInDocByTestId("lf"));
+      expectInDocByTestId("loginForm"));
 
     it('Should render an <h2/> with innerHTML equal to "Not Registered Yet?', () =>
-      expectInnerHTMLByTestId("lfc-r-h2", "Not Registered Yet?"));
+      expectInnerHTMLByTestId("loginPageInfoHeading", "Not Registered Yet?"));
 
     it('Should render a <p/> with innerHTML equal to "Registering for your account is quick and easy', () =>
-      expectInnerHTMLByTestId("lfc-r-p", "Registering for your account is quick and easy"));
+      expectInnerHTMLByTestId("loginPageInfoContent", "Registering for your account is quick and easy"));
 
     it('Should render a <button/> with innerHTML equal to "CREATE ACCOUNT"', () =>
-      expectInnerHTMLByTestId("ca-btn", "CREATE ACCOUNT")); 
+      expectInnerHTMLByTestId("createAccountButton", "CREATE ACCOUNT")); 
   });
   
   describe('navigation', () => {
     beforeEach(renderNavigationTestDOM);
 
     it('Should navigate to "/auth/signup" when the "CREATE ACCOUNT" button is clicked', () =>
-      clickNavigateByTestId("ca-btn", "/auth/signup"));
+      clickNavigateByTestId("createAccountButton", "/auth/signup"));
   });
 });

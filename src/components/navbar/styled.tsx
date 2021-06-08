@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
-export const NavBarWrapper = styled.div`
+export const NavWrapper = styled.div`
   height: 100vh;
   display: grid;
   grid-area: 1fr 2fr;

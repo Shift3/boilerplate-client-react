@@ -16,17 +16,17 @@ export const LoginPage: FC = () => {
   const navigateToSignup = () => push('/auth/signup');
 
   return (
-    <LoginPageContainer data-testid="lpc">
-      <LoginFormContainer data-testid="lfc">
-        <LoginFormContainerLeft data-testid="lfc-l">
+    <LoginPageContainer data-testid="loginPageContainer">
+      <LoginFormContainer data-testid="loginFormContainer">
+        <LoginFormContainerLeft data-testid="loginFormContainerLeft">
           <LoginForm onSubmit={ loginUser } />
           <br />
           <Link to="/auth/forgot-password">Forgot Password?</Link>
         </LoginFormContainerLeft>
-        <LoginFormContainerRight data-testid="lfc-r">
-          <h2 data-testid="lfc-r-h2">Not Registered Yet?</h2>
-          <p data-testid="lfc-r-p">Registering for your account is quick and easy</p>
-          <CustomButton onClick={ navigateToSignup } data-testid="ca-btn">
+        <LoginFormContainerRight data-testid="loginFormContainerRight">
+          <h2 data-testid="loginPageInfoHeading">Not Registered Yet?</h2>
+          <p data-testid="loginPageInfoContent">Registering for your account is quick and easy</p>
+          <CustomButton data-testid="createAccountButton" onClick={ navigateToSignup }>
             CREATE ACCOUNT
           </CustomButton>
         </LoginFormContainerRight>

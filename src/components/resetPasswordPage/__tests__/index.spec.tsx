@@ -14,11 +14,11 @@ describe('<SignupPage/>', () => {
   ));
 
   it('Should render the <ResetPasswordPageContainer/>', () => 
-    expectInDocByTestId('rppc'));
+    expectInDocByTestId('resetPasswordPageContainer'));
 
   it('Should render the <ResetPasswordFormContainer/>', () =>
-    expectInDocByTestId('rpfc'));
+    expectInDocByTestId('resetPasswordFormContainer'));
 
   it('Should render the <SetPasswordForm/>', () =>
-    expectInDocByTestId('spf'));
+    expectInDocByTestId('setPasswordForm'));
 })
