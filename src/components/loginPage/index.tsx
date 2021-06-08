@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { LogInForm } from 'components/logInForm';
 import { Link, useHistory } from 'react-router-dom';
 import { ILogInFormData } from 'components/logInForm/types';
-import { LoginWrapper, LeftLogin, RightLogin, CreateAccountButton, Title, Text, Wrapper } from './styled';
+import { LoginWrapper, LeftLogin, RightLogin, CreateAccountButton, Title, Text, Wrapper, LinkWrapper } from './styled';
 
 export const LogInPage: FC = () => {
   const history = useHistory();
@@ -27,7 +27,9 @@ export const LogInPage: FC = () => {
       <LoginWrapper>
         <LeftLogin>
           <LogInForm onSubmit={onSubmit} onCancel={onCancel} />
-          <Link to='/auth/forgot-password'>Forgot Password?</Link>
+          <LinkWrapper>
+            <Link to='/auth/forgot-password'>Forgot Password?</Link>
+          </LinkWrapper>
         </LeftLogin>
         <RightLogin>
           <Title>
