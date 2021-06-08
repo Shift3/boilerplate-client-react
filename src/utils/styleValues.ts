@@ -1,3 +1,4 @@
+const topNavHeight = '150px';
 export default {
   adminBackground: '#f1f0eb',
   authBackground: '#ecf6f9',
@@ -12,4 +13,5 @@ export default {
   navBackground: '#ffffff',
   navLink: '#2B373B',
   footerHeight: '25px',
+  topNavHeight,
 };
