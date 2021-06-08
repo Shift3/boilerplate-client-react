@@ -14,8 +14,8 @@ export const LoginWrapper = styled.div`
   justify-content: center;
   align-items: center;
   display: flex;
-  width: 50vw;
-  height: 50vh;
+  width: 48vw;
+  height: 55vh;
   padding: 40px;
   display: flex;
   margin-left: 100px;
