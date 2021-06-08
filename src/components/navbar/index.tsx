@@ -9,7 +9,7 @@ export const NavBar: FC = () => (
     <NavLinkWrapper>
       <NavLinkStyled to='/directory'>Directory</NavLinkStyled>
       <NavLinkStyled to='/users'>Users</NavLinkStyled>
-      <NavLinkStyled to='/'>Log Out</NavLinkStyled>
+      <NavLinkStyled to='/'>Log In / Log Out</NavLinkStyled>
     </NavLinkWrapper>
   </NavBarWrapper>
 );

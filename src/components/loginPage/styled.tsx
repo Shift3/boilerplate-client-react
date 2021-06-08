@@ -32,15 +32,14 @@ export const LeftLogin = styled.div`
 `;
 
 export const LinkWrapper = styled.div`
-  color: white;
   padding-bottom: 30px;
+  font-size: 1.2em;
 `;
 
 export const RightLogin = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
   padding: 50px;
   max-width: 350px;
   min-height: 400px;
@@ -48,9 +47,9 @@ export const RightLogin = styled.div`
 
 export const Title = styled.div`
   color: ${(props) => props.theme.cardHeader};
-  font-size: 2em;
   font-style: bold;
   padding-bottom: 10px;
+  width: 200px;
 `;
 
 export const Text = styled.div`
