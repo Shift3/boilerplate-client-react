@@ -5,7 +5,7 @@ import { ISignUpFormData } from 'components/signUpForm/types';
 import { SignUpForm } from '../signUpForm';
 import { Wrapper } from './styled';
 
-export const SignupPage: FC = () => {
+export const SignUpPage: FC = () => {
   const history = useHistory();
 
   //  eslint-disable-next-line

@@ -1,16 +1,26 @@
-/* eslint-disable jsx-quotes */
+/* eslint-disable lines-around-comment */
 import { FC } from 'react';
+import { useHistory } from 'react-router-dom';
 import { ResetPasswordForm } from '../resetPasswordForm';
 import { IResetPasswordFormData } from '../resetPasswordForm/types';
-import { ResetPasswordFormContainer, ResetPasswordPageContainer } from './styled';
+import { Wrapper } from './styled';
 
-//  eslint-disable-next-line
-const onSubmit = (formData: IResetPasswordFormData) => {};
+export const ResetPasswordPage: FC = () => {
+  const history = useHistory();
 
-export const ResetPasswordPage: FC = () => (
-  <ResetPasswordPageContainer data-testid='rppc'>
-    <ResetPasswordFormContainer data-testid='rpfc'>
-      <ResetPasswordForm onSubmit={onSubmit} />
-    </ResetPasswordFormContainer>
-  </ResetPasswordPageContainer>
-);
+  //  eslint-disable-next-line
+  const onSubmit = (formData: IResetPasswordFormData) => {
+    // TODO: make API call to handle success and error cases.
+    history.push('/');
+  };
+
+  const onCancel = () => {
+    history.push('/');
+  };
+
+  return (
+    <Wrapper>
+      <ResetPasswordForm onSubmit={onSubmit} onCancel={onCancel} />;
+    </Wrapper>
+  );
+};

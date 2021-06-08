@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-export interface ILoginFormData {
+export interface ILogInFormData {
   email: string;
   password: string;
 }

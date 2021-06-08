@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import { LogInFormSchema } from './schema';
 import { LogInFormType } from './types';
-import { Error, FieldTitle, StyledForm, Title } from '../loginForm/styled';
+import { ButtonWrapper, CancelButton, Error, FieldTitle, LogInButton, StyledForm, Title } from './styled';
 
 export const LogInForm: LogInFormType = ({ onSubmit, onCancel }) => {
   const {
@@ -22,7 +22,7 @@ export const LogInForm: LogInFormType = ({ onSubmit, onCancel }) => {
   return (
     <>
       <StyledForm onSubmit={handleSubmit(onSubmit)}>
-        s<FieldTitle>Member Log In</FieldTitle>
+        <Title>Member Log In</Title>
         <Form.Group>
           <FieldTitle>
             <Form.Label htmlFor='email'>Email</Form.Label>

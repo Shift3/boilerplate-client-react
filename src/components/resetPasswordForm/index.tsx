@@ -69,5 +69,3 @@ export const ResetPasswordForm: ResetPasswordFormType = ({ onSubmit }) => {
     </>
   );
 };
-
-export default ResetPasswordForm;
