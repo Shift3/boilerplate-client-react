@@ -19,7 +19,7 @@ export const CustomButton = styled(Button)`
   }
 `;
 
-CustomButton.defaultProps = {
+export const StandardButtonTheme = {
   theme: {
     backgroundColor: accent,
     borderColor: accent,
