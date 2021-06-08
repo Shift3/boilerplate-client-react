@@ -20,9 +20,20 @@ export const LoginWrapper = styled.div`
   border-radius: 5px;
 `;
 
-export const LeftLogin = styled.div``;
+export const LeftLogin = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+`;
 
-export const RightLogin = styled.div``;
+export const RightLogin = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 export const Title = styled.div`
   color: ${(props) => props.theme.cardHeader};
