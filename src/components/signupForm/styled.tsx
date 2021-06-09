@@ -39,5 +39,4 @@ export const CancelButton = styled(Button)`
 export const SignUpButton = styled(Button)`
   color: white;
   background-color: ${(props) => props.theme.accent};
-  border: none;
 `;

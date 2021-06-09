@@ -11,11 +11,13 @@ import { Provider as AuthProvider } from './context/auth.context';
 import { Provider as FlashMessageProvider } from './context/flashMessage.context';
 
 // Components
+
 import { DashboardPage } from './components/dashboardPage';
 import { LogInPage } from './components/logInPage';
 import { SignUpPage } from './components/signUpPage';
 import { ResetPasswordPage } from './components/resetPasswordPage';
 import { FlashMessage } from './components/flashMessage';
+
 import { HolyGrailLayout } from './components/holyGrailLayout';
 import { NavBar } from './components/navbar';
 
