@@ -1,4 +1,11 @@
 import styled from 'styled-components';
 
-export const ResetPasswordPageContainer = styled.div``;
-export const ResetPasswordFormContainer = styled.div``;
+export const Wrapper = styled.div`
+  height: 100%;
+  width: 100%;
+  background-color: ${(props) => props.theme.authBackground};
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;

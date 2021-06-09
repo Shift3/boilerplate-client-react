@@ -36,7 +36,7 @@ export const CancelButton = styled(Button)`
   margin-right: 20px;
 `;
 
-export const SignUpButton = styled(Button)`
+export const SubmitButton = styled(Button)`
   color: white;
   background-color: ${(props) => props.theme.accent};
   border: none;

@@ -1,13 +1,27 @@
+/* eslint-disable lines-around-comment */
 import { FC } from 'react';
-import { SignupForm } from '../signupForm';
-import { ISignupFormData } from '../signupForm/types';
+import { useHistory } from 'react-router-dom';
+import { ISignUpFormData } from 'components/signUpForm/types';
+import { SignUpForm } from '../signUpForm';
 import { Wrapper } from './styled';
 
-//  eslint-disable-next-line
-const onSubmit = (formData: ISignupFormData) => {};
+export const SignUpPage: FC = () => {
+  const history = useHistory();
 
-export const SignupPage: FC = () => (
-  <Wrapper>
-    <SignupForm onSubmit={onSubmit} />
-  </Wrapper>
-);
+  //  eslint-disable-next-line
+  const onSubmit = (formData: ISignUpFormData) => {
+    // TODO: we need to actually make an API call and handle
+    // success and error cases.
+    history.push('/');
+  };
+
+  const onCancel = () => {
+    history.push('/');
+  };
+
+  return (
+    <Wrapper>
+      <SignUpForm onSubmit={onSubmit} onCancel={onCancel} />
+    </Wrapper>
+  );
+};
