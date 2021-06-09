@@ -1,8 +1,8 @@
 /* eslint-disable jsx-quotes */
 import { FC } from 'react';
-import { LogInForm } from 'components/logInForm';
+import { LogInForm } from 'components/loginForm';
 import { Link, useHistory } from 'react-router-dom';
-import { ILogInFormData } from 'components/logInForm/types';
+import { ILogInFormData } from '../loginForm/types';
 import { LoginWrapper, LeftLogin, RightLogin, CreateAccountButton, Title, Text, Wrapper, LinkWrapper } from './styled';
 
 export const LogInPage: FC = () => {

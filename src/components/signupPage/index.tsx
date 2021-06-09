@@ -1,8 +1,8 @@
 /* eslint-disable lines-around-comment */
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
-import { ISignUpFormData } from 'components/signUpForm/types';
-import { SignUpForm } from '../signUpForm';
+import { ISignUpFormData } from 'components/signupForm/types';
+import { SignUpForm } from 'components/signupForm';
 import { Wrapper } from './styled';
 
 export const SignUpPage: FC = () => {

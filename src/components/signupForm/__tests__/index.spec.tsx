@@ -1,6 +1,20 @@
+/* eslint-disable require-await */
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+/* eslint-disable space-before-function-paren */
+/* eslint-disable no-undef */
 import { render } from '@testing-library/react';
-import { clickByRoleAsync, expectInDocByLabelText, expectInDocByRole, expectInnerHTMLByRole, expectLengthByRole, expectMockFunctionCalled, expectMockFunctionNotCalled, setValueByLabelText, formAlertMessageCheck } from 'utils/test';
-import { SignupForm } from '../index';
+import {
+  clickByRoleAsync,
+  expectInDocByLabelText,
+  expectInDocByRole,
+  expectInnerHTMLByRole,
+  expectLengthByRole,
+  expectMockFunctionCalled,
+  expectMockFunctionNotCalled,
+  setValueByLabelText,
+  formAlertMessageCheck,
+} from 'utils/test';
+import { SignUpForm } from '../index';
 import { errorMessages } from '../schema';
 
 const {
@@ -21,9 +35,10 @@ describe('SignupForm', () => {
   const longName = 'thisisclearlywaytoolongandisnotavalidnamebecauseitiswelloverfiftycharacters';
 
   const mockOnSubmit = jest.fn();
+  const mockOnCancel = jest.fn();
 
   beforeEach(async () => {
-    render(<SignupForm onSubmit={mockOnSubmit} />);
+    render(<SignUpForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />);
 
     await setValueByLabelText('Email', validEmail);
     await setValueByLabelText('Confirm Email', validEmail);
@@ -31,31 +46,25 @@ describe('SignupForm', () => {
     await setValueByLabelText('Last Name', validName);
   });
 
-  it('Should render email field', () => 
-    expectInDocByLabelText('Email'));
+  it('Should render email field', () => expectInDocByLabelText('Email'));
 
-  it('Should render confirm email field', () =>
-    expectInDocByLabelText('Confirm Email'));
+  it('Should render confirm email field', () => expectInDocByLabelText('Confirm Email'));
 
-  it('Should render first name field', () =>
-  expectInDocByLabelText('First Name'));
+  it('Should render first name field', () => expectInDocByLabelText('First Name'));
 
-  it('Should render last name field', () =>
-    expectInDocByLabelText('Last Name'));
+  it('Should render last name field', () => expectInDocByLabelText('Last Name'));
 
-  it('Should render submit button', () =>
-  expectInDocByRole('button'));
+  it('Should render submit button', () => expectInDocByRole('button'));
 
   describe('Valid input', () => {
     it('Should call onSubmit once all form data is valid, ', async () => {
       await clickByRoleAsync('button');
       expectMockFunctionCalled(mockOnSubmit);
 
-          mockOnSubmit.mockReset();
+      mockOnSubmit.mockReset();
     });
 
-    it('Should not display error messages', async () =>
-      expectLengthByRole('alert', 0));
+    it('Should not display error messages', async () => expectLengthByRole('alert', 0));
   });
 
   describe('Invalid input', () => {

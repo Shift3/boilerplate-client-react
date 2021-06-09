@@ -2,9 +2,9 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
+import { ButtonWrapper, CancelButton, Error, FieldTitle, LogInButton, StyledForm, Title } from './styled';
 import { LogInFormSchema } from './schema';
 import { LogInFormType } from './types';
-import { ButtonWrapper, CancelButton, Error, FieldTitle, LogInButton, StyledForm, Title } from './styled';
 
 export const LogInForm: LogInFormType = ({ onSubmit, onCancel }) => {
   const {

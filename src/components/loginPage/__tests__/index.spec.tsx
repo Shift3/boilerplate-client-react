@@ -2,7 +2,7 @@
 /* eslint-disable no-undef */
 import { render } from '@testing-library/react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { LogInPage } from '..';
+import { LogInPage } from '../index';
 import { expectInDocByTestId, expectInnerHTMLByTestId, clickNavigateByTestId } from '../../../utils/test';
 
 const renderInitialTestDOM = () =>
