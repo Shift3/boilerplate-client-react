@@ -5,9 +5,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import { SignUpFormSchema } from './schema';
 import { SignUpFormType } from './types';
-import { Title, Wrapper, FieldTitle, SignUpButton, CancelButton, ButtonWrapper } from './styled';
+import { Title, FieldTitle, ButtonWrapper, CancelButton, SignUpButton, StyledForm, Error } from './styled';
 
-export const SignUpForm: SignUpFormType = ({ onSubmit }) => {
+export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
   const {
     register,
     handleSubmit,
