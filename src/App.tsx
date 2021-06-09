@@ -1,3 +1,4 @@
+/* eslint-disable jsx-quotes */
 import { FC } from 'react';
 import { ErrorBoundary } from '@sentry/react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -11,8 +12,8 @@ import { Provider as FlashMessageProvider } from './context/flashMessage.context
 
 // Components
 import { DashboardPage } from './components/dashboardPage';
-import { LoginPage } from './components/logInPage';
-import { SignupPage } from './components/signupPage';
+import { LogInPage } from './components/logInPage';
+import { SignUpPage } from './components/signUpPage';
 import { ResetPasswordPage } from './components/resetPasswordPage';
 import { FlashMessage } from './components/flashMessage';
 import { HolyGrailLayout } from './components/holyGrailLayout';
@@ -28,9 +29,9 @@ export const App: FC = () => (
             <Switch>
               <HolyGrailLayout leftSidebar={<NavBar />}>
                 <Route exact path='/' component={DashboardPage} />
-                <Route exact path='/auth/login' component={LoginPage} />
-                <Route exact path='/auth/signup' component={SignupPage} />
-                <Route exact path='/auth/forgot-password' component={ResetPasswordPage} />
+                <Route exact path='/auth/login' component={LogInPage} />
+                <Route exact path='/auth/signup' component={SignUpPage} />
+                <Route exact path='/auth/change-password' component={ResetPasswordPage} />
               </HolyGrailLayout>
             </Switch>
           </Router>

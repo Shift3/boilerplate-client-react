@@ -1,5 +1,9 @@
+/* eslint-disable require-await */
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+/* eslint-disable space-before-function-paren */
+/* eslint-disable no-undef */
 import { render } from '@testing-library/react';
-import { LoginForm } from '../index';
+import { LogInForm } from '../index';
 import { errorMessages } from '../schema';
 import {
   clickByRoleAsync,
@@ -9,7 +13,7 @@ import {
   expectMockFunctionCalled,
   expectMockFunctionNotCalled,
   setValueByLabelText,
-  expectInnerHTMLByRole
+  expectInnerHTMLByRole,
 } from '../../../utils/test';
 
 const { PASSWORD_REQUIRED, INVALID_EMAIL, EMAIL_REQUIRED } = errorMessages;
@@ -19,23 +23,20 @@ describe('LoginForm', () => {
   const invalidEmail = 'test.com';
   const validPassword = 'Password123!';
   const mockOnSubmit = jest.fn();
-
+  const mockOnCancel = jest.fn();
 
   beforeEach(async () => {
-    render(<LoginForm onSubmit={mockOnSubmit} />);
+    render(<LogInForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />);
 
-    await setValueByLabelText('Email', validEmail); 
+    await setValueByLabelText('Email', validEmail);
     await setValueByLabelText('Password', validPassword);
   });
 
-  it('Should render email field', () => 
-    expectInDocByLabelText('Email'));
+  it('Should render email field', () => expectInDocByLabelText('Email'));
 
-  it('Should render password field', () => 
-    expectInDocByLabelText('Password'));
+  it('Should render password field', () => expectInDocByLabelText('Password'));
 
-  it('Should render submit button', () => 
-    expectInDocByRole('button'));
+  it('Should render submit button', () => expectInDocByRole('button'));
 
   describe('Valid input', () => {
     it('Should call onSubmit once formData object including username and password', async () => {
@@ -45,8 +46,7 @@ describe('LoginForm', () => {
       mockOnSubmit.mockReset();
     });
 
-    it('Should not display error messages', async () => 
-      expectLengthByRole('alert', 0));
+    it('Should not display error messages', async () => expectLengthByRole('alert', 0));
   });
 
   describe('Invalid input', () => {
