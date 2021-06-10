@@ -1,13 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Reset Password Page Styled Components Should match the stored <SignupFormContainer /> snapshot 1`] = `
-<div
-  className=""
-/>
-`;
+exports[`Reset Password Page Styled Components Should match the stored <Wrapper /> snapshot 1`] = `
+.c0 {
+  height: 100%;
+  width: 100%;
+  padding: 40px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
 
-exports[`Reset Password Page Styled Components Should match the stored <SignupPageContainer /> snapshot 1`] = `
 <div
-  className=""
+  className="c0"
 />
 `;

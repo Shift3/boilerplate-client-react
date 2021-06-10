@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { SignupPage } from '..';
+import { SignUpPage } from '..';
 import { expectInDocByTestId } from 'utils/test';
 
 beforeEach(() => render(
@@ -9,7 +9,7 @@ beforeEach(() => render(
       <Route 
         exact
         path="/"
-        component={SignupPage} 
+        component={SignUpPage} 
       />
       <Route 
         exact 
@@ -20,12 +20,9 @@ beforeEach(() => render(
   </Router>
 ));
 
-describe('<SignupPage/>', () => {
-  it('Should render the <SignupPageContainer/>', () => 
-    expectInDocByTestId("signupPageContainer"));
-
-  it('Should render the <SignupFormContainer/>', () => 
-    expectInDocByTestId("signupFormContainer"));
+describe('<SignUpPage/>', () => {
+  it('Should render the <Wrapper/>', () => 
+    expectInDocByTestId("wrapper"));
 
   it('Should render the <SignupForm/>', () => 
     expectInDocByTestId("signupForm"));

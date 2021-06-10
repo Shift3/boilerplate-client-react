@@ -28,21 +28,21 @@ describe('<LoginPage/>', () => {
   describe('Rendering', () => {
     beforeEach(renderInitialTestDOM);
 
-    it('Should render the <LoginPageContainer/>', () => expectInDocByTestId('loginPageContainer'));
+    it('Should render the <Wrapper/>', () => expectInDocByTestId('wrapper'));
 
-    it('Should render the <LoginFormContainer/>', () => expectInDocByTestId('loginFormContainer'));
+    it('Should render the <LoginWrapper/>', () => expectInDocByTestId('loginWrapper'));
 
-    it('Should render the <LoginFormContainerRight/>', () => expectInDocByTestId('loginFormContainerRight'));
+    it('Should render the <LoginFormContainerRight/>', () => expectInDocByTestId('rightLogin'));
 
-    it('Should render the <LoginFormContainerLeft/>', () => expectInDocByTestId('loginFormContainerLeft'));
+    it('Should render the <LoginFormContainerLeft/>', () => expectInDocByTestId('leftLogin'));
 
     it('Should render the <LoginForm/>', () => expectInDocByTestId('loginForm'));
 
     it('Should render an <h2/> with innerHTML equal to "Not Registered Yet?', () =>
       expectInnerHTMLByTestId('loginPageInfoHeading', 'Not Registered Yet?'));
 
-    it('Should render a <p/> with innerHTML equal to "Registering for your account is quick and easy', () =>
-      expectInnerHTMLByTestId('loginPageInfoContent', 'Registering for your account is quick and easy'));
+    it('Should render a <p/> with innerHTML equal to "Registering for your account is quick and easy.', () =>
+      expectInnerHTMLByTestId('loginPageInfoContent', 'Registering for your account is quick and easy.'));
 
     it('Should render a <button/> with innerHTML equal to "CREATE ACCOUNT"', () =>
       expectInnerHTMLByTestId('createAccountButton', 'CREATE ACCOUNT'));

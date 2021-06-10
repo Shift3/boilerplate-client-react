@@ -4,9 +4,9 @@
 /* eslint-disable no-undef */
 import { render } from '@testing-library/react';
 import {
-  clickByRoleAsync,
+  clickByTestIdAsync,
   expectInDocByLabelText,
-  expectInDocByRole,
+  expectInDocByTestId,
   expectInnerHTMLByRole,
   expectLengthByRole,
   expectMockFunctionCalled,
@@ -54,11 +54,11 @@ describe('SignupForm', () => {
 
   it('Should render last name field', () => expectInDocByLabelText('Last Name'));
 
-  it('Should render submit button', () => expectInDocByRole('button'));
+  it('Should render submit button', () => expectInDocByTestId('submitButton'));
 
   describe('Valid input', () => {
     it('Should call onSubmit once all form data is valid, ', async () => {
-      await clickByRoleAsync('button');
+      await clickByTestIdAsync('submitButton');
       expectMockFunctionCalled(mockOnSubmit);
 
       mockOnSubmit.mockReset();
@@ -73,7 +73,7 @@ describe('SignupForm', () => {
       await setValueByLabelText('Confirm Email', '');
       await setValueByLabelText('First Name', '');
       await setValueByLabelText('Last Name', '');
-      await clickByRoleAsync('button');
+      await clickByTestIdAsync('submitButton');
       expectMockFunctionNotCalled(mockOnSubmit);
 
       mockOnSubmit.mockReset();

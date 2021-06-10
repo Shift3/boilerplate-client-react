@@ -18,7 +18,7 @@ export const LogInForm: LogInFormType = ({ onSubmit, onCancel }) => {
 
   return (
     <>
-      <StyledForm onSubmit={handleSubmit(onSubmit)}>
+      <StyledForm data-testid="loginForm" onSubmit={handleSubmit(onSubmit)}>
         <Title>Member Log In</Title>
         <Form.Group>
           <FieldTitle>
@@ -35,10 +35,10 @@ export const LogInForm: LogInFormType = ({ onSubmit, onCancel }) => {
           <Error>{errors.password?.message && <span role='alert'>{errors.password?.message}</span>}</Error>
         </Form.Group>
         <ButtonWrapper>
-          <CancelButton data-testid='Cancel Button' onClick={onCancel}>
+          <CancelButton data-testid='cancelButton' onClick={onCancel}>
             CANCEL
           </CancelButton>
-          <LogInButton data-testid='Log In Button' type='submit' disabled={!isValid}>
+          <LogInButton data-testid='submitButton' type='submit' disabled={!isValid}>
             LOG IN
           </LogInButton>
         </ButtonWrapper>

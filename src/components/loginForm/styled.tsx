@@ -13,6 +13,7 @@ export const Title = styled.div`
   font-style: bold;
   padding-bottom: 10px;
 `;
+
 export const FieldTitle = styled.div`
   color: white;
 `;

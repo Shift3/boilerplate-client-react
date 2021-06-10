@@ -31,6 +31,8 @@ export const expectInnerHTMLByRole = (role: string, value: string) => expect(get
 
 export const clickByTestId = (id: string) => act(() => click(getByTestId(id)));
 
+export const clickByTestIdAsync = (id: string) => act(async () => click(getByTestId(id)));
+
 export const clickByRole = (role: string) => act(() => click(getByTestId(role)));
 
 export const clickByRoleAsync = (role: string) => act(async () => click(getByRole(role)));

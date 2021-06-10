@@ -13,7 +13,7 @@ export const NavBar: FC = () => (
       <NavLinkStyled data-testid='usersLink' to='/users'>
         Users
       </NavLinkStyled>
-      <NavLinkStyled data-testid='logoutLink' to='/'>
+      <NavLinkStyled data-testid='logoutLink' to='/logout'>
         Log Out
       </NavLinkStyled>
     </NavLinkWrapper>

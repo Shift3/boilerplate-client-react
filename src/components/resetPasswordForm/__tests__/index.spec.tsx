@@ -1,6 +1,8 @@
 import { render } from '@testing-library/react';
-import { SetPasswordForm } from '..';
+import { ResetPasswordForm } from '../';
 import { errorMessages } from '../schema';
+import { screen } from '@testing-library/react';
+
 import {
   clickByRoleAsync,
   expectLengthByRole,
@@ -9,6 +11,7 @@ import {
   expectMockFunctionNotCalled,
   expectInDocByLabelText,
   expectInDocByRole,
+  expectInDocByTestId,
 } from 'utils/test';
 
 
@@ -22,7 +25,7 @@ const {
   PASSWORD_SPECIAL_CHARACTER,
 } = errorMessages;
 
-const validPassword = 'Password123!';
+const validCurrentPassword = 'Password123!';
 const shortPassword = 'T123!';
 const noSpecialCharPassword= 'Password123';
 const noNumberPassword = 'Password!';
@@ -30,28 +33,33 @@ const noUppercasePassword = 'password123!';
 const noLowercasePassword = 'PASSWORD123!';
 
 const mockOnSubmit = jest.fn();
+const mockOnCancel = jest.fn();
 
 describe('LoginForm', () => {
-  beforeEach(async () => {
-    render(<SetPasswordForm onSubmit={mockOnSubmit} />);
 
-    await setValueByLabelText('Password', validPassword);
-    await setValueByLabelText('Confirm Password', validPassword);
-  });
 
   describe('Rendering', () => {
-    it('should render password field', () =>
-      expectInDocByLabelText('Password'));
+    beforeEach(() => render(<ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />));
 
-    it('should render confirm password field', () =>
+    it('should render the current password field', () =>
+      expectInDocByLabelText('Current Password'));
+
+    it('should render the new password field', () =>
+      expectInDocByLabelText('New Password'));
+
+    it('should render the confirm password field', () =>
       expectInDocByLabelText('Confirm Password'));
 
-    it('should render submit button', () =>
-      expectInDocByRole('button'));
+    it('should render the submit button', () =>
+      expectInDocByTestId('submitButton'));
   });
 
   describe('With valid input', () => {
+    beforeEach(() => render(<ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />));
+
+
     it('Should call onSubmit once formData object including password and confirmPassword', async () => {
+      // @HERE - pair programming
       await clickByRoleAsync('button');
       expect(mockOnSubmit).toHaveBeenCalled();
 
@@ -63,7 +71,8 @@ describe('LoginForm', () => {
     });
   });
 
-  describe('invalid input', () => {
+  describe('Invalid input', () => {
+    console.log("hitting 4");
     it('Should not call onSubmit', async () => {
       await setValueByLabelText('Password', '');
       await setValueByLabelText('Confirm Password', '');
@@ -80,7 +89,8 @@ describe('LoginForm', () => {
       expectLengthByRole('alert', 2);
     });
 
-    describe('invalid password', () => {
+    describe('Invalid password', () => {
+      console.log("hitting 5");
       it('Should only display password required error message', async () => {
         await setValueByLabelText('Password', '');
         expectLengthByRole('alert', 1);
@@ -110,24 +120,12 @@ describe('LoginForm', () => {
         expectLengthByRole('alert', 1);
         expectInnerHTMLByRole('alert', PASSWORD_LOWERCASE);
       });
-    });
-
-    describe('non matching password', () => {
       it('Should only display password mismatch error message', async () => {
         await setValueByLabelText('Password', validPassword);
         await setValueByLabelText('Confirm Password', shortPassword);
         expectLengthByRole('alert', 1);
         expectInnerHTMLByRole('alert', PASSWORD_MATCH);
       });
-    });
-  });
-
-  describe('invalid password length', () => {
-    it('Should only display password length error message', async () => {
-      await setValueByLabelText('Password', shortPassword);
-      await setValueByLabelText('Confirm Password', shortPassword);
-      expectLengthByRole('alert', 1);
-      expectInnerHTMLByRole('alert', PASSWORD_LENGTH);
     });
   });
 });

@@ -5,55 +5,56 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import { SignUpFormSchema } from './schema';
 import { SignUpFormType } from './types';
-import { Title, FieldTitle, ButtonWrapper, CancelButton, SignUpButton, StyledForm, Error } from './styled';
+import { Title, FormLabel, ButtonWrapper, CancelButton, SignUpButton, StyledForm, InputError } from './styled';
 
 export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm({
+  const { register, handleSubmit, formState: { errors, isValid } } = useForm({
     resolver: yupResolver(SignUpFormSchema),
     mode: 'onChange',
   });
 
   return (
     <>
-      <StyledForm onSubmit={handleSubmit(onSubmit)}>
+      <StyledForm data-testid="signupForm" onSubmit={ handleSubmit(onSubmit) }>
+        {/* @HERE - pair programming - Heading? */}
         <Title>Sign Up</Title>
         <Form.Group>
-          <FieldTitle>
-            <Form.Label htmlFor='email'>Email</Form.Label>{' '}
-          </FieldTitle>
+          <FormLabel htmlFor='email'>Email</FormLabel>{' '}
           <Form.Control id='email' type='email' {...register('email')} />
-          <Error>{errors.email?.message && <span role='alert'>{errors.email?.message}</span>}</Error>
+          {
+            errors.email?.message &&
+            (<InputError role='alert'>{errors.email?.message}</InputError>)
+          }
         </Form.Group>
         <Form.Group>
-          <FieldTitle>
-            <Form.Label htmlFor='confirmEmail'>Confirm Email</Form.Label>{' '}
-          </FieldTitle>
+          <FormLabel htmlFor='confirmEmail'>Confirm Email</FormLabel>{' '}
           <Form.Control id='confirmEmail' type='email' {...register('confirmEmail')} />
-          <Error>{errors.confirmEmail?.message && <span role='alert'>{errors.confirmEmail?.message}</span>}</Error>
+          {
+            errors.confirmEmail?.message &&
+              (<InputError role='alert'>{errors.confirmEmail?.message}</InputError>)
+          }
         </Form.Group>
         <Form.Group>
-          <FieldTitle>
-            <Form.Label htmlFor='firstName'>First Name</Form.Label>
-          </FieldTitle>
+          <FormLabel htmlFor='firstName'>First Name</FormLabel>
           <Form.Control id='firstName' type='text' {...register('firstName')} />
-          <Error>{errors.firstName?.message && <span role='alert'>{errors.firstName?.message}</span>}</Error>
+          {
+            errors.firstName?.message &&
+              (<InputError role='alert'>{errors.firstName?.message}</InputError>)
+          }
         </Form.Group>
         <Form.Group>
-          <FieldTitle>
-            <Form.Label htmlFor='lastName'>Last Name</Form.Label>
-          </FieldTitle>
+          <FormLabel htmlFor='lastName'>Last Name</FormLabel>
           <Form.Control id='lastName' type='text' {...register('lastName')} />
-          <Error>{errors.lastName?.message && <span role='alert'>{errors.lastName?.message}</span>}</Error>
+          {
+            errors.lastName?.message &&
+              (<InputError role='alert'>{errors.lastName?.message}</InputError>)
+          }
         </Form.Group>
         <ButtonWrapper>
-          <CancelButton data-testid='Cancel Button' onClick={onCancel}>
+          <CancelButton data-testid='cancelButton' onClick={onCancel}>
             CANCEL
           </CancelButton>
-          <SignUpButton data-testid='Sign Up Button' type='submit' disabled={!isValid}>
+          <SignUpButton data-testid='submitButton' type='submit' disabled={!isValid}>
             SIGN UP
           </SignUpButton>
         </ButtonWrapper>

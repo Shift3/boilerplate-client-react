@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ResetPasswordPage } from '..';
 import { expectInDocByTestId } from '../../../utils/test';
 
-describe('<SignupPage/>', () => {
+describe('<ResetPasswordPage/>', () => {
   beforeEach(() =>
     render(
       <Router>
@@ -19,9 +19,7 @@ describe('<SignupPage/>', () => {
     ),
   );
 
-  it('Should render the <ResetPasswordPageContainer/>', () => expectInDocByTestId('resetPasswordPageContainer'));
+  it('Should render the <Wrapper/>', () => expectInDocByTestId('wrapper'));
 
-  it('Should render the <ResetPasswordFormContainer/>', () => expectInDocByTestId('resetPasswordFormContainer'));
-
-  it('Should render the <SetPasswordForm/>', () => expectInDocByTestId('setPasswordForm'));
+  it('Should render the <ResetPasswordForm/>', () => expectInDocByTestId('resetPasswordForm'));
 });

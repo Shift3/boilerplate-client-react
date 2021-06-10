@@ -6,14 +6,15 @@ import { render } from '@testing-library/react';
 import { LogInForm } from '../index';
 import { errorMessages } from '../schema';
 import {
-  clickByRoleAsync,
+  clickByTestIdAsync,
   expectInDocByLabelText,
-  expectInDocByRole,
+  expectInDocByTestId,
   expectLengthByRole,
   expectMockFunctionCalled,
   expectMockFunctionNotCalled,
   setValueByLabelText,
   expectInnerHTMLByRole,
+
 } from '../../../utils/test';
 
 const { PASSWORD_REQUIRED, INVALID_EMAIL, EMAIL_REQUIRED } = errorMessages;
@@ -36,11 +37,11 @@ describe('LoginForm', () => {
 
   it('Should render password field', () => expectInDocByLabelText('Password'));
 
-  it('Should render submit button', () => expectInDocByRole('button'));
+  it('Should render submit button', () => expectInDocByTestId('submitButton'));
 
   describe('Valid input', () => {
     it('Should call onSubmit once formData object including username and password', async () => {
-      await clickByRoleAsync('button');
+      await clickByTestIdAsync('submitButton');
       expectLengthByRole('alert', 0);
       expectMockFunctionCalled(mockOnSubmit);
       mockOnSubmit.mockReset();
@@ -53,7 +54,7 @@ describe('LoginForm', () => {
     it('should not call onSubmit', async () => {
       await setValueByLabelText('Email', '');
       await setValueByLabelText('Password', '');
-      await clickByRoleAsync('button');
+      await clickByTestIdAsync('submitButton');
       expectMockFunctionNotCalled(mockOnSubmit);
       mockOnSubmit.mockReset();
     });
