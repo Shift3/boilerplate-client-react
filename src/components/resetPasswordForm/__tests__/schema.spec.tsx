@@ -37,18 +37,8 @@ const errorMessageCheck = async (field: string, value: string, message: string) 
       .catch((err: yup.ValidationError) => err.message),
   ).toEqual(message);
 
-const errorMessageConfirmCheck = async (
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  mockFormData: Record<string, any>,
-  field: string,
-  mismatch: string,
-  message: string,
-) =>
-  expect(
-    await ResetPasswordFormSchema.validate({ ...mockFormData, [field]: mismatch }).catch((err) => {
-      return err.message;
-    }),
-  ).toEqual(message);
+const errorMessageConfirmCheck = async (formData: Record<string, unknown>, message: string) =>
+  expect(await ResetPasswordFormSchema.validate(formData).catch((err) => err.message)).toEqual(message);
 
 describe('ResetPasswordSchema', () => {
   describe('Valid input data', () => {
@@ -86,30 +76,29 @@ describe('ResetPasswordSchema', () => {
       await errorMessageCheck('newPassword', missingNumberPassword, PASSWORD_NUMBER);
     });
 
-    // Todo: Refactor in next PR with new Yup method
     it('Should throw validation error with PASSWORD_MUST_MISMATCH message if new password matches current password', async () => {
       const formData = {
         currentPassword: validCurrentPassword,
-        newPassword: validNewPassword,
-        confirmPassword: '',
+        newPassword: validCurrentPassword,
+        confirmPassword: validCurrentPassword,
       };
-      await errorMessageConfirmCheck(formData, 'confirmPassword', mismatchPassword, PASSWORD_MUST_MISMATCH);
+      await errorMessageConfirmCheck(formData, PASSWORD_MUST_MISMATCH);
     });
   });
 
   describe('ConfirmPassword', () => {
     it('Should throw validation error with FIELD_REQUIRED message if empty', async () => {
       const formData = { currentPassword: validCurrentPassword, newPassword: '', confirmPassword: '' };
-      await errorMessageConfirmCheck(formData, 'confirmPassword', '', FIELD_REQUIRED);
+      await errorMessageConfirmCheck(formData, FIELD_REQUIRED);
     });
 
-    it('Should throw validation error with PASSWORD_MUST_MISMATCH message if confirm password does not match new password', async () => {
+    it('Should throw validation error with PASSWORD_MUST_MATCH message if confirm password does not match new password', async () => {
       const formData = {
         currentPassword: validCurrentPassword,
         newPassword: validNewPassword,
-        confirmPassword: '',
+        confirmPassword: mismatchPassword,
       };
-      await errorMessageConfirmCheck(formData, 'confirmPassword', mismatchPassword, PASSWORD_MUST_MISMATCH);
+      await errorMessageConfirmCheck(formData, PASSWORD_MUST_MATCH);
     });
   });
 });

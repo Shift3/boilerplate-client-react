@@ -1,7 +1,8 @@
 import { FC } from 'react';
 
 export interface IResetPasswordFormData {
-  password: string;
+  currentPassword: string;
+  newPassword: string;
   confirmPassword: string;
 }
 

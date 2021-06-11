@@ -41,8 +41,8 @@ exports[`<LogInForm /> styled components should match the stored <FormLabel /> s
   color: white;
 }
 
-<div
-  className="c0"
+<label
+  className="c0 form-label"
 />
 `;
 
@@ -51,7 +51,7 @@ exports[`<LogInForm /> styled components should match the stored <InputError /> 
   color: lightgrey;
 }
 
-<div
+<span
   className="c0"
 />
 `;

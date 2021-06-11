@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<LogInPage /> styled components Should match the stored <CreateAccountButton/> snapshot 1`] = `
+<button
+  className="btn btn-primary"
+  disabled={false}
+  type="button"
+/>
+`;
+
 exports[`<LogInPage /> styled components Should match the stored <LeftLogin/> snapshot 1`] = `
 .c0 {
   display: -webkit-box;

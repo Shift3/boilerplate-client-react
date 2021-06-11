@@ -144,18 +144,18 @@ describe('LoginForm', () => {
       expectInnerHTMLByRole('alert', PASSWORD_LOWERCASE);
     });
 
-    it('Should only display password mismatch error message', async () => {
+    it('Should only display PASSWORD_MUST_MATCH error message', async () => {
       await setValueByLabelText('New Password', validNewPassword);
       await setValueByLabelText('Confirm Password', shortPassword);
       expectLengthByRole('alert', 1);
-      expectInnerHTMLByRole('alert', PASSWORD_MUST_MISMATCH);
+      expectInnerHTMLByRole('alert', PASSWORD_MUST_MATCH);
     });
 
-    it('Should only display password match error message', async () => {
+    it('Should only display PASSWORD_MUST_MISMATCH error message', async () => {
       await setValueByLabelText('Current Password', validNewPassword);
       await setValueByLabelText('New Password', validNewPassword);
       expectLengthByRole('alert', 1);
-      expectInnerHTMLByRole('alert', PASSWORD_MUST_MATCH);
+      expectInnerHTMLByRole('alert', PASSWORD_MUST_MISMATCH);
     });
   });
 });

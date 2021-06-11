@@ -8,8 +8,8 @@ export enum errorMessages {
   PASSWORD_UPPERCASE = 'Password must contain at least one uppercase letter.',
   PASSWORD_SPECIAL_CHARACTER = 'Password must contain at least one special character.',
   PASSWORD_NUMBER = 'Password must contain at least one number.',
-  PASSWORD_MUST_MISMATCH = 'Passwords must match.',
-  PASSWORD_MUST_MATCH = 'New password should not match current password.',
+  PASSWORD_MUST_MISMATCH = 'New password should not match current password.',
+  PASSWORD_MUST_MATCH = 'Passwords must match.',
 }
 
 const minPassLength = 8;
@@ -24,10 +24,10 @@ export const ResetPasswordFormSchema = yup.object().shape({
     .matches(Constants.patterns.UPPERCASE_REGEX, errorMessages.PASSWORD_UPPERCASE)
     .matches(Constants.patterns.SYMBOL_REGEX, errorMessages.PASSWORD_SPECIAL_CHARACTER)
     .matches(Constants.patterns.DIGIT_REGEX, errorMessages.PASSWORD_NUMBER)
-    .notOneOf([ yup.ref('currentPassword') ], errorMessages.PASSWORD_MUST_MATCH),
+    .notOneOf([yup.ref('currentPassword')], errorMessages.PASSWORD_MUST_MATCH),
 
   confirmPassword: yup
     .string()
     .required(errorMessages.FIELD_REQUIRED)
-    .oneOf([ yup.ref('newPassword') ], errorMessages.PASSWORD_MUST_MISMATCH),
+    .oneOf([yup.ref('newPassword')], errorMessages.PASSWORD_MUST_MISMATCH),
 });
