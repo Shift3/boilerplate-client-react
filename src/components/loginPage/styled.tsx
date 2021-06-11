@@ -54,4 +54,5 @@ export const Title = styled.div`
 export const Text = styled.div`
   color: white;
 `;
+
 export const CreateAccountButton = styled(Button)``;

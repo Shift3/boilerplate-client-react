@@ -14,11 +14,11 @@ export const Title = styled.div`
   padding-bottom: 10px;
 `;
 
-export const FieldTitle = styled.div`
+export const FormLabel = styled.div`
   color: white;
 `;
 
-export const Error = styled.div`
+export const InputError = styled.div`
   color: lightgrey;
 `;
 
