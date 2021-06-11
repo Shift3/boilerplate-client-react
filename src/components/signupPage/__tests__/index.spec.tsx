@@ -1,19 +1,19 @@
 import { render } from '@testing-library/react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { SignUpPage } from '..';
+import { SignUpPage } from '../';
 import { expectInDocByTestId } from 'utils/test';
 
 beforeEach(() => render(
   <Router>
     <Switch>
-      <Route 
+      <Route
         exact
         path="/"
-        component={SignUpPage} 
+        component={SignUpPage}
       />
       <Route 
         exact 
-        path="/auth/signup" 
+        path="/auth/signup"
         component={() => <div data-testid="test" />}
       />
     </Switch>
@@ -21,9 +21,9 @@ beforeEach(() => render(
 ));
 
 describe('<SignUpPage/>', () => {
-  it('Should render the <Wrapper/>', () => 
+  it('Should render the <Wrapper/>', () =>
     expectInDocByTestId("wrapper"));
 
-  it('Should render the <SignupForm/>', () => 
+  it('Should render the <SignupForm/>', () =>
     expectInDocByTestId("signupForm"));
 });

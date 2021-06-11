@@ -2,6 +2,6 @@
 
 exports[`<Wrapper /> should match the stored snapshot 1`] = `
 <footer
-  className="sc-bdvvaa laMXQC"
+  className="sc-bdnxRM eZWUKV"
 />
 `;

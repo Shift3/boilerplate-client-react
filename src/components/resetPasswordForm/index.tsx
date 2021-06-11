@@ -1,6 +1,3 @@
-/* eslint-disable indent */
-/* eslint-disable jsx-quotes */
-/* eslint-disable react/jsx-props-no-spreading */
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
@@ -27,40 +24,40 @@ export const ResetPasswordForm: ResetPasswordFormType = ({ onSubmit }) => {
 
   return (
     <>
-      <StyledForm data-testid='resetPasswordForm' onSubmit={handleSubmit(onSubmit)}>
+      <StyledForm data-testid="resetPasswordForm" onSubmit={handleSubmit(onSubmit)}>
         <Title>Reset Password</Title>
         <Form.Group>
-          <FormLabel htmlFor='currentPassword'>Current Password</FormLabel>
-          <Form.Control id='currentPassword' type='password' {...register('currentPassword')} />
+          <FormLabel htmlFor="currentPassword">Current Password</FormLabel>
+          <Form.Control id="currentPassword" type="password" {...register('currentPassword')} />
           {errors.currentPassword?.message && (
-            <InputError role='alert' className='danger'>
+            <InputError role="alert" className="danger">
               {errors.currentPassword?.message}
             </InputError>
           )}
         </Form.Group>
         <Form.Group>
-          <FormLabel htmlFor='newPassword'>New Password</FormLabel>
-          <Form.Control id='newPassword' type='password' {...register('newPassword')} />
+          <FormLabel htmlFor="newPassword">New Password</FormLabel>
+          <Form.Control id="newPassword" type="password" {...register('newPassword')} />
           {errors.newPassword?.message && (
-            <InputError role='alert' className='danger'>
+            <InputError role="alert" className="danger">
               {errors.newPassword?.message}
             </InputError>
           )}
         </Form.Group>
         <Form.Group>
-          <FormLabel htmlFor='confirmPassword'>Confirm Password</FormLabel>
-          <Form.Control id='confirmPassword' type='password' {...register('confirmPassword')} />
+          <FormLabel htmlFor="confirmPassword">Confirm Password</FormLabel>
+          <Form.Control id="confirmPassword" type="password" {...register('confirmPassword')} />
           {errors.confirmPassword?.message && (
-            <InputError role='alert' className='danger'>
+            <InputError role="alert" className="danger">
               {errors.confirmPassword?.message}
             </InputError>
           )}
         </Form.Group>
         <ButtonWrapper>
-          <CancelButton data-testid='cancelButton' onClick={navigateToLogin}>
+          <CancelButton data-testid="cancelButton" onClick={navigateToLogin}>
             Cancel
           </CancelButton>
-          <SubmitButton data-testid='submitButton' type='submit' disabled={!isValid}>
+          <SubmitButton data-testid="submitButton" type="submit" disabled={!isValid}>
             Submit
           </SubmitButton>
         </ButtonWrapper>

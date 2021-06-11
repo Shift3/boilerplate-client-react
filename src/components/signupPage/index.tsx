@@ -1,4 +1,3 @@
-/* eslint-disable lines-around-comment */
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ISignUpFormData } from 'components/signupForm/types';
@@ -10,8 +9,10 @@ export const SignUpPage: FC = () => {
 
   //  eslint-disable-next-line
   const onSubmit = (formData: ISignUpFormData) => {
+
     // TODO: we need to actually make an API call and handle
     // success and error cases.
+
     history.push('/');
   };
 

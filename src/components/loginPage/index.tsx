@@ -1,4 +1,3 @@
-/* eslint-disable jsx-quotes */
 import { FC } from 'react';
 import { LogInForm } from 'components/loginForm';
 import { Link, useHistory } from 'react-router-dom';
@@ -10,7 +9,8 @@ export const LogInPage: FC = () => {
 
   // TODO: we need to make an API call and handle
   // success and error cases.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+  // eslint-disable-next-line
   const onSubmit = (formData: ILogInFormData) => {
     history.push('/');
   };
@@ -25,14 +25,12 @@ export const LogInPage: FC = () => {
   return (
     <Wrapper data-testid="wrapper">
       <LoginWrapper data-testid="loginWrapper">
-        {/* Naming ? */}
-        <LeftLogin data-testid="leftLogin"> 
+        <LeftLogin data-testid="leftLogin">
           <LogInForm onSubmit={ onSubmit } onCancel={ onCancel } />
           <LinkWrapper>
-            <Link to='/auth/change-password'>Forgot Password?</Link>
+            <Link to="/auth/change-password">Forgot Password?</Link>
           </LinkWrapper>
         </LeftLogin>
-        {/* Naming ? */}
         <RightLogin data-testid="rightLogin">
           <Title>
             <h2 data-testid="loginPageInfoHeading">Not Registered Yet?</h2>

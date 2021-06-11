@@ -100,6 +100,11 @@
     "comma-dangle": 0,
     "@typescript-eslint/ban-types": 0,
     "react/self-closing-comp": 0,
+    "no-undef": 0,
+    "import/no-useless-path-segments": 0,
+    "import/order": 0,
+    "space-before-function-paren": 0,
+    "lines-around-comment": 0,
 
     // WARN (1)
     "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
@@ -125,15 +130,6 @@
     "jsx-quotes": 1,
     "key-spacing": 1,
     "keyword-spacing": 1,
-    "lines-around-comment": [
-      1,
-      {
-        "afterBlockComment": false,
-        "afterLineComment": false,
-        "beforeBlockComment": true,
-        "beforeLineComment": true
-      }
-    ],
     "max-depth": 1,
     "max-len": [
       1,
@@ -152,7 +148,6 @@
     "semi-spacing": [1, { "before": false, "after": true }],
     "semi-style": 1,
     "space-before-blocks": 1,
-    "space-before-function-paren": [1, "never"],
     "space-infix-ops": 1,
     "space-unary-ops": [1, { "words": true, "nonwords": false }],
     "spaced-comment": [1, "always"],
@@ -299,7 +294,6 @@
     "no-delete-var": 2,
     "no-label-var": 2,
     "no-shadow-restricted-names": 2,
-    "no-undef": 2,
     "no-undefined": 2,
     "@typescript-eslint/no-unused-vars": 2,
     "no-use-before-define": 2,

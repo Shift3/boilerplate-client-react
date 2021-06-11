@@ -1,5 +1,3 @@
-/* eslint-disable space-before-function-paren */
-/* eslint-disable no-undef */
 import * as yup from 'yup';
 import { LogInFormSchema, errorMessages } from '../schema';
 

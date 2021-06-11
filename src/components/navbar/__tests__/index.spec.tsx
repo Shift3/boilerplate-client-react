@@ -1,9 +1,6 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable array-bracket-spacing */
-/* eslint-disable jsx-quotes */
-/* eslint-disable no-undef */
 import { render } from '@testing-library/react';
 import { Router, Switch, Route } from 'react-router-dom';
+// eslint-disable-next-line
 import { createMemoryHistory } from 'history';
 import { NavBar } from '..';
 import { expectInDocByTestId, clickExpectByTestId } from '../../../utils/test';
@@ -11,12 +8,12 @@ import { expectInDocByTestId, clickExpectByTestId } from '../../../utils/test';
 describe('<NavBar/>', () => {
   beforeEach(() =>
     render(
-      <Router history={createMemoryHistory({ initialEntries: ['/'] })}>
+      <Router history={createMemoryHistory({ initialEntries: [ '/' ] })}>
         <Switch>
-          <Route exact path='/' component={NavBar} />
-          <Route exact path='/logout' component={() => <div data-testid='logout' />} />
-          <Route exact path='/users' component={() => <div data-testid='users' />} />
-          <Route exact path='/directory' component={() => <div data-testid='directory' />} />
+          <Route exact path="/" component={NavBar} />
+          <Route exact path="/logout" component={() => <div data-testid="logout" />} />
+          <Route exact path="/users" component={() => <div data-testid="users" />} />
+          <Route exact path="/directory'"component={() => <div data-testid="directory" />} />
         </Switch>
       </Router>,
     ),

@@ -1,7 +1,3 @@
-/* eslint-disable require-await */
-/* eslint-disable @typescript-eslint/no-magic-numbers */
-/* eslint-disable space-before-function-paren */
-/* eslint-disable no-undef */
 import { render } from '@testing-library/react';
 import { LogInForm } from '../index';
 import { errorMessages } from '../schema';
@@ -47,7 +43,7 @@ describe('LoginForm', () => {
       mockOnSubmit.mockReset();
     });
 
-    it('Should not display error messages', async () => expectLengthByRole('alert', 0));
+    it('Should not display error messages', () => expectLengthByRole('alert', 0));
   });
 
   describe('Invalid input', () => {

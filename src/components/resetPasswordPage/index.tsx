@@ -1,5 +1,3 @@
-/* eslint-disable jsx-quotes */
-/* eslint-disable lines-around-comment */
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ResetPasswordForm } from '../resetPasswordForm';
@@ -16,7 +14,7 @@ export const ResetPasswordPage: FC = () => {
   };
 
   return (
-    <Wrapper data-testid='wrapper'>
+    <Wrapper data-testid="wrapper">
       <ResetPasswordForm onSubmit={onSubmit} />
     </Wrapper>
   );

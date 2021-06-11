@@ -1,5 +1,3 @@
-/* eslint-disable jsx-quotes */
-/* eslint-disable no-undef */
 import { render } from '@testing-library/react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { LogInPage } from '../index';
@@ -9,7 +7,7 @@ const renderInitialTestDOM = () =>
   render(
     <Router>
       <Switch>
-        <Route exact path='/' component={LogInPage} />
+        <Route exact path="/" component={LogInPage} />
       </Switch>
     </Router>,
   );
@@ -18,8 +16,8 @@ const renderNavigationTestDOM = () =>
   render(
     <Router>
       <Switch>
-        <Route exact path='/' component={LogInPage} />
-        <Route exact path='/auth/signup' component={() => <div />} />
+        <Route exact path="/" component={LogInPage} />
+        <Route exact path="/auth/signup" component={() => <div />} />
       </Switch>
     </Router>,
   );

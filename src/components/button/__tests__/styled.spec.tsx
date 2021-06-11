@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import renderer from 'react-test-renderer';
 import { CustomButton } from '../styled';
 import 'jest-styled-components';

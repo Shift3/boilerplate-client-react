@@ -1,7 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable space-before-function-paren */
-/* eslint-disable computed-property-spacing */
-/* eslint-disable no-undef */
 import * as yup from 'yup';
 import { ResetPasswordFormSchema, errorMessages } from '../schema';
 
@@ -47,7 +43,7 @@ const errorMessageConfirmCheck = async (
   message: string,
 ) =>
   expect(
-    await ResetPasswordFormSchema.validate({ ...mockFormData, [field]: mismatch }).catch((err) => {
+    await ResetPasswordFormSchema.validate({ ...mockFormData, [ field ]: mismatch }).catch((err) => {
       return err.message;
     }),
   ).toEqual(message);

@@ -1,6 +1,3 @@
-/* eslint-disable no-trailing-spaces */
-/* eslint-disable object-curly-spacing */
-/* eslint-disable no-undef */
 import { render } from '@testing-library/react';
 import { Logout } from '..';
 import { expectInDocByRole, expectInnerHTMLByRole } from '../../../utils/test';

@@ -1,4 +1,3 @@
-/* eslint-disable array-bracket-spacing */
 import * as yup from 'yup';
 
 export enum errorMessages {
@@ -18,7 +17,7 @@ export const SignUpFormSchema = yup.object().shape({
   confirmEmail: yup
     .string()
     .required(errorMessages.EMAIL_REQUIRED)
-    .oneOf([yup.ref('email'), null], errorMessages.EMAIL_MATCH),
+    .oneOf([ yup.ref('email'), null ], errorMessages.EMAIL_MATCH),
   firstName: yup
     .string()
     .required(errorMessages.FIRST_NAME_REQUIRED)

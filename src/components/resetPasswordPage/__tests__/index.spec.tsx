@@ -1,11 +1,6 @@
-/* eslint-disable array-bracket-spacing */
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable jsx-quotes */
-/* eslint-disable semi */
-/* eslint-disable no-trailing-spaces */
-/* eslint-disable no-undef */
 import { render } from '@testing-library/react';
 import { Router, Switch, Route } from 'react-router-dom';
+// eslint-disable-next-line
 import { createMemoryHistory } from 'history';
 import { ResetPasswordPage } from '..';
 import { expectInDocByTestId } from '../../../utils/test';
@@ -14,10 +9,10 @@ describe('<ResetPasswordPage/>', () => {
   describe('Rendering', () => {
     beforeEach(() =>
       render(
-        <Router history={createMemoryHistory({ initialEntries: ['/'] })}>
+        <Router history={createMemoryHistory({ initialEntries: [ '/' ] })}>
           <Switch>
-            <Route exact path='/' component={ResetPasswordPage} />
-            <Route exact path='/auth/signup' component={() => <div data-testid='test' />} />
+            <Route exact path="/" component={ResetPasswordPage} />
+            <Route exact path="/auth/signup" component={() => <div data-testid="test" />} />
           </Switch>
         </Router>,
       ),

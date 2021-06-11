@@ -1,23 +1,13 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable array-bracket-spacing */
-/* eslint-disable space-before-function-paren */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-undef */
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import {
-  clickByRoleAsync,
   expectLengthByRole,
   expectInnerHTMLByRole,
   expectMockFunctionNotCalled,
   expectInDocByLabelText,
-  expectInDocByRole,
   expectInDocByTestId,
   clickByTestIdAsync,
   setValueByLabelText,
-  clickNavigateByTestId,
 } from 'utils/test';
-import { Router, Switch, Route } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
 import { ResetPasswordForm } from '..';
 import { errorMessages } from '../schema';
 
@@ -123,6 +113,13 @@ describe('LoginForm', () => {
       expectInnerHTMLByRole('alert', FIELD_REQUIRED);
     });
 
+    it('Should only display password length error message', async () => {
+      await setValueByLabelText('New Password', shortPassword);
+      await setValueByLabelText('Confirm Password', shortPassword);
+      expectLengthByRole('alert', 1);
+      expectInnerHTMLByRole('alert', PASSWORD_LENGTH);
+    });
+
     it('Should only display special character required error message', async () => {
       await setValueByLabelText('New Password', noSpecialCharPassword);
       expectLengthByRole('alert', 1);
@@ -157,7 +154,6 @@ describe('LoginForm', () => {
     it('Should only display password match error message', async () => {
       await setValueByLabelText('Current Password', validNewPassword);
       await setValueByLabelText('New Password', validNewPassword);
-      console.log('===== HERE ====', screen.getByRole('alert').innerHTML);
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', PASSWORD_MUST_MATCH);
     });
