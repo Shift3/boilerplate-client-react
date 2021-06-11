@@ -11,6 +11,10 @@ exports[`<Wrapper /> should match the stored snapshot 1`] = `
 }
 
 <footer
+<<<<<<< HEAD
   className="c0"
+=======
+  className="sc-bdnxRM eZWUKV"
+>>>>>>> d9be32e (chore(snapshots): updated snapshots)
 />
 `;
