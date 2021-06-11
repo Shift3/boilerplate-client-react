@@ -1,5 +1,6 @@
 import { expectToMatchSnapshot } from '../../../utils/test';
-import { LoginWrapper, Wrapper, LeftLogin, LinkWrapper, RightLogin, Title, Text } from '../styled';
+import renderer from 'react-test-renderer';
+import { LoginWrapper, Wrapper, LeftLogin, LinkWrapper, RightLogin, Title, Text, CreateAccountButton } from '../styled';
 
 import 'jest-styled-components';
 
@@ -17,4 +18,7 @@ describe('<LogInPage /> styled components', () => {
   it('Should match the stored <Title/> snapshot', () => expectToMatchSnapshot(<Title />));
 
   it('Should match the stored <Text/> snapshot', () => expectToMatchSnapshot(<Text />));
+
+  it('Should match the stored <CreateAccountButton/> snapshot', () =>
+    expect(renderer.create(<CreateAccountButton />).toJSON()).toMatchSnapshot());
 });
