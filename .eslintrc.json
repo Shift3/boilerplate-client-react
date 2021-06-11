@@ -105,6 +105,7 @@
     "import/order": 0,
     "space-before-function-paren": 0,
     "lines-around-comment": 0,
+    "array-bracket-spacing": 0,
 
     // WARN (1)
     "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
@@ -113,7 +114,6 @@
     "no-debugger": 1,
     "prefer-regex-literals": 1,
     "yoda": 1,
-    "array-bracket-spacing": [1, "always"],
     "block-spacing": 1,
     "brace-style": 1,
     "capitalized-comments": 1,
