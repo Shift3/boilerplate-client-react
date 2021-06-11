@@ -32,7 +32,7 @@ const noLowercasePassword = 'PASSWORD123!';
 
 const mockOnSubmit = jest.fn();
 
-describe('LoginForm', () => {
+describe('ResetPasswordForm', () => {
   describe('Rendering', () => {
     beforeEach(() => render(<ResetPasswordForm onSubmit={mockOnSubmit} />));
 
@@ -145,8 +145,10 @@ describe('LoginForm', () => {
     });
 
     it('Should only display PASSWORD_MUST_MATCH error message', async () => {
+      const nonMatchingPassword = `${validNewPassword}4`;
+
       await setValueByLabelText('New Password', validNewPassword);
-      await setValueByLabelText('Confirm Password', shortPassword);
+      await setValueByLabelText('Confirm Password', nonMatchingPassword);
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', PASSWORD_MUST_MATCH);
     });

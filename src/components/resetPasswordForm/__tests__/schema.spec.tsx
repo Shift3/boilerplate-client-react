@@ -38,7 +38,11 @@ const errorMessageCheck = async (field: string, value: string, message: string) 
   ).toEqual(message);
 
 const errorMessageConfirmCheck = async (formData: Record<string, unknown>, message: string) =>
-  expect(await ResetPasswordFormSchema.validate(formData).catch((err) => err.message)).toEqual(message);
+  expect(
+    await ResetPasswordFormSchema.validate(formData).catch((err) => {
+      return err.message;
+    }),
+  ).toEqual(message);
 
 describe('ResetPasswordSchema', () => {
   describe('Valid input data', () => {
