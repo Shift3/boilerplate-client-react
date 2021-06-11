@@ -13,9 +13,9 @@ describe('<NavBar/>', () => {
           <Route exact path="/" component={NavBar} />
           <Route exact path="/logout" component={() => <div data-testid="logout" />} />
           <Route exact path="/users" component={() => <div data-testid="users" />} />
-          <Route exact path="/directory'"component={() => <div data-testid="directory" />} />
+          <Route exact path="/directory"component={() => <div data-testid="directory" />} />
         </Switch>
-      </Router>,
+      </Router>
     ),
   );
 
