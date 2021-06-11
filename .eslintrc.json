@@ -171,6 +171,7 @@
         "ignoreJSX": "multi-line"
       }
     ],
+    "@typescript-eslint/no-unused-vars": 1,
     "no-magic-numbers": [
       1,
       {
@@ -295,7 +296,6 @@
     "no-label-var": 2,
     "no-shadow-restricted-names": 2,
     "no-undefined": 2,
-    "@typescript-eslint/no-unused-vars": 2,
     "no-use-before-define": 2,
     "linebreak-style": 2,
     "max-params": [2, { "max": 4 }],
