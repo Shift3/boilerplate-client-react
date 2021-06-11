@@ -50,7 +50,7 @@ const errorMessageConfirmCheck = async (
     }),
   ).toEqual(message);
 
-describe('loginFormSchema', () => {
+describe('ResetPasswordSchema', () => {
   describe('Valid input data', () => {
     it('Should pass validation', () => expect(ResetPasswordFormSchema.isValidSync(mockFormData)).toBeTruthy());
   });
@@ -87,13 +87,13 @@ describe('loginFormSchema', () => {
     });
 
     // Todo: Refactor in next PR with new Yup method
-    it('Should throw validation error with PASSWORD_MUST_MISMATCHMATCH message if new password matches current password', async () => {
+    it('Should throw validation error with PASSWORD_MUST_MISMATCH message if new password matches current password', async () => {
       const formData = {
-        currentPassword: validNewPassword,
+        currentPassword: validCurrentPassword,
         newPassword: validNewPassword,
-        confirmPassword: validNewPassword,
+        confirmPassword: '',
       };
-      await errorMessageConfirmCheck(formData, 'confirmPassword', mismatchPassword, PASSWORD_MUST_MATCH);
+      await errorMessageConfirmCheck(formData, 'confirmPassword', mismatchPassword, PASSWORD_MUST_MISMATCH);
     });
   });
 
