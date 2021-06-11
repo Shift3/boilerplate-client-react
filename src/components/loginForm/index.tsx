@@ -21,18 +21,14 @@ export const LogInForm: LogInFormType = ({ onSubmit, onCancel }) => {
       <StyledForm data-testid='loginForm' onSubmit={handleSubmit(onSubmit)}>
         <Title>Member Log In</Title>
         <Form.Group>
-          <FormLabel>
-            <Form.Label htmlFor='email'>Email</Form.Label>
-          </FormLabel>
+          <FormLabel htmlFor='email'>Email</FormLabel>
           <Form.Control id='email' type='email' {...register('email')} />
-          <InputError>{errors.email?.message && <span role='alert'>{errors.email?.message}</span>}</InputError>
+          {errors.email?.message && <InputError role='alert'>{errors.email?.message}</InputError>}
         </Form.Group>
         <Form.Group>
-          <FormLabel>
-            <Form.Label htmlFor='password'>Password</Form.Label>
-          </FormLabel>
+          <FormLabel htmlFor='password'>Password</FormLabel>
           <Form.Control id='password' type='password' {...register('password')} />
-          <InputError>{errors.password?.message && <span role='alert'>{errors.password?.message}</span>}</InputError>
+          {errors.password?.message && <InputError role='alert'>{errors.password?.message}</InputError>}
         </Form.Group>
         <ButtonWrapper>
           <CancelButton data-testid='cancelButton' onClick={onCancel}>

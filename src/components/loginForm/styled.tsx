@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { Button, Form } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 export const StyledForm = styled(Form)`
   padding: 40px;
@@ -14,11 +15,11 @@ export const Title = styled.div`
   padding-bottom: 10px;
 `;
 
-export const FormLabel = styled.div`
+export const FormLabel = styled(Form.Label)`
   color: white;
 `;
 
-export const InputError = styled.div`
+export const InputError = styled.span`
   color: lightgrey;
 `;
 

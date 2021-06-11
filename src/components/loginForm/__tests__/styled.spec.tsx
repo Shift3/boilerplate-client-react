@@ -9,11 +9,12 @@ describe('<LogInForm /> styled components', () => {
 
   it('should match the stored <Title /> snapshot', () => expectToMatchSnapshot(<Title />));
 
-  it('should match the stored <FormLabel /> snapshot', () => expectToMatchSnapshot(<FormLabel />));
-
   it('should match the stored <InputError /> snapshot', () => expectToMatchSnapshot(<InputError />));
 
   it('should match the stored <ButtonWrapper /> snapshot', () => expectToMatchSnapshot(<ButtonWrapper />));
+
+  it('should match the stored <FormLabel /> snapshot', () =>
+    expect(renderer.create(<FormLabel />).toJSON()).toMatchSnapshot());
 
   it('should match the stored <CancelButton /> snapshot', () =>
     expect(renderer.create(<CancelButton />).toJSON()).toMatchSnapshot());
