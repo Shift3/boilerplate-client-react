@@ -1,4 +1,6 @@
+const footerHeight = '25px';
 const topNavHeight = '150px';
+
 export default {
   adminBackground: '#f1f0eb',
   authBackground: '#ecf6f9',
@@ -12,6 +14,12 @@ export default {
   cardHeader: '#c5e6ec',
   navBackground: '#ffffff',
   navLink: '#2B373B',
-  footerHeight: '25px',
+  footerHeight,
   topNavHeight,
+  sideNavWidth: '20%',
+  sideNavHeight: '100vh',
+  topNavMinPageHeight: `calc(100vh - ${topNavHeight} - ${footerHeight})`,
+  sideNavMinPageHeight: `calc(100vh - ${footerHeight})`,
+  clear: 'rgba(0, 0, 0, 0)',
+  navLogoOffset: '20px',
 };
