@@ -7,7 +7,6 @@ export interface IResetPasswordFormData {
 
 type IResetPasswordFormProps = {
   onSubmit: (data: IResetPasswordFormData) => void;
-  onCancel: (data: IResetPasswordFormData) => void;
 };
 
 export type ResetPasswordFormType = FC<IResetPasswordFormProps>;

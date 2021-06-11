@@ -176,6 +176,13 @@
         "ignoreJSX": "multi-line"
       }
     ],
+    "no-magic-numbers": [
+      1,
+      {
+        "ignoreArrayIndexes": true,
+        "ignore": [0, 1, 2, 3, 4]
+      }
+    ],
 
     // ERROR (2)
     "for-direction": 2,
@@ -262,14 +269,6 @@
     "no-iterator": 2,
     "no-lone-blocks": 2,
     "no-loop-func": 2,
-    "no-magic-numbers": "off",
-    "@typescript-eslint/no-magic-numbers": [
-      "warn",
-      {
-        "ignoreArrayIndexes": true,
-        "ignore": [0, 1]
-      }
-    ],
     "no-new": 2,
     "no-new-func": 2,
     "no-new-wrappers": 2,

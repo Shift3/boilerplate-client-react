@@ -1,3 +1,4 @@
+/* eslint-disable jsx-quotes */
 /* eslint-disable lines-around-comment */
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -14,13 +15,9 @@ export const ResetPasswordPage: FC = () => {
     history.push('/');
   };
 
-  const onCancel = () => {
-    history.push('/');
-  };
-
   return (
-    <Wrapper data-testid="wrapper">
-      <ResetPasswordForm onSubmit={onSubmit} onCancel={onCancel} />
+    <Wrapper data-testid='wrapper'>
+      <ResetPasswordForm onSubmit={onSubmit} />
     </Wrapper>
   );
 };
