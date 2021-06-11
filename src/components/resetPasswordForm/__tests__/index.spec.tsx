@@ -3,7 +3,7 @@
 /* eslint-disable space-before-function-paren */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-undef */
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import {
   clickByRoleAsync,
   expectLengthByRole,
@@ -22,8 +22,8 @@ import { ResetPasswordForm } from '..';
 import { errorMessages } from '../schema';
 
 const {
-  PASSWORD_MATCH,
-  PASSWORD_MISMATCH,
+  PASSWORD_MUST_MATCH,
+  PASSWORD_MUST_MISMATCH,
   PASSWORD_LENGTH,
   PASSWORD_NUMBER,
   FIELD_REQUIRED,
@@ -146,17 +146,20 @@ describe('LoginForm', () => {
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', PASSWORD_LOWERCASE);
     });
+
     it('Should only display password mismatch error message', async () => {
       await setValueByLabelText('New Password', validNewPassword);
       await setValueByLabelText('Confirm Password', shortPassword);
       expectLengthByRole('alert', 1);
-      expectInnerHTMLByRole('alert', PASSWORD_MISMATCH);
+      expectInnerHTMLByRole('alert', PASSWORD_MUST_MISMATCH);
     });
+
     it('Should only display password match error message', async () => {
       await setValueByLabelText('Current Password', validNewPassword);
       await setValueByLabelText('New Password', validNewPassword);
+      console.log('===== HERE ====', screen.getByRole('alert').innerHTML);
       expectLengthByRole('alert', 1);
-      expectInnerHTMLByRole('alert', PASSWORD_MATCH);
+      expectInnerHTMLByRole('alert', PASSWORD_MUST_MATCH);
     });
   });
 });

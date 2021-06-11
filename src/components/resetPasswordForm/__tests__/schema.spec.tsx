@@ -8,7 +8,8 @@ import { ResetPasswordFormSchema, errorMessages } from '../schema';
 const {
   FIELD_REQUIRED,
   PASSWORD_LENGTH,
-  PASSWORD_MISMATCH,
+  PASSWORD_MUST_MISMATCH,
+  PASSWORD_MUST_MATCH,
   PASSWORD_LOWERCASE,
   PASSWORD_UPPERCASE,
   PASSWORD_SPECIAL_CHARACTER,
@@ -88,14 +89,14 @@ describe('loginFormSchema', () => {
     });
 
     // Todo: Refactor in next PR with new Yup method
-    // fit('Should throw validation error with PASSWORD_MATCH message if new password matches current password', async () => {
-    //   const formData = {
-    //     currentPassword: validNewPassword,
-    //     newPassword: validNewPassword,
-    //     confirmPassword: validNewPassword,
-    //   };
-    //   await errorMessageConfirmCheck(formData, 'confirmPassword', mismatchPassword, PASSWORD_MATCH);
-    // });
+    it('Should throw validation error with PASSWORD_MUST_MISMATCHMATCH message if new password matches current password', async () => {
+      const formData = {
+        currentPassword: validNewPassword,
+        newPassword: validNewPassword,
+        confirmPassword: validNewPassword,
+      };
+      await errorMessageConfirmCheck(formData, 'confirmPassword', mismatchPassword, PASSWORD_MUST_MATCH);
+    });
   });
 
   describe('ConfirmPassword', () => {
@@ -104,13 +105,13 @@ describe('loginFormSchema', () => {
       await errorMessageConfirmCheck(formData, 'confirmPassword', '', FIELD_REQUIRED);
     });
 
-    it('Should throw validation error with PASSWORD_MISMATCH message if confirm password does not match new password', async () => {
+    it('Should throw validation error with PASSWORD_MUST_MISMATCH message if confirm password does not match new password', async () => {
       const formData = {
         currentPassword: validCurrentPassword,
         newPassword: validNewPassword,
         confirmPassword: '',
       };
-      await errorMessageConfirmCheck(formData, 'confirmPassword', mismatchPassword, PASSWORD_MISMATCH);
+      await errorMessageConfirmCheck(formData, 'confirmPassword', mismatchPassword, PASSWORD_MUST_MISMATCH);
     });
   });
 });

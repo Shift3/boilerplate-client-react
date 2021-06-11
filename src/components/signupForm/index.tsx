@@ -21,7 +21,6 @@ export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
   return (
     <>
       <StyledForm data-testid='signupForm' onSubmit={handleSubmit(onSubmit)}>
-        {/* @HERE - pair programming - Heading? */}
         <Title>Sign Up</Title>
         <Form.Group>
           <FormLabel htmlFor='email'>Email</FormLabel> <Form.Control id='email' type='email' {...register('email')} />
