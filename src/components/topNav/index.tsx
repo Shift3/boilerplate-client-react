@@ -1,10 +1,9 @@
 import { FC } from 'react';
-import { ThemeProvider } from 'styled-components';
-import NavDropdown from "react-bootstrap/NavDropdown";
 import { faUser, faStethoscope } from '@fortawesome/free-solid-svg-icons';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import { DropDownItemType } from './types';
 import { CustomButton } from '../button/styled';
-import { NavLinkStyled } from '../sideNav/styled';
+import { NavLinkStyled } from '../navbar/styled';
 import logo from '../../assets/img/logo.png';
 import placeholder_portrait from '../../assets/img/portrait_placeholder.png';
 import {
@@ -54,24 +53,24 @@ export const TopNav: FC = () => (
     <NavContainerRight>
       {
         isLoggedIn && (
-            <DropDownButton>
-              <UserIcon icon={ faUser }/>
-              <CustomNavDropdown
-                title={ `Hi ${ mockUser.firstName }` }
-                id="topNavDropdown"
-                data-testid="navDropdown"
-              >
-                <DropDownContainerLeft>
-                  <ProfilePhoto src={ placeholder_portrait } alt="Placeholder Portrait" />
-                  { fullUserName() }
-                </DropDownContainerLeft>
-                <VerticalLine />
-                <DropDownContainerRight>
-                  <NavDropDownItem linkText="Profile" pathname="/user/profile" testid="profile" />
-                  <NavDropDownItem linkText="Change Password" pathname="/user/change-password" testid="changePassword" />
-                </DropDownContainerRight>
-              </CustomNavDropdown>
-            </DropDownButton>
+          <DropDownButton>
+            <UserIcon icon={ faUser }/>
+            <CustomNavDropdown
+              title={ `Hi ${ mockUser.firstName }` }
+              id="topNavDropdown"
+              data-testid="navDropdown"
+            >
+              <DropDownContainerLeft>
+                <ProfilePhoto src={ placeholder_portrait } alt="Placeholder Portrait" />
+                { fullUserName() }
+              </DropDownContainerLeft>
+              <VerticalLine />
+              <DropDownContainerRight>
+                <NavDropDownItem linkText="Profile" pathname="/user/profile" testid="profile" />
+                <NavDropDownItem linkText="Change Password" pathname="/user/change-password" testid="changePassword" />
+              </DropDownContainerRight>
+            </CustomNavDropdown>
+          </DropDownButton>
         )
       }
       {
