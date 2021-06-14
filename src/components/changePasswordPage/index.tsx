@@ -1,3 +1,4 @@
+/* eslint-disable jsx-quotes */
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ChangePasswordForm } from '../changePasswordForm';
