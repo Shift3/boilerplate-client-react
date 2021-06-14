@@ -1,8 +1,7 @@
-import { FC } from "react"
+import { FC } from "react";
 
 export type DropdownItemProps = {
     linkText: string;
-    pathname: string;
     testid: string;
 }
 

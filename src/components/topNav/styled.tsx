@@ -12,7 +12,7 @@ const {
   clear,
 } = styleValues;
 
-export const NavWrapper = styled(Nav)`
+export const Navbar = styled(Nav)`
   padding: 8px 16px;
   display: flex;
   flex-direction: row;
@@ -29,31 +29,52 @@ export const DirectoryLink = styled(NavLink)`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  & span {
+    color: rgba(0, 0, 0, .5);
+  }
+
+  &:hover {
+    text-decoration: none;
+
+    & > span {
+      color: rgba(0, 0, 0, .7);
+    }
+  }
 `;
 
 export const DropDownButton = styled(Button)`
   background-color: ${clear};
   border-color: ${clear};
 
+  &:hover,
+  &:focus,
   &:active {
       background-color: ${clear} !important;
-      border-color: #175f6e !important;
   }
 
+  &:active,
   &:focus {
-      background-color: ${clear};
-      border-color: ${clear};
+    border-color: #175f6e;
   }
 
+  &:focus,
   &:hover {
-      background-color: ${clear};
       border-color: ${clear};
   }
 `;
 
-export const CustomNavDropdown = styled(NavDropdown)`
+export const Dropdown = styled(NavDropdown)`
   & a {
-    color: #175f6e
+    color: rgba(0, 0, 0, .5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      color: rgba(0, 0, 0, .7);
+    }
   }
 
   & .dropdown-menu {
@@ -71,11 +92,21 @@ export const CustomNavDropdown = styled(NavDropdown)`
   }
 `;
 
+export const NavDropdownItem = styled(NavDropdown.Item)`
+ &:active, &:focus {
+  background-color: rgba(233, 236, 239, 0);
+ }
+
+ &.dropdown-item.active, .dropdown-item:active {
+    background-color: ${clear} !important;
+  };
+`;
+
 export const DropDownContainerLeft = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
 `;
 
@@ -95,10 +126,10 @@ export const DropDownContainerRight = styled.div`
 `;
 
 export const VerticalLine = styled.span`
-  display: inline-block;
-  border-left: 1px solid #d3d3d3;
   margin: 0 20px;
   height: 125px;
+  border-left: 1px solid #d3d3d3;
+  display: inline-block;
 `;
 
 export const NavContainerLeft = styled.div`
@@ -112,10 +143,7 @@ export const NavContainerRight = styled.div`
   align-items: center;
 `;
 
-export const UserIcon = styled(FontAwesomeIcon)`
-  color: #175f6e
-`;
-
-export const StethoscopeIcon = styled(FontAwesomeIcon)`
-  color: #175f6e
+export const NavIcon = styled(FontAwesomeIcon)`
+  color: #175f6e;
+  font-size: 16px;
 `;

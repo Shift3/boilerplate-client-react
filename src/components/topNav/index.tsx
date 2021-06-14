@@ -1,85 +1,107 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { faUser, faStethoscope } from '@fortawesome/free-solid-svg-icons';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import { DropDownItemType } from './types';
 import { CustomButton } from '../button/styled';
-import { NavLinkStyled } from '../navbar/styled';
+import { useHistory } from 'react-router-dom';
 import logo from '../../assets/img/logo.png';
 import placeholder_portrait from '../../assets/img/portrait_placeholder.png';
 import {
-  NavWrapper,
+  Navbar,
   DropDownContainerLeft,
   DropDownContainerRight,
   VerticalLine,
   NavContainerLeft,
   NavContainerRight,
-  CustomNavDropdown,
+  Dropdown,
   ProfilePhoto,
-  UserIcon,
-  StethoscopeIcon,
+  NavIcon,
   TopNavLogo,
   DropDownButton,
-  DirectoryLink
+  DirectoryLink,
+  NavDropdownItem
 } from './styled';
 
-// @TODO - utilize redux to get user data and logged in state in order to display variations of the navbar
+export const TopNav: FC = () => {
+  // eslint-disable-next-line
+  const [ { firstName, lastName, isLoggedIn }, setUserData ] = useState({
+    firstName: "Testy",
+    lastName: "Testerson",
+    isLoggedIn: true,
+  });
 
-const mockUser = {
-  firstName: "Testy",
-  lastName: "Testerson"
-};
+  // @TODO - utilize redux to get user data and logged in state in order to display variations of the navbar
+  // @TODO - utilize redux to get users signed in status
+  // @TODO - useEffect hook to setUserData
 
-const isLoggedIn = true;
+  const history = useHistory();
 
-const fullUserName = () => `${mockUser.firstName}  ${mockUser.lastName}`;
-
-const NavDropDownItem: DropDownItemType = ({ linkText, pathname, testid }) => (
-  <NavDropdown.Item data-testid={ `${testid}DropDownItem` }>
-    <NavLinkStyled data-testid={ `${testid}Link` } to={ pathname }>
+  const DropdownItem: DropDownItemType = ({ linkText, testid }) => (
+    <NavDropdownItem data-testid={ `${testid}DropDownItem` } eventKey={testid}>
       { linkText }
-    </NavLinkStyled>
-  </NavDropdown.Item>
-);
+    </NavDropdownItem>
+  );
 
-export const TopNav: FC = () => (
-  <NavWrapper data-testid="navWrapper">
-    <NavContainerLeft>
-      <TopNavLogo src={ logo } alt="Bitwise Technology Consulting" />
-      <DirectoryLink to="/content/agent-list">
-        <StethoscopeIcon icon={ faStethoscope } />
-        <span>Directory</span>
-      </DirectoryLink>
-    </NavContainerLeft>
-    <NavContainerRight>
-      {
-        isLoggedIn && (
-          <DropDownButton>
-            <UserIcon icon={ faUser }/>
-            <CustomNavDropdown
-              title={ `Hi ${ mockUser.firstName }` }
-              id="topNavDropdown"
-              data-testid="navDropdown"
-            >
-              <DropDownContainerLeft>
-                <ProfilePhoto src={ placeholder_portrait } alt="Placeholder Portrait" />
-                { fullUserName() }
-              </DropDownContainerLeft>
-              <VerticalLine />
-              <DropDownContainerRight>
-                <NavDropDownItem linkText="Profile" pathname="/user/profile" testid="profile" />
-                <NavDropDownItem linkText="Change Password" pathname="/user/change-password" testid="changePassword" />
-              </DropDownContainerRight>
-            </CustomNavDropdown>
-          </DropDownButton>
-        )
-      }
-      {
-        !isLoggedIn && (
-          <CustomButton data-testid="loginOrCreateAccountLink">
-            LOGIN/CREATE ACCOUNT
-          </CustomButton>
-        )
-      }
-    </NavContainerRight>
-  </NavWrapper>
-);
+  const onDropdownItemSelect = (eventKey: string) => {
+    switch (eventKey) {
+      case "profile":
+        history.push('/users/profile');
+        break;
+
+      case "changePassword":
+        history.push("/");
+        break;
+
+      case "signOut":
+        // @TODO call signout method via redux
+        // eslint-disable-next-line
+        console.log("SIGNOUT CLICKED");
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  return (
+    <Navbar data-testid="navWrapper" onSelect={onDropdownItemSelect} >
+      <NavContainerLeft>
+        <TopNavLogo src={ logo } alt="Bitwise Technology Consulting" />
+        <DirectoryLink to="/content/agent-list">
+          <NavIcon icon={ faStethoscope } />
+          <span>Directory</span>
+        </DirectoryLink>
+      </NavContainerLeft>
+      <NavContainerRight>
+        {
+          isLoggedIn ?
+            (
+              <DropDownButton>
+                <NavIcon icon={ faUser }/>
+                <Dropdown
+                  title={ `Hi ${ firstName }` }
+                  id="topNavDropdown"
+                  data-testid="navDropdown"
+                >
+                  <DropDownContainerLeft>
+                    <ProfilePhoto src={ placeholder_portrait } alt="Placeholder Portrait" />
+                    { `${firstName} ${lastName}` }
+                  </DropDownContainerLeft>
+                  <VerticalLine />
+                  <DropDownContainerRight>
+                    <DropdownItem linkText="Profile" testid="profile" />
+                    <DropdownItem linkText="Change Password" testid="changePassword" />
+                    <DropdownItem linkText="Sign Out" testid="signOut" />
+                  </DropDownContainerRight>
+                </Dropdown>
+              </DropDownButton>
+            )
+            : (
+              <CustomButton data-testid="loginOrCreateAccountLink">
+                LOGIN/CREATE ACCOUNT
+              </CustomButton>
+            )
+        }
+      </NavContainerRight>
+    </Navbar>
+  );
+};
