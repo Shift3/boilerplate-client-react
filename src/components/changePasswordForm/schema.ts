@@ -14,7 +14,7 @@ export enum errorMessages {
 
 const minPassLength = 8;
 
-export const ResetPasswordFormSchema = yup.object().shape({
+export const ChangePasswordFormSchema = yup.object().shape({
   currentPassword: yup.string().required(errorMessages.FIELD_REQUIRED),
   newPassword: yup
     .string()

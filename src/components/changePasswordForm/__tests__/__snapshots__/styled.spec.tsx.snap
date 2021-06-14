@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ResetPasswordForm /> styled components should match the stored <ButtonWrapper /> snapshot 1`] = `
+exports[`<ChangePasswordForm /> styled components should match the stored <ButtonWrapper /> snapshot 1`] = `
 .c0 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -22,7 +22,7 @@ exports[`<ResetPasswordForm /> styled components should match the stored <Button
 />
 `;
 
-exports[`<ResetPasswordForm /> styled components should match the stored <CancelButton /> snapshot 1`] = `
+exports[`<ChangePasswordForm /> styled components should match the stored <CancelButton /> snapshot 1`] = `
 .c0 {
   color: white;
   border: 1px solid #679daa;
@@ -36,7 +36,7 @@ exports[`<ResetPasswordForm /> styled components should match the stored <Cancel
 />
 `;
 
-exports[`<ResetPasswordForm /> styled components should match the stored <FormLabel /> snapshot 1`] = `
+exports[`<ChangePasswordForm /> styled components should match the stored <FormLabel /> snapshot 1`] = `
 .c0 {
   color: white;
 }
@@ -46,7 +46,7 @@ exports[`<ResetPasswordForm /> styled components should match the stored <FormLa
 />
 `;
 
-exports[`<ResetPasswordForm /> styled components should match the stored <InputError /> snapshot 1`] = `
+exports[`<ChangePasswordForm /> styled components should match the stored <InputError /> snapshot 1`] = `
 .c0 {
   color: lightgrey;
 }
@@ -56,7 +56,7 @@ exports[`<ResetPasswordForm /> styled components should match the stored <InputE
 />
 `;
 
-exports[`<ResetPasswordForm /> styled components should match the stored <StyledForm /> snapshot 1`] = `
+exports[`<ChangePasswordForm /> styled components should match the stored <StyledForm /> snapshot 1`] = `
 .c0 {
   padding: 40px;
   border-radius: 5px;
@@ -68,7 +68,7 @@ exports[`<ResetPasswordForm /> styled components should match the stored <Styled
 />
 `;
 
-exports[`<ResetPasswordForm /> styled components should match the stored <SubmitButton /> snapshot 1`] = `
+exports[`<ChangePasswordForm /> styled components should match the stored <SubmitButton /> snapshot 1`] = `
 .c0 {
   color: white;
   border: none;
@@ -81,7 +81,7 @@ exports[`<ResetPasswordForm /> styled components should match the stored <Submit
 />
 `;
 
-exports[`<ResetPasswordForm /> styled components should match the stored <Title /> snapshot 1`] = `
+exports[`<ChangePasswordForm /> styled components should match the stored <Title /> snapshot 1`] = `
 .c0 {
   font-size: 2em;
   font-style: bold;

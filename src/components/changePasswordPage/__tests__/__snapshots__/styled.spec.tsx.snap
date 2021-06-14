@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Reset Password Page Styled Components Should match the stored <Wrapper /> snapshot 1`] = `
+exports[`Change Password Page Styled Components Should match the stored <Wrapper /> snapshot 1`] = `
 .c0 {
   height: 100%;
   width: 100%;

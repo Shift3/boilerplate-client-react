@@ -8,7 +8,7 @@ import {
   clickByTestIdAsync,
   setValueByLabelText,
 } from 'utils/test';
-import { ResetPasswordForm } from '..';
+import { ChangePasswordForm } from '..';
 import { errorMessages } from '../schema';
 
 const {
@@ -32,9 +32,9 @@ const noLowercasePassword = 'PASSWORD123!';
 
 const mockOnSubmit = jest.fn();
 
-describe('ResetPasswordForm', () => {
+describe('ChangePasswordForm', () => {
   describe('Rendering', () => {
-    beforeEach(() => render(<ResetPasswordForm onSubmit={mockOnSubmit} />));
+    beforeEach(() => render(<ChangePasswordForm onSubmit={mockOnSubmit} />));
 
     it('should render the current password field', () => expectInDocByLabelText('Current Password'));
 
@@ -48,7 +48,7 @@ describe('ResetPasswordForm', () => {
   });
 
   describe('With valid input', () => {
-    beforeEach(() => render(<ResetPasswordForm onSubmit={mockOnSubmit} />));
+    beforeEach(() => render(<ChangePasswordForm onSubmit={mockOnSubmit} />));
 
     it('Should call onSubmit once formData object including password and confirmPassword', async () => {
       await setValueByLabelText('Current Password', validCurrentPassword);
@@ -68,7 +68,7 @@ describe('ResetPasswordForm', () => {
 
   describe('Invalid input', () => {
     beforeEach(async () => {
-      render(<ResetPasswordForm onSubmit={mockOnSubmit} />);
+      render(<ChangePasswordForm onSubmit={mockOnSubmit} />);
       await setValueByLabelText('Current Password', validCurrentPassword);
       await setValueByLabelText('New Password', validNewPassword);
       await setValueByLabelText('Confirm Password', validNewPassword);
@@ -95,7 +95,7 @@ describe('ResetPasswordForm', () => {
 
   describe('Invalid password', () => {
     beforeEach(async () => {
-      render(<ResetPasswordForm onSubmit={mockOnSubmit} />);
+      render(<ChangePasswordForm onSubmit={mockOnSubmit} />);
       await setValueByLabelText('Current Password', validCurrentPassword);
       await setValueByLabelText('New Password', validNewPassword);
       await setValueByLabelText('Confirm Password', validNewPassword);

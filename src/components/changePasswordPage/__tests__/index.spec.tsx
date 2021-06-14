@@ -2,17 +2,17 @@ import { render } from '@testing-library/react';
 import { Router, Switch, Route } from 'react-router-dom';
 // eslint-disable-next-line
 import { createMemoryHistory } from 'history';
-import { ResetPasswordPage } from '..';
+import { ChangePasswordPage } from '../index';
 import { expectInDocByTestId } from '../../../utils/test';
 
-describe('<ResetPasswordPage/>', () => {
+describe('<ChangePasswordPage/>', () => {
   describe('Rendering', () => {
     beforeEach(() =>
       render(
-        <Router history={createMemoryHistory({ initialEntries: [ '/' ] })}>
+        <Router history={createMemoryHistory({ initialEntries: ['/'] })}>
           <Switch>
-            <Route exact path="/" component={ResetPasswordPage} />
-            <Route exact path="/auth/signup" component={() => <div data-testid="test" />} />
+            <Route exact path='/' component={ChangePasswordPage} />
+            <Route exact path='/auth/signup' component={() => <div data-testid='test' />} />
           </Switch>
         </Router>,
       ),
@@ -20,6 +20,6 @@ describe('<ResetPasswordPage/>', () => {
 
     it('Should render the <Wrapper/>', () => expectInDocByTestId('wrapper'));
 
-    it('Should render the <ResetPasswordForm/>', () => expectInDocByTestId('resetPasswordForm'));
+    it('Should render the <ChangePasswordForm/>', () => expectInDocByTestId('changePasswordForm'));
   });
 });

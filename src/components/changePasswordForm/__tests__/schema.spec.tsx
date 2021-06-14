@@ -1,7 +1,5 @@
-/* eslint-disable computed-property-spacing */
-/* eslint-disable max-len */
 import * as yup from 'yup';
-import { ResetPasswordFormSchema, errorMessages } from '../schema';
+import { ChangePasswordFormSchema, errorMessages } from '../schema';
 
 const {
   FIELD_REQUIRED,
@@ -32,21 +30,21 @@ const mockFormData = {
 const errorMessageCheck = async (field: string, value: string, message: string) =>
   expect(
     await yup
-      .reach(ResetPasswordFormSchema, field)
+      .reach(ChangePasswordFormSchema, field)
       .validate(value)
       .catch((err: yup.ValidationError) => err.message),
   ).toEqual(message);
 
 const errorMessageConfirmCheck = async (formData: Record<string, unknown>, message: string) =>
   expect(
-    await ResetPasswordFormSchema.validate(formData).catch((err) => {
+    await ChangePasswordFormSchema.validate(formData).catch((err) => {
       return err.message;
     }),
   ).toEqual(message);
 
-describe('ResetPasswordSchema', () => {
+describe('ChangePasswordSchema', () => {
   describe('Valid input data', () => {
-    it('Should pass validation', () => expect(ResetPasswordFormSchema.isValidSync(mockFormData)).toBeTruthy());
+    it('Should pass validation', () => expect(ChangePasswordFormSchema.isValidSync(mockFormData)).toBeTruthy());
   });
 
   describe('Current Password', () => {

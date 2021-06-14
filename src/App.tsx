@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { LogInPage } from 'components/loginPage';
 import { SignUpPage } from 'components/signupPage';
-import { ResetPasswordPage } from 'components/resetPasswordPage';
+import { ChangePasswordPage } from 'components/changePasswordPage';
 import { DashboardPage } from './components/dashboardPage';
 import { FlashMessage } from './components/flashMessage';
 import { HolyGrailLayout } from './components/holyGrailLayout';
@@ -28,7 +28,7 @@ export const App: FC = () => (
                 <Route exact path='/' component={DashboardPage} />
                 <Route exact path='/auth/login' component={LogInPage} />
                 <Route exact path='/auth/signup' component={SignUpPage} />
-                <Route exact path='/auth/change-password' component={ResetPasswordPage} />
+                <Route exact path='/auth/change-password' component={ChangePasswordPage} />
               </HolyGrailLayout>
             </Switch>
           </Router>
