@@ -24,5 +24,11 @@
   "workbench.colorCustomizations": {
   
   },
-  "editor.semanticTokenColorCustomizations": null
+  "editor.semanticTokenColorCustomizations": null,
+  "editor.tabSize": 2,
+  "editor.tabCompletion": "on",
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.preferences.quoteStyle": "single",
+  "prettier.jsxSingleQuote": true,
+  "prettier.singleQuote": true
 }

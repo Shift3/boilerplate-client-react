@@ -24,7 +24,7 @@ export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
           {errors.email?.message && <InputError role="alert">{errors.email?.message}</InputError>}
         </Form.Group>
         <Form.Group>
-          <FormLabel htmlFor="confirmEmail">Confirm Email</FormLabel>{' '}
+          <FormLabel htmlFor="confirmEmail">Confirm Email</FormLabel>
           <Form.Control id="confirmEmail" type="email" {...register('confirmEmail')} />
           {errors.confirmEmail?.message && <InputError role="alert">{errors.confirmEmail?.message}</InputError>}
         </Form.Group>
@@ -42,7 +42,7 @@ export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
           <CancelButton data-testid="cancelButton" onClick={onCancel}>
             CANCEL
           </CancelButton>
-          <SignUpButton data-testid="submitButton" type="submit" disabled={!isValid}>
+          <SignUpButton data-testid="signUpButton" type="submit" disabled={!isValid}>
             SIGN UP
           </SignUpButton>
         </ButtonWrapper>

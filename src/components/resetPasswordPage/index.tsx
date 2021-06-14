@@ -7,14 +7,20 @@ import { Wrapper } from './styled';
 export const ResetPasswordPage: FC = () => {
   const history = useHistory();
 
-  //  eslint-disable-next-line
+  // TODO: we need to make an API call and handle
+  // success and error cases.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onSubmit = (formData: IResetPasswordFormData) => {
+    history.push('/');
+  };
 
+  const onCancel = () => {
+    history.push('/');
   };
 
   return (
-    <Wrapper data-testid='wrapper'>
-      <ResetPasswordForm onSubmit={onSubmit} />
+    <Wrapper data-testid="wrapper">
+      <ResetPasswordForm onSubmit={ onSubmit } onCancel={ onCancel } />
     </Wrapper>
   );
 };

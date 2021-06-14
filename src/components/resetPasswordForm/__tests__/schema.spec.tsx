@@ -1,11 +1,10 @@
 /* eslint-disable max-len */
 import * as yup from 'yup';
-import { ChangePasswordFormSchema, errorMessages } from '../schema';
+import { ResetPasswordFormSchema, errorMessages } from '../schema';
 
 const {
   FIELD_REQUIRED,
   PASSWORD_LENGTH,
-  PASSWORD_MUST_MISMATCH,
   PASSWORD_MUST_MATCH,
   PASSWORD_LOWERCASE,
   PASSWORD_UPPERCASE,
@@ -13,7 +12,6 @@ const {
   PASSWORD_NUMBER,
 } = errorMessages;
 
-const validCurrentPassword = 'Password123!';
 const validNewPassword = 'Password456!';
 const mismatchPassword = 'Password123';
 const shortPassword = 'test';
@@ -23,7 +21,6 @@ const missingSpecialCharPassword = 'Password123';
 const missingNumberPassword = 'Password!';
 
 const mockFormData = {
-  currentPassword: validCurrentPassword,
   newPassword: validNewPassword,
   confirmPassword: validNewPassword,
 };
@@ -31,27 +28,21 @@ const mockFormData = {
 const errorMessageCheck = async (field: string, value: string, message: string) =>
   expect(
     await yup
-      .reach(ChangePasswordFormSchema, field)
+      .reach(ResetPasswordFormSchema, field)
       .validate(value)
       .catch((err: yup.ValidationError) => err.message),
   ).toEqual(message);
 
 const errorMessageConfirmCheck = async (formData: Record<string, unknown>, message: string) =>
   expect(
-    await ChangePasswordFormSchema.validate(formData).catch((err) => {
+    await ResetPasswordFormSchema.validate(formData).catch((err) => {
       return err.message;
     }),
   ).toEqual(message);
 
-describe('ChangePasswordSchema', () => {
+describe('ResetPasswordFormSchema', () => {
   describe('Valid input data', () => {
-    it('Should pass validation', () => expect(ChangePasswordFormSchema.isValidSync(mockFormData)).toBeTruthy());
-  });
-
-  describe('Current Password', () => {
-    it('Should throw validation error with FIELD_REQUIRED message if empty', async () => {
-      await errorMessageCheck('currentPassword', '', FIELD_REQUIRED);
-    });
+    it('Should pass validation', () => expect(ResetPasswordFormSchema.isValidSync( mockFormData )).toBeTruthy());
   });
 
   describe('New Password', () => {
@@ -78,26 +69,16 @@ describe('ChangePasswordSchema', () => {
     it('Should throw validation error with PASSWORD_NUMBER message if it does not contain at least on number', async () => {
       await errorMessageCheck('newPassword', missingNumberPassword, PASSWORD_NUMBER);
     });
-
-    it('Should throw validation error with PASSWORD_MUST_MISMATCH message if new password matches current password', async () => {
-      const formData = {
-        currentPassword: validCurrentPassword,
-        newPassword: validCurrentPassword,
-        confirmPassword: validCurrentPassword,
-      };
-      await errorMessageConfirmCheck(formData, PASSWORD_MUST_MISMATCH);
-    });
   });
 
   describe('ConfirmPassword', () => {
     it('Should throw validation error with FIELD_REQUIRED message if empty', async () => {
-      const formData = { currentPassword: validCurrentPassword, newPassword: '', confirmPassword: '' };
-      await errorMessageConfirmCheck(formData, FIELD_REQUIRED);
+      const formData = { newPassword: validNewPassword, confirmPassword: '' };
+      await errorMessageConfirmCheck(formData, FIELD_REQUIRED, );
     });
 
     it('Should throw validation error with PASSWORD_MUST_MATCH message if confirm password does not match new password', async () => {
       const formData = {
-        currentPassword: validCurrentPassword,
         newPassword: validNewPassword,
         confirmPassword: mismatchPassword,
       };
