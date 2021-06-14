@@ -12,9 +12,9 @@ import { HolyGrailLayout } from './components/holyGrailLayout';
 import { NavBar } from './components/navbar';
 import { GlobalStyle } from './GlobalStyle';
 import AppTheme from './utils/styleValues';
-
 import { Provider as AuthProvider } from './context/auth.context';
 import { Provider as FlashMessageProvider } from './context/flashMessage.context';
+import { ResetPasswordPage } from 'components/resetPasswordPage';
 
 export const App: FC = () => (
   <ErrorBoundary>
@@ -29,6 +29,7 @@ export const App: FC = () => (
                 <Route exact path='/auth/login' component={LogInPage} />
                 <Route exact path='/auth/signup' component={SignUpPage} />
                 <Route exact path='/auth/change-password' component={ChangePasswordPage} />
+                <Route exact path='/auth/reset-password' component={ResetPasswordPage} />
               </HolyGrailLayout>
             </Switch>
           </Router>
