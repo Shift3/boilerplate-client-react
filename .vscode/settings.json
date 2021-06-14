@@ -14,5 +14,15 @@
     "Git Bash": {
       "source": "Git Bash"
     }
-  }
+  },
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.preferredHighContrastColorTheme": "Night Owl Black",
+  "workbench.preferredLightColorTheme": "Solarized Dark",
+  "material-icon-theme.files.associations": {
+  
+  },
+  "workbench.colorCustomizations": {
+  
+  },
+  "editor.semanticTokenColorCustomizations": null
 }
