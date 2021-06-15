@@ -17,28 +17,28 @@ export const ResetPasswordForm: ResetPasswordFormType = ({ onSubmit, onCancel })
 
   return (
     <>
-      <StyledForm data-testid='resetPasswordForm' onSubmit={handleSubmit(onSubmit)}>
+      <StyledForm data-testid="resetPasswordForm" onSubmit={handleSubmit(onSubmit)}>
         <Title>Reset Password</Title>
         <Form.Group>
-          <FormLabel htmlFor='newPassword'>New Password</FormLabel>
-          <Form.Control id='newPassword' type='pasword' {...register('newPassword')} placeholder='Enter new password' />
-          {errors.newPassword?.message && <InputError role='alert'>{errors.newPassword?.message}</InputError>}
+          <FormLabel htmlFor="newPassword">New Password</FormLabel>
+          <Form.Control id="newPassword" type="pasword" {...register('newPassword')} placeholder="Enter new password" />
+          {errors.newPassword?.message && <InputError role="alert">{errors.newPassword?.message}</InputError>}
         </Form.Group>
         <Form.Group>
-          <FormLabel htmlFor='confirmPassword'>Confirm Password</FormLabel>
+          <FormLabel htmlFor="confirmPassword">Confirm Password</FormLabel>
           <Form.Control
-            id='confirmPassword'
-            type='password'
+            id="confirmPassword"
+            type="password"
             {...register('confirmPassword')}
-            placeholder='Confirm password'
+            placeholder="Confirm password"
           />
-          {errors.confirmPassword?.message && <InputError role='alert'>{errors.confirmPassword?.message}</InputError>}
+          {errors.confirmPassword?.message && <InputError role="alert">{errors.confirmPassword?.message}</InputError>}
         </Form.Group>
         <ButtonWrapper>
-          <CancelButton data-testid='cancelButton' onClick={onCancel}>
+          <CancelButton data-testid="cancelButton" onClick={onCancel}>
             CANCEL
           </CancelButton>
-          <SubmitButton data-testid='submitButton' type='submit' disabled={!isValid}>
+          <SubmitButton data-testid="submitButton" type="submit" disabled={!isValid}>
             SUBMIT
           </SubmitButton>
         </ButtonWrapper>
