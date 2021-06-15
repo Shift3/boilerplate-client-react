@@ -106,6 +106,7 @@
     "space-before-function-paren": 0,
     "lines-around-comment": 0,
     "array-bracket-spacing": 0,
+    "@typescript-eslint/explicit-module-boundary-types": 0,
 
     // WARN (1)
     "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
