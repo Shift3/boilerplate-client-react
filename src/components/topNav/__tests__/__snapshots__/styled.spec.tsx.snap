@@ -1,0 +1,253 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TopNav/> styled componenets Should match the stored <Dropdown /> snapshot 1`] = `
+.c0 a {
+  color: rgba(0,0,0,.5);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c0 a:hover {
+  color: rgba(0,0,0,.7);
+}
+
+.c0 .dropdown-menu {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c0 .dropdown-menu a {
+  color: #000;
+}
+
+.c0 .dropdown-menu .dropdown-item > a:hover {
+  background-color: rgba(0,0,0,0);
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+<div
+  className="c0 nav-item dropdown"
+>
+  <a
+    aria-expanded={false}
+    aria-haspopup={true}
+    className="dropdown-toggle nav-link"
+    href="#"
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    role="button"
+  />
+</div>
+`;
+
+exports[`<TopNav/> styled componenets Should match the stored <DropdownButton /> snapshot 1`] = `
+.c0 {
+  background-color: rgba(0,0,0,0);
+  border-color: rgba(0,0,0,0);
+}
+
+.c0:hover,
+.c0:focus,
+.c0:active {
+  background-color: rgba(0,0,0,0) !important;
+}
+
+.c0:active,
+.c0:focus {
+  border-color: #175f6e;
+}
+
+.c0:focus,
+.c0:hover {
+  border-color: rgba(0,0,0,0);
+}
+
+<button
+  className="c0 btn btn-primary"
+  disabled={false}
+  type="button"
+/>
+`;
+
+exports[`<TopNav/> styled componenets Should match the stored <DropdownContainerLeft /> snapshot 1`] = `
+.c0 {
+  padding: 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  text-align: center;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`<TopNav/> styled componenets Should match the stored <DropdownContainerRight /> snapshot 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`<TopNav/> styled componenets Should match the stored <NavContainerLeft /> snapshot 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`<TopNav/> styled componenets Should match the stored <NavContainerRight /> snapshot 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`<TopNav/> styled componenets Should match the stored <NavDropdownItem /> snapshot 1`] = `
+.c0:active,
+.c0:focus {
+  background-color: rgba(233,236,239,0);
+}
+
+.c0.dropdown-item.active,
+.c0 .dropdown-item:active {
+  background-color: rgba(0,0,0,0) !important;
+}
+
+<a
+  className="c0 dropdown-item"
+  href="#"
+  onClick={[Function]}
+  onKeyDown={[Function]}
+  role="button"
+/>
+`;
+
+exports[`<TopNav/> styled componenets Should match the stored <Navbar /> snapshot 1`] = `
+.c0 {
+  padding: 8px 16px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  height: 150px;
+}
+
+<div
+  className="c0 nav"
+  onKeyDown={[Function]}
+/>
+`;
+
+exports[`<TopNav/> styled componenets Should match the stored <ProfilePhoto /> snapshot 1`] = `
+.c0 {
+  border-radius: 50%;
+  max-height: 50px;
+  max-width: 50px;
+  width: auto;
+  height: auto;
+}
+
+<img
+  className="c0"
+/>
+`;
+
+exports[`<TopNav/> styled componenets Should match the stored <TopNavLogo /> snapshot 1`] = `
+.c0 {
+  height: calc(150px - 20px);
+}
+
+<img
+  className="c0"
+/>
+`;
+
+exports[`<TopNav/> styled componenets Should match the stored <VerticalLine /> snapshot 1`] = `
+.c0 {
+  margin: 0 20px;
+  height: 125px;
+  border-left: 1px solid #d3d3d3;
+  display: inline-block;
+}
+
+<span
+  className="c0"
+/>
+`;
