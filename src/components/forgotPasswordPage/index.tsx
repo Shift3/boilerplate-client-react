@@ -19,8 +19,8 @@ export const ForgotPasswordPage: FC = () => {
   };
 
   return (
-    <Wrapper data-testid="wrapper">
-      <ForgotPasswordForm onSubmit={ onSubmit } onCancel={ onCancel } />
+    <Wrapper data-testid='wrapper'>
+      <ForgotPasswordForm onSubmit={onSubmit} onCancel={onCancel} />
     </Wrapper>
   );
 };

@@ -9,7 +9,6 @@ export const SignUpPage: FC = () => {
 
   //  eslint-disable-next-line
   const onSubmit = (formData: ISignUpFormData) => {
-
     // TODO: we need to actually make an API call and handle
     // success and error cases.
 
@@ -21,7 +20,7 @@ export const SignUpPage: FC = () => {
   };
 
   return (
-    <Wrapper data-testid="wrapper">
+    <Wrapper data-testid='wrapper'>
       <SignUpForm onSubmit={onSubmit} onCancel={onCancel} />
     </Wrapper>
   );

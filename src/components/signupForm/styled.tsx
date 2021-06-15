@@ -17,7 +17,6 @@ export const Title = styled.div`
 
 export const FormLabel = styled(Form.Label)`
   color: white;
-
 `;
 
 export const InputError = styled.span`

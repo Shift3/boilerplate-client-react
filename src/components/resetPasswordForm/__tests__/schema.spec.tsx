@@ -42,7 +42,7 @@ const errorMessageConfirmCheck = async (formData: Record<string, unknown>, messa
 
 describe('ResetPasswordFormSchema', () => {
   describe('Valid input data', () => {
-    it('Should pass validation', () => expect(ResetPasswordFormSchema.isValidSync( mockFormData )).toBeTruthy());
+    it('Should pass validation', () => expect(ResetPasswordFormSchema.isValidSync(mockFormData)).toBeTruthy());
   });
 
   describe('New Password', () => {
@@ -75,9 +75,9 @@ describe('ResetPasswordFormSchema', () => {
     it('Should throw validation error with FIELD_REQUIRED message if empty', async () => {
       const formData = {
         newPassword: validNewPassword,
-        confirmPassword: ''
+        confirmPassword: '',
       };
-      await errorMessageConfirmCheck(formData, PASSWORD_MUST_MATCH,);
+      await errorMessageConfirmCheck(formData, PASSWORD_MUST_MATCH);
     });
 
     it('Should throw validation error with PASSWORD_MUST_MATCH message if confirm password does not match new password', async () => {

@@ -12,10 +12,7 @@ import {
 import { ForgotPasswordForm } from '../index';
 import { errorMessages } from '../schema';
 
-const {
-  EMAIL_REQUIRED,
-  INVALID_EMAIL,
-} = errorMessages;
+const { EMAIL_REQUIRED, INVALID_EMAIL } = errorMessages;
 
 describe('ForgotPasswordForm', () => {
   const validEmail = 'test@test.com';
@@ -28,7 +25,6 @@ describe('ForgotPasswordForm', () => {
     render(<ForgotPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />);
 
     await setValueByLabelText('Email', validEmail);
-
   });
 
   it('Should render email field', () => expectInDocByLabelText('Email'));

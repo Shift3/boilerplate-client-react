@@ -1,5 +1,5 @@
-import * as yup from 'yup'
-import { Constants } from '../constants'
+import * as yup from 'yup';
+import { Constants } from '../constants';
 
 export const usernameSchema = {
   username: yup
@@ -8,11 +8,11 @@ export const usernameSchema = {
     // use the RegExp in the Angular BP to keep UX consistent.
     .matches(Constants.patterns.EMAIL_REGEX, Constants.validationMessages.username.MUST_BE_VALID_EMAIL)
     .required(Constants.validationMessages.username.IS_REQUIRED),
-}
+};
 
 export const loginPasswordSchema = {
   password: yup.string().required(Constants.validationMessages.password.IS_REQUIRED),
-}
+};
 
 export const registerPasswordSchema = {
   password: yup
@@ -27,4 +27,4 @@ export const registerPasswordSchema = {
     .matches(Constants.patterns.SYMBOL_REGEX, Constants.validationMessages.password.SPECIAL_CHARACTER_REQUIRED)
     .min(8, Constants.validationMessages.password.MIN_LENGTH_REQUIRED)
     .required(Constants.validationMessages.password.IS_REQUIRED),
-}
+};

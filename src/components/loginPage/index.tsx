@@ -23,25 +23,22 @@ export const LogInPage: FC = () => {
   const navigateToSignup = () => push('/auth/signup');
 
   return (
-    <Wrapper data-testid="wrapper">
-      <LoginWrapper data-testid="loginWrapper">
-        <LeftLogin data-testid="leftLogin">
-          <LogInForm onSubmit={ onSubmit } onCancel={ onCancel } />
+    <Wrapper data-testid='wrapper'>
+      <LoginWrapper data-testid='loginWrapper'>
+        <LeftLogin data-testid='leftLogin'>
+          <LogInForm onSubmit={onSubmit} onCancel={onCancel} />
           <LinkWrapper>
-            <Link to="/auth/change-password">Forgot Password?</Link>
+            <Link to='/auth/change-password'>Forgot Password?</Link>
           </LinkWrapper>
         </LeftLogin>
-        <RightLogin data-testid="rightLogin">
+        <RightLogin data-testid='rightLogin'>
           <Title>
-            <h2 data-testid="loginPageInfoHeading">Not Registered Yet?</h2>
+            <h2 data-testid='loginPageInfoHeading'>Not Registered Yet?</h2>
           </Title>
           <Text>
-            <p data-testid="loginPageInfoContent">Registering for your account is quick and easy.</p>
+            <p data-testid='loginPageInfoContent'>Registering for your account is quick and easy.</p>
           </Text>
-          <CreateAccountButton
-            data-testid="createAccountButton"
-            onClick={ navigateToSignup }
-          >
+          <CreateAccountButton data-testid='createAccountButton' onClick={navigateToSignup}>
             CREATE ACCOUNT
           </CreateAccountButton>
         </RightLogin>

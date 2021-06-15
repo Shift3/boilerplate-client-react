@@ -29,7 +29,12 @@ export const ChangePasswordForm: ChangePasswordFormType = ({ onSubmit }) => {
         <Title>Reset Password</Title>
         <Form.Group>
           <FormLabel htmlFor='currentPassword'>Current Password</FormLabel>
-          <Form.Control id='currentPassword' type='password' {...register('currentPassword')}  placeholder="Enter current password" />
+          <Form.Control
+            id='currentPassword'
+            type='password'
+            {...register('currentPassword')}
+            placeholder='Enter current password'
+          />
           {errors.currentPassword?.message && (
             <InputError role='alert' className='danger'>
               {errors.currentPassword?.message}
@@ -38,7 +43,12 @@ export const ChangePasswordForm: ChangePasswordFormType = ({ onSubmit }) => {
         </Form.Group>
         <Form.Group>
           <FormLabel htmlFor='newPassword'>New Password</FormLabel>
-          <Form.Control id='newPassword' type='password' {...register('newPassword')} placeholder="Enter new password" />
+          <Form.Control
+            id='newPassword'
+            type='password'
+            {...register('newPassword')}
+            placeholder='Enter new password'
+          />
           {errors.newPassword?.message && (
             <InputError role='alert' className='danger'>
               {errors.newPassword?.message}
@@ -47,7 +57,12 @@ export const ChangePasswordForm: ChangePasswordFormType = ({ onSubmit }) => {
         </Form.Group>
         <Form.Group>
           <FormLabel htmlFor='confirmPassword'>Confirm Password</FormLabel>
-          <Form.Control id='confirmPassword' type='password' {...register('confirmPassword')} placeholder="Confirm password" />
+          <Form.Control
+            id='confirmPassword'
+            type='password'
+            {...register('confirmPassword')}
+            placeholder='Confirm password'
+          />
           {errors.confirmPassword?.message && (
             <InputError role='alert' className='danger'>
               {errors.confirmPassword?.message}

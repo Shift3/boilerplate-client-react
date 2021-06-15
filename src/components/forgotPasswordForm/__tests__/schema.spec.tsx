@@ -1,9 +1,7 @@
 import * as yup from 'yup';
 import { ForgotPasswordFormSchema, errorMessages } from '../schema';
 
-const {
-  EMAIL_REQUIRED,
-} = errorMessages;
+const { EMAIL_REQUIRED } = errorMessages;
 
 describe('ForgotPasswordFormSchema', () => {
   const validEmail = 'test@test.com';

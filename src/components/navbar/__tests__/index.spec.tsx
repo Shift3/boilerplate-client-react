@@ -8,14 +8,14 @@ import { expectInDocByTestId, clickExpectByTestId } from '../../../utils/test';
 describe('<NavBar/>', () => {
   beforeEach(() =>
     render(
-      <Router history={createMemoryHistory({ initialEntries: [ '/' ] })}>
+      <Router history={createMemoryHistory({ initialEntries: ['/'] })}>
         <Switch>
-          <Route exact path="/" component={NavBar} />
-          <Route exact path="/logout" component={() => <div data-testid="logout" />} />
-          <Route exact path="/users" component={() => <div data-testid="users" />} />
-          <Route exact path="/directory"component={() => <div data-testid="directory" />} />
+          <Route exact path='/' component={NavBar} />
+          <Route exact path='/logout' component={() => <div data-testid='logout' />} />
+          <Route exact path='/users' component={() => <div data-testid='users' />} />
+          <Route exact path='/directory' component={() => <div data-testid='directory' />} />
         </Switch>
-      </Router>
+      </Router>,
     ),
   );
 

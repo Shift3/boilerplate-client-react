@@ -22,12 +22,12 @@ export const LogInForm: LogInFormType = ({ onSubmit, onCancel }) => {
         <Title>Member Log In</Title>
         <Form.Group>
           <FormLabel htmlFor='email'>Email</FormLabel>
-          <Form.Control id='email' type='email' {...register('email')} placeholder="Enter email" />
+          <Form.Control id='email' type='email' {...register('email')} placeholder='Enter email' />
           {errors.email?.message && <InputError role='alert'>{errors.email?.message}</InputError>}
         </Form.Group>
         <Form.Group>
           <FormLabel htmlFor='password'>Password</FormLabel>
-          <Form.Control id='password' type='password' {...register('password')} placeholder="Enter password" />
+          <Form.Control id='password' type='password' {...register('password')} placeholder='Enter password' />
           {errors.password?.message && <InputError role='alert'>{errors.password?.message}</InputError>}
         </Form.Group>
         <ButtonWrapper>

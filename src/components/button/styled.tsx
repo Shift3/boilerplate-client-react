@@ -28,6 +28,6 @@ CustomButton.defaultProps = {
     disabledBorderColor: accent,
     hoverBackgroundColor: accent,
     hoverBorderColor: accent,
-    width: '90%'
-  }
+    width: '90%',
+  },
 };

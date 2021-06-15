@@ -5,8 +5,8 @@ export interface IForgotPassswordFormData {
 }
 
 type IForgotPasswordFormProps = {
-  onSubmit: (data: IForgotPassswordFormData ) => void;
+  onSubmit: (data: IForgotPassswordFormData) => void;
   onCancel: () => void;
-}
+};
 
 export type ForgotPasswordFormType = FC<IForgotPasswordFormProps>;

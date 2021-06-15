@@ -9,7 +9,7 @@ const { SET_FLASH_MESSAGE, CLEAR_FLASH_MESSAGE } = Types;
 const actions = { setFlashMessage };
 
 const initialState: IFlashMessageState = {
-  flashMessage: null
+  flashMessage: null,
 };
 
 const flashMessageReducer: ReducerType = (state, action) => {
@@ -28,5 +28,5 @@ const flashMessageReducer: ReducerType = (state, action) => {
 export const { Context, Provider } = createDataContext<FlashMessageActionType, IFlashMessageState>(
   flashMessageReducer,
   actions,
-  initialState
+  initialState,
 );

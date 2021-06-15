@@ -1,14 +1,14 @@
-import createDataContext from "./index.context";
-import Types from "./action.types";
+import createDataContext from './index.context';
+import Types from './action.types';
 import { logoutUser, loginUser } from './actions/auth.actions';
 import { AuthActionType } from './actions/types';
-import { IAuthState, ReducerType } from "./types";
+import { IAuthState, ReducerType } from './types';
 
 const actions = { logoutUser, loginUser };
 
 const initialState: IAuthState = {
   token: null,
-  user: null
+  user: null,
 };
 
 const authReducer: ReducerType = (state, action) => {

@@ -7,7 +7,7 @@ const renderInitialTestDOM = () =>
   render(
     <Router>
       <Switch>
-        <Route exact path="/" component={LogInPage} />
+        <Route exact path='/' component={LogInPage} />
       </Switch>
     </Router>,
   );
@@ -16,8 +16,8 @@ const renderNavigationTestDOM = () =>
   render(
     <Router>
       <Switch>
-        <Route exact path="/" component={LogInPage} />
-        <Route exact path="/auth/signup" component={() => <div />} />
+        <Route exact path='/' component={LogInPage} />
+        <Route exact path='/auth/signup' component={() => <div />} />
       </Switch>
     </Router>,
   );

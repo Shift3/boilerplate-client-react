@@ -10,7 +10,6 @@ import {
   expectMockFunctionNotCalled,
   setValueByLabelText,
   expectInnerHTMLByRole,
-
 } from '../../../utils/test';
 
 const { PASSWORD_REQUIRED, INVALID_EMAIL, EMAIL_REQUIRED } = errorMessages;

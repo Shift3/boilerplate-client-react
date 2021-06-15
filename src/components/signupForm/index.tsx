@@ -9,7 +9,7 @@ export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid }
+    formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(SignUpFormSchema),
     mode: 'onChange',
@@ -17,34 +17,39 @@ export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
 
   return (
     <>
-      <StyledForm data-testid="signupForm" onSubmit={handleSubmit(onSubmit)}>
+      <StyledForm data-testid='signupForm' onSubmit={handleSubmit(onSubmit)}>
         <Title>Sign Up</Title>
         <Form.Group>
-          <FormLabel htmlFor="email" >
-            Email</FormLabel>
-          <Form.Control id="email" type="email" {...register('email')} placeholder="Enter your email" />
-          {errors.email?.message && <InputError role="alert">{errors.email?.message}</InputError>}
+          <FormLabel htmlFor='email'>Email</FormLabel>
+          <Form.Control id='email' type='email' {...register('email')} placeholder='Enter your email' />
+          {errors.email?.message && <InputError role='alert'>{errors.email?.message}</InputError>}
         </Form.Group>
         <Form.Group>
-          <FormLabel htmlFor="confirmEmail" placeholder="Confirm email">Confirm Email</FormLabel>
-          <Form.Control id="confirmEmail" type="email" {...register('confirmEmail')} placeholder="Confirm your email"/>
-          {errors.confirmEmail?.message && <InputError role="alert">{errors.confirmEmail?.message}</InputError>}
+          <FormLabel htmlFor='confirmEmail' placeholder='Confirm email'>
+            Confirm Email
+          </FormLabel>
+          <Form.Control id='confirmEmail' type='email' {...register('confirmEmail')} placeholder='Confirm your email' />
+          {errors.confirmEmail?.message && <InputError role='alert'>{errors.confirmEmail?.message}</InputError>}
         </Form.Group>
         <Form.Group>
-          <FormLabel htmlFor="firstName" placeholder="Enter your first name">First Name</FormLabel>
-          <Form.Control id="firstName" type="text" {...register('firstName')} placeholder="Enter your first name"/>
-          {errors.firstName?.message && <InputError role="alert">{errors.firstName?.message}</InputError>}
+          <FormLabel htmlFor='firstName' placeholder='Enter your first name'>
+            First Name
+          </FormLabel>
+          <Form.Control id='firstName' type='text' {...register('firstName')} placeholder='Enter your first name' />
+          {errors.firstName?.message && <InputError role='alert'>{errors.firstName?.message}</InputError>}
         </Form.Group>
         <Form.Group>
-          <FormLabel htmlFor="lastName" placeholder="Enter your last name">Last Name</FormLabel>
-          <Form.Control id="lastName" type="text" {...register('lastName')} placeholder="Enter your last name"/>
-          {errors.lastName?.message && <InputError role="alert">{errors.lastName?.message}</InputError>}
+          <FormLabel htmlFor='lastName' placeholder='Enter your last name'>
+            Last Name
+          </FormLabel>
+          <Form.Control id='lastName' type='text' {...register('lastName')} placeholder='Enter your last name' />
+          {errors.lastName?.message && <InputError role='alert'>{errors.lastName?.message}</InputError>}
         </Form.Group>
         <ButtonWrapper>
-          <CancelButton data-testid="cancelButton" onClick={onCancel}>
+          <CancelButton data-testid='cancelButton' onClick={onCancel}>
             CANCEL
           </CancelButton>
-          <SignUpButton data-testid="signUpButton" type="submit" disabled={!isValid}>
+          <SignUpButton data-testid='signUpButton' type='submit' disabled={!isValid}>
             SIGN UP
           </SignUpButton>
         </ButtonWrapper>

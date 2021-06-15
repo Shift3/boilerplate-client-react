@@ -8,7 +8,7 @@ import {
   expectMockFunctionNotCalled,
   expectInDocByLabelText,
   clickByTestIdAsync,
-  expectInDocByTestId
+  expectInDocByTestId,
 } from 'utils/test';
 
 const {
@@ -33,7 +33,7 @@ const mockOnCancel = jest.fn();
 
 describe('ResetPasswordForm', () => {
   describe('Rendering', () => {
-    beforeEach(() => render(<ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel}/>));
+    beforeEach(() => render(<ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />));
 
     it('should render the new password field', () => expectInDocByLabelText('New Password'));
     it('should render the confrim password field', () => expectInDocByLabelText('Confirm Password'));
@@ -42,7 +42,7 @@ describe('ResetPasswordForm', () => {
   });
 
   describe('With valid input', () => {
-    beforeEach(() => render(<ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel}/>));
+    beforeEach(() => render(<ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />));
 
     it('Should call onSubmit once formData object including newPassword and confirmPassword', async () => {
       await setValueByLabelText('New Password', validNewPassword);
@@ -61,7 +61,7 @@ describe('ResetPasswordForm', () => {
 
   describe('Invalid input', () => {
     beforeEach(async () => {
-      render(<ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel}/>);
+      render(<ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />);
       await setValueByLabelText('New Password', validNewPassword);
       await setValueByLabelText('Confirm Password', validNewPassword);
     });
@@ -85,7 +85,7 @@ describe('ResetPasswordForm', () => {
 
   describe('Invalid password', () => {
     beforeEach(async () => {
-      render(<ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel}/>);
+      render(<ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />);
       await setValueByLabelText('New Password', validNewPassword);
       await setValueByLabelText('Confirm Password', validNewPassword);
     });
@@ -96,32 +96,32 @@ describe('ResetPasswordForm', () => {
       expectInnerHTMLByRole('alert', FIELD_REQUIRED);
     });
 
-    it ('Should only display special password length error message', async () => {
+    it('Should only display special password length error message', async () => {
       await setValueByLabelText('New Password', shortPassword);
       await setValueByLabelText('Confirm Password', shortPassword);
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', PASSWORD_LENGTH);
     });
 
-    it ('Should only display special character required error message', async () => {
+    it('Should only display special character required error message', async () => {
       await setValueByLabelText('New Password', noSpecialCharPassword);
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', PASSWORD_SPECIAL_CHARACTER);
     });
 
-    it ('Should only display number required error message', async () => {
+    it('Should only display number required error message', async () => {
       await setValueByLabelText('New Password', noNumberPassword);
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', PASSWORD_NUMBER);
     });
 
-    it ('Should only display uppercase letter required error message', async () => {
+    it('Should only display uppercase letter required error message', async () => {
       await setValueByLabelText('New Password', noUppercasePassword);
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', PASSWORD_UPPERCASE);
     });
 
-    it ('Should only display lowercase letter required error message', async () => {
+    it('Should only display lowercase letter required error message', async () => {
       await setValueByLabelText('New Password', noLowercasePassword);
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', PASSWORD_LOWERCASE);
