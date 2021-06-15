@@ -44,7 +44,7 @@ describe('ChangePasswordForm', () => {
 
     it('should render the submit button', () => expectInDocByTestId('submitButton'));
 
-    it('should render the submit button', () => expectInDocByTestId('cancelButton'));
+    it('should render the cancel button', () => expectInDocByTestId('cancelButton'));
   });
 
   describe('With valid input', () => {

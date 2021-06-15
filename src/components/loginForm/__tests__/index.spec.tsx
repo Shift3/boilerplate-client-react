@@ -33,6 +33,8 @@ describe('LoginForm', () => {
 
   it('Should render password field', () => expectInDocByLabelText('Password'));
 
+  it('Should render cancel button', () => expectInDocByTestId('cancelButton'));
+
   it('Should render submit button', () => expectInDocByTestId('submitButton'));
 
   describe('Valid input', () => {
