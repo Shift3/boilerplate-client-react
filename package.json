@@ -24,6 +24,7 @@
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "build": "react-scripts build",
     "build:staging": "env-cmd -f ./.env.staging react-scripts build",
+    "deploy:staging": "yarn build:staging && aws s3 sync ./build s3://boilerplate-client-react.shift3sandbox.com --profile shift3 --delete",
     "test": "react-scripts test",
     "test-ci": "react-scripts test --watchAll=false",
     "test-cov": "react-scripts test --coverage",
