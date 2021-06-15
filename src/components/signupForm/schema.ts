@@ -9,7 +9,7 @@ export enum errorMessages {
   NAME_LENGTH = 'names must be between 2 and 50 characters',
 }
 
-const minNameLength = 2;
+const minNameLength = 3;
 const maxNameLength = 50;
 
 export const SignUpFormSchema = yup.object().shape({

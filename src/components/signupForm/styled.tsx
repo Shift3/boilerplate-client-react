@@ -14,8 +14,10 @@ export const Title = styled.div`
   font-style: bold;
   padding-bottom: 10px;
 `;
+
 export const FormLabel = styled(Form.Label)`
   color: white;
+
 `;
 
 export const InputError = styled.span`

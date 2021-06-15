@@ -21,12 +21,12 @@ export const ResetPasswordForm: ResetPasswordFormType = ({ onSubmit, onCancel })
         <Title>Reset Password</Title>
         <Form.Group>
           <FormLabel htmlFor="newPassword">New Password</FormLabel>
-          <Form.Control id="newPassword" type="pasword" {...register('newPassword')} />
+          <Form.Control id="newPassword" type="pasword" {...register('newPassword')} placeholder="Enter new password" />
           {errors.newPassword?.message && <InputError role="alert">{errors.newPassword?.message}</InputError>}
         </Form.Group>
         <Form.Group>
           <FormLabel htmlFor="confirmPassword">Confirm Password</FormLabel>
-          <Form.Control id="confirmPassword" type="password" {...register('confirmPassword')} />
+          <Form.Control id="confirmPassword" type="password" {...register('confirmPassword')} placeholder="Confirm password" />
           {errors.confirmPassword?.message && <InputError role="alert">{errors.confirmPassword?.message}</InputError>}
         </Form.Group>
         <ButtonWrapper>

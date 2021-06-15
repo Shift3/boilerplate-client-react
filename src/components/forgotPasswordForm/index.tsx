@@ -20,7 +20,7 @@ export const ForgotPasswordForm: ForgotPasswordFormType = ({ onSubmit, onCancel 
       <StyledForm data-testid="forgotPasswordForm" onSubmit={handleSubmit(onSubmit)}>
         <Title>Forgot Password</Title>
         <Form.Group>
-          <FormLabel htmlFor="email">Email</FormLabel> <Form.Control id="email" type="email" {...register('email')} />
+          <FormLabel htmlFor="email">Email</FormLabel> <Form.Control id="email" type="email" {...register('email')} placeholder="Enter email" />
           {errors.email?.message && <InputError role="alert">{errors.email?.message}</InputError>}
         </Form.Group>
         <ButtonWrapper>
