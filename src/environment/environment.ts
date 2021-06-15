@@ -1,8 +1,13 @@
 import { name, version } from '../../package.json';
-import { IEnvironment } from './interface';
+
+export interface IEnvironment {
+  name: string;
+  version: string;
+  apiRoute: string;
+}
 
 export const environment: IEnvironment = {
   name,
   version,
-  apiRoute: 'http://localhost:3000',
+  apiRoute: process.env.REACT_APP_API_ROUTE ?? '',
 };
