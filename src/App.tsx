@@ -1,4 +1,3 @@
-/* eslint-disable jsx-quotes */
 import { FC } from 'react';
 import { ErrorBoundary } from '@sentry/react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -26,12 +25,12 @@ export const App: FC = () => (
           <Router>
             <Switch>
               <HolyGrailLayout leftSidebar={<NavBar />}>
-                <Route exact path='/' component={DashboardPage} />
-                <Route exact path='/auth/login' component={LogInPage} />
-                <Route exact path='/auth/signup' component={SignUpPage} />
-                <Route exact path='/auth/change-password' component={ChangePasswordPage} />
-                <Route exact path='/auth/reset-password' component={ResetPasswordPage} />
-                <Route exact path='/auth/forgot-password' component={ForgotPasswordPage} />
+                <Route exact path="/" component={DashboardPage} />
+                <Route exact path="/auth/login" component={LogInPage} />
+                <Route exact path="/auth/signup" component={SignUpPage} />
+                <Route exact path="/auth/change-password" component={ChangePasswordPage} />
+                <Route exact path="/auth/reset-password" component={ResetPasswordPage} />
+                <Route exact path="/auth/forgot-password" component={ForgotPasswordPage} />
               </HolyGrailLayout>
             </Switch>
           </Router>
