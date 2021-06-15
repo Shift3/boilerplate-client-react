@@ -24,7 +24,6 @@
   "workbench.colorCustomizations": {
   
   },
-  "editor.semanticTokenColorCustomizations": null,
   "editor.tabSize": 2,
   "editor.tabCompletion": "on",
   "javascript.preferences.quoteStyle": "single",
