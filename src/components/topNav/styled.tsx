@@ -12,7 +12,7 @@ const {
   clear,
 } = styleValues;
 
-export const Navbar = styled(Nav)`
+export const TopNavbar = styled(Nav)`
   padding: 8px 16px;
   display: flex;
   flex-direction: row;
@@ -43,7 +43,7 @@ export const DirectoryLink = styled(NavLink)`
   }
 `;
 
-export const DropDownButton = styled(Button)`
+export const DropdownButton = styled(Button)`
   background-color: ${clear};
   border-color: ${clear};
 
@@ -102,7 +102,7 @@ export const NavDropdownItem = styled(NavDropdown.Item)`
   };
 `;
 
-export const DropDownContainerLeft = styled.div`
+export const DropdownContainerLeft = styled.div`
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -118,7 +118,7 @@ export const ProfilePhoto = styled.img`
   height: auto;
 `;
 
-export const DropDownContainerRight = styled.div`
+export const DropdownContainerRight = styled.div`
   display: flex; 
   flex-direction: column;
   align-items: center;
@@ -146,4 +146,5 @@ export const NavContainerRight = styled.div`
 export const NavIcon = styled(FontAwesomeIcon)`
   color: #175f6e;
   font-size: 16px;
+export const LoginCreateAccountButton = styled(NavLink)`
 `;
