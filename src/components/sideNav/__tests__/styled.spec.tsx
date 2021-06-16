@@ -1,5 +1,12 @@
-import { NavWrapper, NavLogo, NavLinkWrapper } from '../styled';
+// import renderer from 'react-test-renderer';
 import { expectToMatchSnapshot } from '../../../utils/test';
+import {
+  NavWrapper,
+  NavLogo,
+  NavLinkWrapper,
+  // NavLinkStyled
+} from '../styled';
+
 import 'jest-styled-components';
 
 describe('Navbar Styled Components', () => {
