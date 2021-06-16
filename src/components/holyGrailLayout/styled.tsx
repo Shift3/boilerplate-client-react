@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-import {} from '../../utils/styleValues';
+import styleValues from '../../utils/styleValues';
+
+const { footerHeight } = styleValues;
 
 export const HolyGrailWrapper = styled.div`
   display: flex;
@@ -10,12 +12,7 @@ export const HolyGrailMainWrapper = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  max-height: calc(100vh - ${(props) => props.theme.footerHeight});
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-    flex: 1;
-  }
+  min-height: calc(100vh - ${footerHeight});
 `;
 
 export const HolyGrailLeftAside = styled.aside`
