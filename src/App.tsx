@@ -2,19 +2,24 @@ import { FC } from 'react';
 import { ErrorBoundary } from '@sentry/react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { LogInPage } from 'components/loginPage';
-import { SignUpPage } from 'components/signupPage';
-import { ChangePasswordPage } from 'components/changePasswordPage';
+
+// Components
+import { Navbar } from './components/navbar';
 import { DashboardPage } from './components/dashboardPage';
 import { FlashMessage } from './components/flashMessage';
 import { HolyGrailLayout } from './components/holyGrailLayout';
-import { NavBar } from './components/navbar';
-import { GlobalStyle } from './GlobalStyle';
-import AppTheme from './utils/styleValues';
-import { Provider as AuthProvider } from './context/auth.context';
-import { Provider as FlashMessageProvider } from './context/flashMessage.context';
+import { LogInPage } from 'components/loginPage';
+import { SignUpPage } from 'components/signupPage';
+import { ChangePasswordPage } from 'components/changePasswordPage';
 import { ResetPasswordPage } from 'components/resetPasswordPage';
 import { ForgotPasswordPage } from 'components/forgotPasswordPage';
+
+import { GlobalStyle } from './GlobalStyle';
+import AppTheme from './utils/styleValues';
+
+// Context
+import { Provider as AuthProvider } from './context/auth.context';
+import { Provider as FlashMessageProvider } from './context/flashMessage.context';
 
 export const App: FC = () => (
   <ErrorBoundary>
