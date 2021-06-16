@@ -10,7 +10,7 @@ export type DropDownItemType = FC<DropdownItemProps>;
 export type UserDataType = {
   firstName: string;
   lastName: string;
-  profile_picture: string;
+  profile_picture: string | null | undefined;
 };
 
 export type TopNavPropTypes = {

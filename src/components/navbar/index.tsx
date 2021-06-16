@@ -30,7 +30,7 @@ export const Navbar: NavbarType = ({ navType }) => {
   const mockUserData = {
     firstName: "Testy",
     lastName: "Testerson",
-    profile_picture: "../../assets/img/profile.png"
+    profile_picture: null
   };
 
   const signOut = () => {
