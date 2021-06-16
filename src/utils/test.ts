@@ -73,11 +73,7 @@ export const expectChildToHaveInnerHTMLByTestId = (
   parentTestId: string,
   childIndex: number,
   innerHTMLValue: string
-) => {
-  const test = getByTestId(parentTestId).children[ childIndex ].innerHTML;
-  console.log("HERE", test);
-  expect(test).toEqual(innerHTMLValue);
-};
+) => expect(getByTestId(parentTestId).children[ childIndex ].innerHTML).toEqual(innerHTMLValue);
 
 export const clickChildByTestId = (parentTestId: string, childIndex: number) =>
   act(() => click(screen.getByTestId(parentTestId).children[ childIndex ]));
