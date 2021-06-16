@@ -3,7 +3,6 @@ import { expectToMatchSnapshot } from '../../../utils/test';
 import {
   TopNavbar,
   TopNavLogo,
-  // DirectoryLink,
   DropdownButton,
   Dropdown,
   NavDropdownItem,
@@ -14,7 +13,7 @@ import {
   NavContainerLeft,
   NavContainerRight,
   // NavIcon,
-  // LoginCreateAccountButton
+  // DirectoryLink,
 } from '../styled';
 
 import 'jest-styled-components';
@@ -61,7 +60,4 @@ describe('<TopNav/> styled componenets', () => {
 
   // it ('Should match the stored <DirectoryLink /> snapshot', () =>
   //   expect(renderer.create(<DirectoryLink />).toJSON()).toMatchSnapshot());
-
-  // it ('Should match the stored <LoginCreateAccountButton /> snapshot', () =>
-  //   expect(renderer.create(<LoginCreateAccountButton />).toJSON()).toMatchSnapshot());
 });

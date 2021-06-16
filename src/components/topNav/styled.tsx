@@ -147,6 +147,3 @@ export const NavIcon = styled(FontAwesomeIcon)`
   color: #175f6e;
   font-size: 16px;
 `;
-
-export const LoginCreateAccountButton = styled(NavLink)`
-`;

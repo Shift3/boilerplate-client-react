@@ -1,8 +1,8 @@
-import { FC, useState, useEffect } from 'react';
 import { faUser, faStethoscope } from '@fortawesome/free-solid-svg-icons';
-import { DropDownItemType } from './types';
+import { DropDownItemType, TopNavType } from './types';
 import { useHistory } from 'react-router-dom';
 import logo from '../../assets/img/logo.png';
+import { CustomButton } from '../button/styled';
 import placeholder_portrait from '../../assets/img/portrait_placeholder.png';
 import {
   TopNavbar,
@@ -18,30 +18,9 @@ import {
   DropdownButton,
   DirectoryLink,
   NavDropdownItem,
-  LoginCreateAccountButton
 } from './styled';
 
-export const TopNav: FC = () => {
-  const isLoggedInUser = true;
-  // eslint-disable-next-line
-  const [ userData, setUserData ] = useState({
-    firstName: "",
-    lastName: "",
-    profile_picture: ""
-  });
-
-  // @TODO - utilize redux to get user data and logged in state in order to display variations of the navbar
-  // @TODO - utilize redux to get users signed in status
-  // @TODO - useEffect hook to setUserData
-
-  useEffect(() => {
-    setUserData({
-      firstName: "Testy",
-      lastName: "Testerson",
-      profile_picture: "../../assets/img/profile.png"
-    });
-  }, []);
-
+export const TopNav: TopNavType = ({ userData, signOut }) => {
   const history = useHistory();
 
   const DropdownItem: DropDownItemType = ({ linkText, testid }) => (
@@ -51,38 +30,27 @@ export const TopNav: FC = () => {
   );
 
   const onDropdownItemSelect = (eventKey: string) => {
-    switch (eventKey) {
-      case "profile":
-        history.push('/users/profile');
-        break;
-
-      case "changePassword":
-        history.push("/auth/change-password");
-        break;
-
-      case "signOut":
-        // @TODO call signout method via redux
-        // eslint-disable-next-line
-        console.log("SIGNOUT CLICKED");
-        break;
-
-      default:
-        break;
-    }
+    if (eventKey === "profile") history.push("/users/profile");
+    if (eventKey === "changePassword") history.push("/auth/change-password");
+    if (eventKey === "signOut") signOut();
   };
 
   return (
     <TopNavbar data-testid="topNavbar" onSelect={onDropdownItemSelect} >
       <NavContainerLeft data-testid="navContainerLeft">
         <TopNavLogo data-testid="navLogo" src={ logo } alt="Bitwise Technology Consulting" />
-        <DirectoryLink data-testid="directoryLink" to="/content/agent-list">
-          <NavIcon icon={ faStethoscope } />
-          <span data-testid="directoryLinkText">Directory</span>
-        </DirectoryLink>
+        {
+          userData && (
+            <DirectoryLink data-testid="directoryLink" to="/content/agent-list">
+              <NavIcon icon={ faStethoscope } />
+              <span data-testid="directoryLinkText">Directory</span>
+            </DirectoryLink>
+          )
+        }
       </NavContainerLeft>
       <NavContainerRight data-testid="navContainerRight">
         {
-          isLoggedInUser && (
+          userData && (
             <DropdownButton data-testid="dropdownButton">
               <NavIcon icon={ faUser } />
               <Dropdown
@@ -94,7 +62,7 @@ export const TopNav: FC = () => {
                   <ProfilePhoto
                     data-testid="profilePhoto"
                     src={ userData?.profile_picture ?? placeholder_portrait }
-                    alt="Placeholder Portrait"
+                    alt="Profile Photo"
                   />
                   { `${ userData?.firstName } ${ userData?.lastName }` }
                 </DropdownContainerLeft>
@@ -109,13 +77,13 @@ export const TopNav: FC = () => {
           )
         }
         {
-          !isLoggedInUser && (
-            <LoginCreateAccountButton
-              to="/auth/login"
-              data-testid="loginCreateAccountLink"
+          !userData && (
+            <CustomButton
+              onClick={() => history.push('/auth/login')}
+              data-testid="loginCreateAccountButton"
             >
               LOGIN/CREATE ACCOUNT
-            </LoginCreateAccountButton>
+            </CustomButton>
           )
         }
       </NavContainerRight>
