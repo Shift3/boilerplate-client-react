@@ -27,7 +27,7 @@ const {
 
 const validCurrentPassword = 'Password123!';
 const validNewPassword = 'Password456!';
-const shortPassword = 'T123!';
+const shortPassword = 'Aa1!';
 const noSpecialCharPassword = 'Password123';
 const noNumberPassword = 'Password!';
 const noUppercasePassword = 'password123!';
@@ -102,18 +102,22 @@ describe('ChangePasswordForm', () => {
     });
 
     it('Should only display CURRENT_PASSWORD_REQUIRED error message', async () => {
+      await setValueByLabelText('Current Password', 'test');
       await setValueByLabelText('Current Password', '');
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', CURRENT_PASSWORD_REQUIRED);
     });
 
     it('Should only display NEW_PASSWORD_REQUIRED error message', async () => {
+      await setValueByLabelText('Current Password', 'something');
+      await setValueByLabelText('New Password', 'test');
       await setValueByLabelText('New Password', '');
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', NEW_PASSWORD_REQUIRED);
     });
 
     it('Should only display CONFIRM_PASSWORD_REQUIRED error message', async () => {
+      await setValueByLabelText('Confirm Password', 'test');
       await setValueByLabelText('Confirm Password', '');
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', CONFIRM_PASSWORD_REQUIRED);

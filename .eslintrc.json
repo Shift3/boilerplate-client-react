@@ -175,7 +175,7 @@
       1,
       {
         "ignoreArrayIndexes": true,
-        "ignore": [0, 1, 2, 3, 4]
+        "ignore": [0, 1, 2, 3, 4, 8]
       }
     ],
 

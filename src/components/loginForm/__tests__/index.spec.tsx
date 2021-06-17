@@ -63,13 +63,13 @@ describe('LoginForm', () => {
     });
 
     describe('Invalid email', () => {
-      it('Should only display email required error message', async () => {
+      it('Should only display EMAIL_REQUIRED error message', async () => {
         await setValueByLabelText('Email', '');
         expectLengthByRole('alert', 1);
         expectInnerHTMLByRole('alert', EMAIL_REQUIRED);
       });
 
-      it('Should only display invalid email error message', async () => {
+      it('Should only display INVALID_EMAILerror message', async () => {
         await setValueByLabelText('Email', '');
         await setValueByLabelText('Email', invalidEmail);
         expectLengthByRole('alert', 1);
@@ -78,7 +78,7 @@ describe('LoginForm', () => {
     });
 
     describe('Invalid password', () => {
-      it('should only display password required error message', async () => {
+      it('should only display PASSWORD_REQUIRED error message', async () => {
         await setValueByLabelText('Password', '');
         expectLengthByRole('alert', 1);
         expectInnerHTMLByRole('alert', PASSWORD_REQUIRED);

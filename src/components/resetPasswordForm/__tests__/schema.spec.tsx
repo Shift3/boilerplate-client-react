@@ -6,6 +6,7 @@ import { ResetPasswordFormSchema } from '../schema';
 const {
   NEW_PASSWORD_REQUIRED,
   CONFIRM_PASSWORD_REQUIRED,
+  PASSWORD_LENGTH,
   PASSWORD_MUST_MATCH,
   PASSWORD_LOWERCASE,
   PASSWORD_UPPERCASE,
@@ -19,6 +20,7 @@ const missingLowerCasePassword = 'PASSWORD123!';
 const missingUpperCasePassword = 'password123!';
 const missingSpecialCharPassword = 'Password123';
 const missingNumberPassword = 'Password!';
+const shortPassword = 'Passw1!';
 
 const mockValidFormData = {
   newPassword: validNewPassword,
@@ -48,6 +50,10 @@ describe('ResetPasswordFormSchema', () => {
   describe('New Password', () => {
     it('Should throw validation error with FIELD_REQUIRED message if empty', async () => {
       await errorMessageCheck('newPassword', '', NEW_PASSWORD_REQUIRED);
+    });
+
+    it('Should throw validation error with PASSWORD_LENGTH message if password is shorter than 8 characters', async () => {
+      await errorMessageCheck('newPassword', shortPassword, PASSWORD_LENGTH);
     });
 
     it('Should throw validation error with PASSWORD_LOWERCASE message if it does not contain at least one lowercase letter', async () => {

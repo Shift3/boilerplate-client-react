@@ -31,7 +31,7 @@ describe('SignUpFormSchema', () => {
     mismatch: string,
     message: string,
   ) =>
-    expect(await SignUpFormSchema.validate({ ...formData, [field]: mismatch }).catch((err) => err.message)).toEqual(
+    expect(await SignUpFormSchema.validate({ ...formData, [ field ]: mismatch }).catch((err) => err.message)).toEqual(
       message,
     );
 
@@ -70,6 +70,6 @@ describe('SignUpFormSchema', () => {
     it('Should throw validation error with LAST_NAME_REQUIRED message if empty', () =>
       errorMessageCheck('lastName', '', LAST_NAME_REQUIRED));
     it('Should throw validation error with LAST_NAME_REQUIRED if only contains white space', () =>
-      errorMessageCheck('firstName', '  ', LAST_NAME_REQUIRED));
+      errorMessageCheck('firstName', '  ', FIRST_NAME_REQUIRED));
   });
 });

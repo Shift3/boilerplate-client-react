@@ -98,7 +98,6 @@ describe('ResetPasswordForm', () => {
 
     it('Should only display special password length error message', async () => {
       await setValueByLabelText('New Password', shortPassword);
-      await setValueByLabelText('Confirm Password', shortPassword);
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', PASSWORD_LENGTH);
     });

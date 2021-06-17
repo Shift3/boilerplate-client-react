@@ -7,6 +7,7 @@ export const ResetPasswordFormSchema = yup.object().shape({
   newPassword: yup
     .string()
     .required(errorMessages.NEW_PASSWORD_REQUIRED)
+    .min(8, errorMessages.PASSWORD_LENGTH)
     .matches(Constants.patterns.LOWERCASE_REGEX, errorMessages.PASSWORD_LOWERCASE)
     .matches(Constants.patterns.UPPERCASE_REGEX, errorMessages.PASSWORD_UPPERCASE)
     .matches(Constants.patterns.SYMBOL_REGEX, errorMessages.PASSWORD_SPECIAL_CHARACTER)
