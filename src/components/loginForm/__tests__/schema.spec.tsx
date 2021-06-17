@@ -1,7 +1,8 @@
 import * as yup from 'yup';
-import { LogInFormSchema, errorMessages } from '../schema';
+import { Constants } from 'utils/constants';
+import { LogInFormSchema } from '../schema';
 
-const { PASSWORD_REQUIRED, INVALID_EMAIL, EMAIL_REQUIRED } = errorMessages;
+const { EMAIL_REQUIRED, INVALID_EMAIL, PASSWORD_REQUIRED } = Constants.errorMessages;
 
 describe('LoginFormSchema', () => {
   const validEmail = 'test@test.com';

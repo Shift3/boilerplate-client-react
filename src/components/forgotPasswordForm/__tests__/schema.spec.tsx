@@ -1,15 +1,16 @@
 import * as yup from 'yup';
-import { ForgotPasswordFormSchema, errorMessages } from '../schema';
+import { ForgotPasswordFormSchema } from '../schema';
+import { Constants } from 'utils/constants';
 
-const { EMAIL_REQUIRED } = errorMessages;
+const { EMAIL_REQUIRED } = Constants.errorMessages;
+
+const validEmail = 'test@test.com';
+
+const formData = {
+  email: validEmail,
+};
 
 describe('ForgotPasswordFormSchema', () => {
-  const validEmail = 'test@test.com';
-
-  const formData = {
-    email: validEmail,
-  };
-
   const errorMessageCheck = async (field: string, value: string, message: string) =>
     expect(
       await yup

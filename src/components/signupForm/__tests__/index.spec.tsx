@@ -11,16 +11,9 @@ import {
   formAlertMessageCheck,
 } from 'utils/test';
 import { SignUpForm } from '../index';
-import { errorMessages } from '../schema';
+import { Constants } from 'utils/constants';
 
-const {
-  EMAIL_REQUIRED,
-  INVALID_EMAIL,
-  EMAIL_MATCH,
-  FIRST_NAME_REQUIRED,
-  LAST_NAME_REQUIRED,
-  NAME_LENGTH,
-} = errorMessages;
+const { EMAIL_REQUIRED, INVALID_EMAIL, EMAIL_MATCH, FIRST_NAME_REQUIRED, LAST_NAME_REQUIRED } = Constants.errorMessages;
 
 describe('SignupForm', () => {
   const validEmail = 'test@test.com';
@@ -125,32 +118,6 @@ describe('SignupForm', () => {
       await setValueByLabelText('Last Name', '');
       expectLengthByRole('alert', 1);
       formAlertMessageCheck(LAST_NAME_REQUIRED);
-    });
-  });
-
-  describe('Name length', () => {
-    it('Should only display first name length message for being under the range', async () => {
-      await setValueByLabelText('First Name', shortName);
-      expectLengthByRole('alert', 1);
-      formAlertMessageCheck(NAME_LENGTH);
-    });
-
-    it('Should only display last name length message for being under the range', async () => {
-      await setValueByLabelText('Last Name', shortName);
-      expectLengthByRole('alert', 1);
-      formAlertMessageCheck(NAME_LENGTH);
-    });
-
-    it('Should only display first name length message for being over the range', async () => {
-      await setValueByLabelText('First Name', longName);
-      expectLengthByRole('alert', 1);
-      formAlertMessageCheck(NAME_LENGTH);
-    });
-
-    it('Should only display last name length message for being over the range', async () => {
-      await setValueByLabelText('Last Name', longName);
-      expectLengthByRole('alert', 1);
-      formAlertMessageCheck(NAME_LENGTH);
     });
   });
 });

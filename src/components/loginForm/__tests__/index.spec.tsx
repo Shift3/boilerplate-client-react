@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
+import { Constants } from 'utils/constants';
 import { LogInForm } from '../index';
-import { errorMessages } from '../schema';
 import {
   clickByTestIdAsync,
   expectInDocByLabelText,
@@ -10,9 +10,9 @@ import {
   expectMockFunctionNotCalled,
   setValueByLabelText,
   expectInnerHTMLByRole,
-} from '../../../utils/test';
+} from 'utils/test';
 
-const { PASSWORD_REQUIRED, INVALID_EMAIL, EMAIL_REQUIRED } = errorMessages;
+const { EMAIL_REQUIRED, INVALID_EMAIL, PASSWORD_REQUIRED } = Constants.errorMessages;
 
 describe('LoginForm', () => {
   const validEmail = 'test@email.com';
@@ -37,7 +37,7 @@ describe('LoginForm', () => {
   it('Should render submit button', () => expectInDocByTestId('submitButton'));
 
   describe('Valid input', () => {
-    it('Should call onSubmit once formData object including username and password', async () => {
+    it('Should call logIn once formData object is submitted with username and password', async () => {
       await clickByTestIdAsync('submitButton');
       expectLengthByRole('alert', 0);
       expectMockFunctionCalled(mockOnSubmit);

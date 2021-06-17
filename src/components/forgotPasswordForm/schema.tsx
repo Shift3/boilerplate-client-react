@@ -1,10 +1,8 @@
 import * as yup from 'yup';
+import { Constants } from 'utils/constants';
 
-export enum errorMessages {
-  EMAIL_REQUIRED = 'Email is required.',
-  INVALID_EMAIL = 'Please enter a valid email address.',
-}
+const { EMAIL_REQUIRED, INVALID_EMAIL } = Constants.errorMessages;
 
 export const ForgotPasswordFormSchema = yup.object().shape({
-  email: yup.string().required(errorMessages.EMAIL_REQUIRED).email(errorMessages.INVALID_EMAIL),
+  email: yup.string().required(EMAIL_REQUIRED).email(INVALID_EMAIL),
 });

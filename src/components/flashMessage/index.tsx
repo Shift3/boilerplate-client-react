@@ -7,7 +7,7 @@ export const FlashMessage: FC = () => {
   const { flashMessage } = useContext(FlashMessageContext);
 
   return (
-    <FlashMessageContainer data-testid="flashMessageContainer">
+    <FlashMessageContainer data-testid='flashMessageContainer'>
       {flashMessage && <Alert variant={flashMessage.variant}>{flashMessage.message}</Alert>}
     </FlashMessageContainer>
   );

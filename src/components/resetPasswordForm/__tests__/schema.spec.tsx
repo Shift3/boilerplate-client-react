@@ -1,6 +1,6 @@
-/* eslint-disable max-len */
 import * as yup from 'yup';
-import { ResetPasswordFormSchema, errorMessages } from '../schema';
+import { Constants } from 'utils/constants';
+import { ResetPasswordFormSchema } from '../schema';
 
 const {
   FIELD_REQUIRED,
@@ -10,7 +10,7 @@ const {
   PASSWORD_UPPERCASE,
   PASSWORD_SPECIAL_CHARACTER,
   PASSWORD_NUMBER,
-} = errorMessages;
+} = Constants.errorMessages;
 
 const validNewPassword = 'Password456!';
 const mismatchPassword = 'Password123';
@@ -20,7 +20,7 @@ const missingUpperCasePassword = 'password123!';
 const missingSpecialCharPassword = 'Password123';
 const missingNumberPassword = 'Password!';
 
-const mockFormData = {
+const mockValidFormData = {
   newPassword: validNewPassword,
   confirmPassword: validNewPassword,
 };
@@ -42,7 +42,7 @@ const errorMessageConfirmCheck = async (formData: Record<string, unknown>, messa
 
 describe('ResetPasswordFormSchema', () => {
   describe('Valid input data', () => {
-    it('Should pass validation', () => expect(ResetPasswordFormSchema.isValidSync(mockFormData)).toBeTruthy());
+    it('Should pass validation', () => expect(ResetPasswordFormSchema.isValidSync(mockValidFormData)).toBeTruthy());
   });
 
   describe('New Password', () => {

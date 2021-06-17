@@ -20,7 +20,7 @@ export const SignUpPage: FC = () => {
   };
 
   return (
-    <Wrapper data-testid="wrapper">
+    <Wrapper data-testid='wrapper'>
       <SignUpForm onSubmit={onSubmit} onCancel={onCancel} />
     </Wrapper>
   );

@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react';
+import { Constants } from 'utils/constants';
 import {
   clickByTestIdAsync,
   expectInDocByLabelText,
@@ -10,9 +11,8 @@ import {
   formAlertMessageCheck,
 } from 'utils/test';
 import { ForgotPasswordForm } from '../index';
-import { errorMessages } from '../schema';
 
-const { EMAIL_REQUIRED, INVALID_EMAIL } = errorMessages;
+const { EMAIL_REQUIRED, INVALID_EMAIL } = Constants.errorMessages;
 
 describe('ForgotPasswordForm', () => {
   const validEmail = 'test@test.com';

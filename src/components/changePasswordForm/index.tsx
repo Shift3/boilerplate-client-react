@@ -1,4 +1,3 @@
-/* eslint-disable jsx-quotes */
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
@@ -14,7 +13,7 @@ export const ChangePasswordForm: ChangePasswordFormType = ({ onSubmit }) => {
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(ChangePasswordFormSchema),
-    mode: 'onChange',
+    mode: 'all',
   });
 
   const history = useHistory();
@@ -26,7 +25,7 @@ export const ChangePasswordForm: ChangePasswordFormType = ({ onSubmit }) => {
   return (
     <>
       <StyledForm data-testid='changePasswordForm' onSubmit={handleSubmit(onSubmit)}>
-        <Title>Reset Password</Title>
+        <Title>Change Password</Title>
         <Form.Group>
           <FormLabel htmlFor='currentPassword'>Current Password</FormLabel>
           <Form.Control

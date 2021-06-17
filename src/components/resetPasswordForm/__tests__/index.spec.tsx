@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
+import { Constants } from 'utils/constants';
 import { ResetPasswordForm } from '../index';
-import { errorMessages } from '../schema';
 import {
   expectLengthByRole,
   setValueByLabelText,
@@ -12,14 +12,14 @@ import {
 } from 'utils/test';
 
 const {
-  FIELD_REQUIRED,
+  PASSWORD_REQUIRED,
   PASSWORD_MUST_MATCH,
   PASSWORD_LENGTH,
   PASSWORD_NUMBER,
   PASSWORD_LOWERCASE,
   PASSWORD_UPPERCASE,
   PASSWORD_SPECIAL_CHARACTER,
-} = errorMessages;
+} = Constants.errorMessages;
 
 const validNewPassword = 'Password456!';
 const shortPassword = 'T123!';
@@ -93,7 +93,7 @@ describe('ResetPasswordForm', () => {
     it('Should only display password required error message', async () => {
       await setValueByLabelText('New Password', '');
       expectLengthByRole('alert', 1);
-      expectInnerHTMLByRole('alert', FIELD_REQUIRED);
+      expectInnerHTMLByRole('alert', PASSWORD_REQUIRED);
     });
 
     it('Should only display special password length error message', async () => {

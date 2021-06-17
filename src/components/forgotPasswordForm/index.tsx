@@ -17,18 +17,18 @@ export const ForgotPasswordForm: ForgotPasswordFormType = ({ onSubmit, onCancel 
 
   return (
     <>
-      <StyledForm data-testid="forgotPasswordForm" onSubmit={handleSubmit(onSubmit)}>
+      <StyledForm data-testid='forgotPasswordForm' onSubmit={handleSubmit(onSubmit)}>
         <Title>Forgot Password</Title>
         <Form.Group>
-          <FormLabel htmlFor="email">Email</FormLabel>{' '}
-          <Form.Control id="email" type="email" {...register('email')} placeholder="Enter email" />
-          {errors.email?.message && <InputError role="alert">{errors.email?.message}</InputError>}
+          <FormLabel htmlFor='email'>Email</FormLabel>{' '}
+          <Form.Control id='email' type='email' {...register('email')} placeholder='Enter email' />
+          {errors.email?.message && <InputError role='alert'>{errors.email?.message}</InputError>}
         </Form.Group>
         <ButtonWrapper>
-          <CancelButton data-testid="cancelButton" onClick={onCancel}>
+          <CancelButton data-testid='cancelButton' onClick={onCancel}>
             CANCEL
           </CancelButton>
-          <SubmitButton data-testid="submitButton" type="submit" disabled={!isValid}>
+          <SubmitButton data-testid='submitButton' type='submit' disabled={!isValid}>
             SUBMIT
           </SubmitButton>
         </ButtonWrapper>

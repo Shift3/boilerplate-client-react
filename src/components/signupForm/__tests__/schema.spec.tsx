@@ -1,22 +1,14 @@
 import * as yup from 'yup';
-import { SignUpFormSchema, errorMessages } from '../schema';
+import { Constants } from 'utils/constants';
+import { SignUpFormSchema } from '../schema';
 
-const {
-  EMAIL_REQUIRED,
-  INVALID_EMAIL,
-  EMAIL_MATCH,
-  FIRST_NAME_REQUIRED,
-  LAST_NAME_REQUIRED,
-  NAME_LENGTH,
-} = errorMessages;
+const { EMAIL_REQUIRED, INVALID_EMAIL, EMAIL_MATCH, FIRST_NAME_REQUIRED, LAST_NAME_REQUIRED } = Constants.errorMessages;
 
 describe('SignUpFormSchema', () => {
   const validEmail = 'test@test.com';
   const invalidEmail = 'test.com';
   const mismatchEmail = 'test@tets.com';
   const validName = 'test';
-  const shortName = 't';
-  const longName = 'thisisclearlywaytoolongandisnotavalidnamebecauseitiswelloverfiftycharacters';
 
   const formData = {
     email: validEmail,
@@ -70,18 +62,14 @@ describe('SignUpFormSchema', () => {
   describe('First Name', () => {
     it('Should throw validation error with FIRST_NAME_REQUIRED message if empty', () =>
       errorMessageCheck('firstName', '', FIRST_NAME_REQUIRED));
-    it('Should throw validation error with NAME_LENGTH message if shorter than 2 characters', () =>
-      errorMessageCheck('firstName', shortName, NAME_LENGTH));
-    it('Should throw validation error with NAME_LENGTH message if longer than 50 characters', () =>
-      errorMessageCheck('firstName', longName, NAME_LENGTH));
+    it('Should throw validation error with FIRST_NAME_REQUIRED if only contains white space', () =>
+      errorMessageCheck('firstName', '  ', FIRST_NAME_REQUIRED));
   });
 
   describe('Last Name', () => {
     it('Should throw validation error with LAST_NAME_REQUIRED message if empty', () =>
       errorMessageCheck('lastName', '', LAST_NAME_REQUIRED));
-    it('Should throw validation error with NAME_LENGTH message if shorter than 2 characters', () =>
-      errorMessageCheck('lastName', shortName, NAME_LENGTH));
-    it('Should throw validation error with NAME_LENGTH message if longer than 50 characters', () =>
-      errorMessageCheck('lastName', longName, NAME_LENGTH));
+    it('Should throw validation error with LAST_NAME_REQUIRED if only contains white space', () =>
+      errorMessageCheck('firstName', '  ', LAST_NAME_REQUIRED));
   });
 });

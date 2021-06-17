@@ -1,4 +1,6 @@
 import { render } from '@testing-library/react';
+import { Constants } from 'utils/constants';
+import { ChangePasswordForm } from '../index';
 import {
   expectLengthByRole,
   expectInnerHTMLByRole,
@@ -8,19 +10,18 @@ import {
   clickByTestIdAsync,
   setValueByLabelText,
 } from 'utils/test';
-import { ChangePasswordForm } from '..';
-import { errorMessages } from '../schema';
 
 const {
-  PASSWORD_MUST_MATCH,
-  PASSWORD_MUST_MISMATCH,
+  CURRENT_PASSWORD_REQUIRED,
+  NEW_PASSWORD_REQUIRED,
   PASSWORD_LENGTH,
-  PASSWORD_NUMBER,
-  FIELD_REQUIRED,
+  PASSWORD_MUST_MISMATCH,
+  PASSWORD_MUST_MATCH,
   PASSWORD_LOWERCASE,
   PASSWORD_UPPERCASE,
   PASSWORD_SPECIAL_CHARACTER,
-} = errorMessages;
+  PASSWORD_NUMBER,
+} = Constants.errorMessages;
 
 const validCurrentPassword = 'Password123!';
 const validNewPassword = 'Password456!';
@@ -104,13 +105,13 @@ describe('ChangePasswordForm', () => {
     it('Should only display password required error message', async () => {
       await setValueByLabelText('Current Password', '');
       expectLengthByRole('alert', 1);
-      expectInnerHTMLByRole('alert', FIELD_REQUIRED);
+      expectInnerHTMLByRole('alert', CURRENT_PASSWORD_REQUIRED);
     });
 
     it('Should only display new password required error message', async () => {
       await setValueByLabelText('New Password', '');
       expectLengthByRole('alert', 1);
-      expectInnerHTMLByRole('alert', FIELD_REQUIRED);
+      expectInnerHTMLByRole('alert', NEW_PASSWORD_REQUIRED);
     });
 
     it('Should only display password length error message', async () => {
