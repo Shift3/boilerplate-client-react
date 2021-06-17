@@ -19,7 +19,7 @@ const {
 const validCurrentPassword = 'Password123!';
 const validNewPassword = 'Password456!';
 const mismatchPassword = 'Password321!';
-const shortPassword = 'Passwo1!';
+const shortPassword = 'Passw1!';
 const missingLowerCasePassword = 'PASSWORD123!';
 const missingUpperCasePassword = 'password123!';
 const missingSpecialCharPassword = 'Password123';

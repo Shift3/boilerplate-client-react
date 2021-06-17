@@ -15,7 +15,7 @@ const {
 } = Constants.errorMessages;
 
 const validNewPassword = 'Password456!';
-const mismatchPassword = 'Password123';
+const mismatchPassword = 'Password123!';
 const missingLowerCasePassword = 'PASSWORD123!';
 const missingUpperCasePassword = 'password123!';
 const missingSpecialCharPassword = 'Password123';
