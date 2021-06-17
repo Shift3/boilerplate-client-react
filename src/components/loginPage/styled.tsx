@@ -17,7 +17,6 @@ export const LoginWrapper = styled.div`
   width: 50vw;
   height: 50vh;
   padding: 40px;
-  display: flex;
   margin-left: 100px;
   background-color: ${(props) => props.theme.primary};
   border-radius: 5px;
