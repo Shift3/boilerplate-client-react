@@ -1,10 +1,11 @@
+/* eslint-disable max-len */
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { ResetPasswordFormSchema } from '../schema';
 
 const {
-  FIELD_REQUIRED,
-  PASSWORD_LENGTH,
+  NEW_PASSWORD_REQUIRED,
+  CONFIRM_PASSWORD_REQUIRED,
   PASSWORD_MUST_MATCH,
   PASSWORD_LOWERCASE,
   PASSWORD_UPPERCASE,
@@ -14,7 +15,6 @@ const {
 
 const validNewPassword = 'Password456!';
 const mismatchPassword = 'Password123';
-const shortPassword = 'test';
 const missingLowerCasePassword = 'PASSWORD123!';
 const missingUpperCasePassword = 'password123!';
 const missingSpecialCharPassword = 'Password123';
@@ -47,11 +47,7 @@ describe('ResetPasswordFormSchema', () => {
 
   describe('New Password', () => {
     it('Should throw validation error with FIELD_REQUIRED message if empty', async () => {
-      await errorMessageCheck('newPassword', '', FIELD_REQUIRED);
-    });
-
-    it('Should throw validation error with PASSWORD_LENGTH message if password is shorter than 8 characters', async () => {
-      await errorMessageCheck('newPassword', shortPassword, PASSWORD_LENGTH);
+      await errorMessageCheck('newPassword', '', NEW_PASSWORD_REQUIRED);
     });
 
     it('Should throw validation error with PASSWORD_LOWERCASE message if it does not contain at least one lowercase letter', async () => {
@@ -72,12 +68,12 @@ describe('ResetPasswordFormSchema', () => {
   });
 
   describe('ConfirmPassword', () => {
-    it('Should throw validation error with FIELD_REQUIRED message if empty', async () => {
+    it('Should throw validation error with CONFIRM_PASSWORD_REQUIRED message if empty', async () => {
       const formData = {
         newPassword: validNewPassword,
         confirmPassword: '',
       };
-      await errorMessageConfirmCheck(formData, PASSWORD_MUST_MATCH);
+      await errorMessageConfirmCheck(formData, CONFIRM_PASSWORD_REQUIRED);
     });
 
     it('Should throw validation error with PASSWORD_MUST_MATCH message if confirm password does not match new password', async () => {

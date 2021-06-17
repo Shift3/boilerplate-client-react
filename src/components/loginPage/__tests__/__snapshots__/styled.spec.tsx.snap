@@ -61,10 +61,6 @@ exports[`<LogInPage /> styled components Should match the stored <LoginWrapper/>
   width: 50vw;
   height: 50vh;
   padding: 40px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   margin-left: 100px;
   border-radius: 5px;
 }

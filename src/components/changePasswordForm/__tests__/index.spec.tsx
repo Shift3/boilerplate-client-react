@@ -1,3 +1,4 @@
+/* eslint-disable require-await */
 import { render } from '@testing-library/react';
 import { Constants } from 'utils/constants';
 import { ChangePasswordForm } from '../index';
@@ -14,6 +15,7 @@ import {
 const {
   CURRENT_PASSWORD_REQUIRED,
   NEW_PASSWORD_REQUIRED,
+  CONFIRM_PASSWORD_REQUIRED,
   PASSWORD_LENGTH,
   PASSWORD_MUST_MISMATCH,
   PASSWORD_MUST_MATCH,
@@ -97,21 +99,24 @@ describe('ChangePasswordForm', () => {
   describe('Invalid password', () => {
     beforeEach(async () => {
       render(<ChangePasswordForm onSubmit={mockOnSubmit} />);
-      await setValueByLabelText('Current Password', validCurrentPassword);
-      await setValueByLabelText('New Password', validNewPassword);
-      await setValueByLabelText('Confirm Password', validNewPassword);
     });
 
-    it('Should only display password required error message', async () => {
+    it('Should only display CURRENT_PASSWORD_REQUIRED error message', async () => {
       await setValueByLabelText('Current Password', '');
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', CURRENT_PASSWORD_REQUIRED);
     });
 
-    it('Should only display new password required error message', async () => {
+    it('Should only display NEW_PASSWORD_REQUIRED error message', async () => {
       await setValueByLabelText('New Password', '');
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', NEW_PASSWORD_REQUIRED);
+    });
+
+    it('Should only display CONFIRM_PASSWORD_REQUIRED error message', async () => {
+      await setValueByLabelText('Confirm Password', '');
+      expectLengthByRole('alert', 1);
+      expectInnerHTMLByRole('alert', CONFIRM_PASSWORD_REQUIRED);
     });
 
     it('Should only display password length error message', async () => {

@@ -73,7 +73,7 @@ describe('SignupForm', () => {
       await setValueByLabelText('Confirm Email', mismatchEmail);
       await setValueByLabelText('First Name', longName);
       await setValueByLabelText('Last Name', shortName);
-      expectLengthByRole('alert', 4);
+      expectLengthByRole('alert', 2);
     });
   });
 

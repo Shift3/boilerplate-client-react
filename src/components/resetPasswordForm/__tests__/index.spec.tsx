@@ -12,7 +12,7 @@ import {
 } from 'utils/test';
 
 const {
-  PASSWORD_REQUIRED,
+  NEW_PASSWORD_REQUIRED,
   PASSWORD_MUST_MATCH,
   PASSWORD_LENGTH,
   PASSWORD_NUMBER,
@@ -90,10 +90,10 @@ describe('ResetPasswordForm', () => {
       await setValueByLabelText('Confirm Password', validNewPassword);
     });
 
-    it('Should only display password required error message', async () => {
+    it('Should only display NEW_PASSWORD_REQUIRED error message', async () => {
       await setValueByLabelText('New Password', '');
       expectLengthByRole('alert', 1);
-      expectInnerHTMLByRole('alert', PASSWORD_REQUIRED);
+      expectInnerHTMLByRole('alert', NEW_PASSWORD_REQUIRED);
     });
 
     it('Should only display special password length error message', async () => {
