@@ -1,31 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Login Page Styled Components Should match the stored <LoginFormContainer /> snapshot 1`] = `
-.c0 {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  border-radius: 5px;
-  width: 50%;
-  padding: 50px;
-}
-
-<div
-  className="c0"
+exports[`<LogInPage /> styled components Should match the stored <CreateAccountButton/> snapshot 1`] = `
+<button
+  className="btn btn-primary"
+  disabled={false}
+  type="button"
 />
 `;
 
-exports[`Login Page Styled Components Should match the stored <LoginFormContainerLeft /> snapshot 1`] = `
-.c0 {
-  padding-right: 15px;
-  color: white;
-}
-
-<div
-  className="c0"
-/>
-`;
-
-exports[`Login Page Styled Components Should match the stored <LoginFormContainerRight /> snapshot 1`] = `
+exports[`<LogInPage /> styled components Should match the stored <LeftLogin/> snapshot 1`] = `
 .c0 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -38,7 +21,80 @@ exports[`Login Page Styled Components Should match the stored <LoginFormContaine
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  padding-left: 15px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`<LogInPage /> styled components Should match the stored <LinkWrapper/> snapshot 1`] = `
+.c0 {
+  padding-bottom: 30px;
+  font-size: 1.2em;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`<LogInPage /> styled components Should match the stored <LoginWrapper/> snapshot 1`] = `
+.c0 {
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 50vw;
+  height: 50vh;
+  padding: 40px;
+  margin-left: 100px;
+  border-radius: 5px;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`<LogInPage /> styled components Should match the stored <RightLogin/> snapshot 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 50px;
+  max-width: 350px;
+  min-height: 400px;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`<LogInPage /> styled components Should match the stored <Text/> snapshot 1`] = `
+.c0 {
   color: white;
 }
 
@@ -47,21 +103,32 @@ exports[`Login Page Styled Components Should match the stored <LoginFormContaine
 />
 `;
 
-exports[`Login Page Styled Components Should match the stored <LoginPageContainer /> snapshot 1`] = `
+exports[`<LogInPage /> styled components Should match the stored <Title/> snapshot 1`] = `
+.c0 {
+  font-style: bold;
+  padding-bottom: 10px;
+  width: 200px;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`<LogInPage /> styled components Should match the stored <Wrapper/> snapshot 1`] = `
 .c0 {
   height: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+  width: 100%;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-top: 200px;
+  padding-left: 200px;
 }
 
 <div

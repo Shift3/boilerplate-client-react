@@ -1,4 +1,3 @@
-// RegExp constatns coppied over from Angular Boilerplate.
 interface IPattern {
   DIGIT_REGEX: RegExp;
   EMAIL_REGEX: RegExp;
@@ -7,29 +6,29 @@ interface IPattern {
   LOWERCASE_REGEX: RegExp;
   UPPERCASE_REGEX: RegExp;
 }
-
-interface IUsernamelValidationMessages {
-  IS_REQUIRED: string;
-  MUST_BE_VALID_EMAIL: string;
-}
-
-interface IPasswordValidationMessages {
-  IS_REQUIRED: string;
-  UPPERCASE_CHARACTER_REQUIRED: string;
-  LOWERCASE_CHARACTER_REQUIRED: string;
-  NUMBER_REQUIRED: string;
-  SPECIAL_CHARACTER_REQUIRED: string;
-  MIN_LENGTH_REQUIRED: string;
-}
-
-interface IValidationMessages {
-  username: IUsernamelValidationMessages;
-  password: IPasswordValidationMessages;
+interface IErrorMessages {
+  FIELD_REQUIRED: string;
+  PASSWORD_LENGTH: string;
+  PASSWORD_LOWERCASE: string;
+  PASSWORD_UPPERCASE: string;
+  PASSWORD_SPECIAL_CHARACTER: string;
+  PASSWORD_NUMBER: string;
+  PASSWORD_MUST_MISMATCH: string;
+  PASSWORD_MUST_MATCH: string;
+  EMAIL_REQUIRED: string;
+  INVALID_EMAIL: string;
+  PASSWORD_REQUIRED: string;
+  EMAIL_MATCH: string;
+  FIRST_NAME_REQUIRED: string;
+  LAST_NAME_REQUIRED: string;
+  CURRENT_PASSWORD_REQUIRED: string;
+  NEW_PASSWORD_REQUIRED: string;
+  CONFIRM_PASSWORD_REQUIRED: string;
 }
 
 export interface IConstant {
   patterns: IPattern;
-  validationMessages: IValidationMessages;
+  errorMessages: IErrorMessages;
   version: string;
   creationYear: number;
 }
@@ -42,22 +41,27 @@ export const Constants: IConstant = {
     SYMBOL_REGEX: /[-+_!@#$%^&*,.?]/,
     US_PHONE_REGEX: /(^\d{10}$)/,
     LOWERCASE_REGEX: /(?=.*[a-z])/,
-    UPPERCASE_REGEX: /(?=.*[A-Z])/
+    UPPERCASE_REGEX: /(?=.*[A-Z])/,
   },
-  validationMessages: {
-    username: {
-      IS_REQUIRED: 'Username is required.',
-      MUST_BE_VALID_EMAIL: 'Must be a valid email.'
-    },
-    password: {
-      IS_REQUIRED: 'Password is required.',
-      UPPERCASE_CHARACTER_REQUIRED: 'One upper case character required.',
-      LOWERCASE_CHARACTER_REQUIRED: 'One lower case character required.',
-      NUMBER_REQUIRED: 'One number is required.',
-      SPECIAL_CHARACTER_REQUIRED: 'One special character is required',
-      MIN_LENGTH_REQUIRED: 'Minimum 8 character required.'
-    }
+  errorMessages: {
+    FIELD_REQUIRED: 'Field is required.',
+    PASSWORD_LENGTH: 'Password must be at least 8 characters.',
+    PASSWORD_LOWERCASE: 'Password must contain at least one lowercase letter.',
+    PASSWORD_UPPERCASE: 'Password must contain at least one uppercase letter.',
+    PASSWORD_SPECIAL_CHARACTER: 'Password must contain at least one special character.',
+    PASSWORD_NUMBER: 'Password must contain at least one number.',
+    PASSWORD_MUST_MISMATCH: 'New password should not match current password.',
+    PASSWORD_MUST_MATCH: 'Passwords must match.',
+    EMAIL_MATCH: 'Email addresses must match.',
+    FIRST_NAME_REQUIRED: 'First name is required.',
+    LAST_NAME_REQUIRED: 'Last name is required.',
+    EMAIL_REQUIRED: 'Email is required.',
+    INVALID_EMAIL: 'Please enter a valid email address.',
+    PASSWORD_REQUIRED: 'Password is required.',
+    CURRENT_PASSWORD_REQUIRED: 'Current password is required.',
+    NEW_PASSWORD_REQUIRED: 'New password is required.',
+    CONFIRM_PASSWORD_REQUIRED: 'Confirm password is required.',
   },
   version: '0.1.0',
-  creationYear: 2021
+  creationYear: 2021,
 };

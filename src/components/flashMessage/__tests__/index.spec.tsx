@@ -14,7 +14,6 @@ import { expectInDocByTestId } from '../../../utils/test';
 // -- TEST -- (CONDITIONAL) -- After the timeout has completed check that it is not present.
 
 describe('<FlashMessage/>', () => {
-  render(<FlashMessage/>);
-  it('Should render the <FlashMessageContainer />', () =>
-    expectInDocByTestId('flashMessageContainer'));
+  render(<FlashMessage />);
+  it('Should render the <FlashMessageContainer />', () => expectInDocByTestId('flashMessageContainer'));
 });

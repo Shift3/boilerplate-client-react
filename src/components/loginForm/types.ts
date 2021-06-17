@@ -1,12 +1,13 @@
-import { FC } from "react";
+import { FC } from 'react';
 
-export interface ILoginFormProps {
-    onSubmit: (data: ILoginFormData) => void
+export interface ILogInFormData {
+  email: string;
+  password: string;
 }
 
-export interface ILoginFormData {
-    email: string,
-    password: string
+export interface ILogInFormProps {
+  onSubmit: (data: ILogInFormData) => void;
+  onCancel: (data: ILogInFormData) => void;
 }
 
-export type LoginFormType = FC<ILoginFormProps>
+export type LogInFormType = FC<ILogInFormProps>;

@@ -1,36 +1,49 @@
-import { FC, useContext } from 'react';
+/* eslint-disable jsx-quotes */
+import { FC } from 'react';
+import { LogInForm } from 'components/loginForm';
 import { Link, useHistory } from 'react-router-dom';
-import { CustomButton } from '../button/styled';
-import { LoginForm } from "../loginForm";
-import { Context as AuthContext } from '../../context/auth.context';
-import {
-  LoginFormContainer,
-  LoginPageContainer,
-  LoginFormContainerLeft,
-  LoginFormContainerRight
-} from './styled';
+import { ILogInFormData } from '../loginForm/types';
+import { LoginWrapper, LeftLogin, RightLogin, CreateAccountButton, Title, Text, Wrapper, LinkWrapper } from './styled';
 
-export const LoginPage: FC = () => {
-  const { loginUser } = useContext(AuthContext);
+export const LogInPage: FC = () => {
+  const history = useHistory();
+
+  // TODO: we need to make an API call and handle
+  // success and error cases.
+
+  // eslint-disable-next-line
+  const onSubmit = (formData: ILogInFormData) => {
+    history.push('/');
+  };
+
+  const onCancel = () => {
+    history.goBack();
+  };
+
   const { push } = useHistory();
   const navigateToSignup = () => push('/auth/signup');
 
   return (
-    <LoginPageContainer data-testid="loginPageContainer">
-      <LoginFormContainer data-testid="loginFormContainer">
-        <LoginFormContainerLeft data-testid="loginFormContainerLeft">
-          <LoginForm onSubmit={ loginUser } />
-          <br />
-          <Link to="/auth/forgot-password">Forgot Password?</Link>
-        </LoginFormContainerLeft>
-        <LoginFormContainerRight data-testid="loginFormContainerRight">
-          <h2 data-testid="loginPageInfoHeading">Not Registered Yet?</h2>
-          <p data-testid="loginPageInfoContent">Registering for your account is quick and easy</p>
-          <CustomButton data-testid="createAccountButton" onClick={ navigateToSignup }>
+    <Wrapper data-testid='wrapper'>
+      <LoginWrapper data-testid='loginWrapper'>
+        <LeftLogin data-testid='leftLogin'>
+          <LogInForm onSubmit={onSubmit} onCancel={onCancel} />
+          <LinkWrapper>
+            <Link to='/auth/change-password'>Forgot Password?</Link>
+          </LinkWrapper>
+        </LeftLogin>
+        <RightLogin data-testid='rightLogin'>
+          <Title>
+            <h2 data-testid='loginPageInfoHeading'>Not Registered Yet?</h2>
+          </Title>
+          <Text>
+            <p data-testid='loginPageInfoContent'>Registering for your account is quick and easy.</p>
+          </Text>
+          <CreateAccountButton data-testid='createAccountButton' onClick={navigateToSignup}>
             CREATE ACCOUNT
-          </CustomButton>
-        </LoginFormContainerRight>
-      </LoginFormContainer>
-    </LoginPageContainer>
+          </CreateAccountButton>
+        </RightLogin>
+      </LoginWrapper>
+    </Wrapper>
   );
 };

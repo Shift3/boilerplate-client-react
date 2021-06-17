@@ -1,47 +1,59 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import Form from 'react-bootstrap/Form';
-import { CustomButton } from 'components/button/styled';
-import { SignupFormSchema } from './schema';
-import { SignupFormType } from './types';
+import { Form } from 'react-bootstrap';
+import { SignUpFormSchema } from './schema';
+import { SignUpFormType } from './types';
+import { Title, FormLabel, ButtonWrapper, CancelButton, SignUpButton, StyledForm, InputError } from './styled';
 
-export const SignupForm: SignupFormType = ({ onSubmit }) => {
+export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid }
+    formState: { errors, isValid },
   } = useForm({
-    resolver: yupResolver(SignupFormSchema),
-    mode: 'onChange'
+    resolver: yupResolver(SignUpFormSchema),
+    mode: 'onChange',
   });
 
   return (
-    <Form data-testid="signupForm" onSubmit={handleSubmit(onSubmit)}>
-      <Form.Group>
-        <Form.Label htmlFor="email">Email</Form.Label>
-        <Form.Control id="email" type="email" {...register('email')} />
-        {errors.email?.message && <span role="alert">{errors.email?.message}</span>}
-      </Form.Group>
-      <Form.Group>
-        <Form.Label htmlFor="confirmEmail">Confirm Email</Form.Label>
-        <Form.Control id="confirmEmail" type="email" {...register('confirmEmail')} />
-        {errors.confirmEmail?.message && <span role="alert">{errors.confirmEmail?.message}</span>}
-      </Form.Group>
-      <Form.Group>
-        <Form.Label htmlFor="firstName">First Name</Form.Label>
-        <Form.Control id="firstName" type="text" {...register('firstName')} />
-        {errors.firstName?.message && <span role="alert">{errors.firstName?.message}</span>}
-      </Form.Group>
-      <Form.Group>
-        <Form.Label htmlFor="lastName">Last Name</Form.Label>
-        <Form.Control id="lastName" type="text" {...register('lastName')} />
-        {errors.lastName?.message && <span role="alert">{errors.lastName?.message}</span>}
-      </Form.Group>
-      <CustomButton type="submit" name="submit" disabled={!isValid}>
-        Login
-      </CustomButton>
-    </Form>
+    <>
+      <StyledForm data-testid='signupForm' onSubmit={handleSubmit(onSubmit)}>
+        <Title>Sign Up</Title>
+        <Form.Group>
+          <FormLabel htmlFor='email'>Email</FormLabel>
+          <Form.Control id='email' type='email' {...register('email')} placeholder='Enter your email' />
+          {errors.email?.message && <InputError role='alert'>{errors.email?.message}</InputError>}
+        </Form.Group>
+        <Form.Group>
+          <FormLabel htmlFor='confirmEmail' placeholder='Confirm email'>
+            Confirm Email
+          </FormLabel>
+          <Form.Control id='confirmEmail' type='email' {...register('confirmEmail')} placeholder='Confirm your email' />
+          {errors.confirmEmail?.message && <InputError role='alert'>{errors.confirmEmail?.message}</InputError>}
+        </Form.Group>
+        <Form.Group>
+          <FormLabel htmlFor='firstName' placeholder='Enter your first name'>
+            First Name
+          </FormLabel>
+          <Form.Control id='firstName' type='text' {...register('firstName')} placeholder='Enter your first name' />
+          {errors.firstName?.message && <InputError role='alert'>{errors.firstName?.message}</InputError>}
+        </Form.Group>
+        <Form.Group>
+          <FormLabel htmlFor='lastName' placeholder='Enter your last name'>
+            Last Name
+          </FormLabel>
+          <Form.Control id='lastName' type='text' {...register('lastName')} placeholder='Enter your last name' />
+          {errors.lastName?.message && <InputError role='alert'>{errors.lastName?.message}</InputError>}
+        </Form.Group>
+        <ButtonWrapper>
+          <CancelButton data-testid='cancelButton' onClick={onCancel}>
+            CANCEL
+          </CancelButton>
+          <SignUpButton data-testid='signUpButton' type='submit' disabled={!isValid}>
+            SIGN UP
+          </SignUpButton>
+        </ButtonWrapper>
+      </StyledForm>
+    </>
   );
 };
-
-export default SignupForm;

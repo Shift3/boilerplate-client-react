@@ -1,7 +1,8 @@
 import * as yup from 'yup';
-import { LoginFormSchema, errorMessages } from '../schema';
+import { Constants } from 'utils/constants';
+import { LogInFormSchema } from '../schema';
 
-const { PASSWORD_REQUIRED, INVALID_EMAIL, EMAIL_REQUIRED } = errorMessages;
+const { EMAIL_REQUIRED, INVALID_EMAIL, PASSWORD_REQUIRED } = Constants.errorMessages;
 
 describe('LoginFormSchema', () => {
   const validEmail = 'test@test.com';
@@ -13,13 +14,13 @@ describe('LoginFormSchema', () => {
   const errorMessageCheck = async (field: string, value: string, message: string) =>
     expect(
       await yup
-        .reach(LoginFormSchema, field)
+        .reach(LogInFormSchema, field)
         .validate(value)
         .catch((err: yup.ValidationError) => err.message),
     ).toEqual(message);
 
   describe('Valid input data', () => {
-    it('Should pass validation', () => expect(LoginFormSchema.isValidSync(formData)).toBeTruthy());
+    it('Should pass validation', () => expect(LogInFormSchema.isValidSync(formData)).toBeTruthy());
   });
 
   describe('Email', () => {

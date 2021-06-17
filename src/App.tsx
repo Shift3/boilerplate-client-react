@@ -2,21 +2,19 @@ import { FC } from 'react';
 import { ErrorBoundary } from '@sentry/react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { GlobalStyle } from './GlobalStyle';
-import AppTheme from './utils/styleValues';
-
-// Context
-import { Provider as AuthProvider } from './context/auth.context';
-import { Provider as FlashMessageProvider } from './context/flashMessage.context';
-
-// Components
+import { LogInPage } from 'components/loginPage';
+import { SignUpPage } from 'components/signupPage';
+import { ChangePasswordPage } from 'components/changePasswordPage';
 import { DashboardPage } from './components/dashboardPage';
-import { LoginPage } from './components/loginPage';
-import { SignupPage } from './components/signupPage';
-import { ResetPasswordPage } from './components/resetPasswordPage';
 import { FlashMessage } from './components/flashMessage';
 import { HolyGrailLayout } from './components/holyGrailLayout';
 import { NavBar } from './components/navbar';
+import { GlobalStyle } from './GlobalStyle';
+import AppTheme from './utils/styleValues';
+import { Provider as AuthProvider } from './context/auth.context';
+import { Provider as FlashMessageProvider } from './context/flashMessage.context';
+import { ResetPasswordPage } from 'components/resetPasswordPage';
+import { ForgotPasswordPage } from 'components/forgotPasswordPage';
 
 export const App: FC = () => (
   <ErrorBoundary>
@@ -26,11 +24,13 @@ export const App: FC = () => (
           <FlashMessage />
           <Router>
             <Switch>
-              <HolyGrailLayout leftSidebar={<NavBar/>}>
-                <Route exact path="/" component={DashboardPage} />
-                <Route exact path="/auth/login" component={LoginPage} />
-                <Route exact path="/auth/signup" component={SignupPage} />
-                <Route exact path="/auth/forgot-password" component={ResetPasswordPage} />
+              <HolyGrailLayout leftSidebar={<NavBar />}>
+                <Route exact path='/' component={DashboardPage} />
+                <Route exact path='/auth/login' component={LogInPage} />
+                <Route exact path='/auth/signup' component={SignUpPage} />
+                <Route exact path='/users/change-password/:id' component={ChangePasswordPage} />
+                <Route exact path='/auth/reset-password/:token' component={ResetPasswordPage} />
+                <Route exact path='/auth/forgot-password' component={ForgotPasswordPage} />
               </HolyGrailLayout>
             </Switch>
           </Router>

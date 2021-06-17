@@ -11,5 +11,5 @@ export default {
   cardHeader: '#c5e6ec',
   navBackground: '#ffffff',
   navLink: '#2B373B',
-  footerHeight: '25px'
+  footerHeight: '25px',
 };

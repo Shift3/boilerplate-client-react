@@ -1,15 +1,27 @@
 import { FC } from 'react';
-import { SignupForm } from '../signupForm';
-import { ISignupFormData } from '../signupForm/types';
-import { SignupPageContainer, SignupFormContainer } from './styled';
+import { useHistory } from 'react-router-dom';
+import { ISignUpFormData } from 'components/signupForm/types';
+import { SignUpForm } from 'components/signupForm';
+import { Wrapper } from './styled';
 
-//  eslint-disable-next-line
-const onSubmit = (formData: ISignupFormData) => {};
+export const SignUpPage: FC = () => {
+  const history = useHistory();
 
-export const SignupPage: FC = () => (
-  <SignupPageContainer data-testid="signupPageContainer">
-    <SignupFormContainer data-testid="signupFormContainer">
-      <SignupForm  onSubmit={onSubmit}/>
-    </SignupFormContainer>
-  </SignupPageContainer>
-);
+  //  eslint-disable-next-line
+  const onSubmit = (formData: ISignUpFormData) => {
+    // TODO: we need to actually make an API call and handle
+    // success and error cases.
+
+    history.push('/');
+  };
+
+  const onCancel = () => {
+    history.push('/');
+  };
+
+  return (
+    <Wrapper data-testid='wrapper'>
+      <SignUpForm onSubmit={onSubmit} onCancel={onCancel} />
+    </Wrapper>
+  );
+};

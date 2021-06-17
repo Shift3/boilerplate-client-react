@@ -7,13 +7,12 @@ export const logoutUser: LogoutUserAction = (dispatch: Dispatch<IAction>) => (pa
 
 // eslint-disable-next-line
 export const loginUser: LoginUserAction = (dispatch: Dispatch<IAction>) => async (payload: ILoginFormPayload) => {
-
   // @TODO make call via http service to server and receive userData and pass to
   // dispatch below (mock data being used in the mean time)
   // remove eslint-disable when payload is used
 
   dispatch({
     type: Types.LOGIN_USER,
-    payload: { user: { username: 'fakeUser', _id: 'fakeId123456' }, token: 'fakeToken73827943' }
+    payload: { user: { username: 'fakeUser', _id: 'fakeId123456' }, token: 'fakeToken73827943' },
   });
 };

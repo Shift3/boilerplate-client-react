@@ -21,14 +21,14 @@ Sentry.init({
 
     return null;
   },
-  autoSessionTracking: false
+  autoSessionTracking: false,
 });
 
 ReactDOM.render(
   <StrictMode>
     <App />
   </StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 reportWebVitals();
