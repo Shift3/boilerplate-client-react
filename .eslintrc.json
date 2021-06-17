@@ -127,7 +127,7 @@
         "SwitchCase": 1
       }
     ],
-    "jsx-quotes": 1,
+    "jsx-quotes": [1, "prefer-single"],
     "key-spacing": 1,
     "keyword-spacing": 1,
     "max-depth": 1,

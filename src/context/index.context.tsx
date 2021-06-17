@@ -12,7 +12,7 @@ const createDataContext: CreateDataContextType = <ActionType extends CallableFun
     const [state, dispatch] = useReducer(reducer, initialState);
 
     const boundActions: Record<string, ActionType> = Object.keys(actions).reduce(
-      (actionsObj: Record<string, ActionType>, key: string) => ({ ...actionsObj, [key]: actions[key](dispatch) }),
+      (actionsObj: Record<string, ActionType>, key: string) => ({ ...actionsObj, [ key ]: actions[ key ](dispatch) }),
       {},
     );
 

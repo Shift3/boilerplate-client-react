@@ -31,7 +31,7 @@ describe('SignUpFormSchema', () => {
     mismatch: string,
     message: string,
   ) =>
-    expect(await SignUpFormSchema.validate({ ...formData, [ field ]: mismatch }).catch((err) => err.message)).toEqual(
+    expect(await SignUpFormSchema.validate({ ...formData, [field]: mismatch }).catch((err) => err.message)).toEqual(
       message,
     );
 

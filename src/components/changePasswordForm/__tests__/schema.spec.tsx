@@ -95,7 +95,7 @@ describe('ChangePasswordSchema', () => {
   describe('ConfirmPassword', () => {
     it('Should throw validation error with CONFIRM_PASSWORD_REQUIRED, message if empty', async () => {
       const formData = { currentPassword: validCurrentPassword, newPassword: '', confirmPassword: '' };
-      await errorMessageConfirmCheck(formData, CONFIRM_PASSWORD_REQUIRED,);
+      await errorMessageConfirmCheck(formData, CONFIRM_PASSWORD_REQUIRED);
     });
 
     it('Should throw validation error with PASSWORD_MUST_MATCH message if confirm password does not match new password', async () => {

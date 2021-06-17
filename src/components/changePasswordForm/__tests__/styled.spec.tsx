@@ -1,4 +1,3 @@
-import renderer from 'react-test-renderer';
 import { expectToMatchSnapshot } from '../../../utils/test';
 import { StyledForm, Title, FormLabel, InputError, ButtonWrapper, CancelButton, SubmitButton } from '../styled';
 
@@ -15,9 +14,7 @@ describe('<ChangePasswordForm /> styled components', () => {
 
   it('should match the stored <ButtonWrapper /> snapshot', () => expectToMatchSnapshot(<ButtonWrapper />));
 
-  it('should match the stored <CancelButton /> snapshot', () =>
-    expect(renderer.create(<CancelButton />).toJSON()).toMatchSnapshot());
+  it('should match the stored <CancelButton /> snapshot', () => expectToMatchSnapshot(<CancelButton />));
 
-  it('should match the stored <SubmitButton /> snapshot', () =>
-    expect(renderer.create(<SubmitButton />).toJSON()).toMatchSnapshot());
+  it('should match the stored <SubmitButton /> snapshot', () => expectToMatchSnapshot(<SubmitButton />));
 });
