@@ -19,8 +19,52 @@ jobs:
           command: yarn test-cov-ci
       - store_artifacts:
           path: coverage
+
+  build-and-deploy:
+    working_directory: ~/boilerplate-client-react
+    docker:
+      - image: cimg/python:3.9-node
+    steps:
+      - checkout
+      - run: sudo apt-get update
+      - run:
+          name: Configure AWS Credentials
+          command: |
+            bash .circleci/configure_aws_credentials.sh
+
+      - setup_remote_docker:
+          version: 19.03.13
+          docker_layer_caching: true
+
+      - run: |
+          bash .circleci/aws_deploy.sh
+
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - test
+      - test:
+          filters:
+            branches:
+              ignore:
+                - development
+
+  deploy:
+    jobs:
+      - test:
+          filters:
+            branches:
+              only:
+              - development
+      - hold: # <<< A job that will require manual approval in the CircleCI web application.
+          type: approval # <<< This key-value pair will set your workflow to a status of "On Hold"
+          requires: # We only run the "hold" job when test has succeeded
+            - test
+      - build-and-deploy:
+          requires:
+            - test
+            - hold
+          filters:
+            branches:
+              only:
+              - development
