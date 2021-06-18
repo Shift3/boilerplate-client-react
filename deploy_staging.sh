@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export BUILD_DIRECTORY_PATH = YOUR_BUILD_DIRECTORY_PATH
-export AWS_SANDBOX_URL = YOUR_AWS_SANDBOX_URL
+export BUILD_DIRECTORY_PATH=
+export AWS_SANDBOX_URL=
 
 yarn run deploy:staging

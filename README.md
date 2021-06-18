@@ -68,8 +68,6 @@ Deploying to AWS requires having AWS credentials configured on the machine. The 
 - [Configuration and credential file settings](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
 - [Named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
 
-~~Once the AWS sandbox setup has been taken care of by Terraform, the deployment is done via `npm run deploy:staging`.~~
-
 ### Terraform
 
 Configuring, building, and changing the AWS infrastructure **for the sandbox** is handled by Terraform. As a prerequisite, Terraform needs the AWS credentials configured as described in the [above section](#aws), which developers should already have or can access through Zoho Vault.
@@ -100,13 +98,59 @@ terraform apply
 
 The infrastructure can be updated by changing the Terraform configuration files and running these commands again.
 
-### Local Environment
+### Environment Configuration
 
-After provisioning the AWS instance through Terraform, the project environment variables need to be updated with the new server values.
+After provisioning the AWS instance with Terraform, the project environment variables need to be updated with the new server values.
 
-The `apiRoute` property in `environment.staging.ts` will now need to be filled out with the provisioned sandbox instance.
+Update the `apiRoute` property in `environment.staging.ts` with the provisioned sandbox instance url.
 
-The `package.json` file needs to be updated with the project name and sandbox S3 bucket: `"deploy:staging": "ng build --prod --configuration=staging && aws s3 sync ./dist/<PROJECT_DIRECTORY_PATH> s3://<AWS_SANDBOX_URL> --profile shift3 --delete"` Replace the brackets and placeholder values with the project values.
+### Build and Deploy
+
+The boilerplate project provides three ways to build and deploy the application to the staging environment.
+
+1. Manually set the `BUILD_DIRECTORY_PATH` and `AWS_SANDBOX_URL` environment variables to your project values. Then, use `yarn` to run the `deploy:staging` script. For example:
+
+```bash
+export BUILD_DIRECTORY_PATH=./build
+
+export AWS_SANDBOX_URL=example.shift3sandbox.com
+
+yarn run deploy:staging
+```
+
+2. In the provided `deploy_staging.sh` script, set the `BUILD_DIRECTORY_PATH` and `AWS_SANDBOX_URL` variables to your project values. Then, run the `deploy_staging.sh` script.
+
+```bash
+# use the sh command
+sh deploy_staging.sh
+
+# or, make the script executable
+sudo chmod +x ./deploy_staging.sh
+
+# then run as
+./deploy_staging
+```
+
+3. In `package.json`, updated the `"deploy:staging"` script by replacing the `$BUILD_DIRECTORY_PATH` and `$AWS_SANDBOX_URL` placeholders with your project values. Then use `yarn` to run the `deploy:staging` script. For example:
+
+```json
+// Update deploy:staging script
+{
+  ...,
+  "scripts": {
+    ...
+    "deploy:staging": "aws s3 sync ./build s3://example.shift3sandbox.com --profile shift3 --delete"
+    ...
+  }
+}
+```
+
+```bash
+# then run
+yarn run deploy:staging
+```
+
+**_Warning:_** If you update the `deploy:staging` script as described in the third method, the first two methods will no longer work.
 
 ## Development
 
