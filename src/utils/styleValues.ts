@@ -1,5 +1,10 @@
+import { Constants } from "./constants";
+
 const footerHeight = '25px';
 const topNavHeight = '150px';
+const topNavMinPageHeight = `calc(100vh - ${topNavHeight} - ${footerHeight})`;
+const sideNavMinPageHeight = `calc(100vh - ${footerHeight})`;
+const minPageHeight = Constants.navPosition === "top" ? topNavMinPageHeight : sideNavMinPageHeight;
 
 export default {
   adminBackground: '#f1f0eb',
@@ -18,8 +23,7 @@ export default {
   topNavHeight,
   sideNavWidth: '20%',
   sideNavHeight: '100vh',
-  topNavMinPageHeight: `calc(100vh - ${topNavHeight} - ${footerHeight})`,
-  sideNavMinPageHeight: `calc(100vh - ${footerHeight})`,
+  minPageHeight,
   clear: 'rgba(0, 0, 0, 0)',
   navLogoOffset: '20px',
 };

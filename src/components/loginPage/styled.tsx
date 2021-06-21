@@ -9,7 +9,9 @@ export const Wrapper = styled.div`
   align-items: center;
   padding-top: 200px;
   padding-left: 200px;
+  min-height: ${(props) => props.theme.minPageHeight};
 `;
+
 export const LoginWrapper = styled.div`
   justify-content: center;
   align-items: center;
@@ -21,6 +23,7 @@ export const LoginWrapper = styled.div`
   background-color: ${(props) => props.theme.primary};
   border-radius: 5px;
 `;
+
 export const LeftLogin = styled.div`
   display: flex;
   flex-direction: column;
