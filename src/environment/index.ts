@@ -1,16 +1,23 @@
-import * as developmentEnvironmentModule from './environment.dev';
-import * as productionEnvironmentModule from './environment.prod';
-import * as stagingEnvironmentModule from './environment.staging';
+import * as development from './environment.dev';
+import * as production from './environment.prod';
+import * as staging from './environment.staging';
 import { EnvironmentConfiguration, IEnvironment } from './types';
 
-let environmentModule;
+const getEnv = (): IEnvironment => {
+  if (
+    process.env.NODE_ENV === 'production' &&
+    process.env.REACT_APP_CONFIGURATION === EnvironmentConfiguration.Staging
+  ) {
+    return staging.environment;
+  }
 
-if (process.env.NODE_ENV === 'production' && process.env.REACT_APP_CONFIGURATION === EnvironmentConfiguration.Staging) {
-  environmentModule = stagingEnvironmentModule;
-} else if (process.env.NODE_ENV === 'production') {
-  environmentModule = productionEnvironmentModule;
-} else {
-  environmentModule = developmentEnvironmentModule;
-}
+  if (process.env.NODE_ENV === 'production') {
+    return production.environment;
+  }
 
-export const environment: IEnvironment = Object.freeze(environmentModule.environment);
+  return development.environment;
+};
+
+const environment: IEnvironment = Object.freeze(getEnv());
+
+export default environment;
