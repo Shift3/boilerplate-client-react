@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import styleValues from '../../utils/styleValues';
+import { Constants } from '../../utils/constants';
 
-const { footerHeight } = styleValues;
+const { footerHeight, topNavHeight } = styleValues;
+const { navPosition } = Constants;
 
 export const HolyGrailWrapper = styled.div`
   display: flex;
@@ -10,9 +12,11 @@ export const HolyGrailWrapper = styled.div`
 
 export const HolyGrailMainWrapper = styled.div`
   display: flex;
+  flex-direction: ${ navPosition === 'top' ? 'column' : 'row' };
   flex: 1;
-  flex-direction: column;
-  min-height: calc(100vh - ${footerHeight});
+  min-height: ${ navPosition === 'top'
+    ? `calc(100vh - ${footerHeight} - ${topNavHeight})`
+    : `calc(100vh - ${footerHeight})` };
 `;
 
 export const HolyGrailLeftAside = styled.aside`
