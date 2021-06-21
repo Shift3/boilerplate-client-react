@@ -1,8 +1,0 @@
-[default]
-region = us-west-2
-output = json
-
-[profile shift3Super]
-role_arn = arn:aws:iam::008036621198:role/SuperDevAssumeRole
-source_profile = default
-region = us-west-2
