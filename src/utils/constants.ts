@@ -31,7 +31,7 @@ export interface IConstant {
   errorMessages: IErrorMessages;
   version: string;
   creationYear: number;
-  navPosition: "top" | "side";
+  navPosition: 'top' | 'side';
 }
 
 export const Constants: IConstant = {
@@ -63,7 +63,7 @@ export const Constants: IConstant = {
     NEW_PASSWORD_REQUIRED: 'New password is required.',
     CONFIRM_PASSWORD_REQUIRED: 'Confirm password is required.',
   },
-  navPosition: "top",
+  navPosition: 'top',
   version: '0.1.0',
   creationYear: 2021,
 };
