@@ -56,11 +56,23 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 ## Deployment
 
+Deploying the application requires having the `aws` and `terraform` cli commands installed on your machine. See the following links for OS specific installation instructions:
+
+- [AWS CLI installation](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
+- [Terraform installation](https://learn.hashicorp.com/tutorials/terraform/install-cli)
+
+### AWS
+
+Deploying to AWS requires having AWS credentials configured on the machine. The deployment script is set to look for an AWS profile named `shift3`. See the following links for documentation on configuring the AWS CLI, creating an AWS credential file, and creating a named profile:
+
+- [Configuration and credential file settings](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
+- [Named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
+
 ### Terraform
 
-The AWS configuration **for the sandbox** is handled by Terraform. Terraform needs the AWS credentials which developers should already have or can access through Zoho Vault. The Terraform configuration is separated into modules for each cloud service it sets up.
+Configuring, building, and changing the AWS infrastructure **for the sandbox** is handled by Terraform. As a prerequisite, Terraform needs the AWS credentials configured as described in the [above section](#aws), which developers should already have or can access through Zoho Vault.
 
-Terraform also needs the project secrets saved in `terraform/terraform.tfvars` with the following structure:
+Terraform also needs the project secrets saved in `terraform/staging/terraform.tfvars`. This file is not committed to version control since it can contain sensitive information such as database credentials and should be added locally. Create the `terraform/staging/terraform.tfvars` file with the following structure:
 
 ```
 profile = "shift3"
@@ -77,27 +89,81 @@ web_domain_name = ""
 | region          |                                                                      This is usually `us-west-2` |
 | web_domain_name | This will be the web domain name for the project, an example may be: `example.shift3sandbox.com` |
 
-### Local Environment
+After adding the `terraform/staging/terraform.tfvars` file, `cd` into the `terraform/staging` directory and run the following commands to configure and build the AWS infrastructure for the sandbox environment
 
-After provisioning the AWS instance through Terraform, the project environment variables need to be updated with the new server values.
+```
+terraform init
+terraform apply
+```
 
-The `apiRoute` property in `environment.staging.ts` will now need to be filled out with the provisioned sandbox instance.
+The infrastructure can be updated by changing the Terraform configuration files and running these commands again.
 
-The `package.json` file needs to be updated with the project name and sandbox S3 bucket: `"deploy:staging": "ng build --prod --configuration=staging && aws s3 sync ./dist/<PROJECT_DIRECTORY_PATH> s3://<AWS_SANDBOX_URL> --profile shift3 --delete"` Replace the brackets and placeholder values with the project values.
+### Environment Configuration
 
-### AWS
+After provisioning the AWS instance with Terraform, the project environment variables need to be updated with the new server values.
 
-Deploying to AWS requires having AWS credentials on the machine. The script is set to look for a default AWS profile named `shift3`. Once the AWS sandbox setup has been taken care of by Terraform, the deployment is done via `npm run deploy:staging`.
+Update the `apiRoute` property in `environment.staging.ts` with the provisioned sandbox instance url.
+
+### Build and Deploy
+
+The boilerplate project provides three ways to build and deploy the application to the staging environment.
+
+1. Manually set the `BUILD_DIRECTORY_PATH` and `AWS_SANDBOX_URL` environment variables to your project values. Then, use `yarn` to run the `deploy:staging` script. For example:
+
+```bash
+export BUILD_DIRECTORY_PATH=./build
+
+export AWS_SANDBOX_URL=example.shift3sandbox.com
+
+yarn run deploy:staging
+```
+
+2. In the provided `deploy_staging.sh` script, set the `BUILD_DIRECTORY_PATH` and `AWS_SANDBOX_URL` variables to your project values. Then, run the `deploy_staging.sh` script.
+
+```bash
+# use the sh command
+sh deploy_staging.sh
+
+# or, make the script executable
+sudo chmod +x ./deploy_staging.sh
+
+# then run as
+./deploy_staging
+```
+
+3. In `package.json`, updated the `"deploy:staging"` script by replacing the `$BUILD_DIRECTORY_PATH` and `$AWS_SANDBOX_URL` placeholders with your project values. Then use `yarn` to run the `deploy:staging` script. For example:
+
+```json
+// Update deploy:staging script
+{
+  ...,
+  "scripts": {
+    ...
+    "deploy:staging": "aws s3 sync ./build s3://example.shift3sandbox.com --profile shift3 --delete"
+    ...
+  }
+}
+```
+
+```bash
+# then run
+yarn run deploy:staging
+```
+
+**_Warning:_** If you update the `deploy:staging` script as described in the third method, the first two methods will no longer work.
 
 ## Development
 
 ### Local Development
+
 To work with the project directly, the development machine needs `node` and `yarn` installed.
 
 ### Development Server
+
 Run `yarn install` to install dependencies. Then run `yarn start` to start the development server listening on port 4200. You can view the app in the browser by navigating to `http://localhost:4200`. The app will automatically reload if any source files are changed.
 
 ### Docker
+
 This project can be run as a Docker container (it is not recommended for involved development because it makes it harder to debug the codebase). Run `docker-compose up` to build and run the container. The app will be mapped to the port 4200 on your local machine and you can view the app in the browser by navigating to `http://localhost:4200`. It supports hot reloading so the app will automatically reload if any source files are changed.
 
 ### Template Repository
