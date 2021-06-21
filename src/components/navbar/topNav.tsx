@@ -21,19 +21,19 @@ export const TopNav: NavbarType = ({ userData, signOut }) => {
   };
 
   return (
-    <TopNavbar data-testid="topNavbar" onSelect={ onDropdownItemSelect } >
-      <NavContainerLeft data-testid="navContainerLeft">
+    <TopNavbar data-testid='topNavbar' onSelect={ onDropdownItemSelect } >
+      <NavContainerLeft data-testid='navContainerLeft'>
         <TopNavLogo
-          data-testid="navLogo"
+          data-testid='navLogo'
           src={ logo }
-          alt="Bitwise Technology Consulting"
+          alt='Bitwise Technology Consulting'
           onClick={() => history.push('/content/agent-list')}
         />
         {
           userData && <NavDirectoryLink />
         }
       </NavContainerLeft>
-      <NavContainerRight data-testid="navContainerRight">
+      <NavContainerRight data-testid='navContainerRight'>
         {
           userData && <NavDropdown { ...userData } />
         }
@@ -41,7 +41,7 @@ export const TopNav: NavbarType = ({ userData, signOut }) => {
           !userData && (
             <CustomButton
               onClick={() => history.push('/auth/login')}
-              data-testid="loginCreateAccountButton"
+              data-testid='loginCreateAccountButton'
             >
               LOGIN/CREATE ACCOUNT
             </CustomButton>

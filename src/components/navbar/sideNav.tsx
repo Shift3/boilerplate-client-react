@@ -16,34 +16,34 @@ export const SideNav: NavbarType = ({ userData, signOut }) => {
   const history = useHistory();
 
   const onDropdownItemSelect = (eventKey: string) => {
-    if (eventKey === "profile") history.push("/users/profile");
-    if (eventKey === "changePassword") history.push("/auth/change-password");
-    if (eventKey === "signOut") signOut();
+    if (eventKey === 'profile') history.push('/users/profile');
+    if (eventKey === 'changePassword') history.push('/auth/change-password');
+    if (eventKey === 'signOut') signOut();
   };
 
   return (
-    <SideNavbar data-testid="sideNavbar" onSelect={onDropdownItemSelect} >
-      <TopContainer data-testid="topContainer">
+    <SideNavbar data-testid='sideNavbar' onSelect={onDropdownItemSelect} >
+      <TopContainer data-testid='topContainer'>
         <NavLogo
-          data-testid="navLogo"
+          data-testid='navLogo'
           src={logo}
-          alt="Bitwise Technology Consulting"
+          alt='Bitwise Technology Consulting'
           onClick={() => history.push('/content/agent-list')}
         />
       </TopContainer>
       {
         userData &&
-        <MiddleContainer data-testid="middleContainer">
+        <MiddleContainer data-testid='middleContainer'>
           <NavDirectoryLink />
           <NavDropdown { ...userData }/>
         </MiddleContainer>
       }
       {
         !userData && (
-          <BottomContainer data-testid="bottomContainer">
+          <BottomContainer data-testid='bottomContainer'>
             <CustomButton
               onClick={() => history.push('/auth/login')}
-              data-testid="loginCreateAccountButton"
+              data-testid='loginCreateAccountButton'
             >
               LOGIN/CREATE ACCOUNT
             </CustomButton>

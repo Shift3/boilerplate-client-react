@@ -13,8 +13,8 @@ import { Constants } from 'utils/constants';
 const { navPosition } = Constants;
 
 export const HolyGrailLayout: HolyGrailType = ({ leftSidebar, children, rightSidebar }) => (
-  <HolyGrailWrapper data-testid="wrapper">
-    <HolyGrailMainWrapper data-testid="mainWrapper">
+  <HolyGrailWrapper data-testid='wrapper'>
+    <HolyGrailMainWrapper data-testid='mainWrapper'>
       {
         navPosition === "top" &&
           <Navbar/>
@@ -22,25 +22,25 @@ export const HolyGrailLayout: HolyGrailType = ({ leftSidebar, children, rightSid
       {
         navPosition === "side" && !leftSidebar &&
           (
-            <HolyGrailLeftAside data-testid="leftAside">
+            <HolyGrailLeftAside data-testid='leftAside'>
               <Navbar/>
             </HolyGrailLeftAside>
           )
       }
       {
         leftSidebar && navPosition === "top" &&
-          <HolyGrailLeftAside data-testid="leftAside">
+          <HolyGrailLeftAside data-testid='leftAside'>
             { leftSidebar }
           </HolyGrailLeftAside>
       }
       {
         children &&
-          <HolyGrailMain data-testid="main">
+          <HolyGrailMain data-testid='main'>
             { children }
           </HolyGrailMain>}
       {
         rightSidebar &&
-          <HolyGrailRightAside data-testid="rightAside">
+          <HolyGrailRightAside data-testid='rightAside'>
             { rightSidebar }
           </HolyGrailRightAside>
       }
