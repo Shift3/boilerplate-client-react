@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TopNav/> styled component snapshot tests Should match the stored <NavContainerLeft /> snapshot 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`<TopNav/> styled component snapshot tests Should match the stored <NavContainerRight /> snapshot 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`<TopNav/> styled component snapshot tests Should match the stored <Navbar /> snapshot 1`] = `
+.c0 {
+  padding: 8px 16px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  height: 150px;
+}
+
+<div
+  className="c0 nav"
+  onKeyDown={[Function]}
+/>
+`;
+
+exports[`<TopNav/> styled component snapshot tests Should match the stored <TopNavLogo /> snapshot 1`] = `
+.c0 {
+  height: calc(150px - 20px);
+}
+
+<img
+  className="c0"
+/>
+`;

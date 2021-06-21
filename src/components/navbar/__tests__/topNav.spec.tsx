@@ -7,7 +7,7 @@ import {
   expectChildToHaveClassByTestId,
   expectChildToHaveInnerHTMLByTestId
 } from '../../../utils/test';
-import { TopNav } from '..';
+import { TopNav } from '../topNav';
 import { TestRouter } from '../../testRouter';
 
 const mockUserData = {

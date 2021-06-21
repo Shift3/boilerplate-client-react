@@ -1,8 +1,6 @@
 import { expectToMatchSnapshot } from '../../../utils/test';
 // import renderer from 'react-test-renderer';
 import {
-  TopNavbar,
-  TopNavLogo,
   DropdownButton,
   Dropdown,
   NavDropdownItem,
@@ -10,21 +8,13 @@ import {
   ProfilePhoto,
   DropdownContainerRight,
   VerticalLine,
-  NavContainerLeft,
-  NavContainerRight,
   // NavIcon,
   // DirectoryLink,
-} from '../styled';
+} from '../styled/navDropdown.styled';
 
 import 'jest-styled-components';
 
-describe('<TopNav/> styled componenets', () => {
-  it ('Should match the stored <Navbar /> snapshot', () =>
-    expectToMatchSnapshot(<TopNavbar/>));
-
-  it ('Should match the stored <TopNavLogo /> snapshot', () =>
-    expectToMatchSnapshot(<TopNavLogo/>));
-
+describe('<NavDropdown /> styled component snapshot tests', () => {
   it ('Should match the stored <DropdownButton /> snapshot', () =>
     expectToMatchSnapshot(<DropdownButton/>));
 
@@ -45,12 +35,6 @@ describe('<TopNav/> styled componenets', () => {
 
   it ('Should match the stored <VerticalLine /> snapshot', () =>
     expectToMatchSnapshot(<VerticalLine/>));
-
-  it ('Should match the stored <NavContainerLeft /> snapshot', () =>
-    expectToMatchSnapshot(<NavContainerLeft/>));
-
-  it ('Should match the stored <NavContainerRight /> snapshot', () =>
-    expectToMatchSnapshot(<NavContainerRight/>));
 
   // @TODO - find solution for snapshot testing with components
   // that do not fit the type definition for currently used methodology

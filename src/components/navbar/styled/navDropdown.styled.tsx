@@ -1,47 +1,10 @@
 import styled from 'styled-components';
-import Nav from 'react-bootstrap/Nav';
-import NavDropdown from "react-bootstrap/NavDropdown";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from 'react-bootstrap/Button';
-import { NavLink } from 'react-router-dom';
-import styleValues from '../../utils/styleValues';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import styleValues from 'utils/styleValues';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const {
-  topNavHeight,
-  navLogoOffset,
-  clear,
-} = styleValues;
-
-export const TopNavbar = styled(Nav)`
-  padding: 8px 16px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  height: ${topNavHeight}
-`;
-
-export const TopNavLogo = styled.img`
-  height: calc(${ topNavHeight } - ${ navLogoOffset });
-`;
-
-export const DirectoryLink = styled(NavLink)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  & span {
-    color: rgba(0, 0, 0, .5);
-  }
-
-  &:hover {
-    text-decoration: none;
-
-    & > span {
-      color: rgba(0, 0, 0, .7);
-    }
-  }
-`;
+const { clear } = styleValues;
 
 export const DropdownButton = styled(Button)`
   background-color: ${clear};
@@ -130,17 +93,6 @@ export const VerticalLine = styled.span`
   height: 125px;
   border-left: 1px solid #d3d3d3;
   display: inline-block;
-`;
-
-export const NavContainerLeft = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
-export const NavContainerRight = styled.div`
-  display: flex;
-  align-items: center;
 `;
 
 export const NavIcon = styled(FontAwesomeIcon)`

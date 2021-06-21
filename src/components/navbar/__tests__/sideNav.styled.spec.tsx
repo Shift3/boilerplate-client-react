@@ -5,7 +5,7 @@ import {
   NavLogo,
   NavLinkWrapper,
   // NavLinkStyled
-} from '../styled';
+} from '../styled/sideNav.styled';
 
 import 'jest-styled-components';
 
@@ -14,5 +14,5 @@ describe('Navbar Styled Components', () => {
   it('Should match the stored <NavLogo /> snapshot', () => expectToMatchSnapshot(<NavLogo />));
   it('Should match the stored <NavLinkWrapper /> snapshot', () => expectToMatchSnapshot(<NavLinkWrapper />));
   // it('Should match the stored <NavLinkStyled /> snapshot', () =>
-  //   expect(renderer.create(<NavLinkStyled />).toJSON()).toMatchSnapshot());
+  //  expect(renderer.create(<NavLinkStyled />).toJSON()).toMatchSnapshot());
 });

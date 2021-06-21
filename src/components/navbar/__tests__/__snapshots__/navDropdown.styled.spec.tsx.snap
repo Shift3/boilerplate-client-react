@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<TopNav/> styled componenets Should match the stored <Dropdown /> snapshot 1`] = `
+exports[`<NavDropdown /> styled component snapshot tests Should match the stored <Dropdown /> snapshot 1`] = `
 .c0 a {
   color: rgba(0,0,0,.5);
   display: -webkit-box;
@@ -60,7 +60,7 @@ exports[`<TopNav/> styled componenets Should match the stored <Dropdown /> snaps
 </div>
 `;
 
-exports[`<TopNav/> styled componenets Should match the stored <DropdownButton /> snapshot 1`] = `
+exports[`<NavDropdown /> styled component snapshot tests Should match the stored <DropdownButton /> snapshot 1`] = `
 .c0 {
   background-color: rgba(0,0,0,0);
   border-color: rgba(0,0,0,0);
@@ -89,7 +89,7 @@ exports[`<TopNav/> styled componenets Should match the stored <DropdownButton />
 />
 `;
 
-exports[`<TopNav/> styled componenets Should match the stored <DropdownContainerLeft /> snapshot 1`] = `
+exports[`<NavDropdown /> styled component snapshot tests Should match the stored <DropdownContainerLeft /> snapshot 1`] = `
 .c0 {
   padding: 10px;
   display: -webkit-box;
@@ -111,7 +111,7 @@ exports[`<TopNav/> styled componenets Should match the stored <DropdownContainer
 />
 `;
 
-exports[`<TopNav/> styled componenets Should match the stored <DropdownContainerRight /> snapshot 1`] = `
+exports[`<NavDropdown /> styled component snapshot tests Should match the stored <DropdownContainerRight /> snapshot 1`] = `
 .c0 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -135,44 +135,7 @@ exports[`<TopNav/> styled componenets Should match the stored <DropdownContainer
 />
 `;
 
-exports[`<TopNav/> styled componenets Should match the stored <NavContainerLeft /> snapshot 1`] = `
-.c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-<div
-  className="c0"
-/>
-`;
-
-exports[`<TopNav/> styled componenets Should match the stored <NavContainerRight /> snapshot 1`] = `
-.c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-<div
-  className="c0"
-/>
-`;
-
-exports[`<TopNav/> styled componenets Should match the stored <NavDropdownItem /> snapshot 1`] = `
+exports[`<NavDropdown /> styled component snapshot tests Should match the stored <NavDropdownItem /> snapshot 1`] = `
 .c0:active,
 .c0:focus {
   background-color: rgba(233,236,239,0);
@@ -192,30 +155,7 @@ exports[`<TopNav/> styled componenets Should match the stored <NavDropdownItem /
 />
 `;
 
-exports[`<TopNav/> styled componenets Should match the stored <Navbar /> snapshot 1`] = `
-.c0 {
-  padding: 8px 16px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  height: 150px;
-}
-
-<div
-  className="c0 nav"
-  onKeyDown={[Function]}
-/>
-`;
-
-exports[`<TopNav/> styled componenets Should match the stored <ProfilePhoto /> snapshot 1`] = `
+exports[`<NavDropdown /> styled component snapshot tests Should match the stored <ProfilePhoto /> snapshot 1`] = `
 .c0 {
   border-radius: 50%;
   max-height: 50px;
@@ -229,17 +169,7 @@ exports[`<TopNav/> styled componenets Should match the stored <ProfilePhoto /> s
 />
 `;
 
-exports[`<TopNav/> styled componenets Should match the stored <TopNavLogo /> snapshot 1`] = `
-.c0 {
-  height: calc(150px - 20px);
-}
-
-<img
-  className="c0"
-/>
-`;
-
-exports[`<TopNav/> styled componenets Should match the stored <VerticalLine /> snapshot 1`] = `
+exports[`<NavDropdown /> styled component snapshot tests Should match the stored <VerticalLine /> snapshot 1`] = `
 .c0 {
   margin: 0 20px;
   height: 125px;

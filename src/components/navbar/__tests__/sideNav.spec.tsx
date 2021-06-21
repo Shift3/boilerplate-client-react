@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { SideNav } from '../';
+import { SideNav } from '../sideNav';
 import { expectInDocByTestId, clickNavigateByTestId } from '../../../utils/test';
 
 import { TestRouter } from '../../testRouter';
