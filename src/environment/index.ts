@@ -18,6 +18,4 @@ const getEnv = (): IEnvironment => {
   return development.environment;
 };
 
-const environment: IEnvironment = Object.freeze(getEnv());
-
-export default environment;
+export const environment: IEnvironment = Object.freeze(getEnv());
