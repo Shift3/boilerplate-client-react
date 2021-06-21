@@ -65,6 +65,10 @@ exports[`<TopNav/> styled component snapshot tests Should match the stored <TopN
   height: calc(150px - 20px);
 }
 
+.c0:hover {
+  cursor: pointer;
+}
+
 <img
   className="c0"
 />

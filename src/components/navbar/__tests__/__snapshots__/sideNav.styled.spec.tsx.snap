@@ -26,6 +26,10 @@ exports[`Navbar Styled Components Should match the stored <NavLogo /> snapshot 1
   grid-row-start: 1;
 }
 
+.c0:hover {
+  cursor: pointer;
+}
+
 <img
   className="c0"
 />
