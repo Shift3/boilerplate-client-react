@@ -3,7 +3,7 @@ jobs:
   test:
     working_directory: ~/boilerplate-client-react
     docker:
-      - image: 'circleci/node:10-browsers'
+      - image: 'circleci/node:14-browsers'
     steps:
       - checkout
       - run: sudo apt-get update
