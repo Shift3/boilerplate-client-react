@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
 // Components
-import { Navbar } from './components/navbar';
 import { DashboardPage } from './components/dashboardPage';
 import { FlashMessage } from './components/flashMessage';
 import { HolyGrailLayout } from './components/holyGrailLayout';
