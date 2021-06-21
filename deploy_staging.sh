@@ -1,6 +1,13 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-export BUILD_DIRECTORY_PATH=
-export AWS_SANDBOX_URL=
+set -x
+set -o errexit
+set -o pipefail
+set -o nounset
 
-yarn run deploy:staging
+BUILD_DIRECTORY_PATH=
+AWS_SANDBOX_URL=
+
+yarn run predeploy:staging
+
+aws s3 sync $BUILD_DIRECTORY_PATH s3://$AWS_SANDBOX_URL --profile shift3 --delete
