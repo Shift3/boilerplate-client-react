@@ -1,10 +1,16 @@
-import * as Sentry from '@sentry/react';
+// React imports
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
-import { App } from './App';
-import reportWebVitals from './reportWebVitals';
 
+// Third-party package imports
+import * as Sentry from '@sentry/react';
+import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+// App imports
+import reportWebVitals from './reportWebVitals';
+import { App } from './App';
+import store from 'core/redux/store';
 
 /* TODO: - CMS 3/23/21
 - Add in configuration for toggling autoSesssionTracking
@@ -26,7 +32,9 @@ Sentry.init({
 
 ReactDOM.render(
   <StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </StrictMode>,
   document.getElementById('root'),
 );
