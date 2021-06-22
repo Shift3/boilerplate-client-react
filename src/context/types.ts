@@ -1,24 +1,9 @@
 import { ReducerWithoutAction, ReactNode } from 'react';
-import { LoginUserAction, LogoutUserAction, SetFlashMessageAction, IAction } from './actions/types';
+import { LoginUserAction, LogoutUserAction, IAction } from './actions/types';
 
 export interface IAuthState {
   token: string | null;
   user: Record<string, unknown> | null;
-}
-
-export interface IFlashMessage {
-  message: string;
-  variant: string;
-  timeout: number;
-}
-
-export interface IFlashMessageState {
-  flashMessage: IFlashMessage | null;
-}
-
-export interface IFlashMessageContext {
-  setFlashMessage: SetFlashMessageAction;
-  state: IFlashMessageState;
 }
 
 export interface IAuthContext {

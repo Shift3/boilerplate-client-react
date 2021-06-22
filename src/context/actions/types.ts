@@ -1,17 +1,11 @@
 import { Dispatch } from 'react';
-import { IFlashMessage } from '../types';
 
 export type DispatchAction = ({ type, payload }: IAction) => IAction;
 
 export interface IAction {
   type: string;
-  payload: IFlashMessage | ILoginResponse | null;
+  payload: ILoginResponse | null;
 }
-
-// FLASH MESSAGE
-export type SetFlashMessageAction = (dispatch: Dispatch<IAction>) => (payload: IFlashMessage) => void;
-
-export type FlashMessageActionType = SetFlashMessageAction;
 
 // AUTH
 export interface ILoginResponse {
