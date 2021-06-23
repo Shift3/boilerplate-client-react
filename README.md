@@ -1,10 +1,15 @@
 # Boilerplate Client React
 
-## Available Scripts
+### Local Development
 
-In the project directory, you can run:
+The project has been configured to use [yarn](https://classic.yarnpkg.com/en/docs/cli/) for package dependency management.
 
-#### `yarn start`
+#### Quick Start
+To start the project, make sure yarn is installed on your local machine. If you have already installed our [laptop script](https://github.com/Shift3/laptop), you should already have yarn.
+1. Install Dependencies via `yarn install`
+2. Start the Project via `yarn start`
+
+#### Starting the Project
 
 Runs the app in the development mode.\
 Open [http://localhost:4200](http://localhost:4200) to view it in the browser.
@@ -12,19 +17,19 @@ Open [http://localhost:4200](http://localhost:4200) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-#### `yarn test`
+#### Running unit tests
 
-Launches the test runner in the interactive watch mode.\
+Run `yarn test` to execute the unit test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn test-cov`
+### Running test coverage
 
-Runs the test coverage report in interactive watch mode.\
+Run `yarn test-cov` for a test coverage report in interactive watch mode.\
 For more information please refer to the react [Coverage Reporting](https://create-react-app.dev/docs/running-tests/#coverage-reporting) documentation.
 
-### `yarn build`
+### Build
 
-Builds the app for production to the `build` folder.\
+Run `yarn build` to build the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include the hashes.\
