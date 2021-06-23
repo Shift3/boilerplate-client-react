@@ -14,4 +14,8 @@ export class Role implements IRole {
       Object.assign(this, configOverride);
     }
   }
+
+  toPlainObject(): IRole {
+    return { ...this };
+  }
 }

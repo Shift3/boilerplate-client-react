@@ -7,7 +7,7 @@ export interface IUser {
   firstName: string;
   lastName: string;
   profilePicture: string | null;
-  agency: any;
+  agency: unknown;
   role: IRole;
 }
 
@@ -25,5 +25,9 @@ export class User implements IUser {
     if (configOverride) {
       Object.assign(this, configOverride);
     }
+  }
+
+  toPlainObject(): IUser {
+    return { ...this, role: this.role.toPlainObject() };
   }
 }
