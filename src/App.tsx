@@ -13,6 +13,8 @@ import { FlashMessage } from './components/flashMessage';
 import { HolyGrailLayout } from './components/holyGrailLayout';
 import { ResetPasswordPage } from 'components/resetPasswordPage';
 import { ForgotPasswordPage } from 'components/forgotPasswordPage';
+import { DirectoryPage } from 'components/DirectoryPage';
+import { ProfilePage } from 'components/ProfilePage';
 
 // Styling
 import { GlobalStyle } from './GlobalStyle';
@@ -34,9 +36,11 @@ export const App: FC = () => (
                 <Route exact path='/' component={DashboardPage} />
                 <Route exact path='/auth/login' component={LogInPage} />
                 <Route exact path='/auth/signup' component={SignUpPage} />
-                <Route exact path='/users/change-password/:id' component={ChangePasswordPage} />
                 <Route exact path='/auth/reset-password/:token' component={ResetPasswordPage} />
                 <Route exact path='/auth/forgot-password' component={ForgotPasswordPage} />
+                <Route exact path='/content/agent-list' component={DirectoryPage} />
+                <Route exact path='/user/profile' component={ProfilePage} />
+                <Route exact path='/user/change-password/:id' component={ChangePasswordPage} />
               </HolyGrailLayout>
             </Switch>
           </Router>
