@@ -1,22 +1,22 @@
+import { usePasswordReset } from 'core/modules/user/application/passwordReset';
 import { FC } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { ResetPasswordForm } from '../resetPasswordForm';
 import { IResetPasswordFormData } from '../resetPasswordForm/types';
 import { Wrapper } from './styled';
 
 export const ResetPasswordPage: FC = () => {
   const history = useHistory();
+  const { token } = useParams<{ token: string }>();
+  const { resetPassword } = usePasswordReset();
 
-  // TODO: we need to make an API call and handle
-  // success and error cases.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const onSubmit = (formData: IResetPasswordFormData) => {
-    history.push('/');
+  const onSubmit = async (formData: IResetPasswordFormData) => {
+    const data = { ...formData, token };
+    const onSuccess = () => history.push('/');
+    await resetPassword(data, onSuccess);
   };
 
-  const onCancel = () => {
-    history.push('/');
-  };
+  const onCancel = () => history.push('/');
 
   return (
     <Wrapper data-testid='wrapper'>

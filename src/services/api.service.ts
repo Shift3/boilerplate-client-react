@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { environment } from 'environment';
-import { IMessage } from 'models/message';
+import { Message } from 'models/message';
+// import { IMessage } from 'models/message';
 
 declare module 'axios' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface, @typescript-eslint/no-explicit-any
@@ -29,19 +30,18 @@ export class ApiService {
     this.axios.interceptors.response.use(
       (res: AxiosResponse) => res.data,
       (err: AxiosError | Error) => {
-        let message: IMessage;
-
         if (axios.isAxiosError(err)) {
-          message = err.response?.data;
-        } else {
-          message = {
-            error: 'Internal Server Error',
-            message: err.message,
-            statusCode: 500,
-          };
+          if (err.response) {
+            // The server responded with a 4xx/5xx error.
+            return Promise.reject(new Message(err.response.data));
+          }
+          if (err.request) {
+            // The browser was able to make a request, but didn't receive response.
+            return Promise.reject(new Message({ message: err.message }));
+          }
         }
-
-        return Promise.reject(message);
+        // Anything else. Not an axios error, likely error with the app.
+        throw err;
       },
     );
   }

@@ -3,20 +3,19 @@ import { useHistory } from 'react-router-dom';
 import { ForgotPasswordForm } from '../forgotPasswordForm';
 import { IForgotPassswordFormData } from 'components/forgotPasswordForm/types';
 import { Wrapper } from './styled';
+import { usePasswordReset } from 'core/modules/user/application/passwordReset';
 
 export const ForgotPasswordPage: FC = () => {
   const history = useHistory();
+  const { sendForgotPasswordEmail } = usePasswordReset();
 
-  // TODO: we need to make an API call and handle
-  // success and error cases.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onSubmit = (formData: IForgotPassswordFormData) => {
-    history.push('/');
+    const data = { ...formData };
+    const onSuccess = () => history.push('/');
+    sendForgotPasswordEmail(data, onSuccess);
   };
 
-  const onCancel = () => {
-    history.push('/');
-  };
+  const onCancel = () => history.push('/');
 
   return (
     <Wrapper data-testid='wrapper'>
