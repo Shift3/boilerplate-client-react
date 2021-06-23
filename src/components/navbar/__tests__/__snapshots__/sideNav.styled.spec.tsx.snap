@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SideNav Styled Components Should match the stored <BottomContainer /> snapshot 1`] = `
+.c0 {
+  height: calc((100%/3) *2);
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`SideNav Styled Components Should match the stored <MiddleContainer /> snapshot 1`] = `
+.c0 {
+  height: calc((100%/3) * 2);
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`SideNav Styled Components Should match the stored <NavLogo /> snapshot 1`] = `
+.c0 {
+  object-fit: contain;
+  height: 14vh;
+  width: 12vw;
+  margin-top: 10px;
+  grid-row-start: 1;
+}
+
+.c0:hover {
+  cursor: pointer;
+}
+
+<img
+  className="c0"
+/>
+`;
+
+exports[`SideNav Styled Components Should match the stored <SideNavbar /> snapshot 1`] = `
+.c0 {
+  padding: 8px 16px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  height: calc(100vh - 25px);
+}
+
+<div
+  className="c0 nav"
+  onKeyDown={[Function]}
+/>
+`;
+
+exports[`SideNav Styled Components Should match the stored <TopContainer /> snapshot 1`] = `
+.c0 {
+  height: calc(100%/3);
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+<div
+  className="c0"
+/>
+`;
