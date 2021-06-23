@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<HolyGrailLayout /> styled components should match the stored <HolyGrailLeftAside /> snapshot 1`] = `
+.c0 {
+  -webkit-order: -1;
+  -ms-flex-order: -1;
+  order: -1;
+  -webkit-flex: 0 0 12em;
+  -ms-flex: 0 0 12em;
+  flex: 0 0 12em;
+}
+
+@media (min-width:768px) {
+  .c0 {
+    -webkit-flex: 0 0 12em;
+    -ms-flex: 0 0 12em;
+    flex: 0 0 12em;
+  }
+}
+
+<aside
+  className="c0"
+/>
+`;
+
+exports[`<HolyGrailLayout /> styled components should match the stored <HolyGrailMain /> snapshot 1`] = `
+.c0 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+@media (min-width:768px) {
+  .c0 {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+  }
+}
+
+<main
+  className="c0"
+/>
+`;
+
+exports[`<HolyGrailLayout /> styled components should match the stored <HolyGrailMainWrapper /> snapshot 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  min-height: calc(100vh - 25px - 150px);
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`<HolyGrailLayout /> styled components should match the stored <HolyGrailRightAside /> snapshot 1`] = `
+.c0 {
+  -webkit-flex: 0 0 12em;
+  -ms-flex: 0 0 12em;
+  flex: 0 0 12em;
+}
+
+@media (min-width:768px) {
+  .c0 {
+    -webkit-flex: 0 0 12em;
+    -ms-flex: 0 0 12em;
+    flex: 0 0 12em;
+  }
+}
+
+<aside
+  className="c0"
+/>
+`;
+
+exports[`<HolyGrailLayout /> styled components should match the stored <HolyGrailWrapper /> snapshot 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+<div
+  className="c0"
+/>
+`;
