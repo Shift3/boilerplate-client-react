@@ -4,21 +4,19 @@ import { LogInForm } from 'components/loginForm';
 import { Link, useHistory } from 'react-router-dom';
 import { ILogInFormData } from '../loginForm/types';
 import { LoginWrapper, LeftLogin, RightLogin, CreateAccountButton, Title, Text, Wrapper, LinkWrapper } from './styled';
+import { useLoginAction } from 'core/modules/auth/application/loginUser';
 
 export const LogInPage: FC = () => {
   const history = useHistory();
+  const { loginWithEmailAndPassword } = useLoginAction();
 
-  // TODO: we need to make an API call and handle
-  // success and error cases.
-
-  // eslint-disable-next-line
   const onSubmit = (formData: ILogInFormData) => {
-    history.push('/');
+    const credentials = { ...formData };
+    const onSuccess = () => history.push('/');
+    loginWithEmailAndPassword(credentials, onSuccess);
   };
 
-  const onCancel = () => {
-    history.goBack();
-  };
+  const onCancel = () => history.goBack();
 
   const { push } = useHistory();
   const navigateToSignup = () => push('/auth/signup');
@@ -29,7 +27,7 @@ export const LogInPage: FC = () => {
         <LeftLogin data-testid='leftLogin'>
           <LogInForm onSubmit={onSubmit} onCancel={onCancel} />
           <LinkWrapper>
-            <Link to='/auth/change-password'>Forgot Password?</Link>
+            <Link to='/auth/forgot-password'>Forgot Password?</Link>
           </LinkWrapper>
         </LeftLogin>
         <RightLogin data-testid='rightLogin'>

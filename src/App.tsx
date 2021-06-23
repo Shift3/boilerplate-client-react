@@ -11,29 +11,26 @@ import { HolyGrailLayout } from './components/holyGrailLayout';
 import { NavBar } from './components/navbar';
 import { GlobalStyle } from './GlobalStyle';
 import AppTheme from './utils/styleValues';
-import { Provider as AuthProvider } from './context/auth.context';
 import { ResetPasswordPage } from 'components/resetPasswordPage';
 import { ForgotPasswordPage } from 'components/forgotPasswordPage';
 
 export const App: FC = () => (
   <ErrorBoundary>
-    <AuthProvider>
-      <ThemeProvider theme={AppTheme}>
-        <FlashMessage />
-        <Router>
-          <Switch>
-            <HolyGrailLayout leftSidebar={<NavBar />}>
-              <Route exact path='/' component={DashboardPage} />
-              <Route exact path='/auth/login' component={LogInPage} />
-              <Route exact path='/auth/signup' component={SignUpPage} />
-              <Route exact path='/users/change-password/:id' component={ChangePasswordPage} />
-              <Route exact path='/auth/reset-password/:token' component={ResetPasswordPage} />
-              <Route exact path='/auth/forgot-password' component={ForgotPasswordPage} />
-            </HolyGrailLayout>
-          </Switch>
-        </Router>
-      </ThemeProvider>
-    </AuthProvider>
+    <ThemeProvider theme={AppTheme}>
+      <FlashMessage />
+      <Router>
+        <Switch>
+          <HolyGrailLayout leftSidebar={<NavBar />}>
+            <Route exact path='/' component={DashboardPage} />
+            <Route exact path='/auth/login' component={LogInPage} />
+            <Route exact path='/auth/signup' component={SignUpPage} />
+            <Route exact path='/users/change-password/:id' component={ChangePasswordPage} />
+            <Route exact path='/auth/reset-password/:token' component={ResetPasswordPage} />
+            <Route exact path='/auth/forgot-password' component={ForgotPasswordPage} />
+          </HolyGrailLayout>
+        </Switch>
+      </Router>
+    </ThemeProvider>
     <GlobalStyle />
   </ErrorBoundary>
 );

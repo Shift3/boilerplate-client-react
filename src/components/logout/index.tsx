@@ -1,9 +1,9 @@
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
-import { Context as AuthContext } from '../../context/auth.context';
+import { useLogoutAction } from 'core/modules/auth/application/logoutUser';
 
 export const Logout: FC = () => {
-  const { logoutUser } = useContext(AuthContext);
+  const { logoutUser } = useLogoutAction();
 
   return (
     <>
