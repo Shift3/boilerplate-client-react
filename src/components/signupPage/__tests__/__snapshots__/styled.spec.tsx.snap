@@ -2,7 +2,6 @@
 
 exports[`Reset Password Page Styled Components Should match the stored <Wrapper /> snapshot 1`] = `
 .c0 {
-  height: 100%;
   width: 100%;
   padding: 40px;
   display: -webkit-box;

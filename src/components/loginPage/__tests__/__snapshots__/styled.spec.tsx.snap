@@ -117,7 +117,6 @@ exports[`<LogInPage /> styled components Should match the stored <Title/> snapsh
 
 exports[`<LogInPage /> styled components Should match the stored <Wrapper/> snapshot 1`] = `
 .c0 {
-  height: 100%;
   width: 100%;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
