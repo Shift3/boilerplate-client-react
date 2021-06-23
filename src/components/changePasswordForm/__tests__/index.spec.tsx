@@ -1,4 +1,3 @@
-/* eslint-disable require-await */
 import { render } from '@testing-library/react';
 import { Constants } from 'utils/constants';
 import { ChangePasswordForm } from '../index';
@@ -10,6 +9,8 @@ import {
   expectInDocByTestId,
   clickByTestIdAsync,
   setValueByLabelText,
+  expectMockFunctionCalled,
+  expectMockFunctionCalledXTimes,
 } from 'utils/test';
 
 const {
@@ -52,19 +53,15 @@ describe('ChangePasswordForm', () => {
 
   describe('With valid input', () => {
     beforeEach(() => render(<ChangePasswordForm onSubmit={mockOnSubmit} />));
-    // Open a separate issue to refactor this to handle form data
-    it.skip('Should call onSubmit once formData object including password and confirmPassword', async () => {
+
+    it('Should be able to call onSubmit once valid form data is present', async () => {
       await setValueByLabelText('Current Password', validCurrentPassword);
       await setValueByLabelText('New Password', validNewPassword);
       await setValueByLabelText('Confirm Password', validNewPassword);
 
       await clickByTestIdAsync('submitButton');
-      expect(mockOnSubmit).toHaveBeenCalledTimes(1);
-      expect(mockOnSubmit).toHaveBeenCalledWith({
-        currentPassword: validCurrentPassword,
-        newPassword: validNewPassword,
-        confirmPassword: validNewPassword,
-      });
+      expectMockFunctionCalled(mockOnSubmit);
+      expectMockFunctionCalledXTimes(mockOnSubmit, 1);
       mockOnSubmit.mockReset();
     });
 
@@ -101,7 +98,7 @@ describe('ChangePasswordForm', () => {
   });
 
   describe('Invalid password', () => {
-    beforeEach(async () => {
+    beforeEach(() => {
       render(<ChangePasswordForm onSubmit={mockOnSubmit} />);
     });
 
