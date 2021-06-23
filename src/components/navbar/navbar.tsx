@@ -10,6 +10,7 @@ export const Navbar: NavbarType = ({ navPosition }) => {
     firstName: "Testy",
     lastName: "Testerson",
     profile_picture: null,
+    id: '123456'
   });
 
   const signOut = () => {

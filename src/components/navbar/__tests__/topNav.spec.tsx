@@ -13,7 +13,8 @@ import { TestRouter } from '../../testRouter';
 const mockUserData = {
   firstName: "Testy",
   lastName: "Testerson",
-  profile_picture: "../../../assets/img/profile.png"
+  profile_picture: "../../../assets/img/profile.png",
+  id: "123456"
 };
 
 const mockSignOut = jest.fn();
@@ -144,13 +145,12 @@ describe('<topNav/>', () => {
         clickNavigateByTestId('directoryLink', '/content/agent-list');
       });
 
-      it('Should navigate to /users/profile when the profile link is clicked', () => {
-        clickNavigateByTestId('profileDropdownItem', '/users/profile');
+      it('Should navigate to /user/profile when the profile link is clicked', () => {
+        clickNavigateByTestId('profileDropdownItem', '/user/profile');
       });
 
-      it('Should navigate to /auth/change-password when the change password link is clicked', () => {
-        clickNavigateByTestId('changePasswordDropdownItem', '/auth/change-password');
-      });
+      it(`Should navigate to /user/change-password/:${mockUserData.id} when the change password link is clicked`,
+        () => clickNavigateByTestId('changePasswordDropdownItem', `/user/change-password/:${mockUserData.id}`));
     });
   });
 });

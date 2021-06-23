@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { SideNav } from '../sideNav';
 import {
   expectInDocByTestId,
@@ -14,7 +14,8 @@ const mockSignOut = jest.fn();
 const mockUserData = {
   firstName: "Testy",
   lastName: "Testerson",
-  profile_picture: "../../assets/img/profile_picture.png"
+  profile_picture: "../../assets/img/profile_picture.png",
+  id: "123456"
 };
 
 const renderSideNavWithUserData = () => render(
@@ -94,11 +95,11 @@ describe('<SideNav/>', () => {
       it('Should navigate to /content/agent-list when the directory link is clicked', () =>
         clickNavigateByTestId('directoryLink', '/content/agent-list'));
 
-      it('Should navigate to /users/profile when the profile link is clicked', () =>
-        clickNavigateByTestId('profileDropdownItem', '/users/profile'));
+      it('Should navigate to /user/profile when the profile link is clicked', () =>
+        clickNavigateByTestId('profileDropdownItem', '/user/profile'));
 
-      it('Should navigate to /auth/change-password when the change password link is clicked', () =>
-        clickNavigateByTestId('changePasswordDropdownItem', '/auth/change-password'));
+      it(`Should navigate to /user/change-password:${mockUserData.id} when the change password link is clicked`, () =>
+        clickNavigateByTestId('changePasswordDropdownItem', `/user/change-password/:${mockUserData.id}`));
     });
 
     describe('User not logged in', () => {

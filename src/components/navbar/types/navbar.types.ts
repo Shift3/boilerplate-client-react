@@ -2,6 +2,7 @@ export type UserDataType = {
   firstName: string;
   lastName: string;
   profile_picture: string | null | undefined;
+  id: string;
 };
 
 export type NavbarVariantPropTypes = {

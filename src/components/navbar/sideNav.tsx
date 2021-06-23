@@ -16,8 +16,8 @@ export const SideNav: NavbarVariantType = ({ userData, signOut }) => {
   const history = useHistory();
 
   const onDropdownItemSelect = (eventKey: string) => {
-    if (eventKey === 'profile') history.push('/users/profile');
-    if (eventKey === 'changePassword') history.push('/auth/change-password');
+    if (eventKey === 'profile') history.push('/user/profile');
+    if (eventKey === 'changePassword') history.push(`/user/change-password/:${userData?.id}`);
     if (eventKey === 'signOut') signOut();
   };
 
