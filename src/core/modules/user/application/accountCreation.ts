@@ -1,34 +1,75 @@
 import { useShowNotification } from 'core/modules/notifications/application';
-import { ActivateAccountRequest, SignUpRequest } from '../infrastructure/http/dtos';
 import { UserService } from '../infrastructure/http/user.service';
 
-export interface ICreateAccountInteractor {
-  createAccount: (email: string, firstName: string, lastName: string) => Promise<void>;
-  activateAccount: (newPassword: string, confirmPassword: string, token: string) => Promise<void>;
+export type CreateAccountData = {
+  email: string;
+  firstName: string;
+  lastName: string;
+};
+
+export type ActivateAccountData = {
+  newPassword: string;
+  confirmPassword: string;
+  token: string;
+};
+
+export interface IAccountCreationActions {
+  createAccount: (data: CreateAccountData, onSuccess?: CallableFunction, onError?: CallableFunction) => Promise<void>;
+  activateAccount: (
+    data: ActivateAccountData,
+    onSuccess?: CallableFunction,
+    onError?: CallableFunction,
+  ) => Promise<void>;
 }
 
-export const useCreateAccount = (): ICreateAccountInteractor => {
+export const useAccountCreation = (): IAccountCreationActions => {
   const { showSuccessNotification, showErrorNotification } = useShowNotification();
 
-  const createAccount = async (email: string, firstName: string, lastName: string) => {
+  const createAccount = async (
+    data: CreateAccountData,
+    onSuccess?: CallableFunction,
+    onError?: CallableFunction,
+  ): Promise<void> => {
     const userService = new UserService();
-    const payload: SignUpRequest = { email, firstName, lastName };
+    const payload = { ...data };
+
     try {
       await userService.signUp(payload);
-      showSuccessNotification(`An activation email has been sent to ${email}.`);
+      showSuccessNotification(`An activation email has been sent to ${payload.email}.`);
+
+      if (onSuccess) {
+        onSuccess();
+      }
     } catch (error) {
       showErrorNotification(error.message);
+
+      if (onError) {
+        onError();
+      }
     }
   };
 
-  const activateAccount = async (newPassword: string, confirmPassword: string, token: string) => {
+  const activateAccount = async (
+    data: ActivateAccountData,
+    onSuccess?: CallableFunction,
+    onError?: CallableFunction,
+  ): Promise<void> => {
     const userService = new UserService();
-    const payload: ActivateAccountRequest = { newPassword, confirmPassword };
+    const { token, ...payload } = data;
+
     try {
       await userService.activateAccount(payload, token);
       showSuccessNotification('This account has been activated. Please log in.');
+
+      if (onSuccess) {
+        onSuccess();
+      }
     } catch (error) {
       showErrorNotification(error.message);
+
+      if (onError) {
+        onError();
+      }
     }
   };
 
