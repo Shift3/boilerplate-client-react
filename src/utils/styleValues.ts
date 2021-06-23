@@ -1,3 +1,11 @@
+import { Constants } from "./constants";
+
+const footerHeight = '25px';
+const topNavHeight = '150px';
+const topNavMinPageHeight = `calc(100vh - ${topNavHeight} - ${footerHeight})`;
+const sideNavMinPageHeight = `calc(100vh - ${footerHeight})`;
+const minPageHeight = Constants.navPosition === "top" ? topNavMinPageHeight : sideNavMinPageHeight;
+
 export default {
   adminBackground: '#f1f0eb',
   authBackground: '#ecf6f9',
@@ -11,5 +19,13 @@ export default {
   cardHeader: '#c5e6ec',
   navBackground: '#ffffff',
   navLink: '#2B373B',
-  footerHeight: '25px',
+  clear: 'rgba(0, 0, 0, 0)',
+  sideNavWidth: '20%',
+  sideNavHeight: '100vh',
+  navLogoOffset: '20px',
+  footerHeight,
+  topNavHeight,
+  topNavMinPageHeight,
+  sideNavMinPageHeight,
+  minPageHeight
 };
