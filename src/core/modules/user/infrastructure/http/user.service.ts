@@ -1,5 +1,5 @@
+import { ApiService } from 'core/shared/infrastructure/http/api.service';
 import { environment } from 'environment';
-import { ApiService } from '../../../../../services/api.service';
 import { Role } from '../../domain/role';
 import { User } from '../../domain/user';
 import {

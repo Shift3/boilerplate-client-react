@@ -1,5 +1,5 @@
+import { ApiService, RequestOptions } from 'core/shared/infrastructure/http/api.service';
 import { environment } from 'environment';
-import { ApiService, RequestOptions } from 'services/api.service';
 import { LoginRequest, SessionResponse } from './dtos';
 
 export class AuthApiService {
