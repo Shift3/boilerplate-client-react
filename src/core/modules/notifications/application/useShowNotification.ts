@@ -1,6 +1,3 @@
-/* eslint-disable no-magic-numbers */
-/* eslint-disable @typescript-eslint/no-inferrable-types */
-
 // React imports
 import { useCallback } from 'react';
 
@@ -9,14 +6,56 @@ import { useAppDispatch } from 'core/redux';
 import { Notification, NotificationType } from '../domain/notification';
 import notificationsSlice from '../infrastructure/store/notificationsSlice';
 
-export interface IShowNotificationInteractor {
+export interface IShowNotificationFacade {
+  /**
+   * Show a success notification.
+   *
+   * @param {string} message - The text to be displayed inside the notification.
+   * @param {boolean} autoDismiss - If true, the notification will automatically be dismissed after
+   *                                `dismissAfterMillis` milliseconds. Default `true`.
+   * @param {number} dismissAfterMillis - Number of milliseconds after which the notification will be dismissed if
+   *                                      `autoDismiss` is true. Default 5000 ms.
+   */
   showSuccessNotification: (message: string, autoDismiss?: boolean, dismissAfterMillis?: number) => void;
+
+  /**
+   * Show a error notification.
+   *
+   * @param {string} message - The text to be displayed inside the notification.
+   * @param {boolean} autoDismiss - If true, the notification will automatically be dismissed after
+   *                                `dismissAfterMillis` milliseconds. Default `true`.
+   * @param {number} dismissAfterMillis - Number of milliseconds after which the notification will be dismissed if
+   *                                      `autoDismiss` is true. Default 5000 ms.
+   */
   showErrorNotification: (message: string, autoDismiss?: boolean, dismissAfterMillis?: number) => void;
+
+  /**
+   * Show a warning notification.
+   *
+   * @param {string} message - The text to be displayed inside the notification.
+   * @param {boolean} autoDismiss - If true, the notification will automatically be dismissed after
+   *                                `dismissAfterMillis` milliseconds. Default `true`.
+   * @param {number} dismissAfterMillis - Number of milliseconds after which the notification will be dismissed if
+   *                                      `autoDismiss` is true. Default 5000 ms.
+   */
   showWarningNotification: (message: string, autoDismiss?: boolean, dismissAfterMillis?: number) => void;
+
+  /**
+   * Show a info notification.
+   *
+   * @param {string} message - The text to be displayed inside the notification.
+   * @param {boolean} autoDismiss - If true, the notification will automatically be dismissed after
+   *                                `dismissAfterMillis` milliseconds. Default `true`.
+   * @param {number} dismissAfterMillis - Number of milliseconds after which the notification will be dismissed if
+   *                                      `autoDismiss` is true. Default 5000 ms.
+   */
   showInfoNotification: (message: string, autoDismiss?: boolean, dismissAfterMillis?: number) => void;
 }
 
-export const useShowNotification = (): IShowNotificationInteractor => {
+/**
+ * Custom hook that returns an IShowNotificationFacade.
+ */
+export const useShowNotification = (): IShowNotificationFacade => {
   const dispatch = useAppDispatch();
 
   const showNotification = useCallback(

@@ -5,11 +5,19 @@ import { useCallback } from 'react';
 import { useAppDispatch } from 'core/redux';
 import notificationsSlice from '../infrastructure/store/notificationsSlice';
 
-export interface IDismissNotificationInteractor {
-  dismissNotification: (notificationId: number) => void;
+export interface IDismissNotificationFacade {
+  /**
+   * Dismiss (i.e. remove) a notification.
+   *
+   * @param {number} id - The id of the notification to be dismissed.
+   */
+  dismissNotification: (id: number) => void;
 }
 
-export const useDismissNotification = (): IDismissNotificationInteractor => {
+/**
+ * Custom hook that returns an IDismissNotification Facade.
+ */
+export const useDismissNotification = (): IDismissNotificationFacade => {
   const dispatch = useAppDispatch();
 
   const dismissNotification = useCallback(

@@ -3,6 +3,10 @@ import { useSelector } from 'react-redux';
 
 // App imports
 import { INotification } from '../domain/notification';
-import { notificationSelectors } from '../infrastructure/store/notificationsSlice';
+import { selectNotifications } from '../infrastructure/store/notificationsSlice';
 
-export const useNotificationState = (): INotification[] => useSelector(notificationSelectors.selectAll);
+/**
+ * Custom hook to use/subscribe to the notification state. The returned value is reactive and automatically updates
+ * whenever the notification state changes.
+ */
+export const useNotificationState = (): INotification[] => useSelector(selectNotifications);

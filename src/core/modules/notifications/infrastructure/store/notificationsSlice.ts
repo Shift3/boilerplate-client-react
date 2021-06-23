@@ -4,6 +4,8 @@ import { RootState } from 'core/redux';
 
 const notificationAdapter = createEntityAdapter<INotification>();
 
+const notificationSelectors = notificationAdapter.getSelectors<RootState>((state) => state.notifications);
+
 const notificationsSlice = createSlice({
   name: 'notifications',
   initialState: notificationAdapter.getInitialState(),
@@ -15,4 +17,4 @@ const notificationsSlice = createSlice({
 
 export default notificationsSlice;
 
-export const notificationSelectors = notificationAdapter.getSelectors<RootState>((state) => state.notifications);
+export const selectNotifications = (state: RootState): INotification[] => notificationSelectors.selectAll(state);

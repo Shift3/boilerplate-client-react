@@ -24,7 +24,7 @@ export class Notification implements INotification {
     this.type = type;
   }
 
-  toPlainObject(): INotification {
+  public toPlainObject(): INotification {
     return { ...this };
   }
 }
