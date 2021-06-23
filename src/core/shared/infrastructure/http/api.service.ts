@@ -1,7 +1,6 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { environment } from 'environment';
-import { Message } from 'models/message';
-// import { IMessage } from 'models/message';
+import { ApiMessage } from './dtos/api-message';
 
 declare module 'axios' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface, @typescript-eslint/no-explicit-any
@@ -33,11 +32,12 @@ export class ApiService {
         if (axios.isAxiosError(err)) {
           if (err.response) {
             // The server responded with a 4xx/5xx error.
-            return Promise.reject(new Message(err.response.data));
+            const message: ApiMessage = err.response.data;
+            return Promise.reject(message);
           }
           if (err.request) {
             // The browser was able to make a request, but didn't receive response.
-            return Promise.reject(new Message({ message: err.message }));
+            throw new Error(err.message);
           }
         }
         // Anything else. Not an axios error, likely error with the app.
