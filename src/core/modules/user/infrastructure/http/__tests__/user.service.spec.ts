@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import { ApiService } from './api.service';
-import { UserService } from './user.service';
+import { UserService } from '../user.service';
 
 describe('UserService', () => {
   let axiosInstance: AxiosInstance;
