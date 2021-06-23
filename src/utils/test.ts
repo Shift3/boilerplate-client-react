@@ -1,77 +1,128 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable require-await */
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { JSXElementConstructor, ReactElement } from 'react';
 import renderer from 'react-test-renderer';
+import {
+  ClickNavigateType,
+  ExpectToMatchSnapshotType,
+  ExpectChildToHaveClassByTestIdType,
+  ExpectChildToHaveInnerHTMLByTestIdType,
+  StringIdentifierVoidReturnType,
+  StringIdentifierStringValueVoidReturnTupe,
+  StringValueVoidReturnType,
+  StringIdentifierNumberIntegerVoidReturnType,
+  MockFunctionVoidReturnType,
+  ExpectAttributeToEqualByTestIdType,
+  expectMockFunctionCalledXTimesType,
+} from './types';
 
-const { getByTestId, getByRole, getByLabelText, queryAllByRole, queryByTestId, getAllByRole } = screen;
+const {
+  getByTestId,
+  getByRole,
+  getByLabelText,
+  queryAllByRole,
+  queryByTestId,
+  getAllByRole
+} = screen;
 
-const { click, clear, type } = userEvent;
+const {
+  click,
+  clear,
+  type
+} = userEvent;
 
-type expectToMatchSnapshotType = (component: ReactElement<any, string | JSXElementConstructor<any>>) => void;
-
-export const expectToMatchSnapshot: expectToMatchSnapshotType = (component) =>
+export const expectToMatchSnapshot: ExpectToMatchSnapshotType = (component) =>
   expect(renderer.create(component).toJSON()).toMatchSnapshot();
 
-export const expectInDocByTestId = (id: string) => expect(getByTestId(id)).toBeInTheDocument();
+export const expectInDocByTestId: StringIdentifierVoidReturnType =
+  (identifier) => expect(getByTestId(identifier)).toBeInTheDocument();
 
-export const expectNotInDocByTestId = (id: string) => expect(queryByTestId(id)).not.toBeInTheDocument();
+export const expectNotInDocByTestId: StringIdentifierVoidReturnType =
+  (identifier) => expect(queryByTestId(identifier)).not.toBeInTheDocument();
 
-export const expectInDocByRole = (role: string) => expect(getByRole(role)).toBeInTheDocument();
+export const expectInDocByRole: StringIdentifierVoidReturnType =
+  (identifier) => expect(getByRole(identifier)).toBeInTheDocument();
 
-export const expectInnerHTMLByTestId = (id: string, value: string) => expect(getByTestId(id).innerHTML).toEqual(value);
+export const clickByTestId: StringIdentifierVoidReturnType =
+  (identifier) => act(() => click(getByTestId(identifier)));
 
-export const expectInnerHTMLByRole = (role: string, value: string) => expect(getByRole(role).innerHTML).toEqual(value);
+export const clickByTestIdAsync: StringIdentifierVoidReturnType =
+  (identifier) => act(async () => click(getByTestId(identifier)));
 
-export const clickByTestId = (id: string) => act(() => click(getByTestId(id)));
+export const clickByRole: StringIdentifierVoidReturnType =
+  (identifier) => act(() => click(getByTestId(identifier)));
 
-export const clickByTestIdAsync = (id: string) => act(async () => click(getByTestId(id)));
+export const clickByRoleAsync: StringIdentifierVoidReturnType =
+  (identifier) => act(async () => click(getByRole(identifier)));
 
-export const clickByRole = (role: string) => act(() => click(getByTestId(role)));
+export const pathMatch: StringIdentifierVoidReturnType =
+  (identifier) => expect(window.location.pathname).toEqual(identifier);
 
-export const clickByRoleAsync = (role: string) => act(async () => click(getByRole(role)));
-
-export const pathMatch = (path: string) => expect(window.location.pathname).toEqual(path);
-
-export const clickNavigateByTestId = (id: string, path: string) => {
-  clickByTestId(id);
+export const clickNavigateByTestId: ClickNavigateType = (identifier, path) => {
+  clickByTestId(identifier);
   pathMatch(path);
 };
-export const clickNavigateByRole = (role: string, path: string) => {
-  clickByRole(role);
+
+export const clickNavigateByRole: ClickNavigateType = (identifier, path) => {
+  clickByRole(identifier);
   pathMatch(path);
 };
 
-export const expectTextContentByTestId = (id: string, text: string) =>
-  expect(getByTestId(id)).toHaveTextContent(text.toString());
+export const expectInnerHTMLByTestId: StringIdentifierStringValueVoidReturnTupe =
+  (id, value) => expect(getByTestId(id).innerHTML).toEqual(value);
 
-export const expectInDocByLabelText = (text: string) => expect(getByLabelText(text)).toBeInTheDocument();
+export const expectInnerHTMLByRole: StringIdentifierStringValueVoidReturnTupe =
+  (role, value) => expect(getByRole(role).innerHTML).toEqual(value);
 
-export const expectLengthByRole = (role: string, length: number) => expect(queryAllByRole(role)).toHaveLength(length);
+export const expectTextContentByTestId: StringIdentifierStringValueVoidReturnTupe =
+  (id, text) => expect(getByTestId(id)).toHaveTextContent(text.toString());
 
-export const setValueByLabelText = (text: string, value: string) =>
-  act(async () => {
+export const expectInDocByLabelText: StringIdentifierVoidReturnType =
+  (identifier) => expect(getByLabelText(identifier)).toBeInTheDocument();
+
+export const setValueByLabelText: StringIdentifierStringValueVoidReturnTupe =
+  (text, value) => act(async () => {
     const element = getByLabelText(text);
     clear(element);
     type(element, value);
   });
 
-export const formAlertMessageCheck = (message: string) => {
+export const expectAttributeToEqualByTestId: ExpectAttributeToEqualByTestIdType =
+  (identifier, attribute, value) => expect(getByTestId(identifier).getAttribute(attribute)).toEqual(value);
+
+export const expectChildToHaveClassByTestId: ExpectChildToHaveClassByTestIdType =
+  (parentTestId, childIndex, childClass) => {
+    expect(getByTestId(parentTestId).childNodes[childIndex]).toHaveClass(childClass);
+  };
+
+export const expectLengthByRole: StringIdentifierNumberIntegerVoidReturnType = (identifier: string, integer: number) =>
+  expect(queryAllByRole(identifier)).toHaveLength(integer);
+
+export const clickChildByTestId: StringIdentifierNumberIntegerVoidReturnType = (identifier, integer) =>
+  act(() => click(screen.getByTestId(identifier).children[integer]));
+
+export const expectChildToHaveInnerHTMLByTestId: ExpectChildToHaveInnerHTMLByTestIdType =
+  (parentTestId, childIndex, innerHTMLValue) =>
+    expect(getByTestId(parentTestId).children[childIndex].innerHTML).toEqual(innerHTMLValue);
+
+export const formAlertMessageCheck: StringValueVoidReturnType = (value) => {
   const messages = getAllByRole('alert').reduce(
-    (messages: string[], alert: HTMLElement) => [...messages, alert.innerHTML],
-    [],
+    (messages: string[], alert: HTMLElement) => [...messages, alert.innerHTML], []
   );
-  expect(messages.includes(message)).toBeTruthy();
+  expect(messages.includes(value)).toBeTruthy();
 };
 
-export const expectMockFunctionCalled = (mockFunction: jest.Mock<any, any>) => expect(mockFunction).toHaveBeenCalled();
+export const expectMockFunctionCalled: MockFunctionVoidReturnType = (mockFunction) =>
+  expect(mockFunction).toHaveBeenCalled();
 
-export const expectMockFunctionNotCalled = (mockFunction: jest.Mock<any, any>) =>
+export const expectMockFunctionNotCalled: MockFunctionVoidReturnType = (mockFunction) =>
   expect(mockFunction).not.toHaveBeenCalled();
 
-export const clickExpectByTestId = (clickId: string, expectId: string) => {
-  clickByTestId(clickId);
-  expectInDocByTestId(expectId);
-};
+export const expectMockFunctionCalledXTimes: expectMockFunctionCalledXTimesType = (mockFunction, integer) =>
+  expect(mockFunction).toHaveBeenCalledTimes(integer);
+
+export const clickExpectByTestId: StringIdentifierStringValueVoidReturnTupe =
+  (identifier, value) => {
+    clickByTestId(identifier);
+    expectInDocByTestId(value);
+  };
