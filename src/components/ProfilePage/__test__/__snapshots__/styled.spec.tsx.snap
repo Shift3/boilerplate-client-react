@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ProfilePage /> styled component snapshot tests Should match the stored <ProfilePageContainer /> snapshot 1`] = `
+<div
+  className=""
+/>
+`;
