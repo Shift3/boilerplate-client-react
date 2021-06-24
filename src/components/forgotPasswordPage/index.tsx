@@ -15,7 +15,7 @@ export const ForgotPasswordPage: FC = () => {
     sendResetPasswordEmail(email, onSuccess);
   };
 
-  const onCancel = () => history.push('/');
+  const onCancel = () => history.push('/auth/login');
 
   return (
     <Wrapper data-testid='wrapper'>

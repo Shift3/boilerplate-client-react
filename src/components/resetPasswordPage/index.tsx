@@ -16,7 +16,7 @@ export const ResetPasswordPage: FC = () => {
     await resetPassword(data, onSuccess);
   };
 
-  const onCancel = () => history.push('/');
+  const onCancel = () => history.push('/auth/login');
 
   return (
     <Wrapper data-testid='wrapper'>

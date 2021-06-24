@@ -15,7 +15,7 @@ export const LogInPage: FC = () => {
     loginUser(credentials, onSuccess);
   };
 
-  const onCancel = () => history.goBack();
+  const onCancel = () => history.push('/auth/login');
 
   const { push } = useHistory();
   const navigateToSignup = () => push('/auth/signup');
