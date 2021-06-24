@@ -1,5 +1,5 @@
-import { useShowNotification } from 'core/modules/notifications/application';
-import { UserService } from '../infrastructure/http/user.service';
+import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
+import { UserService } from '../infrastructure/http/userService';
 
 export type CreateAccountData = {
   email: string;
@@ -10,11 +10,32 @@ export type CreateAccountData = {
 export type ActivateAccountData = {
   newPassword: string;
   confirmPassword: string;
-  token: string;
+  token: string; // The temporary token in the account activation link of the welcome email.
 };
 
-export interface IAccountCreationActions {
+export interface IAccountCreationFacade {
+  /**
+   * Create account and send welcome email with account activation link.
+   *
+   * If the account is created successfully, a success notification will be shown. Otherwise, if there is an error,
+   * an error notification will be shown.
+   *
+   * @param {CreateAccountData} data - The user data required to create a new account.
+   * @param {CallableFunction} onSuccess - Optional callback function to be called if account is created successfully.
+   * @param {CallableFunction} onError - Optional callback function to be called if account creation fails.
+   */
   createAccount: (data: CreateAccountData, onSuccess?: CallableFunction, onError?: CallableFunction) => Promise<void>;
+
+  /**
+   * Activate account with new password.
+   *
+   * If the account is activated successfully, a success notification will be shown. Otherwise, if there is an error,
+   * an error notificaiton will be shown.
+   *
+   * @param {ActivateAccountData} data - The data required to activate a user account.
+   * @param {CallableFunction} onSuccess - Optional callback function to be called if account is activated successfully.
+   * @param {CallableFunction} onError - Optional callback function to be called if account activation fails.
+   */
   activateAccount: (
     data: ActivateAccountData,
     onSuccess?: CallableFunction,
@@ -22,7 +43,10 @@ export interface IAccountCreationActions {
   ) => Promise<void>;
 }
 
-export const useAccountCreation = (): IAccountCreationActions => {
+/**
+ * Custom hook that returns an IAccountCreationFacade.
+ */
+export const useAccountCreation = (): IAccountCreationFacade => {
   const { showSuccessNotification, showErrorNotification } = useShowNotification();
 
   const createAccount = async (

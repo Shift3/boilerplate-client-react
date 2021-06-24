@@ -1,4 +1,10 @@
-export type RoleType = 'Admin' | 'Editor' | 'User' | 'Super Administrator' | '';
+export enum RoleType {
+  SuperAdmin = 'Super Administrator',
+  Admin = 'Admin',
+  Editor = 'Editor',
+  User = 'User',
+  None = '',
+}
 
 export interface IRole {
   id: number;
@@ -7,7 +13,7 @@ export interface IRole {
 
 export class Role implements IRole {
   id = 0;
-  roleName = '' as const;
+  roleName = RoleType.None;
 
   constructor(configOverride?: Partial<IRole>) {
     if (configOverride) {
@@ -15,7 +21,7 @@ export class Role implements IRole {
     }
   }
 
-  toPlainObject(): IRole {
+  public toPlainObject(): IRole {
     return { ...this };
   }
 }

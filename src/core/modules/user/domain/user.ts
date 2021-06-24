@@ -27,7 +27,7 @@ export class User implements IUser {
     }
   }
 
-  toPlainObject(): IUser {
+  public toPlainObject(): IUser {
     return { ...this, role: this.role.toPlainObject() };
   }
 }

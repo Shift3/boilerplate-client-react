@@ -1,7 +1,5 @@
 import { ApiService } from 'core/shared/infrastructure/http/api.service';
 import { environment } from 'environment';
-import { Role } from '../../domain/role';
-import { User } from '../../domain/user';
 import {
   ActivateAccountRequest,
   ForgotPasswordRequest,
@@ -21,16 +19,14 @@ export class UserService {
     this.url = `${environment.apiRoute}/${this.controllerRoute}`;
   }
 
-  public async signUp(payload: SignUpRequest): Promise<User> {
+  public async signUp(payload: SignUpRequest): Promise<UserResponse> {
     const endpoint = `${this.url}/signup/`;
-    const userDto = await this.apiService.post<UserResponse, SignUpRequest>(endpoint, payload);
-    return new User({ ...userDto, role: new Role(userDto.role) });
+    return this.apiService.post<UserResponse, SignUpRequest>(endpoint, payload);
   }
 
-  public async activateAccount(payload: ActivateAccountRequest, token: string): Promise<User> {
+  public async activateAccount(payload: ActivateAccountRequest, token: string): Promise<UserResponse> {
     const endpoint = `${this.url}/activate-account/${token}`;
-    const userDto = await this.apiService.put<UserResponse, ActivateAccountRequest>(endpoint, payload);
-    return new User({ ...userDto, role: new Role(userDto.role) });
+    return this.apiService.put<UserResponse, ActivateAccountRequest>(endpoint, payload);
   }
 
   public async forgotPassword(payload: ForgotPasswordRequest): Promise<ForgotPasswordResponse> {
@@ -38,9 +34,8 @@ export class UserService {
     return this.apiService.post<ForgotPasswordResponse, ForgotPasswordRequest>(endpoint, payload);
   }
 
-  public async resetPassword(payload: ResetPasswordRequest, token: string): Promise<User> {
+  public async resetPassword(payload: ResetPasswordRequest, token: string): Promise<UserResponse> {
     const endpoint = `${this.url}/reset-password/${token}`;
-    const userDto = await this.apiService.put<UserResponse, ResetPasswordRequest>(endpoint, payload);
-    return new User({ ...userDto, role: new Role(userDto.role) });
+    return this.apiService.put<UserResponse, ResetPasswordRequest>(endpoint, payload);
   }
 }
