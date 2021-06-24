@@ -2,24 +2,30 @@ import { render } from '@testing-library/react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { LogInPage } from '../index';
 import { expectInDocByTestId, expectInnerHTMLByTestId, clickNavigateByTestId } from '../../../utils/test';
+import store from 'core/redux/store';
+import { Provider } from 'react-redux';
 
 const renderInitialTestDOM = () =>
   render(
-    <Router>
-      <Switch>
-        <Route exact path='/' component={LogInPage} />
-      </Switch>
-    </Router>,
+    <Provider store={store}>
+      <Router>
+        <Switch>
+          <Route exact path='/' component={LogInPage} />
+        </Switch>
+      </Router>
+    </Provider>,
   );
 
 const renderNavigationTestDOM = () =>
   render(
-    <Router>
-      <Switch>
-        <Route exact path='/' component={LogInPage} />
-        <Route exact path='/auth/signup' component={() => <div />} />
-      </Switch>
-    </Router>,
+    <Provider store={store}>
+      <Router>
+        <Switch>
+          <Route exact path='/' component={LogInPage} />
+          <Route exact path='/auth/signup' component={() => <div />} />
+        </Switch>
+      </Router>
+    </Provider>,
   );
 
 describe('<LoginPage/>', () => {

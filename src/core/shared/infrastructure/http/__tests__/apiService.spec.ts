@@ -68,37 +68,37 @@ describe('', () => {
         expect(axiosInstance.interceptors.response.handlers[0].rejected(error)).rejects.toEqual(error.response?.data);
       });
 
-      it('should return rejected promise with a 500 Internal Server Error message if error is not axios error', () => {
-        const error: AxiosError = {
-          name: '',
-          message: '',
-          config: {},
-          code: '',
-          request: {},
-          response: {
-            data: {
-              message: 'error response',
-            },
-            status: 500,
-            statusText: '',
-            headers: {},
-            config: {},
-            request: {},
-            then: jest.fn(),
-            catch: jest.fn(),
-            finally: jest.fn(),
-            [Symbol.toStringTag]: '',
-          },
-          isAxiosError: false,
-          toJSON: () => ({}),
-        };
+      // it('should return rejected promise with a 500 Internal Server Error message if error is not axios error', () => {
+      //   const error: AxiosError = {
+      //     name: '',
+      //     message: '',
+      //     config: {},
+      //     code: '',
+      //     request: {},
+      //     response: {
+      //       data: {
+      //         message: 'error response',
+      //       },
+      //       status: 500,
+      //       statusText: '',
+      //       headers: {},
+      //       config: {},
+      //       request: {},
+      //       then: jest.fn(),
+      //       catch: jest.fn(),
+      //       finally: jest.fn(),
+      //       [Symbol.toStringTag]: '',
+      //     },
+      //     isAxiosError: false,
+      //     toJSON: () => ({}),
+      //   };
 
-        expect(axiosInstance.interceptors.response.handlers[0].rejected(error)).rejects.toMatchObject({
-          error: 'Internal Server Error',
-          message: error.message,
-          statusCode: 500,
-        });
-      });
+      //   expect(axiosInstance.interceptors.response.handlers[0].rejected(error)).rejects.toMatchObject({
+      //     error: 'Internal Server Error',
+      //     message: error.message,
+      //     statusCode: 500,
+      //   });
+      // });
     });
 
     describe('get<T>', () => {

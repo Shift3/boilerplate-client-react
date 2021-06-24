@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { ApiService } from './api.service';
+import { ApiService } from 'core/shared/infrastructure/http/apiService';
 import { UserService } from '../userService';
 
 describe('UserService', () => {
