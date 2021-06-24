@@ -122,7 +122,6 @@
     "capitalized-comments": 1,
     "comma-spacing": 1,
     "comma-style": 1,
-    "computed-property-spacing": [1, "always"],
     "indent": [
       1,
       2,

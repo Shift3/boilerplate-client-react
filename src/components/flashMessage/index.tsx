@@ -6,9 +6,16 @@ import Alert from 'react-bootstrap/Alert';
 
 // App imports
 import { FlashMessageContainer } from './styled';
-import { INotification } from 'core/modules/notifications/domain/notification';
+import { INotification, NotificationType } from 'core/modules/notifications/domain/notification';
 import { useNotificationState } from 'core/modules/notifications/application/useNotificationState';
 import { useDismissNotification } from 'core/modules/notifications/application/useDismissNotification';
+
+const mapNotificationTypeToAlertVariant = {
+  [NotificationType.Success]: 'success',
+  [NotificationType.Error]: 'danger',
+  [NotificationType.Warning]: 'warning',
+  [NotificationType.Info]: 'info',
+};
 
 export const FlashMessage: FC = () => {
   const notifications: INotification[] = useNotificationState();
@@ -19,7 +26,7 @@ export const FlashMessage: FC = () => {
       {notifications.map((notification) => (
         <Alert
           key={notification.id}
-          variant={notification.type}
+          variant={mapNotificationTypeToAlertVariant[notification.type]}
           dismissible
           onClose={() => dismissNotification(notification.id)}
         >
