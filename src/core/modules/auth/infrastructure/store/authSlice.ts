@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from 'core/redux';
 import { ISession } from '../../domain/session';
-import { getSession } from './auth.localStorage';
+import { AuthLocalStorage } from './authLocalStorage';
 
 export type AuthSliceState = {
   session: ISession | null;
 };
 
 const initialState: AuthSliceState = {
-  session: getSession(),
+  session: AuthLocalStorage.getSession(),
 };
 
 const authSlice = createSlice({

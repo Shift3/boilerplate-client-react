@@ -15,7 +15,14 @@ export class Session implements ISession {
     }
   }
 
-  toPlainObject(): ISession {
+  public toPlainObject(): ISession {
     return { ...this, user: this.user.toPlainObject() };
+  }
+
+  public static fromPlainObject(sessionObject: ISession): Session {
+    return new Session({
+      ...sessionObject,
+      user: User.fromPlainObject(sessionObject.user),
+    });
   }
 }

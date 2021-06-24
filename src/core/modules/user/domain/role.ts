@@ -24,4 +24,8 @@ export class Role implements IRole {
   public toPlainObject(): IRole {
     return { ...this };
   }
+
+  public static fromPlainObject(roleObject: IRole): Role {
+    return new Role(roleObject);
+  }
 }

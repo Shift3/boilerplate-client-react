@@ -2,7 +2,7 @@ import { ApiService, RequestOptions } from 'core/shared/infrastructure/http/api.
 import { environment } from 'environment';
 import { LoginRequest, SessionResponse } from './dtos';
 
-export class AuthApiService {
+export class AuthService {
   private controllerRoute = 'auth';
   private url: string;
   private apiService: ApiService;

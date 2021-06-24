@@ -30,4 +30,11 @@ export class User implements IUser {
   public toPlainObject(): IUser {
     return { ...this, role: this.role.toPlainObject() };
   }
+
+  public static fromPlainObject(userObject: IUser): User {
+    return new User({
+      ...userObject,
+      role: Role.fromPlainObject(userObject.role),
+    });
+  }
 }
