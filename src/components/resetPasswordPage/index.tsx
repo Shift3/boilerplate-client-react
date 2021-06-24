@@ -1,9 +1,9 @@
-import { usePasswordReset } from 'core/modules/user/application/passwordReset';
 import { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { ResetPasswordForm } from '../resetPasswordForm';
 import { IResetPasswordFormData } from '../resetPasswordForm/types';
 import { Wrapper } from './styled';
+import { usePasswordReset } from 'core/modules/user/application/usePasswordReset';
 
 export const ResetPasswordPage: FC = () => {
   const history = useHistory();

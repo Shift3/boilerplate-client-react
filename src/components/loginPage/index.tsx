@@ -4,16 +4,16 @@ import { LogInForm } from 'components/loginForm';
 import { Link, useHistory } from 'react-router-dom';
 import { ILogInFormData } from '../loginForm/types';
 import { LoginWrapper, LeftLogin, RightLogin, CreateAccountButton, Title, Text, Wrapper, LinkWrapper } from './styled';
-import { useLoginAction } from 'core/modules/auth/application/loginUser';
+import { useLogin } from 'core/modules/auth/application/useLogin';
 
 export const LogInPage: FC = () => {
   const history = useHistory();
-  const { loginWithEmailAndPassword } = useLoginAction();
+  const { loginUser } = useLogin();
 
   const onSubmit = (formData: ILogInFormData) => {
     const credentials = { ...formData };
     const onSuccess = () => history.push('/');
-    loginWithEmailAndPassword(credentials, onSuccess);
+    loginUser(credentials, onSuccess);
   };
 
   const onCancel = () => history.goBack();

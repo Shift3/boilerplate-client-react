@@ -1,13 +1,13 @@
 import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
-import { useLogoutAction } from 'core/modules/auth/application/logoutUser';
+import { useLogout } from 'core/modules/auth/application/useLogout';
 
 export const Logout: FC = () => {
-  const { logoutUser } = useLogoutAction();
+  const { logoutUser } = useLogout();
 
   return (
     <>
-      <Button variant='link' onClick={logoutUser}>
+      <Button variant='link' onClick={() => logoutUser()}>
         Sign Out
       </Button>
     </>

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { ISignUpFormData } from 'components/signupForm/types';
 import { SignUpForm } from 'components/signupForm';
 import { Wrapper } from './styled';
-import { useAccountCreation } from 'core/modules/user/application/accountCreation';
+import { useAccountCreation } from 'core/modules/user/application/useAccountCreation';
 
 export const SignUpPage: FC = () => {
   const history = useHistory();

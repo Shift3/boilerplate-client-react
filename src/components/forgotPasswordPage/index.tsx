@@ -3,16 +3,16 @@ import { useHistory } from 'react-router-dom';
 import { ForgotPasswordForm } from '../forgotPasswordForm';
 import { IForgotPassswordFormData } from 'components/forgotPasswordForm/types';
 import { Wrapper } from './styled';
-import { usePasswordReset } from 'core/modules/user/application/passwordReset';
+import { usePasswordReset } from 'core/modules/user/application/usePasswordReset';
 
 export const ForgotPasswordPage: FC = () => {
   const history = useHistory();
-  const { sendForgotPasswordEmail } = usePasswordReset();
+  const { sendResetPasswordEmail } = usePasswordReset();
 
   const onSubmit = (formData: IForgotPassswordFormData) => {
-    const data = { ...formData };
+    const { email } = formData;
     const onSuccess = () => history.push('/');
-    sendForgotPasswordEmail(data, onSuccess);
+    sendResetPasswordEmail(email, onSuccess);
   };
 
   const onCancel = () => history.push('/');
