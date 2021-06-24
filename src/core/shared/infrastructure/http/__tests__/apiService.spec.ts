@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
-import { IMessage } from 'models/message';
-import { ApiService } from './api.service';
+import { ApiService } from '../apiService';
+import { ApiMessage } from '../dtos/api-message';
 
 describe('', () => {
   let axiosInstance: AxiosInstance;
@@ -18,7 +18,7 @@ describe('', () => {
   describe('response interceptor', () => {
     describe('on success', () => {
       it('should return response data', () => {
-        const response: AxiosResponse<IMessage> = {
+        const response: AxiosResponse<ApiMessage> = {
           data: {
             message: 'successful response',
           },
