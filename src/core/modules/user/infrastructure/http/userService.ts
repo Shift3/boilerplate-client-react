@@ -1,4 +1,4 @@
-import { ApiService } from 'core/shared/infrastructure/http/api.service';
+import { ApiService } from 'core/shared/infrastructure/http/apiService';
 import { environment } from 'environment';
 import {
   ActivateAccountRequest,

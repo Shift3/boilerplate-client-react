@@ -1,4 +1,4 @@
-import { ApiService, RequestOptions } from 'core/shared/infrastructure/http/api.service';
+import { ApiService, RequestOptions } from 'core/shared/infrastructure/http/apiService';
 import { environment } from 'environment';
 import { LoginRequest, SessionResponse } from './dtos';
 
