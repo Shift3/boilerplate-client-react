@@ -1,4 +1,3 @@
-/* eslint-disable jsx-quotes */
 import { FC } from 'react';
 import { LogInForm } from 'components/loginForm';
 import { Link, useHistory } from 'react-router-dom';

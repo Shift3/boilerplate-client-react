@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable require-await */
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { JSXElementConstructor, ReactElement } from 'react';

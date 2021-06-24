@@ -106,6 +106,9 @@
     "space-before-function-paren": 0,
     "lines-around-comment": 0,
     "array-bracket-spacing": 0,
+    "require-await": 0,
+    "no-param-reassign": 0,
+    "@typescript-eslint/no-inferrable-types": 0,
 
     // WARN (1)
     "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
@@ -175,6 +178,7 @@
       1,
       {
         "ignoreArrayIndexes": true,
+        "ignoreDefaultValues": true,
         "ignore": [0, 1, 2, 3, 4, 8]
       }
     ],
@@ -269,7 +273,6 @@
     "no-new-wrappers": 2,
     "no-octal": 2,
     "no-octal-escape": 2,
-    "no-param-reassign": 2,
     "no-proto": 2,
     "no-redeclare": 2,
     "no-return-assign": 2,
@@ -289,7 +292,6 @@
     "no-useless-return": 2,
     "no-void": 2,
     "no-with": 2,
-    "require-await": 2,
     "wrap-iife": 2,
     "no-delete-var": 2,
     "no-label-var": 2,
@@ -298,7 +300,7 @@
     "@typescript-eslint/no-unused-vars": 2,
     "no-use-before-define": 2,
     "linebreak-style": 2,
-    "max-params": [2, { "max": 4 }],
+    "max-params": [2, { "max": 5}],
     "new-cap": 2,
     "new-parens": 2,
     "no-array-constructor": 2,

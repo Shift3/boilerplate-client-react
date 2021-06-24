@@ -1,4 +1,3 @@
-/* eslint-disable jsx-quotes */
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';

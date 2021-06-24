@@ -1,4 +1,3 @@
-/* eslint-disable require-await */
 import { render } from '@testing-library/react';
 import { Constants } from 'utils/constants';
 import { ChangePasswordForm } from '../index';
