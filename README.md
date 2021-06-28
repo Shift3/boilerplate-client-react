@@ -1,5 +1,45 @@
 # Boilerplate Client React
 
+| Branch      | Status                                                                                                                                                                                                                           |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| development | [![Shift3](https://circleci.com/gh/Shift3/boilerplate-client-react.svg?style=shield&circle-token=7906113b0233ea67936098a26da5e8f598eec7ac)](https://circleci.com/gh/Shift3/boilerplate-client-react)                         |
+| main      | [![Shift3](https://circleci.com/gh/Shift3/boilerplate-client-react/tree/main.svg?style=shield&circle-token=7906113b0233ea67936098a26da5e8f598eec7ac)](https://circleci.com/gh/Shift3/boilerplate-client-react/tree/main) |
+
+This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react/wiki) which explains the project and its implementation in much greater detail than the code comments.
+
+- [Boilerplate Client React](#boilerplate-client-react)
+    - [Local Development](#local-development)
+      - [Quick Start](#quick-start)
+      - [Starting the Project](#starting-the-project)
+      - [Running unit tests](#running-unit-tests)
+    - [Running test coverage](#running-test-coverage)
+    - [Build](#build)
+      - [`yarn eject`](#yarn-eject)
+  - [Learn More](#learn-more)
+  - [Staging URL](#staging-url)
+  - [Deployment](#deployment)
+    - [AWS](#aws)
+    - [Terraform](#terraform)
+    - [Environment Configuration](#environment-configuration)
+    - [Build and Deploy](#build-and-deploy)
+  - [Development](#development)
+    - [Local Development](#local-development-1)
+    - [Development Server](#development-server)
+    - [Docker](#docker)
+    - [Template Repository](#template-repository)
+    - [Initializing the Project](#initializing-the-project)
+    - [Prettier](#prettier)
+    - [CI](#ci)
+    - [Local Development](#local-development-2)
+    - [Webpack Bundle Analyzer](#webpack-bundle-analyzer)
+    - [Development Server](#development-server-1)
+    - [Code Scaffolding](#code-scaffolding)
+    - [Build](#build-1)
+    - [Stagin Build](#stagin-build)
+    - [Running Unit Tests](#running-unit-tests-1)
+    - [Running End-to-End Tests](#running-end-to-end-tests)
+    - [Additional Resources](#additional-resources)
+
 ### Local Development
 
 The project has been configured to use [yarn](https://classic.yarnpkg.com/en/docs/cli/) for package dependency management.
