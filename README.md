@@ -1,5 +1,10 @@
 # Boilerplate Client React
 
+| Branch      | Status                                                                                                                                                                                                                           |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| development | [![Shift3](https://circleci.com/gh/Shift3/boilerplate-client-react.svg?style=shield&circle-token=7906113b0233ea67936098a26da5e8f598eec7ac)](https://circleci.com/gh/Shift3/boilerplate-client-react)                         |
+| main      | [![Shift3](https://circleci.com/gh/Shift3/boilerplate-client-react/tree/main.svg?style=shield&circle-token=7906113b0233ea67936098a26da5e8f598eec7ac)](https://circleci.com/gh/Shift3/boilerplate-client-react/tree/main) |
+
 This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react/wiki) which explains the project and its implementation in much greater detail than the code comments.
 
 - [BoilerplateClientReact](#boilerplate-client-react)
@@ -10,15 +15,20 @@ This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react
     - [Running test coverage](#running-test-coverage)
     - [Build](#build)
     - [yarn eject](#yarn-eject)
-  - [Learn More](learn-more)
+  - [Learn More](#learn-more)
   - [Staging URL](#staging-url)
-  - [Deployment](deployment)
-    - [AWS](aws)
-    - [Terraform](terraform)
-    - [Environment Configuration](environment-configuration)
-    - [Build and Deploy](build-and-deploy)
-  - [Development](development)
-  - TODO THE REST!!!
+  - [Deployment](#deployment)
+    - [AWS](#aws)
+    - [Terraform](#terraform)
+    - [Environment Configuration](#environment-configuration)
+    - [Build and Deploy](#build-and-deploy)
+  - [Development](#development)
+    - [Local Development](#local-development)
+    - [Development Server](#development-server)
+    - [Docker](#docker)
+    - [Template Repository](#template-repository)
+    - [Initializing the Project](#initializing-the-project)
+    - [Prettier](#prettier)
 
 ### Local Development
 
