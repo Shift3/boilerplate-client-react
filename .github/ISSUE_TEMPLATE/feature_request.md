@@ -15,6 +15,6 @@ _Where do expect this work to take place? What files (or even functions within f
 ## Steps to Implement
 _Steps needed to deliver this issue, psuedo code, pre-planning_
 
-## Addtional Context / Links to Resources
+## Additional Context / Links to Resources
 _Any links helpful to solving this issue._
 [example link](https://www.google.com)
