@@ -13,13 +13,13 @@ jobs:
             - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install, lint, and test frontend
-          environment:
-            NODE_OPTIONS: --max_old_space_size=4096
           command: |
             export CI=true
             yarn install
             yarn build
             yarn test-ci
+          environment:
+            NODE_OPTIONS: --max_old_space_size=4096
   test-coverage:
     working_directory: ~/boilerplate-client-react
     docker:
@@ -33,12 +33,12 @@ jobs:
             - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Run Jest and Collect Coverage Reports
-          environment:
-            NODE_OPTIONS: --max_old_space_size=4096
           command: |
             export CI=true
             yarn install
             yarn test-cov-ci
+          environment:
+            NODE_OPTIONS: --max_old_space_size=4096
       - store_artifacts:
           path: coverage
 workflows:
