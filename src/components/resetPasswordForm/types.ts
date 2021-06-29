@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 export interface IResetPasswordFormData {
-  password: string;
+  newPassword: string;
   confirmPassword: string;
 }
 

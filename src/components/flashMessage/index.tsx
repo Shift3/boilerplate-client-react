@@ -1,14 +1,38 @@
-import { FC, useContext } from 'react';
+// React imports
+import { FC } from 'react';
+
+// Third-party imports
 import Alert from 'react-bootstrap/Alert';
+
+// App imports
 import { FlashMessageContainer } from './styled';
-import { Context as FlashMessageContext } from '../../context/flashMessage.context';
+import { INotification, NotificationType } from 'core/modules/notifications/domain/notification';
+import { useNotificationState } from 'core/modules/notifications/application/useNotificationState';
+import { useDismissNotification } from 'core/modules/notifications/application/useDismissNotification';
+
+const mapNotificationTypeToAlertVariant = {
+  [NotificationType.Success]: 'success',
+  [NotificationType.Error]: 'danger',
+  [NotificationType.Warning]: 'warning',
+  [NotificationType.Info]: 'info',
+};
 
 export const FlashMessage: FC = () => {
-  const { flashMessage } = useContext(FlashMessageContext);
+  const notifications: INotification[] = useNotificationState();
+  const { dismissNotification } = useDismissNotification();
 
   return (
     <FlashMessageContainer data-testid='flashMessageContainer'>
-      {flashMessage && <Alert variant={flashMessage.variant}>{flashMessage.message}</Alert>}
+      {notifications.map((notification) => (
+        <Alert
+          key={notification.id}
+          variant={mapNotificationTypeToAlertVariant[notification.type]}
+          dismissible
+          onClose={() => dismissNotification(notification.id)}
+        >
+          {notification.message}
+        </Alert>
+      ))}
     </FlashMessageContainer>
   );
 };

@@ -1,4 +1,6 @@
 import { render } from '@testing-library/react';
+import store from 'core/redux/store';
+import { Provider } from 'react-redux';
 import { FlashMessage } from '..';
 import { expectInDocByTestId } from '../../../utils/test';
 
@@ -14,6 +16,11 @@ import { expectInDocByTestId } from '../../../utils/test';
 // -- TEST -- (CONDITIONAL) -- After the timeout has completed check that it is not present.
 
 describe('<FlashMessage/>', () => {
-  render(<FlashMessage />);
+  render(
+    <Provider store={store}>
+      <FlashMessage />
+    </Provider>,
+  );
+
   it('Should render the <FlashMessageContainer />', () => expectInDocByTestId('flashMessageContainer'));
 });
