@@ -3,7 +3,7 @@ name: Bug report
 about: Report a bug you're experiencing with app.
 title: ""
 labels: "bug"
-assignees: codysmith287
+assignees: ""
 ---
 
 ## Describe the bug
