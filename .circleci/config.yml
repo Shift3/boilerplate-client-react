@@ -18,15 +18,24 @@ jobs:
             yarn install
             yarn build
             yarn test-ci
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - .yarn/cache
-            - .yarn/unplugged
+  test-coverage:
+    working_directory: ~/boilerplate-client-react
+    docker:
+      - image: 'circleci/node:14-browsers'
+    steps:
+      - checkout
+      - run: sudo apt-get update
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
-          name: Run Jest and Collect Coverage Reports
-          command: yarn test-cov-ci
+          name: Install, lint, and test frontend
+          command: |
+            export CI=true
+            yarn install
+            yarn build
+            yarn test-cov-ci
       - store_artifacts:
           path: coverage
 workflows:
@@ -34,3 +43,4 @@ workflows:
   build_and_test:
     jobs:
       - test
+      - test-coverage
