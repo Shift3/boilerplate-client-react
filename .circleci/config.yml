@@ -13,8 +13,9 @@ jobs:
             - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install, lint, and test frontend
+          environment:
+            NODE_OPTIONS: --max_old_space_size=4096
           command: |
-            export NODE_OPTIONS=--max_old_space_size=4096
             export CI=true
             yarn install
             yarn build
@@ -32,8 +33,9 @@ jobs:
             - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Run Jest and Collect Coverage Reports
+          environment:
+            NODE_OPTIONS: --max_old_space_size=4096
           command: |
-            export NODE_OPTIONS=--max_old_space_size=4096
             export CI=true
             yarn install
             yarn test-cov-ci
