@@ -17,7 +17,6 @@ jobs:
             export NODE_OPTIONS=--max_old_space_size=4096
             export CI=true
             yarn install
-            yarn build
             yarn test-ci
   test-coverage:
     working_directory: ~/boilerplate-client-react
