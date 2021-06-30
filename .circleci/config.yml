@@ -48,7 +48,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "e2:17:0b:f3:b5:ab:49:30:9e:f4:40:da:2b:db:d5:ae"
+            - "57:05:87:cd:7b:4c:40:65:aa:bd:f4:97:c5:1a:c9:24"
       - checkout
       - run: bash .circleci/deploy_wiki.sh
 
