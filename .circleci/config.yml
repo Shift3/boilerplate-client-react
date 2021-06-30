@@ -41,9 +41,19 @@ jobs:
             NODE_OPTIONS: --max_old_space_size=4096
       - store_artifacts:
           path: coverage
+  deploy-wiki:
+    working_directory: ~/boilerplate-client-react
+    docker:
+      - image: 'circleci/node:14-browsers'
+    steps:
+      - checkout
+      - run: bash .circleci/deploy_wiki.sh
+
 workflows:
   version: 2
   build_and_test:
     jobs:
       - test
       - test-coverage
+      - deploy-wiki
+  
