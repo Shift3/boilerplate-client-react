@@ -46,6 +46,9 @@ jobs:
     docker:
       - image: 'circleci/node:14-browsers'
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "e2:17:0b:f3:b5:ab:49:30:9e:f4:40:da:2b:db:d5:ae"
       - checkout
       - run: bash .circleci/deploy_wiki.sh
 
