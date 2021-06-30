@@ -14,6 +14,8 @@ cp $DOCS_DIR/*.md $WIKI_DIR
 
 cd $WIKI_DIR
 git checkout master
+git config --global user.email "CircleCI"
+git config --global user.name "CircleCI"
 git add .
 git commit -m "chore: update wiki pages"
 git push
