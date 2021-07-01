@@ -26,8 +26,8 @@ GIT_LAST_COMMIT_AUTHOR_EMAIL=\"$(git log --format=%ae -n 1 $CIRCLE_SHA1)\"
 cd ..
 git clone $GITHUB_WIKI_REPO_URL
 
-# Update wiki repository with documentation folder contents
-cp -rf $PROJECT_DIR/docs/* $WIKI_DIR/
+# Update wiki repository
+cp -rf $PROJECT_DIR/wiki/* $WIKI_DIR/
 
 # Switch into wiki repository
 cd $WIKI_DIR
