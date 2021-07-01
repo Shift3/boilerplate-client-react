@@ -18,9 +18,9 @@ WIKI_DIR=$PROJECT_DIR/../$GITHUB_REPO_NAME.wiki
 # Using this hash, we can prase out the commit message and author info from the git log.
 # This code was adapted from solutions posted in the following forum post
 # https://discuss.circleci.com/t/git-commit-message-in-environment-variable/533
-GIT_LAST_COMMIT_MESSAGE=\"$(git log --format=%B -n 1 $CIRCLE_SHA1)\"
-GIT_LAST_COMMIT_AUTHOR_NAME=\"$(git log --format=%an -n 1 $CIRCLE_SHA1)\"
-GIT_LAST_COMMIT_AUTHOR_EMAIL=\"$(git log --format=%ae -n 1 $CIRCLE_SHA1)\"
+GIT_LAST_COMMIT_MESSAGE=$(git log --format=%B -n 1 $CIRCLE_SHA1)
+GIT_LAST_COMMIT_AUTHOR_NAME=$(git log --format=%an -n 1 $CIRCLE_SHA1)
+GIT_LAST_COMMIT_AUTHOR_EMAIL=$(git log --format=%ae -n 1 $CIRCLE_SHA1)
 
 # Change out of the project directory and clone the wiki repo
 cd ..
@@ -42,6 +42,6 @@ else
   git config --global user.name $GIT_LAST_COMMIT_AUTHOR_NAME
   git config --global user.email $GIT_LAST_COMMIT_AUTHOR_EMAIL
   git add .
-  git commit -m $GIT_LAST_COMMIT_MESSAGE
+  git commit -m "$GIT_LAST_COMMIT_MESSAGE"
   git push
 fi
