@@ -5,19 +5,26 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-PROJECT_DIR=boilerplate-client-react
-WIKI_DIR=boilerplate-client-react.wiki
-GH_WIKI_REPO=https://github.com/Shift3/$WIKI_DIR.git
+# CircleCI sets the $CIRCLE_REPOSITORY_URL environement variable to the repo url
+# in the format git@github.com:Shift3/<REPO NAME>:.git. We can use the sed command
+# to extract the REPO NAME using the solution from the following StackOverflow answer
+# https://stackoverflow.com/questions/9786498/expr-awk-sed-get-git-directory-name-from-repo-url
+GITHUB_REPO_NAME="$(echo $CIRCLE_REPOSITORY_URL | sed 's%^.*/\([^/]*\)\.git$%\1%g')"
+GITHUB_WIKI_REPO_URL="https://github.com/Shift3/$GITHUB_REPO_NAME.wiki.git"
+PROJECT_DIR=$CIRCLE_WORKING_DIRECTORY
+WIKI_DIR="$CIRCLE_WORKING_DIRECTORY/../$GITHUB_REPO_NAME.wiki"
 
 # CircleCI sets the $CIRCLE_SHA1 environement variable to the sha1 hash of the last commit.
-# Using this hash, we can prase out the commit message and author info.
+# Using this hash, we can prase out the commit message and author info from the git log.
+# This code was adapted from solutions posted in the following forum post
+# https://discuss.circleci.com/t/git-commit-message-in-environment-variable/533
 GIT_LAST_COMMIT_MESSAGE=\"$(git log --format=%B -n 1 $CIRCLE_SHA1)\"
 GIT_LAST_COMMIT_AUTHOR_NAME=\"$(git log --format=%an -n 1 $CIRCLE_SHA1)\"
 GIT_LAST_COMMIT_AUTHOR_EMAIL=\"$(git log --format=%ae -n 1 $CIRCLE_SHA1)\"
 
 # Change out of the project directory and clone the wiki repo
 cd ..
-git clone $GH_WIKI_REPO
+git clone $GITHUB_WIKI_REPO_URL
 
 # Update wiki repository with documentation folder contents
 cp -rf $PROJECT_DIR/docs/* $WIKI_DIR/
@@ -38,4 +45,3 @@ else
   git commit -m $GIT_LAST_COMMIT_MESSAGE
   git push
 fi
-
