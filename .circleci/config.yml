@@ -68,8 +68,6 @@ workflows:
       - hold:
           type: approval
       - deploy-wiki:
-          requires:
-            - hold
           filters:
             branches:
               only: development
