@@ -62,5 +62,11 @@ workflows:
     jobs:
       - test
       - test-coverage
-      - deploy-wiki
-  
+      - hold:
+          type: approval
+      - deploy-wiki:
+          requires:
+            - hold
+          # filters:
+          #   branches:
+          #     only: development
