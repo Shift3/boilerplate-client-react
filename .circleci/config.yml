@@ -48,10 +48,10 @@ jobs:
     docker:
       - image: 'circleci/node:14'
     steps:
-      - checkout
       - add_ssh_keys:
           fingerprints:
             - "57:05:87:cd:7b:4c:40:65:aa:bd:f4:97:c5:1a:c9:24"
+      - checkout
       - run:
           name: Deploy wiki
           command: bash .circleci/deploy_wiki.sh
@@ -70,6 +70,6 @@ workflows:
       - deploy-wiki:
           requires:
             - hold
-          # filters:
-          #   branches:
-          #     only: development
+          filters:
+            branches:
+              only: development
