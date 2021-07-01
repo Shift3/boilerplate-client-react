@@ -26,7 +26,7 @@ if git diff-index --quiet HEAD && [ ! -n "$(git status -s)" ]; then
   exit 0
 else
 # Otherwise, push changes to master branch of wiki repo
-  git config --global user.name "CircleCI"
+  git config --global user.name $USER
   git config --global user.email "boilerplate-client-react@bitwiseindustries.com"
   git add .
   git commit -m ""

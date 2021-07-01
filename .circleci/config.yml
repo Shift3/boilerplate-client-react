@@ -46,7 +46,7 @@ jobs:
   deploy-wiki:
     working_directory: ~/boilerplate-client-react
     docker:
-      - image: 'cimg/node:14'
+      - image: 'circleci/node:14'
     steps:
       - checkout
       - run:
