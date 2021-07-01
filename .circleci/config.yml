@@ -49,12 +49,13 @@ jobs:
       - image: 'circleci/node:14'
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "57:05:87:cd:7b:4c:40:65:aa:bd:f4:97:c5:1a:c9:24"
       - run:
           name: Deploy wiki
           command: bash .circleci/deploy_wiki.sh
-      - add_ssh_keys:
-          fingerprints:
-            - "98:ff:b6:6e:8d:12:6c:ab:39:96:1d:3c:6d:18:dd:d3"
+      
 
 workflows:
   version: 2
