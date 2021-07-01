@@ -11,8 +11,10 @@ set -o nounset
 # https://stackoverflow.com/questions/9786498/expr-awk-sed-get-git-directory-name-from-repo-url
 GITHUB_REPO_NAME="$(echo $CIRCLE_REPOSITORY_URL | sed 's%^.*/\([^/]*\)\.git$%\1%g')"
 GITHUB_WIKI_REPO_URL=https://github.com/Shift3/$GITHUB_REPO_NAME.wiki.git
+PROJECT_DIR=boilerplate-client-react
+WIKI_DIR=boilerplate-client-react.wiki
 # PROJECT_DIR=$CIRCLE_WORKING_DIRECTORY
-WIKI_DIR=$CIRCLE_WORKING_DIRECTORY/../$GITHUB_REPO_NAME.wiki
+# WIKI_DIR=$CIRCLE_WORKING_DIRECTORY/../$GITHUB_REPO_NAME.wiki
 
 # CircleCI sets the $CIRCLE_SHA1 environement variable to the sha1 hash of the last commit.
 # Using this hash, we can prase out the commit message and author info from the git log.
@@ -27,7 +29,7 @@ cd ..
 git clone $GITHUB_WIKI_REPO_URL
 
 # Update wiki repository with documentation folder contents
-cp -rf $CIRCLE_WORKING_DIRECTORY/docs/* $WIKI_DIR/
+cp -rf $PROJECT_DIR/docs/* $WIKI_DIR/
 
 # Switch into wiki repository
 cd $WIKI_DIR
