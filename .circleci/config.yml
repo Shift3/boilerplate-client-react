@@ -55,7 +55,6 @@ jobs:
       - run:
           name: Deploy wiki
           command: bash .circleci/deploy_wiki.sh
-      
 
 workflows:
   version: 2
