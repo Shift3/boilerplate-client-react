@@ -1,20 +1,20 @@
 # Boilerplate Client React
 
-| Branch      | Status                                                                                                                                                                                                                           |
-| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| development | [![Shift3](https://circleci.com/gh/Shift3/boilerplate-client-react.svg?style=shield&circle-token=7906113b0233ea67936098a26da5e8f598eec7ac)](https://circleci.com/gh/Shift3/boilerplate-client-react)                         |
-| main      | [![Shift3](https://circleci.com/gh/Shift3/boilerplate-client-react/tree/main.svg?style=shield&circle-token=7906113b0233ea67936098a26da5e8f598eec7ac)](https://circleci.com/gh/Shift3/boilerplate-client-react/tree/main) |
+| Branch      | Status                                                                                                                                                                                                                   |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| development | [![Shift3](https://circleci.com/gh/Shift3/boilerplate-client-react.svg?style=shield&circle-token=7906113b0233ea67936098a26da5e8f598eec7ac)](https://circleci.com/gh/Shift3/boilerplate-client-react)                     |
+| main        | [![Shift3](https://circleci.com/gh/Shift3/boilerplate-client-react/tree/main.svg?style=shield&circle-token=7906113b0233ea67936098a26da5e8f598eec7ac)](https://circleci.com/gh/Shift3/boilerplate-client-react/tree/main) |
 
 This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react/wiki) which explains the project and its implementation in much greater detail than the code comments.
 
 - [Boilerplate Client React](#boilerplate-client-react)
-    - [Local Development](#local-development)
-      - [Quick Start](#quick-start)
-      - [Starting the Project](#starting-the-project)
-      - [Running unit tests](#running-unit-tests)
-    - [Running test coverage](#running-test-coverage)
-    - [Build](#build)
-      - [`yarn eject`](#yarn-eject)
+  - [Local Development](#local-development)
+    - [Quick Start](#quick-start)
+    - [Starting the Project](#starting-the-project)
+    - [Running unit tests](#running-unit-tests)
+  - [Running test coverage](#running-test-coverage)
+  - [Build](#build)
+    - [`yarn eject`](#yarn-eject)
   - [Learn More](#learn-more)
   - [Staging URL](#staging-url)
   - [Deployment](#deployment)
@@ -45,7 +45,9 @@ This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react
 The project has been configured to use [yarn](https://classic.yarnpkg.com/en/docs/cli/) for package dependency management.
 
 #### Quick Start
+
 To start the project, make sure yarn is installed on your local machine. If you have already installed our [laptop script](https://github.com/Shift3/laptop), you should already have yarn.
+
 1. Install Dependencies via `yarn install`
 2. Start the Project via `yarn start`
 
@@ -224,6 +226,14 @@ This project uses Prettier to enforce code style. It is highly opinionated by de
 Prettier can be configured within editors so that it formats files on save, which helps minimize any changes the pre-commit hook would need to make.
 
 ### CI
+
+This project is configured to work with CircleCI. CircleCI is a continuous integration and delivery platform for building and deploying your application.
+
+The CI hanldes building the application, running tests, and running linters. All of these jobs must pass in order for the CI build to be successful.
+
+This project has set up the CircleCI configuration [here](https://github.com/Shift3/boilerplate-client-react/blob/development/.circleci/config.yml). The project name needs to match the new project name for the builds to succeed.
+
+It is recommended to use the above configuration, however if you choose to alter the configuration please visit the official CircleCI docs for guidance 'https://circleci.com/docs/2.0/config-intro/'.
 
 ### Local Development
 
