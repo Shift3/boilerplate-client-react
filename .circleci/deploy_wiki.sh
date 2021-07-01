@@ -13,7 +13,7 @@ GITHUB_REPO_NAME="$(echo $CIRCLE_REPOSITORY_URL | sed 's%^.*/\([^/]*\)\.git$%\1%
 GITHUB_WIKI_REPO_URL=https://github.com/Shift3/$GITHUB_REPO_NAME.wiki.git
 # PROJECT_DIR=boilerplate-client-react
 WIKI_DIR=boilerplate-client-react.wiki
-PROJECT_DIR=$CIRCLE_WORKING_DIRECTORY
+PROJECT_DIR="$(echo $CIRCLE_WORKING_DIRECTORY)"
 # WIKI_DIR=$CIRCLE_WORKING_DIRECTORY/../$GITHUB_REPO_NAME.wiki
 
 # CircleCI sets the $CIRCLE_SHA1 environement variable to the sha1 hash of the last commit.
