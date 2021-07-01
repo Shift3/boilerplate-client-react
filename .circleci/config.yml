@@ -65,8 +65,6 @@ workflows:
       - test-coverage
   deploy_wiki:
     jobs:
-      - hold:
-          type: approval
       - deploy-wiki:
           filters:
             branches:
