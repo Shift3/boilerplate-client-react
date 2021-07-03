@@ -67,6 +67,6 @@ The application structure was designed around being able to scale to large and c
 
 The boilerplate was built with accessibility as a priority. It supports keyboard navigation, and focus management. It uses semantic HTML and alt/ARIA text for screen readers. The built-in dynamic form helps provide naming and labelling to form fields as well.
 
-### Webpack aliases
+### Create React App
 
-The boilerplate uses webpack aliases to help create shorter relative file paths. This makes it easier to refactor and manage project files.
+This project was bootstrapped with Create React App.
