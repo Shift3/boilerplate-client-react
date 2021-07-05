@@ -55,7 +55,11 @@ Prettier can be configured within editors so that it formats files on save, whic
 
 The boilerplate is strongly typed throughout. It takes advantage of typing and classes to help manage objects.
 
-### Fast
+### Redux for state management
+
+Redux................................................................
+
+### Speed
 
 The boilerplate was built with performance in mind. It uses lazy loading, OnPush change detection, trackBy in dynamic *ngFor instances, ng-container to reduce hidden elements in the DOM, and more. This is very helpful for the overall user experience, but also with slower devices, and older browsers.
 
@@ -69,4 +73,41 @@ The boilerplate was built with accessibility as a priority. It supports keyboard
 
 ### Create React App
 
-This project was bootstrapped with Create React App.
+This project was bootstrapped with Create React App. -- template typescript
+
+### Prettier
+
+### ESLint
+
+### Axios
+
+### Husky
+
+### Reac Router Dom
+
+### Bundle Size Script
+
+Source Map Explorer
+
+### Styled-components
+
+### Validation
+
+YUP
+
+### Resusable
+
+
+### Sign Up / Log In / Reset Password / Change Password / Forgot Passwords
+
+### Dashboard
+
+
+### Flexibility
+
+
+### Security
+
+### Themes
+
+### Translation
