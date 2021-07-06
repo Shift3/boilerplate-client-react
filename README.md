@@ -243,6 +243,90 @@ It is recommended to use the above configuration, however if you choose to alter
 
 ### Code Scaffolding
 
+### React Hook Forms
+
+### Yup
+
+Yup is a JavaScript object schema validator. With Yup, a developer can define a schema (or structure) which specifies the expected data type of each property in an object. The schema can also specify additional validations such as if a property is optional/required, the min/max length of string properties, the min/max value of numeric properties, a regular expressions to match, etc.
+
+A Yup object schema is created using Yup's `object.shape()` method. For example, below is a simple schema describing a person object:
+
+```javascript
+import * as yup from 'yup';
+
+const personSchema = yup.object().shape({
+  name: yup.string().required(),
+  age: yup.number().required().positive().integer(),
+});
+```
+
+Once a schema has been defined, existing objects can be validated against the schema using the `isValid` or `isValidSync` methods defined on the schema object. `isValid` performs the validation asynchronously and returns the result in a `Promise` whereas `isValidSync` performs the validation synchronously and returns a `boolean`. For example:
+
+```javascript
+const validPerson = {
+  name: 'John',
+  age: 25,
+};
+
+const invalidPerson = {
+  name: 'John',
+  age: -25.5,
+};
+
+// validate asynchronously
+
+personSchema.isValid(validPerson).then((valid) => {
+  // valid === true
+});
+
+personSchema.isValid(invalidPerson).then((valid) => {
+  // valid === false
+});
+
+// or synchronously
+
+personSchema.isValidSync(validPerson); // => true
+
+personSchema.isValidSync(invalidPerson)l // => false
+```
+
+For more information, see the [Yup documentation](https://github.com/jquense/yup).
+
+### React Hook Form
+
+#### resolvers
+
+The `useForm` hook accepts an optional `resolver` function which allows you to use any external validation library such as [Yup](#yup) or your own custom validation logic to validate your forms. To simplify the integration with existing validation libraries, [React Hook Form](#react-hook-form) provides the optional `@hookform/resolvers` module which contains utility methods to create resolver functions from library specific object schemas.
+
+For example, below we use the `yupResolver` from the `@hookform/resolvers` module to convert a [Yup](#yup) object schema into a resolver function:
+
+```jsx
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+const personSchema = yup.object().shape({
+  name: yup.string().required(),
+  age: yup.number().required().positive().integer(),
+});
+
+const PersonForm = () => {
+  const { register, handleSubmit } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <input {...register('name')} />
+      <input type='number' {...register('age')} />
+      <input type='submit' />
+    </form>
+  );
+};
+```
+
+For more information, see the [useForm](https://react-hook-form.com/api/useform) and [@hookform/resolvers](https://github.com/react-hook-form/resolvers) documentation.
+
 ### Build
 
 ### Stagin Build
