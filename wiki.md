@@ -15,7 +15,7 @@ These roles are checked throughout the application with guards to prevent accide
 
 ### Multi-Tenancy
 
-As mentioned above, the boilerplate supports multi-tenancy. This feature is unobtrusive if it's not necessary.
+The boilerplate supports multi-tenancy. This feature is unobtrusive if it's not necessary....z
 
 ### Administrator Only Section
 
