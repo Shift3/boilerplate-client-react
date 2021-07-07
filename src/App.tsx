@@ -12,7 +12,7 @@ import { DashboardPage } from './components/dashboardPage';
 import { FlashMessage } from './components/flashMessage';
 import { HolyGrailLayout } from './components/holyGrailLayout';
 import { NavBar } from './components/navbar';
-import { PrivateRoute } from './core/modules/auth/presentation/privateRoute';
+import PrivateRoute from './core/modules/auth/presentation/privateRoute';
 import { GlobalStyle } from './GlobalStyle';
 import AppTheme from './utils/styleValues';
 
@@ -23,13 +23,13 @@ export const App: FC = () => (
       <Router>
         <Switch>
           <HolyGrailLayout leftSidebar={<NavBar />}>
-            <PrivateRoute authPath='/' component={DashboardPage} isAuth/>
+            <PrivateRoute path='/' component={DashboardPage} />
             <Route exact path='/auth/login' component={LogInPage} />
             <Route exact path='/auth/signup' component={SignUpPage} />
-            <PrivateRoute  authPath='/auth/activate-account/:token' component={ActivateAccountPage} isAuth/>
-            <PrivateRoute  authPath='/users/change-password/:id' component={ChangePasswordPage} isAuth/>
-            <PrivateRoute  authPath='/auth/reset-password/:token' component={ResetPasswordPage} isAuth/>
-            <PrivateRoute authPath='/auth/forgot-password' component={ForgotPasswordPage}isAuth/>
+            <PrivateRoute  path='/auth/activate-account/:token' component={ActivateAccountPage} />
+            <PrivateRoute  path='/users/change-password/:id' component={ChangePasswordPage} />
+            <PrivateRoute  path='/auth/reset-password/:token' component={ResetPasswordPage}/>
+            <PrivateRoute path='/auth/forgot-password' component={ForgotPasswordPage}/>
           </HolyGrailLayout>
         </Switch>
       </Router>

@@ -1,16 +1,31 @@
-import { createElement, FC } from 'react';
-import { Redirect, Route, RouteProps } from 'react-router-dom';
+import { connect, ConnectedProps } from 'react-redux';
+import {
+  Redirect,
+  Route,
+  RouteProps
+} from 'react-router-dom';
+import { RootState } from '../../../redux/store';
 
-export interface IPrivateRouteProps extends RouteProps {
-  isAuth: boolean;
-  authPath: string;
-}
+const mapState = (state: RootState) => ({
+  loggedIn: state.auth
+});
 
-export const PrivateRoute: FC<IPrivateRouteProps> =
-({ component, isAuth, ...rest }:any) => {
-  const routeComponent = (props:any)   =>
-    isAuth
-      ? createElement(component, props)
-      : <Redirect to={{ pathname: '/auth/login' }}/>;
-  return <Route {...rest} render={routeComponent} />;
+const connector = connect(
+  mapState,
+  { }
+);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux & RouteProps & {
+
 };
+
+const PrivateRoute: React.FC<Props> = (props) => {
+  const { loggedIn, ...rest } = props;
+
+  return  !loggedIn ? <Redirect to='/auth/login/' /> :
+    <Route {...rest} />;
+};
+
+export default connector(PrivateRoute);
