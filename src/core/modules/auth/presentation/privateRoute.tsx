@@ -1,31 +1,17 @@
-import { connect, ConnectedProps } from 'react-redux';
 import {
   Redirect,
   Route,
   RouteProps
 } from 'react-router-dom';
-import { RootState } from '../../../redux/store';
+import { useAuthState } from '../application/useAuthState';
+import { ISession } from '../domain/session';
 
-const mapState = (state: RootState) => ({
-  loggedIn: state.auth
-});
+type Props = RouteProps;
 
-const connector = connect(
-  mapState,
-  { }
-);
+export const PrivateRoute: React.FC<Props> = (props) => {
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
+  const session: ISession | null = useAuthState();
 
-type Props = PropsFromRedux & RouteProps & {
-
+  return  !session ? <Redirect to='/auth/login/' /> :
+    <Route {...props} />;
 };
-
-const PrivateRoute: React.FC<Props> = (props) => {
-  const { loggedIn, ...rest } = props;
-
-  return  !loggedIn ? <Redirect to='/auth/login/' /> :
-    <Route {...rest} />;
-};
-
-export default connector(PrivateRoute);
