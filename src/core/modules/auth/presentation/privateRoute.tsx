@@ -12,6 +12,6 @@ export const PrivateRoute: React.FC<Props> = (props) => {
 
   const session: ISession | null = useAuthState();
 
-  return  !session ? <Redirect to='/auth/login/' /> :
+  return  !session ? <Redirect to='/auth/login' /> :
     <Route {...props} />;
 };
