@@ -12,7 +12,7 @@ import { DashboardPage } from './components/dashboardPage';
 import { FlashMessage } from './components/flashMessage';
 import { HolyGrailLayout } from './components/holyGrailLayout';
 import { NavBar } from './components/navbar';
-import { PrivateRoute } from './core/modules/auth/presentation/PrivateRoute';
+import { PrivateRoute } from './core/modules/auth/presentation/privateRoute';
 import { GlobalStyle } from './GlobalStyle';
 import AppTheme from './utils/styleValues';
 
