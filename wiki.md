@@ -45,7 +45,7 @@ The boilerplate uses CircleCI for making sure projects can build, pass tests, an
 
 The boilerplate has working unit tests that cover the client business logic. This not only helps ensure code quality, it can serve as a great set of examples when learning how to write unit tests and how to write them in Angular.
 
-### Consistent
+### Consistency
 
 This project uses Prettier to enforce code style. It is highly opinionated by design with relatively scant options for customization. The thought process behind it is to ignore personal styling preferences and instead embrace consistency. There are .prettierrc and .prettierignore configuration files to adjust some options. Prettier is also wired up to a pre-commit hook. This DOES slightly slow down git, as it runs the hook on staged files every time git commit is executed.
 
