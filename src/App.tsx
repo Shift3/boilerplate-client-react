@@ -23,13 +23,13 @@ export const App: FC = () => (
       <Router>
         <Switch>
           <HolyGrailLayout leftSidebar={<NavBar />}>
-            <PrivateRoute exact path='/' component={DashboardPage} />
+            <PrivateRoute authPath='/' component={DashboardPage} isAuth/>
             <Route exact path='/auth/login' component={LogInPage} />
             <Route exact path='/auth/signup' component={SignUpPage} />
-            <PrivateRoute  exact path='/auth/activate-account/:token' component={ActivateAccountPage} />
-            <PrivateRoute  exact path='/users/change-password/:id' component={ChangePasswordPage} />
-            <PrivateRoute  exact path='/auth/reset-password/:token' component={ResetPasswordPage} />
-            <PrivateRoute exact path='/auth/forgot-password' component={ForgotPasswordPage} />
+            <PrivateRoute  authPath='/auth/activate-account/:token' component={ActivateAccountPage} isAuth/>
+            <PrivateRoute  authPath='/users/change-password/:id' component={ChangePasswordPage} isAuth/>
+            <PrivateRoute  authPath='/auth/reset-password/:token' component={ResetPasswordPage} isAuth/>
+            <PrivateRoute authPath='/auth/forgot-password' component={ForgotPasswordPage}isAuth/>
           </HolyGrailLayout>
         </Switch>
       </Router>

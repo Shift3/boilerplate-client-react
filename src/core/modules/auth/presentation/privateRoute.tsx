@@ -1,30 +1,16 @@
-import { FC } from 'react';
+import { createElement, FC } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
-export interface ProtectedRouteProps extends RouteProps {
-  isAuthenticated: boolean;
-  isAllowed: boolean;
-  restrictedPath: string;
-  authenticationPath: string;
+export interface IPrivateRouteProps extends RouteProps {
+  isAuth: boolean;
+  authPath: string;
 }
 
-export const PrivateRoute: FC<ProtectedRouteProps> =
-({ isAuthenticated, authenticationPath, isAllowed, restrictedPath, ...rest }) => {
-  let redirectPath = '';
-  if (!isAuthenticated ) {
-    redirectPath = authenticationPath;
-  }
-  if (isAuthenticated && !isAllowed) {
-    redirectPath = restrictedPath;
-  }
-
-  if (redirectPath) {
-    const renderComponent = () => <Redirect to={{ pathname: redirectPath }} />;
-    return <Route {...{ isAuthenticated, authenticationPath, isAllowed, restrictedPath }}
-      // eslint-disable-next-line no-undefined
-      component={renderComponent} render={undefined} />;
-  }
-  return <Route {...rest} />;
+export const PrivateRoute: FC<IPrivateRouteProps> =
+({ component, isAuth, ...rest }:any) => {
+  const routeComponent = (props:any)   =>
+    isAuth
+      ? createElement(component, props)
+      : <Redirect to={{ pathname: '/auth/login' }}/>;
+  return <Route {...rest} render={routeComponent} />;
 };
-
-export default PrivateRoute;
