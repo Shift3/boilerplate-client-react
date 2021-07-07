@@ -8,8 +8,8 @@ export interface ProtectedRouteProps extends RouteProps {
   authenticationPath: string;
 }
 
-export const ProtectedRoute: FC<ProtectedRouteProps> =
-({ isAuthenticated, authenticationPath, isAllowed, restrictedPath }) => {
+export const PrivateRoute: FC<ProtectedRouteProps> =
+({ isAuthenticated, authenticationPath, isAllowed, restrictedPath, ...rest }) => {
   let redirectPath = '';
   if (!isAuthenticated ) {
     redirectPath = authenticationPath;
@@ -24,7 +24,7 @@ export const ProtectedRoute: FC<ProtectedRouteProps> =
       // eslint-disable-next-line no-undefined
       component={renderComponent} render={undefined} />;
   }
-  return <Route {...{ isAuthenticated, authenticationPath, isAllowed, restrictedPath }} />;
+  return <Route {...rest} />;
 };
 
-export default ProtectedRoute;
+export default PrivateRoute;
