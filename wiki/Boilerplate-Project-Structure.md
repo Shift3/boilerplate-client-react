@@ -1,0 +1,1 @@
+The React Boilerlplate uses a specific architecture designed to scale well for large projects.

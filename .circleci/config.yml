@@ -20,6 +20,7 @@ jobs:
             yarn test-ci
           environment:
             NODE_OPTIONS: --max_old_space_size=4096
+
   test-coverage:
     working_directory: ~/boilerplate-client-react
     docker:
@@ -41,9 +42,29 @@ jobs:
             NODE_OPTIONS: --max_old_space_size=4096
       - store_artifacts:
           path: coverage
+
+  deploy-wiki:
+    working_directory: ~/boilerplate-client-react
+    docker:
+      - image: 'circleci/node:14'
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "57:05:87:cd:7b:4c:40:65:aa:bd:f4:97:c5:1a:c9:24"
+      - checkout
+      - run:
+          name: Deploy wiki
+          command: bash .circleci/deploy_wiki.sh
+
 workflows:
   version: 2
   build_and_test:
     jobs:
       - test
       - test-coverage
+  deploy_wiki:
+    jobs:
+      - deploy-wiki:
+          filters:
+            branches:
+              only: development

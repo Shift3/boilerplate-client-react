@@ -30,6 +30,7 @@ This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react
     - [Initializing the Project](#initializing-the-project)
     - [Prettier](#prettier)
     - [CI](#ci)
+      - [Wiki Automation](#wiki-automation)
     - [Local Development](#local-development-2)
     - [Webpack Bundle Analyzer](#webpack-bundle-analyzer)
     - [Development Server](#development-server-1)
@@ -234,6 +235,17 @@ The CI hanldes building the application, running tests, and running linters. All
 This project has set up the CircleCI configuration [here](https://github.com/Shift3/boilerplate-client-react/blob/development/.circleci/config.yml). The project name needs to match the new project name for the builds to succeed.
 
 It is recommended to use the above configuration, however if you choose to alter the configuration please visit the official CircleCI docs for guidance 'https://circleci.com/docs/2.0/config-intro/'.
+
+#### Wiki Automation
+
+The CircleCI config includes a `deploy-wiki` job to automatically deploy Wiki pages that are placed in the `wiki/` folder. This workflow only runs when changes are commited directly to the `development` branch or when a feature branch is merged into the `development` branch.
+
+After forking the project, you will need to make the following changes to ensure the `deploy-wiki` job works properly:
+
+1. Under the `deploy-wiki` job, change the `working_directory` to the name of your GitHub repository.
+2. Follow the CircleCI documentaiton on [Creating a GitHub deploy key](https://circleci.com/docs/2.0/gh-bb-integration/#creating-a-github-deploy-key) to add a deploy key with write access, and replace the SSH key fingerprint in the `deploy-wiki` job.
+
+These steps only need to be performed once by a user with admin access to both GitHub repository and CircleCI project.
 
 ### Local Development
 
