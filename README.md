@@ -1,20 +1,20 @@
 # Boilerplate Client React
 
-| Branch      | Status                                                                                                                                                                                                                           |
-| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| development | [![Shift3](https://circleci.com/gh/Shift3/boilerplate-client-react.svg?style=shield&circle-token=7906113b0233ea67936098a26da5e8f598eec7ac)](https://circleci.com/gh/Shift3/boilerplate-client-react)                         |
-| main      | [![Shift3](https://circleci.com/gh/Shift3/boilerplate-client-react/tree/main.svg?style=shield&circle-token=7906113b0233ea67936098a26da5e8f598eec7ac)](https://circleci.com/gh/Shift3/boilerplate-client-react/tree/main) |
+| Branch      | Status                                                                                                                                                                                                                   |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| development | [![Shift3](https://circleci.com/gh/Shift3/boilerplate-client-react.svg?style=shield&circle-token=7906113b0233ea67936098a26da5e8f598eec7ac)](https://circleci.com/gh/Shift3/boilerplate-client-react)                     |
+| main        | [![Shift3](https://circleci.com/gh/Shift3/boilerplate-client-react/tree/main.svg?style=shield&circle-token=7906113b0233ea67936098a26da5e8f598eec7ac)](https://circleci.com/gh/Shift3/boilerplate-client-react/tree/main) |
 
 This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react/wiki) which explains the project and its implementation in much greater detail than the code comments.
 
 - [Boilerplate Client React](#boilerplate-client-react)
-    - [Local Development](#local-development)
-      - [Quick Start](#quick-start)
-      - [Starting the Project](#starting-the-project)
-      - [Running unit tests](#running-unit-tests)
-    - [Running test coverage](#running-test-coverage)
-    - [Build](#build)
-      - [`yarn eject`](#yarn-eject)
+  - [Local Development](#local-development)
+    - [Quick Start](#quick-start)
+    - [Starting the Project](#starting-the-project)
+    - [Running unit tests](#running-unit-tests)
+  - [Running test coverage](#running-test-coverage)
+  - [Build](#build)
+    - [`yarn eject`](#yarn-eject)
   - [Learn More](#learn-more)
   - [Staging URL](#staging-url)
   - [Deployment](#deployment)
@@ -46,7 +46,9 @@ This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react
 The project has been configured to use [yarn](https://classic.yarnpkg.com/en/docs/cli/) for package dependency management.
 
 #### Quick Start
+
 To start the project, make sure yarn is installed on your local machine. If you have already installed our [laptop script](https://github.com/Shift3/laptop), you should already have yarn.
+
 1. Install Dependencies via `yarn install`
 2. Start the Project via `yarn start`
 
@@ -226,6 +228,14 @@ Prettier can be configured within editors so that it formats files on save, whic
 
 ### CI
 
+This project is configured to work with CircleCI. CircleCI is a continuous integration and delivery platform for building and deploying your application.
+
+The CI hanldes building the application, running tests, and running linters. All of these jobs must pass in order for the CI build to be successful.
+
+This project has set up the CircleCI configuration [here](https://github.com/Shift3/boilerplate-client-react/blob/development/.circleci/config.yml). The project name needs to match the new project name for the builds to succeed.
+
+It is recommended to use the above configuration, however if you choose to alter the configuration please visit the official CircleCI docs for guidance 'https://circleci.com/docs/2.0/config-intro/'.
+
 #### Wiki Automation
 
 The CircleCI config includes a `deploy-wiki` job to automatically deploy Wiki pages that are placed in the `wiki/` folder. This workflow only runs when changes are commited directly to the `development` branch or when a feature branch is merged into the `development` branch.
@@ -244,6 +254,90 @@ These steps only need to be performed once by a user with admin access to both G
 ### Development Server
 
 ### Code Scaffolding
+
+### React Hook Forms
+
+### Yup
+
+Yup is a JavaScript object schema validator. With Yup, a developer can define a schema (or structure) which specifies the expected data type of each property in an object. The schema can also specify additional validations such as if a property is optional/required, the min/max length of string properties, the min/max value of numeric properties, a regular expressions to match, etc.
+
+A Yup object schema is created using Yup's `object.shape()` method. For example, below is a simple schema describing a person object:
+
+```javascript
+import * as yup from 'yup';
+
+const personSchema = yup.object().shape({
+  name: yup.string().required(),
+  age: yup.number().required().positive().integer(),
+});
+```
+
+Once a schema has been defined, existing objects can be validated against the schema using the `isValid` or `isValidSync` methods defined on the schema object. `isValid` performs the validation asynchronously and returns the result in a `Promise` whereas `isValidSync` performs the validation synchronously and returns a `boolean`. For example:
+
+```javascript
+const validPerson = {
+  name: 'John',
+  age: 25,
+};
+
+const invalidPerson = {
+  name: 'John',
+  age: -25.5,
+};
+
+// validate asynchronously
+
+personSchema.isValid(validPerson).then((valid) => {
+  // valid === true
+});
+
+personSchema.isValid(invalidPerson).then((valid) => {
+  // valid === false
+});
+
+// or synchronously
+
+personSchema.isValidSync(validPerson); // => true
+
+personSchema.isValidSync(invalidPerson)l // => false
+```
+
+For more information, see the [Yup documentation](https://github.com/jquense/yup).
+
+### React Hook Form
+
+#### resolvers
+
+The `useForm` hook accepts an optional `resolver` function which allows you to use any external validation library such as [Yup](#yup) or your own custom validation logic to validate your forms. To simplify the integration with existing validation libraries, [React Hook Form](#react-hook-form) provides the optional `@hookform/resolvers` module which contains utility methods to create resolver functions from library specific object schemas.
+
+For example, below we use the `yupResolver` from the `@hookform/resolvers` module to convert a [Yup](#yup) object schema into a resolver function:
+
+```jsx
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+const personSchema = yup.object().shape({
+  name: yup.string().required(),
+  age: yup.number().required().positive().integer(),
+});
+
+const PersonForm = () => {
+  const { register, handleSubmit } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((d) => console.log(d))}>
+      <input {...register('name')} />
+      <input type='number' {...register('age')} />
+      <input type='submit' />
+    </form>
+  );
+};
+```
+
+For more information, see the [useForm](https://react-hook-form.com/api/useform) and [@hookform/resolvers](https://github.com/react-hook-form/resolvers) documentation.
 
 ### Build
 
