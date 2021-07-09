@@ -15,7 +15,7 @@ These roles are checked throughout the application with guards to prevent accide
 
 ### Multi-Tenancy
 
-The boilerplate supports multi-tenancy. This feature is unobtrusive if it's not necessary....z
+The boilerplate supports multi-tenancy. This feature is unobtrusive if it's not necessary.
 
 ### Administrator Only Section
 
@@ -31,7 +31,7 @@ There is a section where any logged in user of any role can change their own pro
 
 ### Sentry
 
-The boilerplate is configured to use Sentry, an error logging service Shift3 uses (and loves). It just needs the Sentry DSN added to the environment variables. It can support different DSNs for different environments. It also keeps track of which environment is being logged, and the client version number.
+The boilerplate is configured to use Sentry, an error logging service. It just needs the Sentry DSN added to the environment variables. It can support different DSNs for different environments. It also keeps track of which environment is being logged, and the client version number.
 
 ### Terraform for AWS sandbox deployments
 
@@ -43,17 +43,17 @@ The boilerplate uses CircleCI for making sure projects can build, pass tests, an
 
 ### Unit tests
 
-The boilerplate has working unit tests that cover the client business logic. This not only helps ensure code quality, it can serve as a great set of examples when learning how to write unit tests and how to write them in Angular.
+The boilerplate has working unit tests that cover the client business logic as well as the UI. This not only helps ensure code quality, it can serve as a great set of examples when learning how to write unit tests and how to write them in React.
 
-### Consistent
+### Consistent with Prettier & ESLint
 
-This project uses Prettier to enforce code style. It is highly opinionated by design with relatively scant options for customization. The thought process behind it is to ignore personal styling preferences and instead embrace consistency. There are .prettierrc and .prettierignore configuration files to adjust some options. Prettier is also wired up to a pre-commit hook. This DOES slightly slow down git, as it runs the hook on staged files every time git commit is executed.
+This project uses Prettier to enforce code style. It is highly opinionated by design with relatively scant options for customization. The thought process behind it is to ignore personal styling preferences and instead embrace consistency. There are .prettierrc and .prettierignore configuration files to adjust some options. 
 
-Prettier can be configured within editors so that it formats files on save, which helps minimize any changes the pre-commit hook would need to make.
+ESLint...
 
 ### Strongly typed
 
-The boilerplate is strongly typed throughout. It takes advantage of typing and classes to help manage objects.
+The boilerplate is str,ongly typed throughout with the use of Typescript. It takes advantage of typing and classes to help manage objects.
 
 ### Redux for state management
 
@@ -74,10 +74,6 @@ The boilerplate was built with accessibility as a priority. It supports keyboard
 ### Create React App
 
 This project was bootstrapped with Create React App. -- template typescript
-
-### Prettier
-
-### ESLint
 
 ### Axios
 
