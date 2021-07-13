@@ -30,15 +30,14 @@ export const UserTable: FC = ({ users }) => {
         <tbody>
           {users.length > 0 ?
             users.map((user: IUser) => {
-              const { id, lastName, firstName, email, role, activated, actions } = user;
+              const { id, lastName, firstName, email, role, activatedAt } = user;
               return (
                 <tr key={id}>
                   <td>{lastName}</td>
                   <td>{firstName}</td>
                   <td>{email}</td>
                   <td>{role}</td>
-                  <td>{activated}</td>
-                  <td>{actions}</td>
+                  <td>{activatedAt}</td>
                   <td>
                     <EditButton onClick={navigateToUpdateProfile}>Edit Icon</EditButton>
                     <DeleteButton onClick={deleteUser}>Delete Icon</DeleteButton>
