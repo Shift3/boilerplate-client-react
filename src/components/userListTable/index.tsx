@@ -28,30 +28,24 @@ export const UserTable: FC = ({ users }) => {
           </tr>
         </thead>
         <tbody>
-          {users.length > 0 ?
-            users.map((user: IUser) => {
-              const { id, lastName, firstName, email, role, activatedAt } = user;
-              return (
-                <tr key={id}>
-                  <td>{lastName}</td>
-                  <td>{firstName}</td>
-                  <td>{email}</td>
-                  <td>{role}</td>
-                  <td>{activatedAt}</td>
-                  <td>
-                    <EditButton onClick={navigateToUpdateProfile}>Edit Icon</EditButton>
-                    <DeleteButton onClick={deleteUser}>Delete Icon</DeleteButton>
-                    <ResetPasswordButton onClick={resetPassword}>Lock Icon</ResetPasswordButton>
-                  </td>
-                </tr>
-              );
-            })
-            : (
-              <tr>
-                <td colSpan={4}>No users found</td>
+          { users.map((user: IUser) => {
+            const { id, lastName, firstName, email, role, activatedAt } = user;
+            return (
+              <tr key={id}>
+                <td>{lastName}</td>
+                <td>{firstName}</td>
+                <td>{email}</td>
+                <td>{role}</td>
+                <td>{activatedAt}</td>
+                <td>
+                  <EditButton onClick={navigateToUpdateProfile}>Edit Icon</EditButton>
+                  <DeleteButton onClick={deleteUser}>Delete Icon</DeleteButton>
+                  <ResetPasswordButton onClick={resetPassword}>Lock Icon</ResetPasswordButton>
+                </td>
               </tr>
-            )
+            );
           }
+          )}
         </tbody>
       </table>
     </TableContainer>
