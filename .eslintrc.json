@@ -126,7 +126,8 @@
       1,
       2,
       {
-        "SwitchCase": 1
+        "SwitchCase": 1,
+        "offsetTernaryExpressions": true
       }
     ],
     "jsx-quotes": [1, "prefer-single"],
