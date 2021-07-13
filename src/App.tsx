@@ -1,19 +1,20 @@
-import { FC } from 'react';
 import { ErrorBoundary } from '@sentry/react';
+import { ActivateAccountPage } from 'components/activateAccountPage';
+import { ChangePasswordPage } from 'components/changePasswordPage';
+import { ForgotPasswordPage } from 'components/forgotPasswordPage';
+import { LogInPage } from 'components/loginPage';
+import { ResetPasswordPage } from 'components/resetPasswordPage';
+import { SignUpPage } from 'components/signupPage';
+import { FC } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { LogInPage } from 'components/loginPage';
-import { SignUpPage } from 'components/signupPage';
-import { ChangePasswordPage } from 'components/changePasswordPage';
 import { DashboardPage } from './components/dashboardPage';
 import { FlashMessage } from './components/flashMessage';
 import { HolyGrailLayout } from './components/holyGrailLayout';
 import { NavBar } from './components/navbar';
+import { UserListPage } from './components/userListPage/index';
 import { GlobalStyle } from './GlobalStyle';
 import AppTheme from './utils/styleValues';
-import { ResetPasswordPage } from 'components/resetPasswordPage';
-import { ForgotPasswordPage } from 'components/forgotPasswordPage';
-import { ActivateAccountPage } from 'components/activateAccountPage';
 
 export const App: FC = () => (
   <ErrorBoundary>
@@ -29,6 +30,7 @@ export const App: FC = () => (
             <Route exact path='/users/change-password/:id' component={ChangePasswordPage} />
             <Route exact path='/auth/reset-password/:token' component={ResetPasswordPage} />
             <Route exact path='/auth/forgot-password' component={ForgotPasswordPage} />
+            <Route exact path='/auth/user-list' component={UserListPage} />
           </HolyGrailLayout>
         </Switch>
       </Router>
