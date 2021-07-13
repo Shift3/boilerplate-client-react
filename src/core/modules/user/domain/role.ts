@@ -21,6 +21,27 @@ export class Role implements IRole {
     }
   }
 
+  /**
+   * Returns true if the role is authorized to view agents. Otherwise, returns false.
+   */
+  public canViewAgents(): boolean {
+    return this.roleName !== RoleType.None;
+  }
+
+  /**
+   * Returns true if the role is authorized to view users. Otherwise, returns false.
+   */
+  public canViewUsers(): boolean {
+    return this.roleName === RoleType.SuperAdmin || this.roleName === RoleType.Admin;
+  }
+
+  /**
+   * Returns true if the role is authorized to view agencies. Otherwise, returns false.
+   */
+  public canViewAgencies(): boolean {
+    return this.roleName === RoleType.SuperAdmin;
+  }
+
   public toPlainObject(): IRole {
     return { ...this };
   }
