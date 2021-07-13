@@ -1,7 +1,8 @@
 import { FC } from 'react';
+import { IUser } from '../../core/modules/user/domain/user';
 import { DeleteButton, EditButton, ResetPasswordButton, TableContainer } from './styled';
 
-export const UserTable: FC = (IUser) => {
+export const UserTable: FC = (IUser: IUser) => {
 
   const navigateToUpdateProfile = () => {
     // naviage to update profile page
