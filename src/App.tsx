@@ -13,6 +13,7 @@ import { FlashMessage } from './components/flashMessage';
 import { HolyGrailLayout } from './components/holyGrailLayout';
 import { NavBar } from './components/navbar';
 import { UserListPage } from './components/userListPage/index';
+import { PrivateRoute } from './core/modules/auth/presentation/privateRoute';
 import { GlobalStyle } from './GlobalStyle';
 import AppTheme from './utils/styleValues';
 
@@ -23,7 +24,6 @@ export const App: FC = () => (
       <Router>
         <Switch>
           <HolyGrailLayout leftSidebar={<NavBar />}>
-            <Route exact path='/' component={DashboardPage} />
             <Route exact path='/auth/login' component={LogInPage} />
             <Route exact path='/auth/signup' component={SignUpPage} />
             <Route exact path='/auth/activate-account/:token' component={ActivateAccountPage} />
