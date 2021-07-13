@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { IUser } from '../../core/modules/user/domain/user';
 import { DeleteButton, EditButton, ResetPasswordButton, TableContainer } from './styled';
 
-export const UserTable: FC = (IUser: IUser) => {
+export const UserTable: FC = ({ users }) => {
 
   const navigateToUpdateProfile = () => {
     // naviage to update profile page
@@ -28,8 +28,8 @@ export const UserTable: FC = (IUser: IUser) => {
           </tr>
         </thead>
         <tbody>
-          {IUser.childlength > 0 ?
-            IUser.map((user) => {
+          {users.length > 0 ?
+            users.map((user: IUser) => {
               const { id, lastName, firstName, email, role, activated, actions } = user;
               return (
                 <tr key={id}>
