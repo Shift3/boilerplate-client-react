@@ -1,13 +1,23 @@
+import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import { HolyGrailLayout } from '../index';
 import { expectInDocByTestId, expectNotInDocByTestId } from '../../../utils/test';
+import store from 'core/redux/store';
 
-const renderWithNoProps = () => render(<HolyGrailLayout />);
+const renderWithNoProps = () =>
+  render(
+    <Provider store={store}>
+      <HolyGrailLayout />
+    </Provider>,
+  );
+
 const renderWithPropsAndChild = () =>
   render(
-    <HolyGrailLayout leftSidebar={<div />} rightSidebar={<div />}>
-      <div />
-    </HolyGrailLayout>,
+    <Provider store={store}>
+      <HolyGrailLayout leftSidebar={<div />} rightSidebar={<div />}>
+        <div />
+      </HolyGrailLayout>
+    </Provider>,
   );
 
 describe('HolyGrailLayout', () => {
