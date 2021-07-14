@@ -39,13 +39,13 @@ export const useNavData = (): INavData => {
     },
     {
       icon: 'users',
-      label: 'Directory',
+      label: 'Users',
       path: '/admin/user-list',
       isActive: user?.role.canViewUsers() ?? false,
     },
     {
       icon: 'building',
-      label: 'Directory',
+      label: 'Agencies',
       path: '/admin/agency-list',
       isActive: user?.role.canViewAgencies() ?? false,
     },
