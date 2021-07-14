@@ -2,7 +2,11 @@ import { FC } from 'react';
 import { IUser } from '../../core/modules/user/domain/user';
 import { DeleteButton, EditButton, ResetPasswordButton, TableContainer } from './styled';
 
-export const UserTable: FC = ({ users }) => {
+interface IProps {
+  users: IUser[]
+}
+
+export const UserTable: FC<IProps> = ({ users }) => {
 
   const navigateToUpdateProfile = () => {
     // naviage to update profile page
