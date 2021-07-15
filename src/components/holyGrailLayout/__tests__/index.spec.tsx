@@ -1,22 +1,28 @@
 import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import { HolyGrailLayout } from '../index';
 import { expectInDocByTestId, expectNotInDocByTestId } from '../../../utils/test';
 import store from 'core/redux/store';
+import { createMemoryHistory } from 'history';
 
 const renderWithNoProps = () =>
   render(
     <Provider store={store}>
-      <HolyGrailLayout />
+      <Router history={createMemoryHistory()}>
+        <HolyGrailLayout />
+      </Router>
     </Provider>,
   );
 
 const renderWithPropsAndChild = () =>
   render(
     <Provider store={store}>
-      <HolyGrailLayout leftSidebar={<div />} rightSidebar={<div />}>
-        <div />
-      </HolyGrailLayout>
+      <Router history={createMemoryHistory()}>
+        <HolyGrailLayout leftSidebar={<div />} rightSidebar={<div />}>
+          <div />
+        </HolyGrailLayout>
+      </Router>
     </Provider>,
   );
 
