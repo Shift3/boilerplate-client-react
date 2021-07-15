@@ -49,11 +49,11 @@ const VerticalDivider = styled.span`
   border-left: 1px solid #d3d3d3;
 `;
 
-export const ProfileDropdown: FC<{ user: IUserProfile }> = ({ user }) => {
+export const ProfileDropdown: FC<{ profile: IUserProfile }> = ({ profile }) => {
   const dropdownTitle = (
     <>
       <FontAwesomeIcon icon='user' />
-      <span>Hi {user.firstName}</span>
+      <span>Hi {profile.firstName}</span>
     </>
   );
 
@@ -61,9 +61,9 @@ export const ProfileDropdown: FC<{ user: IUserProfile }> = ({ user }) => {
     <ProfileDropDownContainer id='profile-nav-dropdown' title={dropdownTitle} alignRight>
       <ProfileDropdownMenuContainer>
         <ProfileInfoContainer>
-          <img src={portraitPlaceholder} alt={`${user.firstName} ${user.lastName}`} />
-          <div>{user.firstName}</div>
-          <div>{user.lastName}</div>
+          <img src={portraitPlaceholder} alt={`${profile.firstName} ${profile.lastName}`} />
+          <div>{profile.firstName}</div>
+          <div>{profile.lastName}</div>
         </ProfileInfoContainer>
         <VerticalDivider />
         <div>

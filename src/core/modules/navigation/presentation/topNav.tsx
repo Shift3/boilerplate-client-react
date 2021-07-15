@@ -26,20 +26,20 @@ const CustomNavLink = styled(Nav.Link)`
 `;
 
 export const TopNav: FC = () => {
-  const { authUser, navLinks } = useNavData();
+  const { userProfile, navLinks } = useNavData();
 
   return (
     <Navbar collapseOnSelect expand='lg' className='shadow'>
       <Navbar.Brand href='/content/agent-list'>
         <img src={logo} alt='Bitwise Technology Consulting' width='160px' />
       </Navbar.Brand>
-      {authUser ? (
+      {userProfile ? (
         <>
           <Navbar.Toggle aria-controls='responsive-navbar-nav' />
           <Navbar.Collapse id='responsive-navbar-nav'>
             <Nav className='mr-auto'>
               {navLinks
-                .filter((link) => link.isActive)
+                .filter((link) => link.canUserActivate)
                 .map((link) => (
                   <CustomNavLink key={link.path} href={link.path}>
                     <FontAwesomeIcon icon={link.icon} />
@@ -48,7 +48,7 @@ export const TopNav: FC = () => {
                 ))}
             </Nav>
             <Nav>
-              <ProfileDropdown user={authUser} />
+              <ProfileDropdown profile={userProfile} />
             </Nav>
           </Navbar.Collapse>
         </>

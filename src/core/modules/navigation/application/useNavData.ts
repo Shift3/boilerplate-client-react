@@ -12,11 +12,11 @@ export interface INavLink {
   icon: IconName;
   label: string;
   path: string;
-  isActive: boolean;
+  canUserActivate: boolean;
 }
 
 export interface INavData {
-  authUser: IUserProfile | null;
+  userProfile: IUserProfile | null;
   navLinks: INavLink[];
 }
 
@@ -37,24 +37,24 @@ export const useNavData = (): INavData => {
       icon: 'stethoscope',
       label: 'Directory',
       path: '/content/agent-list',
-      isActive: user?.role.canViewAgents() ?? false,
+      canUserActivate: user?.role.canViewAgents() ?? false,
     },
     {
       icon: 'users',
       label: 'Users',
       path: '/admin/user-list',
-      isActive: user?.role.canViewUsers() ?? false,
+      canUserActivate: user?.role.canViewUsers() ?? false,
     },
     {
       icon: 'building',
       label: 'Agencies',
       path: '/admin/agency-list',
-      isActive: user?.role.canViewAgencies() ?? false,
+      canUserActivate: user?.role.canViewAgencies() ?? false,
     },
   ];
 
   return {
-    authUser,
+    userProfile: authUser,
     navLinks,
   };
 };
