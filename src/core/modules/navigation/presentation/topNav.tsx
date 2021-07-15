@@ -11,7 +11,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 // App imports
 import logo from 'assets/img/logo.png';
-import { useNavData } from '../application/useNavLinks';
+import { useNavData } from '../application/useNavData';
 import { CustomButton } from 'components/button/styled';
 
 const centeredFlexColumnStyle = css`
