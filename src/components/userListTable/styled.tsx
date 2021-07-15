@@ -1,9 +1,5 @@
 import styled from 'styled-components';
 
-export const TableContainer = styled.div`
-
-`;
-
 export const EditButton = styled.div`
 
 `;

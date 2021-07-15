@@ -30,7 +30,7 @@ export const App: FC = () => (
             <Route path='/auth/forgot-password' component={ForgotPasswordPage}/>
             <Route path='/auth/reset-password/:token' component={ResetPasswordPage}/>
             <PrivateRoute path='/users/change-password/:id' component={ChangePasswordPage} />
-            <Route path='/admin/user-list' component={UserListPage} />
+            <PrivateRoute path='/admin/user-list' component={UserListPage} />
             <PrivateRoute exact path='/' component={DashboardPage} />
           </HolyGrailLayout>
         </Switch>
