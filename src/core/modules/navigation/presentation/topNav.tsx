@@ -7,12 +7,12 @@ import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 
 // App imports
 import logo from 'assets/img/logo.png';
-import { useNavData } from '../application/useNavData';
 import { CustomButton } from 'components/button/styled';
+import { ProfileDropdown } from './profileDropdown';
+import { useNavData } from '../application/useNavData';
 
 const centeredFlexColumnStyle = css`
   display: flex;
@@ -24,25 +24,6 @@ const centeredFlexColumnStyle = css`
 const CustomNavLink = styled(Nav.Link)`
   ${centeredFlexColumnStyle}
 `;
-
-const CustomNavDropdown = styled(NavDropdown)`
-  .dropdown-toggle.nav-link {
-    ${centeredFlexColumnStyle}
-  }
-
-  .dropdown-toggle.nav-link::after {
-    margin: 0;
-  }
-`;
-
-const CustomNavDropdownTitle: FC<{ name: string }> = ({ name }) => {
-  return (
-    <>
-      <FontAwesomeIcon icon='user' />
-      <span>Hi {name}</span>
-    </>
-  );
-};
 
 export const TopNav: FC = () => {
   const { authUser, navLinks } = useNavData();
@@ -67,16 +48,7 @@ export const TopNav: FC = () => {
                 ))}
             </Nav>
             <Nav>
-              <CustomNavDropdown
-                id='top-nav-dropdown'
-                title={<CustomNavDropdownTitle name={authUser.firstName} />}
-                alignRight
-              >
-                <NavDropdown.Item href='/user/profile'>Profile</NavDropdown.Item>
-                <NavDropdown.Item href='/user/change-password'>Change Password</NavDropdown.Item>
-                <NavDropdown.Item>Toggle Navigation Bar</NavDropdown.Item>
-                <NavDropdown.Item>Sign Out</NavDropdown.Item>
-              </CustomNavDropdown>
+              <ProfileDropdown user={authUser} />
             </Nav>
           </Navbar.Collapse>
         </>
