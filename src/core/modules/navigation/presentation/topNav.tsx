@@ -2,7 +2,7 @@
 import { FC } from 'react';
 
 // Third party library imports
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Navbar from 'react-bootstrap/Navbar';
@@ -45,12 +45,7 @@ const CustomNavDropdownTitle: FC<{ name: string }> = ({ name }) => {
 };
 
 export const TopNav: FC = () => {
-  const history = useHistory();
   const { authUser, navLinks } = useNavData();
-
-  const onLoginButtonClick = () => {
-    history.push('/auth/login');
-  };
 
   return (
     <Navbar collapseOnSelect expand='lg' className='shadow'>
@@ -87,7 +82,9 @@ export const TopNav: FC = () => {
         </>
       ) : (
         <Nav className='ml-auto'>
-          <CustomButton onClick={onLoginButtonClick}>LOGIN/CREATE ACCOUNT</CustomButton>
+          <Link to='/auth/login'>
+            <CustomButton>LOGIN/CREATE ACCOUNT</CustomButton>
+          </Link>
         </Nav>
       )}
     </Navbar>
