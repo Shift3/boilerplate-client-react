@@ -2,12 +2,13 @@ import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { useAuthState } from 'core/modules/auth/application/useAuthState';
 import { User } from 'core/modules/user/domain/user';
 
-export interface IAuthUserData {
+export interface IUserProfile {
   firstName: string;
   lastName: string;
+  profilePicture: string | null;
 }
 
-export interface INavLinkData {
+export interface INavLink {
   icon: IconName;
   label: string;
   path: string;
@@ -15,8 +16,8 @@ export interface INavLinkData {
 }
 
 export interface INavData {
-  authUser: IAuthUserData | null;
-  navLinks: INavLinkData[];
+  authUser: IUserProfile | null;
+  navLinks: INavLink[];
 }
 
 export const useNavData = (): INavData => {
@@ -27,10 +28,11 @@ export const useNavData = (): INavData => {
     ? {
         firstName: user.firstName,
         lastName: user.lastName,
+        profilePicture: user.profilePicture,
       }
     : null;
 
-  const navLinks: INavLinkData[] = [
+  const navLinks: INavLink[] = [
     {
       icon: 'stethoscope',
       label: 'Directory',

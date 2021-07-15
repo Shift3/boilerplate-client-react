@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // App imports
 import portraitPlaceholder from 'assets/img/portrait_placeholder.png';
-import { IAuthUserData } from '../application/useNavData';
+import { IUserProfile } from '../application/useNavData';
 
 const ProfileDropDownContainer = styled(NavDropdown)`
   .dropdown-toggle.nav-link {
@@ -49,7 +49,7 @@ const VerticalDivider = styled.span`
   border-left: 1px solid #d3d3d3;
 `;
 
-export const ProfileDropdown: FC<{ user: IAuthUserData }> = ({ user }) => {
+export const ProfileDropdown: FC<{ user: IUserProfile }> = ({ user }) => {
   const dropdownTitle = (
     <>
       <FontAwesomeIcon icon='user' />
