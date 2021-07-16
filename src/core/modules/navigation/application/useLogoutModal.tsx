@@ -7,7 +7,7 @@ import { LogoutModal } from '../presentation/logoutModal';
 
 export interface ILogoutModalManager {
   /**
-   * The LogoutModal to be rendered. The modal is implemented using a react-bootstrap Modal which uses a React Portals
+   * A LogoutModal to be rendered. The modal is implemented using a react-bootstrap Modal which uses a React Portal
    * under the hood. As a result, the modal will mounted as a child of a subtree outside the DOM hierarchy where.
    */
   modal: ReactElement;
