@@ -1,4 +1,7 @@
+// React imports
 import { FC } from 'react';
+
+// Third party library imports
 import { Button } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import styled from 'styled-components';
@@ -41,13 +44,13 @@ const StyledCancelButton = styled(StyledButton)`
   border-color: ${(props) => props.theme.primaryBorder};
 `;
 
-interface ILogoutModalProps {
+export interface ILogoutModalProps {
   show: boolean;
   onCancel: () => void;
-  onLogOut: () => void;
+  onLogout: () => void;
 }
 
-export const LogoutModal: FC<ILogoutModalProps> = ({ show, onCancel, onLogOut }) => {
+export const LogoutModal: FC<ILogoutModalProps> = ({ show, onCancel, onLogout }) => {
   return (
     <Modal show={show} onHide={onCancel} keyboard={false} dialogAs={StyledModalDialog}>
       <StyledModalTitle>This will end your login session.</StyledModalTitle>
@@ -56,7 +59,7 @@ export const LogoutModal: FC<ILogoutModalProps> = ({ show, onCancel, onLogOut })
         <StyledCancelButton variant='outline-light' onClick={onCancel}>
           CANCEL
         </StyledCancelButton>
-        <StyledButton variant='primary' onClick={onLogOut}>
+        <StyledButton variant='primary' onClick={onLogout}>
           LOG OUT
         </StyledButton>
       </StyleButtonContainer>
