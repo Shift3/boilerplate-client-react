@@ -26,8 +26,8 @@ export const App: FC = () => (
             <Route exact path='/auth/login' component={LogInPage} />
             <Route exact path='/auth/signup' component={SignUpPage} />
             <Route path='/auth/activate-account/:token' component={ActivateAccountPage} />
-            <Route path='/auth/forgot-password' component={ForgotPasswordPage}/>
-            <Route path='/auth/reset-password/:token' component={ResetPasswordPage}/>
+            <Route path='/auth/forgot-password' component={ForgotPasswordPage} />
+            <Route path='/auth/reset-password/:token' component={ResetPasswordPage} />
             <PrivateRoute path='/users/change-password/:id' component={ChangePasswordPage} />
             <PrivateRoute exact path='/' component={DashboardPage} />
           </HolyGrailLayout>

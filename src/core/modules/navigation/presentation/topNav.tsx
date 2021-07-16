@@ -28,7 +28,7 @@ const CustomNavLink = styled(Nav.Link)`
 
 export const TopNav: FC = () => {
   const { userProfile, navLinks } = useNavData();
-  const { modalPortal, openModal } = useLogoutModal();
+  const { modal, openModal } = useLogoutModal();
 
   return (
     <Navbar collapseOnSelect expand='lg' className='shadow'>
@@ -51,7 +51,7 @@ export const TopNav: FC = () => {
             </Nav>
             <Nav>
               <ProfileDropdown profile={userProfile} onSignOut={openModal} />
-              {modalPortal}
+              {modal}
             </Nav>
           </Navbar.Collapse>
         </>

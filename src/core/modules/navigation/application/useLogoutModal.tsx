@@ -1,6 +1,5 @@
 // React imports
-import { ReactPortal, useState } from 'react';
-import ReactDOM from 'react-dom';
+import { ReactElement, useState } from 'react';
 
 // App imports
 import { useLogout } from 'core/modules/auth/application/useLogout';
@@ -8,10 +7,10 @@ import { LogoutModal } from '../presentation/logoutModal';
 
 export interface ILogoutModalManager {
   /**
-   * A portal that renders the LogoutModal as a child of a subtree outside the current DOM hierarchy.
-   * The modal will be mounted to a root level div with an id of "logout-modal-root".
+   * The LogoutModal to be rendered. The modal is implemented using a react-bootstrap Modal which uses a React Portals
+   * under the hood. As a result, the modal will mounted as a child of a subtree outside the DOM hierarchy where.
    */
-  modalPortal: ReactPortal | null;
+  modal: ReactElement;
 
   /**
    * Opens the modal.
@@ -37,14 +36,10 @@ export const useLogoutModal = (): ILogoutModalManager => {
     closeModal();
   };
 
-  const portalRoot = document.getElementById('logout-modal-root');
-
-  const modalPortal = portalRoot
-    ? ReactDOM.createPortal(<LogoutModal show={show} onCancel={closeModal} onLogout={logout} />, portalRoot)
-    : null;
+  const modal = <LogoutModal show={show} onCancel={closeModal} onLogout={logout} />;
 
   return {
-    modalPortal,
+    modal,
     openModal,
     closeModal,
   };
