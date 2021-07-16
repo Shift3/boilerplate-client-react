@@ -1,42 +1,32 @@
 import styled from 'styled-components';
-import {} from '../../utils/styleValues';
+import { } from '../../utils/styleValues';
 
 export const HolyGrailWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+    grid-auto-rows: minmax(100px, auto);
+    grid-template-areas:
+      "hd  hd   hd   hd   hd   hd   hd  hd"
+      "lsd lsd main main main main rsd rsd"
+      "ft  ft   ft   ft   ft   ft   ft  ft";
 `;
 
-export const HolyGrailMainWrapper = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  max-height: calc(100vh - ${(props) => props.theme.footerHeight});
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-    flex: 1;
-  }
+export const HolyGrailHeader = styled.div`
+    grid-area: hd;
 `;
 
-export const HolyGrailLeftAside = styled.aside`
-  order: -1;
-  flex: 0 0 12em;
-  @media (min-width: 768px) {
-    flex: 0 0 12em;
-  }
-`;
+export const HolyGrailLeftSideBar = styled.div`
+  grid-area: lsd
+  `;
 
-export const HolyGrailMain = styled.main`
-  flex: 1;
-  @media (min-width: 768px) {
-    flex: 1;
-  }
-`;
+export const HolyGrailMain = styled.div`
+  grid-area: main
+  `;
 
-export const HolyGrailRightAside = styled.aside`
-  flex: 0 0 12em;
+export const HolyGrailRightSideBar = styled.div`
+  grid-area: rsd
+  `;
 
-  @media (min-width: 768px) {
-    flex: 0 0 12em;
-  }
-`;
+export const HolyGrailFooter = styled.div`
+  grid-area: ft
+  `;

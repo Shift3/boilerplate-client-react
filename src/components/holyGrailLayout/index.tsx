@@ -1,22 +1,17 @@
 import { Footer } from 'components/footer';
 import { TopNav } from 'core/modules/navigation/presentation/topNav';
 import {
-  HolyGrailWrapper,
-  HolyGrailMainWrapper,
-  HolyGrailLeftAside,
-  HolyGrailMain,
-  HolyGrailRightAside,
+  HolyGrailFooter,
+  HolyGrailHeader, HolyGrailLeftSideBar, HolyGrailMain, HolyGrailRightSideBar, HolyGrailWrapper
 } from './styled';
 import { HolyGrailType } from './types';
 
 export const HolyGrailLayout: HolyGrailType = ({ leftSidebar, children, rightSidebar }) => (
   <HolyGrailWrapper data-testid='wrapper'>
-    <TopNav />
-    <HolyGrailMainWrapper data-testid='mainWrapper'>
-      {!!leftSidebar && <HolyGrailLeftAside data-testid='leftAside'>{leftSidebar}</HolyGrailLeftAside>}
-      {!!children && <HolyGrailMain data-testid='main'>{children}</HolyGrailMain>}
-      {!!rightSidebar && <HolyGrailRightAside data-testid='rightAside'>{rightSidebar}</HolyGrailRightAside>}
-    </HolyGrailMainWrapper>
-    <Footer />
+    <HolyGrailHeader>{TopNav}</HolyGrailHeader>
+    <HolyGrailLeftSideBar data-testid='leftAside'>{leftSidebar}</HolyGrailLeftSideBar>
+    <HolyGrailMain data-testid='main'>{children}</HolyGrailMain>
+    <HolyGrailRightSideBar data-testid='rightAside'>{rightSidebar}</HolyGrailRightSideBar>
+    <HolyGrailFooter>{Footer}</HolyGrailFooter>
   </HolyGrailWrapper>
 );
