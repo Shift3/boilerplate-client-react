@@ -11,9 +11,12 @@ import { Link } from 'react-router-dom';
 import { CustomButton } from 'components/button/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ProfileDropdown } from './profileDropdown';
+import { useLogoutModalManager } from '../application/useLogoutModalManager';
+import { LogoutModal } from './logoutModal';
 
 export const SideNav: FC = () => {
   const { userProfile, navLinks } = useNavData();
+  const { show, openModal, onCancel, onLogout } = useLogoutModalManager();
 
   return (
     <Navbar className='flex-column shadow'>
@@ -33,7 +36,8 @@ export const SideNav: FC = () => {
               ))}
           </Nav>
           <Nav>
-            <ProfileDropdown profile={userProfile} />
+            <ProfileDropdown profile={userProfile} onSignOut={openModal} />
+            <LogoutModal show={show} onCancel={onCancel} onLogout={onLogout} />
           </Nav>
         </>
       ) : (
