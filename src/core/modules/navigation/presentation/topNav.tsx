@@ -13,6 +13,8 @@ import logo from 'assets/img/logo.png';
 import { CustomButton } from 'components/button/styled';
 import { ProfileDropdown } from './profileDropdown';
 import { useNavData } from '../application/useNavData';
+import { useLogoutModalManager } from '../application/useLogoutModalManager';
+import { LogoutModal } from './logoutModal';
 
 const centeredFlexColumnStyle = css`
   display: flex;
@@ -27,6 +29,7 @@ const CustomNavLink = styled(Nav.Link)`
 
 export const TopNav: FC = () => {
   const { userProfile, navLinks } = useNavData();
+  const { show, openModal, onCancel, onLogout } = useLogoutModalManager();
 
   return (
     <Navbar collapseOnSelect expand='lg' className='shadow'>
@@ -48,7 +51,8 @@ export const TopNav: FC = () => {
                 ))}
             </Nav>
             <Nav>
-              <ProfileDropdown profile={userProfile} />
+              <ProfileDropdown profile={userProfile} onSignOut={openModal} />
+              <LogoutModal show={show} onCancel={onCancel} onLogout={onLogout} />
             </Nav>
           </Navbar.Collapse>
         </>

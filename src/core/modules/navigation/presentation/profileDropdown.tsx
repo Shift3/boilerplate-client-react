@@ -49,7 +49,12 @@ const VerticalDivider = styled.span`
   border-left: 1px solid #d3d3d3;
 `;
 
-export const ProfileDropdown: FC<{ profile: IUserProfile }> = ({ profile }) => {
+export interface IProfileDropdownProps {
+  profile: IUserProfile;
+  onSignOut: () => void;
+}
+
+export const ProfileDropdown: FC<IProfileDropdownProps> = ({ profile, onSignOut }) => {
   const dropdownTitle = (
     <>
       <FontAwesomeIcon icon='user' />
@@ -70,7 +75,7 @@ export const ProfileDropdown: FC<{ profile: IUserProfile }> = ({ profile }) => {
           <NavDropdown.Item href='/user/profile'>Profile</NavDropdown.Item>
           <NavDropdown.Item href='/user/change-password'>Change Password</NavDropdown.Item>
           <NavDropdown.Item>Toggle Navigation Bar</NavDropdown.Item>
-          <NavDropdown.Item>Sign Out</NavDropdown.Item>
+          <NavDropdown.Item onClick={onSignOut}>Sign Out</NavDropdown.Item>
         </div>
       </ProfileDropdownMenuContainer>
     </ProfileDropDownContainer>
