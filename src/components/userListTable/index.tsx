@@ -8,7 +8,6 @@ interface IProps {
 }
 
 export const UserTable: FC<IProps> = ({ users }) => {
-
   const navigateToUpdateProfile = () => {
     // naviage to update profile page
   };
