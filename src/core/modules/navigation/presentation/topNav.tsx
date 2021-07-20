@@ -51,7 +51,7 @@ export const TopNav: FC = () => {
                 ))}
             </Nav>
             <Nav>
-              <ProfileDropdown profile={userProfile} onSignOut={openModal} />
+              <ProfileDropdown profile={userProfile} onSignOut={openModal} alignRight />
               <LogoutModal show={show} onCancel={onCancel} onLogout={onLogout} />
             </Nav>
           </Navbar.Collapse>

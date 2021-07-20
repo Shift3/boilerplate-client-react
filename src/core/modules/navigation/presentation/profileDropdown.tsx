@@ -52,9 +52,11 @@ const VerticalDivider = styled.span`
 export interface IProfileDropdownProps {
   profile: IUserProfile;
   onSignOut: () => void;
+  // Align the menu to the right side of the Dropdown toggle
+  alignRight?: boolean;
 }
 
-export const ProfileDropdown: FC<IProfileDropdownProps> = ({ profile, onSignOut }) => {
+export const ProfileDropdown: FC<IProfileDropdownProps> = ({ profile, onSignOut, alignRight }) => {
   const dropdownTitle = (
     <>
       <FontAwesomeIcon icon='user' />
@@ -63,7 +65,7 @@ export const ProfileDropdown: FC<IProfileDropdownProps> = ({ profile, onSignOut 
   );
 
   return (
-    <ProfileDropDownContainer id='profile-nav-dropdown' title={dropdownTitle} alignRight>
+    <ProfileDropDownContainer id='profile-nav-dropdown' title={dropdownTitle} alignRight={alignRight}>
       <ProfileDropdownMenuContainer>
         <ProfileInfoContainer>
           <img src={portraitPlaceholder} alt={`${profile.firstName} ${profile.lastName}`} />
