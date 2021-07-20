@@ -52,11 +52,12 @@ const VerticalDivider = styled.span`
 export interface IProfileDropdownProps {
   profile: IUserProfile;
   onSignOut: () => void;
-  // Align the menu to the right side of the Dropdown toggle
+  // By default, the dropdown is positioned along the left side of its parent. Setting "alignRight" to true will align
+  // the dropdown along the right side of its parent.
   alignRight?: boolean;
 }
 
-export const ProfileDropdown: FC<IProfileDropdownProps> = ({ profile, onSignOut, alignRight }) => {
+export const ProfileDropdown: FC<IProfileDropdownProps> = ({ profile, onSignOut, alignRight = false }) => {
   const dropdownTitle = (
     <>
       <FontAwesomeIcon icon='user' />
