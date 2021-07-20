@@ -13,40 +13,60 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ProfileDropdown } from './profileDropdown';
 import { useLogoutModalManager } from '../application/useLogoutModalManager';
 import { LogoutModal } from './logoutModal';
+import styled from 'styled-components';
+
+const StyledNavLink = styled(Nav.Link)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+interface IFlexGrowProps {
+  proportion: number;
+}
+
+const FlexGrow = styled.div<IFlexGrowProps>`
+  flex-grow: ${(props) => props.proportion};
+`;
 
 export const SideNav: FC = () => {
   const { userProfile, navLinks } = useNavData();
   const { show, openModal, onCancel, onLogout } = useLogoutModalManager();
 
   return (
-    <Navbar className='flex-column shadow'>
-      <Navbar.Brand href='/content/agent-list'>
-        <img src={logo} alt='Bitwise Technology Consulting' width='160px' />
-      </Navbar.Brand>
-      {userProfile ? (
-        <>
-          <Nav className='flex-column'>
-            {navLinks
-              .filter((link) => link.canUserActivate)
-              .map((link) => (
-                <Nav.Link key={link.path} href={link.path}>
-                  <FontAwesomeIcon icon={link.icon} />
-                  <span>{link.label}</span>
-                </Nav.Link>
-              ))}
-          </Nav>
+    <Navbar className='d-flex flex-column h-100 shadow'>
+      <FlexGrow proportion={1}>
+        <Navbar.Brand href='/content/agent-list' style={{ flexGrow: 1 }}>
+          <img src={logo} alt='Bitwise Technology Consulting' width='160px' />
+        </Navbar.Brand>
+      </FlexGrow>
+      <FlexGrow proportion={2}>
+        {userProfile ? (
+          <>
+            <Nav className='d-flex flex-column'>
+              {navLinks
+                .filter((link) => link.canUserActivate)
+                .map((link) => (
+                  <StyledNavLink key={link.path} href={link.path}>
+                    <FontAwesomeIcon icon={link.icon} />
+                    <span>{link.label}</span>
+                  </StyledNavLink>
+                ))}
+            </Nav>
+            <Nav>
+              <ProfileDropdown profile={userProfile} onSignOut={openModal} />
+              <LogoutModal show={show} onCancel={onCancel} onLogout={onLogout} />
+            </Nav>
+          </>
+        ) : (
           <Nav>
-            <ProfileDropdown profile={userProfile} onSignOut={openModal} />
-            <LogoutModal show={show} onCancel={onCancel} onLogout={onLogout} />
+            <Link to='/auth/login'>
+              <CustomButton>LOGIN/CREATE ACCOUNT</CustomButton>
+            </Link>
           </Nav>
-        </>
-      ) : (
-        <Nav>
-          <Link to='/auth/login'>
-            <CustomButton>LOGIN/CREATE ACCOUNT</CustomButton>
-          </Link>
-        </Nav>
-      )}
+        )}
+      </FlexGrow>
     </Navbar>
   );
 };
