@@ -11,6 +11,7 @@ import { ThemeProvider } from 'styled-components';
 import { DashboardPage } from './components/dashboardPage';
 import { FlashMessage } from './components/flashMessage';
 import { HolyGrailLayout } from './components/holyGrailLayout';
+import { UserListPage } from './components/userListPage/index';
 import { PrivateRoute } from './core/modules/auth/presentation/privateRoute';
 import { GlobalStyle } from './GlobalStyle';
 import AppTheme from './utils/styleValues';
@@ -28,6 +29,7 @@ export const App: FC = () => (
             <Route path='/auth/forgot-password' component={ForgotPasswordPage}/>
             <Route path='/auth/reset-password/:token' component={ResetPasswordPage}/>
             <PrivateRoute path='/users/change-password/:id' component={ChangePasswordPage} />
+            <PrivateRoute path='/admin/user-list' component={UserListPage} />
             <PrivateRoute exact path='/' component={DashboardPage} />
           </HolyGrailLayout>
         </Switch>

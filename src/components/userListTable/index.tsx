@@ -1,7 +1,26 @@
 import { FC } from 'react';
 import { Table } from 'react-bootstrap';
+import styled from 'styled-components';
 import { IUser } from '../../core/modules/user/domain/user';
-import { DeleteButton, EditButton, ResetPasswordButton } from './styled';
+
+const StyledTable = styled(Table)`
+background-color: ${(props) => props.theme.primary};
+color: white;
+border-top-left-radius: 10px;
+border-top-right-radius: 10px
+`;
+
+const EditButton = styled.div`
+
+`;
+
+const DeleteButton = styled.div`
+
+`;
+
+const ResetPasswordButton = styled.div`
+
+`;
 
 interface IProps {
   users: IUser[]
@@ -19,7 +38,7 @@ export const UserTable: FC<IProps> = ({ users }) => {
   };
 
   return (
-    <Table bordered>
+    <StyledTable>
       <thead>
         <tr>
           <th>LAST NAME</th>
@@ -50,6 +69,6 @@ export const UserTable: FC<IProps> = ({ users }) => {
         }
         )}
       </tbody>
-    </Table>
+    </StyledTable>
   );
 };
