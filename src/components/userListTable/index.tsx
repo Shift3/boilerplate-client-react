@@ -10,16 +10,23 @@ border-top-left-radius: 10px;
 border-top-right-radius: 10px
 `;
 
-const EditButton = styled.div`
+const ActivatedAt = styled.div`
+/* FontAwesomeIcon icon="fa-solid fa-envelope" */
+`;
+const Actions = styled.div`
 
 `;
 
-const DeleteButton = styled.div`
-
+const EditIcon = styled.div`
+/* FontAwesomeIcon icon="fa-solid fa-pen-to-square" */
 `;
 
-const ResetPasswordButton = styled.div`
+const DeleteIcon = styled.div`
+/* FontAwesomeIcon icon="fa-solid fa-trash-can" */
+`;
 
+const ResetPasswordIcon = styled.div`
+/* FontAwesomeIcon icon="fa-solid fa-lock" */
 `;
 
 interface IProps {
@@ -60,9 +67,12 @@ export const UserTable: FC<IProps> = ({ users }) => {
               <td>{role}</td>
               <td>{activatedAt}</td>
               <td>
-                <EditButton onClick={navigateToUpdateProfile}>Edit Icon</EditButton>
-                <DeleteButton onClick={deleteUser}>Delete Icon</DeleteButton>
-                <ResetPasswordButton onClick={resetPassword}>Lock Icon</ResetPasswordButton>
+                <ActivatedAt></ActivatedAt>
+                <Actions>
+                  <EditIcon onClick={navigateToUpdateProfile}>Edit Icon</EditIcon>
+                  <DeleteIcon onClick={deleteUser}>Delete Icon</DeleteIcon>
+                  <ResetPasswordIcon onClick={resetPassword}>Lock Icon</ResetPasswordIcon>
+                </Actions>
               </td>
             </tr>
           );
