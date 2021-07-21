@@ -2,6 +2,7 @@
 import { FC } from 'react';
 
 // Third party library imports
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -52,9 +53,12 @@ const VerticalDivider = styled.span`
 export interface IProfileDropdownProps {
   profile: IUserProfile;
   onSignOut: () => void;
+  // By default, the dropdown is positioned along the left side of its parent. Setting "alignRight" to true will align
+  // the dropdown along the right side of its parent.
+  alignRight?: boolean;
 }
 
-export const ProfileDropdown: FC<IProfileDropdownProps> = ({ profile, onSignOut }) => {
+export const ProfileDropdown: FC<IProfileDropdownProps> = ({ profile, onSignOut, alignRight = false }) => {
   const dropdownTitle = (
     <>
       <FontAwesomeIcon icon='user' />
@@ -63,7 +67,7 @@ export const ProfileDropdown: FC<IProfileDropdownProps> = ({ profile, onSignOut 
   );
 
   return (
-    <ProfileDropDownContainer id='profile-nav-dropdown' title={dropdownTitle} alignRight>
+    <ProfileDropDownContainer id='profile-nav-dropdown' title={dropdownTitle} alignRight={alignRight}>
       <ProfileDropdownMenuContainer>
         <ProfileInfoContainer>
           <img src={portraitPlaceholder} alt={`${profile.firstName} ${profile.lastName}`} />
@@ -72,8 +76,12 @@ export const ProfileDropdown: FC<IProfileDropdownProps> = ({ profile, onSignOut 
         </ProfileInfoContainer>
         <VerticalDivider />
         <div>
-          <NavDropdown.Item href='/user/profile'>Profile</NavDropdown.Item>
-          <NavDropdown.Item href='/user/change-password'>Change Password</NavDropdown.Item>
+          <NavDropdown.Item as={Link} to='/user/profile'>
+            Profile
+          </NavDropdown.Item>
+          <NavDropdown.Item as={Link} to='/user/change-password'>
+            Change Password
+          </NavDropdown.Item>
           <NavDropdown.Item>Toggle Navigation Bar</NavDropdown.Item>
           <NavDropdown.Item onClick={onSignOut}>Sign Out</NavDropdown.Item>
         </div>
