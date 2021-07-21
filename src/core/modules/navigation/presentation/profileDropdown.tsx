@@ -2,6 +2,7 @@
 import { FC } from 'react';
 
 // Third party library imports
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -75,8 +76,12 @@ export const ProfileDropdown: FC<IProfileDropdownProps> = ({ profile, onSignOut,
         </ProfileInfoContainer>
         <VerticalDivider />
         <div>
-          <NavDropdown.Item href='/user/profile'>Profile</NavDropdown.Item>
-          <NavDropdown.Item href='/user/change-password'>Change Password</NavDropdown.Item>
+          <NavDropdown.Item as={Link} to='/user/profile'>
+            Profile
+          </NavDropdown.Item>
+          <NavDropdown.Item as={Link} to='/user/change-password'>
+            Change Password
+          </NavDropdown.Item>
           <NavDropdown.Item>Toggle Navigation Bar</NavDropdown.Item>
           <NavDropdown.Item onClick={onSignOut}>Sign Out</NavDropdown.Item>
         </div>

@@ -15,13 +15,6 @@ import { useLogoutModalManager } from '../application/useLogoutModalManager';
 import { LogoutModal } from './logoutModal';
 import styled from 'styled-components';
 
-const StyledNavLink = styled(Nav.Link)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
 interface IFlexGrowProps {
   proportion: number;
 }
@@ -37,7 +30,7 @@ export const SideNav: FC = () => {
   return (
     <Navbar className='d-flex flex-column h-100 shadow'>
       <FlexGrow proportion={1}>
-        <Navbar.Brand href='/content/agent-list' style={{ flexGrow: 1 }}>
+        <Navbar.Brand as={Link} to='/content/agent-list'>
           <img src={logo} alt='Bitwise Technology Consulting' width='160px' />
         </Navbar.Brand>
       </FlexGrow>
@@ -48,10 +41,12 @@ export const SideNav: FC = () => {
               {navLinks
                 .filter((link) => link.canUserActivate)
                 .map((link) => (
-                  <StyledNavLink key={link.path} href={link.path}>
-                    <FontAwesomeIcon icon={link.icon} />
-                    <span>{link.label}</span>
-                  </StyledNavLink>
+                  <Nav.Link key={link.path} as={Link} to={link.path}>
+                    <div className='d-flex flex-column justify-content-center align-items-center'>
+                      <FontAwesomeIcon icon={link.icon} />
+                      <span>{link.label}</span>
+                    </div>
+                  </Nav.Link>
                 ))}
             </Nav>
             <Nav>
