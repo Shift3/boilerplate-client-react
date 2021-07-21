@@ -72,6 +72,7 @@ export const HolyGrailFooter = styled.aside`
 //   </HolyGrail>
 // );
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const HolyGrailLayout: any = () => {
   return (
     <HolyGrail>
