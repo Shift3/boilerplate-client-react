@@ -3,7 +3,6 @@ import { FC } from 'react';
 
 // Third party library imports
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 
@@ -14,6 +13,7 @@ import { useNavData } from '../application/useNavData';
 import { useLogoutModalManager } from '../application/useLogoutModalManager';
 import { LogoutModal } from './logoutModal';
 import { NavLogo } from './navLogo';
+import { NavLink } from './navLink';
 
 export const TopNav: FC = () => {
   const { userProfile, navLinks } = useNavData();
@@ -30,12 +30,7 @@ export const TopNav: FC = () => {
               {navLinks
                 .filter((link) => link.canUserActivate)
                 .map((link) => (
-                  <Nav.Link key={link.path} as={Link} to={link.path}>
-                    <div className='d-flex flex-column justify-content-center align-items-center'>
-                      <FontAwesomeIcon icon={link.icon} />
-                      <span>{link.label}</span>
-                    </div>
-                  </Nav.Link>
+                  <NavLink link={link} />
                 ))}
             </Nav>
             <Nav>

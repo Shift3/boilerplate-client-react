@@ -4,7 +4,6 @@ import { FC } from 'react';
 // Third party library imports
 import { Link } from 'react-router-dom';
 import { Nav, Navbar } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 
 // App imports
@@ -14,6 +13,7 @@ import { ProfileDropdown } from './profileDropdown';
 import { useLogoutModalManager } from '../application/useLogoutModalManager';
 import { LogoutModal } from './logoutModal';
 import { NavLogo } from './navLogo';
+import { NavLink } from './navLink';
 
 interface IFlexGrowProps {
   proportion: number;
@@ -39,12 +39,7 @@ export const SideNav: FC = () => {
               {navLinks
                 .filter((link) => link.canUserActivate)
                 .map((link) => (
-                  <Nav.Link key={link.path} as={Link} to={link.path}>
-                    <div className='d-flex flex-column justify-content-center align-items-center'>
-                      <FontAwesomeIcon icon={link.icon} />
-                      <span>{link.label}</span>
-                    </div>
-                  </Nav.Link>
+                  <NavLink link={link} />
                 ))}
             </Nav>
             <Nav>
