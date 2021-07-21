@@ -8,12 +8,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 
 // App imports
-import logo from 'assets/img/logo.png';
 import { CustomButton } from 'components/button/styled';
 import { useNavData } from '../application/useNavData';
 import { ProfileDropdown } from './profileDropdown';
 import { useLogoutModalManager } from '../application/useLogoutModalManager';
 import { LogoutModal } from './logoutModal';
+import { NavLogo } from './navLogo';
 
 interface IFlexGrowProps {
   proportion: number;
@@ -30,9 +30,7 @@ export const SideNav: FC = () => {
   return (
     <Navbar className='d-flex flex-column h-100 shadow'>
       <FlexGrow proportion={1}>
-        <Navbar.Brand as={Link} to='/content/agent-list'>
-          <img src={logo} alt='Bitwise Technology Consulting' width='160px' />
-        </Navbar.Brand>
+        <NavLogo />
       </FlexGrow>
       <FlexGrow proportion={2}>
         {userProfile ? (

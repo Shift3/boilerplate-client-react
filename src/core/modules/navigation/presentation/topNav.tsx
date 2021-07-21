@@ -8,12 +8,12 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 
 // App imports
-import logo from 'assets/img/logo.png';
 import { CustomButton } from 'components/button/styled';
 import { ProfileDropdown } from './profileDropdown';
 import { useNavData } from '../application/useNavData';
 import { useLogoutModalManager } from '../application/useLogoutModalManager';
 import { LogoutModal } from './logoutModal';
+import { NavLogo } from './navLogo';
 
 export const TopNav: FC = () => {
   const { userProfile, navLinks } = useNavData();
@@ -21,9 +21,7 @@ export const TopNav: FC = () => {
 
   return (
     <Navbar collapseOnSelect expand='lg' className='shadow'>
-      <Navbar.Brand as={Link} to='/content/agent-list'>
-        <img src={logo} alt='Bitwise Technology Consulting' width='160px' />
-      </Navbar.Brand>
+      <NavLogo />
       {userProfile ? (
         <>
           <Navbar.Toggle aria-controls='responsive-navbar-nav' />
