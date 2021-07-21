@@ -2,18 +2,18 @@
 import { FC } from 'react';
 
 // Third party library imports
+import { Link } from 'react-router-dom';
 import { Nav, Navbar } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import styled from 'styled-components';
 
 // App imports
 import logo from 'assets/img/logo.png';
-import { useNavData } from '../application/useNavData';
-import { Link } from 'react-router-dom';
 import { CustomButton } from 'components/button/styled';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavData } from '../application/useNavData';
 import { ProfileDropdown } from './profileDropdown';
 import { useLogoutModalManager } from '../application/useLogoutModalManager';
 import { LogoutModal } from './logoutModal';
-import styled from 'styled-components';
 
 interface IFlexGrowProps {
   proportion: number;
