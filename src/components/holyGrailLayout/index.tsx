@@ -1,87 +1,82 @@
+import { Footer } from 'components/footer';
+import { TopNav } from 'core/modules/navigation/presentation/topNav';
+import { FC } from 'react';
 import styled from 'styled-components';
+import { SideNav } from '../../core/modules/navigation/presentation/sideNav';
 import { } from '../../utils/styleValues';
+import { HolyGrailLayoutProps } from './types';
 
 export const HolyGrail = styled.div`
-  font-size: 20px;
   height: 100vh;
   display: flex;
   flex-direction: column;
 `;
 
 export const HolyGrailHeader = styled.header`
-  background-color: #b34a4a;
-  padding-top: 3rem;
-  padding-bottom: 3rem;
 `;
 
 export const HolyGrailMain = styled.div`
-  background-color: #c3a46a;
   display: flex;
   flex: 1;
-
-  @media (min-width: 768px ) {
-    flex-direction: row;
-    flex: 1;
-  }
 `;
 
 export const HolyGrailLeft = styled.aside`
-background-color: #6fa06f;
-  flex: 1 1 5rem;
-   padding-top: 3rem;        
+  flex: 0.75 1;      
 
-  @media (min-width: 768px) {
-    flex: 0 0 12em;
-  }
+   @media (max-width: 540px) {
+      flex-direction: column;
+    }
 `;
 
 export const HolyGrailContent = styled.main`
-  background-color: #6f88a0;
-  flex: 3 3 ; 
-  padding-top: 3rem;  
-  
-  @media (min-width: 768px) {
-    flex: 1;
+  flex: 3 3;
+
+  @media (max-width: 540px) {
+    flex-direction: column;
   }
 `;
 
 export const HolyGrailRight = styled.aside`
-  flex: 1 1 5rem;
-  padding-top: 3rem;
+  flex: 0.75 1;
 
-  @media (min-width: 768px) {
-    flex: 0 0 12em;
+  @media (max-width: 540px) {
+    flex-direction: column;
   }
 `;
 
-export const HolyGrailFooter = styled.aside`
-  height: 16px;
+export const HolyGrailFooter = styled.footer`
 
+  @media (max-width: 540px) {
+    flex-direction: column;
+  }
 `;
 
-// export const HolyGrailLayout: HolyGrailType = ({ leftNav, children, rightSide }) => (
-//   <HolyGrail >
-//     <HolyGrailHeader>{TopNav}</HolyGrailHeader>
-//     <HolyGrailMainWrapper>
-//       {!!leftNav && <HolyGrailLeft>{SideNav}</HolyGrailLeft>}
-//       {!!children && <HolyGrailMain >{children}</HolyGrailMain>}
-//       {!!rightSide && <HolyGrailRight>{rightSide}</HolyGrailRight>}
-//     </HolyGrailMainWrapper>
-//     <Footer />
-//   </HolyGrail>
-// );
+export const HolyGrailLayout: FC<HolyGrailLayoutProps> = ({ header, leftAside, children, rightAside, footer }) => {
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const HolyGrailLayout: any = () => {
+  const renderTopNav = true;
+  const renderSideNav = true;
+
   return (
     <HolyGrail>
-      <HolyGrailHeader>HEADER</HolyGrailHeader>
+      {(renderTopNav || header) && (
+        <HolyGrailHeader>
+          {renderTopNav && <TopNav/>}
+          {header}
+        </HolyGrailHeader>
+      )}
       <HolyGrailMain>
-        <HolyGrailLeft>SIDE NAV</HolyGrailLeft>
-        <HolyGrailContent >MAIN CONTENT</HolyGrailContent>
-        <HolyGrailRight>RIGHT ASIDE</HolyGrailRight>
+        {(renderSideNav || leftAside) && (
+          <HolyGrailLeft>
+            {renderSideNav && <SideNav />}
+            {leftAside}
+          </HolyGrailLeft>
+        )}
+        <HolyGrailContent>{children}</HolyGrailContent>
+        {rightAside && <HolyGrailRight>{rightAside}</HolyGrailRight>}
       </HolyGrailMain>
-      <HolyGrailFooter>FOOTER</HolyGrailFooter>
+      <HolyGrailFooter>
+        {footer ?? <Footer />}
+      </HolyGrailFooter>
     </HolyGrail>
   );
 };

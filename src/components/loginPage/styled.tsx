@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { Button } from 'react-bootstrap';
+import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   height: 100%;
@@ -7,8 +7,7 @@ export const Wrapper = styled.div`
   background-color: ${(props) => props.theme.authBackground};
   justify-content: center;
   align-items: center;
-  padding-top: 200px;
-  padding-left: 200px;
+  padding-top: 100px;
 `;
 export const LoginWrapper = styled.div`
   justify-content: center;
