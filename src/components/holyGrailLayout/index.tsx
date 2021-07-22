@@ -18,6 +18,8 @@ export const HolyGrailHeader = styled.header`
 export const HolyGrailMain = styled.div`
   display: flex;
   flex: 1;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const HolyGrailLeft = styled.aside`

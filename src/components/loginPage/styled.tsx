@@ -3,11 +3,9 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   height: 100%;
-  width: 100%;
   background-color: ${(props) => props.theme.authBackground};
   justify-content: center;
   align-items: center;
-  padding-top: 100px;
 `;
 export const LoginWrapper = styled.div`
   justify-content: center;
