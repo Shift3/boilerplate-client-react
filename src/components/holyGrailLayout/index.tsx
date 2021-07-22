@@ -24,6 +24,7 @@ export const HolyGrailMain = styled.div`
 
 export const HolyGrailLeft = styled.aside`
   flex: 0.75 1;      
+  height: 100%;
 
    @media (max-width: 540px) {
       flex-direction: column;
@@ -32,6 +33,7 @@ export const HolyGrailLeft = styled.aside`
 
 export const HolyGrailContent = styled.main`
   flex: 3 3;
+  height: 100%;
 
   @media (max-width: 540px) {
     flex-direction: column;
@@ -40,6 +42,7 @@ export const HolyGrailContent = styled.main`
 
 export const HolyGrailRight = styled.aside`
   flex: 0.75 1;
+  height: 100%;
 
   @media (max-width: 540px) {
     flex-direction: column;
