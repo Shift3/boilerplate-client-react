@@ -55,8 +55,7 @@ export const HolyGrailRight = styled.aside`
 `;
 
 export const HolyGrailFooter = styled.aside`
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+  height: 16px;
 
 `;
 
