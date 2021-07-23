@@ -3,57 +3,44 @@ import { TopNav } from 'core/modules/navigation/presentation/topNav';
 import { FC } from 'react';
 import styled from 'styled-components';
 import { SideNav } from '../../core/modules/navigation/presentation/sideNav';
-import { } from '../../utils/styleValues';
 import { HolyGrailLayoutProps } from './types';
 
-export const HolyGrail = styled.div`
-  height: 100vh;
+const HolyGrail = styled.div`
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 `;
 
-export const HolyGrailHeader = styled.header`
-`;
+const HolyGrailHeader = styled.header``;
 
-export const HolyGrailMain = styled.div`
+const HolyGrailMain = styled.div`
   display: flex;
   flex: auto;
-`;
 
-export const HolyGrailLeft = styled.aside`
- min-width: 20%;
-  max-width: 20%;
-  flex-grow: 0;
-  @media (max-width: 540px) {
+  @media (max-width: 920px) {
     flex-direction: column;
   }
 `;
 
-export const HolyGrailContent = styled.main`
-  min-width: 60%;
+const HolyGrailLeft = styled.aside`
+  min-width: 16.25em;
+  max-width: 16.25em;
+  flex-grow: 0;
+`;
+
+const HolyGrailContent = styled.main`
   flex-grow: 1;
-  @media (max-width: 540px) {
-    flex-direction: column;
-  }
 `;
 
-export const HolyGrailRight = styled.aside`
-  min-width: 20%;
-  max-width: 20%;
+const HolyGrailRight = styled.aside`
+  min-width: 16.25em;
+  max-width: 16.25em;
   flex-grow: 0;
-  @media (max-width: 540px) {
-    flex-direction: column;
-  }
 `;
 
-export const HolyGrailFooter = styled.footer`
-  @media (max-width: 540px) {
-    flex-direction: column;
-  }
-`;
+const HolyGrailFooter = styled.footer``;
 
 export const HolyGrailLayout: FC<HolyGrailLayoutProps> = ({ header, leftAside, children, rightAside, footer }) => {
-
   const renderTopNav = true;
   const renderSideNav = true;
 
