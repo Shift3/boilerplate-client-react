@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-export interface HolyGrailLayoutProps {
+export type HolyGrailLayoutProps = {
   header?: ReactNode;
   leftAside?: ReactNode;
   children?: ReactNode;
