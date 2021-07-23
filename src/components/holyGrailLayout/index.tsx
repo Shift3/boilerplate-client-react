@@ -17,40 +17,36 @@ export const HolyGrailHeader = styled.header`
 
 export const HolyGrailMain = styled.div`
   display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
+  flex: auto;
 `;
 
 export const HolyGrailLeft = styled.aside`
-  flex: 0.75 1;      
-  height: 100%;
-
-   @media (max-width: 540px) {
-      flex-direction: column;
-    }
+ min-width: 20%;
+  max-width: 20%;
+  flex-grow: 0;
+  @media (max-width: 540px) {
+    flex-direction: column;
+  }
 `;
 
 export const HolyGrailContent = styled.main`
-  flex: 3 3;
-  height: 100%;
-
+  min-width: 60%;
+  flex-grow: 1;
   @media (max-width: 540px) {
     flex-direction: column;
   }
 `;
 
 export const HolyGrailRight = styled.aside`
-  flex: 0.75 1;
-  height: 100%;
-
+  min-width: 20%;
+  max-width: 20%;
+  flex-grow: 0;
   @media (max-width: 540px) {
     flex-direction: column;
   }
 `;
 
 export const HolyGrailFooter = styled.footer`
-
   @media (max-width: 540px) {
     flex-direction: column;
   }
