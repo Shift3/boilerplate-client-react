@@ -5,7 +5,6 @@ import { ForgotPasswordPage } from 'components/forgotPasswordPage';
 import { LogInPage } from 'components/loginPage';
 import { ResetPasswordPage } from 'components/resetPasswordPage';
 import { SignUpPage } from 'components/signupPage';
-import { SideNav } from 'core/modules/navigation/presentation/sideNav';
 import { FC } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
@@ -22,7 +21,7 @@ export const App: FC = () => (
       <FlashMessage />
       <Router>
         <Switch>
-          <HolyGrailLayout leftSidebar={<SideNav />}>
+          <HolyGrailLayout>
             <Route exact path='/auth/login' component={LogInPage} />
             <Route exact path='/auth/signup' component={SignUpPage} />
             <Route path='/auth/activate-account/:token' component={ActivateAccountPage} />

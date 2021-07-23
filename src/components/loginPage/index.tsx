@@ -1,9 +1,62 @@
-import { FC } from 'react';
 import { LogInForm } from 'components/loginForm';
-import { Link, useHistory } from 'react-router-dom';
-import { ILogInFormData } from '../loginForm/types';
-import { LoginWrapper, LeftLogin, RightLogin, CreateAccountButton, Title, Text, Wrapper, LinkWrapper } from './styled';
 import { useLogin } from 'core/modules/auth/application/useLogin';
+import { FC } from 'react';
+import { Button } from 'react-bootstrap';
+import { Link, useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+import { ILogInFormData } from '../loginForm/types';
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: ${(props) => props.theme.authBackground};
+`;
+
+const LoginWrapper = styled.div`
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background-color: ${(props) => props.theme.primary};
+  border-radius: 5px;
+`;
+
+const LeftLogin = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const LinkWrapper = styled.div`
+  padding-bottom: 30px;
+  font-size: 1.2em;
+`;
+
+const RightLogin = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 50px;
+  max-width: 350px;
+  min-height: 400px;
+`;
+
+const Title = styled.div`
+  color: ${(props) => props.theme.cardHeader};
+  font-style: bold;
+  padding-bottom: 10px;
+  width: 200px;
+`;
+
+const Text = styled.div`
+  color: white;
+`;
+
+const CreateAccountButton = styled(Button)``;
 
 export const LogInPage: FC = () => {
   const history = useHistory();
