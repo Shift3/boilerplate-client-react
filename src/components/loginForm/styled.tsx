@@ -1,11 +1,13 @@
-import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import styled from 'styled-components';
 
 export const StyledForm = styled(Form)`
-  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  padding: 60px;
   border-radius: 5px;
-  width: 400px;
+  min-width: 400px;
 `;
 
 export const Title = styled.div`
