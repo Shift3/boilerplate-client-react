@@ -24,6 +24,7 @@ interface IErrorMessages {
   CURRENT_PASSWORD_REQUIRED: string;
   NEW_PASSWORD_REQUIRED: string;
   CONFIRM_PASSWORD_REQUIRED: string;
+  ROLE_REQUIRED: string;
 }
 
 export interface IConstant {
@@ -61,6 +62,7 @@ export const Constants: IConstant = {
     CURRENT_PASSWORD_REQUIRED: 'Current password is required.',
     NEW_PASSWORD_REQUIRED: 'New password is required.',
     CONFIRM_PASSWORD_REQUIRED: 'Confirm password is required.',
+    ROLE_REQUIRED: 'Role is required.'
   },
   version: '0.1.0',
   creationYear: 2021,

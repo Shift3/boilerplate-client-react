@@ -1,14 +1,11 @@
-import { FC } from 'react';
-
-export interface ICreateUserFormData {
+export type CreateUserFormData = {
   firstName: string;
   lastName: string;
   email: string;
   role: string;
 }
-export interface ICreateUserFormProps {
-  onSubmit: (data: ICreateUserFormData) => void;
+
+export type CreateUserFormProps = {
+  onSubmit: (data: CreateUserFormData) => void;
   onCancel: () => void;
 }
-
-export type CreateUserFormType = FC<ICreateUserFormProps>;

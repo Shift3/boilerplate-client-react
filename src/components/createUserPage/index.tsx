@@ -1,6 +1,5 @@
 import { CreateUserForm } from 'components/createUserForm';
-import { ICreateUserFormData } from 'components/createUserForm/types';
-import { useAccountCreation } from 'core/modules/user/application/useAccountCreation';
+import { CreateUserFormData } from 'components/createUserForm/types';
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -17,12 +16,11 @@ export const Wrapper = styled.div`
 
 export const CreateUserPage: FC = () => {
   const history = useHistory();
-  const { createAccount } = useAccountCreation();
 
-  const onSubmit = async (formData: ICreateUserFormData) => {
+  const onSubmit = async (formData: CreateUserFormData) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const data = { ...formData };
-    const onSuccess = () => history.push('/admin/user-list');
-    await createAccount(data, onSuccess);
+    history.push('/admin/user-list');
   };
 
   const onCancel = () => history.push('/auth/user-list');

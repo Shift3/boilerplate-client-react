@@ -1,15 +1,16 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { FC } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { CreateUserFormSchema } from './schema';
-import { CreateUserFormType } from './types';
+import { CreateUserFormProps } from './types';
 
 const StyledForm = styled(Form)`
   background-color: ${(props) => props.theme.primary};
   padding: 40px;
   border-radius: 5px;
-  width: 400px;
+  width: 450px;
 `;
 
 const Title = styled.div`
@@ -46,7 +47,7 @@ const SubmitButton = styled(Button)`
   background-color: ${(props) => props.theme.accent};
 `;
 
-export const CreateUserForm: CreateUserFormType = ({ onSubmit, onCancel }) => {
+export const CreateUserForm: FC<CreateUserFormProps> = ({ onSubmit, onCancel }) => {
   const {
     register,
     handleSubmit,
@@ -78,15 +79,15 @@ export const CreateUserForm: CreateUserFormType = ({ onSubmit, onCancel }) => {
           <Form.Control id='email' type='email' {...register('email')} />
           {errors.email?.message && <InputError role='alert'>{errors.email?.message}</InputError>}
         </Form.Group>
-        {/* <Form.Group>
-          <FormLabel htmlFor='role'>Email</FormLabel>
-          <Form.Control
-            id='role'
-            type=''
-            {...register('role')}
-          />
+        <Form.Group>
+          <FormLabel htmlFor='role'>Role</FormLabel>
+          <Form.Control id='role' as='select' custom aria-label='Select User Role' {...register('role')}>
+            <option>Admin</option>
+            <option>Editor</option>
+            <option>Users</option>
+          </Form.Control>
           {errors.role?.message && <InputError role='alert'>{errors.role?.message}</InputError>}
-        </Form.Group> */}
+        </Form.Group>
         <ButtonWrapper>
           <CancelButton data-testid='cancelButton' onClick={onCancel}>
             CANCEL
