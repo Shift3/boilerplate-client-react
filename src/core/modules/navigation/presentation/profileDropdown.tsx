@@ -50,15 +50,21 @@ const VerticalDivider = styled.span`
   border-left: 1px solid #d3d3d3;
 `;
 
-export interface IProfileDropdownProps {
+export type ProfileDropdownProps = {
   profile: IUserProfile;
+  onNavBarToggle: () => void;
   onSignOut: () => void;
   // By default, the dropdown is positioned along the left side of its parent. Setting "alignRight" to true will align
   // the dropdown along the right side of its parent.
   alignRight?: boolean;
-}
+};
 
-export const ProfileDropdown: FC<IProfileDropdownProps> = ({ profile, onSignOut, alignRight = false }) => {
+export const ProfileDropdown: FC<ProfileDropdownProps> = ({
+  profile,
+  onNavBarToggle,
+  onSignOut,
+  alignRight = false,
+}) => {
   const dropdownTitle = (
     <>
       <FontAwesomeIcon icon='user' />
@@ -82,7 +88,7 @@ export const ProfileDropdown: FC<IProfileDropdownProps> = ({ profile, onSignOut,
           <NavDropdown.Item as={Link} to='/user/change-password'>
             Change Password
           </NavDropdown.Item>
-          <NavDropdown.Item>Toggle Navigation Bar</NavDropdown.Item>
+          <NavDropdown.Item onClick={onNavBarToggle}>Toggle Navigation Bar</NavDropdown.Item>
           <NavDropdown.Item onClick={onSignOut}>Sign Out</NavDropdown.Item>
         </div>
       </ProfileDropdownMenuContainer>
