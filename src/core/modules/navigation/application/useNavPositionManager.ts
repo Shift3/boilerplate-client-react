@@ -1,6 +1,6 @@
 import { useState } from 'react';
-
-export type NavPosition = 'top' | 'side';
+import { NavPosition } from '../domain/navPosition';
+import * as NavLocalStorage from '../infrastructure/store/navLocalStorage';
 
 export type NavPositionManager = {
   /**
@@ -15,11 +15,12 @@ export type NavPositionManager = {
 };
 
 export const useNavPositionManager = (): NavPositionManager => {
-  const [navPosition, setNavPosition] = useState<NavPosition>('top');
+  const [navPosition, setNavPosition] = useState<NavPosition>(NavLocalStorage.getNavPosition() ?? 'top');
 
   const toggleNavPosition = () => {
     const newPosition = navPosition === 'top' ? 'side' : 'top';
     setNavPosition(newPosition);
+    NavLocalStorage.saveNavPosition(newPosition);
   };
 
   return {
