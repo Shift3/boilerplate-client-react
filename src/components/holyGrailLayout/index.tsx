@@ -1,4 +1,5 @@
 import { Footer } from 'components/footer';
+import { useNavPositionManager } from 'core/modules/navigation/application/useNavPositionManager';
 import { TopNav } from 'core/modules/navigation/presentation/topNav';
 import { FC } from 'react';
 import styled from 'styled-components';
@@ -41,30 +42,27 @@ const HolyGrailRight = styled.aside`
 const HolyGrailFooter = styled.footer``;
 
 export const HolyGrailLayout: FC<HolyGrailLayoutProps> = ({ header, leftAside, children, rightAside, footer }) => {
-  const renderTopNav = true;
-  const renderSideNav = true;
+  const { navPosition, toggleNavPosition } = useNavPositionManager();
 
   return (
     <HolyGrail>
-      {(renderTopNav || header) && (
+      {(navPosition === 'top' || header) && (
         <HolyGrailHeader>
-          {renderTopNav && <TopNav/>}
+          {navPosition === 'top' && <TopNav onNavToggle={toggleNavPosition} />}
           {header}
         </HolyGrailHeader>
       )}
       <HolyGrailMain>
-        {(renderSideNav || leftAside) && (
+        {(navPosition === 'side' || leftAside) && (
           <HolyGrailLeft>
-            {renderSideNav && <SideNav />}
+            {navPosition === 'side' && <SideNav onNavToggle={toggleNavPosition} />}
             {leftAside}
           </HolyGrailLeft>
         )}
         <HolyGrailContent>{children}</HolyGrailContent>
         {rightAside && <HolyGrailRight>{rightAside}</HolyGrailRight>}
       </HolyGrailMain>
-      <HolyGrailFooter>
-        {footer ?? <Footer />}
-      </HolyGrailFooter>
+      <HolyGrailFooter>{footer ?? <Footer />}</HolyGrailFooter>
     </HolyGrail>
   );
 };

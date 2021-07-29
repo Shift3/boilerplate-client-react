@@ -14,8 +14,9 @@ import { useLogoutModalManager } from '../application/useLogoutModalManager';
 import { LogoutModal } from './logoutModal';
 import { NavLogo } from './navLogo';
 import { NavLink } from './navLink';
+import { NavProps } from './types';
 
-export const TopNav: FC = () => {
+export const TopNav: FC<NavProps> = ({ onNavToggle }) => {
   const { userProfile, navLinks } = useNavData();
   const { show, openModal, onCancel, onLogout } = useLogoutModalManager();
 
@@ -34,7 +35,7 @@ export const TopNav: FC = () => {
                 ))}
             </Nav>
             <Nav>
-              <ProfileDropdown profile={userProfile} onSignOut={openModal} alignRight />
+              <ProfileDropdown profile={userProfile} onNavBarToggle={onNavToggle} onSignOut={openModal} alignRight />
               <LogoutModal show={show} onCancel={onCancel} onLogout={onLogout} />
             </Nav>
           </Navbar.Collapse>

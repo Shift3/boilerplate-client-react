@@ -14,6 +14,7 @@ import { useLogoutModalManager } from '../application/useLogoutModalManager';
 import { LogoutModal } from './logoutModal';
 import { NavLogo } from './navLogo';
 import { NavLink } from './navLink';
+import { NavProps } from './types';
 
 interface IFlexGrowProps {
   proportion: number;
@@ -23,7 +24,7 @@ const FlexGrow = styled.div<IFlexGrowProps>`
   flex-grow: ${(props) => props.proportion};
 `;
 
-export const SideNav: FC = () => {
+export const SideNav: FC<NavProps> = ({ onNavToggle }) => {
   const { userProfile, navLinks } = useNavData();
   const { show, openModal, onCancel, onLogout } = useLogoutModalManager();
 
@@ -43,7 +44,7 @@ export const SideNav: FC = () => {
                 ))}
             </Nav>
             <Nav>
-              <ProfileDropdown profile={userProfile} onSignOut={openModal} />
+              <ProfileDropdown profile={userProfile} onNavBarToggle={onNavToggle} onSignOut={openModal} />
               <LogoutModal show={show} onCancel={onCancel} onLogout={onLogout} />
             </Nav>
           </>
