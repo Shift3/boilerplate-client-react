@@ -88,6 +88,14 @@ export const CreateUserForm: FC<CreateUserFormProps> = ({ onSubmit, onCancel }) 
           </Form.Control>
           {errors.role?.message && <InputError role='alert'>{errors.role?.message}</InputError>}
         </Form.Group>
+        <Form.Group>
+          <FormLabel htmlFor='agency'>Agency</FormLabel>
+          <Form.Control id='agency' as='select' custom aria-label='Select User Agency' {...register('agency')}>
+            <option>Main</option>
+            <option>Public</option>
+          </Form.Control>
+          {errors.agency?.message && <InputError role='alert'>{errors.agency?.message}</InputError>}
+        </Form.Group>
         <ButtonWrapper>
           <CancelButton data-testid='cancelButton' onClick={onCancel}>
             CANCEL

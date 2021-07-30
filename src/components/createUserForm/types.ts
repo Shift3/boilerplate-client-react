@@ -3,6 +3,7 @@ export type CreateUserFormData = {
   lastName: string;
   email: string;
   role: string;
+  agency: string;
 }
 
 export type CreateUserFormProps = {
