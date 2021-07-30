@@ -8,6 +8,7 @@ import { SignUpPage } from 'components/signupPage';
 import { FC } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
+import { CreateUserPage } from './components/createUserPage/index';
 import { DashboardPage } from './components/dashboardPage';
 import { FlashMessage } from './components/flashMessage';
 import { HolyGrailLayout } from './components/holyGrailLayout';
@@ -27,7 +28,8 @@ export const App: FC = () => (
             <Route path='/auth/activate-account/:token' component={ActivateAccountPage} />
             <Route path='/auth/forgot-password' component={ForgotPasswordPage} />
             <Route path='/auth/reset-password/:token' component={ResetPasswordPage} />
-            <PrivateRoute path='/users/change-password/:id' component={ChangePasswordPage} />
+            <PrivateRoute path='/user/change-password/' component={ChangePasswordPage} />
+            <PrivateRoute path='/admin/create-user/' component={CreateUserPage} />
             <PrivateRoute exact path='/' component={DashboardPage} />
           </HolyGrailLayout>
         </Switch>
