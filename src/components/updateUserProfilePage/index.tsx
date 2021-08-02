@@ -20,7 +20,7 @@ export const UpdateUserProfilePage: FC = () => {
   const onSubmit = async (formData: UpdateUserFormData) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const data = { ...formData };
-    history.push('/admin/user-list');
+    history.push('/auth/login');
   };
 
   const onCancel = () => history.push('/auth/user-list');
