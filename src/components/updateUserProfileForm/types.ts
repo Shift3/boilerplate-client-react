@@ -1,10 +1,10 @@
-export type UpdateUserFormData = {
+export type UpdateUserProfileFormData = {
   firstName: string;
   lastName: string;
   email: string;
 }
 
-export type UpdateUserFormProps = {
-  onSubmit: (data: UpdateUserFormData) => void;
+export type UpdateUserProfileFormProps = {
+  onSubmit: (data: UpdateUserProfileFormData) => void;
   onCancel: () => void;
 }

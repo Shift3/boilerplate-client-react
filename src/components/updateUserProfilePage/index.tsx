@@ -1,4 +1,4 @@
-import { UpdateUserFormData } from 'components/updateUserProfileForm/types';
+import { UpdateUserProfileFormData } from 'components/updateUserProfileForm/types';
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -17,13 +17,15 @@ export const Wrapper = styled.div`
 export const UpdateUserProfilePage: FC = () => {
   const history = useHistory();
 
-  const onSubmit = async (formData: UpdateUserFormData) => {
+  const onSubmit = async (formData: UpdateUserProfileFormData) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const data = { ...formData };
-    history.push('/auth/login');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const onSuccess = () => history.push('/auth/login');
+
   };
 
-  const onCancel = () => history.push('/auth/user-list');
+  const onCancel = () => history.goBack();
 
   return (
     <Wrapper>

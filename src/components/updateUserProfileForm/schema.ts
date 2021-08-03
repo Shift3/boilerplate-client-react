@@ -3,7 +3,7 @@ import { Constants } from '../../utils/constants';
 
 const { errorMessages } = Constants;
 
-export const UpdateUserFormSchema = yup.object().shape({
+export const UpdateUserProfileFormSchema = yup.object().shape({
   firstName: yup.string().trim().required(errorMessages.FIRST_NAME_REQUIRED),
   lastName: yup.string().trim().required(errorMessages.LAST_NAME_REQUIRED),
   email: yup.string().required(errorMessages.EMAIL_REQUIRED).email(errorMessages.INVALID_EMAIL),

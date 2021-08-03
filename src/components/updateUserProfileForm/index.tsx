@@ -3,8 +3,8 @@ import { FC } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { UpdateUserFormSchema } from './schema';
-import { UpdateUserFormProps } from './types';
+import { UpdateUserProfileFormSchema } from './schema';
+import { UpdateUserProfileFormProps } from './types';
 
 const StyledForm = styled(Form)`
   background-color: ${(props) => props.theme.primary};
@@ -47,13 +47,13 @@ const SubmitButton = styled(Button)`
   background-color: ${(props) => props.theme.accent};
 `;
 
-export const UpdateUserProfileForm: FC<UpdateUserFormProps> = ({ onSubmit, onCancel }) => {
+export const UpdateUserProfileForm: FC<UpdateUserProfileFormProps > = ({ onSubmit, onCancel }) => {
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm({
-    resolver: yupResolver(UpdateUserFormSchema),
+    resolver: yupResolver(UpdateUserProfileFormSchema),
     mode: 'onChange',
   });
   return (
