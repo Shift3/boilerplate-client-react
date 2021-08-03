@@ -1,4 +1,4 @@
-import { ApiService } from 'core/shared/infrastructure/http/apiService';
+import { ApiService, RequestOptions } from 'core/shared/infrastructure/http/apiService';
 import { environment } from 'environment';
 import {
   ActivateAccountRequest,
@@ -7,6 +7,7 @@ import {
   ResetPasswordRequest,
   SignUpRequest,
   UserResponse,
+  UpdateProfileRequest
 } from './dtos';
 
 export class UserService {
@@ -37,5 +38,15 @@ export class UserService {
   public async resetPassword(payload: ResetPasswordRequest, token: string): Promise<UserResponse> {
     const endpoint = `${this.url}/reset-password/${token}`;
     return this.apiService.put<UserResponse, ResetPasswordRequest>(endpoint, payload);
+  }
+
+  public async updateProfile(id: number, payload: UpdateProfileRequest, token: string): Promise<UserResponse> {
+    const endpoint = `${this.url}/profile/${id}`;
+    const options: RequestOptions = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    };
+    return this.apiService.put<UserResponse, UpdateProfileRequest>(endpoint, payload, options);
   }
 }

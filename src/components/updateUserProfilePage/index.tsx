@@ -1,4 +1,7 @@
 import { UpdateUserProfileFormData } from 'components/updateUserProfileForm/types';
+import { useAuthState } from 'core/modules/auth/application/useAuthState';
+import { useLogout } from 'core/modules/auth/application/useLogout';
+import { useUpdateProfile } from 'core/modules/user/application/useUpdateProfile';
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -16,13 +19,20 @@ export const Wrapper = styled.div`
 
 export const UpdateUserProfilePage: FC = () => {
   const history = useHistory();
+  const session = useAuthState();
+  const { logoutUser } = useLogout();
+  const { updateProfile } = useUpdateProfile();
 
   const onSubmit = async (formData: UpdateUserProfileFormData) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const data = { ...formData };
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const onSuccess = () => history.push('/auth/login');
+    const data = { ...formData, profilePicture: '' };
+    updateProfile(data);
 
+    if (session && session.user.email !== formData.email) {
+      logoutUser();
+      history.push('/auth/login');
+    } else {
+      history.goBack();
+    }
   };
 
   const onCancel = () => history.goBack();
