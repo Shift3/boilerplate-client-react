@@ -47,7 +47,7 @@ export function GenericTable<ObjectType extends WithId>(
         </thead>
         <tbody>
           {objects.map((obj) => (
-            <tr>
+            <tr key={obj.id}>
               {properties.map((property) => (
                 <td key={String(property.key)}>{obj[property.key]}</td>
               ))}
