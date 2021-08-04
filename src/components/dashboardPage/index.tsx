@@ -1,5 +1,5 @@
-import { ListView } from 'components/listView';
-import { ObjectProperty } from 'components/listView/types';
+import { GenericTable } from 'components/genericTable';
+import { ObjectProperty } from 'components/genericTable/types';
 import { FC } from 'react';
 import styled from 'styled-components';
 
@@ -24,31 +24,12 @@ const agentProperties: ObjectProperty<AgentData>[] = [
   { key: 'phoneNumber', label: 'PHONE NUMBER' },
 ];
 
-type PostData = {
-  id: number;
-  title: string;
-  body: string;
-};
-
-const posts: PostData[] = [
-  { id: 1, title: 'Post 1', body: 'This is post 1' },
-  { id: 2, title: 'Post 2', body: 'This is post 2' },
-  { id: 3, title: 'Post 3', body: 'This is post 3' },
-];
-
-const postProperties: ObjectProperty<PostData>[] = [
-  { key: 'title', label: 'TITLE' },
-  { key: 'body', label: 'BODY' },
-];
-
 const DashboardPageContainer = styled.div``;
 
 export const DashboardPage: FC = () => {
   return (
     <DashboardPageContainer data-testid='dashboardPageContainer'>
-      <ListView<AgentData> objects={agents} properties={agentProperties} />
-      <br />
-      <ListView<PostData> objects={posts} properties={postProperties} />
+      <GenericTable<AgentData> objects={agents} properties={agentProperties} />
     </DashboardPageContainer>
   );
 };

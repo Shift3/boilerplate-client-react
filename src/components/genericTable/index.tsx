@@ -30,7 +30,9 @@ const StyledTable = styled(Table)`
   }
 `;
 
-export function ListView<ObjectType extends WithId>(props: PropsWithChildren<ListViewProps<ObjectType>>): ReactElement {
+export function GenericTable<ObjectType extends WithId>(
+  props: PropsWithChildren<ListViewProps<ObjectType>>,
+): ReactElement {
   const { objects, properties } = props;
 
   return (
