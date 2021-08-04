@@ -1,7 +1,7 @@
-import { PropsWithChildren, ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { Table } from 'react-bootstrap';
 import styled from 'styled-components';
-import { ListViewProps, WithId } from './types';
+import { GenericTableProps, WithId } from './types';
 
 const StyledTable = styled(Table)`
   thead {
@@ -30,7 +30,7 @@ const StyledTable = styled(Table)`
   }
 `;
 
-export const GenericTable = <ObjectType extends WithId>(props: ListViewProps<ObjectType>): ReactElement => {
+export const GenericTable = <ObjectType extends WithId>(props: GenericTableProps<ObjectType>): ReactElement => {
   const { objects, properties } = props;
 
   return (

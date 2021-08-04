@@ -3,7 +3,7 @@ export type ObjectProperty<ObjectType> = {
   label: string;
 };
 
-export type ListViewProps<ObjectType> = {
+export type GenericTableProps<ObjectType> = {
   objects: ObjectType[];
   properties: ObjectProperty<ObjectType>[];
 };
