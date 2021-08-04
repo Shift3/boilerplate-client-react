@@ -7,3 +7,7 @@ export type ListViewProps<ObjectType> = {
   objects: ObjectType[];
   properties: ObjectProperty<ObjectType>[];
 };
+
+export type WithId = {
+  id: number | string;
+};

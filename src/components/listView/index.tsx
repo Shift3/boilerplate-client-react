@@ -1,7 +1,7 @@
 import { PropsWithChildren, ReactElement } from 'react';
 import { Table } from 'react-bootstrap';
 import styled from 'styled-components';
-import { ListViewProps } from './types';
+import { ListViewProps, WithId } from './types';
 
 const StyledTable = styled(Table)`
   thead {
@@ -30,9 +30,7 @@ const StyledTable = styled(Table)`
   }
 `;
 
-export function ListView<ObjectType extends { id: number }>(
-  props: PropsWithChildren<ListViewProps<ObjectType>>,
-): ReactElement {
+export function ListView<ObjectType extends WithId>(props: PropsWithChildren<ListViewProps<ObjectType>>): ReactElement {
   const { objects, properties } = props;
 
   return (
