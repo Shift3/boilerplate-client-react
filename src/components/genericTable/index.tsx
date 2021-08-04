@@ -34,7 +34,7 @@ export const GenericTable = <ObjectType extends WithId>(props: GenericTableProps
   const { objects, properties } = props;
 
   return (
-    <div>
+    <>
       <StyledTable responsive>
         <thead>
           <tr>
@@ -53,6 +53,7 @@ export const GenericTable = <ObjectType extends WithId>(props: GenericTableProps
           ))}
         </tbody>
       </StyledTable>
-    </div>
+      {!objects.length && <div className='text-center'>No data</div>}
+    </>
   );
 };
