@@ -47,7 +47,7 @@ const SubmitButton = styled(Button)`
   background-color: ${(props) => props.theme.accent};
 `;
 
-export const UpdateUserProfileForm: FC<UpdateUserProfileFormProps > = ({ onSubmit, onCancel }) => {
+export const UpdateUserProfileForm: FC<UpdateUserProfileFormProps> = ({ onSubmit, onCancel, defaultValues }) => {
   const {
     register,
     handleSubmit,
@@ -62,21 +62,17 @@ export const UpdateUserProfileForm: FC<UpdateUserProfileFormProps > = ({ onSubmi
         <Title>Update Profile</Title>
         <Form.Group>
           <FormLabel htmlFor='firstName'>First Name</FormLabel>
-          <Form.Control id='firstName' type='text' {...register('firstName')} />
+          <Form.Control id='firstName' type='text' defaultValue={defaultValues.firstName} {...register('firstName')} />
           {errors.firstName?.message && <InputError role='alert'>{errors.firstName?.message}</InputError>}
         </Form.Group>
         <Form.Group>
           <FormLabel htmlFor='lastName'>Last Name</FormLabel>
-          <Form.Control
-            id='lastName'
-            type='text'
-            {...register('lastName')}
-          />
+          <Form.Control id='lastName' type='text' defaultValue={defaultValues.lastName} {...register('lastName')} />
           {errors.lastName?.message && <InputError role='alert'>{errors.lastName?.message}</InputError>}
         </Form.Group>
         <Form.Group>
           <FormLabel htmlFor='email'>Email</FormLabel>
-          <Form.Control id='email' type='email' {...register('email')} />
+          <Form.Control id='email' type='email' defaultValue={defaultValues.email} {...register('email')} />
           {errors.email?.message && <InputError role='alert'>{errors.email?.message}</InputError>}
         </Form.Group>
         <ButtonWrapper>

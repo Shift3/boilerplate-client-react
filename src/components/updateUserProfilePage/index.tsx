@@ -42,7 +42,15 @@ export const UpdateUserProfilePage: FC = () => {
 
   return (
     <Wrapper>
-      <UpdateUserProfileForm onSubmit={onSubmit} onCancel={onCancel} />
+      <UpdateUserProfileForm
+        onSubmit={onSubmit}
+        onCancel={onCancel}
+        defaultValues={{
+          firstName: session!.user.firstName,
+          lastName: session!.user.lastName,
+          email: session!.user.email,
+        }}
+      />
     </Wrapper>
   );
 };

@@ -16,7 +16,7 @@ export type UpdateProfileManager = {
 
 export const useUpdateProfile = (): UpdateProfileManager => {
   const session = useAuthState();
-  const { showErrorNotification } = useShowNotification();
+  const { showSuccessNotification, showErrorNotification } = useShowNotification();
 
   const updateProfile = async (data: UpdateProfileData, onSuccess?: () => void, onError?: () => void) => {
     if (!session) {
@@ -28,6 +28,8 @@ export const useUpdateProfile = (): UpdateProfileManager => {
 
     try {
       await userService.updateProfile(session.user.id, data, session.token);
+
+      showSuccessNotification('Profile updated.');
 
       if (onSuccess) {
         onSuccess();
