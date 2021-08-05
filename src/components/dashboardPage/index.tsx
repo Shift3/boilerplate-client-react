@@ -1,4 +1,7 @@
-/* eslint-disable no-console */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable no-alert */
 /* eslint-disable react/no-unused-prop-types */
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -50,8 +53,8 @@ const agentTableItems: AgentTableItem[] = [
     email: 'john@email.com',
     phoneNumber: '5555555555',
     actions: [
-      { icon: 'trash-alt', onClick: () => console.log('Delete') },
-      { icon: 'edit', onClick: () => console.log('Edit') },
+      { icon: 'trash-alt', onClick: () => alert('Delete Agent 1') },
+      { icon: 'edit', onClick: () => alert('Edit Agent 1') },
     ],
   },
   {
@@ -61,8 +64,8 @@ const agentTableItems: AgentTableItem[] = [
     email: 'jane@email.com',
     phoneNumber: '4444444444',
     actions: [
-      { icon: 'trash-alt', onClick: () => console.log('Delete') },
-      { icon: 'edit', onClick: () => console.log('Edit') },
+      { icon: 'trash-alt', onClick: () => alert('Delete Agent 2') },
+      { icon: 'edit', onClick: () => alert('Edit Agent 2') },
     ],
   },
   {
@@ -72,8 +75,8 @@ const agentTableItems: AgentTableItem[] = [
     email: 'alice@email.com',
     phoneNumber: '3333333333',
     actions: [
-      { icon: 'trash-alt', onClick: () => console.log('Delete') },
-      { icon: 'edit', onClick: () => console.log('Edit') },
+      { icon: 'trash-alt', onClick: () => alert('Delete Agent 3') },
+      { icon: 'edit', onClick: () => alert('Edit Agent 3') },
     ],
   },
 ];
@@ -90,9 +93,8 @@ const customRenderers = {
   actions: ({ actions }: AgentTableItem) => (
     <>
       {actions.map((action, index) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <span className='px-3 py-1' key={index}>
-          <FontAwesomeIcon icon={action.icon} onClick={action.onClick} />
+        <span className='px-3 py-1' key={index} onClick={action.onClick}>
+          <FontAwesomeIcon icon={action.icon} />
         </span>
       ))}
     </>
