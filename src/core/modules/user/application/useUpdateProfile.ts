@@ -11,14 +11,14 @@ export type UpdateProfileData = {
 
 // This function defines what will be returned by this custom hook
 export type UpdateProfileManager = {
-  updateProfile: (data: UpdateProfileData) => void;
-}
+  updateProfile: (data: UpdateProfileData, onSuccess?: () => void, onError?: () => void) => void;
+};
 
 export const useUpdateProfile = (): UpdateProfileManager => {
   const session = useAuthState();
   const { showErrorNotification } = useShowNotification();
 
-  const updateProfile = (data: UpdateProfileData) => {
+  const updateProfile = async (data: UpdateProfileData, onSuccess?: () => void, onError?: () => void) => {
     if (!session) {
       showErrorNotification('Unauthorized');
       return;
@@ -27,9 +27,17 @@ export const useUpdateProfile = (): UpdateProfileManager => {
     const userService = new UserService();
 
     try {
-      userService.updateProfile(session.user.id, data, session.token);
+      await userService.updateProfile(session.user.id, data, session.token);
+
+      if (onSuccess) {
+        onSuccess();
+      }
     } catch (error) {
       showErrorNotification(error.message);
+
+      if (onError) {
+        onError();
+      }
     }
   };
 

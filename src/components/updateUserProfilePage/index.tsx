@@ -25,14 +25,17 @@ export const UpdateUserProfilePage: FC = () => {
 
   const onSubmit = async (formData: UpdateUserProfileFormData) => {
     const data = { ...formData, profilePicture: '' };
-    updateProfile(data);
 
-    if (session && session.user.email !== formData.email) {
-      logoutUser();
-      history.push('/auth/login');
-    } else {
-      history.goBack();
-    }
+    const onSuccess = () => {
+      if (session && session.user.email !== formData.email) {
+        logoutUser();
+        history.push('/auth/login');
+      } else {
+        history.goBack();
+      }
+    };
+
+    updateProfile(data, onSuccess);
   };
 
   const onCancel = () => history.goBack();
