@@ -42,10 +42,8 @@ This project uses Prettier to enforce code style. It is highly opinionated by de
 ESLint...
 ### Strongly typed
 
-The boilerplate is str,ongly typed throughout with the use of Typescript. It takes advantage of typing and classes to help manage objects.
-### Redux for state management
+The boilerplate is strongly typed throughout with the use of Typescript. It takes advantage of typing and classes to help manage objects.
 
-Redux................................................................
 ### Speed
 
 The boilerplate was built with performance in mind. It uses lazy loading, OnPush change detection, trackBy in dynamic *ngFor instances, ng-container to reduce hidden elements in the DOM, and more. This is very helpful for the overall user experience, but also with slower devices, and older browsers.
@@ -84,7 +82,8 @@ YUP
 ### Flexibility
 
 ### Security
-
+Routes...Admin/Private/....
 ### Themes
 
-### Translation
+
+### React Hooks
