@@ -1,13 +1,13 @@
-export type WithId = {
+export type BaseTableItem = {
   id: number | string;
 };
 
-export type ObjectProperty<ObjectType> = {
-  key: keyof ObjectType;
+export type TableHeader<TableItem> = {
+  key: keyof TableItem;
   label: string;
 };
 
-export type GenericTableProps<ObjectType> = {
-  objects: ObjectType[];
-  properties: ObjectProperty<ObjectType>[];
+export type GenericTableProps<TableItem extends BaseTableItem> = {
+  items: TableItem[];
+  headers: TableHeader<TableItem>[];
 };

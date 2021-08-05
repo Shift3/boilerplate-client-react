@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import { Table } from 'react-bootstrap';
 import styled from 'styled-components';
-import { GenericTableProps, WithId } from './types';
+import { BaseTableItem, GenericTableProps } from './types';
 
 const StyledTable = styled(Table)`
   thead {
@@ -30,30 +30,30 @@ const StyledTable = styled(Table)`
   }
 `;
 
-export const GenericTable = <ObjectType extends WithId>(props: GenericTableProps<ObjectType>): ReactElement => {
-  const { objects, properties } = props;
+export const GenericTable = <TableItem extends BaseTableItem>(props: GenericTableProps<TableItem>): ReactElement => {
+  const { items, headers } = props;
 
   return (
     <>
       <StyledTable responsive>
         <thead>
           <tr>
-            {properties.map((property) => (
-              <th key={String(property.key)}>{property.label}</th>
+            {headers.map((header) => (
+              <th key={String(header.key)}>{header.label}</th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {objects.map((obj) => (
-            <tr key={obj.id}>
-              {properties.map((property) => (
-                <td key={String(property.key)}>{obj[property.key]}</td>
+          {items.map((item) => (
+            <tr key={item.id}>
+              {headers.map((header) => (
+                <td key={String(header.key)}>{item[header.key]}</td>
               ))}
             </tr>
           ))}
         </tbody>
       </StyledTable>
-      {!objects.length && <div className='text-center'>No data</div>}
+      {!items.length && <div className='text-center'>No data</div>}
     </>
   );
 };
