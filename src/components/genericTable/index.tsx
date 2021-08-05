@@ -31,7 +31,7 @@ const StyledTable = styled(Table)`
 `;
 
 export const GenericTable = <TableItem extends BaseTableItem>(props: GenericTableProps<TableItem>): ReactElement => {
-  const { items, headers } = props;
+  const { items, headers, customRenderers } = props;
 
   return (
     <>
@@ -46,9 +46,10 @@ export const GenericTable = <TableItem extends BaseTableItem>(props: GenericTabl
         <tbody>
           {items.map((item) => (
             <tr key={item.id}>
-              {headers.map((header) => (
-                <td key={String(header.key)}>{item[header.key]}</td>
-              ))}
+              {headers.map((header) => {
+                const customRenderer = customRenderers[header.key];
+                return <td key={String(header.key)}>{customRenderer ? customRenderer(item) : item[header.key]}</td>;
+              })}
             </tr>
           ))}
         </tbody>
