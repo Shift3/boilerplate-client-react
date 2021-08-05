@@ -5,6 +5,7 @@ import { ForgotPasswordPage } from 'components/forgotPasswordPage';
 import { LogInPage } from 'components/loginPage';
 import { ResetPasswordPage } from 'components/resetPasswordPage';
 import { SignUpPage } from 'components/signupPage';
+import { UpdateUserProfilePage } from 'components/updateUserProfilePage';
 import { FC } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
@@ -30,6 +31,7 @@ export const App: FC = () => (
             <Route path='/auth/reset-password/:token' component={ResetPasswordPage} />
             <PrivateRoute path='/user/change-password/' component={ChangePasswordPage} />
             <PrivateRoute path='/admin/create-user/' component={CreateUserPage} />
+            <PrivateRoute path='/user/profile/' component={UpdateUserProfilePage} />
             <PrivateRoute exact path='/' component={DashboardPage} />
           </HolyGrailLayout>
         </Switch>
