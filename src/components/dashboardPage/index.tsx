@@ -7,6 +7,29 @@ import { TableHeader } from 'components/genericTable/types';
 import { FC } from 'react';
 import styled from 'styled-components';
 
+// --------------------------------------------------------
+//  Posts Table
+// --------------------------------------------------------
+type PostsTableItem = {
+  id: number;
+  title: string;
+  body: string;
+};
+
+const postsTableItems: PostsTableItem[] = [
+  { id: 1, title: 'One', body: 'This is the first post.' },
+  { id: 2, title: 'Two', body: 'This is the second post.' },
+  { id: 3, title: 'Three', body: 'This is the third post.' },
+];
+
+const postsTableHeaders: TableHeader<PostsTableItem>[] = [
+  { key: 'title', label: 'Title' },
+  { key: 'body', label: 'Body' },
+];
+
+// --------------------------------------------------------
+// Agents Table
+// --------------------------------------------------------
 type AgentTableItem = {
   id: number;
   name: string;
@@ -81,6 +104,9 @@ const DashboardPageContainer = styled.div``;
 export const DashboardPage: FC = () => {
   return (
     <DashboardPageContainer data-testid='dashboardPageContainer'>
+      <GenericTable<PostsTableItem> items={postsTableItems} headers={postsTableHeaders} customRenderers={{}} />
+      <br />
+      <br />
       <GenericTable<AgentTableItem>
         items={agentTableItems}
         headers={agentTableHeaders}
