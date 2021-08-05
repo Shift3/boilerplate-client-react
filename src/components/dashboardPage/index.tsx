@@ -90,9 +90,9 @@ const customRenderers = {
   actions: ({ actions }: AgentTableItem) => (
     <>
       {actions.map((action, index) => (
-        <span className='px-3 py-1'>
-          {/* eslint-disable-next-line react/no-array-index-key */}
-          <FontAwesomeIcon key={index} icon={action.icon} onClick={action.onClick} />
+        // eslint-disable-next-line react/no-array-index-key
+        <span className='px-3 py-1' key={index}>
+          <FontAwesomeIcon icon={action.icon} onClick={action.onClick} />
         </span>
       ))}
     </>
