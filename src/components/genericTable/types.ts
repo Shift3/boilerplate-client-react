@@ -14,5 +14,5 @@ export type CustomRenderer<TableItem> = (item: TableItem) => React.ReactNode;
 export type GenericTableProps<TableItem extends BaseTableItem> = {
   items: TableItem[];
   headers: TableHeader<TableItem>[];
-  customRenderers: Partial<Record<keyof TableItem, CustomRenderer<TableItem>>>;
+  customRenderers?: Partial<Record<keyof TableItem, CustomRenderer<TableItem>>>;
 };

@@ -8,7 +8,7 @@ import { FC } from 'react';
 import styled from 'styled-components';
 
 // --------------------------------------------------------
-//  Posts Table
+//  Posts Table Data
 // --------------------------------------------------------
 type PostsTableItem = {
   id: number;
@@ -28,7 +28,7 @@ const postsTableHeaders: TableHeader<PostsTableItem>[] = [
 ];
 
 // --------------------------------------------------------
-// Agents Table
+// Agents Table Data
 // --------------------------------------------------------
 type AgentTableItem = {
   id: number;
@@ -104,7 +104,7 @@ const DashboardPageContainer = styled.div``;
 export const DashboardPage: FC = () => {
   return (
     <DashboardPageContainer data-testid='dashboardPageContainer'>
-      <GenericTable<PostsTableItem> items={postsTableItems} headers={postsTableHeaders} customRenderers={{}} />
+      <GenericTable<PostsTableItem> items={postsTableItems} headers={postsTableHeaders} />
       <br />
       <br />
       <GenericTable<AgentTableItem>

@@ -30,9 +30,11 @@ const StyledTable = styled(Table)`
   }
 `;
 
-export const GenericTable = <TableItem extends BaseTableItem>(props: GenericTableProps<TableItem>): ReactElement => {
-  const { items, headers, customRenderers } = props;
-
+export const GenericTable = <TableItem extends BaseTableItem>({
+  items,
+  headers,
+  customRenderers = {},
+}: GenericTableProps<TableItem>): ReactElement => {
   return (
     <>
       <StyledTable responsive>
