@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { Constants } from 'utils/constants';
-import { ResetPasswordForm } from '../index';
+import { ResetPasswordForm } from '../ResetPasswordForm';
 import {
   expectLengthByRole,
   setValueByLabelText,

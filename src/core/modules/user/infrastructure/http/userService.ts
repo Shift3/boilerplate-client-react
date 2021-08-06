@@ -7,7 +7,7 @@ import {
   ResetPasswordRequest,
   SignUpRequest,
   UserResponse,
-  UpdateProfileRequest
+  UpdateProfileRequest,
 } from './dtos';
 
 export class UserService {
@@ -45,7 +45,7 @@ export class UserService {
     const options: RequestOptions = {
       headers: {
         Authorization: `Bearer ${token}`,
-      }
+      },
     };
     return this.apiService.put<UserResponse, UpdateProfileRequest>(endpoint, payload, options);
   }

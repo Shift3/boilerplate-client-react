@@ -1,11 +1,11 @@
-import { LogInForm } from 'components/loginForm';
+import { LoginForm } from 'components/loginForm/LoginForm';
 import { useLogin } from 'core/modules/auth/application/useLogin';
 import { FC } from 'react';
 import { Button } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { PageWrapper } from 'styles/pages/PageWrapper';
-import { ILogInFormData } from '../components/loginForm/types';
+import { LoginFormData } from '../components/loginForm/types';
 
 const LoginWrapper = styled.div`
   justify-content: center;
@@ -54,7 +54,7 @@ export const LoginPage: FC = () => {
   const history = useHistory();
   const { loginUser } = useLogin();
 
-  const onSubmit = (formData: ILogInFormData) => {
+  const onSubmit = (formData: LoginFormData) => {
     const credentials = { ...formData };
     const onSuccess = () => history.push('/');
     loginUser(credentials, onSuccess);
@@ -69,7 +69,7 @@ export const LoginPage: FC = () => {
     <PageWrapper>
       <LoginWrapper data-testid='loginWrapper'>
         <LeftLogin data-testid='leftLogin'>
-          <LogInForm onSubmit={onSubmit} onCancel={onCancel} />
+          <LoginForm onSubmit={onSubmit} onCancel={onCancel} />
           <LinkWrapper>
             <Link to='/auth/forgot-password'>Forgot Password?</Link>
           </LinkWrapper>

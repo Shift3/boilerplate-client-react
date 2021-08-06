@@ -15,7 +15,7 @@ import {
   CancelButton,
 } from '../../styles/components/Forms';
 
-export const ChangePasswordForm: FC <ChangePasswordFormProps> = ({ onSubmit }) => {
+export const ChangePasswordForm: FC<ChangePasswordFormProps> = ({ onSubmit }) => {
   const {
     register,
     handleSubmit,

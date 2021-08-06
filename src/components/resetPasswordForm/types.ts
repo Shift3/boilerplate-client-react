@@ -1,13 +1,9 @@
-import { FC } from 'react';
-
-export interface IResetPasswordFormData {
+export interface ResetPasswordFormData {
   newPassword: string;
   confirmPassword: string;
 }
 
-type IResetPasswordFormProps = {
-  onSubmit: (data: IResetPasswordFormData) => void;
+export type ResetPasswordFormProps = {
+  onSubmit: (data: ResetPasswordFormData) => void;
   onCancel: () => void;
 };
-
-export type ResetPasswordFormType = FC<IResetPasswordFormProps>;

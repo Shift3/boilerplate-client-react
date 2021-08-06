@@ -4,9 +4,9 @@ export type CreateUserFormData = {
   email: string;
   role: string;
   agency: string;
-}
+};
 
 export type CreateUserFormProps = {
   onSubmit: (data: CreateUserFormData) => void;
   onCancel: () => void;
-}
+};

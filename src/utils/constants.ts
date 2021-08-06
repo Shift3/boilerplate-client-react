@@ -64,7 +64,7 @@ export const Constants: IConstant = {
     NEW_PASSWORD_REQUIRED: 'New password is required.',
     CONFIRM_PASSWORD_REQUIRED: 'Confirm password is required.',
     ROLE_REQUIRED: 'Role is required.',
-    AGENCY_REQUIRED: 'Agency is required.'
+    AGENCY_REQUIRED: 'Agency is required.',
   },
   version: '0.1.0',
   creationYear: 2021,

@@ -19,6 +19,5 @@ beforeEach(() =>
 );
 
 describe('<SignUpPage/>', () => {
-
   it('Should render the <SignupForm/>', () => expectInDocByTestId('signupForm'));
 });

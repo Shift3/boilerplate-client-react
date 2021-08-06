@@ -17,7 +17,7 @@ export class RoleService {
     const options: RequestOptions = {
       headers: {
         Authorization: `Bearer ${token}`,
-      }
+      },
     };
     return this.apiService.get<IRole[]>(endpoint, options);
   }

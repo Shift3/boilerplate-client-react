@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { Dashboard } from './pages/Dashboard';
 import { FlashMessage } from './components/flashMessage/FlashMessage';
-import { HolyGrailLayout } from './components/holyGrailLayout';
+import { HolyGrailLayout } from './components/holyGrailLayout/HolyGrailLayout';
 import { PrivateRoute } from './core/modules/auth/presentation/privateRoute';
 import { GlobalStyle } from './GlobalStyle';
 import AppTheme from './utils/styleValues';

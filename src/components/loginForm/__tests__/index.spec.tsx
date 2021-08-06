@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { Constants } from 'utils/constants';
-import { LogInForm } from '../index';
+import { LogInForm } from '../LoginForm';
 import {
   clickByTestIdAsync,
   expectInDocByLabelText,

@@ -5,7 +5,7 @@ import { useUpdateProfile } from 'core/modules/user/application/useUpdateProfile
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { PageWrapper } from 'styles/pages/PageWrapper';
-import { UpdateUserProfileForm } from '../components/updateUserProfileForm/index';
+import { UpdateUserProfileForm } from '../components/updateUserProfileForm/UpdateUserProfile';
 
 export const UpdateUserProfilePage: FC = () => {
   const history = useHistory();

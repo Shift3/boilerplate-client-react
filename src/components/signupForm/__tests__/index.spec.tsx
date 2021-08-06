@@ -10,7 +10,7 @@ import {
   setValueByLabelText,
   formAlertMessageCheck,
 } from 'utils/test';
-import { SignUpForm } from '../index';
+import { SignUpForm } from '../SignupForm';
 import { Constants } from 'utils/constants';
 
 const { EMAIL_REQUIRED, INVALID_EMAIL, EMAIL_MATCH, FIRST_NAME_REQUIRED, LAST_NAME_REQUIRED } = Constants.errorMessages;

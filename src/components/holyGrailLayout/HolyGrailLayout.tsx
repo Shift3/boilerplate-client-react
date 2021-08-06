@@ -1,10 +1,17 @@
 import { Footer } from 'components/footer/Footer';
 import { useNavPositionManager } from 'core/modules/navigation/application/useNavPositionManager';
 import { TopNav } from 'core/modules/navigation/presentation/topNav';
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import styled from 'styled-components';
 import { SideNav } from '../../core/modules/navigation/presentation/sideNav';
-import { HolyGrailLayoutProps } from './types';
+
+export type HolyGrailLayoutProps = {
+  header?: ReactNode;
+  leftAside?: ReactNode;
+  children?: ReactNode;
+  rightAside?: ReactNode;
+  footer?: ReactNode;
+};
 
 const HolyGrail = styled.div`
   min-height: 100vh;
