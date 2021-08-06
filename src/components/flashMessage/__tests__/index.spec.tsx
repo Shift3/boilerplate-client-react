@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import store from 'core/redux/store';
 import { Provider } from 'react-redux';
-import { FlashMessage } from '..';
+import { FlashMessage } from '../FlashMessage';
 import { expectInDocByTestId } from '../../../utils/test';
 
 // ---------------- @TODO --------------------

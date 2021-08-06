@@ -1,4 +1,4 @@
-import { Footer } from 'components/footer';
+import { Footer } from 'components/footer/Footer';
 import { useNavPositionManager } from 'core/modules/navigation/application/useNavPositionManager';
 import { TopNav } from 'core/modules/navigation/presentation/topNav';
 import { FC } from 'react';

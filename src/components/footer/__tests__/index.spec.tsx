@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { Footer, copyrightDate } from '../index';
+import { Footer, copyrightDate } from '../Footer';
 import { Constants } from '../../../utils/constants';
 import { expectInDocByTestId, expectTextContentByTestId } from '../../../utils/test';
 

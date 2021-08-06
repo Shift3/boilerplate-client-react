@@ -1,8 +1,8 @@
-import { CreateUserForm } from 'components/createUserForm';
-import { CreateUserFormData } from 'components/createUserForm/types';
+import { CreateUserForm } from 'components/createUser/CreateUserForm';
+import { CreateUserFormData } from 'components/createUser/types';
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
-import { PageWrapper } from '../styles/pages/PageWrapper.js';
+import { PageWrapper } from '../styles/pages/PageWrapper';
 
 export const CreateUserPage: FC = () => {
   const history = useHistory();

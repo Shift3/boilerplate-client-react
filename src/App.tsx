@@ -3,8 +3,8 @@ import { UpdateUserProfilePage } from 'pages/UpdateUserProfile';
 import { FC } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { DashboardPage } from './pages/Dashboard';
-import { FlashMessage } from './components/flashMessage';
+import { Dashboard } from './pages/Dashboard';
+import { FlashMessage } from './components/flashMessage/FlashMessage';
 import { HolyGrailLayout } from './components/holyGrailLayout';
 import { PrivateRoute } from './core/modules/auth/presentation/privateRoute';
 import { GlobalStyle } from './GlobalStyle';
@@ -32,7 +32,7 @@ export const App: FC = () => (
             <PrivateRoute path='/user/change-password/' component={ChangePasswordPage} />
             <PrivateRoute path='/admin/create-user/' component={CreateUserPage} />
             <PrivateRoute path='/user/profile/' component={UpdateUserProfilePage} />
-            <PrivateRoute exact path='/' component={DashboardPage} />
+            <PrivateRoute exact path='/' component={Dashboard} />
           </HolyGrailLayout>
         </Switch>
       </Router>

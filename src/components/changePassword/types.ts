@@ -1,13 +1,9 @@
-import { FC } from 'react';
-
-export interface IChangePasswordFormData {
+export type ChangePasswordFormData = {
   currentPassword: string;
   newPassword: string;
   confirmPassword: string;
 }
 
-type IChangePasswordFormProps = {
-  onSubmit: (data: IChangePasswordFormData) => void;
+export type ChangePasswordFormProps = {
+  onSubmit: (data: ChangePasswordFormData) => void;
 };
-
-export type ChangePasswordFormType = FC<IChangePasswordFormProps>;

@@ -1,9 +1,10 @@
 import { useForm } from 'react-hook-form';
+import { FC } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { ChangePasswordFormSchema } from './schema';
-import { ChangePasswordFormType } from './types';
+import { ChangePasswordFormProps } from './types';
 import {
   FormLabel,
   Title,
@@ -14,7 +15,7 @@ import {
   CancelButton,
 } from '../../styles/components/Forms';
 
-export const ChangePasswordForm: ChangePasswordFormType = ({ onSubmit }) => {
+export const ChangePasswordForm: FC <ChangePasswordFormProps> = ({ onSubmit }) => {
   const {
     register,
     handleSubmit,
@@ -31,7 +32,7 @@ export const ChangePasswordForm: ChangePasswordFormType = ({ onSubmit }) => {
   };
 
   return (
-    <StyledForm data-testid='changePasswordForm' onSubmit={handleSubmit(onSubmit)}>
+    <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <Title>Change Password</Title>
       <Form.Group>
         <FormLabel htmlFor='currentPassword'>Current Password</FormLabel>

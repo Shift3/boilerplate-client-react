@@ -24,7 +24,7 @@ export const ActivateAccountForm: ActivateAccountFormType = ({ onSubmit, onCance
   });
 
   return (
-    <StyledForm data-testid='resetPasswordForm' onSubmit={handleSubmit(onSubmit)}>
+    <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <Title>Activate Account</Title>
       <Form.Group>
         <FormLabel htmlFor='newPassword'>New Password</FormLabel>

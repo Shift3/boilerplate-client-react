@@ -1,12 +1,8 @@
-import { FC } from 'react';
-
-export interface IForgotPassswordFormData {
+export interface ForgotPassswordFormData {
   email: string;
 }
 
-type IForgotPasswordFormProps = {
-  onSubmit: (data: IForgotPassswordFormData) => void;
+export type ForgotPasswordFormProps = {
+  onSubmit: (data: ForgotPassswordFormData) => void;
   onCancel: () => void;
 };
-
-export type ForgotPasswordFormType = FC<IForgotPasswordFormProps>;

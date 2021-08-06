@@ -4,8 +4,8 @@ import { FC } from 'react';
 import { Button } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { PageWrapper } from 'styles/pages/PageWrapper';
 import { ILogInFormData } from '../components/loginForm/types';
-import { PageWrapper } from '../styles/pages/PageWrapper.js';
 
 const LoginWrapper = styled.div`
   justify-content: center;
