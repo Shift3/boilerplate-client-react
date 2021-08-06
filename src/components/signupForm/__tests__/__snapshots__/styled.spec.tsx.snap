@@ -80,6 +80,18 @@ exports[`<SignUpForm /> styled components should match the stored <StyledForm />
 />
 `;
 
+exports[`<SignUpForm /> styled components should match the stored <SubmitButton /> snapshot 1`] = `
+.c0 {
+  color: white;
+}
+
+<button
+  className="c0 btn btn-primary"
+  disabled={false}
+  type="button"
+/>
+`;
+
 exports[`<SignUpForm /> styled components should match the stored <Title /> snapshot 1`] = `
 .c0 {
   font-size: 2em;

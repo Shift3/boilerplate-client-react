@@ -1,6 +1,14 @@
 import renderer from 'react-test-renderer';
 import { expectToMatchSnapshot } from '../../../utils/test';
-import { StyledForm, Title, FormLabel, InputError, ButtonWrapper, CancelButton, SignUpButton } from '../styled';
+import {
+  StyledForm,
+  Title,
+  FormLabel,
+  InputError,
+  ButtonWrapper,
+  CancelButton,
+  SubmitButton,
+} from '../../../styles/components/Forms';
 
 import 'jest-styled-components';
 
@@ -18,6 +26,6 @@ describe('<SignUpForm /> styled components', () => {
   it('should match the stored <CancelButton /> snapshot', () =>
     expect(renderer.create(<CancelButton />).toJSON()).toMatchSnapshot());
 
-  it('should match the stored <SignUpButton /> snapshot', () =>
-    expect(renderer.create(<SignUpButton />).toJSON()).toMatchSnapshot());
+  it('should match the stored <SubmitButton /> snapshot', () =>
+    expect(renderer.create(<SubmitButton />).toJSON()).toMatchSnapshot());
 });
