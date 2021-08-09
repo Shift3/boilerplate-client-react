@@ -1,4 +1,5 @@
 /* eslint-disable no-alert */
+import { FC } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { GenericTable } from 'components/genericTable';
@@ -59,7 +60,7 @@ const customRenderers = {
   ),
 };
 
-export const AgencyListView = () => {
+export const AgencyListView: FC = () => {
   return (
     <GenericTable<AgencyTableItem>
       headers={agencyTableHeaders}
