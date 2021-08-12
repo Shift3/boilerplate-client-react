@@ -2,11 +2,6 @@ import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } f
 import { environment } from 'environment';
 import { ApiMessage } from './dtos/api-message';
 
-declare module 'axios' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface, @typescript-eslint/no-explicit-any
-  export interface AxiosResponse<T = any> extends Promise<T> {}
-}
-
 export interface RequestOptions {
   headers?: Record<string, string>;
   params?: Record<string, string>;
@@ -27,7 +22,7 @@ export class ApiService {
       });
 
     this.axios.interceptors.response.use(
-      (res: AxiosResponse) => res.data,
+      (res: AxiosResponse) => res,
       (err: AxiosError | Error) => {
         if (axios.isAxiosError(err)) {
           if (err.response) {
@@ -51,7 +46,7 @@ export class ApiService {
       headers: options?.headers,
       params: options?.params,
     };
-    return this.axios.get<T>(endpoint, config);
+    return (await this.axios.get<T>(endpoint, config)).data;
   }
 
   public async post<T, U>(endpoint: string, payload: U, options?: RequestOptions): Promise<T> {
@@ -59,7 +54,7 @@ export class ApiService {
       headers: options?.headers,
       params: options?.params,
     };
-    return this.axios.post<T>(endpoint, payload, config);
+    return (await this.axios.post<T>(endpoint, payload, config)).data;
   }
 
   public async put<T, U>(endpoint: string, payload: U, options?: RequestOptions): Promise<T> {
@@ -67,7 +62,7 @@ export class ApiService {
       headers: options?.headers,
       params: options?.params,
     };
-    return this.axios.put<T>(endpoint, payload, config);
+    return (await this.axios.put<T>(endpoint, payload, config)).data;
   }
 
   public async delete<T>(endpoint: string, options?: RequestOptions): Promise<T> {
@@ -75,6 +70,6 @@ export class ApiService {
       headers: options?.headers,
       params: options?.params,
     };
-    return this.axios.delete<T>(endpoint, config);
+    return (await this.axios.delete<T>(endpoint, config)).data;
   }
 }
