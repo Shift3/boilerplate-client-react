@@ -1,9 +1,12 @@
 /* eslint-disable no-alert */
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { GenericTable } from 'components/genericTable';
 import { TableHeader } from 'components/genericTable/types';
+import { useAppDispatch, useAppSelector } from 'core/redux';
+import { fetchAll } from 'redux/agency/thunks';
+import { selectAgencies } from 'redux/agency/hooks';
 
 type AgencyTableItem = {
   // eslint-disable-next-line react/no-unused-prop-types
@@ -15,30 +18,6 @@ type AgencyTableItem = {
     onClick: () => void;
   }[];
 };
-
-const agencyTableHeaders: TableHeader<AgencyTableItem>[] = [
-  { key: 'name', label: 'AGENCY NAME' },
-  { key: 'actions', label: 'ACTIONS' },
-];
-
-const agencyTableItems: AgencyTableItem[] = [
-  {
-    id: 1,
-    name: 'Main',
-    actions: [
-      { icon: 'edit', onClick: () => alert('Edit Main') },
-      { icon: 'trash-alt', onClick: () => alert('Delete Main') },
-    ],
-  },
-  {
-    id: 2,
-    name: 'Public',
-    actions: [
-      { icon: 'edit', onClick: () => alert('Edit Public') },
-      { icon: 'trash-alt', onClick: () => alert('Delete Public') },
-    ],
-  },
-];
 
 const customRenderers = {
   actions: ({ actions }: AgencyTableItem) => (
@@ -61,11 +40,31 @@ const customRenderers = {
 };
 
 export const AgencyListView: FC = () => {
-  return (
-    <GenericTable<AgencyTableItem>
-      headers={agencyTableHeaders}
-      items={agencyTableItems}
-      customRenderers={customRenderers}
-    />
-  );
+  const dispatch = useAppDispatch();
+  const agencies = useAppSelector(selectAgencies);
+  const [items, setItems] = useState<AgencyTableItem[]>([]);
+
+  const headers: TableHeader<AgencyTableItem>[] = [
+    { key: 'name', label: 'AGENCY NAME' },
+    { key: 'actions', label: 'ACTIONS' },
+  ];
+
+  useEffect(() => {
+    dispatch(fetchAll());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const tableIems: AgencyTableItem[] = agencies.map((agency) => ({
+      id: agency.id,
+      name: agency.agencyName,
+      actions: [
+        { icon: 'edit', onClick: () => alert(`Edit ${agency.agencyName}`) },
+        { icon: 'trash-alt', onClick: () => alert(`Delete ${agency.agencyName}`) },
+      ],
+    }));
+
+    setItems(tableIems);
+  }, [agencies]);
+
+  return <GenericTable<AgencyTableItem> headers={headers} items={items} customRenderers={customRenderers} />;
 };
