@@ -19,6 +19,7 @@ export class AgencyService implements IAgencyService {
         Authorization: `Bearer ${jwtToken}`,
       },
     };
-    return this.apiService.get<AgencyDTO[]>(endpoint, config);
+    const agencies = await this.apiService.get<AgencyDTO[]>(endpoint, config);
+    return agencies;
   }
 }

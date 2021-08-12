@@ -40,7 +40,6 @@ export class ApiService implements IApiService {
       return Promise.reject(error.response.data);
     }
     // The request was made but no response was received.
-    // The request was made but no response was received.
     if (error.request) {
       const errorResponse: ApiErrorResponse = { message: 'Network error' };
       return Promise.reject(errorResponse);
