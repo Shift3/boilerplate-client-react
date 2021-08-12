@@ -6,6 +6,7 @@ import { LogInPage } from 'components/loginPage';
 import { ResetPasswordPage } from 'components/resetPasswordPage';
 import { SignUpPage } from 'components/signupPage';
 import { UpdateUserProfilePage } from 'components/updateUserProfilePage';
+import { PrivateRoute } from 'containers/PrivateRoute';
 import { RoleType } from 'core/modules/user/domain/role';
 import { FC } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -14,7 +15,6 @@ import { CreateUserPage } from './components/createUserPage/index';
 import { DashboardPage } from './components/dashboardPage';
 import { FlashMessage } from './components/flashMessage';
 import { HolyGrailLayout } from './components/holyGrailLayout';
-import { PrivateRoute } from './core/modules/auth/presentation/privateRoute';
 import { GlobalStyle } from './GlobalStyle';
 import AppTheme from './utils/styleValues';
 
@@ -30,13 +30,13 @@ export const App: FC = () => (
             <Route path='/auth/activate-account/:token' component={ActivateAccountPage} />
             <Route path='/auth/forgot-password' component={ForgotPasswordPage} />
             <Route path='/auth/reset-password/:token' component={ResetPasswordPage} />
-            <PrivateRoute path='/user/change-password/' component={ChangePasswordPage} />
+            <PrivateRoute exact path='/user/change-password/' component={ChangePasswordPage} />
             <PrivateRoute
               roles={[RoleType.Admin, RoleType.SuperAdmin]}
-              path='/admin/create-user/'
+              exact path='/admin/create-user/'
               component={CreateUserPage}
             />
-            <PrivateRoute path='/user/profile/' component={UpdateUserProfilePage} />
+            <PrivateRoute exact path='/user/profile/' component={UpdateUserProfilePage} />
             <PrivateRoute exact path='/' component={DashboardPage} />
           </HolyGrailLayout>
         </Switch>
