@@ -1,4 +1,9 @@
-export interface Agency {
+export interface IAgency {
+  id: number;
+  agencyName: string;
+}
+
+export interface IAgencyDTO {
   id: number;
   createdBy?: number;
   deletedAt?: string;
