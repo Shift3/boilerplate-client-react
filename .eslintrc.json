@@ -110,6 +110,7 @@
     "no-param-reassign": 0,
     "@typescript-eslint/no-inferrable-types": 0,
     "@typescript-eslint/no-non-null-assertion": 0,
+    "class-methods-use-this": 0,
 
     // WARN (1)
     "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
@@ -232,7 +233,6 @@
       }
     ],
     "block-scoped-var": 2,
-    "class-methods-use-this": 2,
     "default-case": 2,
     "default-case-last": 2,
     "default-param-last": 2,

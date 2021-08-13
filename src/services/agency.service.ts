@@ -20,7 +20,12 @@ export class AgencyService implements IAgencyService {
       },
     };
     const dtos: IAgencyDTO[] = await this.apiService.get<IAgencyDTO[]>(endpoint, config);
-    const agencies: IAgency[] = dtos.map((dto): IAgency => ({ id: dto.id, agencyName: dto.agencyName }));
+    const agencies: IAgency[] = dtos.map(this.mapDtoToModel);
     return agencies;
+  }
+
+  private mapDtoToModel(dto: IAgencyDTO): IAgency {
+    const { id, agencyName } = dto;
+    return { id, agencyName };
   }
 }
