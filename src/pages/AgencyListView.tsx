@@ -6,7 +6,7 @@ import { GenericTable } from 'components/genericTable';
 import { TableHeader } from 'components/genericTable/types';
 import { useAppDispatch, useAppSelector } from 'core/redux';
 import { fetchAll } from 'redux/agency/thunks';
-import { selectAgencies } from 'redux/agency/hooks';
+import { selectAgencies } from 'redux/agency/selectors';
 
 type AgencyTableItem = {
   // eslint-disable-next-line react/no-unused-prop-types
@@ -54,7 +54,7 @@ export const AgencyListView: FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const tableIems: AgencyTableItem[] = agencies.map((agency) => ({
+    const tableItems: AgencyTableItem[] = agencies.map((agency) => ({
       id: agency.id,
       name: agency.agencyName,
       actions: [
@@ -63,7 +63,7 @@ export const AgencyListView: FC = () => {
       ],
     }));
 
-    setItems(tableIems);
+    setItems(tableItems);
   }, [agencies]);
 
   return <GenericTable<AgencyTableItem> headers={headers} items={items} customRenderers={customRenderers} />;

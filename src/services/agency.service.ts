@@ -1,5 +1,5 @@
 import { IAgency, IAgencyDTO } from 'models/agency';
-import { ApiRequestConfig, ApiService, IApiService } from './api.service';
+import { IApiRequestConfig, ApiService, IApiService } from './api.service';
 
 export interface IAgencyService {
   getAllAgencies: (jwtToken: string) => Promise<IAgency[]>;
@@ -14,7 +14,7 @@ export class AgencyService implements IAgencyService {
 
   public async getAllAgencies(jwtToken: string): Promise<IAgency[]> {
     const endpoint = `/${this.controllerRoute}`;
-    const config: ApiRequestConfig = {
+    const config: IApiRequestConfig = {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
       },
