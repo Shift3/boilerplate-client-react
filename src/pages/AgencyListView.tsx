@@ -1,63 +1,56 @@
-/* eslint-disable no-alert */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/no-unused-prop-types */
+/* eslint-disable no-console */
 import { FC, useMemo } from 'react';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { GenericTable } from 'components/genericTable';
-import { TableHeader } from 'components/genericTable/types';
+import { TableHeader, ItemActionProps } from 'components/genericTable/types';
 import { useGetAgenciesQuery } from 'services/agencyApi';
-// import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
+import { ItemAction } from 'components/genericTable/ItemAction';
 
 type AgencyTableItem = {
-  // eslint-disable-next-line react/no-unused-prop-types
   id: number;
-  // eslint-disable-next-line react/no-unused-prop-types
   name: string;
-  actions: {
-    icon: IconProp;
-    onClick: () => void;
-  }[];
-};
-
-const customRenderers = {
-  actions: ({ actions }: AgencyTableItem) => (
-    <>
-      {actions.map((action, index) => (
-        <span
-          role='button'
-          tabIndex={0}
-          className='px-3 py-1'
-          // eslint-disable-next-line react/no-array-index-key
-          key={index}
-          onClick={action.onClick}
-          onKeyPress={action.onClick}
-        >
-          <FontAwesomeIcon icon={action.icon} />
-        </span>
-      ))}
-    </>
-  ),
+  actions: ItemActionProps[];
 };
 
 export const AgencyListView: FC = () => {
   const { data: agencies = [] } = useGetAgenciesQuery();
 
+  // Set up table headers
   const headers: TableHeader<AgencyTableItem>[] = [
     { key: 'name', label: 'AGENCY NAME' },
     { key: 'actions', label: 'ACTIONS' },
   ];
 
+  // Transform Agency objects returned from the API into the table item data format expected by the table.
   const items: AgencyTableItem[] = useMemo(
     () =>
       agencies.map((agency) => ({
         id: agency.id,
         name: agency.agencyName,
         actions: [
-          { icon: 'edit' as IconProp, onClick: () => console.log(`Edit ${agency.agencyName}`) },
-          { icon: 'trash-alt' as IconProp, onClick: () => console.log(`Delete ${agency.agencyName}`) },
+          { icon: 'edit', tooltipText: 'Edit', onClick: () => console.log(`Edit ${agency.agencyName}`) },
+          {
+            icon: 'trash-alt',
+            tooltipText: 'Delete',
+            onClick: () => console.log(`Delete ${agency.agencyName}`),
+          },
         ],
       })),
     [agencies],
   );
+
+  // Specify custom render methods for any property in the table items that need to be rendered as a custom component.
+  // Here we want the actions to be rendered using a custom component.
+  const customRenderers = {
+    actions: ({ actions }: AgencyTableItem) => (
+      <>
+        {actions.map((action, index) => (
+          <ItemAction key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
+        ))}
+      </>
+    ),
+  };
 
   return <GenericTable<AgencyTableItem> headers={headers} items={items} customRenderers={customRenderers} />;
 };
