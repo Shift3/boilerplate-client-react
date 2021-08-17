@@ -6,6 +6,8 @@ import { GenericTable } from 'components/genericTable';
 import { TableHeader, ItemActionProps } from 'components/genericTable/types';
 import { useGetAgenciesQuery } from 'services/agencyApi';
 import { ItemAction } from 'components/genericTable/ItemAction';
+import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
 
 type AgencyTableItem = {
   id: number;
@@ -52,5 +54,12 @@ export const AgencyListView: FC = () => {
     ),
   };
 
-  return <GenericTable<AgencyTableItem> headers={headers} items={items} customRenderers={customRenderers} />;
+  return (
+    <Container>
+      <div className='pb-4 text-right'>
+        <Button>ADD AGENCY</Button>
+      </div>
+      <GenericTable<AgencyTableItem> headers={headers} items={items} customRenderers={customRenderers} />
+    </Container>
+  );
 };
