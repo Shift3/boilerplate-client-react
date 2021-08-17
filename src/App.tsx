@@ -15,6 +15,7 @@ import { FlashMessage } from './components/flashMessage';
 import { HolyGrailLayout } from './components/holyGrailLayout';
 import { PrivateRoute } from './core/modules/auth/presentation/privateRoute';
 import { GlobalStyle } from './GlobalStyle';
+import { UserListView } from './pages/UserListView';
 import AppTheme from './utils/styleValues';
 
 export const App: FC = () => (
@@ -32,6 +33,7 @@ export const App: FC = () => (
             <PrivateRoute path='/user/change-password/' component={ChangePasswordPage} />
             <PrivateRoute path='/admin/create-user/' component={CreateUserPage} />
             <PrivateRoute path='/user/profile/' component={UpdateUserProfilePage} />
+            <PrivateRoute path='/admin/user-list' component={UserListView} />
             <PrivateRoute exact path='/' component={DashboardPage} />
           </HolyGrailLayout>
         </Switch>
