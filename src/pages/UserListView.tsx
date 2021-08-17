@@ -3,6 +3,8 @@
 import { ItemAction } from 'components/genericTable/ItemAction';
 import { ItemActionProps, TableHeader } from 'components/genericTable/types';
 import { FC } from 'react';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
 import { useGetUsersQuery } from 'services/userApi';
 import { GenericTable } from '../components/genericTable/index';
 
@@ -56,5 +58,13 @@ export const UserListView: FC = () => {
       </>
     ),
   };
-  return <GenericTable<UserTableItem> headers={headers} items={items} customRenderers={customRenderers} />;
+
+  return (
+    <Container>
+      <div className='mb-4 text-right'>
+        <Button>ADD USER</Button>
+      </div>
+      <GenericTable<UserTableItem> headers={headers} items={items} customRenderers={customRenderers} />
+    </Container>
+  );
 };
