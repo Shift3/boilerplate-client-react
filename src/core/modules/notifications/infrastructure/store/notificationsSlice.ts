@@ -2,7 +2,7 @@ import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { INotification } from 'core/modules/notifications/domain/notification';
 import { RootState } from 'core/redux';
 
-export const notificationAdapter = createEntityAdapter<INotification>();
+const notificationAdapter = createEntityAdapter<INotification>();
 
 const notificationSelectors = notificationAdapter.getSelectors<RootState>((state) => state.notifications);
 
