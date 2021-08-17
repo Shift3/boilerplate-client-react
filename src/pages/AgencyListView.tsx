@@ -44,15 +44,18 @@ export const AgencyListView: FC = () => {
 
   // Specify custom render methods for any property in the table items that need to be rendered as a custom component.
   // Here we want the actions to be rendered using a custom component.
-  const customRenderers = {
-    actions: ({ actions }: AgencyTableItem) => (
-      <>
-        {actions.map((action, index) => (
-          <ItemAction key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
-        ))}
-      </>
-    ),
-  };
+  const customRenderers = useMemo(
+    () => ({
+      actions: ({ actions }: AgencyTableItem) => (
+        <>
+          {actions.map((action, index) => (
+            <ItemAction key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
+          ))}
+        </>
+      ),
+    }),
+    [],
+  );
 
   return (
     <Container>
