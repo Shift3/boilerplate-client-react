@@ -1,12 +1,11 @@
 /* eslint-disable no-alert */
-import { FC, useEffect, useState } from 'react';
+import { FC, useMemo } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { GenericTable } from 'components/genericTable';
 import { TableHeader } from 'components/genericTable/types';
-import { useAppDispatch, useAppSelector } from 'core/redux';
-import { fetchAll } from 'redux/agency/thunks';
-import { selectAgencies } from 'redux/agency/selectors';
+import { useGetAgenciesQuery } from 'services/agencyApi';
+// import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 
 type AgencyTableItem = {
   // eslint-disable-next-line react/no-unused-prop-types
@@ -40,31 +39,25 @@ const customRenderers = {
 };
 
 export const AgencyListView: FC = () => {
-  const dispatch = useAppDispatch();
-  const agencies = useAppSelector(selectAgencies);
-  const [items, setItems] = useState<AgencyTableItem[]>([]);
+  const { data: agencies = [] } = useGetAgenciesQuery();
 
   const headers: TableHeader<AgencyTableItem>[] = [
     { key: 'name', label: 'AGENCY NAME' },
     { key: 'actions', label: 'ACTIONS' },
   ];
 
-  useEffect(() => {
-    dispatch(fetchAll());
-  }, [dispatch]);
-
-  useEffect(() => {
-    const tableItems: AgencyTableItem[] = agencies.map((agency) => ({
-      id: agency.id,
-      name: agency.agencyName,
-      actions: [
-        { icon: 'edit', onClick: () => alert(`Edit ${agency.agencyName}`) },
-        { icon: 'trash-alt', onClick: () => alert(`Delete ${agency.agencyName}`) },
-      ],
-    }));
-
-    setItems(tableItems);
-  }, [agencies]);
+  const items: AgencyTableItem[] = useMemo(
+    () =>
+      agencies.map((agency) => ({
+        id: agency.id,
+        name: agency.agencyName,
+        actions: [
+          { icon: 'edit' as IconProp, onClick: () => console.log(`Edit ${agency.agencyName}`) },
+          { icon: 'trash-alt' as IconProp, onClick: () => console.log(`Delete ${agency.agencyName}`) },
+        ],
+      })),
+    [agencies],
+  );
 
   return <GenericTable<AgencyTableItem> headers={headers} items={items} customRenderers={customRenderers} />;
 };
