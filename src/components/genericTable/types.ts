@@ -1,3 +1,4 @@
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import React from 'react';
 
 export type BaseTableItem = {
@@ -15,4 +16,10 @@ export type GenericTableProps<TableItem extends BaseTableItem> = {
   items: TableItem[];
   headers: TableHeader<TableItem>[];
   customRenderers?: Partial<Record<keyof TableItem, CustomRenderer<TableItem>>>;
+};
+
+export type ItemActionProps = {
+  icon: IconProp;
+  tooltipText: string;
+  onClick: () => void;
 };
