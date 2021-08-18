@@ -110,7 +110,6 @@
     "no-param-reassign": 0,
     "@typescript-eslint/no-inferrable-types": 0,
     "@typescript-eslint/no-non-null-assertion": 0,
-    "class-methods-use-this": 0,
 
     // WARN (1)
     "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
@@ -167,15 +166,6 @@
     "symbol-description": 1,
     "no-multiple-empty-lines": 1,
     "no-tabs": 1,
-    "no-extra-parens": [
-      1,
-      "all",
-      {
-        "returnAssign": false,
-        "conditionalAssign": false,
-        "ignoreJSX": "all"
-      }
-    ],
     "no-magic-numbers": [
       1,
       {
@@ -233,6 +223,7 @@
       }
     ],
     "block-scoped-var": 2,
+    "class-methods-use-this": 2,
     "default-case": 2,
     "default-case-last": 2,
     "default-param-last": 2,

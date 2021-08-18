@@ -9,7 +9,6 @@ export const agencyApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${environment.apiRoute}/agencies`,
     prepareHeaders: (headers: Headers, { getState }) => {
-      // eslint-disable-next-line no-extra-parens
       const token = (getState() as RootState).auth.session?.token;
 
       if (token) {
