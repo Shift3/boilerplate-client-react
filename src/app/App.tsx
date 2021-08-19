@@ -10,13 +10,13 @@ import { Routes as AdminRoutes } from 'features/admin';
 import { FC } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { CreateUserPage } from './components/createUserPage/index';
-import { DashboardPage } from './components/dashboardPage';
-import { FlashMessage } from './components/flashMessage';
-import { HolyGrailLayout } from './components/holyGrailLayout';
-import { PrivateRoute } from './core/modules/auth/presentation/privateRoute';
-import { GlobalStyle } from './GlobalStyle';
-import AppTheme from './utils/styleValues';
+import { CreateUserPage } from '../components/createUserPage/index';
+import { DashboardPage } from '../components/dashboardPage';
+import { FlashMessage } from '../components/flashMessage';
+import { HolyGrailLayout } from '../components/holyGrailLayout';
+import { PrivateRoute } from '../core/modules/auth/presentation/privateRoute';
+import { GlobalStyle } from '../GlobalStyle';
+import AppTheme from '../utils/styleValues';
 
 export const App: FC = () => (
   <ErrorBoundary>

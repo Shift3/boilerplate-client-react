@@ -16,7 +16,7 @@ import store from 'app/redux/store';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { App } from './App';
+import { App } from './app/App';
 // App imports
 import reportWebVitals from './reportWebVitals';
 
