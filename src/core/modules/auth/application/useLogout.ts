@@ -2,8 +2,8 @@
 import { useCallback } from 'react';
 
 // App imports
-import store from 'core/redux/store';
-import { useAppDispatch } from 'core/redux';
+import store from 'app/redux/store';
+import { useAppDispatch } from 'app/redux';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { AuthService } from '../infrastructure/http/authService';
 import { AuthLocalStorage } from '../infrastructure/store/authLocalStorage';

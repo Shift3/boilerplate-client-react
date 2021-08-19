@@ -2,7 +2,7 @@
 import { useCallback } from 'react';
 
 // App imports
-import { useAppDispatch } from 'core/redux';
+import { useAppDispatch } from 'app/redux';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { ISession } from '../domain/session';
 import { AuthService } from '../infrastructure/http/authService';

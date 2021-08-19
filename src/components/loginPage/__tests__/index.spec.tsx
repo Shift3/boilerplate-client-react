@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { LogInPage } from '../index';
 import { expectInDocByTestId, expectInnerHTMLByTestId, clickNavigateByTestId } from '../../../utils/test';
-import store from 'core/redux/store';
+import store from 'app/redux/store';
 import { Provider } from 'react-redux';
 
 const renderInitialTestDOM = () =>

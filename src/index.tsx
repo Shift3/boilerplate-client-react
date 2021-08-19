@@ -12,11 +12,11 @@ import {
 // Third-party package imports
 import * as Sentry from '@sentry/react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import store from 'core/redux/store';
+import store from 'app/redux/store';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { App } from './App';
+import { App } from './app/App';
 // App imports
 import reportWebVitals from './reportWebVitals';
 

@@ -59,7 +59,7 @@ export const HolyGrailLayout: FC<HolyGrailLayoutProps> = ({ header, leftAside, c
             {leftAside}
           </HolyGrailLeft>
         )}
-        <HolyGrailContent>{children}</HolyGrailContent>
+        <HolyGrailContent className='py-4'>{children}</HolyGrailContent>
         {rightAside && <HolyGrailRight>{rightAside}</HolyGrailRight>}
       </HolyGrailMain>
       <HolyGrailFooter>{footer ?? <Footer />}</HolyGrailFooter>
