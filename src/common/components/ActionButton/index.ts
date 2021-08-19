@@ -1,2 +1,4 @@
-export { ActionButton } from './ActionButton';
-export type { ActionButtonProps } from './types';
+import { ActionButton } from './ActionButton';
+
+export default ActionButton;
+export * from './types';
