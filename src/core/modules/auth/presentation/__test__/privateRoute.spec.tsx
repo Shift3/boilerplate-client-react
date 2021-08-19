@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import store from 'core/redux/store';
+import store from 'app/redux/store';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
@@ -8,7 +8,6 @@ import { Session } from '../../domain/session';
 import { PrivateRoute } from '../privateRoute';
 
 describe('PrivateRoute', () => {
-
   const testPath = '/test/path';
   const loginPath = '/auth/login';
 
@@ -19,7 +18,6 @@ describe('PrivateRoute', () => {
   });
 
   describe('when a user is not authenticated', () => {
-
     beforeEach(() => {
       mockUseAuthState.mockReturnValue(null);
     });
@@ -33,7 +31,7 @@ describe('PrivateRoute', () => {
           <Router history={history}>
             <PrivateRoute path={testPath} />
           </Router>
-        </Provider>
+        </Provider>,
       );
 
       expect(history.location.pathname).toBe(loginPath);
@@ -41,7 +39,6 @@ describe('PrivateRoute', () => {
   });
 
   describe('when a user is authenticated', () => {
-
     beforeEach(() => {
       mockUseAuthState.mockReturnValue(new Session());
     });
@@ -55,7 +52,7 @@ describe('PrivateRoute', () => {
           <Router history={history}>
             <PrivateRoute path={testPath} />
           </Router>
-        </Provider>
+        </Provider>,
       );
 
       expect(history.location.pathname).toBe(testPath);
@@ -70,9 +67,9 @@ describe('PrivateRoute', () => {
       const { getByTestId } = render(
         <Provider store={store}>
           <Router history={history}>
-            <PrivateRoute path={testPath} component={TestComponent}/>
+            <PrivateRoute path={testPath} component={TestComponent} />
           </Router>
-        </Provider>
+        </Provider>,
       );
 
       expect(getByTestId('test-component')).toBeInTheDocument();

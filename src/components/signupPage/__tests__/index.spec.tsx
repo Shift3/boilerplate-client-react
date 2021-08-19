@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { SignUpPage } from '../';
 import { expectInDocByTestId } from 'utils/test';
 import { Provider } from 'react-redux';
-import store from 'core/redux/store';
+import store from 'app/redux/store';
 
 beforeEach(() =>
   render(

@@ -2,7 +2,7 @@
 import { useCallback } from 'react';
 
 // App imports
-import { useAppDispatch } from 'core/redux';
+import { useAppDispatch } from 'app/redux';
 import notificationsSlice from '../infrastructure/store/notificationsSlice';
 
 export interface IDismissNotificationFacade {

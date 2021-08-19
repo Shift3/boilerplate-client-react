@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authSlice from 'core/modules/auth/infrastructure/store/authSlice';
 import notificationsSlice from 'core/modules/notifications/infrastructure/store/notificationsSlice';
-import { agencyApi } from 'services/agencyApi';
+import { agencyApi } from 'features/admin/agency';
 
 const store = configureStore({
   reducer: {
