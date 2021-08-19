@@ -19,6 +19,7 @@ export const PrivateRoute: React.FC<Props> = ({ roles = [], ...rest }) => {
   if (roles.length === 0 || roles.includes(user.role.roleName)) {
     return <Route {...rest} />;
   }
+
   showErrorNotification('Not authorized to view the requested page.');
   return <Redirect to='/content/agent-list' />;
 };
