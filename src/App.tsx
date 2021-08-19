@@ -23,8 +23,8 @@ export const App: FC = () => (
     <ThemeProvider theme={AppTheme}>
       <FlashMessage />
       <Router>
-        <Switch>
-          <HolyGrailLayout>
+        <HolyGrailLayout>
+          <Switch>
             <Route exact path='/auth/login' component={LogInPage} />
             <Route exact path='/auth/signup' component={SignUpPage} />
             <Route path='/auth/activate-account/:token' component={ActivateAccountPage} />
@@ -33,13 +33,14 @@ export const App: FC = () => (
             <PrivateRoute exact path='/user/change-password/' component={ChangePasswordPage} />
             <PrivateRoute
               roles={[RoleType.Admin, RoleType.SuperAdmin]}
-              exact path='/admin/create-user/'
+              exact
+              path='/admin/create-user/'
               component={CreateUserPage}
             />
             <PrivateRoute exact path='/user/profile/' component={UpdateUserProfilePage} />
             <PrivateRoute exact path='/' component={DashboardPage} />
-          </HolyGrailLayout>
-        </Switch>
+          </Switch>
+        </HolyGrailLayout>
       </Router>
     </ThemeProvider>
     <GlobalStyle />
