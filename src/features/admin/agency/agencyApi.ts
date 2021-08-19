@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { Agency } from 'common/models';
 import { RootState } from 'core/redux';
 import { environment } from 'environment';
-import { Agency } from 'models/agency';
 
 export const agencyApi = createApi({
   reducerPath: 'agencyApi',

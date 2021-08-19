@@ -2,17 +2,16 @@
 /* eslint-disable react/no-unused-prop-types */
 /* eslint-disable no-console */
 import { FC, useMemo } from 'react';
-import { GenericTable } from 'components/genericTable';
-import { TableHeader, ItemActionProps } from 'components/genericTable/types';
-import { useGetAgenciesQuery } from 'services/agencyApi';
-import { ItemAction } from 'components/genericTable/ItemAction';
+import { useGetAgenciesQuery } from 'features/admin/agency/agencyApi';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
+import GenericTable, { TableHeader } from 'common/components/GenericTable';
+import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
 
 type AgencyTableItem = {
   id: number;
   name: string;
-  actions: ItemActionProps[];
+  actions: ActionButtonProps[];
 };
 
 export const AgencyListView: FC = () => {
@@ -39,6 +38,8 @@ export const AgencyListView: FC = () => {
           },
         ],
       })),
+    // In this case it's ok to use the agencies array as a dependency because RTK Query
+    // memoizes the returned values.
     [agencies],
   );
 
@@ -49,7 +50,7 @@ export const AgencyListView: FC = () => {
       actions: ({ actions }: AgencyTableItem) => (
         <>
           {actions.map((action, index) => (
-            <ItemAction key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
+            <ActionButton key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
           ))}
         </>
       ),
