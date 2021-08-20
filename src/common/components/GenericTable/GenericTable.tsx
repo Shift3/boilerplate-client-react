@@ -1,34 +1,6 @@
 import { ReactElement } from 'react';
-import { Table } from 'react-bootstrap';
-import styled from 'styled-components';
+import { StyledTable } from './styles';
 import { BaseTableItem, GenericTableProps } from './types';
-
-const StyledTable = styled(Table)`
-  thead {
-    background-color: ${(props) => props.theme.primary};
-    color: white;
-  }
-
-  th {
-    border-top: 0;
-  }
-
-  th:nth-child(1) {
-    border-radius: 15px 0px 0px 0px;
-  }
-
-  th:nth-last-child(1) {
-    border-radius: 0px 15px 0px 0px;
-  }
-
-  tbody > tr {
-    background: white;
-  }
-
-  td {
-    color: ${(props) => props.theme.primary};
-  }
-`;
 
 export const GenericTable = <TableItem extends BaseTableItem>({
   items,

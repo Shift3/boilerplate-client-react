@@ -1,12 +1,11 @@
 /* eslint-disable react/no-unused-prop-types */
 /* eslint-disable no-console */
-import { ItemAction } from 'components/genericTable/ItemAction';
-import { ItemActionProps, TableHeader } from 'components/genericTable/types';
-import { FC } from 'react';
+import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
+import GenericTable, { TableHeader } from 'common/components/GenericTable';
+import { useGetUsersQuery } from 'features/admin/users/userApi';
+import { FC, useMemo } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import { useGetUsersQuery } from 'services/userApi';
-import { GenericTable } from '../components/genericTable/index';
 
 type UserTableItem = {
   id: number;
@@ -15,7 +14,7 @@ type UserTableItem = {
   lastName: string;
   activatedAt: string | null;
   role: string;
-  actions: ItemActionProps[];
+  actions: ActionButtonProps[];
 };
 
 export const UserListView: FC = () => {
@@ -30,30 +29,34 @@ export const UserListView: FC = () => {
     { key: 'actions', label: 'ACTIONS' },
   ];
 
-  const items: UserTableItem[] = users.map((user) => ({
-    id: user.id,
-    lastName: user.lastName,
-    firstName: user.firstName,
-    email: user.email,
-    role: user.role.roleName,
-    activatedAt: user.activatedAt,
-    actions: [
-      { icon: 'edit', tooltipText: 'Edit', onClick: () => console.log(`Edit ${user.id}`) },
-      {
-        icon: 'trash-alt',
-        tooltipText: 'Delete',
-        onClick: () => console.log(`Delete ${user.id}`),
-      },
-      { icon: 'lock', tooltipText: 'Reset Password', onClick: () => console.log(`Reset Password ${user.id}`) },
-    ],
-  }));
+  const items: UserTableItem[] = useMemo(
+    () =>
+      users.map((user) => ({
+        id: user.id,
+        lastName: user.lastName,
+        firstName: user.firstName,
+        email: user.email,
+        role: user.role.roleName,
+        activatedAt: user.activatedAt,
+        actions: [
+          { icon: 'edit', tooltipText: 'Edit', onClick: () => console.log(`Edit ${user.id}`) },
+          {
+            icon: 'trash-alt',
+            tooltipText: 'Delete',
+            onClick: () => console.log(`Delete ${user.id}`),
+          },
+          { icon: 'lock', tooltipText: 'Reset Password', onClick: () => console.log(`Reset Password ${user.id}`) },
+        ],
+      })),
+    [users],
+  );
 
   const customRenderers = {
     actions: ({ actions }: UserTableItem) => (
       <>
         {actions.map((action, index) => (
           // eslint-disable-next-line react/no-array-index-key
-          <ItemAction key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
+          <ActionButton key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
         ))}
       </>
     ),

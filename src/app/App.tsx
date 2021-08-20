@@ -6,17 +6,18 @@ import { LogInPage } from 'components/loginPage';
 import { ResetPasswordPage } from 'components/resetPasswordPage';
 import { SignUpPage } from 'components/signupPage';
 import { UpdateUserProfilePage } from 'components/updateUserProfilePage';
+import { Routes as AdminRoutes } from 'features/admin';
 import { FC } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { CreateUserPage } from './components/createUserPage/index';
-import { DashboardPage } from './components/dashboardPage';
-import { FlashMessage } from './components/flashMessage';
-import { HolyGrailLayout } from './components/holyGrailLayout';
-import { PrivateRoute } from './core/modules/auth/presentation/privateRoute';
-import { GlobalStyle } from './GlobalStyle';
-import { UserListView } from './pages/UserListView';
-import AppTheme from './utils/styleValues';
+import { CreateUserPage } from '../components/createUserPage/index';
+import { DashboardPage } from '../components/dashboardPage';
+import { FlashMessage } from '../components/flashMessage';
+import { HolyGrailLayout } from '../components/holyGrailLayout';
+import { PrivateRoute } from '../core/modules/auth/presentation/privateRoute';
+import { GlobalStyle } from '../GlobalStyle';
+import { UserListView } from '../features/admin/users/pages/UserListView';
+import AppTheme from '../utils/styleValues';
 
 export const App: FC = () => (
   <ErrorBoundary>
@@ -35,6 +36,7 @@ export const App: FC = () => (
             <PrivateRoute path='/user/profile/' component={UpdateUserProfilePage} />
             <PrivateRoute path='/admin/user-list' component={UserListView} />
             <PrivateRoute exact path='/' component={DashboardPage} />
+            <PrivateRoute path='/admin' component={AdminRoutes} />
           </HolyGrailLayout>
         </Switch>
       </Router>

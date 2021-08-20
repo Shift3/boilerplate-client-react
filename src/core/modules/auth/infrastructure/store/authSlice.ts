@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from 'core/redux';
+import { RootState } from 'app/redux';
 import { ISession } from '../../domain/session';
 import { AuthLocalStorage } from './authLocalStorage';
 
