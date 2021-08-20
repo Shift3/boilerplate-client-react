@@ -2,7 +2,7 @@
 import { useCallback } from 'react';
 
 // App imports
-import { useAppDispatch } from 'core/redux';
+import { useAppDispatch } from 'app/redux';
 import { Notification, NotificationType } from '../domain/notification';
 import notificationsSlice from '../infrastructure/store/notificationsSlice';
 

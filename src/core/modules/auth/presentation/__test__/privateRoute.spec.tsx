@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import store from 'core/redux/store';
+import store from 'app/redux/store';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
@@ -7,8 +7,12 @@ import * as useAuthStateModule from '../../application/useAuthState';
 import { Session } from '../../domain/session';
 import { PrivateRoute } from '../../../../../containers/PrivateRoute';
 
+<<<<<<< HEAD
 describe.skip('PrivateRoute', () => {
 
+=======
+describe('PrivateRoute', () => {
+>>>>>>> 43fcd9b374ac20e8d68983212475ac3bd0367d8c
   const testPath = '/test/path';
   const loginPath = '/auth/login';
 
@@ -19,7 +23,6 @@ describe.skip('PrivateRoute', () => {
   });
 
   describe('when a user is not authenticated', () => {
-
     beforeEach(() => {
       mockUseAuthState.mockReturnValue(null);
     });
@@ -33,7 +36,7 @@ describe.skip('PrivateRoute', () => {
           <Router history={history}>
             <PrivateRoute path={testPath} />
           </Router>
-        </Provider>
+        </Provider>,
       );
 
       expect(history.location.pathname).toBe(loginPath);
@@ -41,7 +44,6 @@ describe.skip('PrivateRoute', () => {
   });
 
   describe('when a user is authenticated', () => {
-
     beforeEach(() => {
       mockUseAuthState.mockReturnValue(new Session());
     });
@@ -55,7 +57,7 @@ describe.skip('PrivateRoute', () => {
           <Router history={history}>
             <PrivateRoute path={testPath} />
           </Router>
-        </Provider>
+        </Provider>,
       );
 
       expect(history.location.pathname).toBe(testPath);
@@ -70,9 +72,9 @@ describe.skip('PrivateRoute', () => {
       const { getByTestId } = render(
         <Provider store={store}>
           <Router history={history}>
-            <PrivateRoute path={testPath} component={TestComponent}/>
+            <PrivateRoute path={testPath} component={TestComponent} />
           </Router>
-        </Provider>
+        </Provider>,
       );
 
       expect(getByTestId('test-component')).toBeInTheDocument();

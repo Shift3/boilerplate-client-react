@@ -1,6 +1,7 @@
 import { ErrorBoundary } from '@sentry/react';
 import { ActivateAccountPage } from 'components/activateAccountPage';
 import { ChangePasswordPage } from 'components/changePasswordPage';
+import { CreateUserPage } from 'components/createUserPage';
 import { ForgotPasswordPage } from 'components/forgotPasswordPage';
 import { LogInPage } from 'components/loginPage';
 import { ResetPasswordPage } from 'components/resetPasswordPage';
@@ -11,12 +12,11 @@ import { RoleType } from 'core/modules/user/domain/role';
 import { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { CreateUserPage } from './components/createUserPage/index';
-import { DashboardPage } from './components/dashboardPage';
-import { FlashMessage } from './components/flashMessage';
-import { HolyGrailLayout } from './components/holyGrailLayout';
-import { GlobalStyle } from './GlobalStyle';
-import AppTheme from './utils/styleValues';
+import { DashboardPage } from '../components/dashboardPage/index';
+import { FlashMessage } from '../components/flashMessage/index';
+import { HolyGrailLayout } from '../components/holyGrailLayout/index';
+import { GlobalStyle } from '../GlobalStyle';
+import AppTheme from '../utils/styleValues';
 
 export const App: FC = () => (
   <ErrorBoundary>

@@ -166,15 +166,6 @@
     "symbol-description": 1,
     "no-multiple-empty-lines": 1,
     "no-tabs": 1,
-    "no-extra-parens": [
-      1,
-      "all",
-      {
-        "returnAssign": false,
-        "conditionalAssign": false,
-        "ignoreJSX": "all"
-      }
-    ],
     "no-magic-numbers": [
       1,
       {
