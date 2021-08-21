@@ -1,14 +1,7 @@
 import { FC } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { StyledCancelButton, StyledConfirmButton, StyledModal } from './styled';
-
-type ConfirmationModalProps = {
-  show: boolean;
-  message: string;
-  confirmButtonLabel: string;
-  onCancel: VoidFunction;
-  onConfirm: VoidFunction;
-};
+import { ConfirmationModalProps } from './types';
 
 export const ConfirmationModal: FC<ConfirmationModalProps> = ({
   show,
