@@ -16,7 +16,6 @@ import { FlashMessage } from '../components/flashMessage';
 import { HolyGrailLayout } from '../components/holyGrailLayout';
 import { PrivateRoute } from '../core/modules/auth/presentation/privateRoute';
 import { GlobalStyle } from '../GlobalStyle';
-import { UserListView } from '../features/admin/users/pages/UserListView';
 import AppTheme from '../utils/styleValues';
 
 export const App: FC = () => (
@@ -24,8 +23,8 @@ export const App: FC = () => (
     <ThemeProvider theme={AppTheme}>
       <FlashMessage />
       <Router>
-        <Switch>
-          <HolyGrailLayout>
+        <HolyGrailLayout>
+          <Switch>
             <Route exact path='/auth/login' component={LogInPage} />
             <Route exact path='/auth/signup' component={SignUpPage} />
             <Route path='/auth/activate-account/:token' component={ActivateAccountPage} />
@@ -34,11 +33,10 @@ export const App: FC = () => (
             <PrivateRoute path='/user/change-password/' component={ChangePasswordPage} />
             <PrivateRoute path='/admin/create-user/' component={CreateUserPage} />
             <PrivateRoute path='/user/profile/' component={UpdateUserProfilePage} />
-            <PrivateRoute path='/admin/user-list' component={UserListView} />
-            <PrivateRoute exact path='/' component={DashboardPage} />
             <PrivateRoute path='/admin' component={AdminRoutes} />
-          </HolyGrailLayout>
-        </Switch>
+            <PrivateRoute exact path='/' component={DashboardPage} />
+          </Switch>
+        </HolyGrailLayout>
       </Router>
     </ThemeProvider>
     <GlobalStyle />
