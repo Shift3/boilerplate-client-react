@@ -23,7 +23,14 @@ export const agencyApi = createApi({
     getAgencies: builder.query<Agency[], void>({
       query: () => ({ url: '/' }),
     }),
+
+    deleteAgency: builder.mutation<void, number>({
+      query: (agencyId) => ({
+        url: `/${agencyId}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
-export const { useGetAgenciesQuery } = agencyApi;
+export const { useGetAgenciesQuery, useDeleteAgencyMutation } = agencyApi;
