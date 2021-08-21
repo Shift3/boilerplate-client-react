@@ -6,7 +6,8 @@ import { ConfirmationModalProps } from './types';
 export const ConfirmationModal: FC<ConfirmationModalProps> = ({
   show,
   message,
-  confirmButtonLabel,
+  cancelButtonLabel = 'CANCEL',
+  confirmButtonLabel = 'CONFIRM',
   onCancel,
   onConfirm,
 }) => {
@@ -15,7 +16,7 @@ export const ConfirmationModal: FC<ConfirmationModalProps> = ({
       <Modal.Title>{message}</Modal.Title>
       <Modal.Body>Do you want to continue?</Modal.Body>
       <Modal.Footer>
-        <StyledCancelButton onClick={onCancel}>CANCEL</StyledCancelButton>
+        <StyledCancelButton onClick={onCancel}>{cancelButtonLabel}</StyledCancelButton>
         <StyledConfirmButton onClick={onConfirm}>{confirmButtonLabel}</StyledConfirmButton>
       </Modal.Footer>
     </StyledModal>

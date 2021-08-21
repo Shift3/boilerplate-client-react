@@ -1,7 +1,8 @@
 export type ConfirmationModalProps = {
   show: boolean;
   message: string;
-  confirmButtonLabel: string;
+  cancelButtonLabel?: string;
+  confirmButtonLabel?: string;
   onCancel: VoidFunction;
   onConfirm: VoidFunction;
 };
