@@ -3,16 +3,11 @@ import store from 'app/redux/store';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
-import * as useAuthStateModule from '../../application/useAuthState';
-import { Session } from '../../domain/session';
-import { PrivateRoute } from '../../../../../containers/PrivateRoute';
+import * as useAuthStateModule from '../core/modules/auth/application/useAuthState';
+import { Session } from '../core/modules/auth/domain/session';
+import { PrivateRoute } from './PrivateRoute';
 
-<<<<<<< HEAD
 describe.skip('PrivateRoute', () => {
-
-=======
-describe('PrivateRoute', () => {
->>>>>>> 43fcd9b374ac20e8d68983212475ac3bd0367d8c
   const testPath = '/test/path';
   const loginPath = '/auth/login';
 
