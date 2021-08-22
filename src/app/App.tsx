@@ -9,6 +9,7 @@ import { SignUpPage } from 'components/signupPage';
 import { UpdateUserProfilePage } from 'components/updateUserProfilePage';
 import { PrivateRoute } from 'containers/PrivateRoute';
 import { RoleType } from 'core/modules/user/domain/role';
+import { Routes as AdminRoutes } from 'features/admin';
 import { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
@@ -30,13 +31,14 @@ export const App: FC = () => (
           <Route path='/auth/forgot-password' component={ForgotPasswordPage} />
           <Route path='/auth/reset-password/:token' component={ResetPasswordPage} />
           <PrivateRoute exact path='/user/change-password/' component={ChangePasswordPage} />
+          <PrivateRoute exact path='/user/profile/' component={UpdateUserProfilePage} />
           <PrivateRoute
             roles={[RoleType.Admin, RoleType.SuperAdmin]}
             exact
             path='/admin/create-user/'
             component={CreateUserPage}
           />
-          <PrivateRoute exact path='/user/profile/' component={UpdateUserProfilePage} />
+          <PrivateRoute path='/admin' component={AdminRoutes} />
           <PrivateRoute exact path='/' component={DashboardPage} />
         </Switch>
       </HolyGrailLayout>
