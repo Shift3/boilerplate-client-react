@@ -6,8 +6,7 @@ import { LogInPage } from 'components/loginPage';
 import { ResetPasswordPage } from 'components/resetPasswordPage';
 import { SignUpPage } from 'components/signupPage';
 import { UpdateUserProfilePage } from 'components/updateUserProfilePage';
-import { PrivateRoute } from 'containers/PrivateRoute';
-import { RoleType } from 'core/modules/user/domain/role';
+import { PrivateRoute } from 'features/auth/components/PrivateRoute/PrivateRoute';
 import { Routes as AdminRoutes } from 'features/admin';
 import { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
@@ -31,7 +30,7 @@ export const App: FC = () => (
           <Route path='/auth/reset-password/:token' component={ResetPasswordPage} />
           <PrivateRoute exact path='/user/change-password/' component={ChangePasswordPage} />
           <PrivateRoute exact path='/user/profile/' component={UpdateUserProfilePage} />
-          <PrivateRoute path='/admin' component={AdminRoutes} roles={[RoleType.Admin, RoleType.SuperAdmin]} />
+          <PrivateRoute exact path='/admin' component={AdminRoutes} requiredRoles={['Admin', 'Super Administrator']} />
           <PrivateRoute exact path='/' component={DashboardPage} />
         </Switch>
       </HolyGrailLayout>
