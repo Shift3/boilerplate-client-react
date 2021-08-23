@@ -1,7 +1,6 @@
 import { ErrorBoundary } from '@sentry/react';
 import { ActivateAccountPage } from 'components/activateAccountPage';
 import { ChangePasswordPage } from 'components/changePasswordPage';
-import { CreateUserPage } from 'components/createUserPage';
 import { ForgotPasswordPage } from 'components/forgotPasswordPage';
 import { LogInPage } from 'components/loginPage';
 import { ResetPasswordPage } from 'components/resetPasswordPage';
@@ -32,13 +31,7 @@ export const App: FC = () => (
           <Route path='/auth/reset-password/:token' component={ResetPasswordPage} />
           <PrivateRoute exact path='/user/change-password/' component={ChangePasswordPage} />
           <PrivateRoute exact path='/user/profile/' component={UpdateUserProfilePage} />
-          <PrivateRoute
-            roles={[RoleType.Admin, RoleType.SuperAdmin]}
-            exact
-            path='/admin/create-user/'
-            component={CreateUserPage}
-          />
-          <PrivateRoute path='/admin' component={AdminRoutes} />
+          <PrivateRoute path='/admin' component={AdminRoutes} roles={[RoleType.Admin, RoleType.SuperAdmin]} />
           <PrivateRoute exact path='/' component={DashboardPage} />
         </Switch>
       </HolyGrailLayout>
