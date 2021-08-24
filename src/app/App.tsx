@@ -6,15 +6,14 @@ import { LogInPage } from 'components/loginPage';
 import { ResetPasswordPage } from 'components/resetPasswordPage';
 import { SignUpPage } from 'components/signupPage';
 import { UpdateUserProfilePage } from 'components/updateUserProfilePage';
+import { PrivateRoute } from 'features/auth/components/PrivateRoute/PrivateRoute';
 import { Routes as AdminRoutes } from 'features/admin';
 import { FC } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { CreateUserPage } from '../components/createUserPage/index';
-import { DashboardPage } from '../components/dashboardPage';
-import { FlashMessage } from '../components/flashMessage';
-import { HolyGrailLayout } from '../components/holyGrailLayout';
-import { PrivateRoute } from '../core/modules/auth/presentation/privateRoute';
+import { DashboardPage } from '../components/dashboardPage/index';
+import { FlashMessage } from '../components/flashMessage/index';
+import { HolyGrailLayout } from '../components/holyGrailLayout/index';
 import { GlobalStyle } from '../GlobalStyle';
 import AppTheme from '../utils/styleValues';
 
@@ -22,22 +21,19 @@ export const App: FC = () => (
   <ErrorBoundary>
     <ThemeProvider theme={AppTheme}>
       <FlashMessage />
-      <Router>
-        <HolyGrailLayout>
-          <Switch>
-            <Route exact path='/auth/login' component={LogInPage} />
-            <Route exact path='/auth/signup' component={SignUpPage} />
-            <Route path='/auth/activate-account/:token' component={ActivateAccountPage} />
-            <Route path='/auth/forgot-password' component={ForgotPasswordPage} />
-            <Route path='/auth/reset-password/:token' component={ResetPasswordPage} />
-            <PrivateRoute path='/user/change-password/' component={ChangePasswordPage} />
-            <PrivateRoute path='/admin/create-user/' component={CreateUserPage} />
-            <PrivateRoute path='/user/profile/' component={UpdateUserProfilePage} />
-            <PrivateRoute path='/admin' component={AdminRoutes} />
-            <PrivateRoute exact path='/' component={DashboardPage} />
-          </Switch>
-        </HolyGrailLayout>
-      </Router>
+      <HolyGrailLayout>
+        <Switch>
+          <Route exact path='/auth/login' component={LogInPage} />
+          <Route exact path='/auth/signup' component={SignUpPage} />
+          <Route path='/auth/activate-account/:token' component={ActivateAccountPage} />
+          <Route path='/auth/forgot-password' component={ForgotPasswordPage} />
+          <Route path='/auth/reset-password/:token' component={ResetPasswordPage} />
+          <PrivateRoute exact path='/user/change-password/' component={ChangePasswordPage} />
+          <PrivateRoute exact path='/user/profile/' component={UpdateUserProfilePage} />
+          <PrivateRoute exact path='/admin' component={AdminRoutes} requiredRoles={['Admin', 'Super Administrator']} />
+          <PrivateRoute exact path='/' component={DashboardPage} />
+        </Switch>
+      </HolyGrailLayout>
     </ThemeProvider>
     <GlobalStyle />
   </ErrorBoundary>
