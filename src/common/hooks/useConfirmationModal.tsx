@@ -1,5 +1,5 @@
 import { ConfirmationModal } from 'common/components';
-import { FC, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {};
@@ -31,14 +31,19 @@ export const useConfirmationModal = (): ConfirmationModalManager => {
   const [confirmCallback, setConfirmCallback] = useState(() => noop);
   const [cancelCallback, setCancelCallback] = useState(() => noop);
 
-  const openModal = (message: string, onConfirm: () => void, onCancel: () => void = noop) => {
+  const openModal = useCallback((message: string, onConfirm: () => void, onCancel: () => void) => {
     setMessage(message);
     setConfirmCallback(() => onConfirm);
     setCancelCallback(() => onCancel);
     setShow(true);
-  };
+  }, []);
 
-  const closeModal = () => setShow(false);
+  const closeModal = useCallback(() => {
+    setMessage('');
+    setConfirmCallback(() => noop);
+    setCancelCallback(() => noop);
+    setShow(false);
+  }, []);
 
   const Modal: FC = () => (
     <ConfirmationModal show={show} message={message} onConfirm={confirmCallback} onCancel={cancelCallback} />
