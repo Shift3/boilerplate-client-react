@@ -10,15 +10,13 @@ export const ConfirmationModal: FC<ConfirmationModalProps> = ({
   confirmButtonLabel = 'CONFIRM',
   onCancel,
   onConfirm,
-}) => {
-  return (
-    <StyledModal show={show} onHide={onCancel}>
-      <Modal.Title>{message}</Modal.Title>
-      <Modal.Body>Do you want to continue?</Modal.Body>
-      <Modal.Footer>
-        <StyledCancelButton onClick={onCancel}>{cancelButtonLabel}</StyledCancelButton>
-        <StyledConfirmButton onClick={onConfirm}>{confirmButtonLabel}</StyledConfirmButton>
-      </Modal.Footer>
-    </StyledModal>
-  );
-};
+}) => (
+  <StyledModal show={show} onHide={onCancel}>
+    <Modal.Title>{message}</Modal.Title>
+    <Modal.Body>Do you want to continue?</Modal.Body>
+    <Modal.Footer>
+      <StyledCancelButton onClick={onCancel}>{cancelButtonLabel}</StyledCancelButton>
+      <StyledConfirmButton onClick={onConfirm}>{confirmButtonLabel}</StyledConfirmButton>
+    </Modal.Footer>
+  </StyledModal>
+);
