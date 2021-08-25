@@ -8,6 +8,7 @@ export const agencyApi = createApi({
 
   baseQuery: fetchBaseQuery({
     baseUrl: `${environment.apiRoute}/agencies`,
+
     prepareHeaders: (headers: Headers, { getState }) => {
       const token = (getState() as RootState).auth.session?.token;
 
@@ -19,16 +20,20 @@ export const agencyApi = createApi({
     },
   }),
 
+  tagTypes: ['Agency'],
+
   endpoints: (builder) => ({
     getAgencies: builder.query<Agency[], void>({
       query: () => ({ url: '/' }),
+      providesTags: ['Agency'],
     }),
 
     deleteAgency: builder.mutation<void, number>({
       query: (agencyId) => ({
         url: `/${agencyId}`,
-        method: 'POST',
+        method: 'DELETE',
       }),
+      invalidatesTags: ['Agency'],
     }),
   }),
 });
