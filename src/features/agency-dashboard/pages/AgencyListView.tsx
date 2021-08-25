@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { FC } from 'react';
-import { useDeleteAgencyMutation, useGetAgenciesQuery } from 'features/admin/agency/agencyApi';
+import { useDeleteAgencyMutation, useGetAgenciesQuery } from 'features/agency-dashboard/agencyApi';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import GenericTable, { TableHeader } from 'common/components/GenericTable';

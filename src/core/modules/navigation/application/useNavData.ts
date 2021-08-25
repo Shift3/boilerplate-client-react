@@ -48,7 +48,7 @@ export const useNavData = (): INavData => {
     {
       icon: 'building',
       label: 'Agencies',
-      path: '/admin/agency-list',
+      path: '/agencies',
       canUserActivate: user?.role.canViewAgencies() ?? false,
     },
   ];
