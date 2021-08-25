@@ -1,4 +1,3 @@
-// React imports
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faBuilding,
@@ -9,15 +8,14 @@ import {
   faUser,
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
-// Third-party package imports
 import * as Sentry from '@sentry/react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import store from 'app/redux/store';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { App } from './app/App';
-// App imports
 import reportWebVitals from './reportWebVitals';
 
 // Font Awesome recommends importing icons via a “library” in the initializing module of the app
@@ -30,7 +28,6 @@ library.add(faBuilding, faEdit, faLock, faStethoscope, faTrashAlt, faUser, faUse
 - Discuss adding in a release option with the team
 - Discuss an environment folder with the team.
 */
-
 Sentry.init({
   dsn: 'https://943bdfd77eed4be6b91a42aa0ce6a29c@o68356.ingest.sentry.io/5622322',
   beforeSend(event) {
@@ -45,9 +42,11 @@ Sentry.init({
 
 ReactDOM.render(
   <StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <Router>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </Router>
   </StrictMode>,
   document.getElementById('root'),
 );
