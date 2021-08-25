@@ -1,12 +1,13 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/no-unused-prop-types */
 /* eslint-disable no-console */
-import { FC, useMemo } from 'react';
-import { useGetAgenciesQuery } from 'features/admin/agency/agencyApi';
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
-import GenericTable, { TableHeader } from 'common/components/GenericTable';
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
+import GenericTable from 'common/components/GenericTable';
+import { TableHeader } from 'common/components/GenericTable/GenericTable';
+import { useGetAgenciesQuery } from 'features/admin/agency/agencyApi';
+import { FC, useMemo } from 'react';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
 
 type AgencyTableItem = {
   id: number;

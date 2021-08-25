@@ -1,36 +1,46 @@
-import { ReactElement } from 'react';
-import { StyledTable } from './styles';
-import { BaseTableItem, GenericTableProps } from './types';
+import { ReactElement, ReactNode } from 'react';
+import Table from 'react-bootstrap/Table';
 
-export const GenericTable = <TableItem extends BaseTableItem>({
-  items,
+export type BaseDataType = {
+  id: number | string;
+};
+
+export type TableHeader<DataType> = { key: keyof DataType; label: string };
+
+export type CustomRenderer<DataType> = { key: keyof DataType; renderer: (item: DataType) => ReactNode };
+
+export type Props<DataType> = {
+  headers: TableHeader<DataType>[];
+  items: DataType[];
+  customRenderers?: CustomRenderer<DataType>[];
+};
+
+export const GenericTable = <DataType extends BaseDataType>({
   headers,
-  customRenderers = {},
-}: GenericTableProps<TableItem>): ReactElement => {
+  items,
+  customRenderers = [],
+}: Props<DataType>): ReactElement => {
   return (
-    <>
-      <StyledTable responsive>
-        <thead>
-          <tr>
-            {headers.map((header) => (
-              <th key={String(header.key)}>{header.label}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item) => (
-            <tr key={item.id}>
-              {headers.map((header) => {
-                // If the item has a custom render function for the header, use the render function.
-                // Otherwise, just render the value.
-                const customRenderer = customRenderers[header.key];
-                return <td key={String(header.key)}>{customRenderer ? customRenderer(item) : item[header.key]}</td>;
-              })}
-            </tr>
+    <Table responsive>
+      <thead>
+        <tr>
+          {headers.map((header) => (
+            <th key={String(header.key)}>{header.label}</th>
           ))}
-        </tbody>
-      </StyledTable>
-      {!items.length && <div className='text-center'>No data</div>}
-    </>
+        </tr>
+      </thead>
+      <tbody>
+        {items.map((item) => (
+          <tr key={item.id}>
+            {headers.map((header) => {
+              const customRenderer = customRenderers.find((cr) => cr.key === header.key);
+              return (
+                <td key={String(header.key)}>{customRenderer ? customRenderer.renderer(item) : item[header.key]} </td>
+              );
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </Table>
   );
 };
