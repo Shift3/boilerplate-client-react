@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import { AgencyListView } from './pages/AgencyListView';
+import { AgencyListView } from './pages';
 
 export const Routes: FC = () => {
   const { path } = useRouteMatch();
