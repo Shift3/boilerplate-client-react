@@ -6,14 +6,15 @@ import { LogInPage } from 'components/loginPage';
 import { ResetPasswordPage } from 'components/resetPasswordPage';
 import { SignUpPage } from 'components/signupPage';
 import { UpdateUserProfilePage } from 'components/updateUserProfilePage';
-import { PrivateRoute } from 'features/auth/components/PrivateRoute/PrivateRoute';
 import { Routes as AdminRoutes } from 'features/admin';
+import { PrivateRoute } from 'features/auth/components/PrivateRoute/PrivateRoute';
 import { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { DashboardPage } from '../components/dashboardPage/index';
 import { FlashMessage } from '../components/flashMessage/index';
 import { HolyGrailLayout } from '../components/holyGrailLayout/index';
+import { AgentDashboardRoutes } from '../features/agent-dashboard/AgentDashboardRoutes';
 import { GlobalStyle } from '../GlobalStyle';
 import AppTheme from '../utils/styleValues';
 
@@ -31,6 +32,7 @@ export const App: FC = () => (
           <PrivateRoute exact path='/user/change-password/' component={ChangePasswordPage} />
           <PrivateRoute exact path='/user/profile/' component={UpdateUserProfilePage} />
           <PrivateRoute exact path='/admin' component={AdminRoutes} requiredRoles={['Admin', 'Super Administrator']} />
+          <Route path='/content' component={AgentDashboardRoutes} />
           <PrivateRoute exact path='/' component={DashboardPage} />
         </Switch>
       </HolyGrailLayout>
