@@ -3,7 +3,7 @@
 /* eslint-disable no-console */
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
 import GenericTable, { TableHeader } from 'common/components/GenericTable';
-import { FC, useMemo } from 'react';
+import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { useGetAgentsQuery } from '../agentApi';
@@ -24,40 +24,36 @@ export const AgentListView: FC = () => {
   ];
 
   // Transform Agency objects returned from the API into the table item data format expected by the table.
-  const items: AgentTableItem[] = useMemo(
-    () =>
-      agents.map((agent) => ({
-        id: agent.id,
-        name: agent.name,
-        actions: [
-          { icon: 'edit', tooltipText: 'Edit', onClick: () => console.log(`Edit ${agent.name}`) },
-          {
-            icon: 'trash-alt',
-            tooltipText: 'Delete',
-            onClick: () => console.log(`Delete ${agent.name}`),
-          },
-        ],
-      })),
+  const items: AgentTableItem[] = agents.map(
+    (agent) => ({
+      id: agent.id,
+      name: agent.name,
+      actions: [
+        { icon: 'edit', tooltipText: 'Edit', onClick: () => console.log(`Edit ${agent.name}`) },
+        {
+          icon: 'trash-alt',
+          tooltipText: 'Delete',
+          onClick: () => console.log(`Delete ${agent.name}`),
+        },
+      ],
+    }),
     [agents],
   );
 
-  const customRenderers = useMemo(
-    () => ({
-      actions: ({ actions }: AgentTableItem) => (
-        <>
-          {actions.map((action, index) => (
-            <ActionButton key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
-          ))}
-        </>
-      ),
-    }),
-    [],
-  );
+  const customRenderers = {
+    actions: ({ actions }: AgentTableItem) => (
+      <>
+        {actions.map((action, index) => (
+          <ActionButton key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
+        ))}
+      </>
+    ),
+  };
 
   return (
     <Container>
       <div className='pb-4 text-right'>
-        <Button>ADD AGENCY</Button>
+        <Button>ADD AGENT</Button>
       </div>
       <GenericTable<AgentTableItem> headers={headers} items={items} customRenderers={customRenderers} />
     </Container>
