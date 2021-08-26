@@ -2,10 +2,9 @@
 /* eslint-disable react/no-unused-prop-types */
 /* eslint-disable no-console */
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
-import GenericTable from 'common/components/GenericTable';
-import { TableHeader } from 'common/components/GenericTable/GenericTable';
+import { CustomRenderer, GenericTable, TableHeader } from 'common/components/GenericTable';
 import { useGetAgenciesQuery } from 'features/admin/agency/agencyApi';
-import { FC, useMemo } from 'react';
+import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 
@@ -25,39 +24,33 @@ export const AgencyListView: FC = () => {
   ];
 
   // Transform Agency objects returned from the API into the table item data format expected by the table.
-  const items: AgencyTableItem[] = useMemo(
-    () =>
-      agencies.map((agency) => ({
-        id: agency.id,
-        name: agency.agencyName,
-        actions: [
-          { icon: 'edit', tooltipText: 'Edit', onClick: () => console.log(`Edit ${agency.agencyName}`) },
-          {
-            icon: 'trash-alt',
-            tooltipText: 'Delete',
-            onClick: () => console.log(`Delete ${agency.agencyName}`),
-          },
-        ],
-      })),
-    // In this case it's ok to use the agencies array as a dependency because RTK Query
-    // memoizes the returned values.
-    [agencies],
-  );
+  const items: AgencyTableItem[] = agencies.map((agency) => ({
+    id: agency.id,
+    name: agency.agencyName,
+    actions: [
+      { icon: 'edit', tooltipText: 'Edit', onClick: () => console.log(`Edit ${agency.agencyName}`) },
+      {
+        icon: 'trash-alt',
+        tooltipText: 'Delete',
+        onClick: () => console.log(`Delete ${agency.agencyName}`),
+      },
+    ],
+  }));
 
   // Specify custom render methods for any property in the table items that need to be rendered as a custom component.
   // Here we want the actions to be rendered using a custom component.
-  const customRenderers = useMemo(
-    () => ({
-      actions: ({ actions }: AgencyTableItem) => (
+  const customRenderers: CustomRenderer<AgencyTableItem>[] = [
+    {
+      key: 'actions',
+      renderer: ({ actions }: AgencyTableItem) => (
         <>
           {actions.map((action, index) => (
             <ActionButton key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
           ))}
         </>
       ),
-    }),
-    [],
-  );
+    },
+  ];
 
   return (
     <Container>
