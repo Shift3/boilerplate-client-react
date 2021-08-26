@@ -1,2 +1,2 @@
 export * from './agentApi';
-export * from './pages/AgentListView';
+export * from "./pages";

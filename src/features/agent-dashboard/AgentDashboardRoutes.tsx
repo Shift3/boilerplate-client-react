@@ -1,8 +1,6 @@
+import { AgentListView, CreateAgentView, EditAgentView } from 'features/agent-dashboard/pages';
 import { FC } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import { AgentListView } from './pages/AgentListView';
-import { CreateAgentView } from './pages/CreateAgentView';
-import { EditAgentView } from './pages/EditAgentView';
 
 export const AgentDashboardRoutes: FC = () => {
   const { path } = useRouteMatch();
