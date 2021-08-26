@@ -32,7 +32,11 @@ export const App: FC = () => (
           <PrivateRoute exact path='/user/change-password/' component={ChangePasswordPage} />
           <PrivateRoute exact path='/user/profile/' component={UpdateUserProfilePage} />
           <PrivateRoute exact path='/admin' component={AdminRoutes} requiredRoles={['Admin', 'Super Administrator']} />
-          <Route path='/content' component={AgentDashboardRoutes} />
+          <PrivateRoute
+            path='/agents'
+            component={AgentDashboardRoutes}
+            requiredRoles={['Admin', 'Super Administrator']}
+          />
           <PrivateRoute exact path='/' component={DashboardPage} />
         </Switch>
       </HolyGrailLayout>
