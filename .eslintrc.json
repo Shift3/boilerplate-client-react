@@ -110,6 +110,8 @@
     "no-param-reassign": 0,
     "@typescript-eslint/no-inferrable-types": 0,
     "@typescript-eslint/no-non-null-assertion": 0,
+    "react/no-array-index-key": 0,
+    "react/no-unused-prop-types": 0,
 
     // WARN (1)
     "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],

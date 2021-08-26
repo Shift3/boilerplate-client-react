@@ -7,9 +7,9 @@ export const AgentDashboardRoutes: FC = () => {
 
   return (
     <Switch>
-      <Route path={`${path}/agents`} component={AgentListView} />
-      <Route path={`${path}/agents/create-agent`} component={CreateAgentView} />
-      <Route path={`${path}/agents/edit-agent`} component={EditAgentView} />
+      <Route path={`${path}`} component={AgentListView} />
+      <Route path={`${path}/create-agent`} component={CreateAgentView} />
+      <Route path={`${path}/edit-agent`} component={EditAgentView} />
     </Switch>
   );
 };

@@ -8,6 +8,7 @@ import { SignUpPage } from 'components/signupPage';
 import { UpdateUserProfilePage } from 'components/updateUserProfilePage';
 import { Routes as AdminRoutes } from 'features/admin';
 import { PrivateRoute } from 'features/auth/components/PrivateRoute/PrivateRoute';
+import { Routes as AgencyRoutes } from 'features/agency-dashboard/Routes';
 import { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
@@ -31,12 +32,13 @@ export const App: FC = () => (
           <Route path='/auth/reset-password/:token' component={ResetPasswordPage} />
           <PrivateRoute exact path='/user/change-password/' component={ChangePasswordPage} />
           <PrivateRoute exact path='/user/profile/' component={UpdateUserProfilePage} />
-          <PrivateRoute exact path='/admin' component={AdminRoutes} requiredRoles={['Admin', 'Super Administrator']} />
+          <PrivateRoute path='/admin' component={AdminRoutes} requiredRoles={['Admin', 'Super Administrator']} />
           <PrivateRoute
             path='/agents'
             component={AgentDashboardRoutes}
             requiredRoles={['Admin', 'Super Administrator']}
           />
+          <PrivateRoute path='/agencies' component={AgencyRoutes} requiredRoles={['Admin', 'Super Administrator']} />
           <PrivateRoute exact path='/' component={DashboardPage} />
         </Switch>
       </HolyGrailLayout>

@@ -1,4 +1,5 @@
 import { GenericTable } from './GenericTable';
 
-export * from './types';
 export default GenericTable;
+export * from './GenericTable';
+export * from './types';

@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authSlice from 'core/modules/auth/infrastructure/store/authSlice';
 import notificationsSlice from 'core/modules/notifications/infrastructure/store/notificationsSlice';
-import { agencyApi } from 'features/admin/agency';
+import { agencyApi } from 'features/agency-dashboard';
 import { userApi } from 'features/admin/user/usersApi';
 import { agentApi } from '../../features/agent-dashboard/agentApi';
 
@@ -13,6 +13,7 @@ const store = configureStore({
     [agencyApi.reducerPath]: agencyApi.reducer,
     [agentApi.reducerPath]: agentApi.reducer,
   },
+
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(userApi.middleware, agencyApi.middleware, agentApi.middleware),
 });
