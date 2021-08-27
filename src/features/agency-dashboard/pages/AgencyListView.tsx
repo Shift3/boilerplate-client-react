@@ -7,6 +7,7 @@ import GenericTable, { TableHeader } from 'common/components/GenericTable';
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
 import { useConfirmationModal } from 'common/hooks';
 import { Agency } from 'common/models';
+import { Link } from 'react-router-dom';
 
 type AgencyTableItem = {
   id: number;
@@ -58,7 +59,7 @@ export const AgencyListView: FC = () => {
     actions: ({ actions }: AgencyTableItem) => (
       <>
         {actions.map((action, index) => (
-          <ActionButton key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
+          <ActionButton key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} s />
         ))}
       </>
     ),
@@ -67,7 +68,9 @@ export const AgencyListView: FC = () => {
   return (
     <Container>
       <div className='pb-4 text-right'>
-        <Button>ADD AGENCY</Button>
+        <Link to='/agencies/create-agency'>
+          <Button>ADD AGENCY</Button>
+        </Link>
       </div>
       <GenericTable<AgencyTableItem> headers={headers} items={items} customRenderers={customRenderers} />
       <ConfirmationModal />
