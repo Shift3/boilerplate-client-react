@@ -8,8 +8,8 @@ export const userApi = createApi({
 
   baseQuery: fetchBaseQuery({
     baseUrl: `${environment.apiRoute}/users`,
+
     prepareHeaders: (headers: Headers, { getState }) => {
-      // eslint-disable-next-line no-extra-parens
       const token = (getState() as RootState).auth.session?.token;
 
       if (token) {
@@ -20,14 +20,24 @@ export const userApi = createApi({
     },
   }),
 
+  tagTypes: ['User'],
+
   endpoints: (builder) => ({
     getUsers: builder.query<User[], void>({
       query: () => ({ url: '/' }),
-    })
+      providesTags: ['User'],
+    }),
+
+    deleteUser: builder.mutation<void, number>({
+      query: (userId) => ({
+        url: `/${userId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['User'],
+    }),
     // addUser
-    // deleteUser
     // updateUser
-  })
+  }),
 });
-// Auto-generated from Redux-toolkit
-export const { useGetUsersQuery } = userApi;
+
+export const { useGetUsersQuery, useDeleteUserMutation } = userApi;
