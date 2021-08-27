@@ -1,13 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Agency } from 'common/models';
 import { RootState } from 'app/redux';
+import { Agent } from 'common/models/agent';
 import { environment } from 'environment';
 
-export const agencyApi = createApi({
-  reducerPath: 'agencyApi',
+export const agentApi = createApi({
+  reducerPath: 'agentApi',
 
   baseQuery: fetchBaseQuery({
-    baseUrl: `${environment.apiRoute}/agencies`,
+    baseUrl: `${environment.apiRoute}/agents`,
     prepareHeaders: (headers: Headers, { getState }) => {
       const token = (getState() as RootState).auth.session?.token;
 
@@ -20,10 +20,10 @@ export const agencyApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    getAgencies: builder.query<Agency[], void>({
+    getAgents: builder.query<Agent[], void>({
       query: () => ({ url: '/' }),
-    }),
-  }),
+    })
+  })
 });
 
-export const { useGetAgenciesQuery } = agencyApi;
+export const { useGetAgentsQuery } = agentApi;

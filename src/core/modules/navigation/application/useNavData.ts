@@ -36,7 +36,7 @@ export const useNavData = (): INavData => {
     {
       icon: 'stethoscope',
       label: 'Directory',
-      path: '/content/agent-list',
+      path: '/agents',
       canUserActivate: user?.role.canViewAgents() ?? false,
     },
     {
@@ -48,7 +48,7 @@ export const useNavData = (): INavData => {
     {
       icon: 'building',
       label: 'Agencies',
-      path: '/admin/agency-list',
+      path: '/agencies',
       canUserActivate: user?.role.canViewAgencies() ?? false,
     },
   ];
