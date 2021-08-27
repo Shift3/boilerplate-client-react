@@ -1,8 +1,10 @@
 /* eslint-disable no-console */
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
 import GenericTable, { TableHeader } from 'common/components/GenericTable';
-import { useGetUsersQuery } from 'features/user-dashboard/userApi';
-import { FC, useMemo } from 'react';
+import { useConfirmationModal } from 'common/hooks';
+import { User } from 'common/models';
+import { useDeleteUserMutation, useGetUsersQuery } from 'features/user-dashboard/userApi';
+import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 
@@ -18,6 +20,21 @@ type UserTableItem = {
 
 export const UserListView: FC = () => {
   const { data: users = [] } = useGetUsersQuery();
+  const [deleteUser] = useDeleteUserMutation();
+  const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
+
+  const handleDelete = (user: User) => {
+    const message = `Delete ${user.id}?`;
+
+    const onConfirm = () => {
+      deleteUser(user.id);
+      closeModal();
+    };
+
+    const onCancel = () => closeModal();
+
+    openModal(message, onConfirm, onCancel);
+  };
 
   const headers: TableHeader<UserTableItem>[] = [
     { key: 'lastName', label: 'LAST NAME' },
@@ -28,27 +45,23 @@ export const UserListView: FC = () => {
     { key: 'actions', label: 'ACTIONS' },
   ];
 
-  const items: UserTableItem[] = useMemo(
-    () =>
-      users.map((user) => ({
-        id: user.id,
-        lastName: user.lastName,
-        firstName: user.firstName,
-        email: user.email,
-        role: user.role.roleName,
-        activatedAt: user.activatedAt,
-        actions: [
-          { icon: 'edit', tooltipText: 'Edit', onClick: () => console.log(`Edit ${user.id}`) },
-          {
-            icon: 'trash-alt',
-            tooltipText: 'Delete',
-            onClick: () => console.log(`Delete ${user.id}`),
-          },
-          { icon: 'lock', tooltipText: 'Reset Password', onClick: () => console.log(`Reset Password ${user.id}`) },
-        ],
-      })),
-    [users],
-  );
+  const items: UserTableItem[] = users.map((user) => ({
+    id: user.id,
+    lastName: user.lastName,
+    firstName: user.firstName,
+    email: user.email,
+    role: user.role.roleName,
+    activatedAt: user.activatedAt,
+    actions: [
+      { icon: 'edit', tooltipText: 'Edit', onClick: () => console.log(`Edit ${user.id}`) },
+      {
+        icon: 'trash-alt',
+        tooltipText: 'Delete',
+        onClick: () => handleDelete(user),
+      },
+      { icon: 'lock', tooltipText: 'Reset Password', onClick: () => console.log(`Reset Password ${user.id}`) },
+    ],
+  }));
 
   const customRenderers = {
     actions: ({ actions }: UserTableItem) => (
@@ -67,6 +80,7 @@ export const UserListView: FC = () => {
         <Button>ADD USER</Button>
       </div>
       <GenericTable<UserTableItem> headers={headers} items={items} customRenderers={customRenderers} />
+      <ConfirmationModal />
     </Container>
   );
 };
