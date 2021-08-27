@@ -42,7 +42,7 @@ export const useNavData = (): INavData => {
     {
       icon: 'users',
       label: 'Users',
-      path: '/admin/user-list',
+      path: '/users',
       canUserActivate: user?.role.canViewUsers() ?? false,
     },
     {
