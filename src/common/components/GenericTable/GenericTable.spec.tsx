@@ -1,6 +1,5 @@
 import { render } from '@testing-library/react';
-import { GenericTable } from './GenericTable';
-import { TableHeader } from './types';
+import { GenericTable, TableHeader } from './GenericTable';
 
 type TestTableItem = {
   id: number;
