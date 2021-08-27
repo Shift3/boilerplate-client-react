@@ -7,15 +7,15 @@ import { ResetPasswordPage } from 'components/resetPasswordPage';
 import { SignUpPage } from 'components/signupPage';
 import { UpdateUserProfilePage } from 'components/updateUserProfilePage';
 import { Routes as AdminRoutes } from 'features/admin';
-import { PrivateRoute } from 'features/auth/components/PrivateRoute/PrivateRoute';
 import { Routes as AgencyRoutes } from 'features/agency-dashboard/Routes';
+import { PrivateRoute } from 'features/auth/components/PrivateRoute/PrivateRoute';
 import { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { DashboardPage } from '../components/dashboardPage/index';
 import { FlashMessage } from '../components/flashMessage/index';
 import { HolyGrailLayout } from '../components/holyGrailLayout/index';
-import { AgentDashboardRoutes } from '../features/agent-dashboard/AgentDashboardRoutes';
+import { AgentDashboardRoutes } from '../features/agent-dashboard/Routes';
 import { GlobalStyle } from '../GlobalStyle';
 import AppTheme from '../utils/styleValues';
 

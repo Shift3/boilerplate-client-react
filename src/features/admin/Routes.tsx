@@ -1,7 +1,7 @@
 import { CreateUserPage } from 'components/createUserPage';
+import { UserListView } from 'features/user-dashboard';
 import { FC } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import { UserListView } from './user/pages/UserListView';
 
 export const Routes: FC = () => {
   const { path } = useRouteMatch();

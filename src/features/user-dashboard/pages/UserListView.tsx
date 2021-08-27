@@ -1,8 +1,7 @@
-/* eslint-disable react/no-unused-prop-types */
 /* eslint-disable no-console */
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
 import GenericTable, { TableHeader } from 'common/components/GenericTable';
-import { useGetUsersQuery } from 'features/admin/user/usersApi';
+import { useGetUsersQuery } from 'features/user-dashboard/userApi';
 import { FC, useMemo } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
