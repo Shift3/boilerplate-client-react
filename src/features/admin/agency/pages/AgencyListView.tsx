@@ -3,7 +3,7 @@
 /* eslint-disable no-console */
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
 import { CustomRenderer, GenericTable, TableHeader } from 'common/components/GenericTable';
-import { useGetAgenciesQuery } from 'features/admin/agency/agencyApi';
+import { useGetAgenciesQuery } from 'features/agency-dashboard';
 import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
