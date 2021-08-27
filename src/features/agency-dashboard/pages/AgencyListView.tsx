@@ -59,7 +59,7 @@ export const AgencyListView: FC = () => {
     actions: ({ actions }: AgencyTableItem) => (
       <>
         {actions.map((action, index) => (
-          <ActionButton key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} s />
+          <ActionButton key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
         ))}
       </>
     ),
