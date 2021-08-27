@@ -1,9 +1,9 @@
 /* eslint-disable react/no-unused-prop-types */
 /* eslint-disable no-console */
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
-import GenericTable, { TableHeader } from 'common/components/GenericTable';
+import { CustomRenderer, GenericTable, TableHeader } from 'common/components/GenericTable';
 import { useGetUsersQuery } from 'features/admin/user/usersApi';
-import { FC, useMemo } from 'react';
+import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 
@@ -29,38 +29,37 @@ export const UserListView: FC = () => {
     { key: 'actions', label: 'ACTIONS' },
   ];
 
-  const items: UserTableItem[] = useMemo(
-    () =>
-      users.map((user) => ({
-        id: user.id,
-        lastName: user.lastName,
-        firstName: user.firstName,
-        email: user.email,
-        role: user.role.roleName,
-        activatedAt: user.activatedAt,
-        actions: [
-          { icon: 'edit', tooltipText: 'Edit', onClick: () => console.log(`Edit ${user.id}`) },
-          {
-            icon: 'trash-alt',
-            tooltipText: 'Delete',
-            onClick: () => console.log(`Delete ${user.id}`),
-          },
-          { icon: 'lock', tooltipText: 'Reset Password', onClick: () => console.log(`Reset Password ${user.id}`) },
-        ],
-      })),
-    [users],
-  );
+  const items: UserTableItem[] = users.map((user) => ({
+    id: user.id,
+    lastName: user.lastName,
+    firstName: user.firstName,
+    email: user.email,
+    role: user.role.roleName,
+    activatedAt: user.activatedAt,
+    actions: [
+      { icon: 'edit', tooltipText: 'Edit', onClick: () => console.log(`Edit ${user.id}`) },
+      {
+        icon: 'trash-alt',
+        tooltipText: 'Delete',
+        onClick: () => console.log(`Delete ${user.id}`),
+      },
+      { icon: 'lock', tooltipText: 'Reset Password', onClick: () => console.log(`Reset Password ${user.id}`) },
+    ],
+  }));
 
-  const customRenderers = {
-    actions: ({ actions }: UserTableItem) => (
-      <>
-        {actions.map((action, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <ActionButton key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
-        ))}
-      </>
-    ),
-  };
+  const customRenderers: CustomRenderer<UserTableItem>[] = [
+    {
+      key: 'actions',
+      renderer: ({ actions }: UserTableItem) => (
+        <>
+          {actions.map((action, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <ActionButton key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
+          ))}
+        </>
+      ),
+    },
+  ];
 
   return (
     <Container>
