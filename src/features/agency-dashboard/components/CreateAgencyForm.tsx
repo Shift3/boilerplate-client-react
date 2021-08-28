@@ -23,7 +23,7 @@ export const CreateAgencyForm: FC<Props> = ({ onCancel, onSubmit }) => {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<FormInputs>({ resolver: yupResolver(schema) });
+  } = useForm<FormInputs>({ resolver: yupResolver(schema), mode: 'all' });
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
