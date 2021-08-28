@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
-import { CustomRenderer, GenericTable, TableHeader } from 'common/components/GenericTable';
+import { GenericTable } from 'common/components/GenericTable';
+import { CustomRenderer, TableHeader } from 'common/components/GenericTable/types';
 import { useConfirmationModal } from 'common/hooks';
 import { Agency } from 'common/models';
 import { useDeleteAgencyMutation, useGetAgenciesQuery } from 'features/agency-dashboard/agencyApi';

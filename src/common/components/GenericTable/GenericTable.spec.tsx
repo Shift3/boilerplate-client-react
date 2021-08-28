@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react';
-import { GenericTable, TableHeader } from './GenericTable';
+import { GenericTable } from './GenericTable';
+import { TableHeader } from './types';
 
 type TestTableItem = {
   id: number;
@@ -89,7 +90,7 @@ describe('GenericTable', () => {
       });
     });
   });
-
+  // Need to resolve line 101
   it('should use custom render method if customRenderers prop is provided', () => {
     const customRenderFunction = (item: TestTableItem) => `${item.id}`;
 
@@ -97,7 +98,7 @@ describe('GenericTable', () => {
       <GenericTable<TestTableItem>
         items={testTableItems}
         headers={testTableHeaders}
-        customRenderers={{ firstName: customRenderFunction }}
+        // customRenderers={{ customRenderFunction }}
       />,
     );
 

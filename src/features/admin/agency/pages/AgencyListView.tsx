@@ -1,8 +1,7 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/no-unused-prop-types */
 /* eslint-disable no-console */
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
-import { CustomRenderer, GenericTable, TableHeader } from 'common/components/GenericTable';
+import {  GenericTable } from 'common/components/GenericTable';
+import { CustomRenderer, TableHeader } from 'common/components/GenericTable/types';
 import { useGetAgenciesQuery } from 'features/agency-dashboard';
 import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
