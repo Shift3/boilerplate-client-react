@@ -24,7 +24,7 @@ export const UserListView: FC = () => {
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
 
   const handleDelete = (user: User) => {
-    const message = `Delete ${user.id}?`;
+    const message = `Delete ${user.firstName} + ${user.lastName}?`;
 
     const onConfirm = () => {
       deleteUser(user.id);
