@@ -1,15 +1,15 @@
 import { ReactNode } from 'react';
 
-export type BaseDataType = {
+export type BaseTableItem = {
   id: number | string;
 };
 
-export type TableHeader<DataType> = { key: keyof DataType; label: string };
+export type TableHeader<TableItem> = { key: keyof TableItem; label: string };
 
-export type CustomRenderer<DataType> = { key: keyof DataType; renderer: (item: DataType) => ReactNode };
+export type CustomRenderer<TableItem> = { key: keyof TableItem; renderer: (item: TableItem) => ReactNode };
 
-export type Props<DataType> = {
-  headers: TableHeader<DataType>[];
-  items: DataType[];
-  customRenderers?: CustomRenderer<DataType>[];
+export type Props<TableItem> = {
+  headers: TableHeader<TableItem>[];
+  items: TableItem[];
+  customRenderers?: CustomRenderer<TableItem>[];
 };
