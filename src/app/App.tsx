@@ -6,7 +6,6 @@ import { LogInPage } from 'components/loginPage';
 import { ResetPasswordPage } from 'components/resetPasswordPage';
 import { SignUpPage } from 'components/signupPage';
 import { UpdateUserProfilePage } from 'components/updateUserProfilePage';
-import { Routes as AdminRoutes } from 'features/admin';
 import { Routes as AgencyRoutes } from 'features/agency-dashboard/Routes';
 import { Routes as AgentRoutes } from 'features/agent-dashboard/Routes';
 import { PrivateRoute } from 'features/auth/components/PrivateRoute/PrivateRoute';
@@ -33,7 +32,6 @@ export const App: FC = () => (
           <Route path='/auth/reset-password/:token' component={ResetPasswordPage} />
           <PrivateRoute exact path='/user/change-password/' component={ChangePasswordPage} />
           <PrivateRoute exact path='/user/profile/' component={UpdateUserProfilePage} />
-          <PrivateRoute path='/admin' component={AdminRoutes} requiredRoles={['Admin', 'Super Administrator']} />
           <PrivateRoute path='/agents' component={AgentRoutes} requiredRoles={['Admin', 'Super Administrator']} />
           <PrivateRoute path='/agencies' component={AgencyRoutes} requiredRoles={['Admin', 'Super Administrator']} />
           <PrivateRoute path='/users' component={UserRoutes} requiredRoles={['Admin', 'Super Administrator']} />
