@@ -1,12 +1,12 @@
 import { ReactElement } from 'react';
 import { StyledTable } from './styles';
-import { BaseTableItem, Props } from './types';
+import { BaseTableItem, GenericTableProps } from './types';
 
 export const GenericTable = <TableItem extends BaseTableItem>({
   headers,
   items,
   customRenderers = [],
-}: Props<TableItem>): ReactElement => {
+}: GenericTableProps<TableItem>): ReactElement => {
   return (
     <>
       <StyledTable responsive>
