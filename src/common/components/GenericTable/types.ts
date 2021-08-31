@@ -3,12 +3,18 @@ import { ReactNode } from 'react';
 export type BaseTableItem = {
   id: number | string;
 };
-export type TableHeader<TableItem> = { key: keyof TableItem; label: string };
 
-export type CustomRenderer<TableItem> = { key: keyof TableItem; renderer: (item: TableItem) => ReactNode };
+export type TableHeader<TableItem extends BaseTableItem> = {
+  key: keyof TableItem;
+  label: string;
+};
 
-export type GenericTableProps<TableItem> = {
+export type CustomRenderers<TableItem extends BaseTableItem> = Partial<
+  Record<keyof TableItem, (item: TableItem) => ReactNode>
+>;
+
+export type GenericTableProps<TableItem extends BaseTableItem> ={
   headers: TableHeader<TableItem>[];
   items: TableItem[];
-  customRenderers?: CustomRenderer<TableItem>[];
+  customRenderers?: CustomRenderers<TableItem>[];
 };

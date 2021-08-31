@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
+import { GenericTable } from 'common/components';
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
-import { GenericTable } from 'common/components/GenericTable';
 import { CustomRenderer, TableHeader } from 'common/components/GenericTable/types';
 import { useConfirmationModal } from 'common/hooks';
 import { Agency } from 'common/models';
