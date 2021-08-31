@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -11,7 +11,7 @@ export interface FormInputs {
 
 export interface Props {
   onCancel: () => void;
-  onSubmit: () => void;
+  onSubmit: (data: FormInputs) => void;
 }
 
 const schema = yup.object().shape({
@@ -21,9 +21,16 @@ const schema = yup.object().shape({
 export const CreateAgencyForm: FC<Props> = ({ onCancel, onSubmit }) => {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isValid },
     handleSubmit,
+    trigger,
   } = useForm<FormInputs>({ resolver: yupResolver(schema), mode: 'all' });
+
+  useEffect(() => {
+    // Trigger form validation when the component renders for the first time
+    // so validation errors show.
+    trigger();
+  }, [trigger]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -34,7 +41,9 @@ export const CreateAgencyForm: FC<Props> = ({ onCancel, onSubmit }) => {
       </Form.Group>
       <StyledFormButtonWrapper>
         <StyledCancelButton onClick={onCancel}>CANCEL</StyledCancelButton>
-        <StyledSubmitButton type='submit'>CREATE</StyledSubmitButton>
+        <StyledSubmitButton type='submit' disabled={!isValid}>
+          CREATE
+        </StyledSubmitButton>
       </StyledFormButtonWrapper>
     </Form>
   );
