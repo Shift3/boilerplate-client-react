@@ -14,31 +14,24 @@ type AgencyTableItem = {
   name: string;
   actions: ActionButtonProps[];
 };
-
 export const AgencyListView: FC = () => {
   const { data: agencies = [] } = useGetAgenciesQuery();
   const [deleteAgency] = useDeleteAgencyMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
-
   const handleDelete = (agency: Agency) => {
     const message = `Delete ${agency.agencyName}?`;
-
     const onConfirm = () => {
       deleteAgency(agency.id);
       closeModal();
     };
-
     const onCancel = () => closeModal();
-
     openModal(message, onConfirm, onCancel);
   };
-
   // Set up table headers
   const headers: TableHeader<AgencyTableItem>[] = [
     { key: 'name', label: 'AGENCY NAME' },
     { key: 'actions', label: 'ACTIONS' },
   ];
-
   // Transform Agency objects returned from the API into the table item data format expected by the table.
   const items: AgencyTableItem[] = agencies.map((agency) => ({
     id: agency.id,
