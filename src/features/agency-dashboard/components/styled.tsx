@@ -26,6 +26,20 @@ export const StyledFormTitle = styled.p`
   font-weight: 500;
 `;
 
+export const StyledFormButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+
+  & button {
+    margin-right: 10px;
+  }
+
+  & button:last-of-type {
+    margin-right: 0;
+  }
+`;
+
 export const StyledCancelButton = styled(BootstrapButton)`
   min-width: 146px;
   min-height: 24px;
@@ -43,20 +57,6 @@ export const StyledCancelButton = styled(BootstrapButton)`
   &:focus {
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgb(52 58 64 / 50%);
-  }
-`;
-
-export const StyledFormButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 50px;
-
-  & button {
-    margin-right: 10px;
-  }
-
-  & button:last-of-type {
-    margin-right: 0;
   }
 `;
 

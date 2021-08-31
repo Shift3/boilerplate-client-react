@@ -21,7 +21,7 @@ export const CreateAgencyView: FC = () => {
       showSuccessNotification('Agency created.');
       history.push('/agencies');
     } catch (error) {
-      showErrorNotification(JSON.stringify(error));
+      showErrorNotification('Unable to add agency.');
     }
   };
 
