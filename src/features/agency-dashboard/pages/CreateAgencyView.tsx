@@ -2,6 +2,7 @@ import { FC } from 'react';
 import Container from 'react-bootstrap/Container';
 import { useHistory } from 'react-router-dom';
 import { CreateAgencyForm } from '../components/CreateAgencyForm';
+import { StyledFormTitle, StyledFormWrapper } from '../components/styled';
 
 export const CreateAgencyView: FC = () => {
   const history = useHistory();
@@ -15,8 +16,11 @@ export const CreateAgencyView: FC = () => {
   };
 
   return (
-    <Container>
-      <CreateAgencyForm onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
+    <Container className=''>
+      <StyledFormWrapper>
+        <StyledFormTitle>Create Agency</StyledFormTitle>
+        <CreateAgencyForm onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
+      </StyledFormWrapper>
     </Container>
   );
 };
