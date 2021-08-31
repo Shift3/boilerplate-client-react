@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
-import {  GenericTable } from 'common/components/GenericTable';
+import { GenericTable } from 'common/components/GenericTable';
 import { CustomRenderer, TableHeader } from 'common/components/GenericTable/types';
 import { useGetAgenciesQuery } from 'features/agency-dashboard';
 import { FC } from 'react';
