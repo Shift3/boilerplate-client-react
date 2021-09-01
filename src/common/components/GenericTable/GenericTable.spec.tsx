@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { GenericTable } from './GenericTable';
-import { TableHeader } from './types';
+import { CustomRenderer, TableHeader } from './types';
 
 type TestTableItem = {
   id: number;
@@ -92,13 +92,18 @@ describe('GenericTable', () => {
   });
 
   it('should use custom render method if customRenderers prop is provided', () => {
-    const customRenderFunction = (item: TestTableItem) => `${item.id}`;
+    const customRenderers: CustomRenderer<TestTableItem>[] = [
+      {
+        key: 'firstName',
+        renderer: (item: TestTableItem) => `${item.id}`,
+      },
+    ];
 
     const { container } = render(
       <GenericTable<TestTableItem>
         items={testTableItems}
         headers={testTableHeaders}
-        customRenderers={{ firstName: customRenderFunction }}
+        customRenderers={customRenderers}
       />,
     );
 
@@ -110,7 +115,7 @@ describe('GenericTable', () => {
       tds.forEach((td, colIndex) => {
         const item = testTableItems[rowIndex];
         const { key } = testTableHeaders[colIndex];
-        const expected = key === 'firstName' ? customRenderFunction(item) : item[key];
+        const expected = key === 'firstName' ? customRenderers[0].renderer(item) : item[key];
         expect(td.innerHTML).toBe(expected);
       });
     });

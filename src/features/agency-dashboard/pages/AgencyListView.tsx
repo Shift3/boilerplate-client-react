@@ -1,13 +1,13 @@
 /* eslint-disable no-console */
-import { FC } from 'react';
-import { useDeleteAgencyMutation, useGetAgenciesQuery } from 'features/agency-dashboard/agencyApi';
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
-import GenericTable, { TableHeader } from 'common/components/GenericTable';
+import { CustomRenderer, GenericTable, TableHeader } from 'common/components';
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
 import { useConfirmationModal } from 'common/hooks';
 import { Agency } from 'common/models';
 import { Link } from 'react-router-dom';
+import { useDeleteAgencyMutation, useGetAgenciesQuery } from 'features/agency-dashboard/agencyApi';
+import { FC } from 'react';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
 
 type AgencyTableItem = {
   id: number;
@@ -55,15 +55,18 @@ export const AgencyListView: FC = () => {
 
   // Specify custom render methods for any property in the table items that need to be rendered as a custom component.
   // Here we want the actions to be rendered using a custom component.
-  const customRenderers = {
-    actions: ({ actions }: AgencyTableItem) => (
-      <>
-        {actions.map((action, index) => (
-          <ActionButton key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
-        ))}
-      </>
-    ),
-  };
+  const customRenderers: CustomRenderer<AgencyTableItem>[] = [
+    {
+      key: 'actions',
+      renderer: ({ actions }: AgencyTableItem) => (
+        <>
+          {actions.map((action, index) => (
+            <ActionButton key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
+          ))}
+        </>
+      ),
+    },
+  ];
 
   return (
     <Container>

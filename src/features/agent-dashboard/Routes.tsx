@@ -2,7 +2,7 @@ import { AgentListView, CreateAgentView, EditAgentView } from 'features/agent-da
 import { FC } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 
-export const AgentDashboardRoutes: FC = () => {
+export const Routes: FC = () => {
   const { path } = useRouteMatch();
 
   return (
