@@ -3,6 +3,10 @@ import { Agency } from 'common/models';
 import { RootState } from 'app/redux';
 import { environment } from 'environment';
 
+export interface CreateAgencyRequest {
+  agencyName: string;
+}
+
 export const agencyApi = createApi({
   reducerPath: 'agencyApi',
 
@@ -28,6 +32,15 @@ export const agencyApi = createApi({
       providesTags: ['Agency'],
     }),
 
+    createAgency: builder.mutation<Agency, CreateAgencyRequest>({
+      query: (payload) => ({
+        url: '/',
+        method: 'POST',
+        body: payload,
+      }),
+      invalidatesTags: ['Agency'],
+    }),
+
     deleteAgency: builder.mutation<void, number>({
       query: (agencyId) => ({
         url: `/${agencyId}`,
@@ -38,4 +51,4 @@ export const agencyApi = createApi({
   }),
 });
 
-export const { useGetAgenciesQuery, useDeleteAgencyMutation } = agencyApi;
+export const { useCreateAgencyMutation, useDeleteAgencyMutation, useGetAgenciesQuery } = agencyApi;
