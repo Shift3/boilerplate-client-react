@@ -41,6 +41,14 @@ export const agencyApi = createApi({
       invalidatesTags: ['Agency'],
     }),
 
+    updateAgency: builder.mutation<Agency, Pick<Agency, 'id' | 'agencyName'>>({
+      query: ({ id, agencyName }) => ({
+        url: `${id}`,
+        method: 'PUT',
+        body: { agencyName },
+      }),
+    }),
+
     deleteAgency: builder.mutation<void, number>({
       query: (agencyId) => ({
         url: `/${agencyId}`,
@@ -51,4 +59,5 @@ export const agencyApi = createApi({
   }),
 });
 
-export const { useCreateAgencyMutation, useDeleteAgencyMutation, useGetAgenciesQuery } = agencyApi;
+export const { useCreateAgencyMutation, useDeleteAgencyMutation, useGetAgenciesQuery, useUpdateAgencyMutation } =
+  agencyApi;
