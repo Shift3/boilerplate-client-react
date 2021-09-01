@@ -9,12 +9,13 @@ export type TableHeader<TableItem extends BaseTableItem> = {
   label: string;
 };
 
-export type CustomRenderers<TableItem extends BaseTableItem> = Partial<
-  Record<keyof TableItem, (item: TableItem) => ReactNode>
->;
+export type CustomRenderer<TableItem extends BaseTableItem> = {
+  key: keyof TableItem;
+  renderer: (item: TableItem) => ReactNode;
+};
 
 export type GenericTableProps<TableItem extends BaseTableItem> = {
-  items: TableItem[];
   headers: TableHeader<TableItem>[];
-  customRenderers?: CustomRenderers<TableItem>;
+  items: TableItem[];
+  customRenderers?: CustomRenderer<TableItem>[];
 };

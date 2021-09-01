@@ -1,8 +1,6 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/no-unused-prop-types */
 /* eslint-disable no-console */
+import { CustomRenderer, GenericTable, TableHeader } from 'common/components';
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
-import GenericTable, { TableHeader } from 'common/components/GenericTable';
 import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -40,15 +38,18 @@ export const AgentListView: FC = () => {
     [agents],
   );
 
-  const customRenderers = {
-    actions: ({ actions }: AgentTableItem) => (
-      <>
-        {actions.map((action, index) => (
-          <ActionButton key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
-        ))}
-      </>
-    ),
-  };
+  const customRenderers: CustomRenderer<AgentTableItem>[] = [
+    {
+      key: 'actions',
+      renderer: ({ actions }: AgentTableItem) => (
+        <>
+          {actions.map((action, index) => (
+            <ActionButton key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
+          ))}
+        </>
+      ),
+    },
+  ];
 
   return (
     <Container>

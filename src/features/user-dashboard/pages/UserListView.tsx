@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
+import { CustomRenderer, GenericTable, TableHeader } from 'common/components';
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
-import GenericTable, { TableHeader } from 'common/components/GenericTable';
 import { useConfirmationModal } from 'common/hooks';
 import { User } from 'common/models';
 import { useDeleteUserMutation, useGetUsersQuery } from 'features/user-dashboard/userApi';
@@ -57,22 +57,26 @@ export const UserListView: FC = () => {
       {
         icon: 'trash-alt',
         tooltipText: 'Delete',
+
         onClick: () => handleDelete(user),
       },
       { icon: 'lock', tooltipText: 'Reset Password', onClick: () => console.log(`Reset Password ${user.id}`) },
     ],
   }));
 
-  const customRenderers = {
-    actions: ({ actions }: UserTableItem) => (
-      <>
-        {actions.map((action, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <ActionButton key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
-        ))}
-      </>
-    ),
-  };
+  const customRenderers: CustomRenderer<UserTableItem>[] = [
+    {
+      key: 'actions',
+      renderer: ({ actions }: UserTableItem) => (
+        <>
+          {actions.map((action, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <ActionButton key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
+          ))}
+        </>
+      ),
+    },
+  ];
 
   return (
     <Container>
