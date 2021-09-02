@@ -15,10 +15,10 @@ export const UpdateAgencyView: FC = () => {
   const history = useHistory();
   const { showErrorNotification, showSuccessNotification } = useShowNotification();
   const [updateAgency] = useUpdateAgencyMutation();
-  // Since the parent component is subscribed to the query and we just want to pick an item from that query,
+  // Since the AgencyListView is subscribed to the query and we just want to pick an item from that query,
   // we do not need to perform an additional request here. Instead, we can use the `selectFromResult` option
-  // to get a specific item from the query result in the parent component. For details, see the following
-  // RTK Query docs https://redux-toolkit.js.org/rtk-query/usage/queries#selecting-data-from-a-query-result.
+  // to get a specific item from the cached query result. For more info, see the following RTK Query docs
+  // https://redux-toolkit.js.org/rtk-query/usage/queries#selecting-data-from-a-query-result.
   const { agency } = useGetAgenciesQuery(undefined, {
     selectFromResult: ({ data: agencies }) => ({
       agency: agencies?.find((agency) => agency.id === Number(id)),
