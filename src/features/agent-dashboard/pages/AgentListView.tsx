@@ -1,9 +1,5 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/no-unused-prop-types */
-/* eslint-disable no-console */
-import { GenericTable } from 'common/components';
+import { CustomRenderer, GenericTable, TableHeader } from 'common/components';
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
-import { CustomRenderer, TableHeader } from 'common/components/GenericTable/types';
 import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';

@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
-import { GenericTable } from 'common/components';
+import { CustomRenderer, GenericTable, TableHeader } from 'common/components';
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
-import { CustomRenderer, TableHeader } from 'common/components/GenericTable/types';
 import { useConfirmationModal } from 'common/hooks';
 import { User } from 'common/models';
 import { useDeleteUserMutation, useGetUsersQuery } from 'features/user-dashboard/userApi';

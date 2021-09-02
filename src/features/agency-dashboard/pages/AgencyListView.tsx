@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
+import { CustomRenderer, GenericTable, TableHeader } from 'common/components';
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
-import { GenericTable } from 'common/components/GenericTable';
-import { CustomRenderer, TableHeader } from 'common/components/GenericTable/types';
 import { useConfirmationModal } from 'common/hooks';
 import { Agency } from 'common/models';
 import { useDeleteAgencyMutation, useGetAgenciesQuery } from 'features/agency-dashboard/agencyApi';
@@ -71,7 +70,9 @@ export const AgencyListView: FC = () => {
   return (
     <Container>
       <div className='pb-4 text-right'>
-        <Button>ADD AGENCY</Button>
+        <Link to='/agencies/create-agency'>
+          <Button>ADD AGENCY</Button>
+        </Link>
       </div>
       <GenericTable<AgencyTableItem> headers={headers} items={items} customRenderers={customRenderers} />
       <ConfirmationModal />
