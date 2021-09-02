@@ -4,9 +4,6 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useGetAgenciesQuery, useUpdateAgencyMutation } from '../agencyApi';
 import { StyledFormTitle, StyledFormWrapper } from '../components/styled';
 import { UpdateAgencyForm, UpdateAgencyFormData } from '../components/UpdateAgencyForm';
-// import { UpdateAgencyForm, UpdateAgencyFormData } from '../components/';
-// import { useHistory, useParams } from 'react-router-dom';
-// import { useGetAgenciesQuery, useUpdateAgencyMutation } from '../agencyApi';
 
 export interface RouteParams {
   id: string;
