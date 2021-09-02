@@ -1,3 +1,4 @@
+import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { FC, useLayoutEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { useHistory, useParams } from 'react-router-dom';
@@ -18,12 +19,14 @@ export const UpdateAgencyView: FC = () => {
       agency: agencies?.find((agency) => agency.id === Number(id)),
     }),
   });
+  const { showErrorNotification, showSuccessNotification } = useShowNotification();
 
   useLayoutEffect(() => {
     if (Number.isNaN(Number(id)) || !agency) {
+      showErrorNotification('Unable to load agency. Returning to agency list.');
       history.replace('/agencies');
     }
-  }, [id, history, agency]);
+  }, [id, history, agency, showErrorNotification]);
 
   const handleFormCancel = () => {
     history.goBack();
@@ -33,8 +36,10 @@ export const UpdateAgencyView: FC = () => {
     const { agencyName } = data;
     try {
       await updateAgency({ id: Number(id), agencyName }).unwrap();
+      showSuccessNotification('Agency updated.');
+      history.push('/agencies');
     } catch (error) {
-      console.log(error);
+      showErrorNotification('Unable to update agency.');
     }
   };
 
