@@ -10,6 +10,7 @@ export interface UpdateAgencyFormData {
 }
 
 export interface UpdateAgencyFormProps {
+  defaultValues: UpdateAgencyFormData;
   onCancel: () => void;
   onSubmit: (data: UpdateAgencyFormData) => void;
 }
@@ -18,7 +19,7 @@ const schema = yup.object().shape({
   agencyName: yup.string().required('Agency Name is required.'),
 });
 
-export const UpdateAgencyForm: FC<UpdateAgencyFormProps> = ({ onCancel, onSubmit }) => {
+export const UpdateAgencyForm: FC<UpdateAgencyFormProps> = ({ defaultValues, onCancel, onSubmit }) => {
   const {
     register,
     formState: { errors, isValid },
@@ -36,7 +37,12 @@ export const UpdateAgencyForm: FC<UpdateAgencyFormProps> = ({ onCancel, onSubmit
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Group controlId='create-agency-form-agency-name'>
         <Form.Label>Agency Name</Form.Label>
-        <Form.Control type='text' {...register('agencyName')} isInvalid={!!errors.agencyName} />
+        <Form.Control
+          type='text'
+          defaultValue={defaultValues.agencyName}
+          isInvalid={!!errors.agencyName}
+          {...register('agencyName')}
+        />
         <Form.Control.Feedback type='invalid'>{errors.agencyName?.message}</Form.Control.Feedback>
       </Form.Group>
       <StyledFormButtonWrapper>
