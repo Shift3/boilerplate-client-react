@@ -13,7 +13,6 @@ export const UpdateAgencyView: FC = () => {
   const { id } = useParams<RouteParams>();
   const history = useHistory();
   const [updateAgency] = useUpdateAgencyMutation();
-  // eslint-disable-next-line no-undefined
   const { agency } = useGetAgenciesQuery(undefined, {
     selectFromResult: ({ data: agencies }) => ({
       agency: agencies?.find((agency) => agency.id === Number(id)),
