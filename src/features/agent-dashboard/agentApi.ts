@@ -19,11 +19,22 @@ export const agentApi = createApi({
     },
   }),
 
+  tagTypes: ['Agent'],
+
   endpoints: (builder) => ({
     getAgents: builder.query<Agent[], void>({
       query: () => ({ url: '/' }),
-    })
-  })
+      providesTags: ['Agent'],
+    }),
+
+    deleteAgent: builder.mutation<void, number>({
+      query: (agentId) => ({
+        url: `/${agentId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Agent'],
+    }),
+  }),
 });
 
-export const { useGetAgentsQuery } = agentApi;
+export const { useGetAgentsQuery, useDeleteAgentMutation } = agentApi;
