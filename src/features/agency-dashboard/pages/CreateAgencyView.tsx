@@ -16,8 +16,9 @@ export const CreateAgencyView: FC = () => {
   };
 
   const handleFormSubmit = async (data: CreateAgencyFormData) => {
+    const { agencyName } = data;
     try {
-      await createAgency(data).unwrap();
+      await createAgency({ agencyName }).unwrap();
       showSuccessNotification('Agency created.');
       history.push('/agencies');
     } catch (error) {

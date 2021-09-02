@@ -3,10 +3,6 @@ import { Agency } from 'common/models';
 import { RootState } from 'app/redux';
 import { environment } from 'environment';
 
-export interface CreateAgencyRequest {
-  agencyName: string;
-}
-
 export const agencyApi = createApi({
   reducerPath: 'agencyApi',
 
@@ -32,7 +28,7 @@ export const agencyApi = createApi({
       providesTags: ['Agency'],
     }),
 
-    createAgency: builder.mutation<Agency, CreateAgencyRequest>({
+    createAgency: builder.mutation<Agency, Pick<Agency, 'agencyName'>>({
       query: (payload) => ({
         url: '/',
         method: 'POST',
