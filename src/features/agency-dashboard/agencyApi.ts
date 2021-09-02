@@ -47,6 +47,7 @@ export const agencyApi = createApi({
         method: 'PUT',
         body: { agencyName },
       }),
+      invalidatesTags: ['Agency'],
     }),
 
     deleteAgency: builder.mutation<void, number>({
