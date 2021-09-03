@@ -1,9 +1,8 @@
-/* eslint-disable no-console */
 import { CustomRenderer, GenericTable, TableHeader } from 'common/components';
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
 import { useConfirmationModal } from 'common/hooks';
 import { Agency } from 'common/models';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDeleteAgencyMutation, useGetAgenciesQuery } from 'features/agency-dashboard/agencyApi';
 import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
@@ -16,6 +15,7 @@ type AgencyTableItem = {
 };
 
 export const AgencyListView: FC = () => {
+  const history = useHistory();
   const { data: agencies = [] } = useGetAgenciesQuery();
   const [deleteAgency] = useDeleteAgencyMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
@@ -44,7 +44,7 @@ export const AgencyListView: FC = () => {
     id: agency.id,
     name: agency.agencyName,
     actions: [
-      { icon: 'edit', tooltipText: 'Edit', onClick: () => console.log(`Edit ${agency.agencyName}`) },
+      { icon: 'edit', tooltipText: 'Edit', onClick: () => history.push(`/agencies/update-agency/${agency.id}`) },
       {
         icon: 'trash-alt',
         tooltipText: 'Delete',
