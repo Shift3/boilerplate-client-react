@@ -1,4 +1,4 @@
-import { CreateUserForm } from 'components/createUserForm';
+import { CreateUserForm } from 'features/agency-dashboard/components';
 import { CreateUserFormData } from 'components/createUserForm/types';
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
