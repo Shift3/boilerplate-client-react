@@ -2,8 +2,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FC } from 'react';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
 import { CreateUserFormProps } from '../../../components/createUserForm/types';
-import { StyledCancelButton, StyledFormButtonWrapper, StyledSubmitButton } from './styled';
+import { StyledCancelButton, StyledFormButtonWrapper, StyledSubmitButton } from '../user-dashboard/components/styled';
+
+const schema = yup.object().shape({
+  firstName: yup.string().required('First Name is required.'),
+});
 
 export const CreateUserForm: FC<CreateUserFormProps> = ({ onSubmit, onCancel }) => {
   const {
