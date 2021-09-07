@@ -28,6 +28,15 @@ export const userApi = createApi({
       providesTags: ['User'],
     }),
 
+    createUser: builder.mutation<User, Pick<User, 'id' >>({
+      query: ({ id }) => ({
+        url: '/',
+        method: 'POST',
+        body: id,
+      }),
+      invalidatesTags: ['User'],
+    }),
+
     deleteUser: builder.mutation<void, number>({
       query: (userId) => ({
         url: `/${userId}`,
@@ -35,9 +44,9 @@ export const userApi = createApi({
       }),
       invalidatesTags: ['User'],
     }),
-    // addUser
+
     // updateUser
   }),
 });
 
-export const { useGetUsersQuery, useDeleteUserMutation } = userApi;
+export const { useCreateUserMutation, useGetUsersQuery, useDeleteUserMutation } = userApi;
