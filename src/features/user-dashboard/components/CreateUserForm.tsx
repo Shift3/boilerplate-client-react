@@ -6,9 +6,9 @@ import * as yup from 'yup';
 import { StyledCancelButton, StyledFormButtonWrapper, StyledSubmitButton } from './styled';
 
 export interface CreateUserFormData {
+  email: string;
   firstName: string;
   lastName: string;
-  email: string;
   role: string;
   agency: string;
 }
@@ -68,6 +68,10 @@ export const CreateUserForm: FC<CreateUserFormProps> = ({ onSubmit, onCancel }) 
           {...register('role')}
           isInvalid={!!errors.role}
         />
+        {/* TODO:
+              - Only Super Administrators, Admins, and Editors can create new users
+              - Users can only create a new user with equal or lower role rank
+         */}
         <option>Admin</option>
         <option>Editor</option>
         <option>Users</option>
@@ -83,6 +87,10 @@ export const CreateUserForm: FC<CreateUserFormProps> = ({ onSubmit, onCancel }) 
           {...register('agency')}
           isInvalid={!!errors.agency}
         />
+        {/* TODO:
+              - Admins can only create users within their own agency
+              - Super Administrators can create users within any agency
+         */}
         <option>Main</option>
         <option>Public</option>
         <Form.Control.Feedback type='invalid'> {errors.agency?.message}</Form.Control.Feedback>

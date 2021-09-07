@@ -10,13 +10,24 @@ export const CreateUserView: FC = () => {
   const history = useHistory();
   const [createUser] = useCreateUserMutation();
   const { showErrorNotification, showSuccessNotification } = useShowNotification();
+  // TODO:
+  //  - fetch the available roles
+  //  - fetch the available agencies
+  //      const { data: agencies } = useGetAgenciesQuery();
+  //  - filter out the roles and agencies that the current authenticated user is
+  //      allowed to access
 
   const handleFormCancel = () => {
     history.goBack();
   };
 
   const handleFormSubmit = async (data: CreateUserFormData) => {
-    const { lastName } = data;
+    const { email, firstName, lastName, profilePicture, role, agency } = data;
+
+    // TODO:
+    //  - convert 'role' from name to the actualy Role object
+    //  - convert 'agency' from name to Agency object
+
     try {
       await createUser({ lastName }).unwrap();
       showSuccessNotification('User created.');
@@ -31,6 +42,9 @@ export const CreateUserView: FC = () => {
       <StyledFormWrapper>
         <StyledFormTitle>
           Create Agency
+          {/* TODO
+                - pass available roles and agencies to be displayed in the form
+           */}
           <CreateUserForm onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
         </StyledFormTitle>
       </StyledFormWrapper>

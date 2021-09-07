@@ -28,11 +28,14 @@ export const userApi = createApi({
       providesTags: ['User'],
     }),
 
-    createUser: builder.mutation<User, Pick<User, 'id' >>({
-      query: ({ id }) => ({
+    createUser: builder.mutation<
+      User,
+      Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>
+    >({
+      query: ( payload ) => ({
         url: '/',
         method: 'POST',
-        body: id,
+        body: payload,
       }),
       invalidatesTags: ['User'],
     }),
