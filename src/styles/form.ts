@@ -10,11 +10,9 @@ export const StyledFormWrapper = styled.div`
   padding: 50px;
   background-color: ${(props) => props.theme.primary};
   border-radius: 0.25rem;
-
   & label {
     color: white;
   }
-
   & .invalid-feedback {
     /* Modify style of validation error messages here */
   }
@@ -30,11 +28,9 @@ export const StyledFormButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 50px;
-
   & button {
     margin-right: 10px;
   }
-
   & button:last-of-type {
     margin-right: 0;
   }
@@ -45,7 +41,6 @@ export const StyledCancelButton = styled(BootstrapButton)`
   min-height: 24px;
   padding: 10px;
   margin: 0;
-
   &,
   &:hover,
   &:active,
@@ -53,7 +48,6 @@ export const StyledCancelButton = styled(BootstrapButton)`
     background-color: ${(props) => props.theme.primary} !important;
     border-color: ${(props) => props.theme.primaryBorder} !important;
   }
-
   &:focus {
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgb(52 58 64 / 50%);
@@ -65,7 +59,6 @@ export const StyledSubmitButton = styled(BootstrapButton)`
   min-height: 24px;
   padding: 10px;
   margin: 0;
-
   &,
   &:hover,
   &:active,
@@ -73,7 +66,6 @@ export const StyledSubmitButton = styled(BootstrapButton)`
     background-color: ${(props) => props.theme.accent} !important;
     border-color: ${(props) => props.theme.accentBorder} !important;
   }
-
   &:focus {
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgb(52 58 64 / 50%);

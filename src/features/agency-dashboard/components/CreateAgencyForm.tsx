@@ -2,8 +2,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FC, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
+import { StyledCancelButton, StyledFormButtonWrapper, StyledSubmitButton } from 'styles';
 import * as yup from 'yup';
-import { StyledCancelButton, StyledFormButtonWrapper, StyledSubmitButton } from './styled';
 
 export interface CreateAgencyFormData {
   agencyName: string;
