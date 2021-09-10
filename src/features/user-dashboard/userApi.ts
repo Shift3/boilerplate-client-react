@@ -35,9 +35,17 @@ export const userApi = createApi({
       }),
       invalidatesTags: ['User'],
     }),
+
+    forgotPassword: builder.mutation<void, Pick<User, 'email'>>({
+      query: (payload) => ({
+        url: '/forgot-password',
+        method: 'POST',
+        body: payload,
+      }),
+    }),
     // addUser
     // updateUser
   }),
 });
 
-export const { useGetUsersQuery, useDeleteUserMutation } = userApi;
+export const { useGetUsersQuery, useDeleteUserMutation, useForgotPasswordMutation } = userApi;
