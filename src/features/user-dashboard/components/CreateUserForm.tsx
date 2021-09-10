@@ -9,6 +9,7 @@ export interface CreateUserFormData {
   email: string;
   firstName: string;
   lastName: string;
+  profilePicture: string;
   role: string;
   agency: string;
 }

@@ -29,7 +29,7 @@ export const CreateUserView: FC = () => {
     //  - convert 'agency' from name to Agency object
 
     try {
-      await createUser({ lastName }).unwrap();
+      await createUser({ email, firstName, lastName, profilePicture, role, agency }).unwrap();
       showSuccessNotification('User created.');
       history.push('/users');
     } catch (error) {
