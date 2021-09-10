@@ -7,6 +7,7 @@ import { useDeleteUserMutation, useGetUsersQuery } from 'features/user-dashboard
 import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import { Link } from 'react-router-dom';
 
 type UserTableItem = {
   id: number;
@@ -81,7 +82,9 @@ export const UserListView: FC = () => {
   return (
     <Container>
       <div className='mb-4 text-right'>
-        <Button>ADD USER</Button>
+        <Link to='/users/create-user'>
+          <Button>ADD USER</Button>
+        </Link>
       </div>
       <GenericTable<UserTableItem> headers={headers} items={items} customRenderers={customRenderers} />
       <ConfirmationModal />

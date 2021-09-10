@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Agency, Role } from 'common/models';
 import { FC, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
@@ -10,11 +11,13 @@ export interface CreateUserFormData {
   firstName: string;
   lastName: string;
   profilePicture: string;
-  role: string;
-  agency: string;
+  roleName: string;
+  agencyName: string;
 }
 
 export interface CreateUserFormProps {
+  roles: Role[];
+  agencies: Agency[];
   onCancel: () => void;
   onSubmit: (data: CreateUserFormData) => void;
 }
@@ -22,12 +25,12 @@ export interface CreateUserFormProps {
 const schema = yup.object().shape({
   firstName: yup.string().required('First Name is required.'),
   lastName: yup.string().required('Last Name is required.'),
-  email: yup.string().required('Email is required.'),
-  role: yup.string().required('Role is required.'),
-  angency: yup.string().required('Agency is required.'),
+  email: yup.string().email().required('Email is required.'),
+  roleName: yup.string().required('Role is required.'),
+  angencyName: yup.string().required('Agency is required.'),
 });
 
-export const CreateUserForm: FC<CreateUserFormProps> = ({ onSubmit, onCancel }) => {
+export const CreateUserForm: FC<CreateUserFormProps> = ({ roles, agencies, onSubmit, onCancel }) => {
   const {
     register,
     formState: { errors, isValid },
@@ -66,17 +69,16 @@ export const CreateUserForm: FC<CreateUserFormProps> = ({ onSubmit, onCancel }) 
           as='select'
           custom
           aria-label='Select User Role'
-          {...register('role')}
-          isInvalid={!!errors.role}
-        />
-        {/* TODO:
-              - Only Super Administrators, Admins, and Editors can create new users
-              - Users can only create a new user with equal or lower role rank
-         */}
-        <option>Admin</option>
-        <option>Editor</option>
-        <option>Users</option>
-        <Form.Control.Feedback type='invalid'>{errors.role?.message}</Form.Control.Feedback>
+          {...register('roleName')}
+          isInvalid={!!errors.roleName}
+        >
+          {roles.map((role) => (
+            <option key={role.id} value={role.roleName}>
+              {role.roleName}
+            </option>
+          ))}
+        </Form.Control>
+        <Form.Control.Feedback type='invalid'>{errors.roleName?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label>Agency</Form.Label>
@@ -85,16 +87,16 @@ export const CreateUserForm: FC<CreateUserFormProps> = ({ onSubmit, onCancel }) 
           as='select'
           custom
           aria-label='Select User Agency'
-          {...register('agency')}
-          isInvalid={!!errors.agency}
-        />
-        {/* TODO:
-              - Admins can only create users within their own agency
-              - Super Administrators can create users within any agency
-         */}
-        <option>Main</option>
-        <option>Public</option>
-        <Form.Control.Feedback type='invalid'> {errors.agency?.message}</Form.Control.Feedback>
+          {...register('agencyName')}
+          isInvalid={!!errors.agencyName}
+        >
+          {agencies.map((agency) => (
+            <option key={agency.id} value={agency.agencyName}>
+              {agency.agencyName}
+            </option>
+          ))}
+        </Form.Control>
+        <Form.Control.Feedback type='invalid'> {errors.agencyName?.message}</Form.Control.Feedback>
       </Form.Group>
       <StyledFormButtonWrapper>
         <StyledCancelButton onClick={onCancel}>CANCEL</StyledCancelButton>
