@@ -3,7 +3,7 @@ import { Address } from "./address";
 export interface Agent {
   id: number;
   thumbnail: string;
-  name: string;
+  agentName: string;
   description: string;
   email: string;
   phoneNumber: string;
