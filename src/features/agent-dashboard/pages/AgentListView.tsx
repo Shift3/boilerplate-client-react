@@ -20,7 +20,7 @@ export const AgentListView: FC = () => {
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
 
   const handleDelete = (agent: Agent) => {
-    const message = `Delete ${agent.name}?`;
+    const message = `Delete ${agent.agentName}?`;
 
     const onConfirm = () => {
       deleteAgent(agent.id);
@@ -41,9 +41,9 @@ export const AgentListView: FC = () => {
   // Transform Agency objects returned from the API into the table item data format expected by the table.
   const items: AgentTableItem[] = agents.map((agent) => ({
     id: agent.id,
-    name: agent.name,
+    name: agent.agentName,
     actions: [
-      { icon: 'edit', tooltipText: 'Edit', onClick: () => console.log(`Edit ${agent.name}`) },
+      { icon: 'edit', tooltipText: 'Edit', onClick: () => console.log(`Edit ${agent.agentName}`) },
       {
         icon: 'trash-alt',
         tooltipText: 'Delete',

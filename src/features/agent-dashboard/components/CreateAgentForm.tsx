@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import { StyledCancelButton, StyledFormButtonWrapper, StyledSubmitButton } from './styled';
 
 export interface CreateAgentFormData {
-  name: string;
+  agentName: string;
   email: string;
   description: string;
   phoneNumber: string;
@@ -23,7 +23,7 @@ export interface CreateAgentFormProps {
 }
 
 const schema = yup.object().shape({
-  name: yup.string().required('Name is required.'),
+  agentName: yup.string().required('Name is required.'),
   email: yup.string().email().required('Email is required.'),
   description: yup.string().required('Description is required.'),
   phoneNumber: yup.string().required('Phone number is required.'),
@@ -47,12 +47,13 @@ export const CreateAgentForm: FC<CreateAgentFormProps> = ({ onSubmit, onCancel }
   useEffect(() => {
     trigger();
   }, [trigger]);
+
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <Form.Group controlId='create-user-form-name'>
+      <Form.Group controlId='create-agent-form-agent-name'>
         <Form.Label>Name</Form.Label>
-        <Form.Control type='text' {...register('name')} isInvalid={!!errors.name} />
-        <Form.Control.Feedback type='invalid'>{errors.name?.message}</Form.Control.Feedback>
+        <Form.Control type='text' {...register('agentName')} isInvalid={!!errors.agentName} />
+        <Form.Control.Feedback type='invalid'>{errors.agentName?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label>Email</Form.Label>
