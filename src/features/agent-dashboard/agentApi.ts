@@ -29,7 +29,7 @@ export const agentApi = createApi({
 
     createAgent: builder.mutation<
       Agent,
-      Pick<Agent, 'agentName' | 'email' | 'description' | 'phoneNumber' | 'address'>
+      Pick<Agent, 'name' | 'email' | 'description' | 'phoneNumber' | 'address' | 'thumbnail'>
     >({
       query: (payload) => ({
         url: '/',
