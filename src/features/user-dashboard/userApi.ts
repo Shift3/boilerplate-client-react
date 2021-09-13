@@ -44,9 +44,10 @@ export const userApi = createApi({
       }),
     }),
 
-    resendActivationEmail: builder.query<void, Pick<User, 'id'>>({
+    resendActivationEmail: builder.mutation<void, Pick<User, 'id'>>({
       query: ({ id }) => ({
         url: `/resend-activation-email/${id}`,
+        method: 'GET',
       }),
     }),
 
