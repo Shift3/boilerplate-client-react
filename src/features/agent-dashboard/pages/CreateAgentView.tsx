@@ -1,10 +1,9 @@
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
-import { CreateAgencyForm } from 'features/agency-dashboard/components/CreateAgencyForm';
 import { FC } from 'react';
 import Container from 'react-bootstrap/Container';
 import { useHistory } from 'react-router-dom';
 import { useCreateAgentMutation } from '..';
-import { CreateAgentFormData } from '../components/CreateAgentForm';
+import { CreateAgentFormData, CreateAgentForm } from '../components/CreateAgentForm';
 import { StyledFormTitle, StyledFormWrapper } from '../components/styled';
 
 export const CreateAgentView: FC = () => {
@@ -41,7 +40,7 @@ export const CreateAgentView: FC = () => {
       <StyledFormWrapper>
         <StyledFormTitle>
           Create Agent
-          <CreateAgencyForm onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
+          <CreateAgentForm onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
         </StyledFormTitle>
       </StyledFormWrapper>
     </Container>
