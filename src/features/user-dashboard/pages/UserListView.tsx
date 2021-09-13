@@ -13,7 +13,7 @@ type UserTableItem = {
   email: string;
   firstName: string;
   lastName: string;
-  activatedAt: string | null;
+  activatedAt: Date | ActionButtonProps;
   role: string;
   actions: ActionButtonProps[];
 };
@@ -66,7 +66,13 @@ export const UserListView: FC = () => {
     firstName: user.firstName,
     email: user.email,
     role: user.role.roleName,
-    activatedAt: user.activatedAt,
+    activatedAt: user.activatedAt
+      ? new Date(user.activatedAt)
+      : {
+          icon: 'envelope',
+          tooltipText: 'Resend Activation Email',
+          onClick: () => console.log(`Resending activation email for ${user}`),
+        },
     actions: [
       { icon: 'edit', tooltipText: 'Edit', onClick: () => console.log(`Edit ${user.id}`) },
       {
@@ -80,6 +86,17 @@ export const UserListView: FC = () => {
   }));
 
   const customRenderers: CustomRenderer<UserTableItem>[] = [
+    {
+      key: 'activatedAt',
+      renderer: ({ activatedAt }) => {
+        if (activatedAt instanceof Date) {
+          return new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(activatedAt);
+        }
+
+        const action = activatedAt;
+        return <ActionButton icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />;
+      },
+    },
     {
       key: 'actions',
       renderer: ({ actions }: UserTableItem) => (
