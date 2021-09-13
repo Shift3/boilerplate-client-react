@@ -4,17 +4,19 @@ import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { StyledCancelButton, StyledFormButtonWrapper, StyledSubmitButton } from './styled';
+import { Constants } from 'utils/constants';
 
 export interface CreateAgentFormData {
-  agentName: string;
+  name: string;
   email: string;
   description: string;
   phoneNumber: string;
-  address: string;
+  address1: string;
   address2: string;
   city: string;
   state: string;
   zipCode: string;
+  thumbnail: string;
 }
 
 export interface CreateAgentFormProps {
@@ -23,11 +25,12 @@ export interface CreateAgentFormProps {
 }
 
 const schema = yup.object().shape({
-  agentName: yup.string().required('Name is required.'),
+  name: yup.string().required('Name is required.'),
   email: yup.string().email().required('Email is required.'),
   description: yup.string().required('Description is required.'),
-  phoneNumber: yup.string().required('Phone number is required.'),
-  address: yup.string().required('Address is required.'),
+  phoneNumber: yup.string().matches(Constants.patterns.US_PHONE_REGEX).required('Phone number is required.'),
+  address1: yup.string().required('Address is required.'),
+  address2: yup.string(),
   city: yup.string().required('City is required.'),
   state: yup.string().required('State is required.'),
   zipCode: yup.string().required('Zip Code is required'),
@@ -52,8 +55,8 @@ export const CreateAgentForm: FC<CreateAgentFormProps> = ({ onSubmit, onCancel }
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Group controlId='create-agent-form-agent-name'>
         <Form.Label>Name</Form.Label>
-        <Form.Control type='text' {...register('agentName')} isInvalid={!!errors.agentName} />
-        <Form.Control.Feedback type='invalid'>{errors.agentName?.message}</Form.Control.Feedback>
+        <Form.Control type='text' {...register('name')} isInvalid={!!errors.name} />
+        <Form.Control.Feedback type='invalid'>{errors.name?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label>Email</Form.Label>
@@ -72,8 +75,8 @@ export const CreateAgentForm: FC<CreateAgentFormProps> = ({ onSubmit, onCancel }
       </Form.Group>
       <Form.Group>
         <Form.Label>Address</Form.Label>
-        <Form.Control type='text' {...register('address')} isInvalid={!!errors.address} />
-        <Form.Control.Feedback type='invalid'>{errors.address?.message}</Form.Control.Feedback>
+        <Form.Control type='text' {...register('address1')} isInvalid={!!errors.address1} />
+        <Form.Control.Feedback type='invalid'>{errors.address1?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label>Address2</Form.Label>

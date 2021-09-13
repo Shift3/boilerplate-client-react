@@ -7,7 +7,7 @@ export const Routes: FC = () => {
 
   return (
     <Switch>
-      <Route path={`${path}`} component={AgentListView} />
+      <Route exact path={`${path}`} component={AgentListView} />
       <Route path={`${path}/create-agent`} component={CreateAgentView} />
       <Route path={`${path}/edit-agent`} component={EditAgentView} />
     </Switch>

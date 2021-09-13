@@ -7,6 +7,7 @@ import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { useDeleteAgentMutation, useGetAgentsQuery } from '../agentApi';
+import { Link } from 'react-router-dom';
 
 type AgentTableItem = {
   id: number;
@@ -20,7 +21,7 @@ export const AgentListView: FC = () => {
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
 
   const handleDelete = (agent: Agent) => {
-    const message = `Delete ${agent.agentName}?`;
+    const message = `Delete ${agent.name}?`;
 
     const onConfirm = () => {
       deleteAgent(agent.id);
@@ -41,9 +42,9 @@ export const AgentListView: FC = () => {
   // Transform Agency objects returned from the API into the table item data format expected by the table.
   const items: AgentTableItem[] = agents.map((agent) => ({
     id: agent.id,
-    name: agent.agentName,
+    name: agent.name,
     actions: [
-      { icon: 'edit', tooltipText: 'Edit', onClick: () => console.log(`Edit ${agent.agentName}`) },
+      { icon: 'edit', tooltipText: 'Edit', onClick: () => console.log(`Edit ${agent.name}`) },
       {
         icon: 'trash-alt',
         tooltipText: 'Delete',
@@ -68,7 +69,9 @@ export const AgentListView: FC = () => {
   return (
     <Container>
       <div className='pb-4 text-right'>
-        <Button>ADD AGENT</Button>
+        <Link to='/agents/create-agent'>
+          <Button>ADD AGENT</Button>
+        </Link>
       </div>
       <GenericTable<AgentTableItem> headers={headers} items={items} customRenderers={customRenderers} />
       <ConfirmationModal />
