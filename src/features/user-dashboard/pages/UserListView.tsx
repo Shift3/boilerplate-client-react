@@ -24,6 +24,20 @@ export const UserListView: FC = () => {
   const [forgotPassword] = useForgotPasswordMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
 
+  const handleResendActivationEmail = (user: User) => {
+    const fullName = `${user.firstName} ${user.lastName}`;
+    const message = `Resend Activation Email to ${fullName}?`;
+
+    const onConfirm = () => {
+      console.log('Resent activation email');
+      closeModal();
+    };
+
+    const onCancle = () => closeModal();
+
+    openModal(message, onConfirm, onCancle);
+  };
+
   const handleDelete = (user: User) => {
     const message = `Delete ${user.firstName} + ${user.lastName}?`;
 
@@ -71,7 +85,7 @@ export const UserListView: FC = () => {
       : {
           icon: 'envelope',
           tooltipText: 'Resend Activation Email',
-          onClick: () => console.log(`Resending activation email for ${user}`),
+          onClick: () => handleResendActivationEmail(user),
         },
     actions: [
       { icon: 'edit', tooltipText: 'Edit', onClick: () => console.log(`Edit ${user.id}`) },
