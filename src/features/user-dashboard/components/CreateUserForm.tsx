@@ -27,7 +27,7 @@ const schema = yup.object().shape({
   lastName: yup.string().required('Last Name is required.'),
   email: yup.string().email().required('Email is required.'),
   roleName: yup.string().required('Role is required.'),
-  angencyName: yup.string().required('Agency is required.'),
+  agencyName: yup.string().required('Agency is required.'),
 });
 
 export const CreateUserForm: FC<CreateUserFormProps> = ({ roles, agencies, onSubmit, onCancel }) => {
