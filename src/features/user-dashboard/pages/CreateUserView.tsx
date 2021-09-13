@@ -50,10 +50,8 @@ export const CreateUserView: FC = () => {
   return (
     <Container className='d-flex justify-content-center'>
       <StyledFormWrapper>
-        <StyledFormTitle>
-          Create User
-          <CreateUserForm roles={roles} agencies={agencies} onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
-        </StyledFormTitle>
+        <StyledFormTitle>Create User </StyledFormTitle>
+        <CreateUserForm roles={roles} agencies={agencies} onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
       </StyledFormWrapper>
     </Container>
   );
