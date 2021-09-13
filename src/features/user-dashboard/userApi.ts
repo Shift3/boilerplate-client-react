@@ -43,6 +43,13 @@ export const userApi = createApi({
         body: payload,
       }),
     }),
+
+    resendActivationEmail: builder.query<void, Pick<User, 'id'>>({
+      query: ({ id }) => ({
+        url: `/resend-activation-email/${id}`,
+      }),
+    }),
+
     // addUser
     // updateUser
   }),
