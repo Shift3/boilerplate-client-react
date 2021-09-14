@@ -3,7 +3,7 @@ import { CustomRenderer, GenericTable, TableHeader } from 'common/components';
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
 import { useConfirmationModal } from 'common/hooks';
 import { User } from 'common/models';
-import { useDeleteUserMutation, useGetUsersQuery } from 'features/user-dashboard/userApi';
+import { useDeleteUserMutation, useForgotPasswordMutation, useGetUsersQuery } from 'features/user-dashboard/userApi';
 import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -22,6 +22,7 @@ type UserTableItem = {
 export const UserListView: FC = () => {
   const { data: users = [] } = useGetUsersQuery();
   const [deleteUser] = useDeleteUserMutation();
+  const [forgotPassword] = useForgotPasswordMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
 
   const handleDelete = (user: User) => {
@@ -29,6 +30,20 @@ export const UserListView: FC = () => {
 
     const onConfirm = () => {
       deleteUser(user.id);
+      closeModal();
+    };
+
+    const onCancel = () => closeModal();
+
+    openModal(message, onConfirm, onCancel);
+  };
+
+  const handlePasswordReset = (user: User) => {
+    const fullName = `${user.firstName} ${user.lastName}`;
+    const message = `Send Reset Password Email to ${fullName}?`;
+
+    const onConfirm = () => {
+      forgotPassword({ email: user.email });
       closeModal();
     };
 
@@ -61,7 +76,7 @@ export const UserListView: FC = () => {
 
         onClick: () => handleDelete(user),
       },
-      { icon: 'lock', tooltipText: 'Reset Password', onClick: () => console.log(`Reset Password ${user.id}`) },
+      { icon: 'lock', tooltipText: 'Reset Password', onClick: () => handlePasswordReset(user) },
     ],
   }));
 
