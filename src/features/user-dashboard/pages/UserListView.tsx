@@ -108,14 +108,15 @@ export const UserListView: FC = () => {
   const customRenderers: CustomRenderer<UserTableItem>[] = [
     {
       key: 'activatedAt',
-      renderer: ({ activatedAt }) => {
-        if (activatedAt instanceof Date) {
-          return new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(activatedAt);
-        }
-
-        const action = activatedAt;
-        return <ActionButton icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />;
-      },
+      renderer: ({ activatedAt }) => (
+        <>
+          {activatedAt instanceof Date ? (
+            new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(activatedAt)
+          ) : (
+            <ActionButton {...activatedAt} />
+          )}
+        </>
+      ),
     },
     {
       key: 'actions',
