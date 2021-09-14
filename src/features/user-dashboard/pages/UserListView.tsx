@@ -30,9 +30,10 @@ export const UserListView: FC = () => {
   const [resendActivationEmail] = useResendActivationEmailMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
 
+  const getUsersFullName = (user: User) => `${user.firstName} ${user.lastName}`;
+
   const handleResendActivationEmail = (user: User) => {
-    const fullName = `${user.firstName} ${user.lastName}`;
-    const message = `Resend Activation Email to ${fullName}?`;
+    const message = `Resend Activation Email to ${getUsersFullName(user)}?`;
 
     const onConfirm = () => {
       resendActivationEmail({ id: user.id });
@@ -45,7 +46,7 @@ export const UserListView: FC = () => {
   };
 
   const handleDelete = (user: User) => {
-    const message = `Delete ${user.firstName} + ${user.lastName}?`;
+    const message = `Delete ${getUsersFullName(user)}?`;
 
     const onConfirm = () => {
       deleteUser(user.id);
@@ -58,8 +59,7 @@ export const UserListView: FC = () => {
   };
 
   const handlePasswordReset = (user: User) => {
-    const fullName = `${user.firstName} ${user.lastName}`;
-    const message = `Send Reset Password Email to ${fullName}?`;
+    const message = `Send Reset Password Email to ${getUsersFullName(user)}?`;
 
     const onConfirm = () => {
       forgotPassword({ email: user.email });
@@ -122,7 +122,6 @@ export const UserListView: FC = () => {
       renderer: ({ actions }: UserTableItem) => (
         <>
           {actions.map((action, index) => (
-            // eslint-disable-next-line react/no-array-index-key
             <ActionButton key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
           ))}
         </>
