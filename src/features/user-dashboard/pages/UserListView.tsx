@@ -3,7 +3,12 @@ import { CustomRenderer, GenericTable, TableHeader } from 'common/components';
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
 import { useConfirmationModal } from 'common/hooks';
 import { User } from 'common/models';
-import { useDeleteUserMutation, useForgotPasswordMutation, useGetUsersQuery } from 'features/user-dashboard/userApi';
+import {
+  useDeleteUserMutation,
+  useForgotPasswordMutation,
+  useGetUsersQuery,
+  useResendActivationEmailMutation,
+} from 'features/user-dashboard/userApi';
 import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -13,7 +18,7 @@ type UserTableItem = {
   email: string;
   firstName: string;
   lastName: string;
-  activatedAt: string | null;
+  activatedAt: Date | ActionButtonProps;
   role: string;
   actions: ActionButtonProps[];
 };
@@ -22,10 +27,26 @@ export const UserListView: FC = () => {
   const { data: users = [] } = useGetUsersQuery();
   const [deleteUser] = useDeleteUserMutation();
   const [forgotPassword] = useForgotPasswordMutation();
+  const [resendActivationEmail] = useResendActivationEmailMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
 
+  const getUsersFullName = (user: User) => `${user.firstName} ${user.lastName}`;
+
+  const handleResendActivationEmail = (user: User) => {
+    const message = `Resend Activation Email to ${getUsersFullName(user)}?`;
+
+    const onConfirm = () => {
+      resendActivationEmail({ id: user.id });
+      closeModal();
+    };
+
+    const onCancel = () => closeModal();
+
+    openModal(message, onConfirm, onCancel);
+  };
+
   const handleDelete = (user: User) => {
-    const message = `Delete ${user.firstName} + ${user.lastName}?`;
+    const message = `Delete ${getUsersFullName(user)}?`;
 
     const onConfirm = () => {
       deleteUser(user.id);
@@ -38,8 +59,7 @@ export const UserListView: FC = () => {
   };
 
   const handlePasswordReset = (user: User) => {
-    const fullName = `${user.firstName} ${user.lastName}`;
-    const message = `Send Reset Password Email to ${fullName}?`;
+    const message = `Send Reset Password Email to ${getUsersFullName(user)}?`;
 
     const onConfirm = () => {
       forgotPassword({ email: user.email });
@@ -66,7 +86,13 @@ export const UserListView: FC = () => {
     firstName: user.firstName,
     email: user.email,
     role: user.role.roleName,
-    activatedAt: user.activatedAt,
+    activatedAt: user.activatedAt
+      ? new Date(user.activatedAt)
+      : {
+          icon: 'envelope',
+          tooltipText: 'Resend Activation Email',
+          onClick: () => handleResendActivationEmail(user),
+        },
     actions: [
       { icon: 'edit', tooltipText: 'Edit', onClick: () => console.log(`Edit ${user.id}`) },
       {
@@ -81,11 +107,22 @@ export const UserListView: FC = () => {
 
   const customRenderers: CustomRenderer<UserTableItem>[] = [
     {
+      key: 'activatedAt',
+      renderer: ({ activatedAt }) => (
+        <>
+          {activatedAt instanceof Date ? (
+            new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(activatedAt)
+          ) : (
+            <ActionButton {...activatedAt} />
+          )}
+        </>
+      ),
+    },
+    {
       key: 'actions',
       renderer: ({ actions }: UserTableItem) => (
         <>
           {actions.map((action, index) => (
-            // eslint-disable-next-line react/no-array-index-key
             <ActionButton key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
           ))}
         </>

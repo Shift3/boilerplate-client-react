@@ -2,6 +2,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faBuilding,
   faEdit,
+  faEnvelope,
   faLock,
   faStethoscope,
   faTrashAlt,
@@ -21,7 +22,7 @@ import reportWebVitals from './reportWebVitals';
 // Font Awesome recommends importing icons via a “library” in the initializing module of the app
 // so you add them once in your React app and reference them in any component
 // https://fontawesome.com/v5.15/how-to-use/on-the-web/using-with/react
-library.add(faBuilding, faEdit, faLock, faStethoscope, faTrashAlt, faUser, faUsers);
+library.add(faBuilding, faEdit, faEnvelope, faLock, faStethoscope, faTrashAlt, faUser, faUsers);
 
 /* TODO: - CMS 3/23/21
 - Add in configuration for toggling autoSesssionTracking
