@@ -3,7 +3,6 @@ import { CustomRenderer, GenericTable, TableHeader } from 'common/components';
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
 import { useConfirmationModal } from 'common/hooks';
 import { User } from 'common/models';
-import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import {
   useDeleteUserMutation,
   useForgotPasswordMutation,
@@ -30,25 +29,19 @@ export const UserListView: FC = () => {
   const [forgotPassword] = useForgotPasswordMutation();
   const [resendActivationEmail] = useResendActivationEmailMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
-  const { showSuccessNotification } = useShowNotification();
 
   const handleResendActivationEmail = (user: User) => {
     const fullName = `${user.firstName} ${user.lastName}`;
     const message = `Resend Activation Email to ${fullName}?`;
 
-    const onConfirm = async () => {
-      try {
-        await resendActivationEmail({ id: user.id }).unwrap();
-        showSuccessNotification(`A new activation email was sent to ${fullName}.`);
-      } catch (err) {
-        console.log(err);
-      }
+    const onConfirm = () => {
+      resendActivationEmail({ id: user.id });
       closeModal();
     };
 
-    const onCancle = () => closeModal();
+    const onCancel = () => closeModal();
 
-    openModal(message, onConfirm, onCancle);
+    openModal(message, onConfirm, onCancel);
   };
 
   const handleDelete = (user: User) => {
