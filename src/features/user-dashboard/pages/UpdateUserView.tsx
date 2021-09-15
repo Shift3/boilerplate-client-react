@@ -36,7 +36,15 @@ export const UpdateUserView: FC = () => {
   const handleFormSubmit = async (data: UpdateUserFormData) => {
     const { firstName, lastName, email, profilePicture, roleName, agencyName } = data;
     try {
-      await updateUser({ id: Number(id), firstName, lastName, email, profilePicture, roleName, agencyName }).unwrap();
+      await updateUser({
+        id: Number(id),
+        name: firstName,
+        lastName,
+        email,
+        profilePicture,
+        roleName,
+        agencyName,
+      }).unwrap();
       showSuccessNotification('User update.');
       history.push('/users');
     } catch (error) {

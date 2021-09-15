@@ -19,6 +19,8 @@ export interface UpdateUserFormProps {
   defaultValues: UpdateUserFormData;
   onCancel: () => void;
   onSubmit: (data: UpdateUserFormData) => void;
+  roles: Role[];
+  agencies: Agency[];
 }
 
 const schema = yup.object().shape({
