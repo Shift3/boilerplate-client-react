@@ -35,6 +35,7 @@ export const CreateUserForm: FC<CreateUserFormProps> = ({ roles, agencies, onSub
     register,
     formState: { errors, isValid },
     handleSubmit,
+    setValue,
     trigger,
   } = useForm<CreateUserFormData>({
     resolver: yupResolver(schema),
@@ -42,8 +43,16 @@ export const CreateUserForm: FC<CreateUserFormProps> = ({ roles, agencies, onSub
   });
 
   useEffect(() => {
-    trigger();
-  }, [trigger]);
+    if (roles.length) {
+      setValue('roleName', roles[0]?.roleName ?? '');
+      trigger();
+    }
+
+    if (agencies.length) {
+      setValue('agencyName', agencies[0]?.agencyName ?? '');
+      trigger();
+    }
+  }, [roles, agencies, setValue, trigger]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
