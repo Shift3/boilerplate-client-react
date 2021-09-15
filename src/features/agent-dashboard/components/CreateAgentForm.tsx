@@ -28,7 +28,13 @@ const schema = yup.object().shape({
   name: yup.string().required('Name is required.'),
   email: yup.string().email().required('Email is required.'),
   description: yup.string().required('Description is required.'),
-  phoneNumber: yup.string().matches(Constants.patterns.US_PHONE_REGEX).required('Phone number is required.'),
+  phoneNumber: yup
+    .string()
+    .matches(Constants.patterns.US_PHONE_REGEX, {
+      message: 'Please enter a valid phone number.',
+      excludeEmptyString: true,
+    })
+    .required('Phone number is required.'),
   address1: yup.string().required('Address is required.'),
   address2: yup.string(),
   city: yup.string().required('City is required.'),
