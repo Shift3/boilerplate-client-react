@@ -40,6 +40,7 @@ export const CreateAgentView: FC = () => {
         thumbnail,
       }).unwrap();
       showSuccessNotification('Agent created.');
+      history.push('/agents');
     } catch (error) {
       showErrorNotification('Unable to add agent.');
     }
