@@ -6,8 +6,9 @@ export const Routes: FC = () => {
   const { path } = useRouteMatch();
   return (
     <Switch>
-      <Route path={`${path}/create-user`} component={CreateUserView} />
       <Route exact path={`${path}`} component={UserListView} />
+      <Route path={`${path}/create-user`} component={CreateUserView} />
+      <Route path={`${path}/update-user`} component={UpdateUserView} />
     </Switch>
   );
 };

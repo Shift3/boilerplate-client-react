@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from 'app/redux';
 import { User } from 'common/models/user';
 import { environment } from 'environment';
+import { INavData } from '../../core/modules/navigation/application/useNavData';
 
 export const userApi = createApi({
   reducerPath: 'userApi',
@@ -40,6 +41,18 @@ export const userApi = createApi({
       invalidatesTags: ['User'],
     }),
 
+    updateUser: builder.mutation<
+      User,
+      Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>
+    >({
+      query: (payload) => ({
+        url: `{$id}`,
+        method: 'PUT',
+        body: payload,
+      }),
+      invalidatesTags: ['User'],
+    }),
+
     deleteUser: builder.mutation<void, number>({
       query: (userId) => ({
         url: `/${userId}`,
@@ -70,6 +83,7 @@ export const userApi = createApi({
 export const {
   useCreateUserMutation,
   useGetUsersQuery,
+  useUpdateUserMutation,
   useDeleteUserMutation,
   useForgotPasswordMutation,
   useResendActivationEmailMutation,
