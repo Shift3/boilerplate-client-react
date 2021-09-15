@@ -55,8 +55,17 @@ export const userApi = createApi({
         body: payload,
       }),
     }),
+
+    resendActivationEmail: builder.mutation<void, Pick<User, 'id'>>({
+      query: ({ id }) => ({
+        url: `/resend-activation-email/${id}`,
+        method: 'GET',
+      }),
+    }),
+
     // updateUser
   }),
 });
 
-export const { useGetUsersQuery, useDeleteUserMutation, useForgotPasswordMutation, useCreateUserMutation, } = userApi;
+export const { useCreateUserMutation, useGetUsersQuery, useDeleteUserMutation, useForgotPasswordMutation, useResendActivationEmailMutation } =
+  userApi;
