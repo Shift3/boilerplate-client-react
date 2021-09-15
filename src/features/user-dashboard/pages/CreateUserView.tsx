@@ -24,7 +24,14 @@ export const CreateUserView: FC = () => {
   };
 
   const handleFormSubmit = async (data: CreateUserFormData) => {
-    const { email, firstName, lastName, profilePicture = '', roleName, agencyName } = data;
+    const {
+      email,
+      firstName,
+      lastName,
+      profilePicture = 'https://shift3tech.com/images/s3-logo-white.svg',
+      roleName,
+      agencyName,
+    } = data;
     const role = roles.find((role) => role.roleName === roleName);
     const agency = agencies.find((agency) => agency.agencyName === agencyName);
 
