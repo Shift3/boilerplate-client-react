@@ -21,7 +21,18 @@ export const CreateAgentView: FC = () => {
   };
 
   const handleFormSubmit = async (data: CreateAgentFormData) => {
-    const { name, email, description, phoneNumber, address1, address2, city, state, zipCode, thumbnail } = data;
+    const {
+      name,
+      email,
+      description,
+      phoneNumber,
+      address1,
+      address2,
+      city,
+      state,
+      zipCode,
+      thumbnail = 'https://shift3tech.com/images/s3-logo-white.svg',
+    } = data;
     const address: Address = { address1, address2, city, state, zipCode };
     try {
       await createAgent({
