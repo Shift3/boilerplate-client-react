@@ -35,7 +35,6 @@ export const agentApi = createApi({
         url: '/',
         method: 'POST',
         body: payload,
-        thumbnail: 'https://shift3tech.com/images/s3-logo-white.svg',
       }),
       invalidatesTags: ['Agent'],
     }),

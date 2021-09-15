@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FC, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
+import { Agency, Role } from 'common/models';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { StyledCancelButton, StyledFormButtonWrapper, StyledSubmitButton } from './styled';
@@ -22,6 +23,8 @@ export interface CreateAgentFormData {
 export interface CreateAgentFormProps {
   onCancel: () => void;
   onSubmit: (data: CreateAgentFormData) => void;
+  roles: Role[];
+  agencies: Agency[];
 }
 
 const schema = yup.object().shape({
@@ -37,11 +40,12 @@ const schema = yup.object().shape({
   thumbnail: yup.string(),
 });
 
-export const CreateAgentForm: FC<CreateAgentFormProps> = ({ onSubmit, onCancel }) => {
+export const CreateAgentForm: FC<CreateAgentFormProps> = ({ roles, agencies, onSubmit, onCancel }) => {
   const {
     register,
     formState: { errors, isValid },
     handleSubmit,
+    setValue,
     trigger,
   } = useForm<CreateAgentFormData>({
     resolver: yupResolver(schema),
@@ -49,8 +53,16 @@ export const CreateAgentForm: FC<CreateAgentFormProps> = ({ onSubmit, onCancel }
   });
 
   useEffect(() => {
-    trigger();
-  }, [trigger]);
+    if (roles.length) {
+      setValue('name', roles[0]?.roleName ?? '');
+      trigger();
+    }
+
+    if (agencies.length) {
+      setValue('name', agencies[0]?.agencyName ?? '');
+      trigger();
+    }
+  }, [roles, agencies, setValue, trigger]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>

@@ -6,18 +6,22 @@ import { useHistory } from 'react-router-dom';
 import { useCreateAgentMutation } from '../agentApi';
 import { CreateAgentFormData, CreateAgentForm } from '../components/CreateAgentForm';
 import { StyledFormTitle, StyledFormWrapper } from '../components/styled';
+import { useGetAgenciesQuery } from 'features/agency-dashboard/agencyApi';
+import { useGetRolesQuery } from 'features/user-dashboard/roleApi';
 
 export const CreateAgentView: FC = () => {
   const history = useHistory();
   const [createAgent] = useCreateAgentMutation();
   const { showErrorNotification, showSuccessNotification } = useShowNotification();
+  const { data: roles = [] } = useGetRolesQuery();
+  const { data: agencies = [] } = useGetAgenciesQuery();
 
   const handleFormCancel = () => {
     history.goBack();
   };
 
   const handleFormSubmit = async (data: CreateAgentFormData) => {
-    const { name, email, description, phoneNumber, address1, address2, city, state, zipCode, thumbnail = '' } = data;
+    const { name, email, description, phoneNumber, address1, address2, city, state, zipCode, thumbnail } = data;
     const address: Address = { address1, address2, city, state, zipCode };
     try {
       await createAgent({
@@ -39,7 +43,7 @@ export const CreateAgentView: FC = () => {
       <StyledFormWrapper>
         <StyledFormTitle>
           Create Agent
-          <CreateAgentForm onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
+          <CreateAgentForm roles={roles} agencies={agencies} onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
         </StyledFormTitle>
       </StyledFormWrapper>
     </Container>
