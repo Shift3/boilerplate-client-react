@@ -4,6 +4,7 @@ import notificationsSlice from 'core/modules/notifications/infrastructure/store/
 import { agencyApi } from 'features/agency-dashboard';
 import { userApi } from 'features/user-dashboard/userApi';
 import { agentApi } from '../../features/agent-dashboard/agentApi';
+import { roleApi } from '../../features/user-dashboard/roleApi';
 
 const store = configureStore({
   reducer: {
@@ -12,10 +13,11 @@ const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [agencyApi.reducerPath]: agencyApi.reducer,
     [agentApi.reducerPath]: agentApi.reducer,
+    [roleApi.reducerPath]: roleApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(userApi.middleware, agencyApi.middleware, agentApi.middleware),
+    getDefaultMiddleware().concat(userApi.middleware, agencyApi.middleware, agentApi.middleware, roleApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

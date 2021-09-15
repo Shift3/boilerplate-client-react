@@ -28,6 +28,18 @@ export const userApi = createApi({
       providesTags: ['User'],
     }),
 
+    createUser: builder.mutation<
+      User,
+      Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>
+    >({
+      query: (payload) => ({
+        url: '/',
+        method: 'POST',
+        body: payload,
+      }),
+      invalidatesTags: ['User'],
+    }),
+
     deleteUser: builder.mutation<void, number>({
       query: (userId) => ({
         url: `/${userId}`,
@@ -51,10 +63,14 @@ export const userApi = createApi({
       }),
     }),
 
-    // addUser
     // updateUser
   }),
 });
 
-export const { useGetUsersQuery, useDeleteUserMutation, useForgotPasswordMutation, useResendActivationEmailMutation } =
-  userApi;
+export const {
+  useCreateUserMutation,
+  useGetUsersQuery,
+  useDeleteUserMutation,
+  useForgotPasswordMutation,
+  useResendActivationEmailMutation,
+} = userApi;
