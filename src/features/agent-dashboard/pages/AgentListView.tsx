@@ -7,7 +7,6 @@ import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { useDeleteAgentMutation, useGetAgentsQuery } from '../agentApi';
-import { Link } from 'react-router-dom';
 
 type AgentTableItem = {
   id: number;
@@ -69,9 +68,7 @@ export const AgentListView: FC = () => {
   return (
     <Container>
       <div className='pb-4 text-right'>
-        <Link to='/agents/create-agent'>
-          <Button>ADD AGENT</Button>
-        </Link>
+        <Button>ADD AGENT</Button>
       </div>
       <GenericTable<AgentTableItem> headers={headers} items={items} customRenderers={customRenderers} />
       <ConfirmationModal />

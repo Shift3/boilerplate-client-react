@@ -2,7 +2,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from 'app/redux';
 import { User } from 'common/models/user';
 import { environment } from 'environment';
-import { INavData } from '../../core/modules/navigation/application/useNavData';
 
 export const userApi = createApi({
   reducerPath: 'userApi',

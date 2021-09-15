@@ -27,19 +27,6 @@ export const agentApi = createApi({
       providesTags: ['Agent'],
     }),
 
-    createAgent: builder.mutation<
-      Agent,
-      Pick<Agent, 'name' | 'email' | 'description' | 'phoneNumber' | 'address' | 'thumbnail'>
-    >({
-      query: (payload) => ({
-        url: '/',
-        method: 'POST',
-        body: payload,
-        thumbnail: 'https://shift3tech.com/images/s3-logo-white.svg',
-      }),
-      invalidatesTags: ['Agent'],
-    }),
-
     deleteAgent: builder.mutation<void, number>({
       query: (agentId) => ({
         url: `/${agentId}`,
@@ -50,4 +37,4 @@ export const agentApi = createApi({
   }),
 });
 
-export const { useGetAgentsQuery, useCreateAgentMutation, useDeleteAgentMutation } = agentApi;
+export const { useGetAgentsQuery, useDeleteAgentMutation } = agentApi;

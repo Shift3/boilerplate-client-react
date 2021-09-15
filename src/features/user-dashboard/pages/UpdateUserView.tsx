@@ -4,13 +4,13 @@ import { useHistory, useParams } from 'react-router-dom';
 import { StyledFormTitle, StyledFormWrapper } from '../components/styled';
 import { Container } from 'react-bootstrap';
 import { useGetUsersQuery, useUpdateUserMutation } from '../userApi';
-import { UpdateUserForm } from '../components/UpdateUserForm';
+import { UpdateUserForm, UpdateUserFormData } from '../components/UpdateUserForm';
 
 export interface RouteParams {
   id: string;
 }
 
-export const UserListView: FC = () => {
+export const UpdateUserView: FC = () => {
   const { id } = useParams<RouteParams>();
   const history = useHistory();
   const { showErrorNotification, showSuccessNotification } = useShowNotification();
