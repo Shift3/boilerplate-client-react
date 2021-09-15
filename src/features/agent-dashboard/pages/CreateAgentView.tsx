@@ -6,15 +6,11 @@ import { useHistory } from 'react-router-dom';
 import { useCreateAgentMutation } from '../agentApi';
 import { CreateAgentFormData, CreateAgentForm } from '../components/CreateAgentForm';
 import { StyledFormTitle, StyledFormWrapper } from '../components/styled';
-import { useGetAgenciesQuery } from 'features/agency-dashboard/agencyApi';
-import { useGetRolesQuery } from 'features/user-dashboard/roleApi';
 
 export const CreateAgentView: FC = () => {
   const history = useHistory();
   const [createAgent] = useCreateAgentMutation();
   const { showErrorNotification, showSuccessNotification } = useShowNotification();
-  const { data: roles = [] } = useGetRolesQuery();
-  const { data: agencies = [] } = useGetAgenciesQuery();
 
   const handleFormCancel = () => {
     history.goBack();
@@ -52,10 +48,8 @@ export const CreateAgentView: FC = () => {
   return (
     <Container className='d-flex justify-content-center'>
       <StyledFormWrapper>
-        <StyledFormTitle>
-          Create Agent
-          <CreateAgentForm roles={roles} agencies={agencies} onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
-        </StyledFormTitle>
+        <StyledFormTitle>Create Agent </StyledFormTitle>
+        <CreateAgentForm onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
       </StyledFormWrapper>
     </Container>
   );
