@@ -32,7 +32,7 @@ export const userApi = createApi({
       User,
       Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>
     >({
-      query: ( payload ) => ({
+      query: (payload) => ({
         url: '/',
         method: 'POST',
         body: payload,
@@ -67,5 +67,10 @@ export const userApi = createApi({
   }),
 });
 
-export const { useCreateUserMutation, useGetUsersQuery, useDeleteUserMutation, useForgotPasswordMutation, useResendActivationEmailMutation } =
-  userApi;
+export const {
+  useCreateUserMutation,
+  useGetUsersQuery,
+  useDeleteUserMutation,
+  useForgotPasswordMutation,
+  useResendActivationEmailMutation,
+} = userApi;
