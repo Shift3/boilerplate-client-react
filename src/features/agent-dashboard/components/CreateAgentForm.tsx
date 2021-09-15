@@ -34,6 +34,7 @@ const schema = yup.object().shape({
   city: yup.string().required('City is required.'),
   state: yup.string().required('State is required.'),
   zipCode: yup.string().required('Zip Code is required'),
+  thumbnail: yup.string(),
 });
 
 export const CreateAgentForm: FC<CreateAgentFormProps> = ({ onSubmit, onCancel }) => {
