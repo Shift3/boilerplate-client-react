@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { StyledCancelButton, StyledFormButtonWrapper, StyledSubmitButton } from './styled';
 import { Constants } from 'utils/constants';
+import { stateList } from 'utils/states';
 
 export interface CreateAgentFormData {
   name: string;
@@ -52,6 +53,7 @@ export const CreateAgentForm: FC<CreateAgentFormProps> = ({ onSubmit, onCancel }
   } = useForm<CreateAgentFormData>({
     resolver: yupResolver(schema),
     mode: 'all',
+    defaultValues: { state: '' },
   });
 
   useEffect(() => {
@@ -97,7 +99,13 @@ export const CreateAgentForm: FC<CreateAgentFormProps> = ({ onSubmit, onCancel }
       </Form.Group>
       <Form.Group>
         <Form.Label>State</Form.Label>
-        <Form.Control type='text' {...register('state')} isInvalid={!!errors.state} />
+        <Form.Control custom as='select' type='text' {...register('state')} isInvalid={!!errors.state}>
+          {stateList.map(({ name, value }) => (
+            <option key={value} value={value}>
+              {name}
+            </option>
+          ))}
+        </Form.Control>
         <Form.Control.Feedback type='invalid'>{errors.state?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
