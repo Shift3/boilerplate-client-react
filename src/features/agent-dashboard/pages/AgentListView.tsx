@@ -7,7 +7,7 @@ import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { useDeleteAgentMutation, useGetAgentsQuery } from '../agentApi';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 type AgentTableItem = {
   id: number;
@@ -16,9 +16,14 @@ type AgentTableItem = {
 };
 
 export const AgentListView: FC = () => {
+  const history = useHistory();
   const { data: agents = [] } = useGetAgentsQuery();
   const [deleteAgent] = useDeleteAgentMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
+
+  const navigateToUpdateView = (agent: Agent) => {
+    history.push(`/agents/update-agent/${agent.id}`);
+  };
 
   const handleDelete = (agent: Agent) => {
     const message = `Delete ${agent.name}?`;
@@ -44,7 +49,7 @@ export const AgentListView: FC = () => {
     id: agent.id,
     name: agent.name,
     actions: [
-      { icon: 'edit', tooltipText: 'Edit', onClick: () => console.log(`Edit ${agent.name}`) },
+      { icon: 'edit', tooltipText: 'Edit', onClick: () => navigateToUpdateView(agent) },
       {
         icon: 'trash-alt',
         tooltipText: 'Delete',
