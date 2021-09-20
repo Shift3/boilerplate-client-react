@@ -32,7 +32,7 @@ const schema = yup.object().shape({
   phoneNumber: yup
     .string()
     .matches(Constants.patterns.US_PHONE_REGEX, {
-      message: 'Please enter a valid phone number.',
+      message: 'Please enter a valid 10 digit phone number.',
       excludeEmptyString: true,
     })
     .required('Phone number is required.'),
@@ -79,7 +79,7 @@ export const CreateAgentForm: FC<CreateAgentFormProps> = ({ onSubmit, onCancel }
       </Form.Group>
       <Form.Group>
         <Form.Label>Phone Number</Form.Label>
-        <Form.Control type='text' {...register('phoneNumber')} isInvalid={!!errors.phoneNumber} />
+        <Form.Control type='tel' {...register('phoneNumber')} isInvalid={!!errors.phoneNumber} />
         <Form.Control.Feedback type='invalid'>{errors.phoneNumber?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
