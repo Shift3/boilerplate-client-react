@@ -3,6 +3,16 @@ import { RootState } from 'app/redux';
 import { Agent } from 'common/models/agent';
 import { environment } from 'environment';
 
+export type CreateAgentRequest = Pick<
+  Agent,
+  'description' | 'email' | 'name' | 'phoneNumber' | 'thumbnail' | 'address'
+>;
+
+export type UpdateAgentRequest = Pick<
+  Agent,
+  'id' | 'description' | 'email' | 'name' | 'phoneNumber' | 'thumbnail' | 'address'
+>;
+
 export const agentApi = createApi({
   reducerPath: 'agentApi',
 
@@ -27,14 +37,20 @@ export const agentApi = createApi({
       providesTags: ['Agent'],
     }),
 
-    createAgent: builder.mutation<
-      Agent,
-      Pick<Agent, 'name' | 'email' | 'description' | 'phoneNumber' | 'address' | 'thumbnail'>
-    >({
+    createAgent: builder.mutation<Agent, CreateAgentRequest>({
       query: (payload) => ({
         url: '/',
         method: 'POST',
         body: payload,
+      }),
+      invalidatesTags: ['Agent'],
+    }),
+
+    updateAgent: builder.mutation<Agent, UpdateAgentRequest>({
+      query: ({ id, ...agentUpdate }) => ({
+        url: `/${id}`,
+        method: 'PUT',
+        body: agentUpdate,
       }),
       invalidatesTags: ['Agent'],
     }),
@@ -49,4 +65,4 @@ export const agentApi = createApi({
   }),
 });
 
-export const { useGetAgentsQuery, useCreateAgentMutation, useDeleteAgentMutation } = agentApi;
+export const { useGetAgentsQuery, useCreateAgentMutation, useUpdateAgentMutation, useDeleteAgentMutation } = agentApi;
