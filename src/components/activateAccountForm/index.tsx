@@ -21,7 +21,11 @@ export const ActivateAccountForm: ActivateAccountFormType = ({ onSubmit, onCance
         <Title>Activate Account</Title>
         <Form.Group>
           <FormLabel htmlFor='newPassword'>New Password</FormLabel>
-          <Form.Control id='newPassword' type='text' {...register('newPassword')} placeholder='Enter new password' />
+          <Form.Control
+            id='newPassword'
+            type='password' {...register('newPassword')}
+            placeholder='Enter new password'
+          />
           {errors.newPassword?.message && <InputError role='alert'>{errors.newPassword?.message}</InputError>}
         </Form.Group>
         <Form.Group>
