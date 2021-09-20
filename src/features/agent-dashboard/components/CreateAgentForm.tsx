@@ -32,7 +32,7 @@ const schema = yup.object().shape({
   phoneNumber: yup
     .string()
     .matches(Constants.patterns.US_PHONE_REGEX, {
-      message: 'Please enter a valid phone number.',
+      message: 'Please enter a valid phone number. A Phone number must have 10 digits.',
       excludeEmptyString: true,
     })
     .required('Phone number is required.'),
