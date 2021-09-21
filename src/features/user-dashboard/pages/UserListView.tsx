@@ -12,7 +12,7 @@ import {
 import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 type UserTableItem = {
   id: number;
@@ -25,6 +25,7 @@ type UserTableItem = {
 };
 
 export const UserListView: FC = () => {
+  const history = useHistory();
   const { data: users = [] } = useGetUsersQuery();
   const [deleteUser] = useDeleteUserMutation();
   const [forgotPassword] = useForgotPasswordMutation();
@@ -72,6 +73,10 @@ export const UserListView: FC = () => {
     openModal(message, onConfirm, onCancel);
   };
 
+  const navigateToUpdateView = (user: User) => {
+    history.push(`/users/update-user/${user.id}`);
+  };
+
   const headers: TableHeader<UserTableItem>[] = [
     { key: 'lastName', label: 'LAST NAME' },
     { key: 'firstName', label: 'FIRST NAME' },
@@ -95,7 +100,7 @@ export const UserListView: FC = () => {
           onClick: () => handleResendActivationEmail(user),
         },
     actions: [
-      { icon: 'edit', tooltipText: 'Edit', onClick: () => console.log(`Edit ${user.id}`) },
+      { icon: 'edit', tooltipText: 'Edit', onClick: () => navigateToUpdateView(user) },
       {
         icon: 'trash-alt',
         tooltipText: 'Delete',
