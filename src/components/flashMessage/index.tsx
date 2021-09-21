@@ -22,21 +22,19 @@ export const FlashMessage: FC = () => {
   const { dismissNotification } = useDismissNotification();
 
   return (
-    <div className='position-relative'>
-      <FlashMessageContainer
-        className='position-absolute top-0 start-50 translate-middle-x'
-        data-testid='flashMessageContainer'>
-        {notifications.map((notification) => (
-          <Alert
-            key={notification.id}
-            variant={mapNotificationTypeToAlertVariant[notification.type]}
-            dismissible
-            onClose={() => dismissNotification(notification.id)}
-          >
-            {notification.message}
-          </Alert>
-        ))}
-      </FlashMessageContainer>
-    </div>
+    <FlashMessageContainer
+      className='position-absolute'
+      data-testid='flashMessageContainer'>
+      {notifications.map((notification) => (
+        <Alert
+          key={notification.id}
+          variant={mapNotificationTypeToAlertVariant[notification.type]}
+          dismissible
+          onClose={() => dismissNotification(notification.id)}
+        >
+          {notification.message}
+        </Alert>
+      ))}
+    </FlashMessageContainer>
   );
 };
