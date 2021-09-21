@@ -22,7 +22,9 @@ export const FlashMessage: FC = () => {
   const { dismissNotification } = useDismissNotification();
 
   return (
-    <FlashMessageContainer data-testid='flashMessageContainer'>
+    <FlashMessageContainer
+      className='position-absolute'
+      data-testid='flashMessageContainer'>
       {notifications.map((notification) => (
         <Alert
           key={notification.id}
