@@ -1,29 +1,22 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Agent } from 'common/models';
 import { FC, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
-import { StyledCancelButton, StyledFormButtonWrapper, StyledSubmitButton } from './styled';
 import { Constants } from 'utils/constants';
 import { stateList } from 'utils/states';
+import * as yup from 'yup';
+import { StyledCancelButton, StyledFormButtonWrapper, StyledSubmitButton } from './styled';
 
-export interface CreateAgentFormData {
-  name: string;
-  email: string;
-  description: string;
-  phoneNumber: string;
-  address1: string;
-  address2: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  thumbnail: string;
-}
+export type FormData = Pick<Agent, 'name' | 'email' | 'description' | 'phoneNumber' | 'address' | 'thumbnail'>;
 
-export interface CreateAgentFormProps {
+export type Props = {
+  defaultValues?: FormData;
+  submitButtonLabel?: string;
+  cancelButtonLabel?: string;
+  onSubmit: (data: FormData) => void;
   onCancel: () => void;
-  onSubmit: (data: CreateAgentFormData) => void;
-}
+};
 
 const schema = yup.object().shape({
   name: yup.string().required('Name is required.'),
@@ -36,24 +29,36 @@ const schema = yup.object().shape({
       excludeEmptyString: true,
     })
     .required('Phone number is required.'),
-  address1: yup.string().required('Address is required.'),
-  address2: yup.string(),
-  city: yup.string().required('City is required.'),
-  state: yup.string().required('State is required.'),
-  zipCode: yup.string().required('Zip Code is required'),
   thumbnail: yup.string(),
+  address: yup.object().shape({
+    address1: yup.string().required('Address is required.'),
+    address2: yup.string(),
+    city: yup.string().required('City is required.'),
+    state: yup.string().required('State is required.'),
+    zipCode: yup.string().required('Zip Code is required'),
+  }),
 });
 
-export const CreateAgentForm: FC<CreateAgentFormProps> = ({ onSubmit, onCancel }) => {
+export const AgentDetailForm: FC<Props> = ({
+  defaultValues = {},
+  submitButtonLabel = 'CREATE',
+  cancelButtonLabel = 'CANCEL',
+  onSubmit,
+  onCancel,
+}) => {
   const {
     register,
     formState: { errors, isValid },
     handleSubmit,
     trigger,
-  } = useForm<CreateAgentFormData>({
+  } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
-    defaultValues: { state: '' },
+    defaultValues: {
+      ...defaultValues,
+      // Make state dropdown default to empty instead of first option.
+      address: { ...defaultValues.address, state: defaultValues?.address?.state ?? '' },
+    },
   });
 
   useEffect(() => {
@@ -84,39 +89,39 @@ export const CreateAgentForm: FC<CreateAgentFormProps> = ({ onSubmit, onCancel }
       </Form.Group>
       <Form.Group>
         <Form.Label>Address</Form.Label>
-        <Form.Control type='text' {...register('address1')} isInvalid={!!errors.address1} />
-        <Form.Control.Feedback type='invalid'>{errors.address1?.message}</Form.Control.Feedback>
+        <Form.Control type='text' {...register('address.address1')} isInvalid={!!errors.address?.address1} />
+        <Form.Control.Feedback type='invalid'>{errors.address?.address1?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label>Address2</Form.Label>
-        <Form.Control type='text' {...register('address2')} />
-        <Form.Control.Feedback type='invalid'>{errors.address2?.message}</Form.Control.Feedback>
+        <Form.Control type='text' {...register('address.address2')} isValid={!!errors.address?.address2} />
+        <Form.Control.Feedback type='invalid'>{errors.address?.address2?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label>City</Form.Label>
-        <Form.Control type='text' {...register('city')} isInvalid={!!errors.city} />
-        <Form.Control.Feedback type='invalid'>{errors.city?.message}</Form.Control.Feedback>
+        <Form.Control type='text' {...register('address.city')} isInvalid={!!errors.address?.city} />
+        <Form.Control.Feedback type='invalid'>{errors.address?.city?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label>State</Form.Label>
-        <Form.Control custom as='select' type='text' {...register('state')} isInvalid={!!errors.state}>
+        <Form.Control custom as='select' type='text' {...register('address.state')} isInvalid={!!errors.address?.state}>
           {stateList.map(({ name, value }) => (
             <option key={value} value={value}>
               {name}
             </option>
           ))}
         </Form.Control>
-        <Form.Control.Feedback type='invalid'>{errors.state?.message}</Form.Control.Feedback>
+        <Form.Control.Feedback type='invalid'>{errors.address?.state?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label>Zip Code</Form.Label>
-        <Form.Control type='text' {...register('zipCode')} isInvalid={!!errors.zipCode} />
-        <Form.Control.Feedback type='invalid'>{errors.zipCode?.message}</Form.Control.Feedback>
+        <Form.Control type='text' {...register('address.zipCode')} isInvalid={!!errors.address?.zipCode} />
+        <Form.Control.Feedback type='invalid'>{errors.address?.zipCode?.message}</Form.Control.Feedback>
       </Form.Group>
       <StyledFormButtonWrapper>
-        <StyledCancelButton onClick={onCancel}>CANCEL</StyledCancelButton>
+        <StyledCancelButton onClick={onCancel}>{cancelButtonLabel}</StyledCancelButton>
         <StyledSubmitButton type='submit' disabled={!isValid}>
-          CREATE
+          {submitButtonLabel}
         </StyledSubmitButton>
       </StyledFormButtonWrapper>
     </Form>
