@@ -84,7 +84,7 @@ export const AgentDetailForm: FC<Props> = ({
       </Form.Group>
       <Form.Group>
         <Form.Label>Phone Number</Form.Label>
-        <Form.Control type='text' {...register('phoneNumber')} isInvalid={!!errors.phoneNumber} />
+        <Form.Control type='tel' {...register('phoneNumber')} isInvalid={!!errors.phoneNumber} />
         <Form.Control.Feedback type='invalid'>{errors.phoneNumber?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
