@@ -8,20 +8,19 @@
 This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react/wiki) which explains the project and its implementation in much greater detail than the code comments.
 
 - [Boilerplate Client React](#boilerplate-client-react)
-    - [Local Development](#local-development)
+  - [Staging URL](#staging-url)
       - [Quick Start](#quick-start)
       - [Running unit tests](#running-unit-tests)
     - [Running test coverage](#running-test-coverage)
     - [Build](#build)
   - [Learn More](#learn-more)
-  - [Staging URL](#staging-url)
   - [Deployment](#deployment)
     - [AWS](#aws)
     - [Terraform](#terraform)
     - [Environment Configuration](#environment-configuration)
     - [Build and Deploy](#build-and-deploy)
   - [Development](#development)
-    - [Local Development](#local-development-1)
+    - [Local Development](#local-development)
     - [Development Server](#development-server)
     - [Docker](#docker)
     - [Template Repository](#template-repository)
@@ -38,9 +37,9 @@ This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react
     - [Staging Build](#staging-build)
     - [Additional Resources](#additional-resources)
 
-### Local Development
+## Staging URL
 
-The project has been configured to use [yarn](https://classic.yarnpkg.com/en/docs/cli/) for package dependency management.
+<https://boilerplate-client-angular.shift3sandbox.com/>
 
 #### Quick Start
 
@@ -80,10 +79,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-## Staging URL
-
-<https://boilerplate-client-react.shift3sandbox.com/>
 
 ## Deployment
 
@@ -204,6 +199,13 @@ This project can be run as a Docker container (it is not recommended for involve
 This project is configured as a [template repository](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template#about-repository-templates). It creates one commit in the new project based on the template instead of the entire original boilerplate history.
 
 ### Initializing the Project
+
+If this project is being cloned to start a new project, there are a few things that need to be updated to make it work. The project name will need to be updated in the `README.md`, `package.json`, CircleCI `config.yml`. The README also refers to the boilerplate, both in the text and in the CircleCI badges.
+
+The project `environment` files will need to be updated with the path to the APIs. The development `environment.dev.ts`  and `environment.prod.ts` files assumes a local development server of `http://localhost:3000`, which might need to be updated.
+
+After provisioning and before deploying, the `deploy:staging` and `deploy:production` script in `package.json` needs to be updated.
+
 
 ### Prettier
 
