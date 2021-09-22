@@ -1,15 +1,16 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Role, User } from 'common/models';
+import { Agency, Role, User } from 'common/models';
 import { FC, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { StyledCancelButton, StyledFormButtonWrapper, StyledSubmitButton } from './styled';
 
-export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role'>;
+export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>;
 
 export interface Props {
   availableRoles: Role[];
+  availableAgencies: Agency[];
   defaultValues?: FormData;
   submitButtonLabel?: string;
   cancelButtonLabel?: string;
@@ -24,11 +25,15 @@ const schema = yup.object().shape({
   role: yup.object().shape({
     roleName: yup.string().required('Role is required.'),
   }),
+  agency: yup.object().shape({
+    agencyName: yup.string().required('Agency is required.'),
+  }),
 });
 
 export const UserDetailForm: FC<Props> = ({
   availableRoles,
-  defaultValues,
+  availableAgencies,
+  defaultValues = {},
   submitButtonLabel = 'SUBMIT',
   cancelButtonLabel = 'CANCEL',
   onSubmit,
@@ -44,10 +49,20 @@ export const UserDetailForm: FC<Props> = ({
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
-    defaultValues: defaultValues,
+    defaultValues: {
+      ...defaultValues,
+      // Make dropdowns default to empty instead of first option if no valid default passed.
+      role: {
+        roleName: defaultValues?.role?.roleName ?? '',
+      },
+      agency: {
+        agencyName: defaultValues?.agency?.agencyName ?? '',
+      },
+    },
   });
 
   const watchRoleName = watch('role.roleName');
+  const watchAgencyName = watch('agency.agencyName');
 
   // Trigger validation on first render.
   useEffect(() => {
@@ -62,6 +77,15 @@ export const UserDetailForm: FC<Props> = ({
       setValue('role.id', role?.id);
     }
   }, [watchRoleName, availableRoles, setValue]);
+
+  // Update agency id in response to role select value changing.
+  useEffect(() => {
+    const agency = availableAgencies.find((agency) => agency.agencyName === watchAgencyName);
+
+    if (agency) {
+      setValue('agency.id', agency?.id);
+    }
+  }, [watchAgencyName, availableAgencies, setValue]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -97,6 +121,24 @@ export const UserDetailForm: FC<Props> = ({
           ))}
         </Form.Control>
         <Form.Control.Feedback type='invalid'>{errors.role?.roleName?.message}</Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>Agency</Form.Label>
+        <Form.Control
+          id='agency'
+          as='select'
+          custom
+          aria-label='Select User Agency'
+          {...register('agency.agencyName')}
+          isInvalid={!!errors.role?.roleName}
+        >
+          {availableAgencies.map((agency) => (
+            <option key={agency.id} value={agency.agencyName}>
+              {agency.agencyName}
+            </option>
+          ))}
+        </Form.Control>
+        <Form.Control.Feedback type='invalid'>{errors.agency?.agencyName?.message}</Form.Control.Feedback>
       </Form.Group>
       <StyledFormButtonWrapper>
         <StyledCancelButton onClick={onCancel}>{cancelButtonLabel}</StyledCancelButton>

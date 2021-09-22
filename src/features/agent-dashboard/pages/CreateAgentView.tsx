@@ -29,7 +29,7 @@ export const CreateAgentView: FC = () => {
     <Container className='d-flex justify-content-center'>
       <StyledFormWrapper>
         <StyledFormTitle>Create Agent </StyledFormTitle>
-        <AgentDetailForm onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
+        <AgentDetailForm submitButtonLabel='CREATE' onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
       </StyledFormWrapper>
     </Container>
   );

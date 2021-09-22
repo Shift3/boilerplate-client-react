@@ -1,4 +1,5 @@
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
+import { useGetAgenciesQuery } from 'features/agency-dashboard/agencyApi';
 import { FC, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import { useHistory, useParams } from 'react-router-dom';
@@ -18,13 +19,14 @@ export const UpdateUserView: FC = () => {
   const [updateUser] = useUpdateUserMutation();
   const { data: user, isLoading: isLoadingUser, error: getUserError } = useGetUserByIdQuery(id);
   const { data: roles = [], isLoading: isLoadingRoles, error: getRolesError } = useGetRolesQuery();
+  const { data: agencies = [], isLoading: isLoadingAgencies, error: getAgenciesError } = useGetAgenciesQuery();
 
   useEffect(() => {
-    if (getUserError || getRolesError) {
+    if (getUserError || getRolesError || getAgenciesError) {
       showErrorNotification('Unable to load user. Returning to user list.');
       history.replace('/users');
     }
-  }, [getUserError, getRolesError, history, showErrorNotification]);
+  }, [getUserError, getRolesError, getAgenciesError, history, showErrorNotification]);
 
   const handleFormCancel = () => history.goBack();
 
@@ -41,11 +43,12 @@ export const UpdateUserView: FC = () => {
   return (
     <Container className='d-flex justify-content-center'>
       {/* TODO: add loading spinner */}
-      {!isLoadingUser && !isLoadingRoles && (
+      {!isLoadingUser && !isLoadingRoles && !isLoadingAgencies && (
         <StyledFormWrapper>
           <StyledFormTitle>Update User</StyledFormTitle>
           <UserDetailForm
             availableRoles={roles}
+            availableAgencies={agencies}
             defaultValues={user}
             submitButtonLabel='UPDATE'
             onSubmit={handleFormSubmit}

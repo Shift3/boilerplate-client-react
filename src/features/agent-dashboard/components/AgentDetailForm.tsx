@@ -41,7 +41,7 @@ const schema = yup.object().shape({
 
 export const AgentDetailForm: FC<Props> = ({
   defaultValues = {},
-  submitButtonLabel = 'CREATE',
+  submitButtonLabel = 'SUBMIT',
   cancelButtonLabel = 'CANCEL',
   onSubmit,
   onCancel,

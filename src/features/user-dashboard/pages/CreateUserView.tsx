@@ -6,15 +6,14 @@ import { useHistory } from 'react-router-dom';
 import { useGetRolesQuery } from '../roleApi';
 import { useCreateUserMutation } from '../userApi';
 import { StyledFormTitle, StyledFormWrapper } from '../components/styled';
-import { CreateUserForm } from '../components';
-import { CreateUserFormData } from '../components/CreateUserForm';
+import { FormData, UserDetailForm } from '../components/UserDetailForm';
 
 export const CreateUserView: FC = () => {
   const history = useHistory();
   const [createUser] = useCreateUserMutation();
   const { showErrorNotification, showSuccessNotification } = useShowNotification();
-  const { data: roles = [] } = useGetRolesQuery();
-  const { data: agencies = [] } = useGetAgenciesQuery();
+  const { data: roles = [], isLoading: isLoadingRoles } = useGetRolesQuery();
+  const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery();
 
   // TODO: filter out the roles and agencies that the current authenticated user is
   // allowed to access (need to implement role checks first)
@@ -23,23 +22,9 @@ export const CreateUserView: FC = () => {
     history.goBack();
   };
 
-  const handleFormSubmit = async (data: CreateUserFormData) => {
-    const { email, firstName, lastName, profilePicture = '', roleName, agencyName } = data;
-    const role = roles.find((role) => role.roleName === roleName);
-    const agency = agencies.find((agency) => agency.agencyName === agencyName);
-
-    if (!role) {
-      showErrorNotification('Role must be a valid role.');
-      return;
-    }
-
-    if (!agency) {
-      showErrorNotification('Agency must be a valid agency.');
-      return;
-    }
-
+  const handleFormSubmit = async (data: FormData) => {
     try {
-      await createUser({ email, firstName, lastName, profilePicture, role, agency }).unwrap();
+      await createUser(data).unwrap();
       showSuccessNotification('User created.');
       history.push('/users');
     } catch (error) {
@@ -49,10 +34,17 @@ export const CreateUserView: FC = () => {
 
   return (
     <Container className='d-flex justify-content-center'>
-      <StyledFormWrapper>
-        <StyledFormTitle>Create User </StyledFormTitle>
-        <CreateUserForm roles={roles} agencies={agencies} onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
-      </StyledFormWrapper>
+      {!isLoadingRoles && !isLoadingAgencies && (
+        <StyledFormWrapper>
+          <StyledFormTitle>Create User</StyledFormTitle>
+          <UserDetailForm
+            availableRoles={roles}
+            availableAgencies={agencies}
+            onCancel={handleFormCancel}
+            onSubmit={handleFormSubmit}
+          />
+        </StyledFormWrapper>
+      )}
     </Container>
   );
 };
