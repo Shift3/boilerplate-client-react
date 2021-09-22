@@ -33,6 +33,11 @@ export const userApi = createApi({
       providesTags: ['User'],
     }),
 
+    getUserById: builder.query<User, number | string>({
+      query: (id) => `/${id}`,
+      providesTags: ['User'],
+    }),
+
     createUser: builder.mutation<User, CreateUserRequest>({
       query: (payload) => ({
         url: '/',
@@ -78,6 +83,7 @@ export const userApi = createApi({
 
 export const {
   useGetUsersQuery,
+  useGetUserByIdQuery,
   useCreateUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
