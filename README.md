@@ -33,8 +33,7 @@ This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react
     - [Webpack Bundle Analyzer](#webpack-bundle-analyzer)
     - [Development Server](#development-server-1)
     - [Code Scaffolding](#code-scaffolding)
-    - [Build](#build-1)
-    - [Stagin Build](#stagin-build)
+    - [Staging Build](#staging-build)
     - [Running Unit Tests](#running-unit-tests-1)
     - [Running End-to-End Tests](#running-end-to-end-tests)
     - [Additional Resources](#additional-resources)
@@ -322,8 +321,6 @@ const PersonForm = () => {
 ```
 
 For more information, see the [useForm](https://react-hook-form.com/api/useform) and [@hookform/resolvers](https://github.com/react-hook-form/resolvers) documentation.
-
-### Build
 
 ### Staging Build
 
