@@ -29,7 +29,6 @@ This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react
     - [CI](#ci)
       - [Wiki Automation](#wiki-automation)
     - [Webpack Bundle Analyzer](#webpack-bundle-analyzer)
-    - [Code Scaffolding](#code-scaffolding)
     - [React Hook Form](#react-hook-form)
     - [Yup](#yup)
       - [resolvers](#resolvers)
@@ -235,7 +234,7 @@ These steps only need to be performed once by a user with admin access to both G
 
 ### Webpack Bundle Analyzer
 
-### Code Scaffolding
+The project includes [webpack-bundle-analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer), which helps developers figure out the size of the project and its webpack dependencies. To use it, type `yarn build` in the project's directory in a terminal to create the webpack bundle. Run `yarn run analyze`, and webpack-bundle-analyzer will launch a server and browser window with a visualization of the project bundle size.
 
 ### React Hook Form
 
