@@ -10,7 +10,6 @@ This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react
 - [Boilerplate Client React](#boilerplate-client-react)
   - [Local Development](#local-development)
     - [Quick Start](#quick-start)
-    - [Starting the Project](#starting-the-project)
     - [Running unit tests](#running-unit-tests)
   - [Running test coverage](#running-test-coverage)
   - [Build](#build)
@@ -31,7 +30,6 @@ This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react
     - [Prettier](#prettier)
     - [CI](#ci)
       - [Wiki Automation](#wiki-automation)
-    - [Local Development](#local-development-2)
     - [Webpack Bundle Analyzer](#webpack-bundle-analyzer)
     - [Development Server](#development-server-1)
     - [Code Scaffolding](#code-scaffolding)
@@ -50,14 +48,11 @@ The project has been configured to use [yarn](https://classic.yarnpkg.com/en/doc
 To start the project, make sure yarn is installed on your local machine. If you have already installed our [laptop script](https://github.com/Shift3/laptop), you should already have yarn.
 
 1. Install Dependencies via `yarn install`
-2. Start the Project via `yarn start`
+2. Start the Project in development mode via `yarn start`
 
-#### Starting the Project
+Open [http://localhost:4200](http://localhost:4200) to view the project in the browser.
 
-Runs the app in the development mode.\
-Open [http://localhost:4200](http://localhost:4200) to view it in the browser.
-
-The page will reload if you make edits.\
+The page will reload if you make edits. 
 You will also see any lint errors in the console.
 
 #### Running unit tests
@@ -237,8 +232,6 @@ After forking the project, you will need to make the following changes to ensure
 2. Follow the CircleCI documentaiton on [Creating a GitHub deploy key](https://circleci.com/docs/2.0/gh-bb-integration/#creating-a-github-deploy-key) to add a deploy key with write access, and replace the SSH key fingerprint in the `deploy-wiki` job.
 
 These steps only need to be performed once by a user with admin access to both GitHub repository and CircleCI project.
-
-### Local Development
 
 ### Webpack Bundle Analyzer
 
