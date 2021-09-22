@@ -34,8 +34,6 @@ This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react
     - [Development Server](#development-server-1)
     - [Code Scaffolding](#code-scaffolding)
     - [Staging Build](#staging-build)
-    - [Running Unit Tests](#running-unit-tests-1)
-    - [Running End-to-End Tests](#running-end-to-end-tests)
     - [Additional Resources](#additional-resources)
 
 ### Local Development
@@ -323,9 +321,5 @@ const PersonForm = () => {
 For more information, see the [useForm](https://react-hook-form.com/api/useform) and [@hookform/resolvers](https://github.com/react-hook-form/resolvers) documentation.
 
 ### Staging Build
-
-### Running Unit Tests
-
-### Running End-to-End Tests
 
 ### Additional Resources
