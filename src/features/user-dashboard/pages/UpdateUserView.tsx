@@ -16,15 +16,15 @@ export const UpdateUserView: FC = () => {
   const history = useHistory();
   const { showErrorNotification, showSuccessNotification } = useShowNotification();
   const [updateUser] = useUpdateUserMutation();
-  const { data: user, isLoading: isLoadingUser } = useGetUserByIdQuery(id);
-  const { data: roles = [], isLoading: isLoadingRoles } = useGetRolesQuery();
+  const { data: user, isLoading: isLoadingUser, error: getUserError } = useGetUserByIdQuery(id);
+  const { data: roles = [], isLoading: isLoadingRoles, error: getRolesError } = useGetRolesQuery();
 
   useEffect(() => {
-    if (!isLoadingUser && !user) {
+    if (getUserError || getRolesError) {
       showErrorNotification('Unable to load user. Returning to user list.');
       history.replace('/users');
     }
-  }, [id, isLoadingUser, user, history, showErrorNotification]);
+  }, [getUserError, getRolesError, history, showErrorNotification]);
 
   const handleFormCancel = () => history.goBack();
 
