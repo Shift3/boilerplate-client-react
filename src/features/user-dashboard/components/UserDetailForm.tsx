@@ -78,7 +78,7 @@ export const UserDetailForm: FC<Props> = ({
     }
   }, [watchRoleName, availableRoles, setValue]);
 
-  // Update agency id in response to role select value changing.
+  // Update agency id in response to agency select value changing.
   useEffect(() => {
     const agency = availableAgencies.find((agency) => agency.agencyName === watchAgencyName);
 
