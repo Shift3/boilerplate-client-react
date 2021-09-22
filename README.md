@@ -8,12 +8,11 @@
 This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react/wiki) which explains the project and its implementation in much greater detail than the code comments.
 
 - [Boilerplate Client React](#boilerplate-client-react)
-  - [Local Development](#local-development)
-    - [Quick Start](#quick-start)
-    - [Running unit tests](#running-unit-tests)
-  - [Running test coverage](#running-test-coverage)
-  - [Build](#build)
-    - [`yarn eject`](#yarn-eject)
+    - [Local Development](#local-development)
+      - [Quick Start](#quick-start)
+      - [Running unit tests](#running-unit-tests)
+    - [Running test coverage](#running-test-coverage)
+    - [Build](#build)
   - [Learn More](#learn-more)
   - [Staging URL](#staging-url)
   - [Deployment](#deployment)
@@ -33,6 +32,9 @@ This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react
     - [Webpack Bundle Analyzer](#webpack-bundle-analyzer)
     - [Development Server](#development-server-1)
     - [Code Scaffolding](#code-scaffolding)
+    - [React Hook Form](#react-hook-form)
+    - [Yup](#yup)
+      - [resolvers](#resolvers)
     - [Staging Build](#staging-build)
     - [Additional Resources](#additional-resources)
 
@@ -236,7 +238,11 @@ These steps only need to be performed once by a user with admin access to both G
 
 ### Code Scaffolding
 
-### React Hook Forms
+### React Hook Form
+
+We are using [React Hook Form](https://react-hook-form.com/) to extend our forms and make easy to work with validation.
+for more information see: https://react-hook-form.com/ts for typescript support.
+
 
 ### Yup
 
@@ -284,8 +290,6 @@ personSchema.isValidSync(invalidPerson)l // => false
 ```
 
 For more information, see the [Yup documentation](https://github.com/jquense/yup).
-
-### React Hook Form
 
 #### resolvers
 
