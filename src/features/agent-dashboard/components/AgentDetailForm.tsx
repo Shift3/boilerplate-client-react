@@ -61,6 +61,7 @@ export const AgentDetailForm: FC<Props> = ({
     },
   });
 
+  // Trigger validation on first render.
   useEffect(() => {
     trigger();
   }, [trigger]);

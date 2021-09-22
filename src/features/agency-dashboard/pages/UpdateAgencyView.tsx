@@ -4,7 +4,7 @@ import { Container } from 'react-bootstrap';
 import { useHistory, useParams } from 'react-router-dom';
 import { useGetAgencyByIdQuery, useUpdateAgencyMutation } from '../agencyApi';
 import { StyledFormTitle, StyledFormWrapper } from '../components/styled';
-import { UpdateAgencyForm, UpdateAgencyFormData } from '../components/UpdateAgencyForm';
+import { AgencyDetailForm, FormData } from '../components/AgencyDetailForm';
 
 export interface RouteParams {
   id: string;
@@ -28,10 +28,9 @@ export const UpdateAgencyView: FC = () => {
     history.goBack();
   };
 
-  const handleFormSubmit = async (data: UpdateAgencyFormData) => {
-    const { agencyName } = data;
+  const handleFormSubmit = async (data: FormData) => {
     try {
-      await updateAgency({ id: Number(id), agencyName }).unwrap();
+      await updateAgency({ id: Number(id), ...data }).unwrap();
       showSuccessNotification('Agency updated.');
       history.push('/agencies');
     } catch (error) {
@@ -45,8 +44,9 @@ export const UpdateAgencyView: FC = () => {
       {!isLoading && (
         <StyledFormWrapper>
           <StyledFormTitle>Update Agency</StyledFormTitle>
-          <UpdateAgencyForm
+          <AgencyDetailForm
             defaultValues={{ agencyName: agency?.agencyName ?? '' }}
+            submitButtonLabel='UPDATE'
             onSubmit={handleFormSubmit}
             onCancel={handleFormCancel}
           />
