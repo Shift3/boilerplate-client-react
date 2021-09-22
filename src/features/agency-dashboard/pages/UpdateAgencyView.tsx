@@ -41,6 +41,7 @@ export const UpdateAgencyView: FC = () => {
 
   return (
     <Container className='d-flex justify-content-center'>
+      {/* TODO: add loading spinner */}
       {!isLoading && !error && (
         <StyledFormWrapper>
           <StyledFormTitle>Update Agency</StyledFormTitle>

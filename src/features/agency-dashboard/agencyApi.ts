@@ -29,7 +29,7 @@ export const agencyApi = createApi({
     }),
 
     getAgencyById: builder.query<Agency, number | string>({
-      query: (id) => `/${id}`,
+      query: (id) => ({ url: `/${id}` }),
       providesTags: ['Agency'],
     }),
 
