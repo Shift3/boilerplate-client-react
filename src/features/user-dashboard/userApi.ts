@@ -4,10 +4,7 @@ import { User } from 'common/models/user';
 import { environment } from 'environment';
 
 export type CreateUserRequest = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>;
-export type UpdateUserRequest = Pick<
-  User,
-  'id' | 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'
->;
+export type UpdateUserRequest = Pick<User, 'id' | 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role'>;
 export type ForgotPasswordRequest = Pick<User, 'email'>;
 export type ResendActivationEmailRequest = Pick<User, 'id'>;
 
@@ -51,6 +48,7 @@ export const userApi = createApi({
         method: 'PUT',
         body: payload,
       }),
+      invalidatesTags: ['User'],
     }),
 
     deleteUser: builder.mutation<void, number>({
