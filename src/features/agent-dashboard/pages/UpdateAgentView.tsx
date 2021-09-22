@@ -27,12 +27,12 @@ export const UpdateAgentView: FC = () => {
   });
 
   // Since a user can manually type in any random id into the url, we need to ensure `id` is a string that represents
-  // a valid number, and that `id` is a valid agency id for one of the agencies from the query result in the list view.
+  // a valid number, and that `id` is a valid agent id for one of the agencies from the query result in the list view.
   // useLayoutEffect` is used instead of `useEffect` so that the check and redirect occur before the component gets
   // rendered for the first time to the screen.
   useLayoutEffect(() => {
     if (Number.isNaN(Number(id)) || !agent) {
-      showErrorNotification('Unable to load agency. Returning to agency list.');
+      showErrorNotification('Unable to load agent. Returning to agent list.');
       history.replace('/agents');
     }
   }, [id, history, agent, showErrorNotification]);
@@ -45,17 +45,17 @@ export const UpdateAgentView: FC = () => {
     const updateRequest = { id: Number(id), ...data };
     try {
       await updateAgent(updateRequest).unwrap();
-      showSuccessNotification('Agency updated.');
+      showSuccessNotification('Agent updated.');
       history.push('/agents');
     } catch (error) {
-      showErrorNotification('Unable to update agency.');
+      showErrorNotification('Unable to update agent.');
     }
   };
 
   return (
     <Container className='d-flex justify-content-center'>
       <StyledFormWrapper>
-        <StyledFormTitle>Update Agency</StyledFormTitle>
+        <StyledFormTitle>Update Agent</StyledFormTitle>
         <AgentDetailForm
           defaultValues={agent}
           submitButtonLabel='UPDATE'
