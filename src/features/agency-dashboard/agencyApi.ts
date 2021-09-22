@@ -28,6 +28,11 @@ export const agencyApi = createApi({
       providesTags: ['Agency'],
     }),
 
+    getAgencyById: builder.query<Agency, number | string>({
+      query: (id) => `/${id}`,
+      providesTags: ['Agency'],
+    }),
+
     createAgency: builder.mutation<Agency, Pick<Agency, 'agencyName'>>({
       query: (payload) => ({
         url: '/',
@@ -56,5 +61,10 @@ export const agencyApi = createApi({
   }),
 });
 
-export const { useCreateAgencyMutation, useDeleteAgencyMutation, useGetAgenciesQuery, useUpdateAgencyMutation } =
-  agencyApi;
+export const {
+  useCreateAgencyMutation,
+  useGetAgencyByIdQuery,
+  useDeleteAgencyMutation,
+  useGetAgenciesQuery,
+  useUpdateAgencyMutation,
+} = agencyApi;
