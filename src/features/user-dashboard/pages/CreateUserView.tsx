@@ -32,9 +32,12 @@ export const CreateUserView: FC = () => {
     }
   };
 
+  const isLoading = isLoadingRoles || isLoadingAgencies;
+
   return (
     <Container className='d-flex justify-content-center'>
-      {!isLoadingRoles && !isLoadingAgencies && (
+      {/* TODO: add loading spinner */}
+      {!isLoading && (
         <StyledFormWrapper>
           <StyledFormTitle>Create User</StyledFormTitle>
           <UserDetailForm

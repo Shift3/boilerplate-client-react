@@ -18,17 +18,22 @@ export const UpdateUserView: FC = () => {
   const { showErrorNotification, showSuccessNotification } = useShowNotification();
   const [updateUser] = useUpdateUserMutation();
   const { data: user, isLoading: isLoadingUser, error: getUserError } = useGetUserByIdQuery(id);
-  const { data: roles = [], isLoading: isLoadingRoles, error: getRolesError } = useGetRolesQuery();
-  const { data: agencies = [], isLoading: isLoadingAgencies, error: getAgenciesError } = useGetAgenciesQuery();
+  const { data: roles = [], isLoading: isLoadingRoles } = useGetRolesQuery();
+  const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery();
+
+  // TODO: filter out the roles and agencies that the current authenticated user is
+  // allowed to access (need to implement role checks first)
 
   useEffect(() => {
-    if (getUserError || getRolesError || getAgenciesError) {
+    if (getUserError) {
       showErrorNotification('Unable to load user. Returning to user list.');
       history.replace('/users');
     }
-  }, [getUserError, getRolesError, getAgenciesError, history, showErrorNotification]);
+  }, [getUserError, history, showErrorNotification]);
 
-  const handleFormCancel = () => history.goBack();
+  const handleFormCancel = () => {
+    history.goBack();
+  };
 
   const handleFormSubmit = async (data: FormData) => {
     try {
