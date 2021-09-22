@@ -29,7 +29,6 @@ This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react
     - [CI](#ci)
       - [Wiki Automation](#wiki-automation)
     - [Webpack Bundle Analyzer](#webpack-bundle-analyzer)
-    - [Development Server](#development-server-1)
     - [Code Scaffolding](#code-scaffolding)
     - [React Hook Form](#react-hook-form)
     - [Yup](#yup)
@@ -235,8 +234,6 @@ After forking the project, you will need to make the following changes to ensure
 These steps only need to be performed once by a user with admin access to both GitHub repository and CircleCI project.
 
 ### Webpack Bundle Analyzer
-
-### Development Server
 
 ### Code Scaffolding
 
