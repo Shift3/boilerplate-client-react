@@ -40,10 +40,12 @@ export const UpdateUserView: FC = () => {
     }
   };
 
+  const isLoading = isLoadingUser || isLoadingRoles || isLoadingAgencies;
+
   return (
     <Container className='d-flex justify-content-center'>
       {/* TODO: add loading spinner */}
-      {!isLoadingUser && !isLoadingRoles && !isLoadingAgencies && (
+      {!isLoading && (
         <StyledFormWrapper>
           <StyledFormTitle>Update User</StyledFormTitle>
           <UserDetailForm
