@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from 'app/redux';
 import { Session } from 'common/models';
 import { environment } from 'environment';
@@ -15,7 +15,7 @@ export const authApi = createApi({
     baseUrl: `${environment.apiRoute}/auth`,
 
     prepareHeaders: (headers: Headers, { getState }) => {
-      const token = (getState() as RootState).auth.session?.token;
+      const { token } = (getState() as RootState).auth;
 
       if (token) {
         headers.set('authorization', `Bearer ${token}`);
@@ -27,10 +27,10 @@ export const authApi = createApi({
 
   endpoints: (builder) => ({
     login: builder.mutation<Session, LoginRequest>({
-      query: (payload) => ({
+      query: (credentials) => ({
         url: '/login',
         method: 'POST',
-        body: payload,
+        body: credentials,
       }),
     }),
 
@@ -42,3 +42,5 @@ export const authApi = createApi({
     }),
   }),
 });
+
+export const { useLoginMutation, useLogoutMutation } = authApi;
