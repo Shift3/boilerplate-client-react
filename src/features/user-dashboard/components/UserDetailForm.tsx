@@ -114,6 +114,9 @@ export const UserDetailForm: FC<Props> = ({
           {...register('role.roleName')}
           isInvalid={!!errors.role?.roleName}
         >
+          <option value='' disabled hidden>
+            Select a role
+          </option>
           {availableRoles.map((role) => (
             <option key={role.id} value={role.roleName}>
               {role.roleName}
@@ -132,6 +135,9 @@ export const UserDetailForm: FC<Props> = ({
           {...register('agency.agencyName')}
           isInvalid={!!errors.agency?.agencyName}
         >
+          <option value='' disabled hidden>
+            Select an agency
+          </option>
           {availableAgencies.map((agency) => (
             <option key={agency.id} value={agency.agencyName}>
               {agency.agencyName}
