@@ -1,16 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query';
 import { RootState } from 'app/redux';
-import { User } from 'common/models';
+import { Session } from 'common/models';
 import { environment } from 'environment';
 
 export interface LoginRequest {
   email: string;
   password: string;
-}
-
-export interface Session {
-  jwtToken: string;
-  user: User;
 }
 
 export const authApi = createApi({
