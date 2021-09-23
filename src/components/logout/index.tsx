@@ -1,13 +1,13 @@
+import { useLogoutMutation } from 'features/auth/authApi';
 import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
-import { useLogout } from 'core/modules/auth/application/useLogout';
 
 export const Logout: FC = () => {
-  const { logoutUser } = useLogout();
+  const [logout] = useLogoutMutation();
 
   return (
     <>
-      <Button variant='link' onClick={() => logoutUser()}>
+      <Button variant='link' onClick={() => logout()}>
         Sign Out
       </Button>
     </>

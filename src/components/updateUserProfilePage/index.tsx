@@ -1,7 +1,8 @@
+import { useAppSelector } from 'app/redux';
 import { UpdateUserProfileFormData } from 'components/updateUserProfileForm/types';
-import { useAuthState } from 'core/modules/auth/application/useAuthState';
-import { useLogout } from 'core/modules/auth/application/useLogout';
 import { useUpdateProfile } from 'core/modules/user/application/useUpdateProfile';
+import { useLogoutMutation } from 'features/auth/authApi';
+import { selectAuthState } from 'features/auth/authSlice';
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -19,16 +20,16 @@ export const Wrapper = styled.div`
 
 export const UpdateUserProfilePage: FC = () => {
   const history = useHistory();
-  const session = useAuthState();
-  const { logoutUser } = useLogout();
+  const { user } = useAppSelector(selectAuthState);
+  const [logout] = useLogoutMutation();
   const { updateProfile } = useUpdateProfile();
 
   const onSubmit = async (formData: UpdateUserProfileFormData) => {
     const data = { ...formData, profilePicture: '' };
 
     const onSuccess = () => {
-      if (session && session.user.email !== formData.email) {
-        logoutUser();
+      if (user && user.email !== formData.email) {
+        logout();
         history.push('/auth/login');
       } else {
         history.goBack();
@@ -46,9 +47,9 @@ export const UpdateUserProfilePage: FC = () => {
         onSubmit={onSubmit}
         onCancel={onCancel}
         defaultValues={{
-          firstName: session!.user.firstName,
-          lastName: session!.user.lastName,
-          email: session!.user.email,
+          firstName: user?.firstName ?? '',
+          lastName: user?.lastName ?? '',
+          email: user?.email ?? '',
         }}
       />
     </Wrapper>

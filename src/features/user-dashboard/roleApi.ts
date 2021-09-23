@@ -10,7 +10,7 @@ export const roleApi = createApi({
     baseUrl: `${environment.apiRoute}/roles`,
 
     prepareHeaders: (headers: Headers, { getState }) => {
-      const token = (getState() as RootState).auth.session?.token;
+      const { token } = (getState() as RootState).auth;
 
       if (token) {
         headers.set('authorization', `Bearer ${token}`);
@@ -27,7 +27,7 @@ export const roleApi = createApi({
       query: () => ({ url: '/' }),
       providesTags: ['Role'],
     }),
-  })
+  }),
 });
 
 export const { useGetRolesQuery } = roleApi;

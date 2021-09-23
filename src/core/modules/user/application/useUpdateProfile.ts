@@ -1,5 +1,6 @@
-import { useAuthState } from 'core/modules/auth/application/useAuthState';
+import { useAppSelector } from 'app/redux';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
+import { selectAuthState } from 'features/auth/authSlice';
 import { UserService } from '../infrastructure/http/userService';
 
 export type UpdateProfileData = {
@@ -15,11 +16,11 @@ export type UpdateProfileManager = {
 };
 
 export const useUpdateProfile = (): UpdateProfileManager => {
-  const session = useAuthState();
+  const { token, user } = useAppSelector(selectAuthState);
   const { showSuccessNotification, showErrorNotification } = useShowNotification();
 
   const updateProfile = async (data: UpdateProfileData, onSuccess?: () => void, onError?: () => void) => {
-    if (!session) {
+    if (!token || !user) {
       showErrorNotification('Unauthorized');
       return;
     }
@@ -27,7 +28,7 @@ export const useUpdateProfile = (): UpdateProfileManager => {
     const userService = new UserService();
 
     try {
-      await userService.updateProfile(session.user.id, data, session.token);
+      await userService.updateProfile(user.id, data, token);
 
       showSuccessNotification('Profile updated.');
 

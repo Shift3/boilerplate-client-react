@@ -15,7 +15,7 @@ export const userApi = createApi({
     baseUrl: `${environment.apiRoute}/users`,
 
     prepareHeaders: (headers: Headers, { getState }) => {
-      const token = (getState() as RootState).auth.session?.token;
+      const { token } = (getState() as RootState).auth;
 
       if (token) {
         headers.set('authorization', `Bearer ${token}`);

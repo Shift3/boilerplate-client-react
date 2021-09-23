@@ -1,5 +1,5 @@
 import { LogInForm } from 'components/loginForm';
-import { useLogin } from 'core/modules/auth/application/useLogin';
+import { useLoginMutation } from 'features/auth/authApi';
 import { FC } from 'react';
 import { Button } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
@@ -60,12 +60,12 @@ const CreateAccountButton = styled(Button)``;
 
 export const LogInPage: FC = () => {
   const history = useHistory();
-  const { loginUser } = useLogin();
+  const [login] = useLoginMutation();
 
-  const onSubmit = (formData: ILogInFormData) => {
+  const onSubmit = async (formData: ILogInFormData) => {
     const credentials = { ...formData };
-    const onSuccess = () => history.push('/');
-    loginUser(credentials, onSuccess);
+    await login(credentials).unwrap();
+    history.push('/agents');
   };
 
   const onCancel = () => history.push('/auth/login');
