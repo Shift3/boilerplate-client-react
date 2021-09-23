@@ -41,7 +41,7 @@ const schema = yup.object().shape({
 
 export const AgentDetailForm: FC<Props> = ({
   defaultValues = {},
-  submitButtonLabel = 'CREATE',
+  submitButtonLabel = 'SUBMIT',
   cancelButtonLabel = 'CANCEL',
   onSubmit,
   onCancel,
@@ -61,6 +61,7 @@ export const AgentDetailForm: FC<Props> = ({
     },
   });
 
+  // Trigger validation on first render.
   useEffect(() => {
     trigger();
   }, [trigger]);

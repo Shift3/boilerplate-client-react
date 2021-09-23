@@ -3,6 +3,11 @@ import { RootState } from 'app/redux';
 import { User } from 'common/models/user';
 import { environment } from 'environment';
 
+export type CreateUserRequest = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>;
+export type UpdateUserRequest = Pick<User, 'id' | 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role'>;
+export type ForgotPasswordRequest = Pick<User, 'email'>;
+export type ResendActivationEmailRequest = Pick<User, 'id'>;
+
 export const userApi = createApi({
   reducerPath: 'userApi',
 
@@ -28,13 +33,24 @@ export const userApi = createApi({
       providesTags: ['User'],
     }),
 
-    createUser: builder.mutation<
-      User,
-      Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>
-    >({
+    getUserById: builder.query<User, number | string>({
+      query: (id) => `/${id}`,
+      providesTags: ['User'],
+    }),
+
+    createUser: builder.mutation<User, CreateUserRequest>({
       query: (payload) => ({
         url: '/',
         method: 'POST',
+        body: payload,
+      }),
+      invalidatesTags: ['User'],
+    }),
+
+    updateUser: builder.mutation<User, UpdateUserRequest>({
+      query: ({ id, ...payload }) => ({
+        url: `/${id}`,
+        method: 'PUT',
         body: payload,
       }),
       invalidatesTags: ['User'],
@@ -48,7 +64,7 @@ export const userApi = createApi({
       invalidatesTags: ['User'],
     }),
 
-    forgotPassword: builder.mutation<void, Pick<User, 'email'>>({
+    forgotPassword: builder.mutation<void, ForgotPasswordRequest>({
       query: (payload) => ({
         url: '/forgot-password',
         method: 'POST',
@@ -56,20 +72,20 @@ export const userApi = createApi({
       }),
     }),
 
-    resendActivationEmail: builder.mutation<void, Pick<User, 'id'>>({
+    resendActivationEmail: builder.mutation<void, ResendActivationEmailRequest>({
       query: ({ id }) => ({
         url: `/resend-activation-email/${id}`,
         method: 'GET',
       }),
     }),
-
-    // updateUser
   }),
 });
 
 export const {
-  useCreateUserMutation,
   useGetUsersQuery,
+  useGetUserByIdQuery,
+  useCreateUserMutation,
+  useUpdateUserMutation,
   useDeleteUserMutation,
   useForgotPasswordMutation,
   useResendActivationEmailMutation,
