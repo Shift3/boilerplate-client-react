@@ -9,8 +9,8 @@ This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react
 
 - [Boilerplate Client React](#boilerplate-client-react)
   - [Staging URL](#staging-url)
-      - [Quick Start](#quick-start)
-      - [Running unit tests](#running-unit-tests)
+  - [Quick Start](#quick-start)
+    - [Running unit tests](#running-unit-tests)
     - [Running test coverage](#running-test-coverage)
     - [Build](#build)
   - [Learn More](#learn-more)
@@ -39,7 +39,7 @@ This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react
 
 <https://boilerplate-client-angular.shift3sandbox.com/>
 
-#### Quick Start
+## Quick Start
 
 To start the project, make sure yarn is installed on your local machine. If you have already installed our [laptop script](https://github.com/Shift3/laptop), you should already have yarn.
 
@@ -51,7 +51,7 @@ Open [http://localhost:4200](http://localhost:4200) to view the project in the b
 The page will reload if you make edits. 
 You will also see any lint errors in the console.
 
-#### Running unit tests
+### Running unit tests
 
 Run `yarn test` to execute the unit test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
