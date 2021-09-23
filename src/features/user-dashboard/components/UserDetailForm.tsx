@@ -130,7 +130,7 @@ export const UserDetailForm: FC<Props> = ({
           custom
           aria-label='Select User Agency'
           {...register('agency.agencyName')}
-          isInvalid={!!errors.role?.roleName}
+          isInvalid={!!errors.agency?.agencyName}
         >
           {availableAgencies.map((agency) => (
             <option key={agency.id} value={agency.agencyName}>
