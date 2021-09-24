@@ -24,6 +24,8 @@ This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react
     - [Development Server](#development-server)
     - [Docker](#docker)
     - [Template Repository](#template-repository)
+      - [Updating Code Owners](#updating-code-owners)
+      - [Updating Issue Templates](#updating-issue-templates)
     - [Initializing the Project](#initializing-the-project)
     - [Prettier](#prettier)
     - [CI](#ci)
@@ -195,6 +197,24 @@ This project can be run as a Docker container (it is not recommended for involve
 ### Template Repository
 
 This project is configured as a [template repository](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template#about-repository-templates). It creates one commit in the new project based on the template instead of the entire original boilerplate history.
+
+#### Updating Code Owners
+
+In the repository there should be a `.github` folder with a `CODEOWNERS` file inside. This file represents who the owners of the repository code are. When you clone this repo, or use it as a template for a new project, you need to update this file to represent the new owners (you and whomever may be on your project). Simply remove the current owners in the file, and replace them with you and your teamates! The syntax is simply:
+
+```
+@<github username>
+```
+
+Be sure to add the github usernames of all developers on your project. Now anytime a pull request is created, all codeowners are added as reviews automatically! It also becomes a reference point when the project is picked back up in the future. We can easily see who has the best context for the code even years down the line. For more information you can click this link:
+
+[Github Codeowners](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/about-code-owners)
+
+#### Updating Issue Templates
+
+Currently the issue templates may have some things you don't want or need in your new project. This can be anything from the tags being set, to the person assigned for each issue. Be sure to go to the settings for the repository, and click `Set up templates` to configure them in a way that suits your needs. For more information you can click this link:
+
+[Setting up issue templates](https://docs.github.com/en/free-pro-team@latest/github/building-a-strong-community/configuring-issue-templates-for-your-repository)
 
 ### Initializing the Project
 
