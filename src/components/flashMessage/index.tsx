@@ -15,6 +15,7 @@ const mapNotificationTypeToAlertVariant = {
   [NotificationType.Error]: 'danger',
   [NotificationType.Warning]: 'warning',
   [NotificationType.Info]: 'info',
+  [NotificationType.Delete]: 'delete',
 };
 
 export const FlashMessage: FC = () => {
@@ -22,9 +23,7 @@ export const FlashMessage: FC = () => {
   const { dismissNotification } = useDismissNotification();
 
   return (
-    <FlashMessageContainer
-      className='position-absolute'
-      data-testid='flashMessageContainer'>
+    <FlashMessageContainer className='position-absolute' data-testid='flashMessageContainer'>
       {notifications.map((notification) => (
         <Alert
           key={notification.id}
