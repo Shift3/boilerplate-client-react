@@ -25,7 +25,6 @@ export const AgentListView: FC = () => {
 
   const navigateToUpdateView = (agent: Agent) => {
     history.push(`/agents/update-agent/${agent.id}`);
-    showSuccessNotification('Agent deleted.');
   };
 
   const handleDelete = (agent: Agent) => {

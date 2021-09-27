@@ -24,7 +24,6 @@ export const AgencyListView: FC = () => {
 
   const handleDelete = (agency: Agency) => {
     const message = `Delete ${agency.agencyName}?`;
-    showSuccessNotification('Agency deleted.');
 
     const onConfirm = () => {
       deleteAgency(agency.id);
