@@ -21,15 +21,16 @@ export const AgentListView: FC = () => {
   const { data: agents = [] } = useGetAgentsQuery();
   const [deleteAgent] = useDeleteAgentMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
-  const { showDeleteNotification } = useShowNotification();
+  const { showSuccessNotification } = useShowNotification();
 
   const navigateToUpdateView = (agent: Agent) => {
     history.push(`/agents/update-agent/${agent.id}`);
+    showSuccessNotification('Agent deleted.');
   };
 
   const handleDelete = (agent: Agent) => {
     const message = `Delete ${agent.name}?`;
-    showDeleteNotification('Agent deleted.');
+    showSuccessNotification('Agent deleted.');
 
     const onConfirm = () => {
       deleteAgent(agent.id);

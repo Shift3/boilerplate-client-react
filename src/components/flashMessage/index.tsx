@@ -15,7 +15,6 @@ const mapNotificationTypeToAlertVariant = {
   [NotificationType.Error]: 'danger',
   [NotificationType.Warning]: 'warning',
   [NotificationType.Info]: 'info',
-  [NotificationType.Delete]: 'delete',
 };
 
 export const FlashMessage: FC = () => {

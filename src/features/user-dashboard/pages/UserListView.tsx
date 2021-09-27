@@ -32,7 +32,7 @@ export const UserListView: FC = () => {
   const [forgotPassword] = useForgotPasswordMutation();
   const [resendActivationEmail] = useResendActivationEmailMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
-  const { showDeleteNotification } = useShowNotification();
+  const { showSuccessNotification } = useShowNotification();
 
   const getUsersFullName = (user: User) => `${user.firstName} ${user.lastName}`;
 
@@ -51,7 +51,7 @@ export const UserListView: FC = () => {
 
   const handleDelete = (user: User) => {
     const message = `Delete ${getUsersFullName(user)}?`;
-    showDeleteNotification('User deleted.');
+    showSuccessNotification('User deleted.');
 
     const onConfirm = () => {
       deleteUser(user.id);

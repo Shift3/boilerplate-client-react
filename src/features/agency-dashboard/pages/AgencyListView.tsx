@@ -20,11 +20,11 @@ export const AgencyListView: FC = () => {
   const { data: agencies = [] } = useGetAgenciesQuery();
   const [deleteAgency] = useDeleteAgencyMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
-  const { showDeleteNotification } = useShowNotification();
+  const { showSuccessNotification } = useShowNotification();
 
   const handleDelete = (agency: Agency) => {
     const message = `Delete ${agency.agencyName}?`;
-    showDeleteNotification('Agency deleted.');
+    showSuccessNotification('Agency deleted.');
 
     const onConfirm = () => {
       deleteAgency(agency.id);
