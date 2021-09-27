@@ -13,6 +13,7 @@ import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { Link, useHistory } from 'react-router-dom';
+import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 
 type UserTableItem = {
   id: number;
@@ -31,6 +32,7 @@ export const UserListView: FC = () => {
   const [forgotPassword] = useForgotPasswordMutation();
   const [resendActivationEmail] = useResendActivationEmailMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
+  const { showDeleteNotification } = useShowNotification();
 
   const getUsersFullName = (user: User) => `${user.firstName} ${user.lastName}`;
 
@@ -49,6 +51,7 @@ export const UserListView: FC = () => {
 
   const handleDelete = (user: User) => {
     const message = `Delete ${getUsersFullName(user)}?`;
+    showDeleteNotification('User deleted.');
 
     const onConfirm = () => {
       deleteUser(user.id);
