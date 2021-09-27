@@ -30,11 +30,11 @@ export const AgentListView: FC = () => {
 
   const handleDelete = (agent: Agent) => {
     const message = `Delete ${agent.name}?`;
-    showSuccessNotification('Agent deleted.');
 
     const onConfirm = () => {
       deleteAgent(agent.id);
       closeModal();
+      showSuccessNotification('Agent deleted.');
     };
 
     const onCancel = () => closeModal();

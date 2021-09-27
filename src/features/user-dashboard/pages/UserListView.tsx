@@ -51,11 +51,11 @@ export const UserListView: FC = () => {
 
   const handleDelete = (user: User) => {
     const message = `Delete ${getUsersFullName(user)}?`;
-    showSuccessNotification('User deleted.');
 
     const onConfirm = () => {
       deleteUser(user.id);
       closeModal();
+      showSuccessNotification('User deleted.');
     };
 
     const onCancel = () => closeModal();

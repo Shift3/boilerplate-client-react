@@ -29,6 +29,7 @@ export const AgencyListView: FC = () => {
     const onConfirm = () => {
       deleteAgency(agency.id);
       closeModal();
+      showSuccessNotification('Agency deleted.');
     };
 
     const onCancel = () => closeModal();
