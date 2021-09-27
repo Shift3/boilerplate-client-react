@@ -50,6 +50,8 @@ export interface IShowNotificationFacade {
    *                                      `autoDismiss` is true. Default 5000 ms.
    */
   showInfoNotification: (message: string, autoDismiss?: boolean, dismissAfterMillis?: number) => void;
+
+  showDeleteNotification: (message: string, autoDismiss?: boolean, dismissAfterMillis?: number) => void;
 }
 
 /**
@@ -94,10 +96,16 @@ export const useShowNotification = (): IShowNotificationFacade => {
     [showNotification],
   );
 
+  const showDeleteNotification = useCallback (
+    (message: string, autoDismiss: boolean = true, dismissAfterMillis: number = 5000) =>
+      showNotification(message, NotificationType.Delete, autoDismiss, dismissAfterMillis),
+    [showNotification]
+  );
   return {
     showSuccessNotification,
     showErrorNotification,
     showWarningNotification,
     showInfoNotification,
+    showDeleteNotification,
   };
 };
