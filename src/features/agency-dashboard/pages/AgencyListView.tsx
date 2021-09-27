@@ -7,6 +7,7 @@ import { useDeleteAgencyMutation, useGetAgenciesQuery } from 'features/agency-da
 import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 
 type AgencyTableItem = {
   id: number;
@@ -19,6 +20,7 @@ export const AgencyListView: FC = () => {
   const { data: agencies = [] } = useGetAgenciesQuery();
   const [deleteAgency] = useDeleteAgencyMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
+  const { showSuccessNotification } = useShowNotification();
 
   const handleDelete = (agency: Agency) => {
     const message = `Delete ${agency.agencyName}?`;
@@ -26,6 +28,7 @@ export const AgencyListView: FC = () => {
     const onConfirm = () => {
       deleteAgency(agency.id);
       closeModal();
+      showSuccessNotification('Agency deleted.');
     };
 
     const onCancel = () => closeModal();
