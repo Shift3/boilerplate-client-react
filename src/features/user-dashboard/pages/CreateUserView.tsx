@@ -24,7 +24,7 @@ export const CreateUserView: FC = () => {
 
   const handleFormSubmit = async (data: FormData) => {
     try {
-      await createUser(data).unwrap();
+      await createUser({ ...data, profilePicture: '' }).unwrap();
       showSuccessNotification('User created.');
       history.push('/users');
     } catch (error) {
