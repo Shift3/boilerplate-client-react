@@ -42,6 +42,7 @@ export const UserListView: FC = () => {
     const onConfirm = () => {
       resendActivationEmail({ id: user.id });
       closeModal();
+      showSuccessNotification('Activation email has been sent.');
     };
 
     const onCancel = () => closeModal();
