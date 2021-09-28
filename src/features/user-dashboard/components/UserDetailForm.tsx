@@ -51,6 +51,7 @@ export const UserDetailForm: FC<Props> = ({
     mode: 'all',
     defaultValues: {
       ...defaultValues,
+      profilePicture: '',
       // Make dropdowns default to empty instead of first option if no valid default passed.
       role: {
         roleName: defaultValues?.role?.roleName ?? '',
