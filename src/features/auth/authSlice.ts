@@ -1,41 +1,33 @@
-import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from 'app/redux';
-import { Session, User } from 'common/models';
-import { authApi } from './authApi';
+import { User } from 'common/models';
+import * as authLocalStorage from './authLocalStorage';
 
-export interface SliceState {
+export interface AuthState {
   token: string | null;
   user: User | null;
 }
 
+const initialState: AuthState = authLocalStorage.getAuthState() ?? {
+  token: null,
+  user: null,
+};
+
 export const authSlice = createSlice({
   name: 'auth',
-  initialState: { token: null, user: null } as SliceState,
+  initialState,
   reducers: {
-    logout: (state: SliceState) => {
+    userLoggedIn: (state: AuthState, action: PayloadAction<AuthState>) => {
+      const { token, user } = action.payload;
+      state.token = token;
+      state.user = user;
+    },
+
+    userLoggedOut: (state: AuthState) => {
       state.token = null;
       state.user = null;
     },
   },
-  extraReducers: (builder) => {
-    builder.addMatcher(authApi.endpoints.login.matchFulfilled, (state: SliceState, action: PayloadAction<Session>) => {
-      const { jwtToken, user } = action.payload;
-      state.token = jwtToken;
-      state.user = user;
-    });
-
-    builder.addMatcher(
-      isAnyOf(
-        authApi.endpoints.logout.matchFulfilled,
-        authApi.endpoints.logout.matchRejected,
-        authApi.endpoints.login.matchRejected,
-      ),
-      (state: SliceState) => {
-        state.token = null;
-        state.user = null;
-      },
-    );
-  },
 });
 
-export const selectAuthState = (state: RootState): SliceState => state.auth;
+export const selectAuthState = (state: RootState): AuthState => state.auth;
