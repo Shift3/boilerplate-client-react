@@ -1,14 +1,13 @@
-import { useAppSelector } from 'app/redux';
 import { RoleType } from 'common/models';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
-import { selectAuthState } from 'features/auth/authSlice';
+import { useAuth } from 'features/auth/hooks';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
 type Props = RouteProps & { requiredRoles?: RoleType[] };
 
 export const PrivateRoute: React.FC<Props> = ({ requiredRoles = [], ...rest }) => {
   const { showErrorNotification } = useShowNotification();
-  const { user } = useAppSelector(selectAuthState);
+  const { user } = useAuth();
 
   if (!user) {
     return <Redirect to='/auth/login' />;

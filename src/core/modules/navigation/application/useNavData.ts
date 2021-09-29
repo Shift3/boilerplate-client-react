@@ -1,6 +1,5 @@
 import { IconName } from '@fortawesome/fontawesome-svg-core';
-import { useAppSelector } from 'app/redux';
-import { selectAuthState } from 'features/auth/authSlice';
+import { useAuth } from 'features/auth/hooks';
 
 export interface IUserProfile {
   firstName: string;
@@ -21,7 +20,7 @@ export interface INavData {
 }
 
 export const useNavData = (): INavData => {
-  const { user } = useAppSelector(selectAuthState);
+  const { user } = useAuth();
 
   const navLinks: INavLink[] = [
     {

@@ -1,6 +1,5 @@
-import { useAppSelector } from 'app/redux';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
-import { selectAuthState } from 'features/auth/authSlice';
+import { useAuth } from 'features/auth/hooks';
 import { UserService } from '../infrastructure/http/userService';
 
 export type UpdateProfileData = {
@@ -16,7 +15,7 @@ export type UpdateProfileManager = {
 };
 
 export const useUpdateProfile = (): UpdateProfileManager => {
-  const { token, user } = useAppSelector(selectAuthState);
+  const { token, user } = useAuth();
   const { showSuccessNotification, showErrorNotification } = useShowNotification();
 
   const updateProfile = async (data: UpdateProfileData, onSuccess?: () => void, onError?: () => void) => {

@@ -1,8 +1,7 @@
-import { useAppSelector } from 'app/redux';
 import { UpdateUserProfileFormData } from 'components/updateUserProfileForm/types';
 import { useUpdateProfile } from 'core/modules/user/application/useUpdateProfile';
 import { useLogoutMutation } from 'features/auth/authApi';
-import { selectAuthState } from 'features/auth/authSlice';
+import { useAuth } from 'features/auth/hooks';
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -20,7 +19,7 @@ export const Wrapper = styled.div`
 
 export const UpdateUserProfilePage: FC = () => {
   const history = useHistory();
-  const { user } = useAppSelector(selectAuthState);
+  const { user } = useAuth();
   const [logout] = useLogoutMutation();
   const { updateProfile } = useUpdateProfile();
 
