@@ -1,7 +1,6 @@
 import { UpdateUserProfileFormData } from 'components/updateUserProfileForm/types';
 import { useUpdateProfile } from 'core/modules/user/application/useUpdateProfile';
-import { useLogoutMutation } from 'features/auth/authApi';
-import { useAuth } from 'features/auth/hooks';
+import { useAuth, useLogout } from 'features/auth/hooks';
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -20,7 +19,7 @@ export const Wrapper = styled.div`
 export const UpdateUserProfilePage: FC = () => {
   const history = useHistory();
   const { user } = useAuth();
-  const [logout] = useLogoutMutation();
+  const { logout } = useLogout();
   const { updateProfile } = useUpdateProfile();
 
   const onSubmit = async (formData: UpdateUserProfileFormData) => {
@@ -29,7 +28,6 @@ export const UpdateUserProfilePage: FC = () => {
     const onSuccess = () => {
       if (user && user.email !== formData.email) {
         logout();
-        history.push('/auth/login');
       } else {
         history.goBack();
       }
