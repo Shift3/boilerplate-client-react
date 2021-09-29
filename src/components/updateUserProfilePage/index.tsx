@@ -1,7 +1,6 @@
 import { UpdateUserProfileFormData } from 'components/updateUserProfileForm/types';
-import { useAuthState } from 'core/modules/auth/application/useAuthState';
-import { useLogout } from 'core/modules/auth/application/useLogout';
 import { useUpdateProfile } from 'core/modules/user/application/useUpdateProfile';
+import { useAuth, useLogout } from 'features/auth/hooks';
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -19,17 +18,16 @@ export const Wrapper = styled.div`
 
 export const UpdateUserProfilePage: FC = () => {
   const history = useHistory();
-  const session = useAuthState();
-  const { logoutUser } = useLogout();
+  const { user } = useAuth();
+  const { logout } = useLogout();
   const { updateProfile } = useUpdateProfile();
 
   const onSubmit = async (formData: UpdateUserProfileFormData) => {
     const data = { ...formData, profilePicture: '' };
 
     const onSuccess = () => {
-      if (session && session.user.email !== formData.email) {
-        logoutUser();
-        history.push('/auth/login');
+      if (user && user.email !== formData.email) {
+        logout();
       } else {
         history.goBack();
       }
@@ -46,9 +44,9 @@ export const UpdateUserProfilePage: FC = () => {
         onSubmit={onSubmit}
         onCancel={onCancel}
         defaultValues={{
-          firstName: session!.user.firstName,
-          lastName: session!.user.lastName,
-          email: session!.user.email,
+          firstName: user?.firstName ?? '',
+          lastName: user?.lastName ?? '',
+          email: user?.email ?? '',
         }}
       />
     </Wrapper>

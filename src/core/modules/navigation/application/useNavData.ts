@@ -1,6 +1,5 @@
 import { IconName } from '@fortawesome/fontawesome-svg-core';
-import { useAuthState } from 'core/modules/auth/application/useAuthState';
-import { User } from 'core/modules/user/domain/user';
+import { useAuth } from 'features/auth/hooks';
 
 export interface IUserProfile {
   firstName: string;
@@ -21,40 +20,31 @@ export interface INavData {
 }
 
 export const useNavData = (): INavData => {
-  const session = useAuthState();
-  const user = session?.user ? User.fromPlainObject(session.user) : null;
-
-  const authUser = user
-    ? {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        profilePicture: user.profilePicture,
-      }
-    : null;
+  const { user } = useAuth();
 
   const navLinks: INavLink[] = [
     {
       icon: 'stethoscope',
       label: 'Directory',
       path: '/agents',
-      canUserActivate: user?.role.canViewAgents() ?? false,
+      canUserActivate: user?.role.roleName !== '',
     },
     {
       icon: 'users',
       label: 'Users',
       path: '/users',
-      canUserActivate: user?.role.canViewUsers() ?? false,
+      canUserActivate: user?.role.roleName === 'Super Administrator' || user?.role.roleName === 'Admin',
     },
     {
       icon: 'building',
       label: 'Agencies',
       path: '/agencies',
-      canUserActivate: user?.role.canViewAgencies() ?? false,
+      canUserActivate: user?.role.roleName === 'Super Administrator',
     },
   ];
 
   return {
-    userProfile: authUser,
+    userProfile: user,
     navLinks,
   };
 };

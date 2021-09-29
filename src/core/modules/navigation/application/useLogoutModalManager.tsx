@@ -1,8 +1,5 @@
-// React imports
+import { useLogout } from 'features/auth/hooks';
 import { useState } from 'react';
-
-// App imports
-import { useLogout } from 'core/modules/auth/application/useLogout';
 
 export interface ILogoutModalManager {
   /**
@@ -33,7 +30,7 @@ export interface ILogoutModalManager {
 
 export const useLogoutModalManager = (): ILogoutModalManager => {
   const [show, setShow] = useState(false);
-  const { logoutUser } = useLogout();
+  const { logout } = useLogout();
 
   const openModal = () => setShow(true);
 
@@ -42,7 +39,7 @@ export const useLogoutModalManager = (): ILogoutModalManager => {
   const onCancel = () => closeModal();
 
   const onLogout = () => {
-    logoutUser();
+    logout();
     closeModal();
   };
 

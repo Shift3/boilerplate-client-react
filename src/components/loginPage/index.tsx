@@ -1,5 +1,5 @@
 import { LogInForm } from 'components/loginForm';
-import { useLogin } from 'core/modules/auth/application/useLogin';
+import { useLogin } from 'features/auth/hooks';
 import { FC } from 'react';
 import { Button } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
@@ -60,18 +60,15 @@ const CreateAccountButton = styled(Button)``;
 
 export const LogInPage: FC = () => {
   const history = useHistory();
-  const { loginUser } = useLogin();
+  const { login } = useLogin();
 
-  const onSubmit = (formData: ILogInFormData) => {
-    const credentials = { ...formData };
-    const onSuccess = () => history.push('/');
-    loginUser(credentials, onSuccess);
+  const onSubmit = async (credentials: ILogInFormData) => {
+    login(credentials);
   };
 
   const onCancel = () => history.push('/auth/login');
 
-  const { push } = useHistory();
-  const navigateToSignup = () => push('/auth/signup');
+  const navigateToSignup = () => history.push('/auth/signup');
 
   return (
     <Wrapper data-testid='wrapper'>
