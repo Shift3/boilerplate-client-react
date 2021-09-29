@@ -8,7 +8,7 @@ import { roleApi } from 'features/user-dashboard/roleApi';
 import { userApi } from 'features/user-dashboard/userApi';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const createStore = (options?: ConfigureStoreOptions['preloadedState'] | undefined) =>
+export const createAppStore = (options?: ConfigureStoreOptions['preloadedState'] | undefined) =>
   configureStore({
     reducer: {
       auth: authSlice.reducer,
@@ -32,7 +32,7 @@ export const createStore = (options?: ConfigureStoreOptions['preloadedState'] | 
     ...options,
   });
 
-export const store = createStore();
+export const store = createAppStore();
 
 export type RootState = ReturnType<typeof store.getState>;
 

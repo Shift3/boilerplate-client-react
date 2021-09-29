@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { LogInPage } from '../index';
 import { expectInDocByTestId, expectInnerHTMLByTestId, clickNavigateByTestId } from '../../../utils/test';
 import { Provider } from 'react-redux';
-import { createStore } from 'app/redux';
+import { createAppStore } from 'app/redux';
 
 const renderInitialTestDOM = () =>
   render(
-    <Provider store={createStore()}>
+    <Provider store={createAppStore()}>
       <Router>
         <Switch>
           <Route exact path='/' component={LogInPage} />
@@ -18,7 +18,7 @@ const renderInitialTestDOM = () =>
 
 const renderNavigationTestDOM = () =>
   render(
-    <Provider store={createStore()}>
+    <Provider store={createAppStore()}>
       <Router>
         <Switch>
           <Route exact path='/' component={LogInPage} />

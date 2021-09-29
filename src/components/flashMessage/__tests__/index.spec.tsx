@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { createStore } from 'app/redux';
+import { createAppStore } from 'app/redux';
 import { Provider } from 'react-redux';
 import { FlashMessage } from '..';
 import { expectInDocByTestId } from '../../../utils/test';
@@ -17,7 +17,7 @@ import { expectInDocByTestId } from '../../../utils/test';
 
 describe('<FlashMessage/>', () => {
   render(
-    <Provider store={createStore()}>
+    <Provider store={createAppStore()}>
       <FlashMessage />
     </Provider>,
   );

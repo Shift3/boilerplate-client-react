@@ -1,6 +1,6 @@
 import { Store } from '@reduxjs/toolkit';
 import { render, screen } from '@testing-library/react';
-import { createStore } from 'app/redux';
+import { createAppStore } from 'app/redux';
 import { RoleType } from 'common/models';
 import { roleFactory, userFactory } from 'common/models/factories';
 import { createMemoryHistory, MemoryHistory } from 'history';
@@ -28,7 +28,7 @@ describe('PrivateRoute', () => {
     let store: Store;
 
     beforeEach(() => {
-      store = createStore();
+      store = createAppStore();
       history = createMemoryHistory();
       history.push(testPath);
 
@@ -56,7 +56,7 @@ describe('PrivateRoute', () => {
     const auth = { token: 'faketoken', user: basicUser };
 
     beforeEach(() => {
-      store = createStore({ preloadedState: { auth } });
+      store = createAppStore({ preloadedState: { auth } });
       history = createMemoryHistory();
       history.push(testPath);
 
@@ -85,7 +85,7 @@ describe('PrivateRoute', () => {
     const requiredRoles: RoleType[] = ['Super Administrator', 'Admin'];
 
     beforeEach(() => {
-      store = createStore({ preloadedState: { auth } });
+      store = createAppStore({ preloadedState: { auth } });
       history = createMemoryHistory();
       history.push(testPath);
 
@@ -114,7 +114,7 @@ describe('PrivateRoute', () => {
     const requiredRoles: RoleType[] = ['Super Administrator', 'Admin'];
 
     beforeEach(() => {
-      store = createStore({ preloadedState: { auth } });
+      store = createAppStore({ preloadedState: { auth } });
       history = createMemoryHistory();
       history.push(testPath);
 
