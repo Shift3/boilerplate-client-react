@@ -10,7 +10,7 @@ import {
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 import * as Sentry from '@sentry/react';
-import store from 'app/redux/store';
+import { store } from 'app/redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
