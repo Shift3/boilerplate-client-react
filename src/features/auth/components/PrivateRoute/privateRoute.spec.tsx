@@ -2,7 +2,7 @@ import { Store } from '@reduxjs/toolkit';
 import { render, screen } from '@testing-library/react';
 import { createAppStore } from 'app/redux';
 import { RoleType } from 'common/models';
-import { roleFactory, userFactory } from 'common/models/factories';
+import { RoleFactory, UserFactory } from 'common/models/testing-factories';
 import { createMemoryHistory, MemoryHistory } from 'history';
 import { FC } from 'react';
 import { Provider } from 'react-redux';
@@ -14,12 +14,12 @@ describe('PrivateRoute', () => {
   const agentListViewPath = '/agents';
   const testPath = '/test/path';
 
-  const editorRole = roleFactory.build({ roleName: 'Editor' });
-  const adminRole = roleFactory.build({ roleName: 'Admin' });
+  const editorRole = RoleFactory.build({ roleName: 'Editor' });
+  const adminRole = RoleFactory.build({ roleName: 'Admin' });
 
-  const basicUser = userFactory.build();
-  const editorUser = userFactory.build({}, { associations: { role: editorRole } });
-  const adminUser = userFactory.build({}, { associations: { role: adminRole } });
+  const basicUser = UserFactory.build();
+  const editorUser = UserFactory.build({}, { associations: { role: editorRole } });
+  const adminUser = UserFactory.build({}, { associations: { role: adminRole } });
 
   const TestComponent: FC = () => <div data-testid='test-component'></div>;
 
