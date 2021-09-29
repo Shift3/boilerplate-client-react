@@ -21,12 +21,12 @@ export const TopNav: FC<NavProps> = ({ onNavToggle }) => {
   const { show, openModal, onCancel, onLogout } = useLogoutModalManager();
 
   return (
-    <Navbar collapseOnSelect expand='lg' className='shadow'>
+    <Navbar collapseOnSelect expand='lg' className='shadow px-3'>
       <NavLogo />
       {userProfile ? (
         <>
           <Navbar.Toggle aria-controls='responsive-navbar-nav' />
-          <Navbar.Collapse id='responsive-navbar-nav'>
+          <Navbar.Collapse id='responsive-navbar-nav' className='justify-content-between'>
             <Nav className='mr-auto'>
               {navLinks
                 .filter((link) => link.canUserActivate)

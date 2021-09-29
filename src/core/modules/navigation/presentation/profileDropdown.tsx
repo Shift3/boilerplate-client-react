@@ -73,7 +73,7 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({
   );
 
   return (
-    <ProfileDropDownContainer id='profile-nav-dropdown' title={dropdownTitle} alignRight={alignRight}>
+    <ProfileDropDownContainer id='profile-nav-dropdown' title={dropdownTitle} align={alignRight ? 'end' : 'start'}>
       <ProfileDropdownMenuContainer>
         <ProfileInfoContainer>
           <img src={portraitPlaceholder} alt={`${profile.firstName} ${profile.lastName}`} />
