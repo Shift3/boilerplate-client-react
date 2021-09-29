@@ -40,7 +40,7 @@ export const SideNav: FC<NavProps> = ({ onNavToggle }) => {
               {navLinks
                 .filter((link) => link.canUserActivate)
                 .map((link) => (
-                  <NavLink link={link} />
+                  <NavLink key={link.label} link={link} />
                 ))}
             </Nav>
             <Nav>
