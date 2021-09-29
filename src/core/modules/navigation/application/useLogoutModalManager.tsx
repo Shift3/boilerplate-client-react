@@ -1,4 +1,4 @@
-import { useLogoutMutation } from 'features/auth/authApi';
+import { useLogout } from 'features/auth/hooks/useLogout';
 import { useState } from 'react';
 
 export interface ILogoutModalManager {
@@ -30,7 +30,7 @@ export interface ILogoutModalManager {
 
 export const useLogoutModalManager = (): ILogoutModalManager => {
   const [show, setShow] = useState(false);
-  const [logout] = useLogoutMutation();
+  const { logout } = useLogout();
 
   const openModal = () => setShow(true);
 
