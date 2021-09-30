@@ -1,3 +1,4 @@
+import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { FC, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
@@ -15,7 +16,7 @@ export const UpdateAgentView: FC = () => {
   const history = useHistory();
   const { showErrorNotification, showSuccessNotification } = useShowNotification();
   const [updateAgent] = useUpdateAgentMutation();
-  const { data: agent, isLoading, error } = useGetAgentByIdQuery(id);
+  const { data: agent, isLoading: isLoadingAgent, error } = useGetAgentByIdQuery(id);
 
   useEffect(() => {
     if (error) {
@@ -41,8 +42,7 @@ export const UpdateAgentView: FC = () => {
 
   return (
     <Container className='d-flex justify-content-center'>
-      {/* TODO: add loading spinner */}
-      {!isLoading && (
+      <WithLoadingOverlay isLoading={isLoadingAgent}>
         <StyledFormWrapper>
           <StyledFormTitle>Update Agent</StyledFormTitle>
           <AgentDetailForm
@@ -52,7 +52,7 @@ export const UpdateAgentView: FC = () => {
             onCancel={handleFormCancel}
           />
         </StyledFormWrapper>
-      )}
+      </WithLoadingOverlay>
     </Container>
   );
 };
