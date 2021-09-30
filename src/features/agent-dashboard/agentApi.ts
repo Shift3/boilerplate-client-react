@@ -29,6 +29,11 @@ export const agentApi = createApi({
     },
   }),
 
+  // Always refetch data, don't used cache.
+  keepUnusedDataFor: 0,
+  refetchOnMountOrArgChange: true,
+  refetchOnReconnect: true,
+
   tagTypes: ['Agent'],
 
   endpoints: (builder) => ({

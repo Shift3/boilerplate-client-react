@@ -8,6 +8,7 @@ import Container from 'react-bootstrap/Container';
 import { useDeleteAgentMutation, useGetAgentsQuery } from '../agentApi';
 import { Link, useHistory } from 'react-router-dom';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
+import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 
 type AgentTableItem = {
   id: number;
@@ -17,7 +18,7 @@ type AgentTableItem = {
 
 export const AgentListView: FC = () => {
   const history = useHistory();
-  const { data: agents = [] } = useGetAgentsQuery();
+  const { data: agents = [], isLoading: isLoadingAgents } = useGetAgentsQuery();
   const [deleteAgent] = useDeleteAgentMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
   const { showSuccessNotification } = useShowNotification();
@@ -80,7 +81,9 @@ export const AgentListView: FC = () => {
           <Button>ADD AGENT</Button>
         </Link>
       </div>
-      <GenericTable<AgentTableItem> headers={headers} items={items} customRenderers={customRenderers} />
+      <WithLoadingOverlay isLoading={isLoadingAgents}>
+        <GenericTable<AgentTableItem> headers={headers} items={items} customRenderers={customRenderers} />
+      </WithLoadingOverlay>
       <ConfirmationModal />
     </Container>
   );

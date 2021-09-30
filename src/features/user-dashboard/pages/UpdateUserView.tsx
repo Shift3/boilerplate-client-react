@@ -1,3 +1,4 @@
+import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { useGetAgenciesQuery } from 'features/agency-dashboard/agencyApi';
 import { FC, useEffect } from 'react';
@@ -45,12 +46,9 @@ export const UpdateUserView: FC = () => {
     }
   };
 
-  const isLoading = isLoadingUser || isLoadingRoles || isLoadingAgencies;
-
   return (
     <Container className='d-flex justify-content-center'>
-      {/* TODO: add loading spinner */}
-      {!isLoading && (
+      <WithLoadingOverlay isLoading={isLoadingUser || isLoadingRoles || isLoadingAgencies}>
         <StyledFormWrapper>
           <StyledFormTitle>Update User</StyledFormTitle>
           <UserDetailForm
@@ -62,7 +60,7 @@ export const UpdateUserView: FC = () => {
             onCancel={handleFormCancel}
           />
         </StyledFormWrapper>
-      )}
+      </WithLoadingOverlay>
     </Container>
   );
 };

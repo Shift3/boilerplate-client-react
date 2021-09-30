@@ -13,6 +13,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { Link, useHistory } from 'react-router-dom';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
+import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 
 type UserTableItem = {
   id: number;
@@ -26,7 +27,7 @@ type UserTableItem = {
 
 export const UserListView: FC = () => {
   const history = useHistory();
-  const { data: users = [] } = useGetUsersQuery();
+  const { data: users = [], isLoading: isLoadingUsers } = useGetUsersQuery();
   const [deleteUser] = useDeleteUserMutation();
   const [forgotPassword] = useForgotPasswordMutation();
   const [resendActivationEmail] = useResendActivationEmailMutation();
@@ -146,7 +147,9 @@ export const UserListView: FC = () => {
           <Button>ADD USER</Button>
         </Link>
       </div>
-      <GenericTable<UserTableItem> headers={headers} items={items} customRenderers={customRenderers} />
+      <WithLoadingOverlay isLoading={isLoadingUsers}>
+        <GenericTable<UserTableItem> headers={headers} items={items} customRenderers={customRenderers} />
+      </WithLoadingOverlay>
       <ConfirmationModal />
     </Container>
   );
