@@ -27,7 +27,7 @@ export const TopNav: FC<NavProps> = ({ onNavToggle }) => {
         <>
           <Navbar.Toggle aria-controls='responsive-navbar-nav' />
           <Navbar.Collapse id='responsive-navbar-nav' className='justify-content-between'>
-            <Nav className='mr-auto'>
+            <Nav>
               {navLinks
                 .filter((link) => link.canUserActivate)
                 .map((link) => (
@@ -41,7 +41,7 @@ export const TopNav: FC<NavProps> = ({ onNavToggle }) => {
           </Navbar.Collapse>
         </>
       ) : (
-        <Nav className='ml-auto'>
+        <Nav className='ms-auto'>
           <Link to='/auth/login'>
             <CustomButton>LOGIN/CREATE ACCOUNT</CustomButton>
           </Link>
