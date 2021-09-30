@@ -25,6 +25,11 @@ export const authApi = createApi({
     },
   }),
 
+  // Always refetch data, don't used cache.
+  keepUnusedDataFor: 0,
+  refetchOnMountOrArgChange: true,
+  refetchOnReconnect: true,
+
   endpoints: (builder) => ({
     login: builder.mutation<Session, LoginRequest>({
       query: (credentials) => ({

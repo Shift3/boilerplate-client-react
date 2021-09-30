@@ -20,6 +20,11 @@ export const roleApi = createApi({
     },
   }),
 
+  // Always refetch data, don't used cache.
+  keepUnusedDataFor: 0,
+  refetchOnMountOrArgChange: true,
+  refetchOnReconnect: true,
+
   tagTypes: ['Role'],
 
   endpoints: (builder) => ({
