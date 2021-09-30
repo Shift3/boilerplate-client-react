@@ -8,6 +8,7 @@ import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
+import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 
 type AgencyTableItem = {
   id: number;
@@ -17,7 +18,7 @@ type AgencyTableItem = {
 
 export const AgencyListView: FC = () => {
   const history = useHistory();
-  const { data: agencies = [] } = useGetAgenciesQuery();
+  const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery();
   const [deleteAgency] = useDeleteAgencyMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
   const { showSuccessNotification } = useShowNotification();
@@ -78,7 +79,9 @@ export const AgencyListView: FC = () => {
           <Button>ADD AGENCY</Button>
         </Link>
       </div>
-      <GenericTable<AgencyTableItem> headers={headers} items={items} customRenderers={customRenderers} />
+      <WithLoadingOverlay isLoading={isLoadingAgencies}>
+        <GenericTable<AgencyTableItem> headers={headers} items={items} customRenderers={customRenderers} />
+      </WithLoadingOverlay>
       <ConfirmationModal />
     </Container>
   );

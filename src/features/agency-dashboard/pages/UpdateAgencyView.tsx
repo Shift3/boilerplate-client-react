@@ -5,6 +5,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useGetAgencyByIdQuery, useUpdateAgencyMutation } from '../agencyApi';
 import { StyledFormTitle, StyledFormWrapper } from '../components/styled';
 import { AgencyDetailForm, FormData } from '../components/AgencyDetailForm';
+import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 
 export interface RouteParams {
   id: string;
@@ -15,7 +16,7 @@ export const UpdateAgencyView: FC = () => {
   const history = useHistory();
   const { showErrorNotification, showSuccessNotification } = useShowNotification();
   const [updateAgency] = useUpdateAgencyMutation();
-  const { data: agency, isLoading, error } = useGetAgencyByIdQuery(id);
+  const { data: agency, isLoading: isLoadingAgency, error } = useGetAgencyByIdQuery(id);
 
   useEffect(() => {
     if (error) {
@@ -40,8 +41,7 @@ export const UpdateAgencyView: FC = () => {
 
   return (
     <Container className='d-flex justify-content-center'>
-      {/* TODO: add loading spinner */}
-      {!isLoading && (
+      <WithLoadingOverlay isLoading={isLoadingAgency}>
         <StyledFormWrapper>
           <StyledFormTitle>Update Agency</StyledFormTitle>
           <AgencyDetailForm
@@ -51,7 +51,7 @@ export const UpdateAgencyView: FC = () => {
             onCancel={handleFormCancel}
           />
         </StyledFormWrapper>
-      )}
+      </WithLoadingOverlay>
     </Container>
   );
 };
