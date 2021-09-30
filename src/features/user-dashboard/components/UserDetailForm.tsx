@@ -106,10 +106,8 @@ export const UserDetailForm: FC<Props> = ({
       </Form.Group>
       <Form.Group>
         <Form.Label>Role</Form.Label>
-        <Form.Control
+        <Form.Select
           id='role'
-          as='select'
-          custom
           aria-label='Select User Role'
           {...register('role.roleName')}
           isInvalid={!!errors.role?.roleName}
@@ -122,15 +120,13 @@ export const UserDetailForm: FC<Props> = ({
               {role.roleName}
             </option>
           ))}
-        </Form.Control>
+        </Form.Select>
         <Form.Control.Feedback type='invalid'>{errors.role?.roleName?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label>Agency</Form.Label>
-        <Form.Control
+        <Form.Select
           id='agency'
-          as='select'
-          custom
           aria-label='Select User Agency'
           {...register('agency.agencyName')}
           isInvalid={!!errors.agency?.agencyName}
@@ -143,7 +139,7 @@ export const UserDetailForm: FC<Props> = ({
               {agency.agencyName}
             </option>
           ))}
-        </Form.Control>
+        </Form.Select>
         <Form.Control.Feedback type='invalid'>{errors.agency?.agencyName?.message}</Form.Control.Feedback>
       </Form.Group>
       <StyledFormButtonWrapper>

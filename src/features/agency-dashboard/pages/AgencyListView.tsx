@@ -73,7 +73,7 @@ export const AgencyListView: FC = () => {
 
   return (
     <Container>
-      <div className='pb-4 text-right'>
+      <div className='pb-4 text-end'>
         <Link to='/agencies/create-agency'>
           <Button>ADD AGENCY</Button>
         </Link>

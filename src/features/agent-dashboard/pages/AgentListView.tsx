@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { CustomRenderer, GenericTable, TableHeader } from 'common/components';
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
 import { useConfirmationModal } from 'common/hooks';
@@ -76,7 +75,7 @@ export const AgentListView: FC = () => {
 
   return (
     <Container>
-      <div className='pb-4 text-right'>
+      <div className='pb-4 text-end'>
         <Link to='/agents/create-agent'>
           <Button>ADD AGENT</Button>
         </Link>

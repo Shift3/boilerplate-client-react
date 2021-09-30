@@ -105,13 +105,13 @@ export const AgentDetailForm: FC<Props> = ({
       </Form.Group>
       <Form.Group>
         <Form.Label>State</Form.Label>
-        <Form.Control custom as='select' type='text' {...register('address.state')} isInvalid={!!errors.address?.state}>
+        <Form.Select {...register('address.state')} isInvalid={!!errors.address?.state}>
           {stateList.map(({ name, value }) => (
             <option key={value} value={value}>
               {name}
             </option>
           ))}
-        </Form.Control>
+        </Form.Select>
         <Form.Control.Feedback type='invalid'>{errors.address?.state?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>

@@ -21,13 +21,13 @@ export const TopNav: FC<NavProps> = ({ onNavToggle }) => {
   const { show, openModal, onCancel, onLogout } = useLogoutModalManager();
 
   return (
-    <Navbar collapseOnSelect expand='lg' className='shadow'>
+    <Navbar collapseOnSelect expand='lg' className='shadow px-3'>
       <NavLogo />
       {userProfile ? (
         <>
           <Navbar.Toggle aria-controls='responsive-navbar-nav' />
-          <Navbar.Collapse id='responsive-navbar-nav'>
-            <Nav className='mr-auto'>
+          <Navbar.Collapse id='responsive-navbar-nav' className='justify-content-between'>
+            <Nav>
               {navLinks
                 .filter((link) => link.canUserActivate)
                 .map((link) => (
@@ -41,7 +41,7 @@ export const TopNav: FC<NavProps> = ({ onNavToggle }) => {
           </Navbar.Collapse>
         </>
       ) : (
-        <Nav className='ml-auto'>
+        <Nav className='ms-auto'>
           <Link to='/auth/login'>
             <CustomButton>LOGIN/CREATE ACCOUNT</CustomButton>
           </Link>
