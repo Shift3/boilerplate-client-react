@@ -5,5 +5,5 @@ export type Props = {
   isLoading: boolean;
 };
 
-export const WithLoadingIndicator: FC<Props> = ({ isLoading, children }) =>
+export const WithLoadingOverlay: FC<Props> = ({ isLoading, children }) =>
   isLoading ? <LoadingSpinner /> : <>{children}</>;

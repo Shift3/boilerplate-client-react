@@ -1,2 +1,2 @@
 export * from './LoadingSpinner';
-export * from './WithLoadingIndicator';
+export * from './WithLoadingOverlay';
