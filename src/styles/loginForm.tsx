@@ -3,11 +3,11 @@ import Form from 'react-bootstrap/Form';
 import styled from 'styled-components';
 
 export const StyledForm = styled(Form)`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+  padding: 60px;
+  border-radius: 5px;
+  min-width: 450px;
+  background-color: ${(props) => props.theme.forms.backgroundColor};
+  border: 2px solid red;
 `;
 
 export const Title = styled.div`
@@ -41,17 +41,6 @@ export const CancelButton = styled(Button)`
 
 export const LogInButton = styled(Button)`
   color: white;
-  background-color: ${(props) => props.theme.accent};
+  background-color: ${(props) => props.theme.forms.submitButtonColor};
   border: none;
-`;
-
-export const CreateAccountButton = styled(Button)``;
-
-export const Text = styled.div`
-  color: white;
-`;
-
-export const LinkWrapper = styled.div`
-  padding-bottom: 30px;
-  font-size: 1.2em;
 `;
