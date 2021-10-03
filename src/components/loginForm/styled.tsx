@@ -4,11 +4,15 @@ import styled from 'styled-components';
 
 export const StyledForm = styled(Form)`
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  /* margin: 20px; */
+  border: 2px solid red;
 `;
+
+export const Login = styled.div``;
+
+export const Register = styled.div``;
 
 export const Title = styled.div`
   color: ${(props) => props.theme.cardHeader};
