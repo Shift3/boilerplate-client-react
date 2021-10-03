@@ -54,20 +54,20 @@ export const LogInForm: LogInFormType = ({ onSubmit, onCancel }) => {
             LOG IN
           </LogInButton>
         </ButtonWrapper>
+        <LinkWrapper>
+          <Link to='/auth/forgot-password'>Forgot Password?</Link>
+        </LinkWrapper>
+      </Login>
+      <Register>
         <Title>
           <h2 data-testid='loginPageInfoHeading'>Not Registered Yet?</h2>
         </Title>
-      </Login>
-      <Register>
         <Text>
           <p data-testid='loginPageInfoContent'>Registering for your account is quick and easy.</p>
         </Text>
         <CreateAccountButton data-testid='createAccountButton' onClick={navigateToSignup}>
           CREATE ACCOUNT
         </CreateAccountButton>
-        <LinkWrapper>
-          <Link to='/auth/forgot-password'>Forgot Password?</Link>
-        </LinkWrapper>
       </Register>
     </StyledForm>
   );
