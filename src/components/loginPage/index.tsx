@@ -23,13 +23,13 @@ const Wrapper = styled.div`
 //   min-height: 400px;
 // `;
 
-const LoginWrapper = styled.div`
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  background-color: ${(props) => props.theme.primary};
-  border-radius: 5px;
-`;
+// const LoginWrapper = styled.div`
+//   justify-content: center;
+//   align-items: center;
+//   display: flex;
+//   background-color: ${(props) => props.theme.primary};
+//   border-radius: 5px;
+// `;
 
 export const LogInPage: FC = () => {
   const history = useHistory();
@@ -43,9 +43,7 @@ export const LogInPage: FC = () => {
 
   return (
     <Wrapper data-testid='wrapper'>
-      <LoginWrapper data-testid='loginWrapper'>
-        <LogInForm onSubmit={onSubmit} onCancel={onCancel} />
-      </LoginWrapper>
+      <LogInForm onSubmit={onSubmit} onCancel={onCancel} />
     </Wrapper>
   );
 };
