@@ -3,33 +3,49 @@ import { useLogin } from 'features/auth/hooks';
 import { FC } from 'react';
 import styled from 'styled-components';
 import { ILogInFormData } from '../loginForm/types';
+import { ForgotPasswordLink } from './forgotPassword';
+import { RegisterCallToAction } from './registerCallToAction';
 import { useHistory } from 'react-router-dom';
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
   background-color: ${(props) => props.theme.authBackground};
 `;
 
-// const RightLogin = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: space-between;
-//   padding: 50px;
-//   max-width: 350px;
-//   min-height: 400px;
-// `;
+const StyledContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  padding: 40px;
+  background-color: ${(props) => props.theme.forms.backgroundColor};
+  border: 2px solid red;
+`;
 
-// const LoginWrapper = styled.div`
+//
+// const LoginWrapper = styled.div`;
 //   justify-content: center;
 //   align-items: center;
 //   display: flex;
 //   background-color: ${(props) => props.theme.primary};
 //   border-radius: 5px;
 // `;
+
+const LeftColumn = styled.div`
+  width: 60%;
+`;
+
+const RightColumn = styled.div`
+  width: 30%;
+`;
+
+const Title = styled.div`
+  color: ${(props) => props.theme.forms.title};
+  font-size: 2em;
+  font-style: bold;
+`;
 
 export const LogInPage: FC = () => {
   const history = useHistory();
@@ -43,7 +59,16 @@ export const LogInPage: FC = () => {
 
   return (
     <Wrapper data-testid='wrapper'>
-      <LogInForm onSubmit={onSubmit} onCancel={onCancel} />
+      <StyledContainer>
+        <LeftColumn>
+          <Title>Member Log In</Title>
+          <LogInForm onSubmit={onSubmit} onCancel={onCancel} />
+          <ForgotPasswordLink />
+        </LeftColumn>
+        <RightColumn>
+          <RegisterCallToAction />
+        </RightColumn>
+      </StyledContainer>
     </Wrapper>
   );
 };

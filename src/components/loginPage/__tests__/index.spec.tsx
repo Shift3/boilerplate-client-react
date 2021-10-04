@@ -1,61 +1,71 @@
-import { render } from '@testing-library/react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { render, screen, getRoles } from '@testing-library/react';
+import { Router } from 'react-router-dom';
 import { LogInPage } from '../index';
-import { expectInDocByTestId, expectInnerHTMLByTestId, clickNavigateByTestId } from '../../../utils/test';
+import { expectInDocByTestId } from '../../../utils/test';
 import { Provider } from 'react-redux';
 import { createAppStore } from 'app/redux';
-
-const renderInitialTestDOM = () =>
-  render(
-    <Provider store={createAppStore()}>
-      <Router>
-        <Switch>
-          <Route exact path='/' component={LogInPage} />
-        </Switch>
-      </Router>
-    </Provider>,
-  );
-
-const renderNavigationTestDOM = () =>
-  render(
-    <Provider store={createAppStore()}>
-      <Router>
-        <Switch>
-          <Route exact path='/' component={LogInPage} />
-          <Route exact path='/auth/signup' component={() => <div />} />
-        </Switch>
-      </Router>
-    </Provider>,
-  );
+import { createMemoryHistory, MemoryHistory } from 'history';
+import userEvent from '@testing-library/user-event';
+import { ThemeProvider } from 'styled-components';
+import AppTheme from 'utils/styleValues';
 
 describe('<LoginPage/>', () => {
   describe('Rendering', () => {
-    beforeEach(renderInitialTestDOM);
-
-    it('Should render the <Wrapper/>', () => expectInDocByTestId('wrapper'));
-
-    it('Should render the <LoginWrapper/>', () => expectInDocByTestId('loginWrapper'));
-
-    it('Should render the <LoginFormContainerRight/>', () => expectInDocByTestId('rightLogin'));
-
-    it('Should render the <LoginFormContainerLeft/>', () => expectInDocByTestId('leftLogin'));
+    beforeEach(() => {
+      const history = createMemoryHistory();
+      render(
+        <Router history={history}>
+          <Provider store={createAppStore()}>
+            <ThemeProvider theme={AppTheme}>
+              <LogInPage />
+            </ThemeProvider>
+          </Provider>
+        </Router>,
+      );
+    });
 
     it('Should render the <LoginForm/>', () => expectInDocByTestId('loginForm'));
 
-    it('Should render an <h2/> with innerHTML equal to "Not Registered Yet?', () =>
-      expectInnerHTMLByTestId('loginPageInfoHeading', 'Not Registered Yet?'));
+    it('Should render a forgot password link', () => {
+      const forgotPasswordLink = screen.getByText(/forgot password/i);
+      expect(forgotPasswordLink).not.toBeNull();
+      expect(getRoles(forgotPasswordLink)).toHaveProperty('link');
+    });
 
-    it('Should render a <p/> with innerHTML equal to "Registering for your account is quick and easy.', () =>
-      expectInnerHTMLByTestId('loginPageInfoContent', 'Registering for your account is quick and easy.'));
-
-    it('Should render a <button/> with innerHTML equal to "CREATE ACCOUNT"', () =>
-      expectInnerHTMLByTestId('createAccountButton', 'CREATE ACCOUNT'));
+    it('Should render a create account button', () => {
+      const createAccountButton = screen.getByText(/create account/i);
+      expect(createAccountButton).not.toBeNull();
+      expect(getRoles(createAccountButton)).toHaveProperty('button');
+    });
   });
 
   describe('navigation', () => {
-    beforeEach(renderNavigationTestDOM);
+    let history: MemoryHistory;
 
-    it('Should navigate to "/auth/signup" when the "CREATE ACCOUNT" button is clicked', () =>
-      clickNavigateByTestId('createAccountButton', '/auth/signup'));
+    beforeEach(() => {
+      history = createMemoryHistory();
+
+      render(
+        <Router history={history}>
+          <Provider store={createAppStore()}>
+            <ThemeProvider theme={AppTheme}>
+              <LogInPage />
+            </ThemeProvider>
+          </Provider>
+        </Router>,
+      );
+    });
+
+    it('Should navigate to /auth/forgot-password when the forgot password button is clicked', () => {
+      const link = screen.getByText(/forgot password/i);
+      userEvent.click(link);
+      expect(history.location.pathname).toBe('/auth/forgot-password');
+    });
+
+    it('Should navigate to "/auth/signup" when the "CREATE ACCOUNT" button is clicked', () => {
+      const createAccountButton = screen.getByText(/create account/i);
+      userEvent.click(createAccountButton);
+      expect(history.location.pathname).toBe('/auth/signup');
+    });
   });
 });

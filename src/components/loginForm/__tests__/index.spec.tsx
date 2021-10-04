@@ -11,6 +11,8 @@ import {
   setValueByLabelText,
   expectInnerHTMLByRole,
 } from 'utils/test';
+import { ThemeProvider } from 'styled-components';
+import AppTheme from 'utils/styleValues';
 
 const { EMAIL_REQUIRED, INVALID_EMAIL, PASSWORD_REQUIRED } = Constants.errorMessages;
 
@@ -22,7 +24,11 @@ describe('LoginForm', () => {
   const mockOnCancel = jest.fn();
 
   beforeEach(async () => {
-    render(<LogInForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />);
+    render(
+      <ThemeProvider theme={AppTheme}>
+        <LogInForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+      </ThemeProvider>,
+    );
 
     await setValueByLabelText('Email', validEmail);
     await setValueByLabelText('Password', validPassword);
