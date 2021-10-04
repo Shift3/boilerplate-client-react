@@ -6,7 +6,7 @@ export const StyledForm = styled(Form)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* margin: 20px; */
+  background-color: ${(props) => props.theme.forms.backgroundColor};
   border: 2px solid red;
   padding: 20px;
 `;
@@ -16,14 +16,14 @@ export const Login = styled.div``;
 export const Register = styled.div``;
 
 export const Title = styled.div`
-  color: black;
+  color: ${(props) => props.theme.forms.title};
   font-size: 2em;
   font-style: bold;
   padding-bottom: 10px;
 `;
 
 export const FormLabel = styled(Form.Label)`
-  color: white;
+  ${(props) => props.theme.forms.label};
 `;
 
 export const InputError = styled.span`
@@ -38,22 +38,25 @@ export const ButtonWrapper = styled.div`
 `;
 
 export const CancelButton = styled(Button)`
-  color: white;
-  background-color: ${(props) => props.theme.primary};
+  color: ${(props) => props.theme.forms.white};
+  background-color: ${(props) => props.theme.forms.buttonColor};
   border: 1px solid #679daa;
   margin-right: 20px;
 `;
 
 export const LogInButton = styled(Button)`
-  color: white;
-  background-color: ${(props) => props.theme.accent};
+  color: ${(props) => props.theme.forms.white};
+  background-color: ${(props) => props.theme.forms.buttonColor};
   border: none;
 `;
 
-export const CreateAccountButton = styled(Button)``;
+export const CreateAccountButton = styled(Button)`
+  color: ${(props) => props.theme.forms.white};
+  background-color: ${(props) => props.theme.forms.buttonColor};
+`;
 
 export const Text = styled.div`
-  color: white;
+  ${(props) => props.theme.forms.text};
 `;
 
 export const LinkWrapper = styled.div`
