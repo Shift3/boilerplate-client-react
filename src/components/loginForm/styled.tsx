@@ -4,16 +4,22 @@ import styled from 'styled-components';
 
 export const StyledForm = styled(Form)`
   display: flex;
-  justify-content: space-between;
   align-items: center;
   background-color: ${(props) => props.theme.forms.backgroundColor};
   border: 2px solid red;
+  padding: 80px;
+`;
+
+export const Login = styled.div`
   padding: 20px;
 `;
 
-export const Login = styled.div``;
-
-export const Register = styled.div``;
+export const Register = styled.div`
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  width: 20vw;
+`;
 
 export const Title = styled.div`
   color: ${(props) => props.theme.forms.title};
