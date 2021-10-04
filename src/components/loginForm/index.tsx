@@ -5,14 +5,14 @@ import {
   ButtonWrapper,
   CreateAccountButton,
   CancelButton,
-  InputError,
+  ForgotPassword,
   FormLabel,
+  InputError,
+  Login,
   LogInButton,
+  Register,
   StyledForm,
   Title,
-  ForgotPassword,
-  Login,
-  Register,
   Text,
 } from './styled';
 import { LogInFormSchema } from './schema';

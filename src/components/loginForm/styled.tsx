@@ -13,12 +13,6 @@ export const Login = styled.div`
   padding: 20px;
 `;
 
-export const Register = styled.div`
-  align-items: center;
-  padding: 20px;
-  width: 20vw;
-`;
-
 export const Title = styled.div`
   color: ${(props) => props.theme.forms.title};
   font-size: 2em;
@@ -54,6 +48,16 @@ export const LogInButton = styled(Button)`
   border: none;
 `;
 
+export const ForgotPassword = styled.div`
+  font-size: 1.2em;
+`;
+
+export const Register = styled.div`
+  align-items: center;
+  padding: 20px;
+  width: 20vw;
+`;
+
 export const CreateAccountButton = styled(Button)`
   color: ${(props) => props.theme.forms.white};
   background-color: ${(props) => props.theme.forms.buttonColor};
@@ -61,8 +65,4 @@ export const CreateAccountButton = styled(Button)`
 
 export const Text = styled.div`
   ${(props) => props.theme.forms.text};
-`;
-
-export const ForgotPassword = styled.div`
-  font-size: 1.2em;
 `;
