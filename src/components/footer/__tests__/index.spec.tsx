@@ -1,4 +1,3 @@
-import { render, screen, getRoles } from '@testing-library/react';
 import { Footer, copyrightDate } from '../index';
 import { Constants } from '../../../utils/constants';
 import { Provider } from 'react-redux';
