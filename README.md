@@ -39,7 +39,7 @@ This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react
 
 ## Staging URL
 
-<https://boilerplate-client-react.shift3sandbox.com/>
+<https://boilerplate-client-angular.shift3sandbox.com/>
 
 ## Quick Start
 
