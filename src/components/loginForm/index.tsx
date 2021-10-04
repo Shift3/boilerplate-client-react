@@ -10,7 +10,7 @@ import {
   LogInButton,
   StyledForm,
   Title,
-  LinkWrapper,
+  ForgotPassword,
   Login,
   Register,
   Text,
@@ -54,14 +54,12 @@ export const LogInForm: LogInFormType = ({ onSubmit, onCancel }) => {
             LOG IN
           </LogInButton>
         </ButtonWrapper>
-        <LinkWrapper>
+        <ForgotPassword>
           <Link to='/auth/forgot-password'>Forgot Password?</Link>
-        </LinkWrapper>
+        </ForgotPassword>
       </Login>
       <Register>
-        <Title>
-          <h2 data-testid='loginPageInfoHeading'>Need to Register?</h2>
-        </Title>
+        <Title data-testid='loginPageInfoHeading'>Need to Register?</Title>
         <Text>
           <p data-testid='loginPageInfoContent'>Registering for your account is quick and easy.</p>
         </Text>

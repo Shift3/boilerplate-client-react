@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 export const StyledForm = styled(Form)`
   display: flex;
-  align-items: center;
   background-color: ${(props) => props.theme.forms.backgroundColor};
   border: 2px solid red;
   padding: 80px;
@@ -15,7 +14,6 @@ export const Login = styled.div`
 `;
 
 export const Register = styled.div`
-  justify-content: space-between;
   align-items: center;
   padding: 20px;
   width: 20vw;
@@ -40,7 +38,7 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 10px;
+  padding: 20px;
 `;
 
 export const CancelButton = styled(Button)`
@@ -65,7 +63,6 @@ export const Text = styled.div`
   ${(props) => props.theme.forms.text};
 `;
 
-export const LinkWrapper = styled.div`
-  padding-bottom: 30px;
+export const ForgotPassword = styled.div`
   font-size: 1.2em;
 `;
