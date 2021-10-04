@@ -8,6 +8,7 @@ export const StyledForm = styled(Form)`
   align-items: center;
   /* margin: 20px; */
   border: 2px solid red;
+  padding: 20px;
 `;
 
 export const Login = styled.div``;
@@ -15,7 +16,7 @@ export const Login = styled.div``;
 export const Register = styled.div``;
 
 export const Title = styled.div`
-  color: ${(props) => props.theme.cardHeader};
+  color: black;
   font-size: 2em;
   font-style: bold;
   padding-bottom: 10px;

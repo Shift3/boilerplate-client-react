@@ -60,7 +60,7 @@ export const LogInForm: LogInFormType = ({ onSubmit, onCancel }) => {
       </Login>
       <Register>
         <Title>
-          <h2 data-testid='loginPageInfoHeading'>Not Registered Yet?</h2>
+          <h2 data-testid='loginPageInfoHeading'>Need to Register?</h2>
         </Title>
         <Text>
           <p data-testid='loginPageInfoContent'>Registering for your account is quick and easy.</p>
