@@ -25,6 +25,14 @@ export default {
   navLink: '#2B373B',
   footerHeight: '30px',
 
+  app: {
+    backgroundColor: colors.white,
+  },
+
+  footer: {
+    backgroundColor: colors.darkAccent,
+  },
+
   forms: {
     submitButtonColor: colors.primaryBlue,
     backgroundColor: colors.lightBackground,

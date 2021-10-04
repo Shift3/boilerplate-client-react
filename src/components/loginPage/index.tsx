@@ -12,26 +12,17 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-color: ${(props) => props.theme.authBackground};
+  background-color: ${(props) => props.theme.app.backgroundColor};
 `;
 
 const StyledContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  border-radius: 5px;
   width: 70%;
   padding: 40px;
   background-color: ${(props) => props.theme.forms.backgroundColor};
-  border: 2px solid red;
 `;
-
-//
-// const LoginWrapper = styled.div`;
-//   justify-content: center;
-//   align-items: center;
-//   display: flex;
-//   background-color: ${(props) => props.theme.primary};
-//   border-radius: 5px;
-// `;
 
 const LeftColumn = styled.div`
   width: 60%;
