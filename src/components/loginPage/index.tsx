@@ -28,11 +28,11 @@ const StyledContainer = styled.div`
 `;
 
 const LeftColumn = styled.div`
-  width: 60%;
+  width: 55%;
 `;
 
 const RightColumn = styled.div`
-  width: 30%;
+  width: 35%;
 `;
 
 const Title = styled.div`

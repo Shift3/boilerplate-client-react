@@ -2,7 +2,8 @@ const colors = {
   primaryBlue: '#3774B6',
   secondaryBlue: '#4AABE8',
   lightAccent: '#9DD6F3',
-  darkAccent: '#1F4A78',
+  accent: '#1F4A78',
+  darkAccent: '#22304D',
   lightBackground: '#F2F2F2',
   white: '#FFFFFF',
   black: '000000',
@@ -29,8 +30,14 @@ export default {
     backgroundColor: colors.white,
   },
 
+  buttons: {
+    backgroundColor: colors.lightBackground,
+    disabledBackgroundColor: colors.primaryBlue,
+    hoverBackgroundColor: colors.primaryBlue,
+  },
+
   footer: {
-    backgroundColor: colors.darkAccent,
+    backgroundColor: colors.accent,
   },
 
   forms: {
@@ -38,7 +45,7 @@ export default {
     backgroundColor: colors.lightBackground,
     buttonColor: colors.primaryBlue,
     label: colors.black,
-    title: colors.black,
+    title: colors.darkAccent,
     text: colors.black,
     white: colors.white,
     black: colors.black,
