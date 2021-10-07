@@ -66,6 +66,6 @@ export const Constants: IConstant = {
     ROLE_REQUIRED: 'Role is required.',
     AGENCY_REQUIRED: 'Agency is required.'
   },
-  version: '0.1.0',
+  version: '0.2.0',
   creationYear: 2021,
 };

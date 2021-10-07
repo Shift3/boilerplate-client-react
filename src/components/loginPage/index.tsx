@@ -19,9 +19,8 @@ const StyledContainer = styled.div`
   display: flex;
   justify-content: space-between;
   border-radius: 5px;
-  width: 70%;
-  max-width: 820px;
   height: 50%;
+  width: 850px;
   min-height: 420px;
   padding: 60px;
   background-color: ${(props) => props.theme.forms.backgroundColor};
