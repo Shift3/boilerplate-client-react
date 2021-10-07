@@ -24,7 +24,6 @@ export const ButtonWrapper = styled.div`
 export const CancelButton = styled(Button)`
   color: ${(props) => props.theme.forms.white};
   background-color: ${(props) => props.theme.forms.buttonColor};
-  /* margin-right: 20px; */
   min-width: 180px;
   min-height: 24px;
 `;
@@ -32,7 +31,7 @@ export const CancelButton = styled(Button)`
 export const LogInButton = styled(Button)`
   color: ${(props) => props.theme.forms.white};
   background-color: ${(props) => props.theme.forms.buttonColor};
-  /* border: none; */
+  border: none;
   min-width: 180px;
   min-height: 24px;
 `;
