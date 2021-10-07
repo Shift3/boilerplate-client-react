@@ -54,5 +54,6 @@ export default {
     text: colors.black,
     white: colors.white,
     black: colors.black,
+    inputError: colors.primaryBlue,
   },
 };

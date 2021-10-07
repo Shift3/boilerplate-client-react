@@ -11,7 +11,7 @@ export const FormLabel = styled(Form.Label)`
 `;
 
 export const InputError = styled.span`
-  color: lightgrey;
+  color: ${(props) => props.theme.forms.inputError};
 `;
 
 export const ButtonWrapper = styled.div`
