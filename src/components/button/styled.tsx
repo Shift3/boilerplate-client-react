@@ -3,10 +3,11 @@ import { Button } from 'react-bootstrap';
 
 export const CustomButton = styled(Button)`
   background-color: ${(props) => props.theme.buttons.backgroundColor};
-  /* border-color: ${(props) => props.theme.borderColor};
-  color: ${(props) => props.theme.color};
-  width: ${(props) => props.theme.width}; */
-  &:hover {
+  border: none;
+  color: ${(props) => props.theme.buttons.text};
+  /* color: ${(props) => props.theme.color}; */
+  width: ${(props) => props.theme.width};
+  */ &:hover {
     background-color: ${(props) => props.theme.buttons.hoverBackgroundColor};
     /* border-color: ${(props) => props.theme.buttons.hoverBorderColor}; */
   }

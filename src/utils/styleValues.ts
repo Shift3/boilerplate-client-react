@@ -32,8 +32,12 @@ export default {
 
   buttons: {
     backgroundColor: colors.lightBackground,
+    borderColor: colors.secondaryBlue,
     disabledBackgroundColor: colors.primaryBlue,
     hoverBackgroundColor: colors.primaryBlue,
+    text: colors.darkAccent,
+    // hoverBorderColor:
+    // disableBorderColor:
   },
 
   footer: {
