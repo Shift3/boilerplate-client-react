@@ -7,12 +7,14 @@ export const CustomButton = styled(Button)`
   color: ${(props) => props.theme.buttons.text};
 
   width: ${(props) => props.theme.buttons.width};
-  */ &:hover {
+  &:hover {
     background-color: ${(props) => props.theme.buttons.hoverBackgroundColor};
-    /* border-color: ${(props) => props.theme.buttons.hoverBorderColor}; */
+    /* Leaving these style values comments for reference
+    border-color: ${(props) => props.theme.buttons.hoverBorderColor}; */
   }
   &:disabled {
     background-color: ${(props) => props.theme.buttons.disabledBackgroundColor};
-    /* border-color: ${(props) => props.theme.disabledBorderColor}; */
+    /* Leaving these style values comments for reference
+    border-color: ${(props) => props.theme.disabledBorderColor}; */
   }
 `;
