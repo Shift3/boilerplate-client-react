@@ -16,20 +16,23 @@ export const InputError = styled.span`
 
 export const ButtonWrapper = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding-top: 20px;
 `;
 
 export const CancelButton = styled(Button)`
   color: ${(props) => props.theme.forms.white};
   background-color: ${(props) => props.theme.forms.buttonColor};
-  border: 1px solid #679daa;
-  margin-right: 20px;
+  /* margin-right: 20px; */
+  min-width: 180px;
+  min-height: 24px;
 `;
 
 export const LogInButton = styled(Button)`
   color: ${(props) => props.theme.forms.white};
   background-color: ${(props) => props.theme.forms.buttonColor};
-  border: none;
+  /* border: none; */
+  min-width: 180px;
+  min-height: 24px;
 `;

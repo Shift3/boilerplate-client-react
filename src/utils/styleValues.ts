@@ -24,7 +24,6 @@ export default {
   cardHeader: '#c5e6ec',
   navBackground: '#ffffff',
   navLink: '#2B373B',
-  footerHeight: '30px',
 
   app: {
     backgroundColor: colors.white,
@@ -42,6 +41,8 @@ export default {
 
   footer: {
     backgroundColor: colors.accent,
+    text: colors.white,
+    height: '35px',
   },
 
   forms: {

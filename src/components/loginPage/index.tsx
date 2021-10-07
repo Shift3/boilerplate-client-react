@@ -37,7 +37,7 @@ const RightColumn = styled.div`
 
 const Title = styled.div`
   color: ${(props) => props.theme.forms.title};
-  font-size: 2em;
+  font-size: 2.4em;
   font-style: bold;
 `;
 

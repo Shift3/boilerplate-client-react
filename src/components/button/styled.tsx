@@ -5,8 +5,8 @@ export const CustomButton = styled(Button)`
   background-color: ${(props) => props.theme.buttons.backgroundColor};
   border: none;
   color: ${(props) => props.theme.buttons.text};
-  /* color: ${(props) => props.theme.color}; */
-  width: ${(props) => props.theme.width};
+
+  width: ${(props) => props.theme.buttons.width};
   */ &:hover {
     background-color: ${(props) => props.theme.buttons.hoverBackgroundColor};
     /* border-color: ${(props) => props.theme.buttons.hoverBorderColor}; */
@@ -16,16 +16,3 @@ export const CustomButton = styled(Button)`
     /* border-color: ${(props) => props.theme.disabledBorderColor}; */
   }
 `;
-
-// CustomButton.defaultProps = {
-//   theme: {
-//     backgroundColor: accent,
-//     borderColor: accent,
-//     color: '#fff',
-//     disabledBackgroundColor: accentDisabled,
-//     disabledBorderColor: accent,
-//     hoverBackgroundColor: accent,
-//     hoverBorderColor: accent,
-//     width: '90%',
-//   },
-// };

@@ -7,8 +7,11 @@ export const Register = styled.div``;
 
 export const Title = styled.div`
   color: ${(props) => props.theme.forms.title};
-  font-size: 2em;
+  font-size: 2.4em;
   font-style: bold;
+  width: 90%;
+  min-width: 180px;
+  min-height: 24px;
 `;
 
 export const CreateAccountButton = styled(Button)`

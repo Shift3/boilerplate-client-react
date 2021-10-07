@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import { Constants } from '../../utils/constants';
 
 const Wrapper = styled.footer`
+  padding-top: 5px;
   text-align: center;
   background-color: ${(props) => props.theme.footer.backgroundColor};
-  color: white;
-  position: relative;
+  color: ${(props) => props.theme.footer.text};
   bottom: 0;
   width: 100vw;
-  height: ${(props) => props.theme.footerHeight};
+  height: ${(props) => props.theme.footer.height};
 `;
 
 const { version, creationYear } = Constants;
