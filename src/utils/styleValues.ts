@@ -1,3 +1,16 @@
+const colors = {
+  primaryBlue: '#3774B6',
+  secondaryBlue: '#4AABE8',
+  lightAccent: '#9DD6F3',
+  accent: '#1F4A78',
+  darkAccent: '#22304D',
+  lightBackground: '#F2F2F2',
+  white: '#FFFFFF',
+  black: '000000',
+  dangerRed: '#AD0404',
+
+};
+
 export default {
   adminBackground: '#f1f0eb',
   authBackground: '#ecf6f9',
@@ -11,5 +24,37 @@ export default {
   cardHeader: '#c5e6ec',
   navBackground: '#ffffff',
   navLink: '#2B373B',
-  footerHeight: '30px',
+
+  app: {
+    backgroundColor: colors.white,
+  },
+
+  buttons: {
+    backgroundColor: colors.lightBackground,
+    borderColor: colors.secondaryBlue,
+    disabledBackgroundColor: colors.primaryBlue,
+    hoverBackgroundColor: colors.primaryBlue,
+    textColor: colors.darkAccent,
+    // hoverBorderColor:
+    // disableBorderColor:
+  },
+
+  footer: {
+    backgroundColor: colors.accent,
+    textColor: colors.white,
+    height: '35px',
+  },
+
+  forms: {
+    submitButtonColor: colors.primaryBlue,
+    backgroundColor: colors.lightBackground,
+    buttonColor: colors.primaryBlue,
+    label: colors.black,
+    control: colors.black,
+    titleColor: colors.darkAccent,
+    textColor: colors.black,
+    white: colors.white,
+    black: colors.black,
+    inputError: colors.primaryBlue,
+  },
 };

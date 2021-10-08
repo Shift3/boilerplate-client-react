@@ -2,43 +2,42 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import styled from 'styled-components';
 
-export const StyledForm = styled(Form)`
-  padding: 60px;
-  border-radius: 5px;
-  min-width: 450px;
-`;
-
-export const Title = styled.div`
-  color: ${(props) => props.theme.cardHeader};
-  font-size: 2em;
-  font-style: bold;
-  padding-bottom: 10px;
+export const Login = styled.div`
+  padding: 20px;
 `;
 
 export const FormLabel = styled(Form.Label)`
-  color: white;
+  color: ${(props) => props.theme.forms.label};
+  margin-bottom: 5px;
+`;
+
+export const FormControl = styled(Form.Control)`
+  color: ${(props) => props.theme.forms.control};
+  margin-bottom: 20px;
 `;
 
 export const InputError = styled.span`
-  color: lightgrey;
+  color: ${(props) => props.theme.forms.inputError};
 `;
 
 export const ButtonWrapper = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding-top: 10px;
+  padding-top: 16px;
 `;
 
 export const CancelButton = styled(Button)`
-  color: white;
-  background-color: ${(props) => props.theme.primary};
-  border: 1px solid #679daa;
-  margin-right: 20px;
+  color: ${(props) => props.theme.forms.white};
+  background-color: ${(props) => props.theme.forms.buttonColor};
+  min-width: 180px;
+  min-height: 24px;
 `;
 
 export const LogInButton = styled(Button)`
-  color: white;
-  background-color: ${(props) => props.theme.accent};
+  color: ${(props) => props.theme.forms.white};
+  background-color: ${(props) => props.theme.forms.buttonColor};
   border: none;
+  min-width: 180px;
+  min-height: 24px;
 `;

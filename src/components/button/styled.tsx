@@ -1,33 +1,20 @@
 import styled from 'styled-components';
 import { Button } from 'react-bootstrap';
-import StyleValues from '../../utils/styleValues';
-
-const { accent, accentDisabled } = StyleValues;
 
 export const CustomButton = styled(Button)`
-  background-color: ${(props) => props.theme.backgroundColor};
-  border-color: ${(props) => props.theme.borderColor};
-  color: ${(props) => props.theme.color};
-  width: ${(props) => props.theme.width};
+  background-color: ${(props) => props.theme.buttons.backgroundColor};
+  border: none;
+  color: ${(props) => props.theme.buttons.text};
+
+  width: ${(props) => props.theme.buttons.width};
   &:hover {
-    background-color: ${(props) => props.theme.hoverBackgroundColor};
-    border-color: ${(props) => props.theme.hoverBorderColor};
+    background-color: ${(props) => props.theme.buttons.hoverBackgroundColor};
+    /* Leaving these style values comments for reference
+    border-color: ${(props) => props.theme.buttons.hoverBorderColor}; */
   }
   &:disabled {
-    background-color: ${(props) => props.theme.disabledBackgroundColor};
-    border-color: ${(props) => props.theme.disabledBorderColor};
+    background-color: ${(props) => props.theme.buttons.disabledBackgroundColor};
+    /* Leaving these style values comments for reference
+    border-color: ${(props) => props.theme.disabledBorderColor}; */
   }
 `;
-
-CustomButton.defaultProps = {
-  theme: {
-    backgroundColor: accent,
-    borderColor: accent,
-    color: '#fff',
-    disabledBackgroundColor: accentDisabled,
-    disabledBorderColor: accent,
-    hoverBackgroundColor: accent,
-    hoverBorderColor: accent,
-    width: '90%',
-  },
-};

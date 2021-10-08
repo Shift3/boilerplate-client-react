@@ -1,11 +1,17 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Form } from 'react-bootstrap';
-import { ButtonWrapper, CancelButton, InputError, FormLabel, LogInButton, StyledForm, Title } from './styled';
+import { FC } from 'react';
+import Form from 'react-bootstrap/Form';
+import { ButtonWrapper, CancelButton, FormLabel, FormControl, LogInButton } from './styled';
 import { LogInFormSchema } from './schema';
-import { LogInFormType } from './types';
+import { ILogInFormProps } from './types';
 
-export const LogInForm: LogInFormType = ({ onSubmit, onCancel }) => {
+export const LogInForm: FC<ILogInFormProps> = ({
+  cancelButtonLabel = 'CANCEL',
+  submitButtonLabel = 'SUBMIT',
+  onCancel,
+  onSubmit,
+}) => {
   const {
     register,
     handleSubmit,
@@ -16,28 +22,25 @@ export const LogInForm: LogInFormType = ({ onSubmit, onCancel }) => {
   });
 
   return (
-    <>
-      <StyledForm data-testid='loginForm' onSubmit={handleSubmit(onSubmit)}>
-        <Title>Member Log In</Title>
-        <Form.Group>
-          <FormLabel htmlFor='email'>Email</FormLabel>
-          <Form.Control id='email' type='email' {...register('email')} placeholder='Enter email' />
-          {errors.email?.message && <InputError role='alert'>{errors.email?.message}</InputError>}
-        </Form.Group>
-        <Form.Group>
-          <FormLabel htmlFor='password'>Password</FormLabel>
-          <Form.Control id='password' type='password' {...register('password')} placeholder='Enter password' />
-          {errors.password?.message && <InputError role='alert'>{errors.password?.message}</InputError>}
-        </Form.Group>
-        <ButtonWrapper>
-          <CancelButton data-testid='cancelButton' onClick={onCancel}>
-            CANCEL
-          </CancelButton>
-          <LogInButton data-testid='submitButton' type='submit' disabled={!isValid}>
-            LOG IN
-          </LogInButton>
-        </ButtonWrapper>
-      </StyledForm>
-    </>
+    <Form data-testid='loginForm' onSubmit={handleSubmit(onSubmit)}>
+      <Form.Group>
+        <FormLabel htmlFor='email'>Email</FormLabel>
+        <FormControl id='email' type='email' {...register('email')} placeholder='Enter email' />
+        <Form.Control.Feedback type='invalid'>{errors.email?.message}</Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group>
+        <FormLabel htmlFor='password'>Password</FormLabel>
+        <Form.Control id='password' type='password' {...register('password')} placeholder='Enter password' />
+        <Form.Control.Feedback type='invalid'>{errors.password?.message}</Form.Control.Feedback>
+      </Form.Group>
+      <ButtonWrapper>
+        <CancelButton data-testid='cancelButton' onClick={onCancel}>
+          {cancelButtonLabel}
+        </CancelButton>
+        <LogInButton data-testid='submitButton' type='submit' disabled={!isValid}>
+          {submitButtonLabel}
+        </LogInButton>
+      </ButtonWrapper>
+    </Form>
   );
 };

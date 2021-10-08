@@ -3,20 +3,20 @@ import styled from 'styled-components';
 import { Constants } from '../../utils/constants';
 
 const Wrapper = styled.footer`
+  padding-top: 5px;
   text-align: center;
-  background-color: #175f6e;
-  color: white;
-  position: relative;
+  background-color: ${(props) => props.theme.footer.backgroundColor};
+  color: ${(props) => props.theme.footer.textColor};
   bottom: 0;
   width: 100vw;
-  height: ${(props) => props.theme.footerHeight};
+  height: ${(props) => props.theme.footer.height};
 `;
 
 const { version, creationYear } = Constants;
 const currentYear = new Date().getFullYear();
 
 export const copyrightDate: string =
-  currentYear > creationYear ? `${creationYear} - ${currentYear}` : `${creationYear}` as string;
+  currentYear > creationYear ? `${creationYear} - ${currentYear}` : (`${creationYear}` as string);
 
 export const Footer: FC = () => (
   <Wrapper data-testid='footer'>

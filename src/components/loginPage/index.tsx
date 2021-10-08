@@ -1,62 +1,47 @@
 import { LogInForm } from 'components/loginForm';
 import { useLogin } from 'features/auth/hooks';
 import { FC } from 'react';
-import { Button } from 'react-bootstrap';
-import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { ILogInFormData } from '../loginForm/types';
+import { ForgotPasswordLink } from './forgotPassword';
+import { RegisterCallToAction } from './registerCallToAction';
+import { useHistory } from 'react-router-dom';
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-color: ${(props) => props.theme.authBackground};
+  background-color: ${(props) => props.theme.app.backgroundColor};
 `;
 
-const LoginWrapper = styled.div`
-  justify-content: center;
-  align-items: center;
+const StyledContainer = styled.div`
   display: flex;
-  background-color: ${(props) => props.theme.primary};
+  justify-content: space-between;
   border-radius: 5px;
+  height: 50%;
+  width: 850px;
+  min-height: 420px;
+  padding: 60px;
+  background-color: ${(props) => props.theme.forms.backgroundColor};
 `;
 
-const LeftLogin = styled.div`
+const LeftColumn = styled.div`
+  width: 55%;
+`;
+
+const RightColumn = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-
-const LinkWrapper = styled.div`
-  padding-bottom: 30px;
-  font-size: 1.2em;
-`;
-
-const RightLogin = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 50px;
-  max-width: 350px;
-  min-height: 400px;
+  width: 35%;
 `;
 
 const Title = styled.div`
-  color: ${(props) => props.theme.cardHeader};
+  color: ${(props) => props.theme.forms.title};
+  font-size: 2.4em;
   font-style: bold;
-  padding-bottom: 10px;
-  width: 200px;
+  margin-bottom: 5px;
 `;
-
-const Text = styled.div`
-  color: white;
-`;
-
-const CreateAccountButton = styled(Button)``;
 
 export const LogInPage: FC = () => {
   const history = useHistory();
@@ -68,29 +53,18 @@ export const LogInPage: FC = () => {
 
   const onCancel = () => history.push('/auth/login');
 
-  const navigateToSignup = () => history.push('/auth/signup');
-
   return (
     <Wrapper data-testid='wrapper'>
-      <LoginWrapper data-testid='loginWrapper'>
-        <LeftLogin data-testid='leftLogin'>
+      <StyledContainer>
+        <LeftColumn>
+          <Title>Member Log In</Title>
           <LogInForm onSubmit={onSubmit} onCancel={onCancel} />
-          <LinkWrapper>
-            <Link to='/auth/forgot-password'>Forgot Password?</Link>
-          </LinkWrapper>
-        </LeftLogin>
-        <RightLogin data-testid='rightLogin'>
-          <Title>
-            <h2 data-testid='loginPageInfoHeading'>Not Registered Yet?</h2>
-          </Title>
-          <Text>
-            <p data-testid='loginPageInfoContent'>Registering for your account is quick and easy.</p>
-          </Text>
-          <CreateAccountButton data-testid='createAccountButton' onClick={navigateToSignup}>
-            CREATE ACCOUNT
-          </CreateAccountButton>
-        </RightLogin>
-      </LoginWrapper>
+          <ForgotPasswordLink />
+        </LeftColumn>
+        <RightColumn>
+          <RegisterCallToAction />
+        </RightColumn>
+      </StyledContainer>
     </Wrapper>
   );
 };
