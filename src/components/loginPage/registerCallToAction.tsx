@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { FC } from 'react';
 
-export const Register = styled.div``;
+const Wrapper = styled.div``;
 
-export const Title = styled.div`
-  color: ${(props) => props.theme.forms.title};
+const Title = styled.div`
+  color: ${(props) => props.theme.forms.titleColor};
   font-size: 2.4em;
   font-style: bold;
   width: 90%;
@@ -14,13 +14,13 @@ export const Title = styled.div`
   min-height: 24px;
 `;
 
-export const CreateAccountButton = styled(Button)`
+const CreateAccountButton = styled(Button)`
   color: ${(props) => props.theme.forms.white};
   background-color: ${(props) => props.theme.forms.buttonColor};
 `;
 
-export const Text = styled.div`
-  ${(props) => props.theme.forms.text};
+const Text = styled.div`
+  color: ${(props) => props.theme.forms.textColor};
 `;
 
 export const RegisterCallToAction: FC = () => {
@@ -29,7 +29,7 @@ export const RegisterCallToAction: FC = () => {
   const navigateToSignup = () => history.push('/auth/signup');
 
   return (
-    <Register>
+    <Wrapper>
       <Title data-testid='loginPageInfoHeading'>Need to Register?</Title>
       <Text>
         <p data-testid='loginPageInfoContent'>Registering for your account is quick and easy.</p>
@@ -37,6 +37,6 @@ export const RegisterCallToAction: FC = () => {
       <CreateAccountButton data-testid='createAccountButton' onClick={navigateToSignup}>
         CREATE ACCOUNT
       </CreateAccountButton>
-    </Register>
+    </Wrapper>
   );
 };

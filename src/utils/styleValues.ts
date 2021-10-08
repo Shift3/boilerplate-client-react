@@ -34,14 +34,14 @@ export default {
     borderColor: colors.secondaryBlue,
     disabledBackgroundColor: colors.primaryBlue,
     hoverBackgroundColor: colors.primaryBlue,
-    text: colors.darkAccent,
+    textColor: colors.darkAccent,
     // hoverBorderColor:
     // disableBorderColor:
   },
 
   footer: {
     backgroundColor: colors.accent,
-    text: colors.white,
+    textColor: colors.white,
     height: '35px',
   },
 
@@ -50,8 +50,8 @@ export default {
     backgroundColor: colors.lightBackground,
     buttonColor: colors.primaryBlue,
     label: colors.black,
-    title: colors.darkAccent,
-    text: colors.black,
+    titleColor: colors.darkAccent,
+    textColor: colors.black,
     white: colors.white,
     black: colors.black,
     inputError: colors.primaryBlue,

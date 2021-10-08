@@ -6,7 +6,7 @@ const Wrapper = styled.footer`
   padding-top: 5px;
   text-align: center;
   background-color: ${(props) => props.theme.footer.backgroundColor};
-  color: ${(props) => props.theme.footer.text};
+  color: ${(props) => props.theme.footer.textColor};
   bottom: 0;
   width: 100vw;
   height: ${(props) => props.theme.footer.height};
