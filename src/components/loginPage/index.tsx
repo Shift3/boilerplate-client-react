@@ -31,6 +31,8 @@ const LeftColumn = styled.div`
 `;
 
 const RightColumn = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 35%;
 `;
 
@@ -38,6 +40,7 @@ const Title = styled.div`
   color: ${(props) => props.theme.forms.title};
   font-size: 2.4em;
   font-style: bold;
+  margin-bottom: 5px;
 `;
 
 export const LogInPage: FC = () => {

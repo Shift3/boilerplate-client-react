@@ -12,6 +12,7 @@ const Title = styled.div`
   width: 90%;
   min-width: 180px;
   min-height: 24px;
+  padding-bottom: 12px;
 `;
 
 const CreateAccountButton = styled(Button)`
@@ -21,6 +22,8 @@ const CreateAccountButton = styled(Button)`
 
 const Text = styled.div`
   color: ${(props) => props.theme.forms.textColor};
+  margin-top: 20px;
+  margin-bottom: 40px;
 `;
 
 export const RegisterCallToAction: FC = () => {

@@ -50,6 +50,7 @@ export default {
     backgroundColor: colors.lightBackground,
     buttonColor: colors.primaryBlue,
     label: colors.black,
+    control: colors.black,
     titleColor: colors.darkAccent,
     textColor: colors.black,
     white: colors.white,

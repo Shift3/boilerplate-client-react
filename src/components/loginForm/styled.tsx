@@ -8,6 +8,12 @@ export const Login = styled.div`
 
 export const FormLabel = styled(Form.Label)`
   color: ${(props) => props.theme.forms.label};
+  margin-bottom: 5px;
+`;
+
+export const FormControl = styled(Form.Control)`
+  color: ${(props) => props.theme.forms.control};
+  margin-bottom: 20px;
 `;
 
 export const InputError = styled.span`
@@ -18,7 +24,7 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 20px;
+  padding-top: 16px;
 `;
 
 export const CancelButton = styled(Button)`

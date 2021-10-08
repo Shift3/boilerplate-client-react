@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FC } from 'react';
 import Form from 'react-bootstrap/Form';
-import { ButtonWrapper, CancelButton, FormLabel, LogInButton } from './styled';
+import { ButtonWrapper, CancelButton, FormLabel, FormControl, LogInButton } from './styled';
 import { LogInFormSchema } from './schema';
 import { ILogInFormProps } from './types';
 
@@ -25,7 +25,7 @@ export const LogInForm: FC<ILogInFormProps> = ({
     <Form data-testid='loginForm' onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
         <FormLabel htmlFor='email'>Email</FormLabel>
-        <Form.Control id='email' type='email' {...register('email')} placeholder='Enter email' />
+        <FormControl id='email' type='email' {...register('email')} placeholder='Enter email' />
         <Form.Control.Feedback type='invalid'>{errors.email?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
