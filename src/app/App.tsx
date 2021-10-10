@@ -15,8 +15,8 @@ import { ThemeProvider } from 'styled-components';
 import { DashboardPage } from 'features/auth/components/dashboardPage/index';
 import { FlashMessage } from 'features/auth/components/flashMessage/index';
 import { HolyGrailLayout } from 'features/auth/components/holyGrailLayout/index';
-import { GlobalStyle } from '../GlobalStyle';
-import AppTheme from '../utils/styleValues';
+import { GlobalStyle } from 'GlobalStyle';
+import AppTheme from 'utils/styleValues';
 import { PrivateRoute } from 'features/auth/components/privateRoute';
 
 export const App: FC = () => (

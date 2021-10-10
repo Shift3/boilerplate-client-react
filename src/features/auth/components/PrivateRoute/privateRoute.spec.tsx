@@ -7,7 +7,7 @@ import { createMemoryHistory, MemoryHistory } from 'history';
 import { FC } from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
-import { PrivateRoute } from '../privateRoute/';
+import { PrivateRoute } from './index';
 
 describe('PrivateRoute', () => {
   const loginPath = '/auth/login';
