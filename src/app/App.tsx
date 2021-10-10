@@ -1,4 +1,6 @@
+import { FC } from 'react';
 import { ErrorBoundary } from '@sentry/react';
+import { ThemeProvider } from 'styled-components';
 import { ActivateAccountPage } from 'features/auth/components/activateAccountPage';
 import { ChangePasswordPage } from 'features/auth/components/changePasswordPage';
 import { ForgotPasswordPage } from 'features/auth/components/forgotPasswordPage';
@@ -6,18 +8,16 @@ import { LogInPage } from 'features/auth/components/loginPage';
 import { ResetPasswordPage } from 'features/auth/components/resetPasswordPage';
 import { SignUpPage } from 'features/auth/components/signupPage';
 import { UpdateUserProfilePage } from 'features/auth/components/updateUserProfilePage';
+import { Route, Switch } from 'react-router-dom';
+import { PrivateRoute } from 'features/auth/components/privateRoute';
 import { Routes as AgencyRoutes } from 'features/agency-dashboard/Routes';
 import { Routes as AgentRoutes } from 'features/agent-dashboard/Routes';
 import { Routes as UserRoutes } from 'features/user-dashboard/Routes';
-import { FC } from 'react';
-import { Route, Switch } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
 import { DashboardPage } from 'features/auth/components/dashboardPage/index';
 import { FlashMessage } from 'features/auth/components/flashMessage/index';
 import { HolyGrailLayout } from 'features/auth/components/holyGrailLayout/index';
 import { GlobalStyle } from 'GlobalStyle';
 import AppTheme from 'utils/styleValues';
-import { PrivateRoute } from 'features/auth/components/privateRoute';
 
 export const App: FC = () => (
   <ErrorBoundary>
