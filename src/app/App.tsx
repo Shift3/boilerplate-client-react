@@ -8,7 +8,6 @@ import { SignUpPage } from '../features/auth/components/signupPage';
 import { UpdateUserProfilePage } from '../features/auth/components/updateUserProfilePage';
 import { Routes as AgencyRoutes } from 'features/agency-dashboard/Routes';
 import { Routes as AgentRoutes } from 'features/agent-dashboard/Routes';
-import { PrivateRoute } from 'features/auth/components/privateRoute/PrivateRoute';
 import { Routes as UserRoutes } from 'features/user-dashboard/Routes';
 import { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
@@ -18,6 +17,7 @@ import { FlashMessage } from '../features/auth/components/flashMessage/index';
 import { HolyGrailLayout } from '../features/auth/components/holyGrailLayout/index';
 import { GlobalStyle } from '../GlobalStyle';
 import AppTheme from '../utils/styleValues';
+import { PrivateRoute } from 'features/auth/components/privateRoute/PrivateRoute';
 
 export const App: FC = () => (
   <ErrorBoundary>
