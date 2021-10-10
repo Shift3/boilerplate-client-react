@@ -1,4 +1,3 @@
-import { LogInForm } from 'components/loginForm';
 import { useLogin } from 'features/auth/hooks';
 import { FC } from 'react';
 import styled from 'styled-components';
@@ -6,6 +5,7 @@ import { ILogInFormData } from '../loginForm/types';
 import { ForgotPasswordLink } from './forgotPassword';
 import { RegisterCallToAction } from './registerCallToAction';
 import { useHistory } from 'react-router-dom';
+import { LogInForm } from '../loginForm';
 
 const Wrapper = styled.div`
   display: flex;

@@ -3,7 +3,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { IResetPasswordFormData } from '../resetPasswordForm/types';
 import { Wrapper } from './styled';
 import { useAccountCreation } from 'core/modules/user/application/useAccountCreation';
-import { ActivateAccountForm } from 'components/activateAccountForm';
+import { ActivateAccountForm } from 'features/auth/components/activateAccountForm';
 
 export const ActivateAccountPage: FC = () => {
   const history = useHistory();

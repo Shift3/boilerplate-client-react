@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import styled from 'styled-components';
-import { Constants } from '../../utils/constants';
+import { Constants } from 'utils/constants';
 
 const Wrapper = styled.footer`
   padding-top: 5px;

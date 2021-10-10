@@ -1,4 +1,4 @@
-import { UpdateUserProfileFormData } from 'components/updateUserProfileForm/types';
+import { UpdateUserProfileFormData } from '../updateUserProfileForm/types';
 import { useUpdateProfile } from 'core/modules/user/application/useUpdateProfile';
 import { useAuth, useLogout } from 'features/auth/hooks';
 import { FC } from 'react';

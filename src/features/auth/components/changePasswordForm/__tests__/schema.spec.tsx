@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import * as yup from 'yup';
-import { Constants } from 'utils/constants';
 import { ChangePasswordFormSchema } from '../schema';
+import { Constants } from 'utils/constants';
 
 const {
   CURRENT_PASSWORD_REQUIRED,

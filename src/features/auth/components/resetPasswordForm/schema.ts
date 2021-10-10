@@ -1,10 +1,9 @@
 import * as yup from 'yup';
-import { Constants } from '../../utils/constants';
+import { Constants } from 'utils/constants';
 
 const { errorMessages } = Constants;
 
-export const ChangePasswordFormSchema = yup.object().shape({
-  currentPassword: yup.string().required(errorMessages.CURRENT_PASSWORD_REQUIRED),
+export const ResetPasswordFormSchema = yup.object().shape({
   newPassword: yup
     .string()
     .required(errorMessages.NEW_PASSWORD_REQUIRED)
@@ -12,8 +11,7 @@ export const ChangePasswordFormSchema = yup.object().shape({
     .matches(Constants.patterns.LOWERCASE_REGEX, errorMessages.PASSWORD_LOWERCASE)
     .matches(Constants.patterns.UPPERCASE_REGEX, errorMessages.PASSWORD_UPPERCASE)
     .matches(Constants.patterns.SYMBOL_REGEX, errorMessages.PASSWORD_SPECIAL_CHARACTER)
-    .matches(Constants.patterns.DIGIT_REGEX, errorMessages.PASSWORD_NUMBER)
-    .notOneOf([yup.ref('currentPassword')], errorMessages.PASSWORD_MUST_MISMATCH),
+    .matches(Constants.patterns.DIGIT_REGEX, errorMessages.PASSWORD_NUMBER),
 
   confirmPassword: yup
     .string()

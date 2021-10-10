@@ -1,10 +1,10 @@
-import { Footer } from 'components/footer';
+import { Footer } from '../footer';
 import { useNavPositionManager } from 'core/modules/navigation/application/useNavPositionManager';
 import { TopNav } from 'core/modules/navigation/presentation/topNav';
 import { FC } from 'react';
 import styled from 'styled-components';
-import { SideNav } from '../../core/modules/navigation/presentation/sideNav';
 import { HolyGrailLayoutProps } from './types';
+import { SideNav } from '../../../../core/modules/navigation/presentation/sideNav';
 
 const HolyGrail = styled.div`
   min-height: 100vh;

@@ -7,7 +7,7 @@ import { Nav, Navbar } from 'react-bootstrap';
 import styled from 'styled-components';
 
 // App imports
-import { CustomButton } from 'components/button/styled';
+import { CustomButton } from '../../../../features/auth/components/button/styled';
 import { useNavData } from '../application/useNavData';
 import { ProfileDropdown } from './profileDropdown';
 import { useLogoutModalManager } from '../application/useLogoutModalManager';

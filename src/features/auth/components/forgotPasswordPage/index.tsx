@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ForgotPasswordForm } from '../forgotPasswordForm';
-import { IForgotPassswordFormData } from 'components/forgotPasswordForm/types';
+import { IForgotPassswordFormData } from '../forgotPasswordForm/types';
 import { Wrapper } from './styled';
 import { usePasswordReset } from 'core/modules/user/application/usePasswordReset';
 

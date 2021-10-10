@@ -1,10 +1,10 @@
 import { Footer, copyrightDate } from '../index';
-import { Constants } from '../../../utils/constants';
+import { Constants } from 'utils/constants';
 import { Provider } from 'react-redux';
 import { createAppStore } from 'app/redux';
 import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
-import { expectTextContentByTestId } from '../../../utils/test';
+import { expectTextContentByTestId } from 'utils/test';
 
 const { version, creationYear } = Constants;
 
