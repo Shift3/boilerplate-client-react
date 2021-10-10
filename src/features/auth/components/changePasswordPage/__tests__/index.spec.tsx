@@ -3,7 +3,7 @@ import { Router } from 'react-router-dom';
 // eslint-disable-next-line
 import { createMemoryHistory } from 'history';
 import { ChangePasswordPage } from '../index';
-import { expectInDocByTestId } from '../../../utils/test';
+import { expectInDocByTestId } from 'utils/test';
 
 describe('<ChangePasswordPage/>', () => {
   describe('Rendering', () => {

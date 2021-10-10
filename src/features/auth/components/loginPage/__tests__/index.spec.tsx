@@ -1,7 +1,7 @@
 import { render, screen, getRoles } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import { LogInPage } from '../index';
-import { expectInDocByTestId } from '../../../utils/test';
+import { expectInDocByTestId } from 'utils/test';
 import { Provider } from 'react-redux';
 import { createAppStore } from 'app/redux';
 import { createMemoryHistory, MemoryHistory } from 'history';

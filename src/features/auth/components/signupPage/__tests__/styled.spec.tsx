@@ -1,5 +1,5 @@
 import { Wrapper } from '../styled';
-import { expectToMatchSnapshot } from '../../../utils/test';
+import { expectToMatchSnapshot } from 'utils/test';
 import 'jest-styled-components';
 
 describe('Reset Password Page Styled Components', () => {

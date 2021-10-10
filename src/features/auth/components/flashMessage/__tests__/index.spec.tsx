@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import { createAppStore } from 'app/redux';
 import { Provider } from 'react-redux';
 import { FlashMessage } from '..';
-import { expectInDocByTestId } from '../../../utils/test';
+import { expectInDocByTestId } from 'utils/test';
 
 // ---------------- @TODO --------------------
 // -- TEST -- Check that the flash message is not visible.

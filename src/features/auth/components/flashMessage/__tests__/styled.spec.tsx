@@ -1,5 +1,5 @@
 import { FlashMessageContainer } from '../styled';
-import { expectToMatchSnapshot } from '../../../utils/test';
+import { expectToMatchSnapshot } from 'utils/test';
 import 'jest-styled-components';
 
 describe('FlashMessage Styled Components', () => {
