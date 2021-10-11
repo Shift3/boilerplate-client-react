@@ -19,6 +19,7 @@ import { HolyGrailLayout } from 'features/auth/components/holyGrailLayout/index'
 import { GlobalStyle } from 'GlobalStyle';
 import AppTheme from 'utils/styleValues';
 
+
 export const App: FC = () => (
   <ErrorBoundary>
     <ThemeProvider theme={AppTheme}>
