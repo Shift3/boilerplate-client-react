@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { Constants } from 'utils/constants';
 import { stateList } from 'utils/states';
 import * as yup from 'yup';
-import { StyledCancelButton, StyledFormButtonWrapper, StyledSubmitButton } from './styled';
+import { CancelButton, ButtonWrapper, SubmitButton } from './StyledDetailForm';
 
 export type FormData = Pick<Agent, 'name' | 'email' | 'description' | 'phoneNumber' | 'address' | 'thumbnail'>;
 
@@ -119,12 +119,12 @@ export const AgentDetailForm: FC<Props> = ({
         <Form.Control type='text' {...register('address.zipCode')} isInvalid={!!errors.address?.zipCode} />
         <Form.Control.Feedback type='invalid'>{errors.address?.zipCode?.message}</Form.Control.Feedback>
       </Form.Group>
-      <StyledFormButtonWrapper>
-        <StyledCancelButton onClick={onCancel}>{cancelButtonLabel}</StyledCancelButton>
-        <StyledSubmitButton type='submit' disabled={!isValid}>
+      <ButtonWrapper>
+        <CancelButton onClick={onCancel}>{cancelButtonLabel}</CancelButton>
+        <SubmitButton type='submit' disabled={!isValid}>
           {submitButtonLabel}
-        </StyledSubmitButton>
-      </StyledFormButtonWrapper>
+        </SubmitButton>
+      </ButtonWrapper>
     </Form>
   );
 };

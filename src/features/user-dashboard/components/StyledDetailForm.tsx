@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const BootstrapButton: FC<ButtonProps> = ({ children, ...rest }) => <Button {...rest}>{children}</Button>;
 
-export const StyledFormWrapper = styled.div`
+export const Wrapper = styled.div`
   max-width: 500px;
   min-width: 500px;
   padding: 50px;
@@ -20,13 +20,13 @@ export const StyledFormWrapper = styled.div`
   }
 `;
 
-export const StyledFormTitle = styled.p`
+export const Title = styled.p`
   color: ${(props) => props.theme.cardHeader};
   font-size: 2em;
   font-weight: 500;
 `;
 
-export const StyledFormButtonWrapper = styled.div`
+export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 50px;
@@ -40,7 +40,7 @@ export const StyledFormButtonWrapper = styled.div`
   }
 `;
 
-export const StyledCancelButton = styled(BootstrapButton)`
+export const CancelButton = styled(BootstrapButton)`
   min-width: 146px;
   min-height: 24px;
   padding: 10px;
@@ -60,7 +60,7 @@ export const StyledCancelButton = styled(BootstrapButton)`
   }
 `;
 
-export const StyledSubmitButton = styled(BootstrapButton)`
+export const SubmitButton = styled(BootstrapButton)`
   min-width: 146px;
   min-height: 24px;
   padding: 10px;

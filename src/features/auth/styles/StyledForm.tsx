@@ -8,11 +8,11 @@ export const StyledFormWrapper = styled.div`
   max-width: 500px;
   min-width: 500px;
   padding: 50px;
-  background-color: ${(props) => props.theme.primary};
+  background-color: ${(props) => props.theme.forms.backgroundColor};
   border-radius: 0.25rem;
 
   & label {
-    color: white;
+    color: ${(props) => props.theme.forms.labelColor};
   }
 
   & .invalid-feedback {
@@ -21,7 +21,7 @@ export const StyledFormWrapper = styled.div`
 `;
 
 export const StyledFormTitle = styled.p`
-  color: ${(props) => props.theme.cardHeader};
+  color: ${(props) => props.theme.forms.titleColor};
   font-size: 2em;
   font-weight: 500;
 `;

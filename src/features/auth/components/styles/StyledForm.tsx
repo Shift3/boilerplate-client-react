@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Button, Form } from 'react-bootstrap';
 
 export const StyledForm = styled(Form)`
-  background-color: ${(props) => props.theme.primary};
+  background-color: ${(props) => props.theme.forms.backgroundColor};
   padding: 40px;
   border-radius: 5px;
   width: 400px;

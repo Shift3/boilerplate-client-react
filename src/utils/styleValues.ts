@@ -51,9 +51,9 @@ export default {
 
   forms: {
     backgroundColor: colors.lightBackground,
-    label: colors.black,
-    control: colors.black,
+    labelColor: colors.darkAccent,
     titleColor: colors.darkAccent,
+    control: colors.black,
     textColor: colors.black,
     white: colors.white,
     black: colors.black,
