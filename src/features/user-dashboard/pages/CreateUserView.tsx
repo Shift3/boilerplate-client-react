@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container';
 import { useHistory } from 'react-router-dom';
 import { useGetRolesQuery } from '../roleApi';
 import { useCreateUserMutation } from '../userApi';
-import { StyledFormTitle, StyledFormWrapper } from '../components/StyledUserForm';
+import { Title, StyledFormWrapper } from '../../styles/FormStyles';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
 
 export const CreateUserView: FC = () => {
@@ -39,7 +39,7 @@ export const CreateUserView: FC = () => {
       {/* TODO: add loading spinner */}
       {!isLoading && (
         <StyledFormWrapper>
-          <StyledFormTitle>Create User</StyledFormTitle>
+          <Title>Create User</Title>
           <UserDetailForm
             availableRoles={roles}
             availableAgencies={agencies}

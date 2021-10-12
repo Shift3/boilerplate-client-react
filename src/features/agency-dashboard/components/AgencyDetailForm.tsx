@@ -4,7 +4,7 @@ import { FC, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { CancelButton, ButtonWrapper, SubmitButton } from './StyledAgencyForm';
+import { CancelButton, ButtonWrapper, SubmitButton, FormLabel, FormControl } from '../../styles/FormStyles';
 
 export type FormData = Pick<Agency, 'agencyName'>;
 
@@ -42,8 +42,8 @@ export const AgencyDetailForm: FC<Props> = ({
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Group controlId='create-agency-form-agency-name'>
-        <Form.Label>Agency Name</Form.Label>
-        <Form.Control type='text' isInvalid={!!errors.agencyName} {...register('agencyName')} />
+        <FormLabel>Agency Name</FormLabel>
+        <FormControl type='text' isInvalid={!!errors.agencyName} {...register('agencyName')} />
         <Form.Control.Feedback type='invalid'>{errors.agencyName?.message}</Form.Control.Feedback>
       </Form.Group>
       <ButtonWrapper>
