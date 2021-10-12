@@ -11,7 +11,7 @@ import {
   SubmitButton,
   StyledForm,
   InputError,
-} from '../styles/StyledForm';
+} from '../../../styles/FormStyles';
 
 export const ForgotPasswordForm: ForgotPasswordFormType = ({ onSubmit, onCancel }) => {
   const {

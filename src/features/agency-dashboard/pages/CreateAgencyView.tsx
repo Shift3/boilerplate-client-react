@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import { useHistory } from 'react-router-dom';
 import { useCreateAgencyMutation } from '../agencyApi';
 import { AgencyDetailForm, FormData } from '../components/AgencyDetailForm';
-import { StyledFormTitle, StyledFormWrapper } from '../components/StyledAgencyForm';
+import { Title, StyledFormWrapper } from '../../styles/FormStyles';
 
 export const CreateAgencyView: FC = () => {
   const history = useHistory();
@@ -28,7 +28,7 @@ export const CreateAgencyView: FC = () => {
   return (
     <Container className='d-flex justify-content-center'>
       <StyledFormWrapper>
-        <StyledFormTitle>Create Agency</StyledFormTitle>
+        <Title>Create Agency</Title>
         <AgencyDetailForm submitButtonLabel='CREATE' onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
       </StyledFormWrapper>
     </Container>
