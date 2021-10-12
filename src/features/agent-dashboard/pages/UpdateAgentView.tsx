@@ -5,8 +5,27 @@ import Container from 'react-bootstrap/Container';
 import { useHistory, useParams } from 'react-router-dom';
 import { useGetAgentByIdQuery, useUpdateAgentMutation } from '../agentApi';
 import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
-import { StyledFormTitle, StyledFormWrapper } from '../components/styled';
+import styled from 'styled-components';
 
+const StyledFormWrapper = styled.div`
+  max-width: 500px;
+  min-width: 500px;
+  padding: 50px;
+  background-color: ${(props) => props.theme.primary};
+  border-radius: 0.25rem;
+  & label {
+    color: white;
+  }
+  & .invalid-feedback {
+    /* Modify style of validation error messages here */
+  }
+`;
+
+const StyledFormTitle = styled.p`
+  color: ${(props) => props.theme.cardHeader};
+  font-size: 2em;
+  font-weight: 500;
+`;
 export interface RouteParams {
   id: string;
 }
