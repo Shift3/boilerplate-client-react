@@ -30,9 +30,13 @@ export default {
   },
 
   buttons: {
-    backgroundColor: colors.lightBackground,
-    borderColor: colors.secondaryBlue,
-    disabledBackgroundColor: colors.primaryBlue,
+    cancelBackgroundColor: colors.lightBackground,
+    cancelBorderColor: colors.primaryBlue,
+    cancelTextColor: colors.primaryBlue,
+    submitBackgroundColor: colors.primaryBlue,
+    submitBorderColor: colors.primaryBlue,
+    submitTextColor: colors.white,
+    disabledBackgroundColor: colors.lightBackground,
     hoverBackgroundColor: colors.primaryBlue,
     textColor: colors.darkAccent,
     // hoverBorderColor:
@@ -46,9 +50,7 @@ export default {
   },
 
   forms: {
-    submitButtonColor: colors.primaryBlue,
     backgroundColor: colors.lightBackground,
-    buttonColor: colors.primaryBlue,
     label: colors.black,
     control: colors.black,
     titleColor: colors.darkAccent,

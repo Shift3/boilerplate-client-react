@@ -2,13 +2,13 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FC } from 'react';
 import Form from 'react-bootstrap/Form';
-import { ButtonWrapper, CancelButton, FormLabel, FormControl, LogInButton } from './styled';
+import { ButtonWrapper, CancelButton, FormLabel, FormControl, SubmitButton } from './styled';
 import { LogInFormSchema } from './schema';
 import { ILogInFormProps } from './types';
 
 export const LogInForm: FC<ILogInFormProps> = ({
   cancelButtonLabel = 'CANCEL',
-  submitButtonLabel = 'SUBMIT',
+  submitButtonLabel = 'LOG IN',
   onCancel,
   onSubmit,
 }) => {
@@ -37,9 +37,9 @@ export const LogInForm: FC<ILogInFormProps> = ({
         <CancelButton data-testid='cancelButton' onClick={onCancel}>
           {cancelButtonLabel}
         </CancelButton>
-        <LogInButton data-testid='submitButton' type='submit' disabled={!isValid}>
+        <SubmitButton data-testid='submitButton' type='submit' disabled={!isValid}>
           {submitButtonLabel}
-        </LogInButton>
+        </SubmitButton>
       </ButtonWrapper>
     </Form>
   );
