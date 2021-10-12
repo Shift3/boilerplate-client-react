@@ -28,16 +28,17 @@ export const ButtonWrapper = styled.div`
 `;
 
 export const CancelButton = styled(Button)`
-  color: ${(props) => props.theme.forms.white};
-  background-color: ${(props) => props.theme.forms.buttonColor};
+  color: ${(props) => props.theme.buttons.cancelTextColor};
+  background-color: ${(props) => props.theme.buttons.cancelBackgroundColor};
+  border-color: ${(props) => props.theme.buttons.cancelBorderColor};
   min-width: 180px;
   min-height: 24px;
 `;
 
-export const LogInButton = styled(Button)`
-  color: ${(props) => props.theme.forms.white};
-  background-color: ${(props) => props.theme.forms.buttonColor};
-  border: none;
+export const SubmitButton = styled(Button)`
+  color: ${(props) => props.theme.buttons.submitTextColor};
+  background-color: ${(props) => props.theme.buttons.submitBackgroundColor};
+  border-color: ${(props) => props.theme.buttons.submitBorderColor};
   min-width: 180px;
   min-height: 24px;
 `;
