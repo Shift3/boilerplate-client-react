@@ -4,6 +4,26 @@ import styled from 'styled-components';
 
 const BootstrapButton: FC<ButtonProps> = ({ children, ...rest }) => <Button {...rest}>{children}</Button>;
 
+export const StyledFormWrapper = styled.div`
+  max-width: 500px;
+  min-width: 500px;
+  padding: 50px;
+  background-color: ${(props) => props.theme.forms.backgroundColor};
+  border-radius: 0.25rem;
+  & label {
+    color: white;
+  }
+  & .invalid-feedback {
+    /* Modify style of validation error messages here */
+  }
+`;
+
+export const StyledFormTitle = styled.p`
+  color: ${(props) => props.theme.forms.titleColor};
+  font-size: 2em;
+  font-weight: 500;
+`;
+
 export const Wrapper = styled.div`
   max-width: 500px;
   min-width: 500px;
