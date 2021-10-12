@@ -9,7 +9,7 @@ import { Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from '../GlobalStyle';
 import AppTheme from 'utils/styleValues';
-import { FlashMessageContainer } from 'features/auth/components/flashMessage/styled';
+import { FlashMessage } from 'features/auth/components/flashMessage';
 import { HolyGrailLayout } from 'features/auth/components/holyGrailLayout';
 import { LogInPage } from 'features/auth/components/loginPage';
 import { SignUpPage } from 'features/auth/components/signupPage';
@@ -22,7 +22,7 @@ import { UpdateUserProfilePage } from 'features/auth/components/updateUserProfil
 export const App: FC = () => (
   <ErrorBoundary>
     <ThemeProvider theme={AppTheme}>
-      <FlashMessageContainer />
+      <FlashMessage />
       <HolyGrailLayout>
         <Switch>
           <Route exact path='/auth/login' component={LogInPage} />
