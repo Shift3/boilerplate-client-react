@@ -1,7 +1,15 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
-import { Title, FormLabel, ButtonWrapper, CancelButton, SubmitButton, StyledForm, InputError } from './styled';
+import {
+  Title,
+  FormLabel,
+  ButtonWrapper,
+  CancelButton,
+  SubmitButton,
+  StyledForm,
+  InputError,
+} from '../styles/StyledForm';
 import { ActivateAccountFormSchema } from './schema';
 import { ActivateAccountFormType } from './types';
 
@@ -23,7 +31,8 @@ export const ActivateAccountForm: ActivateAccountFormType = ({ onSubmit, onCance
           <FormLabel htmlFor='newPassword'>New Password</FormLabel>
           <Form.Control
             id='newPassword'
-            type='password' {...register('newPassword')}
+            type='password'
+            {...register('newPassword')}
             placeholder='Enter new password'
           />
           {errors.newPassword?.message && <InputError role='alert'>{errors.newPassword?.message}</InputError>}

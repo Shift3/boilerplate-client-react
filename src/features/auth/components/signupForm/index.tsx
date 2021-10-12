@@ -3,7 +3,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import { SignUpFormSchema } from './schema';
 import { SignUpFormType } from './types';
-import { Title, FormLabel, ButtonWrapper, CancelButton, SignUpButton, StyledForm, InputError } from './styled';
+import {
+  Title,
+  FormLabel,
+  ButtonWrapper,
+  CancelButton,
+  SubmitButton,
+  StyledForm,
+  InputError,
+} from '../styles/StyledForm';
 
 export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
   const {
@@ -49,9 +57,9 @@ export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
           <CancelButton data-testid='cancelButton' onClick={onCancel}>
             CANCEL
           </CancelButton>
-          <SignUpButton data-testid='signUpButton' type='submit' disabled={!isValid}>
+          <SubmitButton data-testid='signUpButton' type='submit' disabled={!isValid}>
             SIGN UP
-          </SignUpButton>
+          </SubmitButton>
         </ButtonWrapper>
       </StyledForm>
     </>

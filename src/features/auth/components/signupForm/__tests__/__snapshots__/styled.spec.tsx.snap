@@ -38,7 +38,7 @@ exports[`<SignUpForm /> styled components should match the stored <CancelButton 
 
 exports[`<SignUpForm /> styled components should match the stored <FormLabel /> snapshot 1`] = `
 .c0 {
-  color: white;
+  color: black;
 }
 
 <label
@@ -56,18 +56,6 @@ exports[`<SignUpForm /> styled components should match the stored <InputError />
 />
 `;
 
-exports[`<SignUpForm /> styled components should match the stored <SignUpButton /> snapshot 1`] = `
-.c0 {
-  color: white;
-}
-
-<button
-  className="c0 btn btn-primary"
-  disabled={false}
-  type="button"
-/>
-`;
-
 exports[`<SignUpForm /> styled components should match the stored <StyledForm /> snapshot 1`] = `
 .c0 {
   padding: 40px;
@@ -77,6 +65,18 @@ exports[`<SignUpForm /> styled components should match the stored <StyledForm />
 
 <form
   className="c0"
+/>
+`;
+
+exports[`<SignUpForm /> styled components should match the stored <SubmitButton /> snapshot 1`] = `
+.c0 {
+  color: white;
+}
+
+<button
+  className="c0 btn btn-primary"
+  disabled={false}
+  type="button"
 />
 `;
 

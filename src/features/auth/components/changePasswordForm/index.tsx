@@ -4,7 +4,15 @@ import { Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { ChangePasswordFormSchema } from './schema';
 import { ChangePasswordFormType } from './types';
-import { FormLabel, Title, StyledForm, InputError, ButtonWrapper, SubmitButton, CancelButton } from './styled';
+import {
+  FormLabel,
+  Title,
+  StyledForm,
+  InputError,
+  ButtonWrapper,
+  SubmitButton,
+  CancelButton,
+} from '../styles/StyledForm';
 
 export const ChangePasswordForm: ChangePasswordFormType = ({ onSubmit }) => {
   const {

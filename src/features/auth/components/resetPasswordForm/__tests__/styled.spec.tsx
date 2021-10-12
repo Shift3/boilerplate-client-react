@@ -1,6 +1,14 @@
 import renderer from 'react-test-renderer';
 import { expectToMatchSnapshot } from 'utils/test';
-import { StyledForm, Title, FormLabel, InputError, ButtonWrapper, CancelButton, SubmitButton } from '../styled';
+import {
+  StyledForm,
+  Title,
+  FormLabel,
+  InputError,
+  ButtonWrapper,
+  CancelButton,
+  SubmitButton,
+} from '../../styles/StyledForm';
 
 import 'jest-styled-components';
 
