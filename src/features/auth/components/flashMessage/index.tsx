@@ -5,7 +5,7 @@ import { FC } from 'react';
 import Alert from 'react-bootstrap/Alert';
 
 // App imports
-import { FlashMessageContainer } from './styled';
+import { FlashMessageContainer } from 'features/styles/PageStyles';
 import { INotification, NotificationType } from 'core/modules/notifications/domain/notification';
 import { useNotificationState } from 'core/modules/notifications/application/useNotificationState';
 import { useDismissNotification } from 'core/modules/notifications/application/useDismissNotification';
