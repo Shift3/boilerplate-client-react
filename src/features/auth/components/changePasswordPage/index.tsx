@@ -1,6 +1,5 @@
-import { Title, StyledFormWrapper } from 'features/styles/PageStyles';
+import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
 import { FC } from 'react';
-import Container from 'react-bootstrap/Container';
 import { useHistory } from 'react-router-dom';
 import { ChangePasswordForm } from '../changePasswordForm';
 import { IChangePasswordFormData } from '../changePasswordForm/types';
@@ -15,11 +14,11 @@ export const ChangePasswordPage: FC = () => {
   };
 
   return (
-    <Container className='d-flex justify-content-center'>
+    <PageWrapper>
       <StyledFormWrapper data-testid='wrapper'>
         <Title>Change Password</Title>
         <ChangePasswordForm onSubmit={onSubmit} />
       </StyledFormWrapper>
-    </Container>
+    </PageWrapper>
   );
 };

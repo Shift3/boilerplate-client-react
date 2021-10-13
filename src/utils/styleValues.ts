@@ -58,4 +58,8 @@ export default {
     white: colors.white,
     black: colors.black,
   },
+
+  pages: {
+    backgroundColor: colors.white
+  }
 };

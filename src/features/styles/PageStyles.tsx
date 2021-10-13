@@ -5,6 +5,15 @@ import styled from 'styled-components';
 
 const BootstrapButton: FC<ButtonProps> = ({ children, ...rest }) => <Button {...rest}>{children}</Button>;
 
+export const PageWrapper = styled.div`
+  height: 100%;
+  width: 100%;
+  background-color: ${(props) => props.theme.pages.backgroundColor};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const StyledFormWrapper = styled.div`
   margin: 100px;
   max-width: 500px;
@@ -14,14 +23,12 @@ export const StyledFormWrapper = styled.div`
   border-radius: 0.25rem;
   & label {
     color: ${(props) => props.theme.forms.labelColor};
-    margin-bottom: 5px;
   }
   & .invalid-feedback {
     /* Modify style of validation error messages here */
   }
   & control {
     color: ${(props) => props.theme.forms.control};
-    margin-bottom: 20px;
   }
 `;
 
