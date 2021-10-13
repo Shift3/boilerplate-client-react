@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import { useHistory } from 'react-router-dom';
 import { useCreateAgentMutation } from '../agentApi';
 import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
-import { Title, StyledFormWrapper } from '../../styles/FormStyles';
+import { Title, StyledFormWrapper } from '../../styles/PageStyles';
 
 export const CreateAgentView: FC = () => {
   const history = useHistory();

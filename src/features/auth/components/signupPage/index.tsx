@@ -1,8 +1,9 @@
 import { FC } from 'react';
+import Container from 'react-bootstrap/Container';
 import { useHistory } from 'react-router-dom';
 import { ISignUpFormData } from '../signupForm/types';
 import { SignUpForm } from '../signupForm';
-import { Wrapper } from './styled';
+import { StyledFormWrapper } from 'features/styles/PageStyles';
 import { useAccountCreation } from 'core/modules/user/application/useAccountCreation';
 
 export const SignUpPage: FC = () => {
@@ -18,8 +19,10 @@ export const SignUpPage: FC = () => {
   const onCancel = () => history.push('/auth/login');
 
   return (
-    <Wrapper data-testid='wrapper'>
-      <SignUpForm onSubmit={onSubmit} onCancel={onCancel} />
-    </Wrapper>
+    <Container className='d-flex justify-content-center'>
+      <StyledFormWrapper data-testid='wrapper'>
+        <SignUpForm onSubmit={onSubmit} onCancel={onCancel} />
+      </StyledFormWrapper>
+    </Container>
   );
 };

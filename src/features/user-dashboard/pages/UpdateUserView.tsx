@@ -4,7 +4,7 @@ import { useGetAgenciesQuery } from 'features/agency-dashboard/agencyApi';
 import { FC, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import { useHistory, useParams } from 'react-router-dom';
-import { Title, StyledFormWrapper } from '../../styles/FormStyles';
+import { Title, StyledFormWrapper } from '../../styles/PageStyles';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
 import { useGetRolesQuery } from '../roleApi';
 import { useGetUserByIdQuery, useUpdateUserMutation } from '../userApi';
