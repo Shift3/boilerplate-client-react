@@ -12,6 +12,8 @@ import {
 } from 'utils/test';
 import { SignUpForm } from '../index';
 import { Constants } from 'utils/constants';
+import { ThemeProvider } from 'styled-components';
+import AppTheme from 'utils/styleValues';
 
 const { EMAIL_REQUIRED, INVALID_EMAIL, EMAIL_MATCH, FIRST_NAME_REQUIRED, LAST_NAME_REQUIRED } = Constants.errorMessages;
 
@@ -27,7 +29,11 @@ describe('SignupForm', () => {
   const mockOnCancel = jest.fn();
 
   beforeEach(async () => {
-    render(<SignUpForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />);
+    render(
+      <ThemeProvider theme={AppTheme}>
+        <SignUpForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+      </ThemeProvider>,
+    );
 
     await setValueByLabelText('Email', validEmail);
     await setValueByLabelText('Confirm Email', validEmail);

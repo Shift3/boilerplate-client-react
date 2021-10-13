@@ -11,6 +11,8 @@ import {
   formAlertMessageCheck,
 } from 'utils/test';
 import { ForgotPasswordForm } from '../index';
+import { ThemeProvider } from 'styled-components';
+import AppTheme from 'utils/styleValues';
 
 const { EMAIL_REQUIRED, INVALID_EMAIL } = Constants.errorMessages;
 
@@ -22,8 +24,13 @@ describe('ForgotPasswordForm', () => {
   const mockOnCancel = jest.fn();
 
   beforeEach(async () => {
-    render(<ForgotPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />);
-
+    render(
+      <ThemeProvider theme={AppTheme}>
+        render(
+        <ForgotPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+        );
+      </ThemeProvider>,
+    );
     await setValueByLabelText('Email', validEmail);
   });
 

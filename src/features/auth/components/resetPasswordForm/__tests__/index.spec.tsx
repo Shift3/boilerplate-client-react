@@ -10,6 +10,8 @@ import {
   clickByTestIdAsync,
   expectInDocByTestId,
 } from 'utils/test';
+import { ThemeProvider } from 'styled-components';
+import AppTheme from 'utils/styleValues';
 
 const {
   NEW_PASSWORD_REQUIRED,
@@ -21,22 +23,26 @@ const {
   PASSWORD_SPECIAL_CHARACTER,
 } = Constants.errorMessages;
 
-const validNewPassword = 'Password456!';
-const shortPassword = 'T123!';
-const noSpecialCharPassword = 'Password123';
-const noNumberPassword = 'Password!';
-const noUppercasePassword = 'password123!';
-const noLowercasePassword = 'PASSWORD123!';
-
-const mockOnSubmit = jest.fn();
-const mockOnCancel = jest.fn();
-
 describe('ResetPasswordForm', () => {
-  describe('Rendering', () => {
-    beforeEach(() => render(<ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />));
+  const validNewPassword = 'Password456!';
+  const shortPassword = 'T123!';
+  const noSpecialCharPassword = 'Password123';
+  const noNumberPassword = 'Password!';
+  const noUppercasePassword = 'password123!';
+  const noLowercasePassword = 'PASSWORD123!';
+  const mockOnSubmit = jest.fn();
+  const mockOnCancel = jest.fn();
+
+  beforeEach(() => {
+    render(
+      <ThemeProvider theme={AppTheme}>
+        <ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+        ));
+      </ThemeProvider>,
+    );
 
     it('should render the new password field', () => expectInDocByLabelText('New Password'));
-    it('should render the confrim password field', () => expectInDocByLabelText('Confirm Password'));
+    it('should render the confirm password field', () => expectInDocByLabelText('Confirm Password'));
     it('should render the cancel button', () => expectInDocByTestId('cancelButton'));
     it('should render the submit button', () => expectInDocByTestId('submitButton'));
   });
