@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { ForgotPasswordForm } from '../forgotPasswordForm';
 import { IForgotPassswordFormData } from '../forgotPasswordForm/types';
 import Container from 'react-bootstrap/Container';
-import { StyledFormWrapper } from 'features/styles/PageStyles';
+import { StyledFormWrapper, Title } from 'features/styles/PageStyles';
 import { usePasswordReset } from 'core/modules/user/application/usePasswordReset';
 
 export const ForgotPasswordPage: FC = () => {
@@ -21,6 +21,7 @@ export const ForgotPasswordPage: FC = () => {
   return (
     <Container className='d-flex justify-content-center'>
       <StyledFormWrapper data-testid='wrapper'>
+        <Title>Forgot Password</Title>
         <ForgotPasswordForm onSubmit={onSubmit} onCancel={onCancel} />
       </StyledFormWrapper>
     </Container>
