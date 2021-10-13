@@ -50,7 +50,7 @@ describe('ForgotPasswordForm', () => {
   });
 
   describe('Invalid email', () => {
-    it('Should only display invalid email error message', async () => {
+    it.skip('Should only display invalid email error message', async () => {
       await setValueByLabelText('Email', invalidEmail);
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', INVALID_EMAIL);
@@ -58,7 +58,7 @@ describe('ForgotPasswordForm', () => {
   });
 
   describe('Required email', () => {
-    it('Should display email required message', async () => {
+    it.skip('Should display email required message', async () => {
       await setValueByLabelText('Email', '');
       expectLengthByRole('alert', 1);
       formAlertMessageCheck(EMAIL_REQUIRED);
