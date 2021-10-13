@@ -3,7 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import { ForgotPasswordFormSchema } from './schema';
 import { ForgotPasswordFormType } from './types';
-import { ButtonWrapper, CancelButton, SubmitButton, StyledForm, Title } from '../../../styles/PageStyles';
+import { ButtonWrapper, CancelButton, SubmitButton, StyledForm } from '../../../styles/PageStyles';
 
 export const ForgotPasswordForm: ForgotPasswordFormType = ({ onSubmit, onCancel }) => {
   const {
@@ -17,7 +17,6 @@ export const ForgotPasswordForm: ForgotPasswordFormType = ({ onSubmit, onCancel 
 
   return (
     <StyledForm data-testid='forgotPasswordForm' onSubmit={handleSubmit(onSubmit)}>
-      <Title>Forgot Password</Title>
       <Form.Group>
         <Form.Label htmlFor='email'>Email</Form.Label>
         <Form.Control id='email' type='email' {...register('email')} placeholder='Enter email' />

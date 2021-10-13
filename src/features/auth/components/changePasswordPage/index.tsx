@@ -1,4 +1,4 @@
-import { StyledFormWrapper } from 'features/styles/PageStyles';
+import { Title, StyledFormWrapper } from 'features/styles/PageStyles';
 import { FC } from 'react';
 import Container from 'react-bootstrap/Container';
 import { useHistory } from 'react-router-dom';
@@ -17,6 +17,7 @@ export const ChangePasswordPage: FC = () => {
   return (
     <Container className='d-flex justify-content-center'>
       <StyledFormWrapper data-testid='wrapper'>
+        <Title>Change Password</Title>
         <ChangePasswordForm onSubmit={onSubmit} />
       </StyledFormWrapper>
     </Container>

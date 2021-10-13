@@ -24,7 +24,7 @@ export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
         <Form.Control.Feedback type='invalid'>{errors.email?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor='confirmEmaisl' placeholder='Confirm email'>
+        <Form.Label htmlFor='confirmEmail' placeholder='Confirm email'>
           Confirm Email
         </Form.Label>
         <Form.Control id='confirmEmail' type='email' {...register('confirmEmail')} placeholder='Confirm your email' />
