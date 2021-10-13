@@ -5,8 +5,8 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-BUILD_DIRECTORY_PATH=
-AWS_SANDBOX_URL=
+BUILD_DIRECTORY_PATH=./build
+AWS_SANDBOX_URL=boilerplate-client-react.shift3sandbox.com
 
 yarn run predeploy:staging
 
