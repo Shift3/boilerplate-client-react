@@ -1,10 +1,9 @@
-import { Address } from 'common/models/address';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { FC } from 'react';
 import Container from 'react-bootstrap/Container';
 import { useHistory } from 'react-router-dom';
 import { useCreateAgentMutation } from '../agentApi';
-import { CreateAgentFormData, CreateAgentForm } from '../components/CreateAgentForm';
+import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
 import { StyledFormTitle, StyledFormWrapper } from '../components/styled';
 
 export const CreateAgentView: FC = () => {
@@ -16,29 +15,9 @@ export const CreateAgentView: FC = () => {
     history.goBack();
   };
 
-  const handleFormSubmit = async (data: CreateAgentFormData) => {
-    const {
-      name,
-      email,
-      description,
-      phoneNumber,
-      address1,
-      address2,
-      city,
-      state,
-      zipCode,
-      thumbnail = 'https://shift3tech.com/images/s3-logo-white.svg',
-    } = data;
-    const address: Address = { address1, address2, city, state, zipCode };
+  const handleFormSubmit = async (data: FormData) => {
     try {
-      await createAgent({
-        name,
-        email,
-        description,
-        phoneNumber,
-        address,
-        thumbnail,
-      }).unwrap();
+      await createAgent({ ...data, thumbnail: 'https://shift3tech.com/images/s3-logo-white.svg' }).unwrap();
       showSuccessNotification('Agent created.');
       history.push('/agents');
     } catch (error) {
@@ -50,7 +29,7 @@ export const CreateAgentView: FC = () => {
     <Container className='d-flex justify-content-center'>
       <StyledFormWrapper>
         <StyledFormTitle>Create Agent </StyledFormTitle>
-        <CreateAgentForm onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
+        <AgentDetailForm submitButtonLabel='CREATE' onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
       </StyledFormWrapper>
     </Container>
   );

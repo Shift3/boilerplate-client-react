@@ -1,23 +1,23 @@
 import { ErrorBoundary } from '@sentry/react';
-import { ActivateAccountPage } from 'components/activateAccountPage';
-import { ChangePasswordPage } from 'components/changePasswordPage';
-import { ForgotPasswordPage } from 'components/forgotPasswordPage';
-import { LogInPage } from 'components/loginPage';
-import { ResetPasswordPage } from 'components/resetPasswordPage';
-import { SignUpPage } from 'components/signupPage';
-import { UpdateUserProfilePage } from 'components/updateUserProfilePage';
 import { Routes as AgencyRoutes } from 'features/agency-dashboard/Routes';
 import { Routes as AgentRoutes } from 'features/agent-dashboard/Routes';
-import { PrivateRoute } from 'features/auth/components/PrivateRoute/PrivateRoute';
+import { DashboardPage } from 'features/auth/components/dashboardPage';
+import { PrivateRoute } from 'features/auth/components/privateRoute.tsx';
 import { Routes as UserRoutes } from 'features/user-dashboard/Routes';
 import { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { DashboardPage } from '../components/dashboardPage/index';
-import { FlashMessage } from '../components/flashMessage/index';
-import { HolyGrailLayout } from '../components/holyGrailLayout/index';
 import { GlobalStyle } from '../GlobalStyle';
-import AppTheme from '../utils/styleValues';
+import AppTheme from 'utils/styleValues';
+import { FlashMessage } from 'features/auth/components/flashMessage';
+import { HolyGrailLayout } from 'features/auth/components/holyGrailLayout';
+import { LogInPage } from 'features/auth/components/loginPage';
+import { SignUpPage } from 'features/auth/components/signupPage';
+import { ActivateAccountPage } from 'features/auth/components/activateAccountPage';
+import { ForgotPasswordPage } from 'features/auth/components/forgotPasswordPage';
+import { ResetPasswordPage } from 'features/auth/components/resetPasswordPage';
+import { ChangePasswordPage } from 'features/auth/components/changePasswordPage';
+import { UpdateUserProfilePage } from 'features/auth/components/updateUserProfilePage';
 
 export const App: FC = () => (
   <ErrorBoundary>

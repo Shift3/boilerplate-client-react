@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { CustomRenderer, GenericTable, TableHeader } from 'common/components';
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
 import { useConfirmationModal } from 'common/hooks';
@@ -7,7 +6,9 @@ import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { useDeleteAgentMutation, useGetAgentsQuery } from '../agentApi';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
+import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 
 type AgentTableItem = {
   id: number;
@@ -16,9 +17,15 @@ type AgentTableItem = {
 };
 
 export const AgentListView: FC = () => {
-  const { data: agents = [] } = useGetAgentsQuery();
+  const history = useHistory();
+  const { data: agents = [], isLoading: isLoadingAgents } = useGetAgentsQuery();
   const [deleteAgent] = useDeleteAgentMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
+  const { showSuccessNotification } = useShowNotification();
+
+  const navigateToUpdateView = (agent: Agent) => {
+    history.push(`/agents/update-agent/${agent.id}`);
+  };
 
   const handleDelete = (agent: Agent) => {
     const message = `Delete ${agent.name}?`;
@@ -26,6 +33,7 @@ export const AgentListView: FC = () => {
     const onConfirm = () => {
       deleteAgent(agent.id);
       closeModal();
+      showSuccessNotification('Agent deleted.');
     };
 
     const onCancel = () => closeModal();
@@ -44,7 +52,7 @@ export const AgentListView: FC = () => {
     id: agent.id,
     name: agent.name,
     actions: [
-      { icon: 'edit', tooltipText: 'Edit', onClick: () => console.log(`Edit ${agent.name}`) },
+      { icon: 'edit', tooltipText: 'Edit', onClick: () => navigateToUpdateView(agent) },
       {
         icon: 'trash-alt',
         tooltipText: 'Delete',
@@ -68,12 +76,14 @@ export const AgentListView: FC = () => {
 
   return (
     <Container>
-      <div className='pb-4 text-right'>
+      <div className='pb-4 text-end'>
         <Link to='/agents/create-agent'>
           <Button>ADD AGENT</Button>
         </Link>
       </div>
-      <GenericTable<AgentTableItem> headers={headers} items={items} customRenderers={customRenderers} />
+      <WithLoadingOverlay isLoading={isLoadingAgents}>
+        <GenericTable<AgentTableItem> headers={headers} items={items} customRenderers={customRenderers} />
+      </WithLoadingOverlay>
       <ConfirmationModal />
     </Container>
   );

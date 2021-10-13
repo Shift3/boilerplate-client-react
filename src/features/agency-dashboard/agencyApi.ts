@@ -10,7 +10,7 @@ export const agencyApi = createApi({
     baseUrl: `${environment.apiRoute}/agencies`,
 
     prepareHeaders: (headers: Headers, { getState }) => {
-      const token = (getState() as RootState).auth.session?.token;
+      const { token } = (getState() as RootState).auth;
 
       if (token) {
         headers.set('authorization', `Bearer ${token}`);
@@ -20,11 +20,21 @@ export const agencyApi = createApi({
     },
   }),
 
+  // Always refetch data, don't used cache.
+  keepUnusedDataFor: 0,
+  refetchOnMountOrArgChange: true,
+  refetchOnReconnect: true,
+
   tagTypes: ['Agency'],
 
   endpoints: (builder) => ({
     getAgencies: builder.query<Agency[], void>({
       query: () => ({ url: '/' }),
+      providesTags: ['Agency'],
+    }),
+
+    getAgencyById: builder.query<Agency, number | string>({
+      query: (id) => ({ url: `/${id}` }),
       providesTags: ['Agency'],
     }),
 
@@ -56,5 +66,10 @@ export const agencyApi = createApi({
   }),
 });
 
-export const { useCreateAgencyMutation, useDeleteAgencyMutation, useGetAgenciesQuery, useUpdateAgencyMutation } =
-  agencyApi;
+export const {
+  useCreateAgencyMutation,
+  useGetAgencyByIdQuery,
+  useDeleteAgencyMutation,
+  useGetAgenciesQuery,
+  useUpdateAgencyMutation,
+} = agencyApi;

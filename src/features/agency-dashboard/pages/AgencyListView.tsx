@@ -7,6 +7,8 @@ import { useDeleteAgencyMutation, useGetAgenciesQuery } from 'features/agency-da
 import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
+import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 
 type AgencyTableItem = {
   id: number;
@@ -16,9 +18,10 @@ type AgencyTableItem = {
 
 export const AgencyListView: FC = () => {
   const history = useHistory();
-  const { data: agencies = [] } = useGetAgenciesQuery();
+  const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery();
   const [deleteAgency] = useDeleteAgencyMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
+  const { showSuccessNotification } = useShowNotification();
 
   const handleDelete = (agency: Agency) => {
     const message = `Delete ${agency.agencyName}?`;
@@ -26,6 +29,7 @@ export const AgencyListView: FC = () => {
     const onConfirm = () => {
       deleteAgency(agency.id);
       closeModal();
+      showSuccessNotification('Agency deleted.');
     };
 
     const onCancel = () => closeModal();
@@ -70,12 +74,14 @@ export const AgencyListView: FC = () => {
 
   return (
     <Container>
-      <div className='pb-4 text-right'>
+      <div className='pb-4 text-end'>
         <Link to='/agencies/create-agency'>
           <Button>ADD AGENCY</Button>
         </Link>
       </div>
-      <GenericTable<AgencyTableItem> headers={headers} items={items} customRenderers={customRenderers} />
+      <WithLoadingOverlay isLoading={isLoadingAgencies}>
+        <GenericTable<AgencyTableItem> headers={headers} items={items} customRenderers={customRenderers} />
+      </WithLoadingOverlay>
       <ConfirmationModal />
     </Container>
   );

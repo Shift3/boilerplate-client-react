@@ -12,11 +12,24 @@ jobs:
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
-          name: Install, lint, and test frontend
+          name: Set up Dependencies
+          command: |
+            yarn install
+      - run:
+          name: Test Server
+          command: |
+            yarn start
+          background: true
+          environment:
+            NODE_OPTIONS: --max_old_space_size=4096
+      - run:
+          name: Build and Lint
+          command: |
+            yarn build         
+      - run:
+          name: Test Frontend
           command: |
             export CI=true
-            yarn install
-            yarn build
             yarn test-ci
           environment:
             NODE_OPTIONS: --max_old_space_size=4096

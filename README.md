@@ -8,59 +8,52 @@
 This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react/wiki) which explains the project and its implementation in much greater detail than the code comments.
 
 - [Boilerplate Client React](#boilerplate-client-react)
-  - [Local Development](#local-development)
-    - [Quick Start](#quick-start)
-    - [Starting the Project](#starting-the-project)
-    - [Running unit tests](#running-unit-tests)
-  - [Running test coverage](#running-test-coverage)
-  - [Build](#build)
-    - [`yarn eject`](#yarn-eject)
-  - [Learn More](#learn-more)
   - [Staging URL](#staging-url)
+  - [Quick Start](#quick-start)
+    - [Running unit tests](#running-unit-tests)
+    - [Running test coverage](#running-test-coverage)
+    - [Build](#build)
+  - [Learn More](#learn-more)
   - [Deployment](#deployment)
     - [AWS](#aws)
     - [Terraform](#terraform)
     - [Environment Configuration](#environment-configuration)
     - [Build and Deploy](#build-and-deploy)
   - [Development](#development)
-    - [Local Development](#local-development-1)
+    - [Local Development](#local-development)
     - [Development Server](#development-server)
     - [Docker](#docker)
     - [Template Repository](#template-repository)
+      - [Updating Code Owners](#updating-code-owners)
+      - [Updating Issue Templates](#updating-issue-templates)
     - [Initializing the Project](#initializing-the-project)
     - [Prettier](#prettier)
     - [CI](#ci)
       - [Wiki Automation](#wiki-automation)
-    - [Local Development](#local-development-2)
     - [Webpack Bundle Analyzer](#webpack-bundle-analyzer)
-    - [Development Server](#development-server-1)
-    - [Code Scaffolding](#code-scaffolding)
-    - [Build](#build-1)
-    - [Stagin Build](#stagin-build)
-    - [Running Unit Tests](#running-unit-tests-1)
-    - [Running End-to-End Tests](#running-end-to-end-tests)
+    - [React Hook Form](#react-hook-form)
+    - [Yup](#yup)
+      - [resolvers](#resolvers)
+    - [Staging Build](#staging-build)
     - [Additional Resources](#additional-resources)
 
-### Local Development
+## Staging URL
 
-The project has been configured to use [yarn](https://classic.yarnpkg.com/en/docs/cli/) for package dependency management.
+<https://boilerplate-client-angular.shift3sandbox.com/>
 
-#### Quick Start
+## Quick Start
 
 To start the project, make sure yarn is installed on your local machine. If you have already installed our [laptop script](https://github.com/Shift3/laptop), you should already have yarn.
 
 1. Install Dependencies via `yarn install`
-2. Start the Project via `yarn start`
+2. Start the Project in development mode via `yarn start`
 
-#### Starting the Project
+Open [http://localhost:4200](http://localhost:4200) to view the project in the browser.
 
-Runs the app in the development mode.\
-Open [http://localhost:4200](http://localhost:4200) to view it in the browser.
-
-The page will reload if you make edits.\
+The page will reload if you make edits. 
 You will also see any lint errors in the console.
 
-#### Running unit tests
+### Running unit tests
 
 Run `yarn test` to execute the unit test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
@@ -78,17 +71,6 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-#### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
 ## Learn More
 
@@ -98,16 +80,14 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-## Staging URL
-
-<https://boilerplate-client-react.shift3sandbox.com/>
-
 ## Deployment
 
 Deploying the application requires having the `aws` and `terraform` cli commands installed on your machine. See the following links for OS specific installation instructions:
 
 - [AWS CLI installation](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
 - [Terraform installation](https://learn.hashicorp.com/tutorials/terraform/install-cli)
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 ### AWS
 
@@ -218,7 +198,32 @@ This project can be run as a Docker container (it is not recommended for involve
 
 This project is configured as a [template repository](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template#about-repository-templates). It creates one commit in the new project based on the template instead of the entire original boilerplate history.
 
+#### Updating Code Owners
+
+In the repository there should be a `.github` folder with a `CODEOWNERS` file inside. This file represents who the owners of the repository code are. When you clone this repo, or use it as a template for a new project, you need to update this file to represent the new owners (you and whomever may be on your project). Simply remove the current owners in the file, and replace them with you and your teamates! The syntax is simply:
+
+```
+@<github username>
+```
+
+Be sure to add the github usernames of all developers on your project. Now anytime a pull request is created, all codeowners are added as reviews automatically! It also becomes a reference point when the project is picked back up in the future. We can easily see who has the best context for the code even years down the line. For more information you can click this link:
+
+[Github Codeowners](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/about-code-owners)
+
+#### Updating Issue Templates
+
+Currently the issue templates may have some things you don't want or need in your new project. This can be anything from the tags being set, to the person assigned for each issue. Be sure to go to the settings for the repository, and click `Set up templates` to configure them in a way that suits your needs. For more information you can click this link:
+
+[Setting up issue templates](https://docs.github.com/en/free-pro-team@latest/github/building-a-strong-community/configuring-issue-templates-for-your-repository)
+
 ### Initializing the Project
+
+If this project is being cloned to start a new project, there are a few things that need to be updated to make it work. The project name will need to be updated in the `README.md`, `package.json`, CircleCI `config.yml`. The README also refers to the boilerplate, both in the text and in the CircleCI badges.
+
+The project `environment` files will need to be updated with the path to the APIs. The development `environment.dev.ts`  and `environment.prod.ts` files assumes a local development server of `http://localhost:3000`, which might need to be updated.
+
+After provisioning and before deploying, the `deploy:staging` and `deploy:production` script in `package.json` needs to be updated.
+
 
 ### Prettier
 
@@ -247,15 +252,15 @@ After forking the project, you will need to make the following changes to ensure
 
 These steps only need to be performed once by a user with admin access to both GitHub repository and CircleCI project.
 
-### Local Development
-
 ### Webpack Bundle Analyzer
 
-### Development Server
+The project includes [webpack-bundle-analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer), which helps developers figure out the size of the project and its webpack dependencies. To use it, type `yarn build` in the project's directory in a terminal to create the webpack bundle. Run `yarn run analyze`, and webpack-bundle-analyzer will launch a server and browser window with a visualization of the project bundle size.
 
-### Code Scaffolding
+### React Hook Form
 
-### React Hook Forms
+We are using [React Hook Form](https://react-hook-form.com/) to extend our forms and make easy to work with validation.
+for more information see: https://react-hook-form.com/ts for typescript support.
+
 
 ### Yup
 
@@ -304,8 +309,6 @@ personSchema.isValidSync(invalidPerson)l // => false
 
 For more information, see the [Yup documentation](https://github.com/jquense/yup).
 
-### React Hook Form
-
 #### resolvers
 
 The `useForm` hook accepts an optional `resolver` function which allows you to use any external validation library such as [Yup](#yup) or your own custom validation logic to validate your forms. To simplify the integration with existing validation libraries, [React Hook Form](#react-hook-form) provides the optional `@hookform/resolvers` module which contains utility methods to create resolver functions from library specific object schemas.
@@ -339,12 +342,6 @@ const PersonForm = () => {
 
 For more information, see the [useForm](https://react-hook-form.com/api/useform) and [@hookform/resolvers](https://github.com/react-hook-form/resolvers) documentation.
 
-### Build
-
-### Stagin Build
-
-### Running Unit Tests
-
-### Running End-to-End Tests
+### Staging Build
 
 ### Additional Resources

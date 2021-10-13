@@ -1,3 +1,5 @@
+import { environment } from '../environment/index';
+
 interface IPattern {
   DIGIT_REGEX: RegExp;
   EMAIL_REGEX: RegExp;
@@ -66,6 +68,6 @@ export const Constants: IConstant = {
     ROLE_REQUIRED: 'Role is required.',
     AGENCY_REQUIRED: 'Agency is required.'
   },
-  version: '0.1.0',
+  version: environment.version,
   creationYear: 2021,
 };

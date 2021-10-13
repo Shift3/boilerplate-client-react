@@ -3,7 +3,7 @@ import { FC } from 'react';
 import Container from 'react-bootstrap/Container';
 import { useHistory } from 'react-router-dom';
 import { useCreateAgencyMutation } from '../agencyApi';
-import { CreateAgencyForm, CreateAgencyFormData } from '../components/CreateAgencyForm';
+import { AgencyDetailForm, FormData } from '../components/AgencyDetailForm';
 import { StyledFormTitle, StyledFormWrapper } from '../components/styled';
 
 export const CreateAgencyView: FC = () => {
@@ -15,10 +15,9 @@ export const CreateAgencyView: FC = () => {
     history.goBack();
   };
 
-  const handleFormSubmit = async (data: CreateAgencyFormData) => {
-    const { agencyName } = data;
+  const handleFormSubmit = async (data: FormData) => {
     try {
-      await createAgency({ agencyName }).unwrap();
+      await createAgency(data).unwrap();
       showSuccessNotification('Agency created.');
       history.push('/agencies');
     } catch (error) {
@@ -30,7 +29,7 @@ export const CreateAgencyView: FC = () => {
     <Container className='d-flex justify-content-center'>
       <StyledFormWrapper>
         <StyledFormTitle>Create Agency</StyledFormTitle>
-        <CreateAgencyForm onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
+        <AgencyDetailForm submitButtonLabel='CREATE' onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
       </StyledFormWrapper>
     </Container>
   );

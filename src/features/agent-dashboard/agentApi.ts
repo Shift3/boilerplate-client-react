@@ -3,13 +3,23 @@ import { RootState } from 'app/redux';
 import { Agent } from 'common/models/agent';
 import { environment } from 'environment';
 
+export type CreateAgentRequest = Pick<
+  Agent,
+  'description' | 'email' | 'name' | 'phoneNumber' | 'thumbnail' | 'address'
+>;
+
+export type UpdateAgentRequest = Pick<
+  Agent,
+  'id' | 'description' | 'email' | 'name' | 'phoneNumber' | 'thumbnail' | 'address'
+>;
+
 export const agentApi = createApi({
   reducerPath: 'agentApi',
 
   baseQuery: fetchBaseQuery({
     baseUrl: `${environment.apiRoute}/agents`,
     prepareHeaders: (headers: Headers, { getState }) => {
-      const token = (getState() as RootState).auth.session?.token;
+      const { token } = (getState() as RootState).auth;
 
       if (token) {
         headers.set('authorization', `Bearer ${token}`);
@@ -19,6 +29,11 @@ export const agentApi = createApi({
     },
   }),
 
+  // Always refetch data, don't used cache.
+  keepUnusedDataFor: 0,
+  refetchOnMountOrArgChange: true,
+  refetchOnReconnect: true,
+
   tagTypes: ['Agent'],
 
   endpoints: (builder) => ({
@@ -27,14 +42,25 @@ export const agentApi = createApi({
       providesTags: ['Agent'],
     }),
 
-    createAgent: builder.mutation<
-      Agent,
-      Pick<Agent, 'name' | 'email' | 'description' | 'phoneNumber' | 'address' | 'thumbnail'>
-    >({
+    getAgentById: builder.query<Agent, number | string>({
+      query: (id) => ({ url: `/${id}` }),
+      providesTags: ['Agent'],
+    }),
+
+    createAgent: builder.mutation<Agent, CreateAgentRequest>({
       query: (payload) => ({
         url: '/',
         method: 'POST',
         body: payload,
+      }),
+      invalidatesTags: ['Agent'],
+    }),
+
+    updateAgent: builder.mutation<Agent, UpdateAgentRequest>({
+      query: ({ id, ...agentUpdate }) => ({
+        url: `/${id}`,
+        method: 'PUT',
+        body: agentUpdate,
       }),
       invalidatesTags: ['Agent'],
     }),
@@ -49,4 +75,10 @@ export const agentApi = createApi({
   }),
 });
 
-export const { useGetAgentsQuery, useCreateAgentMutation, useDeleteAgentMutation } = agentApi;
+export const {
+  useGetAgentsQuery,
+  useGetAgentByIdQuery,
+  useCreateAgentMutation,
+  useUpdateAgentMutation,
+  useDeleteAgentMutation,
+} = agentApi;

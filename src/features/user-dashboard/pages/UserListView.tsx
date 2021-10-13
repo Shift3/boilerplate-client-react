@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { CustomRenderer, GenericTable, TableHeader } from 'common/components';
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
 import { useConfirmationModal } from 'common/hooks';
@@ -12,7 +11,9 @@ import {
 import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
+import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 
 type UserTableItem = {
   id: number;
@@ -25,11 +26,13 @@ type UserTableItem = {
 };
 
 export const UserListView: FC = () => {
-  const { data: users = [] } = useGetUsersQuery();
+  const history = useHistory();
+  const { data: users = [], isLoading: isLoadingUsers } = useGetUsersQuery();
   const [deleteUser] = useDeleteUserMutation();
   const [forgotPassword] = useForgotPasswordMutation();
   const [resendActivationEmail] = useResendActivationEmailMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
+  const { showSuccessNotification } = useShowNotification();
 
   const getUsersFullName = (user: User) => `${user.firstName} ${user.lastName}`;
 
@@ -39,6 +42,7 @@ export const UserListView: FC = () => {
     const onConfirm = () => {
       resendActivationEmail({ id: user.id });
       closeModal();
+      showSuccessNotification('Activation email has been sent.');
     };
 
     const onCancel = () => closeModal();
@@ -52,6 +56,7 @@ export const UserListView: FC = () => {
     const onConfirm = () => {
       deleteUser(user.id);
       closeModal();
+      showSuccessNotification('User deleted.');
     };
 
     const onCancel = () => closeModal();
@@ -70,6 +75,10 @@ export const UserListView: FC = () => {
     const onCancel = () => closeModal();
 
     openModal(message, onConfirm, onCancel);
+  };
+
+  const navigateToUpdateView = (user: User) => {
+    history.push(`/users/update-user/${user.id}`);
   };
 
   const headers: TableHeader<UserTableItem>[] = [
@@ -95,7 +104,7 @@ export const UserListView: FC = () => {
           onClick: () => handleResendActivationEmail(user),
         },
     actions: [
-      { icon: 'edit', tooltipText: 'Edit', onClick: () => console.log(`Edit ${user.id}`) },
+      { icon: 'edit', tooltipText: 'Edit', onClick: () => navigateToUpdateView(user) },
       {
         icon: 'trash-alt',
         tooltipText: 'Delete',
@@ -133,12 +142,14 @@ export const UserListView: FC = () => {
 
   return (
     <Container>
-      <div className='mb-4 text-right'>
+      <div className='mb-4 text-end'>
         <Link to='/users/create-user'>
           <Button>ADD USER</Button>
         </Link>
       </div>
-      <GenericTable<UserTableItem> headers={headers} items={items} customRenderers={customRenderers} />
+      <WithLoadingOverlay isLoading={isLoadingUsers}>
+        <GenericTable<UserTableItem> headers={headers} items={items} customRenderers={customRenderers} />
+      </WithLoadingOverlay>
       <ConfirmationModal />
     </Container>
   );

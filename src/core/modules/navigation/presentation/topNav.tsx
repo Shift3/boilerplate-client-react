@@ -7,7 +7,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 
 // App imports
-import { CustomButton } from 'components/button/styled';
+import { CustomButton } from 'features/auth/components/button/styled';
 import { ProfileDropdown } from './profileDropdown';
 import { useNavData } from '../application/useNavData';
 import { useLogoutModalManager } from '../application/useLogoutModalManager';
@@ -21,17 +21,17 @@ export const TopNav: FC<NavProps> = ({ onNavToggle }) => {
   const { show, openModal, onCancel, onLogout } = useLogoutModalManager();
 
   return (
-    <Navbar collapseOnSelect expand='lg' className='shadow'>
+    <Navbar collapseOnSelect expand='lg' className='shadow px-3'>
       <NavLogo />
       {userProfile ? (
         <>
           <Navbar.Toggle aria-controls='responsive-navbar-nav' />
-          <Navbar.Collapse id='responsive-navbar-nav'>
-            <Nav className='mr-auto'>
+          <Navbar.Collapse id='responsive-navbar-nav' className='justify-content-between'>
+            <Nav>
               {navLinks
                 .filter((link) => link.canUserActivate)
                 .map((link) => (
-                  <NavLink link={link} />
+                  <NavLink key={link.label} link={link} />
                 ))}
             </Nav>
             <Nav>
@@ -41,7 +41,7 @@ export const TopNav: FC<NavProps> = ({ onNavToggle }) => {
           </Navbar.Collapse>
         </>
       ) : (
-        <Nav className='ml-auto'>
+        <Nav className='ms-auto'>
           <Link to='/auth/login'>
             <CustomButton>LOGIN/CREATE ACCOUNT</CustomButton>
           </Link>
