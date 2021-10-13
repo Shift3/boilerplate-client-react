@@ -1,10 +1,9 @@
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { FC } from 'react';
-import Container from 'react-bootstrap/Container';
 import { useHistory } from 'react-router-dom';
 import { useCreateAgentMutation } from '../agentApi';
 import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
-import { Title, StyledFormWrapper } from '../../styles/PageStyles';
+import { PageWrapper, Title, StyledFormWrapper } from '../../styles/PageStyles';
 
 export const CreateAgentView: FC = () => {
   const history = useHistory();
@@ -26,11 +25,11 @@ export const CreateAgentView: FC = () => {
   };
 
   return (
-    <Container className='d-flex justify-content-center'>
+    <PageWrapper>
       <StyledFormWrapper>
         <Title>Create Agent </Title>
         <AgentDetailForm submitButtonLabel='CREATE' onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
       </StyledFormWrapper>
-    </Container>
+    </PageWrapper>
   );
 };

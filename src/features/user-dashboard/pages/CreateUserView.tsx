@@ -1,11 +1,10 @@
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { useGetAgenciesQuery } from 'features/agency-dashboard';
 import { FC } from 'react';
-import Container from 'react-bootstrap/Container';
 import { useHistory } from 'react-router-dom';
 import { useGetRolesQuery } from '../roleApi';
 import { useCreateUserMutation } from '../userApi';
-import { Title, StyledFormWrapper } from 'features/styles/PageStyles';
+import { PageWrapper, Title, StyledFormWrapper } from 'features/styles/PageStyles';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
 
 export const CreateUserView: FC = () => {
@@ -35,8 +34,7 @@ export const CreateUserView: FC = () => {
   const isLoading = isLoadingRoles || isLoadingAgencies;
 
   return (
-    <Container className='d-flex justify-content-center'>
-      {/* TODO: add loading spinner */}
+    <PageWrapper>
       {!isLoading && (
         <StyledFormWrapper>
           <Title>Create User</Title>
@@ -48,6 +46,6 @@ export const CreateUserView: FC = () => {
           />
         </StyledFormWrapper>
       )}
-    </Container>
+    </PageWrapper>
   );
 };

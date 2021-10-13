@@ -2,9 +2,8 @@ import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { useGetAgenciesQuery } from 'features/agency-dashboard/agencyApi';
 import { FC, useEffect } from 'react';
-import Container from 'react-bootstrap/Container';
 import { useHistory, useParams } from 'react-router-dom';
-import { Title, StyledFormWrapper } from '../../styles/PageStyles';
+import { PageWrapper, Title, StyledFormWrapper } from '../../styles/PageStyles';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
 import { useGetRolesQuery } from '../roleApi';
 import { useGetUserByIdQuery, useUpdateUserMutation } from '../userApi';
@@ -47,7 +46,7 @@ export const UpdateUserView: FC = () => {
   };
 
   return (
-    <Container className='d-flex justify-content-center'>
+    <PageWrapper>
       <WithLoadingOverlay isLoading={isLoadingUser || isLoadingRoles || isLoadingAgencies}>
         <StyledFormWrapper>
           <Title>Update User</Title>
@@ -61,6 +60,6 @@ export const UpdateUserView: FC = () => {
           />
         </StyledFormWrapper>
       </WithLoadingOverlay>
-    </Container>
+    </PageWrapper>
   );
 };
