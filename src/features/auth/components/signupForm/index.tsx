@@ -3,7 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import { SignUpFormSchema } from './schema';
 import { SignUpFormType } from './types';
-import { ButtonWrapper, CancelButton, SubmitButton, StyledForm, Title } from '../../../styles/PageStyles';
+import { ButtonWrapper, CancelButton, SubmitButton, StyledForm } from '../../../styles/PageStyles';
 
 export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
   const {
@@ -17,7 +17,6 @@ export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
 
   return (
     <StyledForm data-testid='signupForm' onSubmit={handleSubmit(onSubmit)}>
-      <Title>Sign Up</Title>
       <Form.Group>
         <Form.Label htmlFor='email'>Email</Form.Label>
         <Form.Control id='email' type='email' {...register('email')} placeholder='Enter your email' />

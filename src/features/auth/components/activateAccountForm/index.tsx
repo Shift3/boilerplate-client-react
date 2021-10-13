@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
-import { Title, ButtonWrapper, CancelButton, SubmitButton, StyledForm } from '../../../styles/PageStyles';
+import { ButtonWrapper, CancelButton, SubmitButton, StyledForm } from '../../../styles/PageStyles';
 import { ActivateAccountFormSchema } from './schema';
 import { ActivateAccountFormType } from './types';
 
@@ -17,7 +17,6 @@ export const ActivateAccountForm: ActivateAccountFormType = ({ onSubmit, onCance
 
   return (
     <StyledForm data-testid='resetPasswordForm' onSubmit={handleSubmit(onSubmit)}>
-      <Title>Activate Account</Title>
       <Form.Group>
         <Form.Label htmlFor='newPassword'>New Password</Form.Label>
         <Form.Control id='newPassword' type='password' {...register('newPassword')} placeholder='Enter new password' />

@@ -2,10 +2,9 @@ import { UpdateUserProfileFormData } from '../updateUserProfileForm/types';
 import { useUpdateProfile } from 'core/modules/user/application/useUpdateProfile';
 import { useAuth, useLogout } from 'features/auth/hooks';
 import { FC } from 'react';
-import Container from 'react-bootstrap/Container';
 import { useHistory } from 'react-router-dom';
 import { UpdateUserProfileForm } from '../updateUserProfileForm/index';
-import { StyledFormWrapper } from 'features/styles/PageStyles';
+import { StyledFormWrapper, PageWrapper } from 'features/styles/PageStyles';
 
 export const UpdateUserProfilePage: FC = () => {
   const history = useHistory();
@@ -30,7 +29,7 @@ export const UpdateUserProfilePage: FC = () => {
   const onCancel = () => history.goBack();
 
   return (
-    <Container className='d-flex justify-content-center'>
+    <PageWrapper>
       <StyledFormWrapper>
         <UpdateUserProfileForm
           onSubmit={onSubmit}
@@ -42,6 +41,6 @@ export const UpdateUserProfilePage: FC = () => {
           }}
         />
       </StyledFormWrapper>
-    </Container>
+    </PageWrapper>
   );
 };
