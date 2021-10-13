@@ -2,19 +2,19 @@ import { render } from '@testing-library/react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { SignUpPage } from '../';
 import { expectInDocByTestId } from 'utils/test';
-import { Provider } from 'react-redux';
-import { createAppStore } from 'app/redux';
+import { ThemeProvider } from 'styled-components';
+import AppTheme from 'utils/styleValues';
 
 beforeEach(() =>
   render(
-    <Provider store={createAppStore()}>
+    <ThemeProvider theme={AppTheme}>
       <Router>
         <Switch>
           <Route exact path='/' component={SignUpPage} />
           <Route exact path='/auth/signup' component={() => <div data-testid='test' />} />
         </Switch>
       </Router>
-    </Provider>,
+    </ThemeProvider>,
   ),
 );
 
