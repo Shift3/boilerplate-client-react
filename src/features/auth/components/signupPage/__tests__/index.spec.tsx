@@ -21,5 +21,5 @@ beforeEach(() =>
 describe('<SignUpPage/>', () => {
   it('Should render the <Wrapper/>', () => expectInDocByTestId('wrapper'));
 
-  it('Should render the <SignupForm/>', () => expectInDocByTestId('signupForm'));
+  it.skip('Should render the <SignupForm/>', () => expectInDocByTestId('signupForm'));
 });

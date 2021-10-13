@@ -4,15 +4,7 @@ import { Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { UpdateUserProfileFormSchema } from './schema';
 import { UpdateUserProfileFormProps } from './types';
-import {
-  Title,
-  FormLabel,
-  ButtonWrapper,
-  CancelButton,
-  SubmitButton,
-  StyledForm,
-  InputError,
-} from '../../../styles/FormStyles';
+import { ButtonWrapper, CancelButton, SubmitButton, StyledForm, Title } from '../../../styles/FormStyles';
 
 export const UpdateUserProfileForm: FC<UpdateUserProfileFormProps> = ({ onSubmit, onCancel, defaultValues }) => {
   const {
@@ -27,19 +19,19 @@ export const UpdateUserProfileForm: FC<UpdateUserProfileFormProps> = ({ onSubmit
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <Title>Update Profile</Title>
       <Form.Group>
-        <FormLabel htmlFor='firstName'>First Name</FormLabel>
+        <Form.Label htmlFor='firstName'>First Name</Form.Label>
         <Form.Control id='firstName' type='text' defaultValue={defaultValues.firstName} {...register('firstName')} />
-        {errors.firstName?.message && <InputError role='alert'>{errors.firstName?.message}</InputError>}
+        <Form.Control.Feedback type='invalid'>{errors.firstName?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
-        <FormLabel htmlFor='lastName'>Last Name</FormLabel>
+        <Form.Label htmlFor='lastName'>Last Name</Form.Label>
         <Form.Control id='lastName' type='text' defaultValue={defaultValues.lastName} {...register('lastName')} />
-        {errors.lastName?.message && <InputError role='alert'>{errors.lastName?.message}</InputError>}
+        <Form.Control.Feedback type='invalid'>{errors.lastName?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
-        <FormLabel htmlFor='email'>Email</FormLabel>
+        <Form.Label htmlFor='email'>Email</Form.Label>
         <Form.Control id='email' type='email' defaultValue={defaultValues.email} {...register('email')} />
-        {errors.email?.message && <InputError role='alert'>{errors.email?.message}</InputError>}
+        <Form.Control.Feedback type='invalid'>{errors.email?.message}</Form.Control.Feedback>
       </Form.Group>
       <ButtonWrapper>
         <CancelButton data-testid='cancelButton' onClick={onCancel}>

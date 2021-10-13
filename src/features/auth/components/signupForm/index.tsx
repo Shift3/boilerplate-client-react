@@ -3,15 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import { SignUpFormSchema } from './schema';
 import { SignUpFormType } from './types';
-import {
-  Title,
-  FormLabel,
-  ButtonWrapper,
-  CancelButton,
-  SubmitButton,
-  StyledForm,
-  InputError,
-} from '../../../styles/FormStyles';
+import { ButtonWrapper, CancelButton, SubmitButton, StyledForm, Title } from '../../../styles/FormStyles';
 
 export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
   const {
@@ -27,30 +19,30 @@ export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
     <StyledForm data-testid='signupForm' onSubmit={handleSubmit(onSubmit)}>
       <Title>Sign Up</Title>
       <Form.Group>
-        <FormLabel htmlFor='email'>Email</FormLabel>
+        <Form.Label htmlFor='email'>Email</Form.Label>
         <Form.Control id='email' type='email' {...register('email')} placeholder='Enter your email' />
-        {errors.email?.message && <InputError role='alert'>{errors.email?.message}</InputError>}
+        <Form.Control.Feedback type='invalid'>{errors.email?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
-        <FormLabel htmlFor='confirmEmail' placeholder='Confirm email'>
+        <Form.Label htmlFor='confirmEmaisl' placeholder='Confirm email'>
           Confirm Email
-        </FormLabel>
+        </Form.Label>
         <Form.Control id='confirmEmail' type='email' {...register('confirmEmail')} placeholder='Confirm your email' />
-        {errors.confirmEmail?.message && <InputError role='alert'>{errors.confirmEmail?.message}</InputError>}
+        <Form.Control.Feedback type='invalid'>{errors.confirmEmail?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
-        <FormLabel htmlFor='firstName' placeholder='Enter your first name'>
+        <Form.Label htmlFor='firstName' placeholder='Enter your first name'>
           First Name
-        </FormLabel>
+        </Form.Label>
         <Form.Control id='firstName' type='text' {...register('firstName')} placeholder='Enter your first name' />
-        {errors.firstName?.message && <InputError role='alert'>{errors.firstName?.message}</InputError>}
+        <Form.Control.Feedback>{errors.firstName?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
-        <FormLabel htmlFor='lastName' placeholder='Enter your last name'>
+        <Form.Label htmlFor='lastName' placeholder='Enter your last name'>
           Last Name
-        </FormLabel>
+        </Form.Label>
         <Form.Control id='lastName' type='text' {...register('lastName')} placeholder='Enter your last name' />
-        {errors.lastName?.message && <InputError role='alert'>{errors.lastName?.message}</InputError>}
+        <Form.Control.Feedback>{errors.lastName?.message}</Form.Control.Feedback>
       </Form.Group>
       <ButtonWrapper>
         <CancelButton data-testid='cancelButton' onClick={onCancel}>
