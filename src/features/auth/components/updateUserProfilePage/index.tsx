@@ -4,7 +4,7 @@ import { useAuth, useLogout } from 'features/auth/hooks';
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { UpdateUserProfileForm } from '../updateUserProfileForm/index';
-import { StyledFormWrapper, PageWrapper } from 'features/styles/PageStyles';
+import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
 
 export const UpdateUserProfilePage: FC = () => {
   const history = useHistory();
@@ -31,6 +31,7 @@ export const UpdateUserProfilePage: FC = () => {
   return (
     <PageWrapper>
       <StyledFormWrapper>
+        <Title>Update Profile</Title>
         <UpdateUserProfileForm
           onSubmit={onSubmit}
           onCancel={onCancel}

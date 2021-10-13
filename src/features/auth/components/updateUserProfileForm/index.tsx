@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { UpdateUserProfileFormSchema } from './schema';
 import { UpdateUserProfileFormProps } from './types';
-import { ButtonWrapper, CancelButton, SubmitButton, StyledForm, Title } from '../../../styles/PageStyles';
+import { ButtonWrapper, CancelButton, SubmitButton, StyledForm } from '../../../styles/PageStyles';
 
 export const UpdateUserProfileForm: FC<UpdateUserProfileFormProps> = ({ onSubmit, onCancel, defaultValues }) => {
   const {
@@ -17,7 +17,6 @@ export const UpdateUserProfileForm: FC<UpdateUserProfileFormProps> = ({ onSubmit
   });
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
-      <Title>Update Profile</Title>
       <Form.Group>
         <Form.Label htmlFor='firstName'>First Name</Form.Label>
         <Form.Control id='firstName' type='text' defaultValue={defaultValues.firstName} {...register('firstName')} />

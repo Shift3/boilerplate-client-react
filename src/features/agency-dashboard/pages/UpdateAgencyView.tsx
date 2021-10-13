@@ -1,9 +1,8 @@
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { FC, useEffect } from 'react';
-import { Container } from 'react-bootstrap';
 import { useHistory, useParams } from 'react-router-dom';
 import { useGetAgencyByIdQuery, useUpdateAgencyMutation } from '../agencyApi';
-import { Title, StyledFormWrapper } from '../../styles/PageStyles';
+import { PageWrapper, Title, StyledFormWrapper } from '../../styles/PageStyles';
 import { AgencyDetailForm, FormData } from '../components/AgencyDetailForm';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 
@@ -40,7 +39,7 @@ export const UpdateAgencyView: FC = () => {
   };
 
   return (
-    <Container className='d-flex justify-content-center'>
+    <PageWrapper>
       <WithLoadingOverlay isLoading={isLoadingAgency}>
         <StyledFormWrapper>
           <Title>Update Agency</Title>
@@ -52,6 +51,6 @@ export const UpdateAgencyView: FC = () => {
           />
         </StyledFormWrapper>
       </WithLoadingOverlay>
-    </Container>
+    </PageWrapper>
   );
 };
