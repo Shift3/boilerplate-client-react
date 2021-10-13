@@ -3,15 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import { ResetPasswordFormSchema } from './schema';
 import { ResetPasswordFormType } from './types';
-import {
-  Title,
-  FormLabel,
-  ButtonWrapper,
-  CancelButton,
-  SubmitButton,
-  StyledForm,
-  InputError,
-} from '../../../styles/FormStyles';
+import { ButtonWrapper, CancelButton, SubmitButton, StyledForm, Title } from '../../../styles/FormStyles';
 
 export const ResetPasswordForm: ResetPasswordFormType = ({ onSubmit, onCancel }) => {
   const {
@@ -27,19 +19,19 @@ export const ResetPasswordForm: ResetPasswordFormType = ({ onSubmit, onCancel })
     <StyledForm data-testid='resetPasswordForm' onSubmit={handleSubmit(onSubmit)}>
       <Title>Reset Password</Title>
       <Form.Group>
-        <FormLabel htmlFor='newPassword'>New Password</FormLabel>
+        <Form.Label htmlFor='newPassword'>New Password</Form.Label>
         <Form.Control id='newPassword' type='text' {...register('newPassword')} placeholder='Enter new password' />
-        {errors.newPassword?.message && <InputError role='alert'>{errors.newPassword?.message}</InputError>}
+        <Form.Control.Feedback type='invalid'>{errors.newPassword?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
-        <FormLabel htmlFor='confirmPassword'>Confirm Password</FormLabel>
+        <Form.Label htmlFor='confirmPassword'>Confirm Password</Form.Label>
         <Form.Control
           id='confirmPassword'
           type='password'
           {...register('confirmPassword')}
           placeholder='Confirm password'
         />
-        {errors.confirmPassword?.message && <InputError role='alert'>{errors.confirmPassword?.message}</InputError>}
+        <Form.Control.Feedback type='invalid'>{errors.confirmPassword?.message}</Form.Control.Feedback>
       </Form.Group>
       <ButtonWrapper>
         <CancelButton data-testid='cancelButton' onClick={onCancel}>

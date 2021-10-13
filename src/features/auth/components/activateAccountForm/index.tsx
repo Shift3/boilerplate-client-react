@@ -1,15 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
-import {
-  Title,
-  FormLabel,
-  ButtonWrapper,
-  CancelButton,
-  SubmitButton,
-  StyledForm,
-  InputError,
-} from '../../../styles/FormStyles';
+import { Title, ButtonWrapper, CancelButton, SubmitButton, StyledForm } from '../../../styles/FormStyles';
 import { ActivateAccountFormSchema } from './schema';
 import { ActivateAccountFormType } from './types';
 
@@ -27,19 +19,19 @@ export const ActivateAccountForm: ActivateAccountFormType = ({ onSubmit, onCance
     <StyledForm data-testid='resetPasswordForm' onSubmit={handleSubmit(onSubmit)}>
       <Title>Activate Account</Title>
       <Form.Group>
-        <FormLabel htmlFor='newPassword'>New Password</FormLabel>
+        <Form.Label htmlFor='newPassword'>New Password</Form.Label>
         <Form.Control id='newPassword' type='password' {...register('newPassword')} placeholder='Enter new password' />
-        {errors.newPassword?.message && <InputError role='alert'>{errors.newPassword?.message}</InputError>}
+        <Form.Control.Feedback type='invalid'>{errors.newPassword?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
-        <FormLabel htmlFor='confirmPassword'>Confirm Password</FormLabel>
+        <Form.Label htmlFor='confirmPassword'>Confirm Password</Form.Label>
         <Form.Control
           id='confirmPassword'
           type='password'
           {...register('confirmPassword')}
           placeholder='Confirm password'
         />
-        {errors.confirmPassword?.message && <InputError role='alert'>{errors.confirmPassword?.message}</InputError>}
+        <Form.Control.Feedback type='invalid'>{errors.confirmPassword?.message}</Form.Control.Feedback>
       </Form.Group>
       <ButtonWrapper>
         <CancelButton data-testid='cancelButton' onClick={onCancel}>

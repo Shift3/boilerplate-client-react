@@ -55,10 +55,15 @@ export const StyledFormWrapper = styled.div`
   background-color: ${(props) => props.theme.forms.backgroundColor};
   border-radius: 0.25rem;
   & label {
-    color: white;
+    color: ${(props) => props.theme.forms.labelColor};
+    margin-bottom: 5px;
   }
   & .invalid-feedback {
     /* Modify style of validation error messages here */
+  }
+  & control {
+    color: ${(props) => props.theme.forms.control};
+    margin-bottom: 20px;
   }
 `;
 
@@ -75,19 +80,15 @@ export const Title = styled.p`
   font-weight: 500;
 `;
 
-export const FormLabel = styled(Form.Label)`
-  color: ${(props) => props.theme.forms.labelColor};
-  margin-bottom: 5px;
-`;
+// export const FormLabel = styled(Form.Label)`
+//   color: ${(props) => props.theme.forms.labelColor};
+//   margin-bottom: 5px;
+// `;
 
-export const FormControl = styled(Form.Control)`
-  color: ${(props) => props.theme.forms.control};
-  margin-bottom: 20px;
-`;
-
-export const InputError = styled.span`
-  color: ${(props) => props.theme.forms.inputError};
-`;
+// export const FormControl = styled(Form.Control)`
+//   /* color: ${(props) => props.theme.forms.control}; */
+//   margin-bottom: 20px;
+// `;
 
 export const ButtonWrapper = styled.div`
   display: flex;

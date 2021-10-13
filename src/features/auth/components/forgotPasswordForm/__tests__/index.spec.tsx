@@ -26,9 +26,7 @@ describe('ForgotPasswordForm', () => {
   beforeEach(async () => {
     render(
       <ThemeProvider theme={AppTheme}>
-        render(
         <ForgotPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
-        );
       </ThemeProvider>,
     );
     await setValueByLabelText('Email', validEmail);

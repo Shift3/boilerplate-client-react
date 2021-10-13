@@ -4,15 +4,7 @@ import { Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { ChangePasswordFormSchema } from './schema';
 import { ChangePasswordFormType } from './types';
-import {
-  FormLabel,
-  Title,
-  StyledForm,
-  InputError,
-  ButtonWrapper,
-  SubmitButton,
-  CancelButton,
-} from '../../../styles/FormStyles';
+import { ButtonWrapper, CancelButton, SubmitButton, StyledForm, Title } from '../../../styles/FormStyles';
 
 export const ChangePasswordForm: ChangePasswordFormType = ({ onSubmit }) => {
   const {
@@ -34,41 +26,29 @@ export const ChangePasswordForm: ChangePasswordFormType = ({ onSubmit }) => {
     <StyledForm data-testid='changePasswordForm' onSubmit={handleSubmit(onSubmit)}>
       <Title>Change Password</Title>
       <Form.Group>
-        <FormLabel htmlFor='currentPassword'>Current Password</FormLabel>
+        <Form.Label htmlFor='currentPassword'>Current Password</Form.Label>
         <Form.Control
           id='currentPassword'
           type='password'
           {...register('currentPassword')}
           placeholder='Enter current password'
         />
-        {errors.currentPassword?.message && (
-          <InputError role='alert' className='danger'>
-            {errors.currentPassword?.message}
-          </InputError>
-        )}
+        <Form.Control.Feedback type='invalid'>{errors.currentPassword?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
-        <FormLabel htmlFor='newPassword'>New Password</FormLabel>
+        <Form.Label htmlFor='newPassword'>New Password</Form.Label>
         <Form.Control id='newPassword' type='password' {...register('newPassword')} placeholder='Enter new password' />
-        {errors.newPassword?.message && (
-          <InputError role='alert' className='danger'>
-            {errors.newPassword?.message}
-          </InputError>
-        )}
+        <Form.Control.Feedback type='invalid'> {errors.newPassword?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
-        <FormLabel htmlFor='confirmPassword'>Confirm Password</FormLabel>
+        <Form.Label htmlFor='confirmPassword'>Confirm Password</Form.Label>
         <Form.Control
           id='confirmPassword'
           type='password'
           {...register('confirmPassword')}
           placeholder='Confirm password'
         />
-        {errors.confirmPassword?.message && (
-          <InputError role='alert' className='danger'>
-            {errors.confirmPassword?.message}
-          </InputError>
-        )}
+        <Form.Control.Feedback type='invalid'> {errors.confirmPassword?.message}</Form.Control.Feedback>
       </Form.Group>
       <ButtonWrapper>
         <CancelButton data-testid='cancelButton' onClick={navigateToLogin}>
