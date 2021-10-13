@@ -71,3 +71,7 @@ export const SubmitButton = styled(BootstrapButton)`
   padding: 10px;
   margin: 0;
 `;
+
+export const FlashMessageContainer = styled.div`
+  z-index: 1;
+`;

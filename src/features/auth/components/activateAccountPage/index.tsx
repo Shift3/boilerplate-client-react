@@ -1,7 +1,8 @@
 import { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { IResetPasswordFormData } from '../resetPasswordForm/types';
-import { Wrapper } from './styled';
+import Container from 'react-bootstrap/Container';
+import { StyledFormWrapper } from 'features/styles/PageStyles';
 import { useAccountCreation } from 'core/modules/user/application/useAccountCreation';
 import { ActivateAccountForm } from 'features/auth/components/activateAccountForm';
 
@@ -19,8 +20,10 @@ export const ActivateAccountPage: FC = () => {
   const onCancel = () => history.push('/auth/login');
 
   return (
-    <Wrapper data-testid='wrapper'>
-      <ActivateAccountForm onSubmit={onSubmit} onCancel={onCancel} />
-    </Wrapper>
+    <Container className='d-flex justify-content-center'>
+      <StyledFormWrapper data-testid='wrapper'>
+        <ActivateAccountForm onSubmit={onSubmit} onCancel={onCancel} />
+      </StyledFormWrapper>
+    </Container>
   );
 };
