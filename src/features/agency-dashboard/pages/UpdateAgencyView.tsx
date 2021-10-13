@@ -3,7 +3,7 @@ import { FC, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { useHistory, useParams } from 'react-router-dom';
 import { useGetAgencyByIdQuery, useUpdateAgencyMutation } from '../agencyApi';
-import { Title, StyledFormWrapper } from '../../styles/FormStyles';
+import { Title, StyledFormWrapper } from '../../styles/PageStyles';
 import { AgencyDetailForm, FormData } from '../components/AgencyDetailForm';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 

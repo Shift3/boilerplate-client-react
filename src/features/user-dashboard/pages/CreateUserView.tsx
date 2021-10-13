@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container';
 import { useHistory } from 'react-router-dom';
 import { useGetRolesQuery } from '../roleApi';
 import { useCreateUserMutation } from '../userApi';
-import { Title, StyledFormWrapper } from '../../styles/FormStyles';
+import { Title, StyledFormWrapper } from '../../styles/PageStyles';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
 
 export const CreateUserView: FC = () => {

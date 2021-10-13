@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { UpdateUserProfileFormSchema } from './schema';
 import { UpdateUserProfileFormProps } from './types';
-import { ButtonWrapper, CancelButton, SubmitButton, StyledForm, Title } from '../../../styles/FormStyles';
+import { ButtonWrapper, CancelButton, SubmitButton, StyledForm, Title } from '../../../styles/PageStyles';
 
 export const UpdateUserProfileForm: FC<UpdateUserProfileFormProps> = ({ onSubmit, onCancel, defaultValues }) => {
   const {

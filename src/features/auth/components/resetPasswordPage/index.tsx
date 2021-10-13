@@ -1,8 +1,9 @@
 import { FC } from 'react';
+import Container from 'react-bootstrap/Container';
 import { useHistory, useParams } from 'react-router-dom';
 import { ResetPasswordForm } from '../resetPasswordForm';
 import { IResetPasswordFormData } from '../resetPasswordForm/types';
-import { Wrapper } from './styled';
+import { StyledFormWrapper } from 'features/styles/PageStyles';
 import { usePasswordReset } from 'core/modules/user/application/usePasswordReset';
 
 export const ResetPasswordPage: FC = () => {
@@ -19,8 +20,10 @@ export const ResetPasswordPage: FC = () => {
   const onCancel = () => history.push('/auth/login');
 
   return (
-    <Wrapper data-testid='wrapper'>
-      <ResetPasswordForm onSubmit={onSubmit} onCancel={onCancel} />
-    </Wrapper>
+    <Container className='d-flex justify-content-center'>
+      <StyledFormWrapper data-testid='wrapper'>
+        <ResetPasswordForm onSubmit={onSubmit} onCancel={onCancel} />
+      </StyledFormWrapper>
+    </Container>
   );
 };

@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container';
 import { useHistory, useParams } from 'react-router-dom';
 import { useGetAgentByIdQuery, useUpdateAgentMutation } from '../agentApi';
 import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
-import { Title, StyledFormWrapper } from '../../styles/FormStyles';
+import { Title, StyledFormWrapper } from '../../styles/PageStyles';
 
 export interface RouteParams {
   id: string;

@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { ChangePasswordFormSchema } from './schema';
 import { ChangePasswordFormType } from './types';
-import { ButtonWrapper, CancelButton, SubmitButton, StyledForm, Title } from '../../../styles/FormStyles';
+import { ButtonWrapper, CancelButton, SubmitButton, StyledForm, Title } from '../../../styles/PageStyles';
 
 export const ChangePasswordForm: ChangePasswordFormType = ({ onSubmit }) => {
   const {
@@ -61,5 +61,3 @@ export const ChangePasswordForm: ChangePasswordFormType = ({ onSubmit }) => {
     </StyledForm>
   );
 };
-
-export default ChangePasswordForm;
