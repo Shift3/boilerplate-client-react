@@ -1,15 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
-import {
-  Title,
-  FormLabel,
-  ButtonWrapper,
-  CancelButton,
-  SubmitButton,
-  StyledForm,
-  InputError,
-} from '../styles/StyledForm';
+import { ButtonWrapper, CancelButton, SubmitButton, StyledForm } from '../../../styles/PageStyles';
 import { ActivateAccountFormSchema } from './schema';
 import { ActivateAccountFormType } from './types';
 
@@ -24,38 +16,30 @@ export const ActivateAccountForm: ActivateAccountFormType = ({ onSubmit, onCance
   });
 
   return (
-    <>
-      <StyledForm data-testid='resetPasswordForm' onSubmit={handleSubmit(onSubmit)}>
-        <Title>Activate Account</Title>
-        <Form.Group>
-          <FormLabel htmlFor='newPassword'>New Password</FormLabel>
-          <Form.Control
-            id='newPassword'
-            type='password'
-            {...register('newPassword')}
-            placeholder='Enter new password'
-          />
-          {errors.newPassword?.message && <InputError role='alert'>{errors.newPassword?.message}</InputError>}
-        </Form.Group>
-        <Form.Group>
-          <FormLabel htmlFor='confirmPassword'>Confirm Password</FormLabel>
-          <Form.Control
-            id='confirmPassword'
-            type='password'
-            {...register('confirmPassword')}
-            placeholder='Confirm password'
-          />
-          {errors.confirmPassword?.message && <InputError role='alert'>{errors.confirmPassword?.message}</InputError>}
-        </Form.Group>
-        <ButtonWrapper>
-          <CancelButton data-testid='cancelButton' onClick={onCancel}>
-            CANCEL
-          </CancelButton>
-          <SubmitButton data-testid='submitButton' type='submit' disabled={!isValid}>
-            SUBMIT
-          </SubmitButton>
-        </ButtonWrapper>
-      </StyledForm>
-    </>
+    <StyledForm data-testid='resetPasswordForm' onSubmit={handleSubmit(onSubmit)}>
+      <Form.Group>
+        <Form.Label htmlFor='newPassword'>New Password</Form.Label>
+        <Form.Control id='newPassword' type='password' {...register('newPassword')} placeholder='Enter new password' />
+        <Form.Control.Feedback type='invalid'>{errors.newPassword?.message}</Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group>
+        <Form.Label htmlFor='confirmPassword'>Confirm Password</Form.Label>
+        <Form.Control
+          id='confirmPassword'
+          type='password'
+          {...register('confirmPassword')}
+          placeholder='Confirm password'
+        />
+        <Form.Control.Feedback type='invalid'>{errors.confirmPassword?.message}</Form.Control.Feedback>
+      </Form.Group>
+      <ButtonWrapper>
+        <CancelButton data-testid='cancelButton' onClick={onCancel}>
+          CANCEL
+        </CancelButton>
+        <SubmitButton data-testid='submitButton' type='submit' disabled={!isValid}>
+          SUBMIT
+        </SubmitButton>
+      </ButtonWrapper>
+    </StyledForm>
   );
 };

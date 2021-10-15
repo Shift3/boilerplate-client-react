@@ -1,17 +1,20 @@
 import { render } from '@testing-library/react';
 import { Router } from 'react-router-dom';
-// eslint-disable-next-line
+import { expectInDocByTestId } from 'utils/test';
 import { createMemoryHistory } from 'history';
 import { ChangePasswordPage } from '../index';
-import { expectInDocByTestId } from 'utils/test';
+import { ThemeProvider } from 'styled-components';
+import AppTheme from 'utils/styleValues';
 
 describe('<ChangePasswordPage/>', () => {
   describe('Rendering', () => {
     beforeEach(() =>
       render(
-        <Router history={createMemoryHistory({ initialEntries: ['/'] })}>
-          <ChangePasswordPage />
-        </Router>,
+        <ThemeProvider theme={AppTheme}>
+          <Router history={createMemoryHistory({ initialEntries: ['/'] })}>
+            <ChangePasswordPage />
+          </Router>
+        </ThemeProvider>,
       ),
     );
 

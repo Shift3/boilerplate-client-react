@@ -3,18 +3,8 @@ import { useUpdateProfile } from 'core/modules/user/application/useUpdateProfile
 import { useAuth, useLogout } from 'features/auth/hooks';
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
 import { UpdateUserProfileForm } from '../updateUserProfileForm/index';
-
-export const Wrapper = styled.div`
-  height: 100%;
-  width: 100%;
-  background-color: ${(props) => props.theme.adminBackground};
-  padding: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
 
 export const UpdateUserProfilePage: FC = () => {
   const history = useHistory();
@@ -39,16 +29,19 @@ export const UpdateUserProfilePage: FC = () => {
   const onCancel = () => history.goBack();
 
   return (
-    <Wrapper>
-      <UpdateUserProfileForm
-        onSubmit={onSubmit}
-        onCancel={onCancel}
-        defaultValues={{
-          firstName: user?.firstName ?? '',
-          lastName: user?.lastName ?? '',
-          email: user?.email ?? '',
-        }}
-      />
-    </Wrapper>
+    <PageWrapper>
+      <StyledFormWrapper>
+        <Title>Update Profile</Title>
+        <UpdateUserProfileForm
+          onSubmit={onSubmit}
+          onCancel={onCancel}
+          defaultValues={{
+            firstName: user?.firstName ?? '',
+            lastName: user?.lastName ?? '',
+            email: user?.email ?? '',
+          }}
+        />
+      </StyledFormWrapper>
+    </PageWrapper>
   );
 };

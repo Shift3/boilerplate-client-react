@@ -1,11 +1,10 @@
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { FC, useEffect } from 'react';
-import Container from 'react-bootstrap/Container';
 import { useHistory, useParams } from 'react-router-dom';
 import { useGetAgentByIdQuery, useUpdateAgentMutation } from '../agentApi';
 import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
-import { StyledFormTitle, StyledFormWrapper } from '../components/styled';
+import { PageWrapper, Title, StyledFormWrapper } from '../../styles/PageStyles';
 
 export interface RouteParams {
   id: string;
@@ -41,10 +40,10 @@ export const UpdateAgentView: FC = () => {
   };
 
   return (
-    <Container className='d-flex justify-content-center'>
+    <PageWrapper>
       <WithLoadingOverlay isLoading={isLoadingAgent}>
         <StyledFormWrapper>
-          <StyledFormTitle>Update Agent</StyledFormTitle>
+          <Title>Update Agent</Title>
           <AgentDetailForm
             defaultValues={agent}
             submitButtonLabel='UPDATE'
@@ -53,6 +52,6 @@ export const UpdateAgentView: FC = () => {
           />
         </StyledFormWrapper>
       </WithLoadingOverlay>
-    </Container>
+    </PageWrapper>
   );
 };

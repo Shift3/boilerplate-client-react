@@ -1,10 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Form } from 'react-bootstrap';
 import { Agency } from 'common/models';
 import { FC, useEffect } from 'react';
-import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { StyledCancelButton, StyledFormButtonWrapper, StyledSubmitButton } from './styled';
+import { CancelButton, ButtonWrapper, SubmitButton, StyledForm } from '../../styles/PageStyles';
 
 export type FormData = Pick<Agency, 'agencyName'>;
 
@@ -40,18 +40,18 @@ export const AgencyDetailForm: FC<Props> = ({
   }, [trigger]);
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <Form.Group controlId='create-agency-form-agency-name'>
         <Form.Label>Agency Name</Form.Label>
         <Form.Control type='text' isInvalid={!!errors.agencyName} {...register('agencyName')} />
         <Form.Control.Feedback type='invalid'>{errors.agencyName?.message}</Form.Control.Feedback>
       </Form.Group>
-      <StyledFormButtonWrapper>
-        <StyledCancelButton onClick={onCancel}>{cancelButtonLabel}</StyledCancelButton>
-        <StyledSubmitButton type='submit' disabled={!isValid}>
+      <ButtonWrapper>
+        <CancelButton onClick={onCancel}>{cancelButtonLabel}</CancelButton>
+        <SubmitButton type='submit' disabled={!isValid}>
           {submitButtonLabel}
-        </StyledSubmitButton>
-      </StyledFormButtonWrapper>
-    </Form>
+        </SubmitButton>
+      </ButtonWrapper>
+    </StyledForm>
   );
 };
