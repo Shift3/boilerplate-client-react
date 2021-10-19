@@ -1,6 +1,8 @@
 import { render } from '@testing-library/react';
 import { GenericTable } from './GenericTable';
 import { CustomRenderer, TableHeader } from './types';
+import { ThemeProvider } from 'styled-components';
+import AppTheme from 'utils/styleValues';
 
 type TestTableItem = {
   id: number;
@@ -20,6 +22,14 @@ const testTableHeaders: TableHeader<TestTableItem>[] = [
 ];
 
 describe('GenericTable', () => {
+  beforeEach(() => {
+    render(
+      <ThemeProvider theme={AppTheme}>
+        <GenericTable headers={testTableHeaders} items={testTableItems} />
+      </ThemeProvider>,
+    );
+  });
+
   it('should render one table element', () => {
     const { container } = render(<GenericTable<TestTableItem> items={[]} headers={testTableHeaders} />);
     expect(container.querySelector('table')).toBeInTheDocument();
