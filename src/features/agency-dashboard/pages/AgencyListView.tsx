@@ -5,10 +5,10 @@ import { Agency } from 'common/models';
 import { Link, useHistory } from 'react-router-dom';
 import { useDeleteAgencyMutation, useGetAgenciesQuery } from 'features/agency-dashboard/agencyApi';
 import { FC } from 'react';
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
+import { CreateButton } from 'features/styles/PageStyles';
 
 type AgencyTableItem = {
   id: number;
@@ -76,7 +76,7 @@ export const AgencyListView: FC = () => {
     <Container>
       <div className='pb-4 text-end'>
         <Link to='/agencies/create-agency'>
-          <Button>ADD AGENCY</Button>
+          <CreateButton>ADD AGENCY</CreateButton>
         </Link>
       </div>
       <WithLoadingOverlay isLoading={isLoadingAgencies}>

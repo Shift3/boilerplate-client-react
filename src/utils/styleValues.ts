@@ -41,6 +41,11 @@ export default {
     textColor: colors.darkAccent,
     // hoverBorderColor:
     // disableBorderColor:
+    createBackgroundColor: colors.secondaryBlue,
+    createBorderColor: colors.secondaryBlue,
+    createTextColor: colors.white,
+    createHoverBackgroundColor: colors.accent,
+    createHoverBorderColor: colors.accent,
   },
 
   footer: {
@@ -64,6 +69,9 @@ export default {
   },
 
   tables: {
+    borderColor: colors.lightAccent,
+    headerBackgroundColor: colors.primaryBlue,
+    headerTextColor: colors.white,
     backgroundColor: colors.primaryBlue,
     textColor: colors.primaryBlue
   }
