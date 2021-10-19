@@ -61,5 +61,10 @@ export default {
 
   pages: {
     backgroundColor: colors.white
+  },
+
+  tables: {
+    backgroundColor: colors.primaryBlue,
+    textColor: colors.primaryBlue
   }
 };

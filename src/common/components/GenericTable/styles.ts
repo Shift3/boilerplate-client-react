@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const StyledTable = styled(Table)`
   thead {
-    background-color: ${(props) => props.theme.primary};
+    background-color: ${(props) => props.theme.tables.backgroundColor};
     color: white;
   }
 
@@ -24,6 +24,6 @@ export const StyledTable = styled(Table)`
   }
 
   td {
-    color: ${(props) => props.theme.primary};
+    color: ${(props) => props.theme.tables.textColor};
   }
 `;
