@@ -2,24 +2,24 @@
 import { FC } from 'react';
 
 // Third party library imports
-import { Button } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import styled from 'styled-components';
+import { CancelButton, SubmitButton } from 'features/styles/PageStyles';
 
 const StyledModalDialog = styled(Modal.Dialog)`
   .modal-content {
-    background-color: ${(props) => props.theme.primary};
+    background-color: ${(props) => props.theme.modals.logoutBackgroundColor};
     padding: 50px;
   }
 `;
 
 const StyledModalTitle = styled(Modal.Title)`
-  color: ${(props) => props.theme.cardHeader};
+  color: ${(props) => props.theme.modals.logoutTitleColor};
 `;
 
 const StyledModalBody = styled(Modal.Body)`
   padding: 10px 0;
-  color: #fff;
+  color: ${(props) => props.theme.modals.logoutTextColor};
 `;
 
 const StyleButtonContainer = styled.div`
@@ -32,18 +32,6 @@ const StyleButtonContainer = styled.div`
     margin-left: 10px;
   }
 `;
-
-const StyledButton = styled(Button)`
-  min-width: 150px;
-  padding: 10px;
-`;
-
-const StyledCancelButton = styled(StyledButton)`
-  color: #fff;
-  background-color: ${(props) => props.theme.primary};
-  border-color: ${(props) => props.theme.primaryBorder};
-`;
-
 export interface ILogoutModalProps {
   show: boolean;
   onCancel: () => void;
@@ -56,12 +44,8 @@ export const LogoutModal: FC<ILogoutModalProps> = ({ show, onCancel, onLogout })
       <StyledModalTitle>This will end your login session.</StyledModalTitle>
       <StyledModalBody>Do you want to continue?</StyledModalBody>
       <StyleButtonContainer>
-        <StyledCancelButton variant='outline-light' onClick={onCancel}>
-          CANCEL
-        </StyledCancelButton>
-        <StyledButton variant='primary' onClick={onLogout}>
-          LOG OUT
-        </StyledButton>
+        <CancelButton onClick={onCancel}>CANCEL</CancelButton>
+        <SubmitButton onClick={onLogout}>LOG OUT</SubmitButton>
       </StyleButtonContainer>
     </Modal>
   );

@@ -82,3 +82,18 @@ export const SubmitButton = styled(BootstrapButton)`
 export const FlashMessageContainer = styled.div`
   z-index: 1;
 `;
+
+export const CreateButton = styled(BootstrapButton)`
+  color: ${(props) => props.theme.buttons.createTextColor};
+  background-color: ${(props) => props.theme.buttons.createBackgroundColor};
+  border-color: ${(props) => props.theme.buttons.createBorderColor};
+  min-width: 146px;
+  min-height: 24px;
+  padding: 10px;
+  margin: 0;
+
+  &:hover {
+    background-color: ${(props) => props.theme.buttons.createHoverBackgroundColor};
+    border-color: ${(props) => props.theme.buttons.createHoverBorderColor};
+  }
+`;

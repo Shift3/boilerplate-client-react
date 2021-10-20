@@ -41,6 +41,11 @@ export default {
     textColor: colors.darkAccent,
     // hoverBorderColor:
     // disableBorderColor:
+    createBackgroundColor: colors.secondaryBlue,
+    createBorderColor: colors.secondaryBlue,
+    createTextColor: colors.white,
+    createHoverBackgroundColor: colors.accent,
+    createHoverBorderColor: colors.accent,
   },
 
   footer: {
@@ -59,7 +64,21 @@ export default {
     black: colors.black,
   },
 
+  modals: {
+    logoutBackgroundColor: colors.lightBackground,
+    logoutTitleColor: colors.primaryBlue,
+    logoutTextColor: colors.primaryBlue,
+  },
+
   pages: {
     backgroundColor: colors.white
+  },
+
+  tables: {
+    borderColor: colors.lightAccent,
+    headerBackgroundColor: colors.primaryBlue,
+    headerTextColor: colors.white,
+    backgroundColor: colors.primaryBlue,
+    textColor: colors.primaryBlue
   }
 };
