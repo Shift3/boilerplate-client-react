@@ -64,6 +64,12 @@ export default {
     black: colors.black,
   },
 
+  modals: {
+    logoutBackgroundColor: colors.lightBackground,
+    logoutTitleColor: colors.primaryBlue,
+    logoutTextColor: colors.primaryBlue,
+  },
+
   pages: {
     backgroundColor: colors.white
   },
