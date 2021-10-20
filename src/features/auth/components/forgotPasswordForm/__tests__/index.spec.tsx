@@ -32,13 +32,11 @@ describe('ForgotPasswordForm', () => {
     await setValueByLabelText('Email', validEmail);
   });
 
-  it('Should render email field', () => expectInDocByLabelText('Email'));
-
-  it('Should render submit button', () => expectInDocByTestId('submitButton'));
-
-  it('Should render cancel button', () => expectInDocByTestId('cancelButton'));
-
   describe('Valid input', () => {
+    it('Should render email field', () => expectInDocByLabelText('Email'));
+    it('Should render submit button', () => expectInDocByTestId('submitButton'));
+
+    it('Should render cancel button', () => expectInDocByTestId('cancelButton'));
     it('Should call onSubmit once all form data is valid, ', async () => {
       await clickByTestIdAsync('submitButton');
       expectMockFunctionCalled(mockOnSubmit);

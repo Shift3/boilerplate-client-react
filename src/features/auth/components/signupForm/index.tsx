@@ -47,7 +47,7 @@ export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
         <CancelButton data-testid='cancelButton' onClick={onCancel}>
           CANCEL
         </CancelButton>
-        <SubmitButton data-testid='signUpButton' type='submit' disabled={!isValid}>
+        <SubmitButton data-testid='submitButton' type='submit' disabled={!isValid}>
           SIGN UP
         </SubmitButton>
       </ButtonWrapper>

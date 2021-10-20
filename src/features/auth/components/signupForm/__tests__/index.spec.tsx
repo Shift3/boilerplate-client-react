@@ -42,18 +42,14 @@ describe('SignupForm', () => {
   });
 
   it('Should render email field', () => expectInDocByLabelText('Email'));
-
-  it.skip('Should render confirm email field', () => expectInDocByLabelText('Confirm Email'));
-
-  it.skip('Should render first name field', () => expectInDocByLabelText('First Name'));
-
-  it.skip('Should render last name field', () => expectInDocByLabelText('Last Name'));
-
-  it.skip('Should render sign up button', () => expectInDocByTestId('signUpButton'));
+  it('Should render confirm email field', () => expectInDocByLabelText('Confirm Email'));
+  it('Should render first name field', () => expectInDocByLabelText('First Name'));
+  it('Should render last name field', () => expectInDocByLabelText('Last Name'));
+  it('Should render sign up button', () => expectInDocByTestId('submitButton'));
 
   describe('Valid input', () => {
-    it.skip('Should call onSubmit once all form data is valid, ', async () => {
-      await clickByTestIdAsync('signUpButton');
+    it('Should call onSubmit once all form data is valid, ', async () => {
+      await clickByTestIdAsync('submitButton');
       expectMockFunctionCalled(mockOnSubmit);
 
       mockOnSubmit.mockReset();
@@ -63,18 +59,18 @@ describe('SignupForm', () => {
   });
 
   describe('Invalid input', () => {
-    it.skip('Should not call onSubmit', async () => {
+    it('Should not call onSubmit', async () => {
       await setValueByLabelText('Email', '');
       await setValueByLabelText('Confirm Email', '');
       await setValueByLabelText('First Name', '');
       await setValueByLabelText('Last Name', '');
-      await clickByTestIdAsync('signUpButton');
+      await clickByTestIdAsync('submitButton');
       expectMockFunctionNotCalled(mockOnSubmit);
 
       mockOnSubmit.mockReset();
     });
 
-    it.skip('Should display error messages', async () => {
+    it('Should display error messages', async () => {
       await setValueByLabelText('Email', invalidEmail);
       await setValueByLabelText('Confirm Email', mismatchEmail);
       await setValueByLabelText('First Name', longName);
@@ -84,7 +80,13 @@ describe('SignupForm', () => {
   });
 
   describe('Invalid email', () => {
-    it.skip('Should only display invalid email error message', async () => {
+    render(
+      <ThemeProvider theme={AppTheme}>
+        <SignUpForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+      </ThemeProvider>,
+    );
+
+    it('Should only display invalid email error message', async () => {
       await setValueByLabelText('Email', invalidEmail);
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', INVALID_EMAIL);

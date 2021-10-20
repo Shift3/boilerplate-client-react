@@ -26,59 +26,49 @@ const {
   PASSWORD_NUMBER,
 } = Constants.errorMessages;
 
-const validCurrentPassword = 'Password123!';
-const validNewPassword = 'Password456!';
-const shortPassword = 'Aa1!';
-const noSpecialCharPassword = 'Password123';
-const noNumberPassword = 'Password!';
-const noUppercasePassword = 'password123!';
-const noLowercasePassword = 'PASSWORD123!';
-
-const mockOnSubmit = jest.fn();
-
 describe('ChangePasswordForm', () => {
-  describe('Rendering', () => {
-    beforeEach(() => {
-      render(
-        <ThemeProvider theme={AppTheme}>
-          <ChangePasswordForm onSubmit={mockOnSubmit} />
-        </ThemeProvider>,
-      );
-    });
+  const validCurrentPassword = 'Password123!';
+  const validNewPassword = 'Password456!';
+  const shortPassword = 'Aa1!';
+  const noSpecialCharPassword = 'Password123';
+  const noNumberPassword = 'Password!';
+  const noUppercasePassword = 'password123!';
+  const noLowercasePassword = 'PASSWORD123!';
 
+  const mockOnSubmit = jest.fn();
+
+  beforeEach(async () => {
+    render(
+      <ThemeProvider theme={AppTheme}>
+        <ChangePasswordForm onSubmit={mockOnSubmit} />
+      </ThemeProvider>,
+    );
+  });
+
+  describe('With valid input', () => {
     it('should render the current password field', () => expectInDocByLabelText('Current Password'));
     it('should render the new password field', () => expectInDocByLabelText('New Password'));
     it('should render the confirm password field', () => expectInDocByLabelText('Confirm Password'));
     it('should render the submit button', () => expectInDocByTestId('submitButton'));
     it('should render the cancel button', () => expectInDocByTestId('cancelButton'));
-  });
 
-  describe('With valid input', () => {
-    beforeEach(() => {
-      render(
-        <ThemeProvider theme={AppTheme}>
-          <ChangePasswordForm onSubmit={mockOnSubmit} />
-        </ThemeProvider>,
-      );
+    it('Should call onSubmit once with form data', async () => {
+      await setValueByLabelText('Current Password', validCurrentPassword);
+      await setValueByLabelText('New Password', validNewPassword);
+      await setValueByLabelText('Confirm Password', validNewPassword);
 
-      it.skip('Should call onSubmit once formData object including password and confirmPassword', async () => {
-        await setValueByLabelText('Current Password', validCurrentPassword);
-        await setValueByLabelText('New Password', validNewPassword);
-        await setValueByLabelText('Confirm Password', validNewPassword);
-
-        await clickByTestIdAsync('submitButton');
-        expect(mockOnSubmit).toHaveBeenCalledTimes(1);
-        expect(mockOnSubmit).toHaveBeenCalledWith({
-          currentPassword: validCurrentPassword,
-          newPassword: validNewPassword,
-          confirmPassword: validNewPassword,
-        });
-        mockOnSubmit.mockReset();
+      await clickByTestIdAsync('submitButton');
+      expect(mockOnSubmit).toHaveBeenCalledTimes(1);
+      expect(mockOnSubmit).toHaveBeenCalledWith({
+        currentPassword: validCurrentPassword,
+        newPassword: validNewPassword,
+        confirmPassword: validNewPassword,
       });
+      mockOnSubmit.mockReset();
+    });
 
-      it.skip('Should not display error messages', () => {
-        expectLengthByRole('alert', 0);
-      });
+    it('Should not display error messages', () => {
+      expectLengthByRole('alert', 0);
     });
 
     describe('Invalid input', () => {
@@ -90,7 +80,7 @@ describe('ChangePasswordForm', () => {
         );
       });
 
-      it.skip('Should not call onSubmit', async () => {
+      it('Should not call onSubmit', async () => {
         await setValueByLabelText('Current Password', '');
         await setValueByLabelText('New Password', '');
         await setValueByLabelText('Confirm Password', '');
@@ -100,25 +90,18 @@ describe('ChangePasswordForm', () => {
         mockOnSubmit.mockReset();
       });
 
-      it.skip('Should display error messages', async () => {
+      it('Should display error messages', async () => {
         await setValueByLabelText('Current Password', '');
         await setValueByLabelText('New Password', '');
         await setValueByLabelText('Confirm Password', '');
 
         expectLengthByRole('alert', 3);
       });
+      mockOnSubmit.mockReset();
     });
 
     describe('Invalid password', () => {
-      beforeEach(async () => {
-        render(
-          <ThemeProvider theme={AppTheme}>
-            <ChangePasswordForm onSubmit={mockOnSubmit} />
-          </ThemeProvider>,
-        );
-      });
-
-      it.skip('Should only display CURRENT_PASSWORD_REQUIRED error message', async () => {
+      it('Should only display CURRENT_PASSWORD_REQUIRED error message', async () => {
         await setValueByLabelText('Current Password', 'test');
         await setValueByLabelText('Current Password', '');
         expectLengthByRole('alert', 1);
