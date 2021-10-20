@@ -55,7 +55,7 @@ describe('SignupForm', () => {
       mockOnSubmit.mockReset();
     });
 
-    it.skip('Should not display error messages', () => expectLengthByRole('alert', 0));
+    it('Should not display error messages', () => expectLengthByRole('alert', 0));
   });
 
   describe('Invalid input', () => {
@@ -80,12 +80,6 @@ describe('SignupForm', () => {
   });
 
   describe('Invalid email', () => {
-    render(
-      <ThemeProvider theme={AppTheme}>
-        <SignUpForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
-      </ThemeProvider>,
-    );
-
     it('Should only display invalid email error message', async () => {
       await setValueByLabelText('Email', invalidEmail);
       expectLengthByRole('alert', 1);
