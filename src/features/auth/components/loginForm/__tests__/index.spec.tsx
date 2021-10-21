@@ -50,11 +50,11 @@ describe('LoginForm', () => {
       mockOnSubmit.mockReset();
     });
 
-    it.skip('Should not display error messages', () => expectLengthByRole('alert', 0));
+    it('Should not display error messages', () => expectLengthByRole('alert', 0));
   });
 
   describe('Invalid input', () => {
-    it.skip('should not call onSubmit', async () => {
+    it('should not call onSubmit', async () => {
       await setValueByLabelText('Email', '');
       await setValueByLabelText('Password', '');
       await clickByTestIdAsync('submitButton');

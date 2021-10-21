@@ -29,14 +29,17 @@ describe('ForgotPasswordForm', () => {
         <ForgotPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
       </ThemeProvider>,
     );
+
     await setValueByLabelText('Email', validEmail);
   });
 
-  describe('Valid input', () => {
-    it('Should render email field', () => expectInDocByLabelText('Email'));
-    it('Should render submit button', () => expectInDocByTestId('submitButton'));
+  it('Should render email field', () => expectInDocByLabelText('Email'));
 
-    it('Should render cancel button', () => expectInDocByTestId('cancelButton'));
+  it('Should render submit button', () => expectInDocByTestId('submitButton'));
+
+  it('Should render cancel button', () => expectInDocByTestId('cancelButton'));
+
+  describe('Valid input', () => {
     it('Should call onSubmit once all form data is valid, ', async () => {
       await clickByTestIdAsync('submitButton');
       expectMockFunctionCalled(mockOnSubmit);
@@ -48,7 +51,7 @@ describe('ForgotPasswordForm', () => {
   });
 
   describe('Invalid email', () => {
-    it.skip('Should only display invalid email error message', async () => {
+    it('Should only display invalid email error message', async () => {
       await setValueByLabelText('Email', invalidEmail);
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', INVALID_EMAIL);
@@ -56,7 +59,7 @@ describe('ForgotPasswordForm', () => {
   });
 
   describe('Required email', () => {
-    it.skip('Should display email required message', async () => {
+    it('Should display email required message', async () => {
       await setValueByLabelText('Email', '');
       expectLengthByRole('alert', 1);
       formAlertMessageCheck(EMAIL_REQUIRED);

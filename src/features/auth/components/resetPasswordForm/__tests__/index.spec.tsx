@@ -69,12 +69,9 @@ describe('ResetPasswordForm', () => {
           <ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
         </ThemeProvider>,
       );
-
-      await setValueByLabelText('New Password', validNewPassword);
-      await setValueByLabelText('Confirm Password', validNewPassword);
     });
 
-    it.skip('Should not call onSubmit', async () => {
+    it('Should not call onSubmit', async () => {
       await setValueByLabelText('New Password', '');
       await setValueByLabelText('Confirm Password', '');
       await clickByTestIdAsync('submitButton');
@@ -83,7 +80,7 @@ describe('ResetPasswordForm', () => {
       mockOnSubmit.mockReset();
     });
 
-    it.skip('Should display error messages', async () => {
+    it('Should display error messages', async () => {
       await setValueByLabelText('New Password', '');
       await setValueByLabelText('Confirm Password', '');
 
@@ -92,54 +89,43 @@ describe('ResetPasswordForm', () => {
   });
 
   describe('Invalid password', () => {
-    beforeEach(async () => {
-      render(
-        <ThemeProvider theme={AppTheme}>
-          <ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
-        </ThemeProvider>,
-      );
-
-      await setValueByLabelText('New Password', validNewPassword);
-      await setValueByLabelText('Confirm Password', validNewPassword);
-    });
-
-    it.skip('Should only display NEW_PASSWORD_REQUIRED error message', async () => {
+    it('Should only display NEW_PASSWORD_REQUIRED error message', async () => {
       await setValueByLabelText('New Password', '');
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', NEW_PASSWORD_REQUIRED);
     });
 
-    it.skip('Should only display special password length error message', async () => {
+    it('Should only display special password length error message', async () => {
       await setValueByLabelText('New Password', shortPassword);
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', PASSWORD_LENGTH);
     });
 
-    it.skip('Should only display special character required error message', async () => {
+    it('Should only display special character required error message', async () => {
       await setValueByLabelText('New Password', noSpecialCharPassword);
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', PASSWORD_SPECIAL_CHARACTER);
     });
 
-    it.skip('Should only display number required error message', async () => {
+    it('Should only display number required error message', async () => {
       await setValueByLabelText('New Password', noNumberPassword);
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', PASSWORD_NUMBER);
     });
 
-    it.skip('Should only display uppercase letter required error message', async () => {
+    it('Should only display uppercase letter required error message', async () => {
       await setValueByLabelText('New Password', noUppercasePassword);
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', PASSWORD_UPPERCASE);
     });
 
-    it.skip('Should only display lowercase letter required error message', async () => {
+    it('Should only display lowercase letter required error message', async () => {
       await setValueByLabelText('New Password', noLowercasePassword);
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', PASSWORD_LOWERCASE);
     });
 
-    it.skip('Should only display PASSWORD_MUST_MATCH error message', async () => {
+    it('Should only display PASSWORD_MUST_MATCH error message', async () => {
       const nonMatchingPassword = `${validNewPassword}4`;
 
       await setValueByLabelText('New Password', validNewPassword);

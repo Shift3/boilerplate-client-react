@@ -88,7 +88,7 @@ describe('SignupForm', () => {
   });
 
   describe('Non matching email', () => {
-    it.skip('Should only display email mismatch error message', async () => {
+    it('Should only display email mismatch error message', async () => {
       await setValueByLabelText('Confirm Email', mismatchEmail);
       expectLengthByRole('alert', 1);
       expectInnerHTMLByRole('alert', EMAIL_MATCH);
@@ -96,27 +96,27 @@ describe('SignupForm', () => {
   });
 
   describe('Required email', () => {
-    it.skip('Should display email required message', async () => {
+    it('Should display email required message', async () => {
       await setValueByLabelText('Email', '');
       await setValueByLabelText('Confirm Email', '');
       expectLengthByRole('alert', 2);
       formAlertMessageCheck(EMAIL_REQUIRED);
     });
 
-    it.skip('Should display emailConfirm required message', async () => {
+    it('Should display emailConfirm required message', async () => {
       await setValueByLabelText('Confirm Email', '');
       await setValueByLabelText('Email', '');
       expectLengthByRole('alert', 2);
       formAlertMessageCheck(EMAIL_REQUIRED);
     });
 
-    it.skip('Should only display first name required message', async () => {
+    it('Should only display first name required message', async () => {
       await setValueByLabelText('First Name', '');
       expectLengthByRole('alert', 1);
       formAlertMessageCheck(FIRST_NAME_REQUIRED);
     });
 
-    it.skip('Should only display last name required message', async () => {
+    it('Should only display last name required message', async () => {
       await setValueByLabelText('Last Name', '');
       expectLengthByRole('alert', 1);
       formAlertMessageCheck(LAST_NAME_REQUIRED);
