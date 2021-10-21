@@ -18,8 +18,8 @@ export const SignUpPage: FC = () => {
   const onCancel = () => history.push('/auth/login');
 
   return (
-    <PageWrapper>
-      <StyledFormWrapper data-testid='wrapper'>
+    <PageWrapper data-testid='pageWrapper'>
+      <StyledFormWrapper>
         <Title>Sign Up</Title>
         <SignUpForm onSubmit={onSubmit} onCancel={onCancel} />
       </StyledFormWrapper>

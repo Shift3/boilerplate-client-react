@@ -62,20 +62,20 @@ describe('LoginForm', () => {
       mockOnSubmit.mockReset();
     });
 
-    it.skip('Should display error messages', async () => {
+    it('Should display error messages', async () => {
       await setValueByLabelText('Email', '');
       await setValueByLabelText('Password', '');
       expectLengthByRole('alert', 2);
     });
 
     describe('Invalid email', () => {
-      it.skip('Should only display EMAIL_REQUIRED error message', async () => {
+      it('Should only display EMAIL_REQUIRED error message', async () => {
         await setValueByLabelText('Email', '');
         expectLengthByRole('alert', 1);
         expectInnerHTMLByRole('alert', EMAIL_REQUIRED);
       });
 
-      it.skip('Should only display INVALID_EMAILerror message', async () => {
+      it('Should only display INVALID_EMAILerror message', async () => {
         await setValueByLabelText('Email', '');
         await setValueByLabelText('Email', invalidEmail);
         expectLengthByRole('alert', 1);
@@ -84,7 +84,7 @@ describe('LoginForm', () => {
     });
 
     describe('Invalid password', () => {
-      it.skip('should only display PASSWORD_REQUIRED error message', async () => {
+      it('should only display PASSWORD_REQUIRED error message', async () => {
         await setValueByLabelText('Password', '');
         expectLengthByRole('alert', 1);
         expectInnerHTMLByRole('alert', PASSWORD_REQUIRED);

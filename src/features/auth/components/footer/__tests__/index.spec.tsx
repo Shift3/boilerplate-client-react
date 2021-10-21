@@ -19,10 +19,9 @@ describe('footer', () => {
     </Provider>;
   });
 
-  it.skip('Should contain the version', () => expectTextContentByTestId('copyright', version));
+  it('Should contain the version', () => expectTextContentByTestId('copyright', version));
 
-  it.skip('Should contain the copyright date', () => expectTextContentByTestId('copyright', copyrightDate));
+  it('Should contain the copyright date', () => expectTextContentByTestId('copyright', copyrightDate));
 
-  it.skip('Should display properly formatted copyright date', () =>
-    expect(copyrightDate).toEqual(expectedCopyrightDate));
+  it('Should display properly formatted copyright date', () => expect(copyrightDate).toEqual(expectedCopyrightDate));
 });
