@@ -8,7 +8,7 @@ const mockOnSubmit = jest.fn();
 const mockOnCancel = jest.fn();
 
 describe('SignupForm', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     render(
       <ThemeProvider theme={AppTheme}>
         <SignUpForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
