@@ -15,7 +15,7 @@ describe('<SignUpPage/>', () => {
           <Router>
             <Switch>
               <Route exact path='/' component={SignUpPage} />
-              <Route exact path='/auth/signup' component={() => <div data-testid='signUpPage' />} />
+              <Route exact path='/auth/signup' component={() => <div />} />
             </Switch>
           </Router>
         </Provider>

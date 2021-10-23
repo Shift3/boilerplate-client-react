@@ -20,34 +20,36 @@ export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
       <Form.Group>
         <Form.Label htmlFor='email'>Email</Form.Label>
         <Form.Control id='email' type='email' {...register('email')} placeholder='Enter your email' />
-        <Form.Control.Feedback type='invalid'>{errors.email?.message}</Form.Control.Feedback>
+        <Form.Control.Feedback type='invalid' role='alert'>
+          {errors.email?.message}
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label htmlFor='confirmEmail' placeholder='Confirm email'>
           Confirm Email
         </Form.Label>
         <Form.Control id='confirmEmail' type='email' {...register('confirmEmail')} placeholder='Confirm your email' />
-        <Form.Control.Feedback type='invalid'>{errors.confirmEmail?.message}</Form.Control.Feedback>
+        <Form.Control.Feedback type='invalid' role='alert'>
+          {errors.confirmEmail?.message}
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label htmlFor='firstName' placeholder='Enter your first name'>
           First Name
         </Form.Label>
         <Form.Control id='firstName' type='text' {...register('firstName')} placeholder='Enter your first name' />
-        <Form.Control.Feedback>{errors.firstName?.message}</Form.Control.Feedback>
+        <Form.Control.Feedback role='alert'>{errors.firstName?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label htmlFor='lastName' placeholder='Enter your last name'>
           Last Name
         </Form.Label>
         <Form.Control id='lastName' type='text' {...register('lastName')} placeholder='Enter your last name' />
-        <Form.Control.Feedback>{errors.lastName?.message}</Form.Control.Feedback>
+        <Form.Control.Feedback role='alert'>{errors.lastName?.message}</Form.Control.Feedback>
       </Form.Group>
       <ButtonWrapper>
-        <CancelButton data-testid='cancelButton' onClick={onCancel}>
-          CANCEL
-        </CancelButton>
-        <SubmitButton data-testid='submitButton' type='submit' disabled={!isValid}>
+        <CancelButton onClick={onCancel}>CANCEL</CancelButton>
+        <SubmitButton type='submit' disabled={!isValid}>
           SIGN UP
         </SubmitButton>
       </ButtonWrapper>

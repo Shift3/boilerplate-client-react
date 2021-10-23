@@ -45,21 +45,21 @@ export const HolyGrailLayout: FC<HolyGrailLayoutProps> = ({ header, leftAside, c
   const { navPosition, toggleNavPosition } = useNavPositionManager();
 
   return (
-    <HolyGrail>
+    <HolyGrail data-testid='wrapper'>
       {(navPosition === 'top' || header) && (
         <HolyGrailHeader>
           {navPosition === 'top' && <TopNav onNavToggle={toggleNavPosition} />}
           {header}
         </HolyGrailHeader>
       )}
-      <HolyGrailMain>
+      <HolyGrailMain data-testid='mainWrapper'>
         {(navPosition === 'side' || leftAside) && (
-          <HolyGrailLeft>
+          <HolyGrailLeft data-testid='leftAside'>
             {navPosition === 'side' && <SideNav onNavToggle={toggleNavPosition} />}
             {leftAside}
           </HolyGrailLeft>
         )}
-        <HolyGrailContent>{children}</HolyGrailContent>
+        <HolyGrailContent data-testid='main'>{children}</HolyGrailContent>
         {rightAside && <HolyGrailRight>{rightAside}</HolyGrailRight>}
       </HolyGrailMain>
       <HolyGrailFooter>{footer ?? <Footer />}</HolyGrailFooter>

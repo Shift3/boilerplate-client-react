@@ -20,7 +20,9 @@ export const ActivateAccountForm: ActivateAccountFormType = ({ onSubmit, onCance
       <Form.Group>
         <Form.Label htmlFor='newPassword'>New Password</Form.Label>
         <Form.Control id='newPassword' type='password' {...register('newPassword')} placeholder='Enter new password' />
-        <Form.Control.Feedback type='invalid'>{errors.newPassword?.message}</Form.Control.Feedback>
+        <Form.Control.Feedback type='invalid' role='alert'>
+          {errors.newPassword?.message}
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label htmlFor='confirmPassword'>Confirm Password</Form.Label>
@@ -30,13 +32,13 @@ export const ActivateAccountForm: ActivateAccountFormType = ({ onSubmit, onCance
           {...register('confirmPassword')}
           placeholder='Confirm password'
         />
-        <Form.Control.Feedback type='invalid'>{errors.confirmPassword?.message}</Form.Control.Feedback>
+        <Form.Control.Feedback type='invalid' role='alert'>
+          {errors.confirmPassword?.message}
+        </Form.Control.Feedback>
       </Form.Group>
       <ButtonWrapper>
-        <CancelButton data-testid='cancelButton' onClick={onCancel}>
-          CANCEL
-        </CancelButton>
-        <SubmitButton data-testid='submitButton' type='submit' disabled={!isValid}>
+        <CancelButton onClick={onCancel}>CANCEL</CancelButton>
+        <SubmitButton type='submit' disabled={!isValid}>
           SUBMIT
         </SubmitButton>
       </ButtonWrapper>
