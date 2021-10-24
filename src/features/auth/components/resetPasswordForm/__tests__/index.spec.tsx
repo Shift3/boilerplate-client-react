@@ -32,14 +32,25 @@ describe('ResetPasswordForm', () => {
     expect(mockOnSubmit).not.toBeCalled();
   });
 
-  it('should submit the form', async () => {
+  it('should not submit the form', async () => {
     const newPasswordInput = screen.getByRole('textbox', { name: /^New Password$/i });
     userEvent.type(newPasswordInput, '123');
 
     const confirmNewPasswordInput = screen.getByLabelText(/Confirm Password/i);
     userEvent.type(confirmNewPasswordInput, 'abc');
 
-    fireEvent.submit(screen.getByRole('button', { name: 'SUBMIT' }));
-    await waitFor(() => expect(mockOnSubmit).toHaveBeenCalledTimes(1));
+    fireEvent.click(screen.getByRole('button', { name: 'SUBMIT' }));
+    await waitFor(() => expect(mockOnSubmit).not.toHaveBeenCalledTimes);
+  });
+
+  it('should submit the form', async () => {
+    const newPasswordInput = screen.getByRole('textbox', { name: /^New Password$/i });
+    userEvent.type(newPasswordInput, 'Testpassword123!');
+
+    const confirmNewPasswordInput = screen.getByLabelText(/Confirm Password/i);
+    userEvent.type(confirmNewPasswordInput, 'Testpassword123!');
+
+    fireEvent.click(screen.getByRole('button', { name: 'SUBMIT' }));
+    await waitFor(() => expect(mockOnSubmit).toHaveBeenCalled);
   });
 });
