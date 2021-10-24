@@ -18,21 +18,28 @@ describe('ResetPasswordForm', () => {
 
   it('should render the basic fields', () => {
     expect(screen.getByRole('textbox', { name: /^New Password$/i })).toBeInTheDocument();
-    expect(screen.getByRole('textbox', { name: /^Confirm Password$/i })).toBeInTheDocument();
+    expect(screen.getByLabelText(/Confirm Password/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'CANCEL' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'SUBMIT' })).toBeInTheDocument();
   });
 
-  // it('should validate form fields', async () => {
-  //   userEvent.type(screen.getByRole('textbox', { name: /^email$/i }), 'testEmail');
-  //   userEvent.type(screen.getByRole('textbox', { name: /^Confirm Email$/i }), 'confirmTestEmail');
-  //   userEvent.type(screen.getByRole('textbox', { name: /^First Name$/i }), '123');
-  //   userEvent.type(screen.getByRole('textbox', { name: /^Last Name$/i }), '456');
+  it('should validate form fields', async () => {
+    userEvent.type(screen.getByRole('textbox', { name: /^New Password$/i }), 'abc');
+    userEvent.type(screen.getByLabelText(/Confirm Password/i), '123');
 
-  //   fireEvent.submit(screen.getByRole('button', { name: 'SIGN UP' }));
-  //   expect(await screen.findAllByRole('alert')).toHaveLength(4);
-  //   expect(mockOnSubmit).not.toBeCalled();
-  // });
+    fireEvent.submit(screen.getByRole('button', { name: 'SUBMIT' }));
+    expect(await screen.findAllByRole('alert')).toHaveLength(2);
+    expect(mockOnSubmit).not.toBeCalled();
+  });
 
-  // it('should submit the form', async () => {});
+  it('should submit the form', async () => {
+    const newPasswordInput = screen.getByRole('textbox', { name: /^New Password$/i });
+    userEvent.type(newPasswordInput, '123');
+
+    const confirmNewPasswordInput = screen.getByLabelText(/Confirm Password/i);
+    userEvent.type(confirmNewPasswordInput, 'abc');
+
+    fireEvent.submit(screen.getByRole('button', { name: 'SUBMIT' }));
+    await waitFor(() => expect(mockOnSubmit).toHaveBeenCalledTimes(1));
+  });
 });

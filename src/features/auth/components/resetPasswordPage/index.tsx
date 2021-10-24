@@ -20,7 +20,7 @@ export const ResetPasswordPage: FC = () => {
 
   return (
     <PageWrapper>
-      <StyledFormWrapper data-testid='wrapper'>
+      <StyledFormWrapper>
         <Title>Reset Password</Title>
         <ResetPasswordForm onSubmit={onSubmit} onCancel={onCancel} />
       </StyledFormWrapper>
