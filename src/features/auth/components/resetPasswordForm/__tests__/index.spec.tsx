@@ -1,151 +1,38 @@
-import { render } from '@testing-library/react';
-import { Constants } from 'utils/constants';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { ResetPasswordForm } from '../index';
-import {
-  expectLengthByRole,
-  setValueByLabelText,
-  expectInnerHTMLByRole,
-  expectMockFunctionNotCalled,
-  expectInDocByLabelText,
-  clickByTestIdAsync,
-  expectInDocByTestId,
-} from 'utils/test';
 import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
 
-const {
-  NEW_PASSWORD_REQUIRED,
-  PASSWORD_MUST_MATCH,
-  PASSWORD_LENGTH,
-  PASSWORD_NUMBER,
-  PASSWORD_LOWERCASE,
-  PASSWORD_UPPERCASE,
-  PASSWORD_SPECIAL_CHARACTER,
-} = Constants.errorMessages;
+const mockOnSubmit = jest.fn();
+const mockOnCancel = jest.fn();
 
 describe('ResetPasswordForm', () => {
-  const validNewPassword = 'Password456!';
-  const shortPassword = 'T123!';
-  const noSpecialCharPassword = 'Password123';
-  const noNumberPassword = 'Password!';
-  const noUppercasePassword = 'password123!';
-  const noLowercasePassword = 'PASSWORD123!';
-  const mockOnSubmit = jest.fn();
-  const mockOnCancel = jest.fn();
-
-  describe('With valid input', () => {
-    beforeEach(async () => {
-      render(
-        <ThemeProvider theme={AppTheme}>
-          <ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
-        </ThemeProvider>,
-      );
-    });
-
-    it('should render the new password field', () => expectInDocByLabelText('New Password'));
-    it('should render the confirm password field', () => expectInDocByLabelText('Confirm Password'));
-    it('should render the cancel button', () => expectInDocByTestId('cancelButton'));
-    it('should render the submit button', () => expectInDocByTestId('submitButton'));
-
-    it('Should call onSubmit once formData object including newPassword and confirmPassword', async () => {
-      await setValueByLabelText('New Password', validNewPassword);
-      await setValueByLabelText('Confirm Password', validNewPassword);
-
-      await clickByTestIdAsync('submitButton');
-      expect(mockOnSubmit).toHaveBeenCalled();
-
-      mockOnSubmit.mockReset();
-    });
-
-    it('Should not display error messages', () => {
-      expectLengthByRole('alert', 0);
-    });
+  beforeEach(async () => {
+    render(
+      <ThemeProvider theme={AppTheme}>
+        <ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+      </ThemeProvider>,
+    );
   });
 
-  describe('Invalid input', () => {
-    beforeEach(async () => {
-      render(
-        <ThemeProvider theme={AppTheme}>
-          <ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
-        </ThemeProvider>,
-      );
-
-      await setValueByLabelText('New Password', validNewPassword);
-      await setValueByLabelText('Confirm Password', validNewPassword);
-    });
-
-    it.skip('Should not call onSubmit', async () => {
-      await setValueByLabelText('New Password', '');
-      await setValueByLabelText('Confirm Password', '');
-      await clickByTestIdAsync('submitButton');
-      expectMockFunctionNotCalled(mockOnSubmit);
-
-      mockOnSubmit.mockReset();
-    });
-
-    it.skip('Should display error messages', async () => {
-      await setValueByLabelText('New Password', '');
-      await setValueByLabelText('Confirm Password', '');
-
-      expectLengthByRole('alert', 2);
-    });
+  it('should render the basic fields', () => {
+    expect(screen.getByRole('textbox', { name: /^New Password$/i })).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: /^Confirm Password$/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'CANCEL' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'SUBMIT' })).toBeInTheDocument();
   });
 
-  describe('Invalid password', () => {
-    beforeEach(async () => {
-      render(
-        <ThemeProvider theme={AppTheme}>
-          <ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
-        </ThemeProvider>,
-      );
+  // it('should validate form fields', async () => {
+  //   userEvent.type(screen.getByRole('textbox', { name: /^email$/i }), 'testEmail');
+  //   userEvent.type(screen.getByRole('textbox', { name: /^Confirm Email$/i }), 'confirmTestEmail');
+  //   userEvent.type(screen.getByRole('textbox', { name: /^First Name$/i }), '123');
+  //   userEvent.type(screen.getByRole('textbox', { name: /^Last Name$/i }), '456');
 
-      await setValueByLabelText('New Password', validNewPassword);
-      await setValueByLabelText('Confirm Password', validNewPassword);
-    });
+  //   fireEvent.submit(screen.getByRole('button', { name: 'SIGN UP' }));
+  //   expect(await screen.findAllByRole('alert')).toHaveLength(4);
+  //   expect(mockOnSubmit).not.toBeCalled();
+  // });
 
-    it.skip('Should only display NEW_PASSWORD_REQUIRED error message', async () => {
-      await setValueByLabelText('New Password', '');
-      expectLengthByRole('alert', 1);
-      expectInnerHTMLByRole('alert', NEW_PASSWORD_REQUIRED);
-    });
-
-    it.skip('Should only display special password length error message', async () => {
-      await setValueByLabelText('New Password', shortPassword);
-      expectLengthByRole('alert', 1);
-      expectInnerHTMLByRole('alert', PASSWORD_LENGTH);
-    });
-
-    it.skip('Should only display special character required error message', async () => {
-      await setValueByLabelText('New Password', noSpecialCharPassword);
-      expectLengthByRole('alert', 1);
-      expectInnerHTMLByRole('alert', PASSWORD_SPECIAL_CHARACTER);
-    });
-
-    it.skip('Should only display number required error message', async () => {
-      await setValueByLabelText('New Password', noNumberPassword);
-      expectLengthByRole('alert', 1);
-      expectInnerHTMLByRole('alert', PASSWORD_NUMBER);
-    });
-
-    it.skip('Should only display uppercase letter required error message', async () => {
-      await setValueByLabelText('New Password', noUppercasePassword);
-      expectLengthByRole('alert', 1);
-      expectInnerHTMLByRole('alert', PASSWORD_UPPERCASE);
-    });
-
-    it.skip('Should only display lowercase letter required error message', async () => {
-      await setValueByLabelText('New Password', noLowercasePassword);
-      expectLengthByRole('alert', 1);
-      expectInnerHTMLByRole('alert', PASSWORD_LOWERCASE);
-    });
-
-    it.skip('Should only display PASSWORD_MUST_MATCH error message', async () => {
-      const nonMatchingPassword = `${validNewPassword}4`;
-
-      await setValueByLabelText('New Password', validNewPassword);
-      await setValueByLabelText('Confirm Password', nonMatchingPassword);
-      expectLengthByRole('alert', 1);
-      expectInnerHTMLByRole('alert', PASSWORD_MUST_MATCH);
-    });
-  });
+  // it('should submit the form', async () => {});
 });
