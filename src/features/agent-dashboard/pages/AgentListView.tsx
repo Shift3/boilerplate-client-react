@@ -3,12 +3,12 @@ import ActionButton, { ActionButtonProps } from 'common/components/ActionButton'
 import { useConfirmationModal } from 'common/hooks';
 import { Agent } from 'common/models';
 import { FC } from 'react';
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { useDeleteAgentMutation, useGetAgentsQuery } from '../agentApi';
 import { Link, useHistory } from 'react-router-dom';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
+import { CreateButton } from 'features/styles/PageStyles';
 
 type AgentTableItem = {
   id: number;
@@ -78,7 +78,7 @@ export const AgentListView: FC = () => {
     <Container>
       <div className='pb-4 text-end'>
         <Link to='/agents/create-agent'>
-          <Button>ADD AGENT</Button>
+          <CreateButton>ADD AGENT</CreateButton>
         </Link>
       </div>
       <WithLoadingOverlay isLoading={isLoadingAgents}>

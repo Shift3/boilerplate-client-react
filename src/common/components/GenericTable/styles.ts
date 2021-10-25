@@ -2,9 +2,11 @@ import Table from 'react-bootstrap/Table';
 import styled from 'styled-components';
 
 export const StyledTable = styled(Table)`
+  border-color: ${(props) => props.theme.tables.borderColor};
+  
   thead {
-    background-color: ${(props) => props.theme.primary};
-    color: white;
+    background-color: ${(props) => props.theme.tables.headerBackgroundColor};
+    color: ${(props) => props.theme.tables.headerTextColor};
   }
 
   th {
@@ -24,6 +26,6 @@ export const StyledTable = styled(Table)`
   }
 
   td {
-    color: ${(props) => props.theme.primary};
+    color: ${(props) => props.theme.tables.textColor};
   }
 `;

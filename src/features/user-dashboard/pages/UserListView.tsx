@@ -9,11 +9,11 @@ import {
   useResendActivationEmailMutation,
 } from 'features/user-dashboard/userApi';
 import { FC } from 'react';
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { Link, useHistory } from 'react-router-dom';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
+import { CreateButton } from 'features/styles/PageStyles';
 
 type UserTableItem = {
   id: number;
@@ -144,7 +144,7 @@ export const UserListView: FC = () => {
     <Container>
       <div className='mb-4 text-end'>
         <Link to='/users/create-user'>
-          <Button>ADD USER</Button>
+          <CreateButton>ADD USER</CreateButton>
         </Link>
       </div>
       <WithLoadingOverlay isLoading={isLoadingUsers}>

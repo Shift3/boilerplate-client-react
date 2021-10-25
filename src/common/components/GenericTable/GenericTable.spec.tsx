@@ -1,6 +1,8 @@
 import { render } from '@testing-library/react';
 import { GenericTable } from './GenericTable';
 import { CustomRenderer, TableHeader } from './types';
+import { ThemeProvider } from 'styled-components';
+import AppTheme from 'utils/styleValues';
 
 type TestTableItem = {
   id: number;
@@ -20,32 +22,60 @@ const testTableHeaders: TableHeader<TestTableItem>[] = [
 ];
 
 describe('GenericTable', () => {
+  beforeEach(() => {
+    render(
+      <ThemeProvider theme={AppTheme}>
+        <GenericTable headers={testTableHeaders} items={testTableItems} />
+      </ThemeProvider>,
+    );
+  });
+
   it('should render one table element', () => {
-    const { container } = render(<GenericTable<TestTableItem> items={[]} headers={testTableHeaders} />);
+    const { container } = render(
+      <ThemeProvider theme={AppTheme}>
+        <GenericTable<TestTableItem> items={[]} headers={testTableHeaders} />
+      </ThemeProvider>,
+    );
     expect(container.querySelector('table')).toBeInTheDocument();
     expect(container.querySelectorAll('table')).toHaveLength(1);
   });
 
   it('should render one thead element', () => {
-    const { container } = render(<GenericTable<TestTableItem> items={[]} headers={testTableHeaders} />);
+    const { container } = render(
+      <ThemeProvider theme={AppTheme}>
+        <GenericTable<TestTableItem> items={[]} headers={testTableHeaders} />
+      </ThemeProvider>,
+    );
     expect(container.querySelector('thead')).toBeInTheDocument();
     expect(container.querySelectorAll('thead')).toHaveLength(1);
   });
 
   it('should render one tbody element', () => {
-    const { container } = render(<GenericTable<TestTableItem> items={[]} headers={testTableHeaders} />);
+    const { container } = render(
+      <ThemeProvider theme={AppTheme}>
+        <GenericTable<TestTableItem> items={[]} headers={testTableHeaders} />
+      </ThemeProvider>,
+    );
     expect(container.querySelector('tbody')).toBeInTheDocument();
     expect(container.querySelectorAll('tbody')).toHaveLength(1);
   });
 
   it('should render a th tag for each object in headers prop', () => {
-    const { container } = render(<GenericTable<TestTableItem> items={[]} headers={testTableHeaders} />);
+    const { container } = render(
+      <ThemeProvider theme={AppTheme}>
+        <GenericTable<TestTableItem> items={[]} headers={testTableHeaders} />
+      </ThemeProvider>,
+    );
     const headers = container.querySelectorAll('th');
     expect(headers).toHaveLength(testTableHeaders.length);
   });
 
   it('should render the correct text in each header column', () => {
-    const { container } = render(<GenericTable<TestTableItem> items={[]} headers={testTableHeaders} />);
+    const { container } = render(
+      <ThemeProvider theme={AppTheme}>
+        <GenericTable<TestTableItem> items={[]} headers={testTableHeaders} />
+      </ThemeProvider>,
+    );
     const headers = container.querySelectorAll('th');
     headers.forEach((th, index) => {
       expect(th.textContent).toBe(testTableHeaders[index].label);
@@ -53,31 +83,51 @@ describe('GenericTable', () => {
   });
 
   it('should not render any rows in the table body if the items prop is an empty array', () => {
-    const { container } = render(<GenericTable<TestTableItem> items={[]} headers={testTableHeaders} />);
+    const { container } = render(
+      <ThemeProvider theme={AppTheme}>
+        <GenericTable<TestTableItem> items={[]} headers={testTableHeaders} />
+      </ThemeProvider>,
+    );
     const tbody = container.querySelector('tbody');
     const rows = tbody?.querySelectorAll('tr');
     expect(rows).toHaveLength(0);
   });
 
   it('should render "No data" text if the items prop is an empty array', () => {
-    const { getByText } = render(<GenericTable<TestTableItem> items={[]} headers={testTableHeaders} />);
+    const { getByText } = render(
+      <ThemeProvider theme={AppTheme}>
+        <GenericTable<TestTableItem> items={[]} headers={testTableHeaders} />
+      </ThemeProvider>,
+    );
     expect(getByText('No data')).toBeInTheDocument();
   });
 
   it('should not render "No data" text if the items prop is not an empty array', () => {
-    const { queryByText } = render(<GenericTable<TestTableItem> items={testTableItems} headers={testTableHeaders} />);
+    const { queryByText } = render(
+      <ThemeProvider theme={AppTheme}>
+        <GenericTable<TestTableItem> items={testTableItems} headers={testTableHeaders} />
+      </ThemeProvider>,
+    );
     expect(queryByText('No data')).toBeNull();
   });
 
   it('should render a row in the table body for each item in the items prop', () => {
-    const { container } = render(<GenericTable<TestTableItem> items={testTableItems} headers={testTableHeaders} />);
+    const { container } = render(
+      <ThemeProvider theme={AppTheme}>
+        <GenericTable<TestTableItem> items={testTableItems} headers={testTableHeaders} />
+      </ThemeProvider>,
+    );
     const tbody = container.querySelector('tbody');
     const rows = tbody?.querySelectorAll('tr');
     expect(rows).toHaveLength(testTableItems.length);
   });
 
   it('should render the correct data in each column of the rows', () => {
-    const { container } = render(<GenericTable<TestTableItem> items={testTableItems} headers={testTableHeaders} />);
+    const { container } = render(
+      <ThemeProvider theme={AppTheme}>
+        <GenericTable<TestTableItem> items={testTableItems} headers={testTableHeaders} />
+      </ThemeProvider>,
+    );
     const tbody = container.querySelector('tbody');
     const rows = tbody?.querySelectorAll('tr');
 
@@ -100,11 +150,14 @@ describe('GenericTable', () => {
     ];
 
     const { container } = render(
-      <GenericTable<TestTableItem>
-        items={testTableItems}
-        headers={testTableHeaders}
-        customRenderers={customRenderers}
-      />,
+      <ThemeProvider theme={AppTheme}>
+        <GenericTable<TestTableItem>
+          items={testTableItems}
+          headers={testTableHeaders}
+          customRenderers={customRenderers}
+        />
+        ,
+      </ThemeProvider>,
     );
 
     const tbody = container.querySelector('tbody');
