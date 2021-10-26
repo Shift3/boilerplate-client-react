@@ -50,7 +50,7 @@ describe('SignupForm', () => {
     userEvent.type(lastNameInput, '2');
 
     fireEvent.click(screen.getByRole('button', { name: 'SIGN UP' }));
-    await waitFor(() => expect(mockOnSubmit).not.toHaveBeenCalledTimes);
+    await waitFor(() => expect(mockOnSubmit).not.toHaveBeenCalled);
   });
 
   it('should submit the form', async () => {
