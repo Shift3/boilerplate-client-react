@@ -32,6 +32,9 @@ export type RbacRules = {
 const rules: RbacRules = {
   'Super Administrator': {
     'agency:create': true,
+    'agency:read': true,
+    'agency:update': true,
+    'agency:delete': true,
     'agent:create': true,
     'agent:read': true,
     'agent:update': true,
