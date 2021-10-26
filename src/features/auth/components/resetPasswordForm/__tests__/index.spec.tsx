@@ -16,10 +16,19 @@ describe('ResetPasswordForm', () => {
     );
   });
 
-  it('should render the basic fields', () => {
+  it('should render the new password field', () => {
     expect(screen.getByLabelText(/New Password/i)).toBeInTheDocument();
+  });
+
+  it('should render the confirm password field', () => {
     expect(screen.getByLabelText(/Confirm Password/i)).toBeInTheDocument();
+  });
+
+  it('should render the cancel button', () => {
     expect(screen.getByRole('button', { name: 'CANCEL' })).toBeInTheDocument();
+  });
+
+  it('should render the submit button', () => {
     expect(screen.getByRole('button', { name: 'SUBMIT' })).toBeInTheDocument();
   });
 
