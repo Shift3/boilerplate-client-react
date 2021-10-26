@@ -36,6 +36,23 @@ describe('SignupForm', () => {
     expect(mockOnSubmit).not.toBeCalled();
   });
 
+  it('should not submit the form', async () => {
+    const emailInput = screen.getByRole('textbox', { name: /^email/i });
+    userEvent.type(emailInput, 'test');
+
+    const confirmEmailInput = screen.getByRole('textbox', { name: /^Confirm Email$/i });
+    userEvent.type(confirmEmailInput, '123');
+
+    const firstNameInput = screen.getByRole('textbox', { name: /^First Name$/i });
+    userEvent.type(firstNameInput, '1');
+
+    const lastNameInput = screen.getByRole('textbox', { name: /^Last Name$/i });
+    userEvent.type(lastNameInput, '2');
+
+    fireEvent.click(screen.getByRole('button', { name: 'SIGN UP' }));
+    await waitFor(() => expect(mockOnSubmit).not.toHaveBeenCalledTimes);
+  });
+
   it('should submit the form', async () => {
     const emailInput = screen.getByRole('textbox', { name: /^email/i });
     userEvent.type(emailInput, 'test@email.com');
