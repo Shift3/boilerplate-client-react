@@ -9,6 +9,7 @@ import Container from 'react-bootstrap/Container';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { CreateButton } from 'features/styles/PageStyles';
+import { Can } from 'features/rbac';
 
 type AgencyTableItem = {
   id: number;
@@ -74,11 +75,13 @@ export const AgencyListView: FC = () => {
 
   return (
     <Container>
-      <div className='pb-4 text-end'>
-        <Link to='/agencies/create-agency'>
-          <CreateButton>ADD AGENCY</CreateButton>
-        </Link>
-      </div>
+      <Can perform='agency:create'>
+        <div className='pb-4 text-end'>
+          <Link to='/agencies/create-agency'>
+            <CreateButton>ADD AGENCY</CreateButton>
+          </Link>
+        </div>
+      </Can>
       <WithLoadingOverlay isLoading={isLoadingAgencies}>
         <GenericTable<AgencyTableItem> headers={headers} items={items} customRenderers={customRenderers} />
       </WithLoadingOverlay>

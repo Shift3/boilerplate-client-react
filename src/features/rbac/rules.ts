@@ -28,8 +28,15 @@ export type RbacRules = {
 };
 
 const rules: RbacRules = {
-  'Super Administrator': {},
-  Admin: {},
+  'Super Administrator': {
+    'agency:create': true,
+    'agent:create': true,
+    'user:create': true,
+  },
+  Admin: {
+    'agent:create': true,
+    'user:create': true,
+  },
   Editor: {},
   User: {},
 };

@@ -9,6 +9,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { CreateButton } from 'features/styles/PageStyles';
+import { Can } from 'features/rbac';
 
 type AgentTableItem = {
   id: number;
@@ -76,11 +77,13 @@ export const AgentListView: FC = () => {
 
   return (
     <Container>
-      <div className='pb-4 text-end'>
-        <Link to='/agents/create-agent'>
-          <CreateButton>ADD AGENT</CreateButton>
-        </Link>
-      </div>
+      <Can perform='agent:create'>
+        <div className='pb-4 text-end'>
+          <Link to='/agents/create-agent'>
+            <CreateButton>ADD AGENT</CreateButton>
+          </Link>
+        </div>
+      </Can>
       <WithLoadingOverlay isLoading={isLoadingAgents}>
         <GenericTable<AgentTableItem> headers={headers} items={items} customRenderers={customRenderers} />
       </WithLoadingOverlay>

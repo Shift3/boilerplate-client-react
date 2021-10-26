@@ -14,6 +14,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { CreateButton } from 'features/styles/PageStyles';
+import { Can } from 'features/rbac';
 
 type UserTableItem = {
   id: number;
@@ -142,11 +143,13 @@ export const UserListView: FC = () => {
 
   return (
     <Container>
-      <div className='mb-4 text-end'>
-        <Link to='/users/create-user'>
-          <CreateButton>ADD USER</CreateButton>
-        </Link>
-      </div>
+      <Can perform='user:create'>
+        <div className='mb-4 text-end'>
+          <Link to='/users/create-user'>
+            <CreateButton>ADD USER</CreateButton>
+          </Link>
+        </div>
+      </Can>
       <WithLoadingOverlay isLoading={isLoadingUsers}>
         <GenericTable<UserTableItem> headers={headers} items={items} customRenderers={customRenderers} />
       </WithLoadingOverlay>
