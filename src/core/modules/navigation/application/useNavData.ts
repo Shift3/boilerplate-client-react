@@ -1,5 +1,6 @@
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { useAuth } from 'features/auth/hooks';
+import { useRbac } from 'features/rbac';
 
 export interface IUserProfile {
   firstName: string;
@@ -21,25 +22,26 @@ export interface INavData {
 
 export const useNavData = (): INavData => {
   const { user } = useAuth();
+  const { userCan } = useRbac();
 
   const navLinks: INavLink[] = [
     {
       icon: 'stethoscope',
       label: 'Directory',
       path: '/agents',
-      canUserActivate: user?.role.roleName !== '',
+      canUserActivate: userCan('agent:read'),
     },
     {
       icon: 'users',
       label: 'Users',
       path: '/users',
-      canUserActivate: user?.role.roleName === 'Super Administrator' || user?.role.roleName === 'Admin',
+      canUserActivate: userCan('user:read'),
     },
     {
       icon: 'building',
       label: 'Agencies',
       path: '/agencies',
-      canUserActivate: user?.role.roleName === 'Super Administrator',
+      canUserActivate: userCan('agency:read'),
     },
   ];
 
