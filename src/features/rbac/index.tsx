@@ -1,4 +1,4 @@
-import HasPermission from './HasPermission';
-import { useRbac } from './useRbac';
+import { Can } from './components/Can';
+import { useRbac } from './hooks/useRbac';
 
-export { HasPermission, useRbac };
+export { Can, useRbac };
