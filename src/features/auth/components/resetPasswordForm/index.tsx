@@ -19,7 +19,7 @@ export const ResetPasswordForm: ResetPasswordFormType = ({ onSubmit, onCancel })
     <StyledForm data-testid='resetPasswordForm' onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
         <Form.Label htmlFor='newPassword'>New Password</Form.Label>
-        <Form.Control id='newPassword' type='text' {...register('newPassword')} placeholder='Enter new password' />
+        <Form.Control id='newPassword' type='password' {...register('newPassword')} placeholder='Enter new password' />
         <Form.Control.Feedback type='invalid' role='alert'>
           {errors.newPassword?.message}
         </Form.Control.Feedback>

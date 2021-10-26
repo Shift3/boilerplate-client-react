@@ -17,14 +17,14 @@ describe('ResetPasswordForm', () => {
   });
 
   it('should render the basic fields', () => {
-    expect(screen.getByRole('textbox', { name: /^New Password$/i })).toBeInTheDocument();
+    expect(screen.getByLabelText(/New Password/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Confirm Password/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'CANCEL' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'SUBMIT' })).toBeInTheDocument();
   });
 
   it('should validate form fields', async () => {
-    userEvent.type(screen.getByRole('textbox', { name: /^New Password$/i }), 'abc');
+    userEvent.type(screen.getByLabelText(/New Password/i), 'abc');
     userEvent.type(screen.getByLabelText(/Confirm Password/i), '123');
 
     fireEvent.submit(screen.getByRole('button', { name: 'SUBMIT' }));
@@ -33,7 +33,7 @@ describe('ResetPasswordForm', () => {
   });
 
   it('should not submit the form', async () => {
-    const newPasswordInput = screen.getByRole('textbox', { name: /^New Password$/i });
+    const newPasswordInput = screen.getByLabelText(/New Password/i);
     userEvent.type(newPasswordInput, '123');
 
     const confirmNewPasswordInput = screen.getByLabelText(/Confirm Password/i);
@@ -44,7 +44,7 @@ describe('ResetPasswordForm', () => {
   });
 
   it('should submit the form', async () => {
-    const newPasswordInput = screen.getByRole('textbox', { name: /^New Password$/i });
+    const newPasswordInput = screen.getByLabelText(/New Password/i);
     userEvent.type(newPasswordInput, 'Testpassword123!');
 
     const confirmNewPasswordInput = screen.getByLabelText(/Confirm Password/i);
