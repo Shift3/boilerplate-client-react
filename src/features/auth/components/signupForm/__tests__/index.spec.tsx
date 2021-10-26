@@ -16,12 +16,22 @@ describe('SignupForm', () => {
     );
   });
 
-  it('should render the basic fields', () => {
+  it('should render the email field', () => {
     expect(screen.getByRole('textbox', { name: /^email$/i })).toBeInTheDocument();
+  });
+  it('should render the confirm email field', () => {
     expect(screen.getByRole('textbox', { name: /^Confirm Email$/i })).toBeInTheDocument();
+  });
+  it('should render the first name field', () => {
     expect(screen.getByRole('textbox', { name: /^First Name$/i })).toBeInTheDocument();
+  });
+  it('should render the last name field', () => {
     expect(screen.getByRole('textbox', { name: /^Last Name$/i })).toBeInTheDocument();
+  });
+  it('should render the cancel button', () => {
     expect(screen.getByRole('button', { name: 'CANCEL' })).toBeInTheDocument();
+  });
+  it('should render the sign up button', () => {
     expect(screen.getByRole('button', { name: 'SIGN UP' })).toBeInTheDocument();
   });
 
