@@ -19,7 +19,7 @@ export const SignUpPage: FC = () => {
 
   return (
     <PageWrapper>
-      <StyledFormWrapper data-testid='wrapper'>
+      <StyledFormWrapper>
         <Title>Sign Up</Title>
         <SignUpForm onSubmit={onSubmit} onCancel={onCancel} />
       </StyledFormWrapper>
