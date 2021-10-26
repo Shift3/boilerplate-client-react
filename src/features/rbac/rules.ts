@@ -1,4 +1,4 @@
-import { RoleType, User } from 'common/models';
+import { Role, RoleHierarchy, RoleType, User } from 'common/models';
 
 export type Permission =
   | 'agency:create'
@@ -39,6 +39,7 @@ const rules: RbacRules = {
     'agent:read': true,
     'agent:update': true,
     'agent:delete': true,
+    'role:read': true,
     'user:create': true,
     'user:read': true,
     'user:update': true,
@@ -51,6 +52,8 @@ const rules: RbacRules = {
     'agent:read': true,
     'agent:update': true,
     'agent:delete': true,
+    'role:read': (user: User, role: unknown) =>
+      RoleHierarchy[user.role.roleName] >= RoleHierarchy[(role as Role).roleName],
     'user:create': true,
     'user:read': true,
     'user:update': true,

@@ -6,16 +6,22 @@ import { useGetRolesQuery } from '../roleApi';
 import { useCreateUserMutation } from '../userApi';
 import { PageWrapper, Title, StyledFormWrapper } from 'features/styles/PageStyles';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
+import { useRbac } from 'features/rbac';
+import { useAuth } from 'features/auth/hooks';
 
 export const CreateUserView: FC = () => {
   const history = useHistory();
+  const { user } = useAuth();
+  const { userCan } = useRbac();
   const [createUser] = useCreateUserMutation();
   const { showErrorNotification, showSuccessNotification } = useShowNotification();
   const { data: roles = [], isLoading: isLoadingRoles } = useGetRolesQuery();
-  const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery();
+  const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery(undefined, {
+    skip: !userCan('agency:read'),
+  });
 
-  // TODO: filter out the roles and agencies that the current authenticated user is
-  // allowed to access (need to implement role checks first)
+  const availableRoles = roles.filter((role) => userCan({ permission: 'role:read', data: role }));
+  const availableAgencies = agencies.length !== 0 ? agencies : [user!.agency];
 
   const handleFormCancel = () => {
     history.goBack();
@@ -39,8 +45,8 @@ export const CreateUserView: FC = () => {
         <StyledFormWrapper>
           <Title>Create User</Title>
           <UserDetailForm
-            availableRoles={roles}
-            availableAgencies={agencies}
+            availableRoles={availableRoles}
+            availableAgencies={availableAgencies}
             onCancel={handleFormCancel}
             onSubmit={handleFormSubmit}
           />
