@@ -14,7 +14,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { CreateButton } from 'features/styles/PageStyles';
-import { Can } from 'features/rbac';
+import { Can, useRbac } from 'features/rbac';
 
 type UserTableItem = {
   id: number;
@@ -28,6 +28,7 @@ type UserTableItem = {
 
 export const UserListView: FC = () => {
   const history = useHistory();
+  const { userCan } = useRbac();
   const { data: users = [], isLoading: isLoadingUsers } = useGetUsersQuery();
   const [deleteUser] = useDeleteUserMutation();
   const [forgotPassword] = useForgotPasswordMutation();
@@ -103,16 +104,27 @@ export const UserListView: FC = () => {
           icon: 'envelope',
           tooltipText: 'Resend Activation Email',
           onClick: () => handleResendActivationEmail(user),
+          show: userCan({ permission: 'user:resend-activation-email', data: user }),
         },
     actions: [
-      { icon: 'edit', tooltipText: 'Edit', onClick: () => navigateToUpdateView(user) },
+      {
+        icon: 'edit',
+        tooltipText: 'Edit',
+        onClick: () => navigateToUpdateView(user),
+        show: userCan({ permission: 'user:update', data: user }),
+      },
       {
         icon: 'trash-alt',
         tooltipText: 'Delete',
-
         onClick: () => handleDelete(user),
+        show: userCan({ permission: 'user:delete', data: user }),
       },
-      { icon: 'lock', tooltipText: 'Reset Password', onClick: () => handlePasswordReset(user) },
+      {
+        icon: 'lock',
+        tooltipText: 'Reset Password',
+        onClick: () => handlePasswordReset(user),
+        show: userCan({ permission: 'user:send-reset-password-email', data: user }),
+      },
     ],
   }));
 
@@ -134,7 +146,7 @@ export const UserListView: FC = () => {
       renderer: ({ actions }: UserTableItem) => (
         <>
           {actions.map((action, index) => (
-            <ActionButton key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
+            <ActionButton key={index} {...action} />
           ))}
         </>
       ),

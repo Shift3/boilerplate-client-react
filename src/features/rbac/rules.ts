@@ -13,7 +13,9 @@ export type Permission =
   | 'user:create'
   | 'user:read'
   | 'user:update'
-  | 'user:delete';
+  | 'user:delete'
+  | 'user:resend-activation-email'
+  | 'user:send-reset-password-email';
 
 export type Predicate = (user: User, data?: unknown) => boolean;
 
@@ -32,10 +34,20 @@ const rules: RbacRules = {
     'agency:create': true,
     'agent:create': true,
     'user:create': true,
+    'user:read': true,
+    'user:update': true,
+    'user:delete': (self: User, other: unknown) => (other as User).id !== self.id,
+    'user:resend-activation-email': true,
+    'user:send-reset-password-email': (self: User, other: unknown) => (other as User).id !== self.id,
   },
   Admin: {
     'agent:create': true,
     'user:create': true,
+    'user:read': true,
+    'user:update': true,
+    'user:delete': (self: User, other: unknown) => (other as User).id !== self.id,
+    'user:resend-activation-email': true,
+    'user:send-reset-password-email': (self: User, other: unknown) => (other as User).id !== self.id,
   },
   Editor: {},
   User: {},

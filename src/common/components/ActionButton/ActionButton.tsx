@@ -3,10 +3,11 @@ import { FC } from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { ActionButtonProps } from './types';
 
-export const ActionButton: FC<ActionButtonProps> = ({ icon, tooltipText, onClick }) => (
-  <OverlayTrigger placement='top' overlay={<Tooltip id=''>{tooltipText}</Tooltip>}>
-    <span role='button' tabIndex={0} className='px-3 py-1' onClick={onClick} onKeyPress={onClick}>
-      <FontAwesomeIcon icon={icon} />
-    </span>
-  </OverlayTrigger>
-);
+export const ActionButton: FC<ActionButtonProps> = ({ icon, tooltipText, onClick, show }) =>
+  show ? (
+    <OverlayTrigger placement='top' overlay={<Tooltip id=''>{tooltipText}</Tooltip>}>
+      <span role='button' tabIndex={0} className='px-3 py-1' onClick={onClick} onKeyPress={onClick}>
+        <FontAwesomeIcon icon={icon} />
+      </span>
+    </OverlayTrigger>
+  ) : null;
