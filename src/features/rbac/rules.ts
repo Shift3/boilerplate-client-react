@@ -33,6 +33,9 @@ const rules: RbacRules = {
   'Super Administrator': {
     'agency:create': true,
     'agent:create': true,
+    'agent:read': true,
+    'agent:update': true,
+    'agent:delete': true,
     'user:create': true,
     'user:read': true,
     'user:update': true,
@@ -42,6 +45,9 @@ const rules: RbacRules = {
   },
   Admin: {
     'agent:create': true,
+    'agent:read': true,
+    'agent:update': true,
+    'agent:delete': true,
     'user:create': true,
     'user:read': true,
     'user:update': true,
@@ -49,8 +55,13 @@ const rules: RbacRules = {
     'user:resend-activation-email': true,
     'user:send-reset-password-email': (self: User, other: unknown) => (other as User).id !== self.id,
   },
-  Editor: {},
-  User: {},
+  Editor: {
+    'agent:read': true,
+    'agent:update': true,
+  },
+  User: {
+    'agent:read': true,
+  },
 };
 
 export const getRbacRules = (): RbacRules => rules;
