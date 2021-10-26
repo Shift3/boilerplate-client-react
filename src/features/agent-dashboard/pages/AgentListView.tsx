@@ -22,7 +22,7 @@ type AgentTableItem = {
 
 export const AgentListView: FC = () => {
   const history = useHistory();
-  const { userCan } = useRbac();
+  const { userHasPermission } = useRbac();
   const { data: agents = [], isLoading: isLoadingAgents } = useGetAgentsQuery();
   const [deleteAgent] = useDeleteAgentMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
@@ -67,13 +67,13 @@ export const AgentListView: FC = () => {
         icon: 'edit',
         tooltipText: 'Edit',
         onClick: () => navigateToUpdateView(agent),
-        show: userCan({ permission: 'agent:update', data: agent }),
+        show: userHasPermission({ permission: 'agent:update', data: agent }),
       },
       {
         icon: 'trash-alt',
         tooltipText: 'Delete',
         onClick: () => handleDelete(agent),
-        show: userCan({ permission: 'agent:delete', data: agent }),
+        show: userHasPermission({ permission: 'agent:delete', data: agent }),
       },
     ],
   }));

@@ -6,13 +6,13 @@ import { userRoleHasPermission } from '../utils/userRoleHasPermission';
 type Action = Permission | { permission: Permission; data: unknown };
 
 type UseRbacHook = () => {
-  userCan: (perform: Action | Action[]) => boolean;
+  userHasPermission: (perform: Action | Action[]) => boolean;
 };
 
 export const useRbac: UseRbacHook = () => {
   const { user } = useAuth();
 
-  const userCan = (perform: Action | Action[]): boolean => {
+  const userHasPermission = (perform: Action | Action[]): boolean => {
     if (!user) {
       return false;
     }
@@ -27,6 +27,6 @@ export const useRbac: UseRbacHook = () => {
   };
 
   return {
-    userCan,
+    userHasPermission,
   };
 };

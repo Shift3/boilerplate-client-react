@@ -19,7 +19,7 @@ type AgencyTableItem = {
 
 export const AgencyListView: FC = () => {
   const history = useHistory();
-  const { userCan } = useRbac();
+  const { userHasPermission } = useRbac();
   const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery();
   const [deleteAgency] = useDeleteAgencyMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
@@ -54,13 +54,13 @@ export const AgencyListView: FC = () => {
         icon: 'edit',
         tooltipText: 'Edit',
         onClick: () => history.push(`/agencies/update-agency/${agency.id}`),
-        show: userCan('agency:update'),
+        show: userHasPermission('agency:update'),
       },
       {
         icon: 'trash-alt',
         tooltipText: 'Delete',
         onClick: () => handleDelete(agency),
-        show: userCan('agency:delete'),
+        show: userHasPermission('agency:delete'),
       },
     ],
   }));

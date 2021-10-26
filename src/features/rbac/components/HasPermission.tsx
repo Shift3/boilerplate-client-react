@@ -15,7 +15,12 @@ type Props = {
   no?: ComponentType;
 };
 
-export const Can: FC<Props> = ({ perform = [], children, yes: Yes = () => <>{children}</>, no: No = () => null }) => {
+export const HasPermission: FC<Props> = ({
+  perform = [],
+  children,
+  yes: Yes = () => <>{children}</>,
+  no: No = () => null,
+}) => {
   const { user } = useAuth();
   const rules = getRbacRules();
   const actions = ensureArray<Action>(perform);

@@ -12,15 +12,15 @@ import { useAuth } from 'features/auth/hooks';
 export const CreateUserView: FC = () => {
   const history = useHistory();
   const { user } = useAuth();
-  const { userCan } = useRbac();
+  const { userHasPermission } = useRbac();
   const [createUser] = useCreateUserMutation();
   const { showErrorNotification, showSuccessNotification } = useShowNotification();
   const { data: roles = [], isLoading: isLoadingRoles } = useGetRolesQuery();
   const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery(undefined, {
-    skip: !userCan('agency:read'),
+    skip: !userHasPermission('agency:read'),
   });
 
-  const availableRoles = roles.filter((role) => userCan({ permission: 'role:read', data: role }));
+  const availableRoles = roles.filter((role) => userHasPermission({ permission: 'role:read', data: role }));
   const availableAgencies = agencies.length !== 0 ? agencies : [user!.agency];
 
   const handleFormCancel = () => {

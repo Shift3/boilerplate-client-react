@@ -17,17 +17,17 @@ interface RouteParams {
 export const UpdateUserView: FC = () => {
   const { id } = useParams<RouteParams>();
   const auth = useAuth();
-  const { userCan } = useRbac();
+  const { userHasPermission } = useRbac();
   const history = useHistory();
   const { showErrorNotification, showSuccessNotification } = useShowNotification();
   const [updateUser] = useUpdateUserMutation();
   const { data: user, isLoading: isLoadingUser, error: getUserError } = useGetUserByIdQuery(id);
   const { data: roles = [], isLoading: isLoadingRoles } = useGetRolesQuery();
   const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery(undefined, {
-    skip: !userCan('agency:read'),
+    skip: !userHasPermission('agency:read'),
   });
 
-  const availableRoles = roles.filter((role) => userCan({ permission: 'role:read', data: role }));
+  const availableRoles = roles.filter((role) => userHasPermission({ permission: 'role:read', data: role }));
   const availableAgencies = agencies.length !== 0 ? agencies : [auth.user!.agency];
 
   useEffect(() => {

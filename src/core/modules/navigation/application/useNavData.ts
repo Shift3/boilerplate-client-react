@@ -22,26 +22,26 @@ export interface INavData {
 
 export const useNavData = (): INavData => {
   const { user } = useAuth();
-  const { userCan } = useRbac();
+  const { userHasPermission } = useRbac();
 
   const navLinks: INavLink[] = [
     {
       icon: 'stethoscope',
       label: 'Directory',
       path: '/agents',
-      canUserActivate: userCan('agent:read'),
+      canUserActivate: userHasPermission('agent:read'),
     },
     {
       icon: 'users',
       label: 'Users',
       path: '/users',
-      canUserActivate: userCan('user:read'),
+      canUserActivate: userHasPermission('user:read'),
     },
     {
       icon: 'building',
       label: 'Agencies',
       path: '/agencies',
-      canUserActivate: userCan('agency:read'),
+      canUserActivate: userHasPermission('agency:read'),
     },
   ];
 

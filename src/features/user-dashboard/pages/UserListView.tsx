@@ -28,7 +28,7 @@ type UserTableItem = {
 
 export const UserListView: FC = () => {
   const history = useHistory();
-  const { userCan } = useRbac();
+  const { userHasPermission } = useRbac();
   const { data: users = [], isLoading: isLoadingUsers } = useGetUsersQuery();
   const [deleteUser] = useDeleteUserMutation();
   const [forgotPassword] = useForgotPasswordMutation();
@@ -104,26 +104,26 @@ export const UserListView: FC = () => {
           icon: 'envelope',
           tooltipText: 'Resend Activation Email',
           onClick: () => handleResendActivationEmail(user),
-          show: userCan({ permission: 'user:resend-activation-email', data: user }),
+          show: userHasPermission({ permission: 'user:resend-activation-email', data: user }),
         },
     actions: [
       {
         icon: 'edit',
         tooltipText: 'Edit',
         onClick: () => navigateToUpdateView(user),
-        show: userCan({ permission: 'user:update', data: user }),
+        show: userHasPermission({ permission: 'user:update', data: user }),
       },
       {
         icon: 'trash-alt',
         tooltipText: 'Delete',
         onClick: () => handleDelete(user),
-        show: userCan({ permission: 'user:delete', data: user }),
+        show: userHasPermission({ permission: 'user:delete', data: user }),
       },
       {
         icon: 'lock',
         tooltipText: 'Reset Password',
         onClick: () => handlePasswordReset(user),
-        show: userCan({ permission: 'user:send-reset-password-email', data: user }),
+        show: userHasPermission({ permission: 'user:send-reset-password-email', data: user }),
       },
     ],
   }));
