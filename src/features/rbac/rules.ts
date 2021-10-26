@@ -14,6 +14,7 @@ export type Permission =
   | 'user:read'
   | 'user:update'
   | 'user:delete'
+  | 'user:change-role'
   | 'user:resend-activation-email'
   | 'user:send-reset-password-email';
 
