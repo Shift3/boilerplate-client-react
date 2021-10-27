@@ -46,7 +46,7 @@ describe('ResetPasswordForm', () => {
     userEvent.type(newPasswordInput, '123');
 
     const confirmNewPasswordInput = screen.getByLabelText(/Confirm Password/i);
-    userEvent.type(confirmNewPasswordInput, '123');
+    userEvent.type(confirmNewPasswordInput, 'abc');
 
     fireEvent.click(screen.getByRole('button', { name: 'SUBMIT' }));
     await waitFor(() => expect(mockOnSubmit).not.toHaveBeenCalledTimes);
