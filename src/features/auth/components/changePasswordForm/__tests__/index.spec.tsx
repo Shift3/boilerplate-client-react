@@ -1,5 +1,5 @@
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import user from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 import { ChangePasswordForm } from '../index';
 import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
@@ -36,9 +36,9 @@ describe('ChangePasswordForm', () => {
   });
 
   it('should not submit form if form fields are invalid', async () => {
-    user.type(screen.getByLabelText(/Current Password/i), 'abc');
-    user.type(screen.getByLabelText(/New Password/i), '123');
-    user.type(screen.getByLabelText(/Confirm Password/i), '456');
+    userEvent.type(screen.getByLabelText(/Current Password/i), 'abc');
+    userEvent.type(screen.getByLabelText(/New Password/i), '123');
+    userEvent.type(screen.getByLabelText(/Confirm Password/i), '456');
 
     fireEvent.submit(screen.getByRole('button', { name: 'SUBMIT' }));
     expect(await screen.findAllByRole('alert')).toHaveLength(3);
@@ -47,15 +47,15 @@ describe('ChangePasswordForm', () => {
 
   it('should submit form if all form fields are valid', async () => {
     const currentPasswordInput = screen.getByLabelText(/Current Password/i);
-    user.type(currentPasswordInput, 'Test1234!');
+    userEvent.type(currentPasswordInput, 'Test1234!');
 
     const newPasswordInput = screen.getByLabelText(/New Password/i);
-    user.type(newPasswordInput, 'Test1235!');
+    userEvent.type(newPasswordInput, 'Test1235!');
 
     const confirmNewPasswordInput = screen.getByLabelText(/Confirm Password/i);
-    user.type(confirmNewPasswordInput, 'Test1235!');
+    userEvent.type(confirmNewPasswordInput, 'Test1235!');
 
-    user.click(screen.getByRole('button', { name: 'SUBMIT' }));
+    userEvent.click(screen.getByRole('button', { name: 'SUBMIT' }));
     await waitFor(() =>
       expect(mockOnSubmit).not.toHaveBeenCalledWith(currentPasswordInput, newPasswordInput, confirmNewPasswordInput),
     );
@@ -63,16 +63,16 @@ describe('ChangePasswordForm', () => {
 
   it('should validate user inputs and provide error messages', async () => {
     const currentPasswordInput = screen.getByLabelText(/Current Password/i);
-    user.type(currentPasswordInput, 'abc');
+    userEvent.type(currentPasswordInput, 'abc');
 
     const newPasswordInput = screen.getByLabelText(/New Password/i);
-    user.type(newPasswordInput, '123');
+    userEvent.type(newPasswordInput, '123');
 
     const confirmNewPasswordInput = screen.getByLabelText(/Confirm Password/i);
-    user.type(confirmNewPasswordInput, '456');
+    userEvent.type(confirmNewPasswordInput, '456');
 
     await act(async () => {
-      user.click(screen.getByRole('button', { name: 'SUBMIT' }));
+      userEvent.click(screen.getByRole('button', { name: 'SUBMIT' }));
     });
     expect(await screen.findAllByRole('alert')).toHaveLength(3);
   });
