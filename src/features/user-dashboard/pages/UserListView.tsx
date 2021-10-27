@@ -14,7 +14,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { CreateButton } from 'features/styles/PageStyles';
-import { Can, useRbac } from 'features/rbac';
+import { HasPermission, useRbac } from 'features/rbac';
 
 type UserTableItem = {
   id: number;
@@ -155,13 +155,13 @@ export const UserListView: FC = () => {
 
   return (
     <Container>
-      <Can perform='user:create'>
+      <HasPermission perform='user:create'>
         <div className='mb-4 text-end'>
           <Link to='/users/create-user'>
             <CreateButton>ADD USER</CreateButton>
           </Link>
         </div>
-      </Can>
+      </HasPermission>
       <WithLoadingOverlay isLoading={isLoadingUsers}>
         <GenericTable<UserTableItem> headers={headers} items={items} customRenderers={customRenderers} />
       </WithLoadingOverlay>
