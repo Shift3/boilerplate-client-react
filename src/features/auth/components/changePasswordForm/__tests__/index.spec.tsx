@@ -35,16 +35,6 @@ describe('ChangePasswordForm', () => {
     expect(screen.getByRole('button', { name: 'SUBMIT' })).toBeInTheDocument();
   });
 
-  it('should not submit form if form fields are invalid', async () => {
-    userEvent.type(screen.getByLabelText(/Current Password/i), 'abc');
-    userEvent.type(screen.getByLabelText(/New Password/i), '123');
-    userEvent.type(screen.getByLabelText(/Confirm Password/i), '456');
-
-    fireEvent.submit(screen.getByRole('button', { name: 'SUBMIT' }));
-    expect(await screen.findAllByRole('alert')).toHaveLength(3);
-    expect(mockOnSubmit).not.toHaveBeenCalled();
-  });
-
   it('should submit form if all form fields are valid', async () => {
     const currentPasswordInput = screen.getByLabelText(/Current Password/i);
     userEvent.type(currentPasswordInput, 'Test1234!');
