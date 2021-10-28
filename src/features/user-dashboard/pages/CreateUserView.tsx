@@ -1,5 +1,4 @@
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
-import { useGetAgenciesQuery } from 'features/agency-dashboard';
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useGetRolesQuery } from '../roleApi';
@@ -8,6 +7,7 @@ import { PageWrapper, Title, StyledFormWrapper } from 'features/styles/PageStyle
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
 import { useRbac } from 'features/rbac';
 import { useAuth } from 'features/auth/hooks';
+import { useGetAgenciesQuery } from 'common/api/agencyApi';
 
 export const CreateUserView: FC = () => {
   const history = useHistory();
