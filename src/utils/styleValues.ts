@@ -52,9 +52,22 @@ export default {
   },
 
   modals: {
-    logoutBackgroundColor: colors.lightBackground,
-    logoutTitleColor: colors.primaryBlue,
-    logoutTextColor: colors.primaryBlue,
+    confirmation: {
+      contentBackgroundColor: colors.lightBackground,
+      contentBorderColor: colors.lightBackground,
+      titleTextColor: colors.primaryBlue,
+      bodyTextColor: colors.primaryBlue,
+      cancelButtonBackgroundColor: colors.lightBackground,
+      cancelButtonBorderColor: colors.lightBackground,
+      cancelButtonTextColor: colors.primaryBlue,
+      confirmButtonBackgroundColor: colors.primaryBlue,
+      confirmButtonBorderColor: colors.primaryBlue,
+    },
+    logout: {
+      backgroundColor: colors.lightBackground,
+      titleTextColor: colors.primaryBlue,
+      textColor: colors.primaryBlue,
+    },
   },
 
   pages: {
