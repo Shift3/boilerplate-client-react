@@ -9,6 +9,7 @@ import Container from 'react-bootstrap/Container';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { CreateButton } from 'features/styles/PageStyles';
+import { HasPermission, useRbac } from 'features/rbac';
 
 type AgencyTableItem = {
   id: number;
@@ -18,6 +19,7 @@ type AgencyTableItem = {
 
 export const AgencyListView: FC = () => {
   const history = useHistory();
+  const { userHasPermission } = useRbac();
   const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery();
   const [deleteAgency] = useDeleteAgencyMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
@@ -48,11 +50,17 @@ export const AgencyListView: FC = () => {
     id: agency.id,
     name: agency.agencyName,
     actions: [
-      { icon: 'edit', tooltipText: 'Edit', onClick: () => history.push(`/agencies/update-agency/${agency.id}`) },
+      {
+        icon: 'edit',
+        tooltipText: 'Edit',
+        onClick: () => history.push(`/agencies/update-agency/${agency.id}`),
+        show: userHasPermission('agency:update'),
+      },
       {
         icon: 'trash-alt',
         tooltipText: 'Delete',
         onClick: () => handleDelete(agency),
+        show: userHasPermission('agency:delete'),
       },
     ],
   }));
@@ -65,7 +73,7 @@ export const AgencyListView: FC = () => {
       renderer: ({ actions }: AgencyTableItem) => (
         <>
           {actions.map((action, index) => (
-            <ActionButton key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
+            <ActionButton key={index} {...action} />
           ))}
         </>
       ),
@@ -74,11 +82,13 @@ export const AgencyListView: FC = () => {
 
   return (
     <Container>
-      <div className='pb-4 text-end'>
-        <Link to='/agencies/create-agency'>
-          <CreateButton>ADD AGENCY</CreateButton>
-        </Link>
-      </div>
+      <HasPermission perform='agency:create'>
+        <div className='pb-4 text-end'>
+          <Link to='/agencies/create-agency'>
+            <CreateButton>ADD AGENCY</CreateButton>
+          </Link>
+        </div>
+      </HasPermission>
       <WithLoadingOverlay isLoading={isLoadingAgencies}>
         <GenericTable<AgencyTableItem> headers={headers} items={items} customRenderers={customRenderers} />
       </WithLoadingOverlay>

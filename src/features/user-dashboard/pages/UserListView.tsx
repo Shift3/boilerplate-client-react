@@ -14,6 +14,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { CreateButton } from 'features/styles/PageStyles';
+import { HasPermission, useRbac } from 'features/rbac';
 
 type UserTableItem = {
   id: number;
@@ -27,6 +28,7 @@ type UserTableItem = {
 
 export const UserListView: FC = () => {
   const history = useHistory();
+  const { userHasPermission } = useRbac();
   const { data: users = [], isLoading: isLoadingUsers } = useGetUsersQuery();
   const [deleteUser] = useDeleteUserMutation();
   const [forgotPassword] = useForgotPasswordMutation();
@@ -102,16 +104,27 @@ export const UserListView: FC = () => {
           icon: 'envelope',
           tooltipText: 'Resend Activation Email',
           onClick: () => handleResendActivationEmail(user),
+          show: userHasPermission({ permission: 'user:resend-activation-email', data: user }),
         },
     actions: [
-      { icon: 'edit', tooltipText: 'Edit', onClick: () => navigateToUpdateView(user) },
+      {
+        icon: 'edit',
+        tooltipText: 'Edit',
+        onClick: () => navigateToUpdateView(user),
+        show: userHasPermission({ permission: 'user:update', data: user }),
+      },
       {
         icon: 'trash-alt',
         tooltipText: 'Delete',
-
         onClick: () => handleDelete(user),
+        show: userHasPermission({ permission: 'user:delete', data: user }),
       },
-      { icon: 'lock', tooltipText: 'Reset Password', onClick: () => handlePasswordReset(user) },
+      {
+        icon: 'lock',
+        tooltipText: 'Reset Password',
+        onClick: () => handlePasswordReset(user),
+        show: userHasPermission({ permission: 'user:send-reset-password-email', data: user }),
+      },
     ],
   }));
 
@@ -133,7 +146,7 @@ export const UserListView: FC = () => {
       renderer: ({ actions }: UserTableItem) => (
         <>
           {actions.map((action, index) => (
-            <ActionButton key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
+            <ActionButton key={index} {...action} />
           ))}
         </>
       ),
@@ -142,11 +155,13 @@ export const UserListView: FC = () => {
 
   return (
     <Container>
-      <div className='mb-4 text-end'>
-        <Link to='/users/create-user'>
-          <CreateButton>ADD USER</CreateButton>
-        </Link>
-      </div>
+      <HasPermission perform='user:create'>
+        <div className='mb-4 text-end'>
+          <Link to='/users/create-user'>
+            <CreateButton>ADD USER</CreateButton>
+          </Link>
+        </div>
+      </HasPermission>
       <WithLoadingOverlay isLoading={isLoadingUsers}>
         <GenericTable<UserTableItem> headers={headers} items={items} customRenderers={customRenderers} />
       </WithLoadingOverlay>

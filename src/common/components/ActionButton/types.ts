@@ -4,4 +4,5 @@ export type ActionButtonProps = {
   icon: IconProp;
   tooltipText: string;
   onClick: () => void;
+  show?: boolean;
 };
