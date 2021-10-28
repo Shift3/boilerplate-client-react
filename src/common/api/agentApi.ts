@@ -1,7 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { RootState } from 'app/redux';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import { Agent } from 'common/models/agent';
-import { environment } from 'environment';
+import { customBaseQuery } from './customBaseQuery';
 
 export type CreateAgentRequest = Pick<
   Agent,
@@ -16,18 +15,7 @@ export type UpdateAgentRequest = Pick<
 export const agentApi = createApi({
   reducerPath: 'agentApi',
 
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${environment.apiRoute}/agents`,
-    prepareHeaders: (headers: Headers, { getState }) => {
-      const { token } = (getState() as RootState).auth;
-
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-
-      return headers;
-    },
-  }),
+  baseQuery: customBaseQuery,
 
   // Always refetch data, don't used cache.
   keepUnusedDataFor: 0,
@@ -38,18 +26,18 @@ export const agentApi = createApi({
 
   endpoints: (builder) => ({
     getAgents: builder.query<Agent[], void>({
-      query: () => ({ url: '/' }),
+      query: () => ({ url: '/agents' }),
       providesTags: ['Agent'],
     }),
 
     getAgentById: builder.query<Agent, number | string>({
-      query: (id) => ({ url: `/${id}` }),
+      query: (id) => ({ url: `/agents/${id}` }),
       providesTags: ['Agent'],
     }),
 
     createAgent: builder.mutation<Agent, CreateAgentRequest>({
       query: (payload) => ({
-        url: '/',
+        url: '/agents',
         method: 'POST',
         body: payload,
       }),
@@ -58,7 +46,7 @@ export const agentApi = createApi({
 
     updateAgent: builder.mutation<Agent, UpdateAgentRequest>({
       query: ({ id, ...agentUpdate }) => ({
-        url: `/${id}`,
+        url: `/agents/${id}`,
         method: 'PUT',
         body: agentUpdate,
       }),
@@ -67,7 +55,7 @@ export const agentApi = createApi({
 
     deleteAgent: builder.mutation<void, number>({
       query: (agentId) => ({
-        url: `/${agentId}`,
+        url: `/agents/${agentId}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Agent'],
