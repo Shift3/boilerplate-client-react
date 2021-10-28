@@ -3,6 +3,7 @@ import { RootState } from 'app/redux';
 import { environment } from 'environment';
 import * as authLocalStorage from 'features/auth/authLocalStorage';
 import { authSlice } from 'features/auth/authSlice';
+import { StatusCodes } from 'http-status-codes';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: environment.apiRoute,
@@ -24,8 +25,7 @@ export const customBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBase
 ) => {
   const result = await baseQuery(args, api, extraOptions);
 
-  // eslint-disable-next-line no-magic-numbers
-  if (result.error && result.error.status === 401) {
+  if (result.error && result.error.status === StatusCodes.UNAUTHORIZED) {
     api.dispatch(authSlice.actions.userLoggedOut());
     authLocalStorage.clearAuthState();
   }
