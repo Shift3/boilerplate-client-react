@@ -31,13 +31,24 @@ export const ChangePasswordForm: ChangePasswordFormType = ({ onSubmit }) => {
           type='password'
           {...register('currentPassword')}
           placeholder='Enter current password'
+          isInvalid={!!errors.currentPassword}
         />
-        <Form.Control.Feedback type='invalid'>{errors.currentPassword?.message}</Form.Control.Feedback>
+        <Form.Control.Feedback type='invalid' role='alert'>
+          {errors.currentPassword?.message}
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label htmlFor='newPassword'>New Password</Form.Label>
-        <Form.Control id='newPassword' type='password' {...register('newPassword')} placeholder='Enter new password' />
-        <Form.Control.Feedback type='invalid'> {errors.newPassword?.message}</Form.Control.Feedback>
+        <Form.Control
+          id='newPassword'
+          type='password'
+          {...register('newPassword')}
+          placeholder='Enter new password'
+          isInvalid={!!errors.newPassword}
+        />
+        <Form.Control.Feedback type='invalid' role='alert'>
+          {errors.newPassword?.message}
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label htmlFor='confirmPassword'>Confirm Password</Form.Label>
@@ -46,15 +57,16 @@ export const ChangePasswordForm: ChangePasswordFormType = ({ onSubmit }) => {
           type='password'
           {...register('confirmPassword')}
           placeholder='Confirm password'
+          isInvalid={!!errors.confirmPassword}
         />
-        <Form.Control.Feedback type='invalid'> {errors.confirmPassword?.message}</Form.Control.Feedback>
+        <Form.Control.Feedback type='invalid' role='alert'>
+          {errors.confirmPassword?.message}
+        </Form.Control.Feedback>
       </Form.Group>
       <ButtonWrapper>
-        <CancelButton data-testid='cancelButton' onClick={navigateToLogin}>
-          Cancel
-        </CancelButton>
-        <SubmitButton data-testid='submitButton' type='submit' disabled={!isValid}>
-          Submit
+        <CancelButton onClick={navigateToLogin}>CANCEL</CancelButton>
+        <SubmitButton type='submit' disabled={!isValid}>
+          SUBMIT
         </SubmitButton>
       </ButtonWrapper>
     </StyledForm>
