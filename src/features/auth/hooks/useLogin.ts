@@ -1,10 +1,10 @@
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { useAppDispatch } from 'app/redux';
+import { useLoginMutation } from 'common/api/authApi';
 import { ErrorResponse } from 'common/models';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useLoginMutation } from '../authApi';
 import * as authLocalStorage from '../authLocalStorage';
 import { authSlice } from '../authSlice';
 
