@@ -2,9 +2,9 @@ import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { FC, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { useGetAgentByIdQuery, useUpdateAgentMutation } from '../agentApi';
 import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
 import { PageWrapper, Title, StyledFormWrapper } from '../../styles/PageStyles';
+import { useGetAgentByIdQuery, useUpdateAgentMutation } from 'common/api/agentApi';
 
 export interface RouteParams {
   id: string;

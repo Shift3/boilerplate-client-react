@@ -4,12 +4,12 @@ import { useConfirmationModal } from 'common/hooks';
 import { Agent } from 'common/models';
 import { FC } from 'react';
 import Container from 'react-bootstrap/Container';
-import { useDeleteAgentMutation, useGetAgentsQuery } from '../agentApi';
 import { Link, useHistory } from 'react-router-dom';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { CreateButton } from 'features/styles/PageStyles';
 import { HasPermission, useRbac } from 'features/rbac';
+import { useDeleteAgentMutation, useGetAgentsQuery } from 'common/api/agentApi';
 
 type AgentTableItem = {
   id: number;
