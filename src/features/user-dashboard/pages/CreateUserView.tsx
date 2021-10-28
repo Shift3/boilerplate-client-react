@@ -1,8 +1,8 @@
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useGetRolesQuery } from '../roleApi';
-import { useCreateUserMutation } from '../userApi';
+import { useGetRolesQuery } from 'common/api/roleApi';
+import { useCreateUserMutation } from 'common/api/userApi';
 import { PageWrapper, Title, StyledFormWrapper } from 'features/styles/PageStyles';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
 import { useRbac } from 'features/rbac';

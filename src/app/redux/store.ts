@@ -1,11 +1,11 @@
 import { configureStore, ConfigureStoreOptions } from '@reduxjs/toolkit';
 import notificationsSlice from 'core/modules/notifications/infrastructure/store/notificationsSlice';
 import { authSlice } from 'features/auth/authSlice';
-import { roleApi } from 'features/user-dashboard/roleApi';
-import { userApi } from 'features/user-dashboard/userApi';
 import { agencyApi } from 'common/api/agencyApi';
 import { agentApi } from 'common/api/agentApi';
 import { authApi } from 'common/api/authApi';
+import { roleApi } from 'common/api/roleApi';
+import { userApi } from 'common/api/userApi';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const createAppStore = (options?: ConfigureStoreOptions['preloadedState'] | undefined) =>
