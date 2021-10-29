@@ -34,10 +34,10 @@ export const LogInForm: FC<ILogInFormProps> = ({
         <Form.Control.Feedback type='invalid'>{errors.password?.message}</Form.Control.Feedback>
       </Form.Group>
       <ButtonWrapper>
-        <CancelButton data-testid='cancelButton' onClick={onCancel}>
+        <CancelButton onClick={onCancel}>
           {cancelButtonLabel}
         </CancelButton>
-        <SubmitButton data-testid='submitButton' type='submit' disabled={!isValid}>
+        <SubmitButton type='submit' disabled={!isValid}>
           {submitButtonLabel}
         </SubmitButton>
       </ButtonWrapper>
