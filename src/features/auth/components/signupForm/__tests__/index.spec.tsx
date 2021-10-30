@@ -14,13 +14,14 @@ describe('SignupForm', () => {
         <SignUpForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
       </ThemeProvider>,
     );
+    mockOnSubmit.mockReset();
   });
 
   it('should render form fields', () => {
-    expect(screen.getByRole('textbox', { name: /^email$/i })).toBeInTheDocument();
-    expect(screen.getByRole('textbox', { name: /^Confirm Email$/i })).toBeInTheDocument();
-    expect(screen.getByRole('textbox', { name: /^First Name$/i })).toBeInTheDocument();
-    expect(screen.getByRole('textbox', { name: /^Last Name$/i })).toBeInTheDocument();
+    expect(screen.getByLabelText(/^Email$/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/^Confirm Email$/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/^First Name$/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/^Last Name$/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'CANCEL' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'SIGN UP' })).toBeInTheDocument();
   });
@@ -34,16 +35,16 @@ describe('SignupForm', () => {
     };
 
     await act(async () => {
-      const emailInput = screen.getByLabelText(/email/i);
+      const emailInput = screen.getByLabelText(/^Email$/i);
       userEvent.type(emailInput, testFormData.email);
 
-      const confirmEmailInput = screen.getByLabelText(/confirm email/i);
+      const confirmEmailInput = screen.getByLabelText(/^Confirm Email$/i);
       userEvent.type(confirmEmailInput, testFormData.confirmEmail);
 
-      const firstNameInput = screen.getByLabelText(/first name/i);
+      const firstNameInput = screen.getByLabelText(/^First Name$/i);
       userEvent.type(firstNameInput, testFormData.firstName);
 
-      const lastNameInput = screen.getByLabelText(/last name/i);
+      const lastNameInput = screen.getByLabelText(/^Last Name$/i);
       userEvent.type(lastNameInput, testFormData.lastName);
     });
 
@@ -53,20 +54,20 @@ describe('SignupForm', () => {
   });
 
   it('should not submit the form', async () => {
-    const emailInput = screen.getByLabelText(/email/i);
+    const emailInput = screen.getByLabelText(/^Email$/i);
     userEvent.type(emailInput, 'myemail');
 
-    const confirmEmailInput = screen.getByLabelText(/confirm email/i);
+    const confirmEmailInput = screen.getByLabelText(/^Confirm Email$/i);
     userEvent.type(confirmEmailInput, 'myemail123');
 
-    const firstNameInput = screen.getByLabelText(/first name/i);
+    const firstNameInput = screen.getByLabelText(/^First Name$/i);
     userEvent.type(firstNameInput, '@%$!');
 
-    const lastNameInput = screen.getByLabelText(/last name/i);
+    const lastNameInput = screen.getByLabelText(/^Last Name$/i);
     userEvent.type(lastNameInput, '456!&');
 
     await act(async () => {
-      userEvent.click(screen.getByRole('button', { name: 'SUBMIT' }));
+      userEvent.click(screen.getByRole('button', { name: 'SIGN UP' }));
     });
 
     expect(await screen.findAllByRole('alert')).toHaveLength(4);

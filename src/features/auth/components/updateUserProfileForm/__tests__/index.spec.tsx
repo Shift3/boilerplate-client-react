@@ -9,7 +9,7 @@ const mockOnCancel = jest.fn();
 const mockDefaultValues = {
   firstName: 'Firstname',
   lastName: 'Lastname',
-  email: 'test@email.com',
+  email: 'test@test.com',
 };
 
 describe('UpdateUserProfileForm', () => {
@@ -23,9 +23,9 @@ describe('UpdateUserProfileForm', () => {
   });
 
   it('should render form fields', () => {
-    expect(screen.getByLabelText(/first name/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/last name/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/^First Name$/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/^Last Name$/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/^Email$/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'CANCEL' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'UPDATE' })).toBeInTheDocument();
   });
@@ -38,13 +38,13 @@ describe('UpdateUserProfileForm', () => {
     };
 
     await act(async () => {
-      const firstNameInput = screen.getByLabelText(/first name/i);
+      const firstNameInput = screen.getByLabelText(/^First Name$/i);
       userEvent.type(firstNameInput, testFormData.firstName);
 
-      const lastNameInput = screen.getByLabelText(/last name/i);
+      const lastNameInput = screen.getByLabelText(/^Last Name$/i);
       userEvent.type(lastNameInput, testFormData.lastName);
 
-      const emailInput = screen.getByLabelText(/email/i);
+      const emailInput = screen.getByLabelText(/^Email$/i);
       userEvent.type(emailInput, testFormData.email);
     });
 
