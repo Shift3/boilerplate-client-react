@@ -26,17 +26,19 @@ export const LogInForm: FC<ILogInFormProps> = ({
       <Form.Group>
         <FormLabel htmlFor='email'>Email</FormLabel>
         <FormControl id='email' type='email' {...register('email')} placeholder='Enter email' />
-        <Form.Control.Feedback type='invalid'>{errors.email?.message}</Form.Control.Feedback>
+        <Form.Control.Feedback type='invalid' role='alert'>
+          {errors.email?.message}
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <FormLabel htmlFor='password'>Password</FormLabel>
         <Form.Control id='password' type='password' {...register('password')} placeholder='Enter password' />
-        <Form.Control.Feedback type='invalid'>{errors.password?.message}</Form.Control.Feedback>
+        <Form.Control.Feedback type='invalid' role='alert'>
+          {errors.password?.message}
+        </Form.Control.Feedback>
       </Form.Group>
       <ButtonWrapper>
-        <CancelButton onClick={onCancel}>
-          {cancelButtonLabel}
-        </CancelButton>
+        <CancelButton onClick={onCancel}>{cancelButtonLabel}</CancelButton>
         <SubmitButton type='submit' disabled={!isValid}>
           {submitButtonLabel}
         </SubmitButton>

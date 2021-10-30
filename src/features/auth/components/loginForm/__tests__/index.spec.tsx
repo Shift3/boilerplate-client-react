@@ -1,8 +1,8 @@
-import { act, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { LogInForm } from '../index';
+import { act, render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
+import userEvent from '@testing-library/user-event';
 
 const mockOnSubmit = jest.fn();
 const mockOnCancel = jest.fn();
@@ -51,7 +51,7 @@ describe('LoginForm', () => {
     userEvent.type(passwordInput, '123');
 
     await act(async () => {
-      userEvent.click(screen.getByRole('button', { name: 'SUBMIT' }));
+      userEvent.click(screen.getByRole('button', { name: 'LOG IN' }));
     });
 
     expect(await screen.findAllByRole('alert')).toHaveLength(2);
