@@ -1,14 +1,14 @@
+import { useGetAgenciesQuery } from 'common/api/agencyApi';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
-import { useGetAgenciesQuery } from 'features/agency-dashboard/agencyApi';
 import { useAuth } from 'features/auth/hooks';
 import { useRbac } from 'features/rbac';
 import { FC, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { PageWrapper, Title, StyledFormWrapper } from '../../styles/PageStyles';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
-import { useGetRolesQuery } from '../roleApi';
-import { useGetUserByIdQuery, useUpdateUserMutation } from '../userApi';
+import { useGetRolesQuery } from 'common/api/roleApi';
+import { useGetUserByIdQuery, useUpdateUserMutation } from 'common/api/userApi';
 
 interface RouteParams {
   id: string;

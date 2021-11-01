@@ -1,7 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { RootState } from 'app/redux';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { customBaseQuery } from 'common/api/customBaseQuery';
 import { User } from 'common/models/user';
-import { environment } from 'environment';
 
 export type CreateUserRequest = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>;
 export type UpdateUserRequest = Pick<User, 'id' | 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role'>;
@@ -11,19 +10,7 @@ export type ResendActivationEmailRequest = Pick<User, 'id'>;
 export const userApi = createApi({
   reducerPath: 'userApi',
 
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${environment.apiRoute}/users`,
-
-    prepareHeaders: (headers: Headers, { getState }) => {
-      const { token } = (getState() as RootState).auth;
-
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-
-      return headers;
-    },
-  }),
+  baseQuery: customBaseQuery,
 
   // Always refetch data, don't used cache.
   keepUnusedDataFor: 0,
@@ -34,18 +21,18 @@ export const userApi = createApi({
 
   endpoints: (builder) => ({
     getUsers: builder.query<User[], void>({
-      query: () => ({ url: '/' }),
+      query: () => ({ url: '/users' }),
       providesTags: ['User'],
     }),
 
     getUserById: builder.query<User, number | string>({
-      query: (id) => `/${id}`,
+      query: (id) => `/users/${id}`,
       providesTags: ['User'],
     }),
 
     createUser: builder.mutation<User, CreateUserRequest>({
       query: (payload) => ({
-        url: '/',
+        url: '/users',
         method: 'POST',
         body: payload,
       }),
@@ -54,7 +41,7 @@ export const userApi = createApi({
 
     updateUser: builder.mutation<User, UpdateUserRequest>({
       query: ({ id, ...payload }) => ({
-        url: `/${id}`,
+        url: `/users/${id}`,
         method: 'PUT',
         body: payload,
       }),
@@ -63,7 +50,7 @@ export const userApi = createApi({
 
     deleteUser: builder.mutation<void, number>({
       query: (userId) => ({
-        url: `/${userId}`,
+        url: `/users/${userId}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['User'],
@@ -71,7 +58,7 @@ export const userApi = createApi({
 
     forgotPassword: builder.mutation<void, ForgotPasswordRequest>({
       query: (payload) => ({
-        url: '/forgot-password',
+        url: '/users/forgot-password',
         method: 'POST',
         body: payload,
       }),
@@ -79,7 +66,7 @@ export const userApi = createApi({
 
     resendActivationEmail: builder.mutation<void, ResendActivationEmailRequest>({
       query: ({ id }) => ({
-        url: `/resend-activation-email/${id}`,
+        url: `/users/resend-activation-email/${id}`,
         method: 'GET',
       }),
     }),

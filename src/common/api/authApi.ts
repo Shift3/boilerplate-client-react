@@ -1,7 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { RootState } from 'app/redux';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import { Session } from 'common/models';
-import { environment } from 'environment';
+import { customBaseQuery } from './customBaseQuery';
 
 export interface LoginRequest {
   email: string;
@@ -11,19 +10,7 @@ export interface LoginRequest {
 export const authApi = createApi({
   reducerPath: 'authApi',
 
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${environment.apiRoute}/auth`,
-
-    prepareHeaders: (headers: Headers, { getState }) => {
-      const { token } = (getState() as RootState).auth;
-
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-
-      return headers;
-    },
-  }),
+  baseQuery: customBaseQuery,
 
   // Always refetch data, don't used cache.
   keepUnusedDataFor: 0,
@@ -33,7 +20,7 @@ export const authApi = createApi({
   endpoints: (builder) => ({
     login: builder.mutation<Session, LoginRequest>({
       query: (credentials) => ({
-        url: '/login',
+        url: '/auth/login',
         method: 'POST',
         body: credentials,
       }),
@@ -41,7 +28,7 @@ export const authApi = createApi({
 
     logout: builder.mutation<void, void>({
       query: () => ({
-        url: '/logout',
+        url: '/auth/logout',
         method: 'GET',
       }),
     }),

@@ -1,9 +1,9 @@
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useCreateAgentMutation } from '../agentApi';
 import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
 import { PageWrapper, Title, StyledFormWrapper } from '../../styles/PageStyles';
+import { useCreateAgentMutation } from 'common/api/agentApi';
 
 export const CreateAgentView: FC = () => {
   const history = useHistory();

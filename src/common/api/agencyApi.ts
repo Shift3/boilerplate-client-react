@@ -1,24 +1,11 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import { Agency } from 'common/models';
-import { RootState } from 'app/redux';
-import { environment } from 'environment';
+import { customBaseQuery } from 'common/api/customBaseQuery';
 
 export const agencyApi = createApi({
   reducerPath: 'agencyApi',
 
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${environment.apiRoute}/agencies`,
-
-    prepareHeaders: (headers: Headers, { getState }) => {
-      const { token } = (getState() as RootState).auth;
-
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-
-      return headers;
-    },
-  }),
+  baseQuery: customBaseQuery,
 
   // Always refetch data, don't used cache.
   keepUnusedDataFor: 0,
@@ -29,18 +16,18 @@ export const agencyApi = createApi({
 
   endpoints: (builder) => ({
     getAgencies: builder.query<Agency[], void>({
-      query: () => ({ url: '/' }),
+      query: () => ({ url: '/agencies' }),
       providesTags: ['Agency'],
     }),
 
     getAgencyById: builder.query<Agency, number | string>({
-      query: (id) => ({ url: `/${id}` }),
+      query: (id) => ({ url: `/agencies/${id}` }),
       providesTags: ['Agency'],
     }),
 
     createAgency: builder.mutation<Agency, Pick<Agency, 'agencyName'>>({
       query: (payload) => ({
-        url: '/',
+        url: '/agencies',
         method: 'POST',
         body: payload,
       }),
@@ -49,7 +36,7 @@ export const agencyApi = createApi({
 
     updateAgency: builder.mutation<Agency, Pick<Agency, 'id' | 'agencyName'>>({
       query: ({ id, agencyName }) => ({
-        url: `${id}`,
+        url: `/agencies/${id}`,
         method: 'PUT',
         body: { agencyName },
       }),
@@ -58,7 +45,7 @@ export const agencyApi = createApi({
 
     deleteAgency: builder.mutation<void, number>({
       query: (agencyId) => ({
-        url: `/${agencyId}`,
+        url: `/agencies/${agencyId}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Agency'],

@@ -3,13 +3,13 @@ import ActionButton, { ActionButtonProps } from 'common/components/ActionButton'
 import { useConfirmationModal } from 'common/hooks';
 import { Agency } from 'common/models';
 import { Link, useHistory } from 'react-router-dom';
-import { useDeleteAgencyMutation, useGetAgenciesQuery } from 'features/agency-dashboard/agencyApi';
 import { FC } from 'react';
 import Container from 'react-bootstrap/Container';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { CreateButton } from 'features/styles/PageStyles';
 import { HasPermission, useRbac } from 'features/rbac';
+import { useDeleteAgencyMutation, useGetAgenciesQuery } from 'common/api/agencyApi';
 
 type AgencyTableItem = {
   id: number;

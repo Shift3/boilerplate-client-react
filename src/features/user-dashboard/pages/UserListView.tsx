@@ -7,7 +7,7 @@ import {
   useForgotPasswordMutation,
   useGetUsersQuery,
   useResendActivationEmailMutation,
-} from 'features/user-dashboard/userApi';
+} from 'common/api/userApi';
 import { FC } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Link, useHistory } from 'react-router-dom';

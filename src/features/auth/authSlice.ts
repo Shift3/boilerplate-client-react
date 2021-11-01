@@ -2,16 +2,19 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from 'app/redux';
 import { User } from 'common/models';
 import * as authLocalStorage from './authLocalStorage';
+import * as jwt from './utils/jwt';
 
 export interface AuthState {
   token: string | null;
   user: User | null;
 }
 
-const initialState: AuthState = authLocalStorage.getAuthState() ?? {
-  token: null,
-  user: null,
-};
+const storedAuthState = authLocalStorage.getAuthState();
+
+const initialState: AuthState =
+  storedAuthState?.token && !jwt.isMalformed(storedAuthState.token) && !jwt.isExpired(storedAuthState.token)
+    ? storedAuthState
+    : { token: null, user: null };
 
 export const authSlice = createSlice({
   name: 'auth',

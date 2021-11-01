@@ -1,13 +1,13 @@
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
-import { useGetAgenciesQuery } from 'features/agency-dashboard';
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useGetRolesQuery } from '../roleApi';
-import { useCreateUserMutation } from '../userApi';
+import { useGetRolesQuery } from 'common/api/roleApi';
+import { useCreateUserMutation } from 'common/api/userApi';
 import { PageWrapper, Title, StyledFormWrapper } from 'features/styles/PageStyles';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
 import { useRbac } from 'features/rbac';
 import { useAuth } from 'features/auth/hooks';
+import { useGetAgenciesQuery } from 'common/api/agencyApi';
 
 export const CreateUserView: FC = () => {
   const history = useHistory();
