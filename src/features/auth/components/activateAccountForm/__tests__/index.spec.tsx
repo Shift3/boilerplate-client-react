@@ -11,7 +11,7 @@ describe('ActivateAccountForm', () => {
   beforeEach(async () => {
     render(
       <ThemeProvider theme={AppTheme}>
-        <ActivateAccountForm onSubmit={mockOnSubmit} onCanel={mockOnCancel} />
+        <ActivateAccountForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
       </ThemeProvider>,
     );
     mockOnSubmit.mockReset();
