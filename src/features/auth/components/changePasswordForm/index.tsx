@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
@@ -10,6 +11,7 @@ export const ChangePasswordForm: ChangePasswordFormType = ({ onSubmit }) => {
   const {
     register,
     handleSubmit,
+    trigger,
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(ChangePasswordFormSchema),
@@ -21,6 +23,11 @@ export const ChangePasswordForm: ChangePasswordFormType = ({ onSubmit }) => {
   const navigateToLogin = () => {
     history.push('/auth/login');
   };
+
+  // Trigger validation on first render.
+  useEffect(() => {
+    trigger();
+  }, [trigger]);
 
   return (
     <StyledForm data-testid='changePasswordForm' onSubmit={handleSubmit(onSubmit)}>

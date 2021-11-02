@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
@@ -9,11 +10,17 @@ export const ActivateAccountForm: ActivateAccountFormType = ({ onSubmit, onCance
   const {
     register,
     handleSubmit,
+    trigger,
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(ActivateAccountFormSchema),
     mode: 'onChange',
   });
+
+  // Trigger validation on first render.
+  useEffect(() => {
+    trigger();
+  }, [trigger]);
 
   return (
     <StyledForm data-testid='resetPasswordForm' onSubmit={handleSubmit(onSubmit)}>

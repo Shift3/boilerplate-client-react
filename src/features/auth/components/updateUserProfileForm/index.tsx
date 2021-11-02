@@ -15,6 +15,7 @@ export const UpdateUserProfileForm: FC<UpdateUserProfileFormProps> = ({ onSubmit
     resolver: yupResolver(UpdateUserProfileFormSchema),
     mode: 'onChange',
   });
+
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
