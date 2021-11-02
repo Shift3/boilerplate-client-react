@@ -1,5 +1,7 @@
 # Contributing
 
+Looking to help out? Please take a look at [good first issue](https://github.com/Shift3/boilerplate-client-react/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22) tagged issues.
+
 ## Contribution Standards
 
 - New features must be approved and pass architectural review. We want to thoughtfully design features and consider likely use-case scenarios.
