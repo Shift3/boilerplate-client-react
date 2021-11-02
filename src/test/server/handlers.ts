@@ -4,7 +4,7 @@ import { environment } from 'environment';
 import { StatusCodes } from 'http-status-codes';
 import { rest } from 'msw';
 
-const baseUrl = environment.apiRoute;
+export const baseUrl = environment.apiRoute;
 
 export const handlers = [
   rest.get(`${baseUrl}/agencies`, (req, res, ctx) => {

@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { act, render, screen, waitFor, within } from '@testing-library/react';
 import { createAppStore } from 'app/redux';
 import { RoleFactory, UserFactory } from 'common/models/testing-factories';
 import { AuthState } from 'features/auth/authSlice';
@@ -6,6 +6,17 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { CreateUserView } from '../CreateUserView';
 import theme from 'utils/styleValues';
+import { selectNotifications } from 'core/modules/notifications/infrastructure/store/notificationsSlice';
+import userEvent from '@testing-library/user-event';
+import { Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
+import { EnhancedStore } from '@reduxjs/toolkit';
+import { NotificationType } from 'core/modules/notifications/domain/notification';
+import { flushPromises } from 'test/utils/flushPromises';
+import { baseUrl, server } from 'test/server';
+import { rest } from 'msw';
+import { StatusCodes } from 'http-status-codes';
+// import { baseUrl } from 'test/server/handlers';
 
 describe('CreateUserView', () => {
   describe('when user has Admin role', () => {
@@ -15,11 +26,13 @@ describe('CreateUserView', () => {
 
     beforeEach(() => {
       render(
-        <Provider store={createAppStore({ preloadedState: { auth } })}>
-          <ThemeProvider theme={theme}>
-            <CreateUserView />
-          </ThemeProvider>
-        </Provider>,
+        <Router history={createMemoryHistory()}>
+          <Provider store={createAppStore({ preloadedState: { auth } })}>
+            <ThemeProvider theme={theme}>
+              <CreateUserView />
+            </ThemeProvider>
+          </Provider>
+        </Router>,
       );
     });
 
@@ -72,11 +85,13 @@ describe('CreateUserView', () => {
 
     beforeEach(() => {
       render(
-        <Provider store={createAppStore({ preloadedState: { auth } })}>
-          <ThemeProvider theme={theme}>
-            <CreateUserView />
-          </ThemeProvider>
-        </Provider>,
+        <Router history={createMemoryHistory()}>
+          <Provider store={createAppStore({ preloadedState: { auth } })}>
+            <ThemeProvider theme={theme}>
+              <CreateUserView />
+            </ThemeProvider>
+          </Provider>
+        </Router>,
       );
     });
 
@@ -117,6 +132,81 @@ describe('CreateUserView', () => {
 
       expect(select).toBeInTheDocument();
       expect(options).not.toHaveLength(0);
+    });
+  });
+
+  describe('when form is submitted', () => {
+    const role = RoleFactory.build({ roleName: 'Admin' });
+    const user = UserFactory.build({}, { associations: { role } });
+    const auth: AuthState = { token: 'fake token', user };
+    const newUser = UserFactory.build();
+    let store: EnhancedStore;
+
+    beforeEach(() => {
+      store = createAppStore({ preloadedState: { auth } });
+
+      render(
+        <Router history={createMemoryHistory()}>
+          <Provider store={store}>
+            <ThemeProvider theme={theme}>
+              <CreateUserView />
+            </ThemeProvider>
+          </Provider>
+        </Router>,
+      );
+    });
+
+    it('should add a success notification if API request is successful', async () => {
+      const form = await screen.findByRole('form');
+
+      await act(async () => {
+        userEvent.type(within(form).getByRole('textbox', { name: /first name/i }), newUser.firstName);
+        userEvent.type(within(form).getByRole('textbox', { name: /last name/i }), newUser.lastName);
+        userEvent.type(within(form).getByRole('textbox', { name: /email/i }), newUser.email);
+        userEvent.selectOptions(within(form).getByRole('combobox', { name: /role/i }), newUser.role.roleName);
+      });
+
+      await act(async () => {
+        userEvent.click(within(form).getByRole('button', { name: /submit/i }));
+      });
+
+      // We need to wait for API request to resolve.
+      await waitFor(async () => flushPromises());
+
+      const notifications = selectNotifications(store.getState());
+
+      expect(notifications).toHaveLength(1);
+      expect(notifications[0].type).toBe(NotificationType.Success);
+    });
+
+    it('should add an error notification if API request fails', async () => {
+      // Override mock server response to return an error response.
+      server.use(
+        rest.post(`${baseUrl}/users`, (req, res, ctx) => {
+          return res(ctx.status(StatusCodes.BAD_REQUEST));
+        }),
+      );
+
+      const form = await screen.findByRole('form');
+
+      await act(async () => {
+        userEvent.type(within(form).getByRole('textbox', { name: /first name/i }), newUser.firstName);
+        userEvent.type(within(form).getByRole('textbox', { name: /last name/i }), newUser.lastName);
+        userEvent.type(within(form).getByRole('textbox', { name: /email/i }), newUser.email);
+        userEvent.selectOptions(within(form).getByRole('combobox', { name: /role/i }), newUser.role.roleName);
+      });
+
+      await act(async () => {
+        userEvent.click(within(form).getByRole('button', { name: /submit/i }));
+      });
+
+      // We need to wait for API request to resolve.
+      await waitFor(async () => flushPromises());
+
+      const notifications = selectNotifications(store.getState());
+
+      expect(notifications).toHaveLength(1);
+      expect(notifications[0].type).toBe(NotificationType.Error);
     });
   });
 });
