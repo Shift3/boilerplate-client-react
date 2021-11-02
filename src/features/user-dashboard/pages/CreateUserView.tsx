@@ -21,7 +21,15 @@ export const CreateUserView: FC = () => {
   });
 
   const availableRoles = roles.filter((role) => userHasPermission({ permission: 'role:read', data: role }));
-  const availableAgencies = agencies.length !== 0 ? agencies : [user!.agency];
+
+  const availableAgencies = userHasPermission('agency:read') ? agencies : [];
+
+  // If the user doesn't have permission to see list of agencies,then they can
+  // only create a new user within their own agency. Hence, the agency will be
+  // passed in as a default value.
+  const defaultValues: Partial<FormData> = {
+    agency: !userHasPermission('agency:read') ? user?.agency : undefined,
+  };
 
   const handleFormCancel = () => {
     history.goBack();
@@ -47,6 +55,7 @@ export const CreateUserView: FC = () => {
           <UserDetailForm
             availableRoles={availableRoles}
             availableAgencies={availableAgencies}
+            defaultValues={defaultValues}
             onCancel={handleFormCancel}
             onSubmit={handleFormSubmit}
           />
