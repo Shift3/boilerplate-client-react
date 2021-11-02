@@ -23,9 +23,16 @@ export const StyledFormWrapper = styled.div`
   border-radius: 0.25rem;
   & label {
     color: ${(props) => props.theme.forms.labelColor};
+    margin: 5px;
+  }
+  & .is-invalid {
+    border-color: ${(props) => props.theme.forms.errorBorderColor};
+    background-image: none;
   }
   & .invalid-feedback {
     /* Modify style of validation error messages here */
+    color: ${(props) => props.theme.forms.errorTextColor};
+    padding-bottom: 5px;
   }
   & control {
     color: ${(props) => props.theme.forms.control};
