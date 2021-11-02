@@ -6,7 +6,7 @@ import { rest } from 'msw';
 
 const baseUrl = environment.apiRoute;
 
-export const defaultHandlers = [
+export const handlers = [
   rest.get(`${baseUrl}/agencies`, (req, res, ctx) => {
     return res(
       ctx.status(StatusCodes.OK),
