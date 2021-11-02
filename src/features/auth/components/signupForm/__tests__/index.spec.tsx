@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { SignUpForm } from '../index';
 import { ThemeProvider } from 'styled-components';
@@ -14,69 +14,62 @@ describe('SignupForm', () => {
         <SignUpForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
       </ThemeProvider>,
     );
+    mockOnSubmit.mockReset();
   });
 
-  it('should render the email field', () => {
-    expect(screen.getByRole('textbox', { name: /^email$/i })).toBeInTheDocument();
-  });
-  it('should render the confirm email field', () => {
-    expect(screen.getByRole('textbox', { name: /^Confirm Email$/i })).toBeInTheDocument();
-  });
-  it('should render the first name field', () => {
-    expect(screen.getByRole('textbox', { name: /^First Name$/i })).toBeInTheDocument();
-  });
-  it('should render the last name field', () => {
-    expect(screen.getByRole('textbox', { name: /^Last Name$/i })).toBeInTheDocument();
-  });
-  it('should render the cancel button', () => {
+  it('should render form fields', () => {
+    expect(screen.getByLabelText(/^Email$/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/^Confirm Email$/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/^First Name$/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/^Last Name$/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'CANCEL' })).toBeInTheDocument();
-  });
-  it('should render the sign up button', () => {
     expect(screen.getByRole('button', { name: 'SIGN UP' })).toBeInTheDocument();
   });
 
-  it('should validate form fields', async () => {
-    userEvent.type(screen.getByRole('textbox', { name: /^email$/i }), 'testEmail');
-    userEvent.type(screen.getByRole('textbox', { name: /^Confirm Email$/i }), 'confirmTestEmail');
-    userEvent.type(screen.getByRole('textbox', { name: /^First Name$/i }), '123');
-    userEvent.type(screen.getByRole('textbox', { name: /^Last Name$/i }), '456');
+  it('should submit form if all form fields are valid', async () => {
+    const testFormData = {
+      email: 'myemail@test.com',
+      confirmEmail: 'myemail@test.com',
+      firstName: 'Jonathan',
+      lastName: 'Smith',
+    };
 
-    fireEvent.submit(screen.getByRole('button', { name: 'SIGN UP' }));
-    expect(await screen.findAllByRole('alert')).toHaveLength(4);
-    expect(mockOnSubmit).not.toBeCalled();
+    await act(async () => {
+      const emailInput = screen.getByLabelText(/^Email$/i);
+      userEvent.type(emailInput, testFormData.email);
+
+      const confirmEmailInput = screen.getByLabelText(/^Confirm Email$/i);
+      userEvent.type(confirmEmailInput, testFormData.confirmEmail);
+
+      const firstNameInput = screen.getByLabelText(/^First Name$/i);
+      userEvent.type(firstNameInput, testFormData.firstName);
+
+      const lastNameInput = screen.getByLabelText(/^Last Name$/i);
+      userEvent.type(lastNameInput, testFormData.lastName);
+    });
+
+    await act(async () => userEvent.click(screen.getByRole('button', { name: 'SIGN UP' })));
+
+    expect(mockOnSubmit).toHaveBeenCalledWith(testFormData, expect.any(Object));
   });
 
   it('should not submit the form', async () => {
-    const emailInput = screen.getByRole('textbox', { name: /^email/i });
-    userEvent.type(emailInput, 'test');
+    const emailInput = screen.getByLabelText(/^Email$/i);
+    userEvent.type(emailInput, 'myemail');
 
-    const confirmEmailInput = screen.getByRole('textbox', { name: /^Confirm Email$/i });
-    userEvent.type(confirmEmailInput, '123');
+    const confirmEmailInput = screen.getByLabelText(/^Confirm Email$/i);
+    userEvent.type(confirmEmailInput, 'myemail123');
 
-    const firstNameInput = screen.getByRole('textbox', { name: /^First Name$/i });
-    userEvent.type(firstNameInput, '1');
+    const firstNameInput = screen.getByLabelText(/^First Name$/i);
+    userEvent.type(firstNameInput, '@%$!');
 
-    const lastNameInput = screen.getByRole('textbox', { name: /^Last Name$/i });
-    userEvent.type(lastNameInput, '2');
+    const lastNameInput = screen.getByLabelText(/^Last Name$/i);
+    userEvent.type(lastNameInput, '456!&');
 
-    fireEvent.click(screen.getByRole('button', { name: 'SIGN UP' }));
-    await waitFor(() => expect(mockOnSubmit).not.toHaveBeenCalled);
-  });
+    await act(async () => {
+      userEvent.click(screen.getByRole('button', { name: 'SIGN UP' }));
+    });
 
-  it('should submit the form', async () => {
-    const emailInput = screen.getByRole('textbox', { name: /^email/i });
-    userEvent.type(emailInput, 'test@email.com');
-
-    const confirmEmailInput = screen.getByRole('textbox', { name: /^Confirm Email$/i });
-    userEvent.type(confirmEmailInput, 'test@email.com');
-
-    const firstNameInput = screen.getByRole('textbox', { name: /^First Name$/i });
-    userEvent.type(firstNameInput, 'Test');
-
-    const lastNameInput = screen.getByRole('textbox', { name: /^Last Name$/i });
-    userEvent.type(lastNameInput, 'Last');
-
-    fireEvent.submit(screen.getByRole('button', { name: 'SIGN UP' }));
-    await waitFor(() => expect(mockOnSubmit).toHaveBeenCalled());
+    expect(await screen.findAllByRole('alert')).toHaveLength(4);
   });
 });

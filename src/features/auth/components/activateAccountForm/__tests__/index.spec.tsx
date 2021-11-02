@@ -1,19 +1,20 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ResetPasswordForm } from '../index';
+import { ActivateAccountForm } from '../index';
 import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
 
 const mockOnSubmit = jest.fn();
 const mockOnCancel = jest.fn();
 
-describe('ResetPasswordForm', () => {
+describe('ActivateAccountForm', () => {
   beforeEach(async () => {
     render(
       <ThemeProvider theme={AppTheme}>
-        <ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+        <ActivateAccountForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
       </ThemeProvider>,
     );
+    mockOnSubmit.mockReset();
   });
 
   it('should render form fields', () => {
@@ -25,33 +26,33 @@ describe('ResetPasswordForm', () => {
 
   it('should submit form if all form fields are valid', async () => {
     const testFormData = {
-      newPassword: 'Testpass123!',
-      confirmPassword: 'Testpass123!',
+      newPassword: 'Test1234!',
+      confirmPassword: 'Test1234!',
     };
 
     await act(async () => {
       const newPasswordInput = screen.getByLabelText(/New Password/i);
       userEvent.type(newPasswordInput, testFormData.newPassword);
 
-      const confirmNewPasswordInput = screen.getByLabelText(/Confirm Password/i);
-      userEvent.type(confirmNewPasswordInput, testFormData.confirmPassword);
+      const confirmPasswordInput = screen.getByLabelText(/Confirm Password/i);
+      userEvent.type(confirmPasswordInput, testFormData.confirmPassword);
     });
 
     await act(async () => userEvent.click(screen.getByRole('button', { name: 'SUBMIT' })));
 
     expect(mockOnSubmit).toHaveBeenCalledWith(testFormData, expect.any(Object));
   });
+
   it('should validate user inputs and provide error messages', async () => {
     const newPasswordInput = screen.getByLabelText(/New Password/i);
-    userEvent.type(newPasswordInput, 'Testpassword123!');
+    userEvent.type(newPasswordInput, 'abc');
 
-    const confirmNewPasswordInput = screen.getByLabelText(/Confirm Password/i);
-    userEvent.type(confirmNewPasswordInput, 'Testpassword123!');
+    const confirmPasswordInput = screen.getByLabelText(/Confirm Password/i);
+    userEvent.type(confirmPasswordInput, '123');
 
     await act(async () => {
       userEvent.click(screen.getByRole('button', { name: 'SUBMIT' }));
     });
-
     expect(await screen.findAllByRole('alert')).toHaveLength(2);
   });
 });

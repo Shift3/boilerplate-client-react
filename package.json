@@ -36,7 +36,7 @@
     "deploy:staging": "aws s3 sync $BUILD_DIRECTORY_PATH s3://$AWS_SANDBOX_URL --profile shift3 --delete",
     "test": "react-scripts test",
     "test-ci": "react-scripts test -w 1 --watchAll=false",
-    "test-cov": "react-scripts test --coverage",
+    "test-cov": "react-scripts test --coverage .",
     "test-cov-ci": "react-scripts test -w 1 --watchAll=false --coverage",
     "eject": "react-scripts eject"
   },

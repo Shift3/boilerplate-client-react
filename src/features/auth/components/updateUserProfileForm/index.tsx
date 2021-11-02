@@ -19,24 +19,46 @@ export const UpdateUserProfileForm: FC<UpdateUserProfileFormProps> = ({ onSubmit
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
         <Form.Label htmlFor='firstName'>First Name</Form.Label>
-        <Form.Control id='firstName' type='text' defaultValue={defaultValues.firstName} {...register('firstName')} />
-        <Form.Control.Feedback type='invalid'>{errors.firstName?.message}</Form.Control.Feedback>
+        <Form.Control
+          id='firstName'
+          type='text'
+          defaultValue={defaultValues.firstName}
+          {...register('firstName')}
+          isInvalid={!!errors.firstName}
+        />
+        <Form.Control.Feedback type='invalid' role='alert'>
+          {errors.firstName?.message}
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label htmlFor='lastName'>Last Name</Form.Label>
-        <Form.Control id='lastName' type='text' defaultValue={defaultValues.lastName} {...register('lastName')} />
-        <Form.Control.Feedback type='invalid'>{errors.lastName?.message}</Form.Control.Feedback>
+        <Form.Control
+          id='lastName'
+          type='text'
+          defaultValue={defaultValues.lastName}
+          {...register('lastName')}
+          isInvalid={!!errors.lastName}
+        />
+        <Form.Control.Feedback type='invalid' role='alert'>
+          {errors.lastName?.message}
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label htmlFor='email'>Email</Form.Label>
-        <Form.Control id='email' type='email' defaultValue={defaultValues.email} {...register('email')} />
-        <Form.Control.Feedback type='invalid'>{errors.email?.message}</Form.Control.Feedback>
+        <Form.Control
+          id='email'
+          type='email'
+          defaultValue={defaultValues.email}
+          {...register('email')}
+          isInvalid={!!errors.email}
+        />
+        <Form.Control.Feedback type='invalid' role='alert'>
+          {errors.email?.message}
+        </Form.Control.Feedback>
       </Form.Group>
       <ButtonWrapper>
-        <CancelButton data-testid='cancelButton' onClick={onCancel}>
-          CANCEL
-        </CancelButton>
-        <SubmitButton data-testid='submitButton' type='submit' disabled={!isValid}>
+        <CancelButton onClick={onCancel}>CANCEL</CancelButton>
+        <SubmitButton type='submit' disabled={!isValid}>
           UPDATE
         </SubmitButton>
       </ButtonWrapper>
