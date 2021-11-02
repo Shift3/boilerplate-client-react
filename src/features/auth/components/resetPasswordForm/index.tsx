@@ -12,7 +12,7 @@ export const ResetPasswordForm: ResetPasswordFormType = ({ onSubmit, onCancel })
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(ResetPasswordFormSchema),
-    mode: 'onChange',
+    mode: 'all',
   });
 
   return (

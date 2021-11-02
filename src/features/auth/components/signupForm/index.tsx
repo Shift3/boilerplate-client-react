@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
@@ -9,11 +10,18 @@ export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
   const {
     register,
     handleSubmit,
+    trigger,
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(SignUpFormSchema),
-    mode: 'onChange',
+    mode: 'all',
   });
+
+  // Trigger validation on first render.
+  useEffect(() => {
+    trigger();
+  }, [trigger]);
+
   return (
     <StyledForm data-testid='signupForm' onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>

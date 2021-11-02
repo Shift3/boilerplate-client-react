@@ -13,8 +13,9 @@ export const UpdateUserProfileForm: FC<UpdateUserProfileFormProps> = ({ onSubmit
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(UpdateUserProfileFormSchema),
-    mode: 'onChange',
+    mode: 'all',
   });
+
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>

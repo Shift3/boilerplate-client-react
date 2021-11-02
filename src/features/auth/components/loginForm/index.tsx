@@ -18,7 +18,7 @@ export const LogInForm: FC<ILogInFormProps> = ({
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(LogInFormSchema),
-    mode: 'onChange',
+    mode: 'all',
   });
 
   return (

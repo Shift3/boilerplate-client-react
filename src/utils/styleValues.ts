@@ -49,6 +49,9 @@ export default {
     textColor: colors.black,
     white: colors.white,
     black: colors.black,
+    errorBorderColor: colors.lightAccent,
+    errorTextColor: colors.accent,
+    errorImageColor: colors.lightAccent
   },
 
   modals: {
