@@ -24,6 +24,8 @@ describe('CreateUserView', () => {
     });
 
     it('should render a form', async () => {
+      // According to MDN docs, the <form> element has an implicit ARIA role of "form" if it has a name attribute
+      // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form
       const form = await screen.findByRole('form');
       expect(form).toBeInTheDocument();
     });
@@ -38,6 +40,8 @@ describe('CreateUserView', () => {
 
     it('should render Role select field with options', async () => {
       const form = await screen.findByRole('form');
+      // According to MDN docs, the <select> element has an implicit ARIA role of "combobox"
+      // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select#technical_summary
       const select = within(form).getByRole('combobox', { name: /role/i });
       const options = within(select).getAllByRole('option');
 
