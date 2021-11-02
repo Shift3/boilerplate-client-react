@@ -38,7 +38,9 @@ export const CreateUserView: FC = () => {
   const handleFormSubmit = async (data: FormData) => {
     try {
       await createUser({ ...data, profilePicture: '' }).unwrap();
-      showSuccessNotification('User created.');
+      showSuccessNotification(
+        `An email has been sent to ${data.email} with instructions to finish activating the account.`,
+      );
       history.push('/users');
     } catch (error) {
       showErrorNotification('Unable to add user.');
