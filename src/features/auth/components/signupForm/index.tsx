@@ -14,7 +14,7 @@ export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(SignUpFormSchema),
-    mode: 'onChange',
+    mode: 'all',
   });
 
   // Trigger validation on first render.

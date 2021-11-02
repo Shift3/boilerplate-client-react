@@ -14,7 +14,7 @@ export const ForgotPasswordForm: ForgotPasswordFormType = ({ onSubmit, onCancel 
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(ForgotPasswordFormSchema),
-    mode: 'onChange',
+    mode: 'all',
   });
 
   // Trigger validation on first render.

@@ -14,7 +14,7 @@ export const ActivateAccountForm: ActivateAccountFormType = ({ onSubmit, onCance
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(ActivateAccountFormSchema),
-    mode: 'onChange',
+    mode: 'all',
   });
 
   // Trigger validation on first render.

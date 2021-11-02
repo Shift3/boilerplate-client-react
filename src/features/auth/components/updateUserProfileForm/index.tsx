@@ -13,7 +13,7 @@ export const UpdateUserProfileForm: FC<UpdateUserProfileFormProps> = ({ onSubmit
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(UpdateUserProfileFormSchema),
-    mode: 'onChange',
+    mode: 'all',
   });
 
   return (
