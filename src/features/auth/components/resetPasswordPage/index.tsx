@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { ResetPasswordForm } from '../resetPasswordForm';
 import { IResetPasswordFormData } from '../resetPasswordForm/types';
-import { Wrapper } from './styled';
+import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
 import { usePasswordReset } from 'core/modules/user/application/usePasswordReset';
 
 export const ResetPasswordPage: FC = () => {
@@ -19,8 +19,11 @@ export const ResetPasswordPage: FC = () => {
   const onCancel = () => history.push('/auth/login');
 
   return (
-    <Wrapper data-testid='wrapper'>
-      <ResetPasswordForm onSubmit={onSubmit} onCancel={onCancel} />
-    </Wrapper>
+    <PageWrapper>
+      <StyledFormWrapper>
+        <Title>Reset Password</Title>
+        <ResetPasswordForm onSubmit={onSubmit} onCancel={onCancel} />
+      </StyledFormWrapper>
+    </PageWrapper>
   );
 };

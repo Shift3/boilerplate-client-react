@@ -1,11 +1,10 @@
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { FC, useEffect } from 'react';
-import { Container } from 'react-bootstrap';
 import { useHistory, useParams } from 'react-router-dom';
-import { useGetAgencyByIdQuery, useUpdateAgencyMutation } from '../agencyApi';
-import { StyledFormTitle, StyledFormWrapper } from '../components/styled';
+import { PageWrapper, Title, StyledFormWrapper } from '../../styles/PageStyles';
 import { AgencyDetailForm, FormData } from '../components/AgencyDetailForm';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
+import { useGetAgencyByIdQuery, useUpdateAgencyMutation } from 'common/api/agencyApi';
 
 export interface RouteParams {
   id: string;
@@ -40,10 +39,10 @@ export const UpdateAgencyView: FC = () => {
   };
 
   return (
-    <Container className='d-flex justify-content-center'>
+    <PageWrapper>
       <WithLoadingOverlay isLoading={isLoadingAgency}>
         <StyledFormWrapper>
-          <StyledFormTitle>Update Agency</StyledFormTitle>
+          <Title>Update Agency</Title>
           <AgencyDetailForm
             defaultValues={{ agencyName: agency?.agencyName ?? '' }}
             submitButtonLabel='UPDATE'
@@ -52,6 +51,6 @@ export const UpdateAgencyView: FC = () => {
           />
         </StyledFormWrapper>
       </WithLoadingOverlay>
-    </Container>
+    </PageWrapper>
   );
 };

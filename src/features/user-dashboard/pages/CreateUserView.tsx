@@ -1,22 +1,35 @@
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
-import { useGetAgenciesQuery } from 'features/agency-dashboard';
 import { FC } from 'react';
-import Container from 'react-bootstrap/Container';
 import { useHistory } from 'react-router-dom';
-import { useGetRolesQuery } from '../roleApi';
-import { useCreateUserMutation } from '../userApi';
-import { StyledFormTitle, StyledFormWrapper } from '../components/styled';
+import { useGetRolesQuery } from 'common/api/roleApi';
+import { useCreateUserMutation } from 'common/api/userApi';
+import { PageWrapper, Title, StyledFormWrapper } from 'features/styles/PageStyles';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
+import { useRbac } from 'features/rbac';
+import { useAuth } from 'features/auth/hooks';
+import { useGetAgenciesQuery } from 'common/api/agencyApi';
 
 export const CreateUserView: FC = () => {
   const history = useHistory();
+  const { user } = useAuth();
+  const { userHasPermission } = useRbac();
   const [createUser] = useCreateUserMutation();
   const { showErrorNotification, showSuccessNotification } = useShowNotification();
   const { data: roles = [], isLoading: isLoadingRoles } = useGetRolesQuery();
-  const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery();
+  const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery(undefined, {
+    skip: !userHasPermission('agency:read'),
+  });
 
-  // TODO: filter out the roles and agencies that the current authenticated user is
-  // allowed to access (need to implement role checks first)
+  const availableRoles = roles.filter((role) => userHasPermission({ permission: 'role:read', data: role }));
+
+  const availableAgencies = userHasPermission('agency:read') ? agencies : [];
+
+  // If the user doesn't have permission to see list of agencies,then they can
+  // only create a new user within their own agency. Hence, the agency will be
+  // passed in as a default value.
+  const defaultValues: Partial<FormData> = {
+    agency: !userHasPermission('agency:read') ? user?.agency : undefined,
+  };
 
   const handleFormCancel = () => {
     history.goBack();
@@ -25,7 +38,9 @@ export const CreateUserView: FC = () => {
   const handleFormSubmit = async (data: FormData) => {
     try {
       await createUser({ ...data, profilePicture: '' }).unwrap();
-      showSuccessNotification('User created.');
+      showSuccessNotification(
+        `An email has been sent to ${data.email} with instructions to finish activating the account.`,
+      );
       history.push('/users');
     } catch (error) {
       showErrorNotification('Unable to add user.');
@@ -35,19 +50,19 @@ export const CreateUserView: FC = () => {
   const isLoading = isLoadingRoles || isLoadingAgencies;
 
   return (
-    <Container className='d-flex justify-content-center'>
-      {/* TODO: add loading spinner */}
+    <PageWrapper>
       {!isLoading && (
         <StyledFormWrapper>
-          <StyledFormTitle>Create User</StyledFormTitle>
+          <Title>Create User</Title>
           <UserDetailForm
-            availableRoles={roles}
-            availableAgencies={agencies}
+            availableRoles={availableRoles}
+            availableAgencies={availableAgencies}
+            defaultValues={defaultValues}
             onCancel={handleFormCancel}
             onSubmit={handleFormSubmit}
           />
         </StyledFormWrapper>
       )}
-    </Container>
+    </PageWrapper>
   );
 };

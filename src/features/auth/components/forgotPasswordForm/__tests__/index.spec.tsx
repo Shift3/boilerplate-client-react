@@ -1,62 +1,50 @@
-import { render } from '@testing-library/react';
-import { Constants } from 'utils/constants';
-import {
-  clickByTestIdAsync,
-  expectInDocByLabelText,
-  expectInDocByTestId,
-  expectInnerHTMLByRole,
-  expectLengthByRole,
-  expectMockFunctionCalled,
-  setValueByLabelText,
-  formAlertMessageCheck,
-} from 'utils/test';
+import { act, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { ForgotPasswordForm } from '../index';
+import { ThemeProvider } from 'styled-components';
+import AppTheme from 'utils/styleValues';
 
-const { EMAIL_REQUIRED, INVALID_EMAIL } = Constants.errorMessages;
+const mockOnSubmit = jest.fn();
+const mockOnCancel = jest.fn();
 
 describe('ForgotPasswordForm', () => {
-  const validEmail = 'test@test.com';
-  const invalidEmail = 'test.com';
-
-  const mockOnSubmit = jest.fn();
-  const mockOnCancel = jest.fn();
-
   beforeEach(async () => {
-    render(<ForgotPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />);
-
-    await setValueByLabelText('Email', validEmail);
+    render(
+      <ThemeProvider theme={AppTheme}>
+        <ForgotPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+      </ThemeProvider>,
+    );
+    mockOnSubmit.mockReset();
   });
 
-  it('Should render email field', () => expectInDocByLabelText('Email'));
-
-  it('Should render submit button', () => expectInDocByTestId('submitButton'));
-
-  it('Should render cancel button', () => expectInDocByTestId('cancelButton'));
-
-  describe('Valid input', () => {
-    it('Should call onSubmit once all form data is valid, ', async () => {
-      await clickByTestIdAsync('submitButton');
-      expectMockFunctionCalled(mockOnSubmit);
-
-      mockOnSubmit.mockReset();
-    });
-
-    it('Should not display error messages', () => expectLengthByRole('alert', 0));
+  it('should render form fields', () => {
+    expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'CANCEL' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'SUBMIT' })).toBeInTheDocument();
   });
 
-  describe('Invalid email', () => {
-    it('Should only display invalid email error message', async () => {
-      await setValueByLabelText('Email', invalidEmail);
-      expectLengthByRole('alert', 1);
-      expectInnerHTMLByRole('alert', INVALID_EMAIL);
+  it('should submit form if all form fields are valid', async () => {
+    const testFormData = {
+      email: 'Testemail@gmail.com',
+    };
+
+    await act(async () => {
+      const emailInput = screen.getByLabelText(/Email/i);
+      userEvent.type(emailInput, testFormData.email);
     });
+
+    await act(async () => userEvent.click(screen.getByRole('button', { name: 'SUBMIT' })));
+
+    expect(mockOnSubmit).toHaveBeenCalledWith(testFormData, expect.any(Object));
   });
 
-  describe('Required email', () => {
-    it('Should display email required message', async () => {
-      await setValueByLabelText('Email', '');
-      expectLengthByRole('alert', 1);
-      formAlertMessageCheck(EMAIL_REQUIRED);
+  it('should validate user inputs and provide error messages', async () => {
+    const emailInput = screen.getByLabelText(/Email/i);
+    userEvent.type(emailInput, 'abc');
+
+    await act(async () => {
+      userEvent.click(screen.getByRole('button', { name: 'SUBMIT' }));
     });
+    expect(await screen.findAllByRole('alert')).toHaveLength(1);
   });
 });

@@ -20,7 +20,7 @@ export const copyrightDate: string =
 
 export const Footer: FC = () => (
   <Wrapper data-testid='footer'>
-    <span data-testid='copyright'>
+    <span>
       &copy; Bitwise Technology Consulting - {version} Staging &nbsp; {copyrightDate}
     </span>
   </Wrapper>

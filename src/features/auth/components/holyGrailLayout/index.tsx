@@ -17,6 +17,7 @@ const HolyGrailHeader = styled.header``;
 const HolyGrailMain = styled.div`
   display: flex;
   flex: auto;
+  margin-top: 40px;
 
   @media (max-width: 920px) {
     flex-direction: column;

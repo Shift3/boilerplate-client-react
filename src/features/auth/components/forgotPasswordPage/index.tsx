@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ForgotPasswordForm } from '../forgotPasswordForm';
 import { IForgotPassswordFormData } from '../forgotPasswordForm/types';
-import { Wrapper } from './styled';
+import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
 import { usePasswordReset } from 'core/modules/user/application/usePasswordReset';
 
 export const ForgotPasswordPage: FC = () => {
@@ -18,8 +18,11 @@ export const ForgotPasswordPage: FC = () => {
   const onCancel = () => history.push('/auth/login');
 
   return (
-    <Wrapper data-testid='wrapper'>
-      <ForgotPasswordForm onSubmit={onSubmit} onCancel={onCancel} />
-    </Wrapper>
+    <PageWrapper>
+      <StyledFormWrapper data-testid='wrapper'>
+        <Title>Forgot Password</Title>
+        <ForgotPasswordForm onSubmit={onSubmit} onCancel={onCancel} />
+      </StyledFormWrapper>
+    </PageWrapper>
   );
 };

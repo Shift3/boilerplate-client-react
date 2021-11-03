@@ -1,8 +1,8 @@
+import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ChangePasswordForm } from '../changePasswordForm';
 import { IChangePasswordFormData } from '../changePasswordForm/types';
-import { Wrapper } from './styled';
 
 export const ChangePasswordPage: FC = () => {
   const history = useHistory();
@@ -14,8 +14,11 @@ export const ChangePasswordPage: FC = () => {
   };
 
   return (
-    <Wrapper data-testid='wrapper'>
-      <ChangePasswordForm onSubmit={onSubmit} />
-    </Wrapper>
+    <PageWrapper>
+      <StyledFormWrapper data-testid='wrapper'>
+        <Title>Change Password</Title>
+        <ChangePasswordForm onSubmit={onSubmit} />
+      </StyledFormWrapper>
+    </PageWrapper>
   );
 };

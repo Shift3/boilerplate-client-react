@@ -3,21 +3,26 @@ import ActionButton, { ActionButtonProps } from 'common/components/ActionButton'
 import { useConfirmationModal } from 'common/hooks';
 import { Agent } from 'common/models';
 import { FC } from 'react';
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import { useDeleteAgentMutation, useGetAgentsQuery } from '../agentApi';
 import { Link, useHistory } from 'react-router-dom';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
+import { CreateButton } from 'features/styles/PageStyles';
+import { HasPermission, useRbac } from 'features/rbac';
+import { useDeleteAgentMutation, useGetAgentsQuery } from 'common/api/agentApi';
 
 type AgentTableItem = {
   id: number;
   name: string;
+  description: string;
+  email: string;
+  phoneNumber: string;
   actions: ActionButtonProps[];
 };
 
 export const AgentListView: FC = () => {
   const history = useHistory();
+  const { userHasPermission } = useRbac();
   const { data: agents = [], isLoading: isLoadingAgents } = useGetAgentsQuery();
   const [deleteAgent] = useDeleteAgentMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
@@ -44,19 +49,31 @@ export const AgentListView: FC = () => {
   // Set up table headers
   const headers: TableHeader<AgentTableItem>[] = [
     { key: 'name', label: 'AGENT NAME' },
+    { key: 'description', label: 'DESCRIPTION' },
+    { key: 'email', label: 'EMAIL' },
+    { key: 'phoneNumber', label: 'PHONE NUMBER' },
     { key: 'actions', label: 'ACTIONS' },
   ];
 
-  // Transform Agency objects returned from the API into the table item data format expected by the table.
+  // Transform Agent objects returned from the API into the table item data format expected by the table.
   const items: AgentTableItem[] = agents.map((agent) => ({
     id: agent.id,
     name: agent.name,
+    description: agent.description,
+    email: agent.email,
+    phoneNumber: agent.phoneNumber,
     actions: [
-      { icon: 'edit', tooltipText: 'Edit', onClick: () => navigateToUpdateView(agent) },
+      {
+        icon: 'edit',
+        tooltipText: 'Edit',
+        onClick: () => navigateToUpdateView(agent),
+        show: userHasPermission({ permission: 'agent:update', data: agent }),
+      },
       {
         icon: 'trash-alt',
         tooltipText: 'Delete',
         onClick: () => handleDelete(agent),
+        show: userHasPermission({ permission: 'agent:delete', data: agent }),
       },
     ],
   }));
@@ -67,7 +84,7 @@ export const AgentListView: FC = () => {
       renderer: ({ actions }: AgentTableItem) => (
         <>
           {actions.map((action, index) => (
-            <ActionButton key={index} icon={action.icon} tooltipText={action.tooltipText} onClick={action.onClick} />
+            <ActionButton key={index} {...action} />
           ))}
         </>
       ),
@@ -76,11 +93,13 @@ export const AgentListView: FC = () => {
 
   return (
     <Container>
-      <div className='pb-4 text-end'>
-        <Link to='/agents/create-agent'>
-          <Button>ADD AGENT</Button>
-        </Link>
-      </div>
+      <HasPermission perform='agent:create'>
+        <div className='pb-4 text-end'>
+          <Link to='/agents/create-agent'>
+            <CreateButton>ADD AGENT</CreateButton>
+          </Link>
+        </div>
+      </HasPermission>
       <WithLoadingOverlay isLoading={isLoadingAgents}>
         <GenericTable<AgentTableItem> headers={headers} items={items} customRenderers={customRenderers} />
       </WithLoadingOverlay>

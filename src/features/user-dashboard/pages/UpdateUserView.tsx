@@ -1,13 +1,14 @@
+import { useGetAgenciesQuery } from 'common/api/agencyApi';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
-import { useGetAgenciesQuery } from 'features/agency-dashboard/agencyApi';
+import { useAuth } from 'features/auth/hooks';
+import { useRbac } from 'features/rbac';
 import { FC, useEffect } from 'react';
-import Container from 'react-bootstrap/Container';
 import { useHistory, useParams } from 'react-router-dom';
-import { StyledFormTitle, StyledFormWrapper } from '../components/styled';
+import { PageWrapper, Title, StyledFormWrapper } from '../../styles/PageStyles';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
-import { useGetRolesQuery } from '../roleApi';
-import { useGetUserByIdQuery, useUpdateUserMutation } from '../userApi';
+import { useGetRolesQuery } from 'common/api/roleApi';
+import { useGetUserByIdQuery, useUpdateUserMutation } from 'common/api/userApi';
 
 interface RouteParams {
   id: string;
@@ -15,15 +16,19 @@ interface RouteParams {
 
 export const UpdateUserView: FC = () => {
   const { id } = useParams<RouteParams>();
+  const auth = useAuth();
+  const { userHasPermission } = useRbac();
   const history = useHistory();
   const { showErrorNotification, showSuccessNotification } = useShowNotification();
   const [updateUser] = useUpdateUserMutation();
   const { data: user, isLoading: isLoadingUser, error: getUserError } = useGetUserByIdQuery(id);
   const { data: roles = [], isLoading: isLoadingRoles } = useGetRolesQuery();
-  const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery();
+  const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery(undefined, {
+    skip: !userHasPermission('agency:read'),
+  });
 
-  // TODO: filter out the roles and agencies that the current authenticated user is
-  // allowed to access (need to implement role checks first)
+  const availableRoles = roles.filter((role) => userHasPermission({ permission: 'role:read', data: role }));
+  const availableAgencies = agencies.length !== 0 ? agencies : [auth.user!.agency];
 
   useEffect(() => {
     if (getUserError) {
@@ -47,13 +52,13 @@ export const UpdateUserView: FC = () => {
   };
 
   return (
-    <Container className='d-flex justify-content-center'>
+    <PageWrapper>
       <WithLoadingOverlay isLoading={isLoadingUser || isLoadingRoles || isLoadingAgencies}>
         <StyledFormWrapper>
-          <StyledFormTitle>Update User</StyledFormTitle>
+          <Title>Update User</Title>
           <UserDetailForm
-            availableRoles={roles}
-            availableAgencies={agencies}
+            availableRoles={availableRoles}
+            availableAgencies={availableAgencies}
             defaultValues={user}
             submitButtonLabel='UPDATE'
             onSubmit={handleFormSubmit}
@@ -61,6 +66,6 @@ export const UpdateUserView: FC = () => {
           />
         </StyledFormWrapper>
       </WithLoadingOverlay>
-    </Container>
+    </PageWrapper>
   );
 };

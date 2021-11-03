@@ -12,31 +12,27 @@ const colors = {
 };
 
 export default {
-  adminBackground: '#f1f0eb',
-  authBackground: '#ecf6f9',
-  contentBackground: '#f1f0eb',
-  userBackground: '#f1f0eb',
-  primary: '#175f6e',
-  primaryBorder: '#66bbcd',
-  accent: '#d44325',
-  accentBorder: '#d44325',
-  accentDisabled: '#e78b78',
-  cardHeader: '#c5e6ec',
-  navBackground: '#ffffff',
-  navLink: '#2B373B',
-
   app: {
     backgroundColor: colors.white,
   },
 
   buttons: {
-    backgroundColor: colors.lightBackground,
-    borderColor: colors.secondaryBlue,
-    disabledBackgroundColor: colors.primaryBlue,
+    cancelBackgroundColor: colors.lightBackground,
+    cancelBorderColor: colors.primaryBlue,
+    cancelTextColor: colors.primaryBlue,
+    submitBackgroundColor: colors.primaryBlue,
+    submitBorderColor: colors.primaryBlue,
+    submitTextColor: colors.white,
+    disabledBackgroundColor: colors.lightBackground,
     hoverBackgroundColor: colors.primaryBlue,
     textColor: colors.darkAccent,
     // hoverBorderColor:
     // disableBorderColor:
+    createBackgroundColor: colors.secondaryBlue,
+    createBorderColor: colors.secondaryBlue,
+    createTextColor: colors.white,
+    createHoverBackgroundColor: colors.accent,
+    createHoverBorderColor: colors.accent,
   },
 
   footer: {
@@ -46,15 +42,46 @@ export default {
   },
 
   forms: {
-    submitButtonColor: colors.primaryBlue,
     backgroundColor: colors.lightBackground,
-    buttonColor: colors.primaryBlue,
-    label: colors.black,
-    control: colors.black,
+    labelColor: colors.darkAccent,
     titleColor: colors.darkAccent,
+    control: colors.black,
     textColor: colors.black,
     white: colors.white,
     black: colors.black,
-    inputError: colors.primaryBlue,
+    errorBorderColor: colors.lightAccent,
+    errorTextColor: colors.accent,
+    errorImageColor: colors.lightAccent
   },
+
+  modals: {
+    confirmation: {
+      contentBackgroundColor: colors.lightBackground,
+      contentBorderColor: colors.lightBackground,
+      titleTextColor: colors.primaryBlue,
+      bodyTextColor: colors.primaryBlue,
+      cancelButtonBackgroundColor: colors.lightBackground,
+      cancelButtonBorderColor: colors.lightBackground,
+      cancelButtonTextColor: colors.primaryBlue,
+      confirmButtonBackgroundColor: colors.primaryBlue,
+      confirmButtonBorderColor: colors.primaryBlue,
+    },
+    logout: {
+      backgroundColor: colors.lightBackground,
+      titleTextColor: colors.primaryBlue,
+      textColor: colors.primaryBlue,
+    },
+  },
+
+  pages: {
+    backgroundColor: colors.white
+  },
+
+  tables: {
+    borderColor: colors.lightAccent,
+    headerBackgroundColor: colors.primaryBlue,
+    headerTextColor: colors.white,
+    backgroundColor: colors.primaryBlue,
+    textColor: colors.primaryBlue
+  }
 };

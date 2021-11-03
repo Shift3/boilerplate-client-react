@@ -1,7 +1,9 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ConfirmationModal } from './ConfirmationModal';
 import { ConfirmationModalProps } from './types';
+import { ThemeProvider } from 'styled-components';
+import AppTheme from 'utils/styleValues';
 
 describe('ConfirmationModal', () => {
   it('should not render if the "show" prop is false', () => {
@@ -12,9 +14,13 @@ describe('ConfirmationModal', () => {
       onConfirm: jest.fn(),
     };
 
-    const { queryByRole } = render(<ConfirmationModal {...props} />);
+    render(
+      <ThemeProvider theme={AppTheme}>
+        <ConfirmationModal {...props} />
+      </ThemeProvider>,
+    );
 
-    const modal = queryByRole('dialog');
+    const modal = screen.queryByRole('dialog');
 
     expect(modal).toBeNull();
   });
@@ -27,9 +33,13 @@ describe('ConfirmationModal', () => {
       onConfirm: jest.fn(),
     };
 
-    const { getByRole } = render(<ConfirmationModal {...props} />);
+    render(
+      <ThemeProvider theme={AppTheme}>
+        <ConfirmationModal {...props} />
+      </ThemeProvider>,
+    );
 
-    const modal = getByRole('dialog');
+    const modal = screen.getByRole('dialog');
 
     expect(modal).toBeTruthy();
   });
@@ -43,9 +53,13 @@ describe('ConfirmationModal', () => {
       onConfirm: jest.fn(),
     };
 
-    const { getByText } = render(<ConfirmationModal {...props} />);
+    render(
+      <ThemeProvider theme={AppTheme}>
+        <ConfirmationModal {...props} />
+      </ThemeProvider>,
+    );
 
-    const button = getByText(props.cancelButtonLabel as string);
+    const button = screen.getByText(props.cancelButtonLabel as string);
 
     expect(button.getAttribute('type')).toBe('button');
   });
@@ -59,9 +73,13 @@ describe('ConfirmationModal', () => {
       onConfirm: jest.fn(),
     };
 
-    const { getByText } = render(<ConfirmationModal {...props} />);
+    render(
+      <ThemeProvider theme={AppTheme}>
+        <ConfirmationModal {...props} />
+      </ThemeProvider>,
+    );
 
-    const button = getByText(props.confirmButtonLabel as string);
+    const button = screen.getByText(props.confirmButtonLabel as string);
 
     expect(button.getAttribute('type')).toBe('button');
   });
@@ -75,9 +93,13 @@ describe('ConfirmationModal', () => {
       onConfirm: jest.fn(),
     };
 
-    const { getByText } = render(<ConfirmationModal {...props} />);
+    render(
+      <ThemeProvider theme={AppTheme}>
+        <ConfirmationModal {...props} />
+      </ThemeProvider>,
+    );
 
-    const cancelButton = getByText(props.cancelButtonLabel as string);
+    const cancelButton = screen.getByText(props.cancelButtonLabel as string);
 
     userEvent.click(cancelButton);
 
@@ -94,9 +116,13 @@ describe('ConfirmationModal', () => {
       onConfirm: jest.fn(),
     };
 
-    const { getByText } = render(<ConfirmationModal {...props} />);
+    render(
+      <ThemeProvider theme={AppTheme}>
+        <ConfirmationModal {...props} />
+      </ThemeProvider>,
+    );
 
-    const confirmButton = getByText(props.confirmButtonLabel as string);
+    const confirmButton = screen.getByText(props.confirmButtonLabel as string);
 
     userEvent.click(confirmButton);
 

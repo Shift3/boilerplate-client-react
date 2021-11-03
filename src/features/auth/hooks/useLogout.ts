@@ -1,7 +1,7 @@
 import { useAppDispatch } from 'app/redux';
+import { useLogoutMutation } from 'common/api/authApi';
 import { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useLogoutMutation } from '../authApi';
 import * as authLocalStorage from '../authLocalStorage';
 import { authSlice } from '../authSlice';
 
