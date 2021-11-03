@@ -11,10 +11,10 @@ import {
 import { FC } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Link, useHistory } from 'react-router-dom';
-import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { CreateButton } from 'features/styles/PageStyles';
 import { HasPermission, useRbac } from 'features/rbac';
+import * as notificationService from 'common/services/notification';
 
 type UserTableItem = {
   id: number;
@@ -34,7 +34,6 @@ export const UserListView: FC = () => {
   const [forgotPassword] = useForgotPasswordMutation();
   const [resendActivationEmail] = useResendActivationEmailMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
-  const { showSuccessNotification } = useShowNotification();
 
   const getUsersFullName = (user: User) => `${user.firstName} ${user.lastName}`;
 
@@ -44,7 +43,7 @@ export const UserListView: FC = () => {
     const onConfirm = () => {
       resendActivationEmail({ id: user.id });
       closeModal();
-      showSuccessNotification('Activation email has been sent.');
+      notificationService.showSuccessMessage('Activation email has been sent.');
     };
 
     const onCancel = () => closeModal();
@@ -58,7 +57,7 @@ export const UserListView: FC = () => {
     const onConfirm = () => {
       deleteUser(user.id);
       closeModal();
-      showSuccessNotification('User deleted.');
+      notificationService.showSuccessMessage('User deleted.');
     };
 
     const onCancel = () => closeModal();

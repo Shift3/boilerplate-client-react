@@ -1,10 +1,10 @@
-import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { FC, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { PageWrapper, Title, StyledFormWrapper } from '../../styles/PageStyles';
 import { AgencyDetailForm, FormData } from '../components/AgencyDetailForm';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { useGetAgencyByIdQuery, useUpdateAgencyMutation } from 'common/api/agencyApi';
+import * as notificationService from 'common/services/notification';
 
 export interface RouteParams {
   id: string;
@@ -13,16 +13,15 @@ export interface RouteParams {
 export const UpdateAgencyView: FC = () => {
   const { id } = useParams<RouteParams>();
   const history = useHistory();
-  const { showErrorNotification, showSuccessNotification } = useShowNotification();
   const [updateAgency] = useUpdateAgencyMutation();
   const { data: agency, isLoading: isLoadingAgency, error } = useGetAgencyByIdQuery(id);
 
   useEffect(() => {
     if (error) {
-      showErrorNotification('Unable to load agency. Returning to agency list.');
+      notificationService.showErrorMessage('Unable to load agency. Returning to agency list.');
       history.replace('/agencies');
     }
-  }, [error, history, showErrorNotification]);
+  }, [error, history]);
 
   const handleFormCancel = () => {
     history.goBack();
@@ -31,10 +30,10 @@ export const UpdateAgencyView: FC = () => {
   const handleFormSubmit = async (data: FormData) => {
     try {
       await updateAgency({ id: Number(id), ...data }).unwrap();
-      showSuccessNotification('Agency updated.');
+      notificationService.showSuccessMessage('Agency updated.');
       history.push('/agencies');
     } catch (error) {
-      showErrorNotification('Unable to update agency.');
+      notificationService.showErrorMessage('Unable to update agency.');
     }
   };
 

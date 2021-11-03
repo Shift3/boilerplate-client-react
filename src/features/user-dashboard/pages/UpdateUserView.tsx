@@ -1,6 +1,5 @@
 import { useGetAgenciesQuery } from 'common/api/agencyApi';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
-import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { useAuth } from 'features/auth/hooks';
 import { useRbac } from 'features/rbac';
 import { FC, useEffect } from 'react';
@@ -9,6 +8,7 @@ import { PageWrapper, Title, StyledFormWrapper } from '../../styles/PageStyles';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
 import { useGetRolesQuery } from 'common/api/roleApi';
 import { useGetUserByIdQuery, useUpdateUserMutation } from 'common/api/userApi';
+import * as notificationService from 'common/services/notification';
 
 interface RouteParams {
   id: string;
@@ -19,7 +19,6 @@ export const UpdateUserView: FC = () => {
   const auth = useAuth();
   const { userHasPermission } = useRbac();
   const history = useHistory();
-  const { showErrorNotification, showSuccessNotification } = useShowNotification();
   const [updateUser] = useUpdateUserMutation();
   const { data: user, isLoading: isLoadingUser, error: getUserError } = useGetUserByIdQuery(id);
   const { data: roles = [], isLoading: isLoadingRoles } = useGetRolesQuery();
@@ -32,10 +31,10 @@ export const UpdateUserView: FC = () => {
 
   useEffect(() => {
     if (getUserError) {
-      showErrorNotification('Unable to load user. Returning to user list.');
+      notificationService.showErrorMessage('Unable to load user. Returning to user list.');
       history.replace('/users');
     }
-  }, [getUserError, history, showErrorNotification]);
+  }, [getUserError, history]);
 
   const handleFormCancel = () => {
     history.goBack();
@@ -45,9 +44,9 @@ export const UpdateUserView: FC = () => {
     try {
       await updateUser({ id: Number(id), ...data }).unwrap();
       history.push('/users');
-      showSuccessNotification('User updated.');
+      notificationService.showSuccessMessage('User updated.');
     } catch (error) {
-      showErrorNotification('Unable to update user');
+      notificationService.showErrorMessage('Unable to update user');
     }
   };
 

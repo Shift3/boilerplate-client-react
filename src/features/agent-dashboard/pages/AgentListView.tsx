@@ -5,11 +5,11 @@ import { Agent } from 'common/models';
 import { FC } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Link, useHistory } from 'react-router-dom';
-import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { CreateButton } from 'features/styles/PageStyles';
 import { HasPermission, useRbac } from 'features/rbac';
 import { useDeleteAgentMutation, useGetAgentsQuery } from 'common/api/agentApi';
+import * as notificationService from 'common/services/notification';
 
 type AgentTableItem = {
   id: number;
@@ -26,7 +26,6 @@ export const AgentListView: FC = () => {
   const { data: agents = [], isLoading: isLoadingAgents } = useGetAgentsQuery();
   const [deleteAgent] = useDeleteAgentMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
-  const { showSuccessNotification } = useShowNotification();
 
   const navigateToUpdateView = (agent: Agent) => {
     history.push(`/agents/update-agent/${agent.id}`);
@@ -38,7 +37,7 @@ export const AgentListView: FC = () => {
     const onConfirm = () => {
       deleteAgent(agent.id);
       closeModal();
-      showSuccessNotification('Agent deleted.');
+      notificationService.showSuccessMessage('Agent deleted.');
     };
 
     const onCancel = () => closeModal();

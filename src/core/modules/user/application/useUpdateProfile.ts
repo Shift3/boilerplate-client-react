@@ -1,4 +1,4 @@
-import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
+import * as notificationService from 'common/services/notification';
 import { useAuth } from 'features/auth/hooks';
 import { UserService } from '../infrastructure/http/userService';
 
@@ -16,11 +16,10 @@ export type UpdateProfileManager = {
 
 export const useUpdateProfile = (): UpdateProfileManager => {
   const { token, user } = useAuth();
-  const { showSuccessNotification, showErrorNotification } = useShowNotification();
 
   const updateProfile = async (data: UpdateProfileData, onSuccess?: () => void, onError?: () => void) => {
     if (!token || !user) {
-      showErrorNotification('Unauthorized');
+      notificationService.showErrorMessage('Unauthorized');
       return;
     }
 
@@ -29,13 +28,13 @@ export const useUpdateProfile = (): UpdateProfileManager => {
     try {
       await userService.updateProfile(user.id, data, token);
 
-      showSuccessNotification('Profile updated.');
+      notificationService.showSuccessMessage('Profile updated.');
 
       if (onSuccess) {
         onSuccess();
       }
     } catch (error) {
-      showErrorNotification(error.message);
+      notificationService.showErrorMessage(error.message);
 
       if (onError) {
         onError();

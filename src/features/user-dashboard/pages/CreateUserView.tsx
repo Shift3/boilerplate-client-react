@@ -1,4 +1,3 @@
-import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useGetRolesQuery } from 'common/api/roleApi';
@@ -8,13 +7,13 @@ import { FormData, UserDetailForm } from '../components/UserDetailForm';
 import { useRbac } from 'features/rbac';
 import { useAuth } from 'features/auth/hooks';
 import { useGetAgenciesQuery } from 'common/api/agencyApi';
+import * as notificationService from 'common/services/notification';
 
 export const CreateUserView: FC = () => {
   const history = useHistory();
   const { user } = useAuth();
   const { userHasPermission } = useRbac();
   const [createUser] = useCreateUserMutation();
-  const { showErrorNotification, showSuccessNotification } = useShowNotification();
   const { data: roles = [], isLoading: isLoadingRoles } = useGetRolesQuery();
   const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery(undefined, {
     skip: !userHasPermission('agency:read'),
@@ -38,12 +37,12 @@ export const CreateUserView: FC = () => {
   const handleFormSubmit = async (data: FormData) => {
     try {
       await createUser({ ...data, profilePicture: '' }).unwrap();
-      showSuccessNotification(
+      notificationService.showSuccessMessage(
         `An email has been sent to ${data.email} with instructions to finish activating the account.`,
       );
       history.push('/users');
     } catch (error) {
-      showErrorNotification('Unable to add user.');
+      notificationService.showErrorMessage('Unable to add user.');
     }
   };
 

@@ -5,11 +5,11 @@ import { Agency } from 'common/models';
 import { Link, useHistory } from 'react-router-dom';
 import { FC } from 'react';
 import Container from 'react-bootstrap/Container';
-import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { CreateButton } from 'features/styles/PageStyles';
 import { HasPermission, useRbac } from 'features/rbac';
 import { useDeleteAgencyMutation, useGetAgenciesQuery } from 'common/api/agencyApi';
+import * as notificationService from 'common/services/notification';
 
 type AgencyTableItem = {
   id: number;
@@ -23,7 +23,6 @@ export const AgencyListView: FC = () => {
   const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery();
   const [deleteAgency] = useDeleteAgencyMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
-  const { showSuccessNotification } = useShowNotification();
 
   const handleDelete = (agency: Agency) => {
     const message = `Delete ${agency.agencyName}?`;
@@ -31,7 +30,7 @@ export const AgencyListView: FC = () => {
     const onConfirm = () => {
       deleteAgency(agency.id);
       closeModal();
-      showSuccessNotification('Agency deleted.');
+      notificationService.showSuccessMessage('Agency deleted.');
     };
 
     const onCancel = () => closeModal();

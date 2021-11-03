@@ -1,4 +1,4 @@
-import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
+import * as notificationService from 'common/services/notification';
 import { UserService } from '../infrastructure/http/userService';
 
 export type CreateAccountData = {
@@ -47,8 +47,6 @@ export interface IAccountCreationFacade {
  * Custom hook that returns an IAccountCreationFacade.
  */
 export const useAccountCreation = (): IAccountCreationFacade => {
-  const { showSuccessNotification, showErrorNotification } = useShowNotification();
-
   const createAccount = async (
     data: CreateAccountData,
     onSuccess?: CallableFunction,
@@ -59,13 +57,13 @@ export const useAccountCreation = (): IAccountCreationFacade => {
 
     try {
       await userService.signUp(payload);
-      showSuccessNotification(`An activation email has been sent to ${payload.email}.`);
+      notificationService.showSuccessMessage(`An activation email has been sent to ${payload.email}.`);
 
       if (onSuccess) {
         onSuccess();
       }
     } catch (error) {
-      showErrorNotification(error.message);
+      notificationService.showErrorMessage(error.message);
 
       if (onError) {
         onError();
@@ -83,13 +81,13 @@ export const useAccountCreation = (): IAccountCreationFacade => {
 
     try {
       await userService.activateAccount(payload, token);
-      showSuccessNotification('This account has been activated. Please log in.');
+      notificationService.showSuccessMessage('This account has been activated. Please log in.');
 
       if (onSuccess) {
         onSuccess();
       }
     } catch (error) {
-      showErrorNotification(error.message);
+      notificationService.showErrorMessage(error.message);
 
       if (onError) {
         onError();

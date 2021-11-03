@@ -9,7 +9,6 @@ import { Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from '../GlobalStyle';
 import AppTheme from 'utils/styleValues';
-import { FlashMessage } from 'features/auth/components/flashMessage';
 import { HolyGrailLayout } from 'features/auth/components/holyGrailLayout';
 import { LogInPage } from 'features/auth/components/loginPage';
 import { SignUpPage } from 'features/auth/components/signupPage';
@@ -18,11 +17,12 @@ import { ForgotPasswordPage } from 'features/auth/components/forgotPasswordPage'
 import { ResetPasswordPage } from 'features/auth/components/resetPasswordPage';
 import { ChangePasswordPage } from 'features/auth/components/changePasswordPage';
 import { UpdateUserProfilePage } from 'features/auth/components/updateUserProfilePage';
+import { NotificationContainer } from 'common/components/Notification';
 
 export const App: FC = () => (
   <ErrorBoundary>
     <ThemeProvider theme={AppTheme}>
-      <FlashMessage />
+      <NotificationContainer />
       <HolyGrailLayout>
         <Switch>
           <Route exact path='/auth/login' component={LogInPage} />

@@ -6,17 +6,15 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { CreateUserView } from '../CreateUserView';
 import theme from 'utils/styleValues';
-import { selectNotifications } from 'core/modules/notifications/infrastructure/store/notificationsSlice';
 import userEvent from '@testing-library/user-event';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { EnhancedStore } from '@reduxjs/toolkit';
-import { NotificationType } from 'core/modules/notifications/domain/notification';
 import { flushPromises } from 'test/utils/flushPromises';
 import { baseUrl, server } from 'test/server';
 import { rest } from 'msw';
 import { StatusCodes } from 'http-status-codes';
-// import { baseUrl } from 'test/server/handlers';
+import * as notificationService from 'common/services/notification';
 
 describe('CreateUserView', () => {
   describe('when user has Admin role', () => {
@@ -156,7 +154,9 @@ describe('CreateUserView', () => {
       );
     });
 
-    it('should add a success notification if API request is successful', async () => {
+    it('should show a success notification if API request is successful', async () => {
+      const spy = jest.spyOn(notificationService, 'showSuccessMessage');
+
       const form = await screen.findByRole('form');
 
       await act(async () => {
@@ -173,13 +173,12 @@ describe('CreateUserView', () => {
       // We need to wait for API request to resolve.
       await waitFor(async () => flushPromises());
 
-      const notifications = selectNotifications(store.getState());
-
-      expect(notifications).toHaveLength(1);
-      expect(notifications[0].type).toBe(NotificationType.Success);
+      expect(spy).toHaveBeenCalled();
     });
 
-    it('should add an error notification if API request fails', async () => {
+    it('should show an error notification if API request fails', async () => {
+      const spy = jest.spyOn(notificationService, 'showErrorMessage');
+
       // Override mock server response to return an error response.
       server.use(
         rest.post(`${baseUrl}/users`, (req, res, ctx) => {
@@ -203,10 +202,7 @@ describe('CreateUserView', () => {
       // We need to wait for API request to resolve.
       await waitFor(async () => flushPromises());
 
-      const notifications = selectNotifications(store.getState());
-
-      expect(notifications).toHaveLength(1);
-      expect(notifications[0].type).toBe(NotificationType.Error);
+      expect(spy).toHaveBeenCalled();
     });
   });
 });

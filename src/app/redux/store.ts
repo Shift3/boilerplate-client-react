@@ -1,5 +1,4 @@
 import { configureStore, ConfigureStoreOptions } from '@reduxjs/toolkit';
-import notificationsSlice from 'core/modules/notifications/infrastructure/store/notificationsSlice';
 import { authSlice } from 'features/auth/authSlice';
 import { agencyApi } from 'common/api/agencyApi';
 import { agentApi } from 'common/api/agentApi';
@@ -12,7 +11,6 @@ export const createAppStore = (options?: ConfigureStoreOptions['preloadedState']
   configureStore({
     reducer: {
       auth: authSlice.reducer,
-      notifications: notificationsSlice.reducer,
       [agencyApi.reducerPath]: agencyApi.reducer,
       [agentApi.reducerPath]: agentApi.reducer,
       [authApi.reducerPath]: authApi.reducer,
