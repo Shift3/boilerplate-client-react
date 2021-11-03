@@ -9,7 +9,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import logo from 'assets/img/logo.png';
 
 export const NavLogo: FC = () => (
-  <Navbar.Brand as={Link} to='/content/agent-list'>
+  <Navbar.Brand as={Link} to='/agents'>
     <img src={logo} alt='Bitwise Technology Consulting' width='160px' />
   </Navbar.Brand>
 );
