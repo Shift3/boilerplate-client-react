@@ -18,6 +18,7 @@ import { ResetPasswordPage } from 'features/auth/components/resetPasswordPage';
 import { ChangePasswordPage } from 'features/auth/components/changePasswordPage';
 import { UpdateUserProfilePage } from 'features/auth/components/updateUserProfilePage';
 import { NotificationContainer } from 'common/components/Notification';
+import { NotFoundView } from 'common/components/NotFound';
 
 export const App: FC = () => (
   <ErrorBoundary>
@@ -27,15 +28,16 @@ export const App: FC = () => (
         <Switch>
           <Route exact path='/auth/login' component={LogInPage} />
           <Route exact path='/auth/signup' component={SignUpPage} />
-          <Route path='/auth/activate-account/:token' component={ActivateAccountPage} />
-          <Route path='/auth/forgot-password' component={ForgotPasswordPage} />
-          <Route path='/auth/reset-password/:token' component={ResetPasswordPage} />
+          <Route exact path='/auth/activate-account/:token' component={ActivateAccountPage} />
+          <Route exact path='/auth/forgot-password' component={ForgotPasswordPage} />
+          <Route exact path='/auth/reset-password/:token' component={ResetPasswordPage} />
           <PrivateRoute exact path='/user/change-password/' component={ChangePasswordPage} />
           <PrivateRoute exact path='/user/profile/' component={UpdateUserProfilePage} />
           <PrivateRoute path='/agents' component={AgentRoutes} />
           <PrivateRoute path='/agencies' component={AgencyRoutes} requiredRoles={['Admin', 'Super Administrator']} />
           <PrivateRoute path='/users' component={UserRoutes} requiredRoles={['Admin', 'Super Administrator']} />
           <PrivateRoute exact path='/' component={DashboardPage} />
+          <Route path='/' component={NotFoundView} />
         </Switch>
       </HolyGrailLayout>
     </ThemeProvider>
