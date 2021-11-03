@@ -2,7 +2,7 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { useAppDispatch } from 'app/redux';
 import { useLoginMutation } from 'common/api/authApi';
 import { ErrorResponse } from 'common/models';
-import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
+import * as notificationService from 'common/services/notification';
 import { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as authLocalStorage from '../authLocalStorage';
@@ -21,7 +21,6 @@ export type UseLoginHook = () => {
 export const useLogin: UseLoginHook = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
-  const { showErrorNotification } = useShowNotification();
   const [login, { isLoading }] = useLoginMutation();
 
   const loginUser = useCallback(
@@ -39,15 +38,15 @@ export const useLogin: UseLoginHook = () => {
         if ('data' in fetchError) {
           const { data } = fetchError;
           const { message } = data as ErrorResponse;
-          showErrorNotification(message);
+          notificationService.showErrorMessage(message);
         } else if (!navigator.onLine) {
-          showErrorNotification('No Internet Connection.');
+          notificationService.showErrorMessage('No Internet Connection.');
         } else {
-          showErrorNotification('Unable to complete request');
+          notificationService.showErrorMessage('Unable to complete request');
         }
       }
     },
-    [login, dispatch, history, showErrorNotification],
+    [login, dispatch, history],
   );
 
   return { login: loginUser, isLoading };

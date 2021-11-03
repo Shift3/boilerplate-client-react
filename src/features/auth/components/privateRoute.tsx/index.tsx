@@ -1,12 +1,11 @@
 import { RoleType } from 'common/models';
-import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
+import * as notificationService from 'common/services/notification';
 import { useAuth } from 'features/auth/hooks';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
 type Props = RouteProps & { requiredRoles?: RoleType[] };
 
 export const PrivateRoute: React.FC<Props> = ({ requiredRoles = [], ...rest }) => {
-  const { showErrorNotification } = useShowNotification();
   const { user } = useAuth();
 
   if (!user) {
@@ -17,6 +16,6 @@ export const PrivateRoute: React.FC<Props> = ({ requiredRoles = [], ...rest }) =
     return <Route {...rest} />;
   }
 
-  showErrorNotification('Not authorized to view the requested page.');
+  notificationService.showErrorMessage('Not authorized to view the requested page.');
   return <Redirect to='/agents' />;
 };

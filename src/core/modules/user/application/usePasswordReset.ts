@@ -1,4 +1,4 @@
-import { useShowNotification } from 'core/modules/notifications/application/useShowNotification';
+import * as notificationService from 'common/services/notification';
 import { ForgotPasswordRequest, ResetPasswordRequest } from '../infrastructure/http/dtos';
 import { UserService } from '../infrastructure/http/userService';
 
@@ -41,8 +41,6 @@ export interface IPasswordResetFacade {
  * Custom hook that returns an IPasswordResetFacade.
  */
 export const usePasswordReset = (): IPasswordResetFacade => {
-  const { showSuccessNotification, showErrorNotification } = useShowNotification();
-
   const sendForgotPasswordEmail = async (
     email: string,
     onSuccess?: CallableFunction,
@@ -53,13 +51,13 @@ export const usePasswordReset = (): IPasswordResetFacade => {
 
     try {
       const response = await userService.forgotPassword(payload);
-      showSuccessNotification(response.message);
+      notificationService.showSuccessMessage(response.message);
 
       if (onSuccess) {
         onSuccess();
       }
     } catch (error) {
-      showErrorNotification(error.message);
+      notificationService.showErrorMessage(error.message);
 
       if (onError) {
         onError();
@@ -78,13 +76,13 @@ export const usePasswordReset = (): IPasswordResetFacade => {
 
     try {
       await userService.resetPassword(payload, token);
-      showSuccessNotification('The password was reset successfully.');
+      notificationService.showSuccessMessage('The password was reset successfully.');
 
       if (onSuccess) {
         onSuccess();
       }
     } catch (error) {
-      showErrorNotification(error.message);
+      notificationService.showErrorMessage(error.message);
 
       if (onError) {
         onError();
