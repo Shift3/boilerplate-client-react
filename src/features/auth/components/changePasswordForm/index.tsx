@@ -5,7 +5,7 @@ import { Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { ChangePasswordFormSchema } from './schema';
 import { ChangePasswordFormType } from './types';
-import { ButtonWrapper, CancelButton, SubmitButton, StyledForm } from '../../../styles/PageStyles';
+import { ButtonWrapper, CancelButton, SubmitButton } from 'features/styles/PageStyles';
 
 export const ChangePasswordForm: ChangePasswordFormType = ({ onSubmit }) => {
   const {
@@ -28,7 +28,7 @@ export const ChangePasswordForm: ChangePasswordFormType = ({ onSubmit }) => {
   }, [trigger]);
 
   return (
-    <StyledForm data-testid='changePasswordForm' onSubmit={handleSubmit(onSubmit)}>
+    <Form data-testid='changePasswordForm' onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
         <Form.Label htmlFor='currentPassword'>Current Password</Form.Label>
         <Form.Control
@@ -74,6 +74,6 @@ export const ChangePasswordForm: ChangePasswordFormType = ({ onSubmit }) => {
           SUBMIT
         </SubmitButton>
       </ButtonWrapper>
-    </StyledForm>
+    </Form>
   );
 };

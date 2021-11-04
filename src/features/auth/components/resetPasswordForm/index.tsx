@@ -3,7 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import { ResetPasswordFormSchema } from './schema';
 import { ResetPasswordFormType } from './types';
-import { ButtonWrapper, CancelButton, SubmitButton, StyledForm } from '../../../styles/PageStyles';
+import { ButtonWrapper, CancelButton, SubmitButton } from 'features/styles/PageStyles';
 
 export const ResetPasswordForm: ResetPasswordFormType = ({ onSubmit, onCancel }) => {
   const {
@@ -16,7 +16,7 @@ export const ResetPasswordForm: ResetPasswordFormType = ({ onSubmit, onCancel })
   });
 
   return (
-    <StyledForm data-testid='resetPasswordForm' onSubmit={handleSubmit(onSubmit)}>
+    <Form data-testid='resetPasswordForm' onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
         <Form.Label htmlFor='newPassword'>New Password</Form.Label>
         <Form.Control
@@ -49,6 +49,6 @@ export const ResetPasswordForm: ResetPasswordFormType = ({ onSubmit, onCancel })
           SUBMIT
         </SubmitButton>
       </ButtonWrapper>
-    </StyledForm>
+    </Form>
   );
 };
