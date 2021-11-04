@@ -4,7 +4,7 @@ import { FC, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { CancelButton, ButtonWrapper, SubmitButton } from '../../styles/PageStyles';
+import { CancelButton, ButtonWrapper, SubmitButton } from 'features/styles/PageStyles';
 
 export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>;
 

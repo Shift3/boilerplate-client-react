@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
-import { ButtonWrapper, CancelButton, SubmitButton, StyledForm } from '../../../styles/PageStyles';
+import { ButtonWrapper, CancelButton, SubmitButton } from 'features/styles/PageStyles';
 import { ActivateAccountFormSchema } from './schema';
 import { ActivateAccountFormType } from './types';
 
@@ -23,7 +23,7 @@ export const ActivateAccountForm: ActivateAccountFormType = ({ onSubmit, onCance
   }, [trigger]);
 
   return (
-    <StyledForm data-testid='resetPasswordForm' onSubmit={handleSubmit(onSubmit)}>
+    <Form data-testid='resetPasswordForm' onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
         <Form.Label htmlFor='newPassword'>New Password</Form.Label>
         <Form.Control
@@ -56,6 +56,6 @@ export const ActivateAccountForm: ActivateAccountFormType = ({ onSubmit, onCance
           SUBMIT
         </SubmitButton>
       </ButtonWrapper>
-    </StyledForm>
+    </Form>
   );
 };

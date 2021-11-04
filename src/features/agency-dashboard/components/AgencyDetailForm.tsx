@@ -4,7 +4,7 @@ import { Agency } from 'common/models';
 import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { CancelButton, ButtonWrapper, SubmitButton, StyledForm } from '../../styles/PageStyles';
+import { CancelButton, ButtonWrapper, SubmitButton } from 'features/styles/PageStyles';
 
 export type FormData = Pick<Agency, 'agencyName'>;
 
@@ -40,7 +40,7 @@ export const AgencyDetailForm: FC<Props> = ({
   }, [trigger]);
 
   return (
-    <StyledForm onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Group controlId='create-agency-form-agency-name'>
         <Form.Label>Agency Name</Form.Label>
         <Form.Control type='text' isInvalid={!!errors.agencyName} {...register('agencyName')} />
@@ -52,6 +52,6 @@ export const AgencyDetailForm: FC<Props> = ({
           {submitButtonLabel}
         </SubmitButton>
       </ButtonWrapper>
-    </StyledForm>
+    </Form>
   );
 };
