@@ -20,9 +20,7 @@ export const ChangePasswordForm: ChangePasswordFormType = ({ onSubmit }) => {
 
   const history = useHistory();
 
-  const navigateToLogin = () => {
-    history.push('/auth/login');
-  };
+  const onCancel = () => history.goBack();
 
   // Trigger validation on first render.
   useEffect(() => {
@@ -71,7 +69,7 @@ export const ChangePasswordForm: ChangePasswordFormType = ({ onSubmit }) => {
         </Form.Control.Feedback>
       </Form.Group>
       <ButtonWrapper>
-        <CancelButton onClick={navigateToLogin}>CANCEL</CancelButton>
+        <CancelButton onClick={onCancel}>CANCEL</CancelButton>
         <SubmitButton type='submit' disabled={!isValid}>
           SUBMIT
         </SubmitButton>
