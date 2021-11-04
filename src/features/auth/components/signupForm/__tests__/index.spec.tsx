@@ -8,13 +8,15 @@ const mockOnSubmit = jest.fn();
 const mockOnCancel = jest.fn();
 
 describe('SignupForm', () => {
-  beforeEach(() => {
-    render(
-      <ThemeProvider theme={AppTheme}>
-        <SignUpForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
-      </ThemeProvider>,
-    );
-    mockOnSubmit.mockReset();
+  beforeEach(async () => {
+    await act(async () => {
+      render(
+        <ThemeProvider theme={AppTheme}>
+          <SignUpForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+        </ThemeProvider>,
+      );
+      mockOnSubmit.mockReset();
+    });
   });
 
   it('should render form fields', () => {

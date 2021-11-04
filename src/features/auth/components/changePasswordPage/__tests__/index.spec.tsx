@@ -1,25 +1,26 @@
-import { render } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { Router } from 'react-router-dom';
-import { expectInDocByTestId } from 'utils/test';
 import { createMemoryHistory } from 'history';
 import { ChangePasswordPage } from '../index';
 import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
+import { createAppStore } from 'app/redux';
+import { Provider } from 'react-redux';
 
 describe('<ChangePasswordPage/>', () => {
-  describe('Rendering', () => {
-    beforeEach(() =>
+  it('should render page title text', async () => {
+    await act(async () => {
       render(
-        <ThemeProvider theme={AppTheme}>
-          <Router history={createMemoryHistory({ initialEntries: ['/'] })}>
-            <ChangePasswordPage />
-          </Router>
-        </ThemeProvider>,
-      ),
-    );
-
-    it('Should render the <Wrapper/>', () => expectInDocByTestId('wrapper'));
-
-    it('Should render the <ChangePasswordForm/>', () => expectInDocByTestId('changePasswordForm'));
+        <Provider store={createAppStore()}>
+          <ThemeProvider theme={AppTheme}>
+            <Router history={createMemoryHistory({ initialEntries: ['/'] })}>
+              <ChangePasswordPage />
+            </Router>
+          </ThemeProvider>
+        </Provider>,
+      );
+    });
+    const pageTitleText = screen.getByText(/Change Password/i);
+    expect(pageTitleText).toBeInTheDocument();
   });
 });
