@@ -6,6 +6,11 @@ export type CreateUserRequest = Pick<User, 'email' | 'firstName' | 'lastName' | 
 export type UpdateUserRequest = Pick<User, 'id' | 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role'>;
 export type ForgotPasswordRequest = Pick<User, 'email'>;
 export type ResendActivationEmailRequest = Pick<User, 'id'>;
+export type ChangePasswordRequest = Pick<User, 'id'> & {
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+};
 
 export const userApi = createApi({
   reducerPath: 'userApi',
@@ -56,6 +61,14 @@ export const userApi = createApi({
       invalidatesTags: ['User'],
     }),
 
+    changePassword: builder.mutation<void, ChangePasswordRequest>({
+      query: ({ id, ...payload }) => ({
+        url: `/users/change-password/${id}`,
+        method: 'PUT',
+        body: payload,
+      }),
+    }),
+
     forgotPassword: builder.mutation<void, ForgotPasswordRequest>({
       query: (payload) => ({
         url: '/users/forgot-password',
@@ -79,6 +92,7 @@ export const {
   useCreateUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
+  useChangePasswordMutation,
   useForgotPasswordMutation,
   useResendActivationEmailMutation,
 } = userApi;
