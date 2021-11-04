@@ -8,14 +8,12 @@ const mockOnSubmit = jest.fn();
 
 describe('ChangePasswordForm', () => {
   beforeEach(async () => {
-    await act(async () => {
-      render(
-        <ThemeProvider theme={AppTheme}>
-          <ChangePasswordForm onSubmit={mockOnSubmit} />
-        </ThemeProvider>,
-      );
-      mockOnSubmit.mockReset();
-    });
+    render(
+      <ThemeProvider theme={AppTheme}>
+        <ChangePasswordForm onSubmit={mockOnSubmit} />
+      </ThemeProvider>,
+    );
+    mockOnSubmit.mockReset();
   });
 
   it('should render form fields', () => {

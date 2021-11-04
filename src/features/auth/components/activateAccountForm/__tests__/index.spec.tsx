@@ -9,14 +9,12 @@ const mockOnCancel = jest.fn();
 
 describe('ActivateAccountForm', () => {
   beforeEach(async () => {
-    await act(async () => {
-      render(
-        <ThemeProvider theme={AppTheme}>
-          <ActivateAccountForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
-        </ThemeProvider>,
-      );
-      mockOnSubmit.mockReset();
-    });
+    render(
+      <ThemeProvider theme={AppTheme}>
+        <ActivateAccountForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+      </ThemeProvider>,
+    );
+    mockOnSubmit.mockReset();
   });
 
   it('should render form fields', () => {
