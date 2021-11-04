@@ -15,8 +15,8 @@ describe('ActivateAccountForm', () => {
           <ActivateAccountForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
         </ThemeProvider>,
       );
-      mockOnSubmit.mockReset();
     });
+    mockOnSubmit.mockReset();
   });
 
   it('should render form fields', () => {

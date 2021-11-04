@@ -14,8 +14,8 @@ describe('ChangePasswordForm', () => {
           <ChangePasswordForm onSubmit={mockOnSubmit} />
         </ThemeProvider>,
       );
-      mockOnSubmit.mockReset();
     });
+    mockOnSubmit.mockReset();
   });
 
   it('should render form fields', () => {
