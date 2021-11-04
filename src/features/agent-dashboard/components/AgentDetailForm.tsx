@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { Constants } from 'utils/constants';
 import { stateList } from 'utils/states';
 import * as yup from 'yup';
-import { CancelButton, ButtonWrapper, SubmitButton } from '../../styles/PageStyles';
+import { CancelButton, ButtonWrapper, SubmitButton } from 'features/styles/PageStyles';
 
 export type FormData = Pick<Agent, 'name' | 'email' | 'description' | 'phoneNumber' | 'address' | 'thumbnail'>;
 
@@ -71,7 +71,9 @@ export const AgentDetailForm: FC<Props> = ({
       <Form.Group controlId='create-agent-form-agent-name'>
         <Form.Label>Name</Form.Label>
         <Form.Control type='text' {...register('name')} isInvalid={!!errors.name} />
-        <Form.Control.Feedback type='invalid'>{errors.name?.message}</Form.Control.Feedback>
+        <Form.Control.Feedback type='invalid' role='alert'>
+          {errors.name?.message}
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label>Email</Form.Label>
