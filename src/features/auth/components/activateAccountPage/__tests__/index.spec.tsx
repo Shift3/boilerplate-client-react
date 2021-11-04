@@ -1,7 +1,7 @@
 import { act, render } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import { ChangePasswordPage } from '../index';
+import { ActivateAccountPage } from '../index';
 import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
 import { createAppStore } from 'app/redux';
@@ -14,7 +14,7 @@ describe('<ChangePasswordPage/>', () => {
         <Provider store={createAppStore()}>
           <ThemeProvider theme={AppTheme}>
             <Router history={createMemoryHistory({ initialEntries: ['/'] })}>
-              <ChangePasswordPage />
+              <ActivateAccountPage />
             </Router>
           </ThemeProvider>
         </Provider>,

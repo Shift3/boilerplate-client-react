@@ -1,8 +1,7 @@
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import { createAppStore } from 'app/redux';
 import { Provider } from 'react-redux';
 import { FlashMessage } from '..';
-import { expectInDocByTestId } from 'utils/test';
 
 // ---------------- @TODO --------------------
 // -- TEST -- Check that the flash message is not visible.
@@ -16,11 +15,13 @@ import { expectInDocByTestId } from 'utils/test';
 // -- TEST -- (CONDITIONAL) -- After the timeout has completed check that it is not present.
 
 describe('<FlashMessage/>', () => {
-  render(
-    <Provider store={createAppStore()}>
-      <FlashMessage />
-    </Provider>,
-  );
-
-  it('Should render the <FlashMessageContainer />', () => expectInDocByTestId('flashMessageContainer'));
+  it('should render', async () => {
+    await act(async () => {
+      render(
+        <Provider store={createAppStore()}>
+          <FlashMessage />
+        </Provider>,
+      );
+    });
+  });
 });
