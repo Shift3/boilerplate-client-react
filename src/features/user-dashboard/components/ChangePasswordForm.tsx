@@ -2,7 +2,7 @@ import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
-import { ButtonWrapper, CancelButton, SubmitButton, StyledForm } from '../../styles/PageStyles';
+import { ButtonWrapper, CancelButton, SubmitButton } from '../../styles/PageStyles';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 
@@ -53,7 +53,7 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, onCancel }) => {
   }, [trigger]);
 
   return (
-    <StyledForm data-testid='changePasswordForm' onSubmit={handleSubmit(onSubmit)}>
+    <Form name='change-password-form' onSubmit={handleSubmit(onSubmit)}>
       <Form.Group className='position-relative'>
         <Form.Label htmlFor='currentPassword'>Current Password</Form.Label>
         <Form.Control
@@ -105,6 +105,6 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, onCancel }) => {
           SUBMIT
         </SubmitButton>
       </ButtonWrapper>
-    </StyledForm>
+    </Form>
   );
 };
