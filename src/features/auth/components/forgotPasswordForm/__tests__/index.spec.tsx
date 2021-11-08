@@ -9,11 +9,13 @@ const mockOnCancel = jest.fn();
 
 describe('ForgotPasswordForm', () => {
   beforeEach(async () => {
-    render(
-      <ThemeProvider theme={AppTheme}>
-        <ForgotPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
-      </ThemeProvider>,
-    );
+    await act(async () => {
+      render(
+        <ThemeProvider theme={AppTheme}>
+          <ForgotPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+        </ThemeProvider>,
+      );
+    });
     mockOnSubmit.mockReset();
   });
 
