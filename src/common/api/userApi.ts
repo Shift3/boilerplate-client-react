@@ -1,5 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { customBaseQuery } from 'common/api/customBaseQuery';
+import { Session } from 'common/models';
 import { User } from 'common/models/user';
 
 export type CreateUserRequest = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>;
@@ -61,7 +62,7 @@ export const userApi = createApi({
       invalidatesTags: ['User'],
     }),
 
-    changePassword: builder.mutation<void, ChangePasswordRequest>({
+    changePassword: builder.mutation<Session, ChangePasswordRequest>({
       query: ({ id, ...payload }) => ({
         url: `/users/change-password/${id}`,
         method: 'PUT',
