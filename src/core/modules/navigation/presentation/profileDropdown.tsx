@@ -85,7 +85,7 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({
           <NavDropdown.Item as={Link} to='/user/profile'>
             Profile
           </NavDropdown.Item>
-          <NavDropdown.Item as={Link} to='/user/change-password'>
+          <NavDropdown.Item as={Link} to={`/users/change-password/${profile.id}`}>
             Change Password
           </NavDropdown.Item>
           <NavDropdown.Item onClick={onNavBarToggle}>Toggle Navigation Bar</NavDropdown.Item>

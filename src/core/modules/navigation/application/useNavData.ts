@@ -3,6 +3,7 @@ import { useAuth } from 'features/auth/hooks';
 import { useRbac } from 'features/rbac';
 
 export interface IUserProfile {
+  id: number;
   firstName: string;
   lastName: string;
   profilePicture: string | null;
