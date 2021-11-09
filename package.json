@@ -8,7 +8,7 @@
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@reduxjs/toolkit": "^1.6.0",
     "@types/history": "^4.7.9",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "bootstrap": "5.1.1",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
