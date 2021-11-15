@@ -1,6 +1,4 @@
-import { useNavPositionManager } from 'core/modules/navigation/application/useNavPositionManager';
-import { SideNav } from 'core/modules/navigation/presentation/sideNav';
-import { TopNav } from 'core/modules/navigation/presentation/topNav';
+import { SideNavbar, TopNavbar, useNavbarPosition } from 'features/navbar';
 import { FC } from 'react';
 import styled from 'styled-components';
 import { Footer } from '../footer';
@@ -17,7 +15,6 @@ const HolyGrailHeader = styled.header``;
 const HolyGrailMain = styled.div`
   display: flex;
   flex: auto;
-  margin-top: 40px;
 
   @media (max-width: 920px) {
     flex-direction: column;
@@ -32,6 +29,7 @@ const HolyGrailLeft = styled.aside`
 
 const HolyGrailContent = styled.main`
   flex-grow: 1;
+  margin-top: 40px;
 `;
 
 const HolyGrailRight = styled.aside`
@@ -43,20 +41,20 @@ const HolyGrailRight = styled.aside`
 const HolyGrailFooter = styled.footer``;
 
 export const HolyGrailLayout: FC<HolyGrailLayoutProps> = ({ header, leftAside, children, rightAside, footer }) => {
-  const { navPosition, toggleNavPosition } = useNavPositionManager();
+  const { navbarPosition, toggleNavbarPosition } = useNavbarPosition();
 
   return (
     <HolyGrail>
-      {(navPosition === 'top' || header) && (
+      {(navbarPosition === 'top' || header) && (
         <HolyGrailHeader>
-          {navPosition === 'top' && <TopNav onNavToggle={toggleNavPosition} />}
+          {navbarPosition === 'top' && <TopNavbar onNavbarToggle={toggleNavbarPosition} />}
           {header}
         </HolyGrailHeader>
       )}
       <HolyGrailMain>
-        {(navPosition === 'side' || leftAside) && (
+        {(navbarPosition === 'side' || leftAside) && (
           <HolyGrailLeft>
-            {navPosition === 'side' && <SideNav onNavToggle={toggleNavPosition} />}
+            {navbarPosition === 'side' && <SideNavbar onNavbarToggle={toggleNavbarPosition} />}
             {leftAside}
           </HolyGrailLeft>
         )}
