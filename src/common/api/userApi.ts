@@ -12,6 +12,18 @@ export type ChangePasswordRequest = Pick<User, 'id'> & {
   newPassword: string;
   confirmPassword: string;
 };
+export type SignUpRequest = Pick<User, 'email' | 'firstName' | 'lastName'>;
+export type ActivateAccountRequest = {
+  token: string;
+  newPassword: string;
+  confirmPassword: string;
+};
+export type ResetPasswordRequest = {
+  token: string;
+  newPassword: string;
+  confirmPassword: string;
+};
+export type UpdateProfileRequest = Pick<User, 'id' | 'email' | 'firstName' | 'lastName' | 'profilePicture'>;
 
 export const userApi = createApi({
   reducerPath: 'userApi',
@@ -76,6 +88,39 @@ export const userApi = createApi({
         method: 'POST',
         body: payload,
       }),
+    }),
+
+    signUp: builder.mutation<User, SignUpRequest>({
+      query: (payload) => ({
+        url: '/users/signup',
+        method: 'POST',
+        body: payload,
+      }),
+    }),
+
+    activateAccount: builder.mutation<User, ActivateAccountRequest>({
+      query: ({ token, ...payload }) => ({
+        url: `/users/activate-account/${token}`,
+        method: 'PUT',
+        body: payload,
+      }),
+    }),
+
+    resetPassword: builder.mutation<User, ResetPasswordRequest>({
+      query: ({ token, ...payload }) => ({
+        url: `/users/reset-password/${token}`,
+        method: 'PUT',
+        body: payload,
+      }),
+    }),
+
+    updateProfile: builder.mutation<User, UpdateProfileRequest>({
+      query: ({ id, ...payload }) => ({
+        url: `/users/profile/${id}`,
+        method: 'PUT',
+        body: payload,
+      }),
+      invalidatesTags: ['User'],
     }),
 
     resendActivationEmail: builder.mutation<void, ResendActivationEmailRequest>({
