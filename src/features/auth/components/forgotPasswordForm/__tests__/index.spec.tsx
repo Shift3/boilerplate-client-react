@@ -19,12 +19,6 @@ describe('ForgotPasswordForm', () => {
     mockOnSubmit.mockReset();
   });
 
-  it('should render form fields', () => {
-    expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'CANCEL' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'SUBMIT' })).toBeInTheDocument();
-  });
-
   it('should submit form if all form fields are valid', async () => {
     const testFormData = {
       email: 'Testemail@gmail.com',
@@ -39,6 +33,26 @@ describe('ForgotPasswordForm', () => {
 
     expect(mockOnSubmit).toHaveBeenCalledWith(testFormData, expect.any(Object));
   });
+
+  it('should disable the submit button when fields are invalid', async() => {
+    const button = screen.getByRole('button', { name: 'SUBMIT' })
+    expect(button.hasAttribute('disabled')).toBeTruthy();
+  });
+
+  it('should enable the submit button when fields are valid', async() => {
+    const testFormData = {
+      email: 'Testemail@gmail.com',
+    };
+
+    await act(async () => {
+      const emailInput = screen.getByLabelText(/Email/i);
+      userEvent.type(emailInput, testFormData.email);
+    });
+
+    const button = screen.getByRole('button', { name: 'SUBMIT' })
+    expect(button.hasAttribute('disabled')).toBeFalsy();
+  });
+
 
   it('should validate user inputs and provide error messages', async () => {
     const emailInput = screen.getByLabelText(/Email/i);

@@ -5,6 +5,9 @@
 import '@testing-library/jest-dom';
 import { server } from 'test/server';
 
+// TODO(justin): Have logged in and logged out stores exported here
+// (or somewhere else) for use across testing.
+
 beforeAll(() => server.listen());
 
 afterEach(() => server.resetHandlers());
