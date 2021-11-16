@@ -34,25 +34,6 @@ describe('CreateUserView', () => {
       );
     });
 
-    /* NOTE(justin): This is probably not necessary and more brittle
-    than it needs to be, also tests further down the file will fail
-    anyway if there is no form... */
-    /* it('should render a form', async () => {
-     *   // According to MDN docs, the <form> element has an implicit ARIA role of "form" if it has a name attribute
-     *   // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form
-     *   const form = await screen.findByRole('form');
-     *   expect(form).toBeInTheDocument();
-     * });
-
-     * it('should render text input fields', async () => {
-     *   const form = await screen.findByRole('form');
-
-     *   expect(within(form).getByRole('textbox', { name: /first name/i })).toBeInTheDocument();
-     *   expect(within(form).getByRole('textbox', { name: /last name/i })).toBeInTheDocument();
-     *   expect(within(form).getByRole('textbox', { name: /email/i })).toBeInTheDocument();
-     * });
-     */
-
     it('should render Role select field with options', async () => {
       const form = await screen.findByRole('form');
       // According to MDN docs, the <select> element has an implicit ARIA role of "combobox"
@@ -96,20 +77,7 @@ describe('CreateUserView', () => {
         </Router>,
       );
     });
-    /*
-     *     it('should render a form', async () => {
-     *       const form = await screen.findByRole('form');
-     *       expect(form).toBeInTheDocument();
-     *     });
-     *
-     *     it('should render text input fields', async () => {
-     *       const form = await screen.findByRole('form');
-     *
-     *       expect(within(form).getByRole('textbox', { name: /first name/i })).toBeInTheDocument();
-     *       expect(within(form).getByRole('textbox', { name: /last name/i })).toBeInTheDocument();
-     *       expect(within(form).getByRole('textbox', { name: /email/i })).toBeInTheDocument();
-     *     });
-     *  */
+
     it('should render Role select field with options', async () => {
       const form = await screen.findByRole('form');
       const select = within(form).getByRole('combobox', { name: /role/i });
