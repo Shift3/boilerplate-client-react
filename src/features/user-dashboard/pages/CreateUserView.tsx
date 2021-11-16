@@ -41,7 +41,7 @@ export const CreateUserView: FC = () => {
         `An email has been sent to ${data.email} with instructions to finish activating the account.`,
       );
       history.push('/users');
-    } catch (error: any) {
+    } catch (error) {
       notificationService.showErrorMessage('Unable to add user.');
     }
   };

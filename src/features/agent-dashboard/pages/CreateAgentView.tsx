@@ -18,7 +18,7 @@ export const CreateAgentView: FC = () => {
       await createAgent({ ...data, thumbnail: 'https://shift3tech.com/images/s3-logo-white.svg' }).unwrap();
       notificationService.showSuccessMessage('Agent created.');
       history.push('/agents');
-    } catch (error: any) {
+    } catch (error) {
       notificationService.showErrorMessage('Unable to add agent.');
     }
   };

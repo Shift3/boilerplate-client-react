@@ -95,7 +95,7 @@ describe('', () => {
 
       //   expect(axiosInstance.interceptors.response.handlers[0].rejected(error)).rejects.toMatchObject({
       //     error: 'Internal Server Error',
-      //     message: error.message,
+      //     message: (error as Error).message,
       //     statusCode: 500,
       //   });
       // });
