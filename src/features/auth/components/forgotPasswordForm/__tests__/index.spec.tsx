@@ -60,6 +60,7 @@ describe('ForgotPasswordForm', () => {
     await act(async () => {
       userEvent.click(screen.getByRole('button', { name: 'SUBMIT' }));
     });
+
     expect(await screen.findAllByRole('alert')).toHaveLength(1);
   });
 });
