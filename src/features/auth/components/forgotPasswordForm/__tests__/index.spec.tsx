@@ -34,12 +34,12 @@ describe('ForgotPasswordForm', () => {
     expect(mockOnSubmit).toHaveBeenCalledWith(testFormData, expect.any(Object));
   });
 
-  it('should disable the submit button when fields are invalid', async() => {
-    const button = screen.getByRole('button', { name: 'SUBMIT' })
+  it('should disable the submit button when fields are invalid', async () => {
+    const button = screen.getByRole('button', { name: 'SUBMIT' });
     expect(button.hasAttribute('disabled')).toBeTruthy();
   });
 
-  it('should enable the submit button when fields are valid', async() => {
+  it('should enable the submit button when fields are valid', async () => {
     const testFormData = {
       email: 'Testemail@gmail.com',
     };
@@ -49,10 +49,9 @@ describe('ForgotPasswordForm', () => {
       userEvent.type(emailInput, testFormData.email);
     });
 
-    const button = screen.getByRole('button', { name: 'SUBMIT' })
+    const button = screen.getByRole('button', { name: 'SUBMIT' });
     expect(button.hasAttribute('disabled')).toBeFalsy();
   });
-
 
   it('should validate user inputs and provide error messages', async () => {
     const emailInput = screen.getByLabelText(/Email/i);
