@@ -33,7 +33,7 @@ export const UpdateAgentView: FC = () => {
       await updateAgent(updateRequest).unwrap();
       notificationService.showSuccessMessage('Agent updated.');
       history.push('/agents');
-    } catch (error) {
+    } catch (error: any) {
       notificationService.showErrorMessage('Unable to update agent.');
     }
   };

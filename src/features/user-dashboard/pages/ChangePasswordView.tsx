@@ -23,7 +23,7 @@ export const ChangePasswordPage: FC = () => {
       const session = await changePassword(request).unwrap();
       dispatch(authSlice.actions.userLoggedIn({ token: session.jwtToken, user: session.user }));
       notificationService.showSuccessMessage('Password updated.');
-    } catch (error) {
+    } catch (error: any) {
       notificationService.showErrorMessage(((error as FetchBaseQueryError).data as ErrorResponse).message);
     }
 

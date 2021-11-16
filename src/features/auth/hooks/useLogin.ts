@@ -32,7 +32,7 @@ export const useLogin: UseLoginHook = () => {
         dispatch(authSlice.actions.userLoggedIn(auth));
         authLocalStorage.saveAuthState(auth);
         history.replace('/agents');
-      } catch (error) {
+      } catch (error: any) {
         const fetchError = error as FetchBaseQueryError;
 
         if ('data' in fetchError) {

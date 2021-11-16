@@ -32,7 +32,7 @@ export const UpdateAgencyView: FC = () => {
       await updateAgency({ id: Number(id), ...data }).unwrap();
       notificationService.showSuccessMessage('Agency updated.');
       history.push('/agencies');
-    } catch (error) {
+    } catch (error: any) {
       notificationService.showErrorMessage('Unable to update agency.');
     }
   };

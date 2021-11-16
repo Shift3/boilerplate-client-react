@@ -45,7 +45,7 @@ export const UpdateUserView: FC = () => {
       await updateUser({ id: Number(id), ...data }).unwrap();
       history.push('/users');
       notificationService.showSuccessMessage('User updated.');
-    } catch (error) {
+    } catch (error: any) {
       notificationService.showErrorMessage('Unable to update user');
     }
   };

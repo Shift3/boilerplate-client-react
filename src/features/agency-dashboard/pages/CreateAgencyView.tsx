@@ -18,7 +18,7 @@ export const CreateAgencyView: FC = () => {
       await createAgency(data).unwrap();
       notificationService.showSuccessMessage('Agency created.');
       history.push('/agencies');
-    } catch (error) {
+    } catch (error: any) {
       notificationService.showErrorMessage('Unable to add agency.');
     }
   };

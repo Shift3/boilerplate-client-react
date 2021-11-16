@@ -69,10 +69,10 @@ export const AgencyListView: FC = () => {
   const customRenderers: CustomRenderer<AgencyTableItem>[] = [
     {
       key: 'actions',
-      renderer: ({ actions }: AgencyTableItem) => (
+      renderer: ({ actions, id }: AgencyTableItem) => (
         <>
-          {actions.map((action, index) => (
-            <ActionButton key={index} {...action} />
+          {actions.map((action) => (
+            <ActionButton key={id} {...action} />
           ))}
         </>
       ),

@@ -22,7 +22,7 @@ export const TopNavbar: FC<Props> = ({ onNavbarToggle }) => {
   return (
     <Navbar collapseOnSelect expand='lg' className='shadow px-3'>
       <Logo />
-      {!!user ? (
+      {user ? (
         <>
           <Navbar.Toggle aria-controls='responsive-navbar-nav' />
           <Navbar.Collapse id='responsive-navbar-nav' className='justify-content-between'>

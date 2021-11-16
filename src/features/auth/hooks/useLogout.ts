@@ -15,7 +15,7 @@ export const useLogout: UseLogoutHook = () => {
   const logoutUser = useCallback(async () => {
     try {
       await logout();
-    } catch (error) {
+    } catch (error: any) {
       // Nothing to do right now. Whether the api call succeeds or fails, we clear the auth state and
       // navigate to the login page the same way, which is handled in the finally block.
     } finally {

@@ -33,7 +33,7 @@ export const useUpdateProfile = (): UpdateProfileManager => {
       if (onSuccess) {
         onSuccess();
       }
-    } catch (error) {
+    } catch (error: any) {
       notificationService.showErrorMessage(error.message);
 
       if (onError) {
