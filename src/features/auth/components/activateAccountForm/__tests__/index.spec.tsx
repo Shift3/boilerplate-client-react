@@ -45,8 +45,8 @@ describe('ActivateAccountForm', () => {
 
   it('should enable the submit button when fields are valid', async () => {
     const testFormData = {
-      newPassword: 'Testemail@gmail.com',
-      confirmPassword: 'Testemail@gmail.com',
+      newPassword: 'Test1234!',
+      confirmPassword: 'Test1234!',
     };
 
     await act(async () => {

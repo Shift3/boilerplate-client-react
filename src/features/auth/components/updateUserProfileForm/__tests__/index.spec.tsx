@@ -14,18 +14,19 @@ const defaultValues = {
 
 describe('UpdateUserProfileForm', () => {
   beforeEach(async () => {
-    render(
-      <ThemeProvider theme={AppTheme}>
-        <UpdateUserProfileForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} defaultValues={defaultValues} />
-      </ThemeProvider>,
-    );
+    await act(async () => {
+      render(
+        <ThemeProvider theme={AppTheme}>
+          <UpdateUserProfileForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} defaultValues={defaultValues} />
+        </ThemeProvider>,
+      );
+    });
     mockOnSubmit.mockReset();
   });
 
   it('should submit form if all form fields are valid', async () => {
     await act(async () => userEvent.click(screen.getByRole('button', { name: 'UPDATE' })));
     expect(mockOnSubmit).toHaveBeenCalledWith(defaultValues, expect.any(Object));
-
   });
 
   /*
