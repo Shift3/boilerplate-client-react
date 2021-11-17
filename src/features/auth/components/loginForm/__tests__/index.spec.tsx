@@ -17,13 +17,6 @@ describe('LoginForm', () => {
     mockOnSubmit.mockReset();
   });
 
-  it('should render form fields', () => {
-    expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'CANCEL' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'LOG IN' })).toBeInTheDocument();
-  });
-
   it('should submit form if all form fields are valid', async () => {
     const testFormData = {
       email: 'test123@test.com',

@@ -19,13 +19,6 @@ describe('ActivateAccountForm', () => {
     mockOnSubmit.mockReset();
   });
 
-  it('should render form fields', () => {
-    expect(screen.getByLabelText(/New Password/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Confirm Password/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'CANCEL' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'SUBMIT' })).toBeInTheDocument();
-  });
-
   it('should submit form if all form fields are valid', async () => {
     const testFormData = {
       newPassword: 'Test1234!',
@@ -43,6 +36,29 @@ describe('ActivateAccountForm', () => {
     await act(async () => userEvent.click(screen.getByRole('button', { name: 'SUBMIT' })));
 
     expect(mockOnSubmit).toHaveBeenCalledWith(testFormData, expect.any(Object));
+  });
+
+  it('should disable the submit button when fields are invalid', async () => {
+    const button = screen.getByRole('button', { name: 'SUBMIT' });
+    expect(button.hasAttribute('disabled')).toBeTruthy();
+  });
+
+  it('should enable the submit button when fields are valid', async () => {
+    const testFormData = {
+      newPassword: 'Test1234!',
+      confirmPassword: 'Test1234!',
+    };
+
+    await act(async () => {
+      const newPasswordInput = screen.getByLabelText(/New Password/i);
+      userEvent.type(newPasswordInput, testFormData.newPassword);
+
+      const confirmPasswordInput = screen.getByLabelText(/Confirm Password/i);
+      userEvent.type(confirmPasswordInput, testFormData.confirmPassword);
+    });
+
+    const button = screen.getByRole('button', { name: 'SUBMIT' });
+    expect(button.hasAttribute('disabled')).toBeFalsy();
   });
 
   it('should validate user inputs and provide error messages', async () => {
