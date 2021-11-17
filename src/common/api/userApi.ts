@@ -140,5 +140,9 @@ export const {
   useDeleteUserMutation,
   useChangePasswordMutation,
   useForgotPasswordMutation,
+  useSignUpMutation,
+  useActivateAccountMutation,
+  useResetPasswordMutation,
+  useUpdateProfileMutation,
   useResendActivationEmailMutation,
 } = userApi;
