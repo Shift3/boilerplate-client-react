@@ -1,6 +1,6 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ActivateAccountForm } from '../index';
+import { ActivateAccountForm } from '../activateAccountForm/index';
 import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
 

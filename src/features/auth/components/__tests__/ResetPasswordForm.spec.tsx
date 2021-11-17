@@ -1,6 +1,6 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ResetPasswordForm } from '../index';
+import { ResetPasswordForm } from '../resetPasswordForm/index';
 import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
 
