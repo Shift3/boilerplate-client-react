@@ -9,11 +9,13 @@ const mockOnCancel = jest.fn();
 
 describe('PasswordResetForm', () => {
   beforeEach(async () => {
-    render(
-      <ThemeProvider theme={AppTheme}>
-        <PasswordResetForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
-      </ThemeProvider>,
-    );
+    await act(async () => {
+      render(
+        <ThemeProvider theme={AppTheme}>
+          <PasswordResetForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+        </ThemeProvider>,
+      );
+    });
   });
 
   it('should submit form if all form fields are valid', async () => {
@@ -59,11 +61,18 @@ describe('PasswordResetForm', () => {
   });
 
   it('should validate user inputs and provide error messages', async () => {
-    const newPasswordInput = screen.getByLabelText(/New Password/i);
-    userEvent.type(newPasswordInput, 'Testpassword123!');
+    const testFormData = {
+      newPassword: 'bad password',
+      confirmPassword: 'non matching confirm password',
+    };
 
-    const confirmNewPasswordInput = screen.getByLabelText(/Confirm Password/i);
-    userEvent.type(confirmNewPasswordInput, 'Testpassword123!');
+    await act(async () => {
+      const newPasswordInput = screen.getByLabelText(/New Password/i);
+      userEvent.type(newPasswordInput, testFormData.newPassword);
+
+      const confirmNewPasswordInput = screen.getByLabelText(/Confirm Password/i);
+      userEvent.type(confirmNewPasswordInput, testFormData.confirmPassword);
+    });
 
     await act(async () => {
       userEvent.click(screen.getByRole('button', { name: 'SUBMIT' }));
