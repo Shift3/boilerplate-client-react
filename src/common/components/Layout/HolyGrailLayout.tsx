@@ -1,7 +1,7 @@
 import { SideNavbar, TopNavbar, useNavbarPosition } from 'features/navbar';
 import { FC, ReactNode } from 'react';
 import styled from 'styled-components';
-import { Footer } from '../../../features/auth/components/footer';
+import { Footer } from '../Footer';
 
 const HolyGrail = styled.div`
   min-height: 100vh;
