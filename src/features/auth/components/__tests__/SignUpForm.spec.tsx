@@ -1,6 +1,6 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { SignUpForm } from '../signupForm/index';
+import { SignUpForm } from '../SignUpForm';
 import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
 
