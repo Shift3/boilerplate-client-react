@@ -9,11 +9,11 @@ import { Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from '../GlobalStyle';
 import AppTheme from 'utils/styleValues';
-import { HolyGrailLayout } from 'features/auth/components/holyGrailLayout';
-import { UpdateUserProfilePage } from 'features/auth/components/updateUserProfilePage';
+import { HolyGrailLayout } from 'common/components/Layout';
 import { NotificationContainer } from 'common/components/Notification';
 import { NotFoundView } from 'common/components/NotFound';
 import { Routes as AuthRoutes } from 'features/auth/Routes';
+import { UpdateUserProfilePage } from 'features/user-dashboard/updateUserProfilePage';
 
 export const App: FC = () => (
   <ErrorBoundary>
