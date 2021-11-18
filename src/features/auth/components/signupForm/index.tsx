@@ -1,19 +1,42 @@
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
-import { SignUpFormSchema } from './schema';
-import { SignUpFormType } from './types';
 import { ButtonWrapper, CancelButton, SubmitButton } from 'features/styles/PageStyles';
+import * as yup from 'yup';
+import { Constants } from 'utils/constants';
 
-export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
+export type FormData = {
+  email: string;
+  confirmEmail: string;
+  firstName: string;
+  lastName: string;
+};
+
+type Props = {
+  onSubmit: (data: FormData) => void;
+  onCancel: () => void;
+};
+
+const schema: yup.SchemaOf<FormData> = yup.object().shape({
+  email: yup.string().required(Constants.errorMessages.EMAIL_REQUIRED).email(Constants.errorMessages.INVALID_EMAIL),
+  confirmEmail: yup
+    .string()
+    .trim()
+    .required(Constants.errorMessages.EMAIL_REQUIRED)
+    .oneOf([yup.ref('email'), null], Constants.errorMessages.EMAIL_MATCH),
+  firstName: yup.string().trim().required(Constants.errorMessages.FIRST_NAME_REQUIRED),
+  lastName: yup.string().trim().required(Constants.errorMessages.LAST_NAME_REQUIRED),
+});
+
+export const SignUpForm: FC<Props> = ({ onSubmit, onCancel }) => {
   const {
-    register,
-    handleSubmit,
-    trigger,
     formState: { errors, isValid },
+    handleSubmit,
+    register,
+    trigger,
   } = useForm({
-    resolver: yupResolver(SignUpFormSchema),
+    resolver: yupResolver(schema),
     mode: 'all',
   });
 
@@ -33,9 +56,11 @@ export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
           placeholder='Enter your email'
           isInvalid={!!errors.email}
         />
-        <Form.Control.Feedback type='invalid' role='alert'>
-          {errors.email?.message}
-        </Form.Control.Feedback>
+        {errors.email && (
+          <Form.Control.Feedback type='invalid' role='alert'>
+            {errors.email.message}
+          </Form.Control.Feedback>
+        )}
       </Form.Group>
       <Form.Group>
         <Form.Label htmlFor='confirmEmail' placeholder='Confirm email'>
@@ -48,9 +73,11 @@ export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
           placeholder='Confirm your email'
           isInvalid={!!errors.confirmEmail}
         />
-        <Form.Control.Feedback type='invalid' role='alert'>
-          {errors.confirmEmail?.message}
-        </Form.Control.Feedback>
+        {errors.confirmEmail && (
+          <Form.Control.Feedback type='invalid' role='alert'>
+            {errors.confirmEmail.message}
+          </Form.Control.Feedback>
+        )}
       </Form.Group>
       <Form.Group>
         <Form.Label htmlFor='firstName' placeholder='Enter your first name'>
@@ -63,9 +90,11 @@ export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
           placeholder='Enter your first name'
           isInvalid={!!errors.firstName}
         />
-        <Form.Control.Feedback type='invalid' role='alert'>
-          {errors.firstName?.message}
-        </Form.Control.Feedback>
+        {errors.firstName && (
+          <Form.Control.Feedback type='invalid' role='alert'>
+            {errors.firstName.message}
+          </Form.Control.Feedback>
+        )}
       </Form.Group>
       <Form.Group>
         <Form.Label htmlFor='lastName' placeholder='Enter your last name'>
@@ -78,9 +107,11 @@ export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
           placeholder='Enter your last name'
           isInvalid={!!errors.lastName}
         />
-        <Form.Control.Feedback type='invalid' role='alert'>
-          {errors.lastName?.message}
-        </Form.Control.Feedback>
+        {errors.lastName && (
+          <Form.Control.Feedback type='invalid' role='alert'>
+            {errors.lastName.message}
+          </Form.Control.Feedback>
+        )}
       </Form.Group>
       <ButtonWrapper>
         <CancelButton onClick={onCancel}>CANCEL</CancelButton>
