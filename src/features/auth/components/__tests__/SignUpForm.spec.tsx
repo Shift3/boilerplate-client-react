@@ -7,7 +7,7 @@ import AppTheme from 'utils/styleValues';
 const mockOnSubmit = jest.fn();
 const mockOnCancel = jest.fn();
 
-describe('SignupForm', () => {
+describe('SignUpForm', () => {
   beforeEach(async () => {
     await act(async () => {
       render(
@@ -78,21 +78,26 @@ describe('SignupForm', () => {
   });
 
   it('should validate user inputs and provide error messages', async () => {
+    const invalidEmail = 'email';
+    const invalidConfirmEmail = 'confirmEmail';
+    const whiteSpace = ' ';
+
     const emailInput = screen.getByLabelText(/^Email$/i);
-    userEvent.type(emailInput, 'myemail');
+    userEvent.type(emailInput, invalidEmail);
 
     const confirmEmailInput = screen.getByLabelText(/^Confirm Email$/i);
-    userEvent.type(confirmEmailInput, 'myemail123');
+    userEvent.type(confirmEmailInput, invalidConfirmEmail);
 
     const firstNameInput = screen.getByLabelText(/^First Name$/i);
-    userEvent.type(firstNameInput, '@%$!');
+    userEvent.type(firstNameInput, whiteSpace);
 
     const lastNameInput = screen.getByLabelText(/^Last Name$/i);
-    userEvent.type(lastNameInput, '456!&');
+    userEvent.type(lastNameInput, whiteSpace);
 
     await act(async () => {
       userEvent.click(screen.getByRole('button', { name: 'SIGN UP' }));
     });
+
     expect(await screen.findAllByRole('alert')).toHaveLength(4);
   });
 });
