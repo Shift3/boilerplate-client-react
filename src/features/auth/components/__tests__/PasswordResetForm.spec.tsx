@@ -1,17 +1,17 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ResetPasswordForm } from '../resetPasswordForm/index';
 import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
+import { PasswordResetForm } from '../PasswordResetForm';
 
 const mockOnSubmit = jest.fn();
 const mockOnCancel = jest.fn();
 
-describe('ResetPasswordForm', () => {
+describe('PasswordResetForm', () => {
   beforeEach(async () => {
     render(
       <ThemeProvider theme={AppTheme}>
-        <ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+        <PasswordResetForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
       </ThemeProvider>,
     );
   });
