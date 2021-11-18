@@ -1,7 +1,7 @@
 import { ErrorBoundary } from '@sentry/react';
 import { Routes as AgencyRoutes } from 'features/agency-dashboard/Routes';
 import { Routes as AgentRoutes } from 'features/agent-dashboard/Routes';
-import { PrivateRoute } from 'features/auth/components/privateRoute.tsx';
+import { PrivateRoute } from 'features/rbac';
 import { Routes as UserRoutes } from 'features/user-dashboard/Routes';
 import { FC } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
@@ -25,7 +25,7 @@ export const App: FC = () => (
           <PrivateRoute path='/agents' component={AgentRoutes} />
           <PrivateRoute path='/agencies' component={AgencyRoutes} requiredRoles={['Admin', 'Super Administrator']} />
           <PrivateRoute path='/users' component={UserRoutes} requiredRoles={['Admin', 'Super Administrator']} />
-          <PrivateRoute exact path='/' render={() => <Redirect to='/agents' />} />
+          <Route exact path='/' render={() => <Redirect to='/agents' />} />
           <Route component={NotFoundView} />
         </Switch>
       </HolyGrailLayout>
