@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import Modal, { ModalProps } from 'react-bootstrap/Modal';
-import { CancelButton, SubmitButton } from '../../../features/styles/PageStyles';
+import { CancelButton, SubmitButton } from '../../styles/PageStyles';
 import { ConfirmationModalProps } from './types';
 import styled from 'styled-components';
 

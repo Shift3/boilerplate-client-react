@@ -2,7 +2,7 @@ import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { FC, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
-import { PageWrapper, Title, StyledFormWrapper } from '../../styles/PageStyles';
+import { PageWrapper, Title, StyledFormWrapper } from '../../../common/styles/PageStyles';
 import { useGetAgentByIdQuery, useUpdateAgentMutation } from 'common/api/agentApi';
 import * as notificationService from 'common/services/notification';
 

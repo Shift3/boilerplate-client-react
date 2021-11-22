@@ -2,7 +2,7 @@ import { useAuth } from 'features/auth/hooks';
 import { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { FormData, UpdateUserProfileForm } from '../../user-dashboard/components/UpdateUserProfileForm';
-import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
+import { PageWrapper, StyledFormWrapper, Title } from 'common/styles/PageStyles';
 import { useUpdateProfileMutation } from 'common/api/userApi';
 import { handleApiError } from 'common/api/handleApiError';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';

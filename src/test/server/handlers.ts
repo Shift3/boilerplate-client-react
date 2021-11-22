@@ -33,9 +33,8 @@ export const handlers = [
     const newUser = UserFactory.build({ ...(req.body as Partial<User>) });
     return res(ctx.status(StatusCodes.CREATED), ctx.json(newUser));
   }),
-  
-  rest.post(`${baseUrl}/users/forgot-password`, (req, res, ctx) => {
-    return res(ctx.status(StatusCodes.OK))
-  })
-];
 
+  rest.post(`${baseUrl}/users/forgot-password`, (req, res, ctx) => {
+    return res(ctx.status(StatusCodes.OK));
+  }),
+];

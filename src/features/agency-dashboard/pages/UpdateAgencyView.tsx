@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { PageWrapper, Title, StyledFormWrapper } from '../../styles/PageStyles';
+import { PageWrapper, Title, StyledFormWrapper } from '../../../common/styles/PageStyles';
 import { AgencyDetailForm, FormData } from '../components/AgencyDetailForm';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { useGetAgencyByIdQuery, useUpdateAgencyMutation } from 'common/api/agencyApi';

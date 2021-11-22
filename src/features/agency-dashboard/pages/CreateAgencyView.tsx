@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AgencyDetailForm, FormData } from '../components/AgencyDetailForm';
-import { PageWrapper, Title, StyledFormWrapper } from '../../styles/PageStyles';
+import { PageWrapper, Title, StyledFormWrapper } from '../../../common/styles/PageStyles';
 import { useCreateAgencyMutation } from 'common/api/agencyApi';
 import * as notificationService from 'common/services/notification';
 

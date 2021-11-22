@@ -6,7 +6,7 @@ import { FC } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Link, useHistory } from 'react-router-dom';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
-import { CreateButton } from 'features/styles/PageStyles';
+import { CreateButton } from 'common/styles/PageStyles';
 import { HasPermission, useRbac } from 'features/rbac';
 import { useDeleteAgentMutation, useGetAgentsQuery } from 'common/api/agentApi';
 import * as notificationService from 'common/services/notification';

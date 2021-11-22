@@ -2,7 +2,7 @@ import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
-import { ButtonWrapper, CancelButton, StyledForm, SubmitButton } from '../../styles/PageStyles';
+import { ButtonWrapper, CancelButton, StyledForm, SubmitButton } from '../../../common/styles/PageStyles';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 

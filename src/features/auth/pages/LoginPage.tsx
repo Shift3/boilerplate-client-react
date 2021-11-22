@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { ForgotPasswordLink } from '../components/ForgotPasswordLink';
 import { useHistory } from 'react-router-dom';
 import { FormData, LoginForm } from '../components/LoginForm';
-import { ButtonWrapper, SubmitButton, Title } from 'features/styles/PageStyles';
+import { ButtonWrapper, SubmitButton, Title } from 'common/styles/PageStyles';
 import Container from 'react-bootstrap/Container';
 
 const Wrapper = styled(Container).attrs({ fluid: true })`

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
+import { PageWrapper, StyledFormWrapper, Title } from 'common/styles/PageStyles';
 import { FormData, PasswordResetForm } from 'features/auth/components/PasswordResetForm';
 import { useActivateAccountMutation } from 'common/api/userApi';
 import { handleApiError } from 'common/api/handleApiError';

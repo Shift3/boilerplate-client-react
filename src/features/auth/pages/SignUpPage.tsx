@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FormData, SignUpForm } from '../components/SignUpForm';
-import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
+import { PageWrapper, StyledFormWrapper, Title } from 'common/styles/PageStyles';
 import { useSignUpMutation } from 'common/api/userApi';
 import { showSuccessMessage } from 'common/services/notification';
 import { handleApiError } from 'common/api/handleApiError';

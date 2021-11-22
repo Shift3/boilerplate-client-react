@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Form from 'react-bootstrap/Form';
 import { Constants } from 'utils/constants';
-import { ButtonWrapper, CancelButton, StyledForm, SubmitButton } from 'features/styles/PageStyles';
+import { ButtonWrapper, CancelButton, StyledForm, SubmitButton } from 'common/styles/PageStyles';
 
 export type FormData = {
   email: string;

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
+import { PageWrapper, StyledFormWrapper, Title } from 'common/styles/PageStyles';
 import { FormData, PasswordResetForm } from '../components/PasswordResetForm';
 import { useResetPasswordMutation } from 'common/api/userApi';
 import * as notificationService from 'common/services/notification';

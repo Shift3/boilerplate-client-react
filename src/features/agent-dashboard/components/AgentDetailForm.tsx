@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { Constants } from 'utils/constants';
 import { stateList } from 'utils/states';
 import * as yup from 'yup';
-import { CancelButton, ButtonWrapper, SubmitButton, StyledForm } from 'features/styles/PageStyles';
+import { CancelButton, ButtonWrapper, SubmitButton, StyledForm } from 'common/styles/PageStyles';
 
 export type FormData = Pick<Agent, 'name' | 'email' | 'description' | 'phoneNumber' | 'address' | 'thumbnail'>;
 

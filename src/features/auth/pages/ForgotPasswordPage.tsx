@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ForgotPasswordForm, FormData } from '../components/ForgotPasswordForm';
-import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
+import { PageWrapper, StyledFormWrapper, Title } from 'common/styles/PageStyles';
 import * as notificationService from 'common/services/notification';
 import { useForgotPasswordMutation } from 'common/api/userApi';
 import { handleApiError } from 'common/api/handleApiError';

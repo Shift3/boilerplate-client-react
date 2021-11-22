@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useGetRolesQuery } from 'common/api/roleApi';
 import { useCreateUserMutation } from 'common/api/userApi';
-import { PageWrapper, Title, StyledFormWrapper } from 'features/styles/PageStyles';
+import { PageWrapper, Title, StyledFormWrapper } from 'common/styles/PageStyles';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
 import { useRbac } from 'features/rbac';
 import { useAuth } from 'features/auth/hooks';
