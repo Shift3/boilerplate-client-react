@@ -1,4 +1,4 @@
-import { LogInForm } from '../loginForm/index';
+import { LoginForm } from '../LoginForm';
 import { act, render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
@@ -11,7 +11,7 @@ describe('LoginForm', () => {
   beforeEach(async () => {
     render(
       <ThemeProvider theme={AppTheme}>
-        <LogInForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+        <LoginForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
       </ThemeProvider>,
     );
     mockOnSubmit.mockReset();
