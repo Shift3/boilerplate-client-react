@@ -30,7 +30,7 @@ export const SideNavbar: FC<Props> = ({ onNavbarToggle }) => {
         <Logo />
       </FlexGrow>
       <FlexGrow proportion={2}>
-        {!!user ? (
+        {user ? (
           <>
             <Nav className='d-flex flex-column'>
               {navLinks.map((link) => (

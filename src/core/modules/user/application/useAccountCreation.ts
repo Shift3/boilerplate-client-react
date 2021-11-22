@@ -63,7 +63,7 @@ export const useAccountCreation = (): IAccountCreationFacade => {
         onSuccess();
       }
     } catch (error) {
-      notificationService.showErrorMessage(error.message);
+      notificationService.showErrorMessage((error as Error).message);
 
       if (onError) {
         onError();
@@ -87,7 +87,7 @@ export const useAccountCreation = (): IAccountCreationFacade => {
         onSuccess();
       }
     } catch (error) {
-      notificationService.showErrorMessage(error.message);
+      notificationService.showErrorMessage((error as Error).message);
 
       if (onError) {
         onError();

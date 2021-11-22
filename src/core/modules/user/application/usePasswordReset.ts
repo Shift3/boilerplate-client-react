@@ -57,7 +57,7 @@ export const usePasswordReset = (): IPasswordResetFacade => {
         onSuccess();
       }
     } catch (error) {
-      notificationService.showErrorMessage(error.message);
+      notificationService.showErrorMessage((error as Error).message);
 
       if (onError) {
         onError();
@@ -82,7 +82,7 @@ export const usePasswordReset = (): IPasswordResetFacade => {
         onSuccess();
       }
     } catch (error) {
-      notificationService.showErrorMessage(error.message);
+      notificationService.showErrorMessage((error as Error).message);
 
       if (onError) {
         onError();

@@ -142,10 +142,10 @@ export const UserListView: FC = () => {
     },
     {
       key: 'actions',
-      renderer: ({ actions }: UserTableItem) => (
+      renderer: ({ actions, id }: UserTableItem) => (
         <>
-          {actions.map((action, index) => (
-            <ActionButton key={index} {...action} />
+          {actions.map((action) => (
+            <ActionButton key={id} {...action} />
           ))}
         </>
       ),

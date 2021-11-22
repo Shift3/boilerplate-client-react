@@ -34,7 +34,7 @@ export const useUpdateProfile = (): UpdateProfileManager => {
         onSuccess();
       }
     } catch (error) {
-      notificationService.showErrorMessage(error.message);
+      notificationService.showErrorMessage((error as Error).message);
 
       if (onError) {
         onError();
