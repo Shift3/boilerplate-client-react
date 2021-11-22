@@ -1,6 +1,7 @@
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { useAppDispatch } from 'app/redux';
 import { useLoginMutation } from 'common/api/authApi';
+import { handleApiError } from 'common/api/handleApiError';
 import { ErrorResponse } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { useCallback } from 'react';
@@ -26,24 +27,13 @@ export const useLogin: UseLoginHook = () => {
   const loginUser = useCallback(
     async (credentials: Credentials) => {
       try {
-        const session = await login(credentials).unwrap();
-        const { jwtToken: token, user } = session;
+        const { jwtToken: token, user } = await login(credentials).unwrap();
         const auth = { token, user };
         dispatch(authSlice.actions.userLoggedIn(auth));
         authLocalStorage.saveAuthState(auth);
         history.replace('/agents');
       } catch (error) {
-        const fetchError = error as FetchBaseQueryError;
-
-        if ('data' in fetchError) {
-          const { data } = fetchError;
-          const { message } = data as ErrorResponse;
-          notificationService.showErrorMessage(message);
-        } else if (!navigator.onLine) {
-          notificationService.showErrorMessage('No Internet Connection.');
-        } else {
-          notificationService.showErrorMessage('Unable to complete request');
-        }
+        handleApiError(error as FetchBaseQueryError);
       }
     },
     [login, dispatch, history],

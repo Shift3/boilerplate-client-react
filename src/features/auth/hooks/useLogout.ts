@@ -21,7 +21,6 @@ export const useLogout: UseLogoutHook = () => {
     } finally {
       dispatch(authSlice.actions.userLoggedOut());
       authLocalStorage.clearAuthState();
-      history.replace('/auth/login');
     }
   }, [logout, dispatch, history]);
 
