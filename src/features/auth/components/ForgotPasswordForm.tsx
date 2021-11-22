@@ -2,7 +2,7 @@ import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
-import { ButtonWrapper, CancelButton, SubmitButton } from 'features/styles/PageStyles';
+import { ButtonWrapper, CancelButton, StyledForm, SubmitButton } from 'features/styles/PageStyles';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 
@@ -36,7 +36,7 @@ export const ForgotPasswordForm: FC<Props> = ({ onSubmit, onCancel }) => {
   }, [trigger]);
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
         <Form.Label htmlFor='email'>Email</Form.Label>
         <Form.Control
@@ -58,6 +58,6 @@ export const ForgotPasswordForm: FC<Props> = ({ onSubmit, onCancel }) => {
           SUBMIT
         </SubmitButton>
       </ButtonWrapper>
-    </Form>
+    </StyledForm>
   );
 };

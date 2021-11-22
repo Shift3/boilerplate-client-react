@@ -22,6 +22,9 @@ export const StyledFormWrapper = styled.div`
   padding: 50px;
   background-color: ${(props) => props.theme.forms.backgroundColor};
   border-radius: 0.25rem;
+`;
+
+export const StyledForm = styled(Form)`
   & label {
     color: ${(props) => props.theme.forms.labelColor};
     margin: 5px;
@@ -48,16 +51,10 @@ export const StyledFormWrapper = styled.div`
     color: ${(props) => props.theme.forms.errorTextColor};
     padding-bottom: 5px;
   }
+
   & control {
     color: ${(props) => props.theme.forms.control};
   }
-`;
-
-export const StyledForm = styled(Form)`
-  background-color: ${(props) => props.theme.forms.backgroundColor};
-  padding: 40px;
-  border-radius: 5px;
-  width: 400px;
 `;
 
 export const Title = styled.p`

@@ -4,7 +4,7 @@ import { FC, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { CancelButton, ButtonWrapper, SubmitButton } from 'features/styles/PageStyles';
+import { CancelButton, ButtonWrapper, SubmitButton, StyledForm } from 'features/styles/PageStyles';
 
 export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>;
 
@@ -88,7 +88,7 @@ export const UserDetailForm: FC<Props> = ({
   }, [watchAgencyName, availableAgencies, setValue]);
 
   return (
-    <Form name='create-user-form' onSubmit={handleSubmit(onSubmit)}>
+    <StyledForm name='create-user-form' onSubmit={handleSubmit(onSubmit)}>
       <Form.Group controlId='create-user-form-first-name'>
         <Form.Label>First Name</Form.Label>
         <Form.Control type='text' {...register('firstName')} isInvalid={!!errors.firstName} />
@@ -146,6 +146,6 @@ export const UserDetailForm: FC<Props> = ({
           {submitButtonLabel}
         </SubmitButton>
       </ButtonWrapper>
-    </Form>
+    </StyledForm>
   );
 };
