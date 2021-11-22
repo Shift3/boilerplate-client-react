@@ -7,6 +7,7 @@ import { rest } from 'msw';
 export const baseUrl = environment.apiRoute;
 
 export const handlers = [
+  // Agency endpoints
   rest.get(`${baseUrl}/agencies`, (req, res, ctx) => {
     return res(
       ctx.status(StatusCodes.OK),
@@ -14,6 +15,7 @@ export const handlers = [
     );
   }),
 
+  // Role endpoints
   rest.get(`${baseUrl}/roles`, (req, res, ctx) => {
     return res(
       ctx.status(StatusCodes.OK),
@@ -26,8 +28,14 @@ export const handlers = [
     );
   }),
 
+  // User endpoints
   rest.post(`${baseUrl}/users`, (req, res, ctx) => {
     const newUser = UserFactory.build({ ...(req.body as Partial<User>) });
     return res(ctx.status(StatusCodes.CREATED), ctx.json(newUser));
   }),
+  
+  rest.post(`${baseUrl}/users/forgot-password`, (req, res, ctx) => {
+    return res(ctx.status(StatusCodes.OK))
+  })
 ];
+
