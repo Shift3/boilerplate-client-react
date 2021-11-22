@@ -1,5 +1,5 @@
-import { CustomButton } from 'features/auth/components/button/styled';
 import { useAuth } from 'features/auth/hooks';
+import { CustomButton } from 'features/styles/PageStyles';
 import { FC } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
