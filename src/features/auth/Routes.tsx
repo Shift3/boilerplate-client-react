@@ -1,14 +1,15 @@
 import { NotFoundView } from 'common/components/NotFound';
 import { FC } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import {ActivateAccountPage} from './components/activateAccountPage';
-import {ForgotPasswordPage} from './components/forgotPasswordPage';
-import {LogInPage} from './components/loginPage';
-import {ResetPasswordPage} from './components/resetPasswordPage';
+import { ActivateAccountPage } from './pages/ActivateAccountPage';
+import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
+import { LogInPage } from './pages/LoginPage';
+import { ResetPasswordPage } from './pages/ResetPasswordPage';
 import { SignUpPage } from './pages/SignUpPage';
 
 export const Routes: FC = () => {
   const { path } = useRouteMatch();
+
   return (
     <Switch>
       <Route exact path={`${path}/login`} component={LogInPage} />
