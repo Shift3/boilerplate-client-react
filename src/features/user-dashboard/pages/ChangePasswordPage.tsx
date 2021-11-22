@@ -1,7 +1,7 @@
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useAppDispatch } from 'app/redux';
+import { handleApiError } from 'common/api/handleApiError';
 import { ChangePasswordRequest, useChangePasswordMutation } from 'common/api/userApi';
-import { ErrorResponse } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { authSlice } from 'features/auth/authSlice';
 import { useAuth } from 'features/auth/hooks';
@@ -23,11 +23,10 @@ export const ChangePasswordPage: FC = () => {
       const session = await changePassword(request).unwrap();
       dispatch(authSlice.actions.userLoggedIn({ token: session.jwtToken, user: session.user }));
       notificationService.showSuccessMessage('Password updated.');
+      history.push('/agents');
     } catch (error) {
-      notificationService.showErrorMessage(((error as FetchBaseQueryError).data as ErrorResponse).message);
+      handleApiError(error as FetchBaseQueryError);
     }
-
-    history.push('/agents');
   };
 
   const onFormCancel = () => history.goBack();

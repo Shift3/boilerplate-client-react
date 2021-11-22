@@ -1,7 +1,7 @@
 import { act, render, screen, waitFor, within } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory, MemoryHistory } from 'history';
-import { ChangePasswordPage } from '../ChangePasswordView';
+import { ChangePasswordPage } from '../ChangePasswordPage';
 import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
 import { Provider } from 'react-redux';
