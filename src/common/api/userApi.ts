@@ -6,6 +6,7 @@ import { User } from 'common/models/user';
 export type CreateUserRequest = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>;
 export type UpdateUserRequest = Pick<User, 'id' | 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role'>;
 export type ForgotPasswordRequest = Pick<User, 'email'>;
+export type ForgotPasswordResponse = { message: string };
 export type ResendActivationEmailRequest = Pick<User, 'id'>;
 export type ChangePasswordRequest = Pick<User, 'id'> & {
   oldPassword: string;
@@ -82,7 +83,7 @@ export const userApi = createApi({
       }),
     }),
 
-    forgotPassword: builder.mutation<void, ForgotPasswordRequest>({
+    forgotPassword: builder.mutation<ForgotPasswordResponse, ForgotPasswordRequest>({
       query: (payload) => ({
         url: '/users/forgot-password',
         method: 'POST',
