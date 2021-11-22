@@ -3,7 +3,7 @@ import { ErrorResponse } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { StatusCodes } from 'http-status-codes';
 
-export const handleApiError = (error: FetchBaseQueryError) => {
+export const handleApiError = (error: FetchBaseQueryError): void => {
   let message: string;
 
   switch (error.status) {

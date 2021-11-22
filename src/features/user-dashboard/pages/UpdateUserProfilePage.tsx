@@ -1,4 +1,4 @@
-import { useAuth, useLogout } from 'features/auth/hooks';
+import { useAuth } from 'features/auth/hooks';
 import { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { FormData, UpdateUserProfileForm } from '../../user-dashboard/components/UpdateUserProfileForm';
