@@ -24,20 +24,31 @@ describe('UpdateUserProfileForm', () => {
     mockOnSubmit.mockReset();
   });
 
+  it('should populate form fields with default values', async () => {
+    const firstNameInput = screen.getByLabelText(/First Name/i);
+    const lastNameInput = screen.getByLabelText(/Last Name/i);
+    const emailInput = screen.getByLabelText(/Email/i);
+    expect(firstNameInput).toHaveValue(defaultValues.firstName);
+    expect(lastNameInput).toHaveValue(defaultValues.lastName);
+    expect(emailInput).toHaveValue(defaultValues.email);
+  });
+
   it('should submit form if all form fields are valid', async () => {
     await act(async () => userEvent.click(screen.getByRole('button', { name: 'UPDATE' })));
     expect(mockOnSubmit).toHaveBeenCalledWith(defaultValues, expect.any(Object));
   });
 
   it('should validate user inputs and provide error messages', async () => {
-    const firstNameInput = screen.getByLabelText(/First Name/i);
-    userEvent.type(firstNameInput, '123');
+    await act(async () => {
+      const firstNameInput = screen.getByLabelText(/First Name/i);
+      userEvent.clear(firstNameInput);
 
-    const lastNameInput = screen.getByLabelText(/Last Name/i);
-    userEvent.type(lastNameInput, '567');
+      const lastNameInput = screen.getByLabelText(/Last Name/i);
+      userEvent.clear(lastNameInput);
 
-    const emailInput = screen.getByLabelText(/Email/i);
-    userEvent.type(emailInput, 'abc123');
+      const emailInput = screen.getByLabelText(/Email/i);
+      userEvent.clear(emailInput);
+    });
 
     await act(async () => {
       userEvent.click(screen.getByRole('button', { name: 'UPDATE' }));

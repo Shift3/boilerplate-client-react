@@ -167,13 +167,6 @@ describe('ChangePasswordPage', () => {
 
         expect(auth.token).toBe(testAuth.token);
       });
-
-      it('should navigate user to agent list view', async () => {
-        // Wait for promise from API response to resolve.
-        await waitFor(async () => flushPromises());
-
-        expect(history.location.pathname).toBe('/agents');
-      });
     });
   });
 });

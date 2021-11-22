@@ -37,11 +37,16 @@ describe('LoginForm', () => {
   });
 
   it('should validate user inputs and provide error messages', async () => {
-    const emailInput = screen.getByLabelText(/email/i);
-    userEvent.type(emailInput, 'abcd');
+    await act(async () => {
+      const emailInput = screen.getByLabelText(/email/i);
+      userEvent.type(emailInput, 'bademail');
 
-    const passwordInput = screen.getByLabelText(/password/i);
-    userEvent.type(passwordInput, '123');
+      const passwordInput = screen.getByLabelText(/password/i);
+      userEvent.click(passwordInput);
+
+      // Need to click somewhere else after clicking password field to trigger validation.
+      userEvent.click(emailInput);
+    });
 
     await act(async () => {
       userEvent.click(screen.getByRole('button', { name: 'LOG IN' }));

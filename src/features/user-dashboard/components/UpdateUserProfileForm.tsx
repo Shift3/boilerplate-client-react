@@ -15,7 +15,7 @@ export type FormData = {
 type Props = {
   onSubmit: (data: FormData) => void;
   onCancel: () => void;
-  defaultValues: Partial<FormData>;
+  defaultValues?: Partial<FormData>;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
