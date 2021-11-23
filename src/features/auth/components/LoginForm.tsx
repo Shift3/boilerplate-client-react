@@ -35,14 +35,26 @@ export const LogInForm: FC<Props> = ({ onCancel, onSubmit }) => {
     <Form data-testid='loginForm' onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
         <Form.Label htmlFor='email'>Email</Form.Label>
-        <Form.Control id='email' type='email' {...register('email')} placeholder='Enter email' />
+        <Form.Control
+          id='email'
+          type='email'
+          {...register('email')}
+          placeholder='Enter email'
+          isInvalid={!!errors.email}
+        />
         <Form.Control.Feedback type='invalid' role='alert'>
           {errors.email?.message}
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label htmlFor='password'>Password</Form.Label>
-        <Form.Control id='password' type='password' {...register('password')} placeholder='Enter password' />
+        <Form.Control
+          id='password'
+          type='password'
+          {...register('password')}
+          placeholder='Enter password'
+          isInvalid={!!errors.password}
+        />
         <Form.Control.Feedback type='invalid' role='alert'>
           {errors.password?.message}
         </Form.Control.Feedback>
