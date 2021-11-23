@@ -1,7 +1,7 @@
+import { Footer } from 'common/components/Footer';
 import { SideNavbar, TopNavbar, useNavbarPosition } from 'features/navbar';
 import { FC } from 'react';
 import styled from 'styled-components';
-import { Footer } from '../footer';
 import { HolyGrailLayoutProps } from './types';
 
 const HolyGrail = styled.div`
