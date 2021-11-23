@@ -30,7 +30,7 @@ export const App: FC = () => (
           <Route exact path='/auth/activate-account/:token' component={ActivateAccountPage} />
           <Route exact path='/auth/forgot-password' component={ForgotPasswordPage} />
           <Route exact path='/auth/reset-password/:token' component={ResetPasswordPage} />
-          <PrivateRoute exact path='/user/profile/' component={UpdateUserProfilePage} />
+          <PrivateRoute exact path='/user/profile/:id' component={UpdateUserProfilePage} />
           <PrivateRoute path='/agents' component={AgentRoutes} />
           <PrivateRoute path='/agencies' component={AgencyRoutes} requiredRoles={['Super Administrator']} />
           <PrivateRoute path='/users' component={UserRoutes} requiredRoles={['Admin', 'Super Administrator']} />
