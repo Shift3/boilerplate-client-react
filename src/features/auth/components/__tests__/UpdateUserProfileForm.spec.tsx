@@ -1,6 +1,6 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { UpdateUserProfileForm } from '../index';
+import { UpdateUserProfileForm } from '../UpdateUserProfileForm';
 import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
 

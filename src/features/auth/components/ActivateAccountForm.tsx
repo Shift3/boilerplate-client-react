@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import { ButtonWrapper, CancelButton, SubmitButton } from 'features/styles/PageStyles';
-import { ActivateAccountFormSchema } from './schema';
-import { ActivateAccountFormType } from './types';
+import { ActivateAccountFormSchema } from './activateAccountForm/schema';
+import { ActivateAccountFormType } from './activateAccountForm/types';
 
 export const ActivateAccountForm: ActivateAccountFormType = ({ onSubmit, onCancel }) => {
   const {

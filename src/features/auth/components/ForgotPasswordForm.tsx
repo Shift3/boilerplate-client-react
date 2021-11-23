@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
-import { ForgotPasswordFormSchema } from './schema';
-import { ForgotPasswordFormType } from './types';
+import { ForgotPasswordFormSchema } from './forgotPasswordForm/schema';
+import { ForgotPasswordFormType } from './forgotPasswordForm/types';
 import { ButtonWrapper, CancelButton, SubmitButton } from 'features/styles/PageStyles';
 
 export const ForgotPasswordForm: ForgotPasswordFormType = ({ onSubmit, onCancel }) => {

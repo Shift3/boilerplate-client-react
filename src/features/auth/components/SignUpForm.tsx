@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
-import { SignUpFormSchema } from './schema';
-import { SignUpFormType } from './types';
+import { SignUpFormSchema } from './signupForm/schema';
+import { SignUpFormType } from './signupForm/types';
 import { ButtonWrapper, CancelButton, SubmitButton } from 'features/styles/PageStyles';
 
 export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {

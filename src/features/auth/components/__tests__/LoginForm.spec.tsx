@@ -1,4 +1,4 @@
-import { LogInForm } from '../index';
+import { LogInForm } from '../LoginForm';
 import { act, render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';

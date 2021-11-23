@@ -2,8 +2,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FC } from 'react';
 import { Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { UpdateUserProfileFormSchema } from './schema';
-import { UpdateUserProfileFormProps } from './types';
+import { UpdateUserProfileFormSchema } from './updateUserProfileForm/schema';
+import { UpdateUserProfileFormProps } from './updateUserProfileForm/types';
 import { ButtonWrapper, CancelButton, SubmitButton } from 'features/styles/PageStyles';
 
 export const UpdateUserProfileForm: FC<UpdateUserProfileFormProps> = ({ onSubmit, onCancel, defaultValues }) => {

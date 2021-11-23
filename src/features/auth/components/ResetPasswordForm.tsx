@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
-import { ResetPasswordFormSchema } from './schema';
-import { ResetPasswordFormType } from './types';
+import { ResetPasswordFormSchema } from './resetPasswordForm/schema';
+import { ResetPasswordFormType } from './resetPasswordForm/types';
 import { ButtonWrapper, CancelButton, SubmitButton } from 'features/styles/PageStyles';
 
 export const ResetPasswordForm: ResetPasswordFormType = ({ onSubmit, onCancel }) => {
