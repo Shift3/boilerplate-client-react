@@ -8,7 +8,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from '../GlobalStyle';
 import AppTheme from 'utils/styleValues';
-import { HolyGrailLayout } from 'features/auth/components/holyGrailLayout';
+import { HolyGrailLayout } from 'common/components/HolyGrailLayout';
 import { LogInPage } from 'features/auth/components/loginPage';
 import { SignUpPage } from 'features/auth/components/signupPage';
 import { ActivateAccountPage } from 'features/auth/components/activateAccountPage';
