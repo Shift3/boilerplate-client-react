@@ -1,6 +1,5 @@
 import { render, screen, getRoles } from '@testing-library/react';
 import { Router } from 'react-router-dom';
-import { LogInPage } from '../index';
 import { expectInDocByTestId } from 'utils/test';
 import { Provider } from 'react-redux';
 import { createAppStore } from 'app/redux';
@@ -8,6 +7,7 @@ import { createMemoryHistory, MemoryHistory } from 'history';
 import userEvent from '@testing-library/user-event';
 import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
+import { LogInPage } from '../LoginPage';
 
 describe('<LoginPage/>', () => {
   describe('Rendering', () => {

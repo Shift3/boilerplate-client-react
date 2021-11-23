@@ -9,11 +9,13 @@ const mockOnCancel = jest.fn();
 
 describe('ResetPasswordForm', () => {
   beforeEach(async () => {
-    render(
-      <ThemeProvider theme={AppTheme}>
-        <ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
-      </ThemeProvider>,
-    );
+    await act(async () => {
+      render(
+        <ThemeProvider theme={AppTheme}>
+          <ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+        </ThemeProvider>,
+      );
+    });
   });
 
   it('should submit form if all form fields are valid', async () => {
