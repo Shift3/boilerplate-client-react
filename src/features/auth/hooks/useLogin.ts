@@ -2,8 +2,6 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { useAppDispatch } from 'app/redux';
 import { useLoginMutation } from 'common/api/authApi';
 import { handleApiError } from 'common/api/handleApiError';
-import { ErrorResponse } from 'common/models';
-import * as notificationService from 'common/services/notification';
 import { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as authLocalStorage from '../authLocalStorage';
