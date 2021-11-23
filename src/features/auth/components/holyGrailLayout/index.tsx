@@ -1,8 +1,7 @@
 import { Footer } from 'common/components/Footer';
 import { SideNavbar, TopNavbar, useNavbarPosition } from 'features/navbar';
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import styled from 'styled-components';
-import { HolyGrailLayoutProps } from './types';
 
 const HolyGrail = styled.div`
   min-height: 100vh;
@@ -40,7 +39,15 @@ const HolyGrailRight = styled.aside`
 
 const HolyGrailFooter = styled.footer``;
 
-export const HolyGrailLayout: FC<HolyGrailLayoutProps> = ({ header, leftAside, children, rightAside, footer }) => {
+type Props = {
+  header?: ReactNode;
+  leftAside?: ReactNode;
+  children?: ReactNode;
+  rightAside?: ReactNode;
+  footer?: ReactNode;
+};
+
+export const HolyGrailLayout: FC<Props> = ({ header, leftAside, children, rightAside, footer }) => {
   const { navbarPosition, toggleNavbarPosition } = useNavbarPosition();
 
   return (
