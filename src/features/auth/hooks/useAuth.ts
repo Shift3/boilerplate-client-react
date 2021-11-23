@@ -3,5 +3,4 @@ import { AuthState, selectAuthState } from '../authSlice';
 
 export type UseAuthHook = () => AuthState;
 
-export const useAuth: UseAuthHook = () =>
-  useAppSelector(selectAuthState, (first: AuthState, second: AuthState) => first.token === second.token);
+export const useAuth: UseAuthHook = () => useAppSelector(selectAuthState);
