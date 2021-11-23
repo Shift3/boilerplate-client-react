@@ -1,58 +1,64 @@
+import { FC, useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FC } from 'react';
 import { Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { UpdateUserProfileFormSchema } from './updateUserProfileForm/schema';
-import { UpdateUserProfileFormProps } from './updateUserProfileForm/types';
+import * as yup from 'yup';
 import { ButtonWrapper, CancelButton, SubmitButton } from 'features/styles/PageStyles';
+import { Constants } from 'utils/constants';
 
-export const UpdateUserProfileForm: FC<UpdateUserProfileFormProps> = ({ onSubmit, onCancel, defaultValues }) => {
+export type FormData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+};
+
+type Props = {
+  onSubmit: (data: FormData) => void;
+  onCancel: () => void;
+  defaultValues?: Partial<FormData>;
+};
+
+const schema: yup.SchemaOf<FormData> = yup.object().shape({
+  firstName: yup.string().trim().required(Constants.errorMessages.FIRST_NAME_REQUIRED),
+  lastName: yup.string().trim().required(Constants.errorMessages.LAST_NAME_REQUIRED),
+  email: yup.string().required(Constants.errorMessages.EMAIL_REQUIRED).email(Constants.errorMessages.INVALID_EMAIL),
+});
+
+export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, onCancel, defaultValues }) => {
   const {
-    register,
-    handleSubmit,
     formState: { errors, isValid },
+    handleSubmit,
+    register,
+    trigger,
   } = useForm({
-    resolver: yupResolver(UpdateUserProfileFormSchema),
+    resolver: yupResolver(schema),
     mode: 'all',
+    defaultValues,
   });
+
+  useEffect(() => {
+    trigger();
+  }, [trigger]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
         <Form.Label htmlFor='firstName'>First Name</Form.Label>
-        <Form.Control
-          id='firstName'
-          type='text'
-          defaultValue={defaultValues.firstName}
-          {...register('firstName')}
-          isInvalid={!!errors.firstName}
-        />
+        <Form.Control id='firstName' type='text' {...register('firstName')} isInvalid={!!errors.firstName} />
         <Form.Control.Feedback type='invalid' role='alert'>
           {errors.firstName?.message}
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label htmlFor='lastName'>Last Name</Form.Label>
-        <Form.Control
-          id='lastName'
-          type='text'
-          defaultValue={defaultValues.lastName}
-          {...register('lastName')}
-          isInvalid={!!errors.lastName}
-        />
+        <Form.Control id='lastName' type='text' {...register('lastName')} isInvalid={!!errors.lastName} />
         <Form.Control.Feedback type='invalid' role='alert'>
           {errors.lastName?.message}
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label htmlFor='email'>Email</Form.Label>
-        <Form.Control
-          id='email'
-          type='email'
-          defaultValue={defaultValues.email}
-          {...register('email')}
-          isInvalid={!!errors.email}
-        />
+        <Form.Control id='email' type='email' {...register('email')} isInvalid={!!errors.email} />
         <Form.Control.Feedback type='invalid' role='alert'>
           {errors.email?.message}
         </Form.Control.Feedback>

@@ -1,19 +1,18 @@
 import { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { ResetPasswordForm } from '../resetPasswordForm';
-import { IResetPasswordFormData } from '../resetPasswordForm/types';
 import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
 import { handleApiError } from 'common/api/handleApiError';
 import * as notificationService from 'common/services/notification';
 import { useResetPasswordMutation } from 'common/api/userApi';
+import { FormData, ResetPasswordForm } from '../components/ResetPasswordForm';
 
 export const ResetPasswordPage: FC = () => {
   const history = useHistory();
   const { token } = useParams<{ token: string }>();
   const [resetPassword] = useResetPasswordMutation();
 
-  const onSubmit = async (formData: IResetPasswordFormData) => {
+  const onSubmit = async (formData: FormData) => {
     const data = { ...formData, token };
 
     try {

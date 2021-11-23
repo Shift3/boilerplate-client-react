@@ -1,18 +1,17 @@
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
-import { ISignUpFormData } from '../signupForm/types';
-import { SignUpForm } from '../signupForm';
 import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
 import { useSignUpMutation } from 'common/api/userApi';
 import { handleApiError } from 'common/api/handleApiError';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import * as notificationService from 'common/services/notification';
+import { FormData, SignUpForm } from '../components/SignUpForm';
 
 export const SignUpPage: FC = () => {
   const history = useHistory();
   const [signUp] = useSignUpMutation();
 
-  const onSubmit = async (formData: ISignUpFormData) => {
+  const onSubmit = async (formData: FormData) => {
     const data = { ...formData };
 
     try {

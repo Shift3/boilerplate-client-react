@@ -1,18 +1,17 @@
-import { LogInForm } from '../loginForm';
 import { useLogin } from 'features/auth/hooks';
 import { FC } from 'react';
 import styled from 'styled-components';
-import { ILogInFormData } from '../loginForm/types';
-import { ForgotPasswordLink } from './forgotPassword';
-import { RegisterCallToAction } from './registerCallToAction';
 import { useHistory } from 'react-router-dom';
+import { FormData, LogInForm } from '../components/LoginForm';
+import { ForgotPasswordLink } from '../components/ForgotPasswordLink';
+import { RegisterCallToAction } from '../components/RegisterCallToAction';
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-color: ${(props) => props.theme.app.backgroundColor};
+  background-color: ${props => props.theme.app.backgroundColor};
 `;
 
 const StyledContainer = styled.div`
@@ -23,7 +22,7 @@ const StyledContainer = styled.div`
   width: 850px;
   min-height: 420px;
   padding: 60px;
-  background-color: ${(props) => props.theme.forms.backgroundColor};
+  background-color: ${props => props.theme.forms.backgroundColor};
 `;
 
 const LeftColumn = styled.div`
@@ -37,7 +36,7 @@ const RightColumn = styled.div`
 `;
 
 const Title = styled.div`
-  color: ${(props) => props.theme.forms.title};
+  color: ${props => props.theme.forms.title};
   font-size: 2.4em;
   font-style: bold;
   margin-bottom: 5px;
@@ -47,7 +46,7 @@ export const LogInPage: FC = () => {
   const history = useHistory();
   const { login } = useLogin();
 
-  const onSubmit = async (credentials: ILogInFormData) => {
+  const onSubmit = async (credentials: FormData) => {
     login(credentials);
   };
 

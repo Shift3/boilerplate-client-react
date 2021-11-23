@@ -1,19 +1,45 @@
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
+import * as yup from 'yup';
 import { ButtonWrapper, CancelButton, SubmitButton } from 'features/styles/PageStyles';
-import { ActivateAccountFormSchema } from './activateAccountForm/schema';
-import { ActivateAccountFormType } from './activateAccountForm/types';
+import { Constants } from 'utils/constants';
 
-export const ActivateAccountForm: ActivateAccountFormType = ({ onSubmit, onCancel }) => {
+export type FormData = {
+  newPassword: string;
+  confirmPassword: string;
+};
+
+type Props = {
+  onSubmit: (data: FormData) => void;
+  onCancel: () => void;
+};
+
+const schema: yup.SchemaOf<FormData> = yup.object().shape({
+  newPassword: yup
+    .string()
+    .required(Constants.errorMessages.NEW_PASSWORD_REQUIRED)
+    .min(8, Constants.errorMessages.PASSWORD_LENGTH)
+    .matches(Constants.patterns.LOWERCASE_REGEX, Constants.errorMessages.PASSWORD_LOWERCASE)
+    .matches(Constants.patterns.UPPERCASE_REGEX, Constants.errorMessages.PASSWORD_UPPERCASE)
+    .matches(Constants.patterns.SYMBOL_REGEX, Constants.errorMessages.PASSWORD_SPECIAL_CHARACTER)
+    .matches(Constants.patterns.DIGIT_REGEX, Constants.errorMessages.PASSWORD_NUMBER),
+
+  confirmPassword: yup
+    .string()
+    .required(Constants.errorMessages.CONFIRM_PASSWORD_REQUIRED)
+    .oneOf([yup.ref('newPassword')], Constants.errorMessages.PASSWORD_MUST_MATCH),
+});
+
+export const ActivateAccountForm: FC<Props> = ({ onSubmit, onCancel }) => {
   const {
-    register,
-    handleSubmit,
-    trigger,
     formState: { errors, isValid },
+    handleSubmit,
+    register,
+    trigger,
   } = useForm({
-    resolver: yupResolver(ActivateAccountFormSchema),
+    resolver: yupResolver(schema),
     mode: 'all',
   });
 
@@ -23,7 +49,7 @@ export const ActivateAccountForm: ActivateAccountFormType = ({ onSubmit, onCance
   }, [trigger]);
 
   return (
-    <Form data-testid='resetPasswordForm' onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
         <Form.Label htmlFor='newPassword'>New Password</Form.Label>
         <Form.Control

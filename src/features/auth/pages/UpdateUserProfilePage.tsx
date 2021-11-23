@@ -1,9 +1,7 @@
 import { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { UpdateUserProfileFormData } from '../updateUserProfileForm/types';
 import { useAuth } from 'features/auth/hooks';
-import { UpdateUserProfileForm } from '../updateUserProfileForm/index';
 import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
 import { useUpdateProfileMutation } from 'common/api/userApi';
 import { handleApiError } from 'common/api/handleApiError';
@@ -11,6 +9,7 @@ import { useAppDispatch } from 'app/redux';
 import { authSlice } from 'features/auth/authSlice';
 import * as notificationService from 'common/services/notification';
 import * as authLocalStorage from 'features/auth/authLocalStorage';
+import { FormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
 
 type RouteParams = {
   id: string;
@@ -23,7 +22,7 @@ export const UpdateUserProfilePage: FC = () => {
   const [updateProfile] = useUpdateProfileMutation();
   const dispatch = useAppDispatch();
 
-  const onSubmit = async (formData: UpdateUserProfileFormData) => {
+  const onSubmit = async (formData: FormData) => {
     const data = { id: Number(id), ...formData, profilePicture: '' };
 
     try {

@@ -1,19 +1,41 @@
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
-import { SignUpFormSchema } from './signupForm/schema';
-import { SignUpFormType } from './signupForm/types';
+import * as yup from 'yup';
 import { ButtonWrapper, CancelButton, SubmitButton } from 'features/styles/PageStyles';
+import { Constants } from 'utils/constants';
 
-export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
+export type FormData = {
+  email: string;
+  confirmEmail: string;
+  firstName: string;
+  lastName: string;
+};
+type Props = {
+  onSubmit: (data: FormData) => void;
+  onCancel: () => void;
+};
+
+const schema: yup.SchemaOf<FormData> = yup.object().shape({
+  email: yup.string().required(Constants.errorMessages.EMAIL_REQUIRED).email(Constants.errorMessages.INVALID_EMAIL),
+  confirmEmail: yup
+    .string()
+    .trim()
+    .required(Constants.errorMessages.EMAIL_REQUIRED)
+    .oneOf([yup.ref('email'), null], Constants.errorMessages.EMAIL_MATCH),
+  firstName: yup.string().trim().required(Constants.errorMessages.FIRST_NAME_REQUIRED),
+  lastName: yup.string().trim().required(Constants.errorMessages.LAST_NAME_REQUIRED),
+});
+
+export const SignUpForm: FC<Props> = ({ onSubmit, onCancel }) => {
   const {
-    register,
-    handleSubmit,
-    trigger,
     formState: { errors, isValid },
+    handleSubmit,
+    register,
+    trigger,
   } = useForm({
-    resolver: yupResolver(SignUpFormSchema),
+    resolver: yupResolver(schema),
     mode: 'all',
   });
 
@@ -23,7 +45,7 @@ export const SignUpForm: SignUpFormType = ({ onSubmit, onCancel }) => {
   }, [trigger]);
 
   return (
-    <Form data-testid='signupForm' onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
         <Form.Label htmlFor='email'>Email</Form.Label>
         <Form.Control

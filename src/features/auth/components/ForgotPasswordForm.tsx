@@ -1,19 +1,32 @@
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
-import { ForgotPasswordFormSchema } from './forgotPasswordForm/schema';
-import { ForgotPasswordFormType } from './forgotPasswordForm/types';
+import * as yup from 'yup';
 import { ButtonWrapper, CancelButton, SubmitButton } from 'features/styles/PageStyles';
+import { Constants } from 'utils/constants';
 
-export const ForgotPasswordForm: ForgotPasswordFormType = ({ onSubmit, onCancel }) => {
+export type FormData = {
+  email: string;
+};
+
+type Props = {
+  onSubmit: (data: FormData) => void;
+  onCancel: () => void;
+};
+
+const schema: yup.SchemaOf<FormData> = yup.object().shape({
+  email: yup.string().required(Constants.errorMessages.EMAIL_REQUIRED).email(Constants.errorMessages.INVALID_EMAIL),
+});
+
+export const ForgotPasswordForm: FC<Props> = ({ onSubmit, onCancel }) => {
   const {
-    register,
-    handleSubmit,
-    trigger,
     formState: { errors, isValid },
+    handleSubmit,
+    register,
+    trigger,
   } = useForm({
-    resolver: yupResolver(ForgotPasswordFormSchema),
+    resolver: yupResolver(schema),
     mode: 'all',
   });
 
@@ -23,7 +36,7 @@ export const ForgotPasswordForm: ForgotPasswordFormType = ({ onSubmit, onCancel 
   }, [trigger]);
 
   return (
-    <Form data-testid='forgotPasswordForm' onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
         <Form.Label htmlFor='email'>Email</Form.Label>
         <Form.Control

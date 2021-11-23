@@ -1,19 +1,18 @@
 import { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { IResetPasswordFormData } from '../resetPasswordForm/types';
 import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
-import { ActivateAccountForm } from 'features/auth/components/activateAccountForm';
 import { useActivateAccountMutation } from 'common/api/userApi';
 import { handleApiError } from 'common/api/handleApiError';
 import * as notificationService from 'common/services/notification';
+import { ActivateAccountForm, FormData } from '../components/ActivateAccountForm';
 
 export const ActivateAccountPage: FC = () => {
   const history = useHistory();
   const { token } = useParams<{ token: string }>();
   const [activateAccount] = useActivateAccountMutation();
 
-  const onSubmit = async (formData: IResetPasswordFormData) => {
+  const onSubmit = async (formData: FormData) => {
     const data = { ...formData, token };
 
     try {
