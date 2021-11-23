@@ -1,19 +1,28 @@
 import { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { ResetPasswordForm } from '../resetPasswordForm';
 import { IResetPasswordFormData } from '../resetPasswordForm/types';
 import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
-import { usePasswordReset } from 'core/modules/user/application/usePasswordReset';
+import { handleApiError } from 'common/api/handleApiError';
+import * as notificationService from 'common/services/notification';
+import { useResetPasswordMutation } from 'common/api/userApi';
 
 export const ResetPasswordPage: FC = () => {
   const history = useHistory();
   const { token } = useParams<{ token: string }>();
-  const { resetPassword } = usePasswordReset();
+  const [resetPassword] = useResetPasswordMutation();
 
   const onSubmit = async (formData: IResetPasswordFormData) => {
     const data = { ...formData, token };
-    const onSuccess = () => history.push('/');
-    await resetPassword(data, onSuccess);
+
+    try {
+      await resetPassword(data).unwrap();
+      notificationService.showSuccessMessage('The password was reset successfully. Please log in.');
+      history.push('/auth/login');
+    } catch (error) {
+      handleApiError(error as FetchBaseQueryError);
+    }
   };
 
   const onCancel = () => history.push('/auth/login');
