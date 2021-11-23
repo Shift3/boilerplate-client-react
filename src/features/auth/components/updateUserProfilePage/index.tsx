@@ -1,29 +1,41 @@
-import { UpdateUserProfileFormData } from '../updateUserProfileForm/types';
-import { useUpdateProfile } from 'core/modules/user/application/useUpdateProfile';
-import { useAuth, useLogout } from 'features/auth/hooks';
 import { FC } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+import { UpdateUserProfileFormData } from '../updateUserProfileForm/types';
+import { useAuth } from 'features/auth/hooks';
 import { UpdateUserProfileForm } from '../updateUserProfileForm/index';
 import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
+import { useUpdateProfileMutation } from 'common/api/userApi';
+import { handleApiError } from 'common/api/handleApiError';
+import { useAppDispatch } from 'app/redux';
+import { authSlice } from 'features/auth/authSlice';
+import * as notificationService from 'common/services/notification';
+import * as authLocalStorage from 'features/auth/authLocalStorage';
+
+type RouteParams = {
+  id: string;
+};
 
 export const UpdateUserProfilePage: FC = () => {
   const history = useHistory();
-  const { user } = useAuth();
-  const { logout } = useLogout();
-  const { updateProfile } = useUpdateProfile();
+  const { id } = useParams<RouteParams>();
+  const { token, user } = useAuth();
+  const [updateProfile] = useUpdateProfileMutation();
+  const dispatch = useAppDispatch();
 
   const onSubmit = async (formData: UpdateUserProfileFormData) => {
-    const data = { ...formData, profilePicture: '' };
+    const data = { id: Number(id), ...formData, profilePicture: '' };
 
-    const onSuccess = () => {
-      if (user && user.email !== formData.email) {
-        logout();
-      } else {
-        history.goBack();
-      }
-    };
-
-    updateProfile(data, onSuccess);
+    try {
+      const updatedUser = await updateProfile(data).unwrap();
+      const newAuth = { token, user: updatedUser };
+      dispatch(authSlice.actions.userLoggedIn(newAuth));
+      authLocalStorage.saveAuthState(newAuth);
+      notificationService.showSuccessMessage('Profile updated.');
+      history.push('/agents');
+    } catch (error) {
+      handleApiError(error as FetchBaseQueryError);
+    }
   };
 
   const onCancel = () => history.goBack();

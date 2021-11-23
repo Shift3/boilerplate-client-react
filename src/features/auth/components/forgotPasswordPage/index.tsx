@@ -1,18 +1,25 @@
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { ForgotPasswordForm } from '../forgotPasswordForm';
 import { IForgotPassswordFormData } from '../forgotPasswordForm/types';
 import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
-import { usePasswordReset } from 'core/modules/user/application/usePasswordReset';
+import { useForgotPasswordMutation } from 'common/api/userApi';
+import * as notificationService from 'common/services/notification';
+import { handleApiError } from 'common/api/handleApiError';
 
 export const ForgotPasswordPage: FC = () => {
   const history = useHistory();
-  const { sendResetPasswordEmail } = usePasswordReset();
+  const [forgotPassword] = useForgotPasswordMutation();
 
-  const onSubmit = (formData: IForgotPassswordFormData) => {
-    const { email } = formData;
-    const onSuccess = () => history.push('/');
-    sendResetPasswordEmail(email, onSuccess);
+  const onSubmit = async (formData: IForgotPassswordFormData) => {
+    try {
+      const { message } = await forgotPassword(formData).unwrap();
+      notificationService.showSuccessMessage(message);
+      history.push('/auth/login');
+    } catch (error) {
+      handleApiError(error as FetchBaseQueryError);
+    }
   };
 
   const onCancel = () => history.push('/auth/login');

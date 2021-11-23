@@ -15,6 +15,7 @@ import { ActivateAccountPage } from 'features/auth/components/activateAccountPag
 import { ForgotPasswordPage } from 'features/auth/components/forgotPasswordPage';
 import { ResetPasswordPage } from 'features/auth/components/resetPasswordPage';
 import { UpdateUserProfilePage } from 'features/auth/components/updateUserProfilePage';
+import { ChangePasswordPage } from 'features/user-dashboard/pages/ChangePasswordView';
 import { NotificationContainer } from 'common/components/Notification';
 import { NotFoundView } from 'common/components/NotFound';
 
@@ -29,7 +30,8 @@ export const App: FC = () => (
           <Route exact path='/auth/activate-account/:token' component={ActivateAccountPage} />
           <Route exact path='/auth/forgot-password' component={ForgotPasswordPage} />
           <Route exact path='/auth/reset-password/:token' component={ResetPasswordPage} />
-          <PrivateRoute exact path='/user/profile/' component={UpdateUserProfilePage} />
+          <PrivateRoute exact path='/user/profile/:id' component={UpdateUserProfilePage} />
+          <PrivateRoute exact path='/user/change-password/:id' component={ChangePasswordPage} />
           <PrivateRoute path='/agents' component={AgentRoutes} />
           <PrivateRoute path='/agencies' component={AgencyRoutes} requiredRoles={['Super Administrator']} />
           <PrivateRoute path='/users' component={UserRoutes} requiredRoles={['Admin', 'Super Administrator']} />

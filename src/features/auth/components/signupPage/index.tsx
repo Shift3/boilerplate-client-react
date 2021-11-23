@@ -3,16 +3,25 @@ import { useHistory } from 'react-router-dom';
 import { ISignUpFormData } from '../signupForm/types';
 import { SignUpForm } from '../signupForm';
 import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
-import { useAccountCreation } from 'core/modules/user/application/useAccountCreation';
+import { useSignUpMutation } from 'common/api/userApi';
+import { handleApiError } from 'common/api/handleApiError';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+import * as notificationService from 'common/services/notification';
 
 export const SignUpPage: FC = () => {
   const history = useHistory();
-  const { createAccount } = useAccountCreation();
+  const [signUp] = useSignUpMutation();
 
   const onSubmit = async (formData: ISignUpFormData) => {
     const data = { ...formData };
-    const onSuccess = () => history.push('/auth/login');
-    await createAccount(data, onSuccess);
+
+    try {
+      await signUp(data);
+      notificationService.showSuccessMessage(`An activation email has been sent to ${data.email}.`);
+      history.push('/auth/login');
+    } catch (error) {
+      handleApiError(error as FetchBaseQueryError);
+    }
   };
 
   const onCancel = () => history.push('/auth/login');

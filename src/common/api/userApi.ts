@@ -3,15 +3,28 @@ import { customBaseQuery } from 'common/api/customBaseQuery';
 import { Session } from 'common/models';
 import { User } from 'common/models/user';
 
-export type CreateUserRequest = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>;
-export type UpdateUserRequest = Pick<User, 'id' | 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role'>;
-export type ForgotPasswordRequest = Pick<User, 'email'>;
-export type ResendActivationEmailRequest = Pick<User, 'id'>;
+export type ActivateAccountRequest = {
+  token: string;
+  newPassword: string;
+  confirmPassword: string;
+};
 export type ChangePasswordRequest = Pick<User, 'id'> & {
   oldPassword: string;
   newPassword: string;
   confirmPassword: string;
 };
+export type CreateUserRequest = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>;
+export type ForgotPasswordRequest = Pick<User, 'email'>;
+export type ForgotPasswordResponse = { message: string };
+export type ResendActivationEmailRequest = Pick<User, 'id'>;
+export type ResetPasswordRequest = {
+  token: string;
+  newPassword: string;
+  confirmPassword: string;
+};
+export type SignUpRequest = Pick<User, 'email' | 'firstName' | 'lastName'>;
+export type UpdateProfileRequest = Pick<User, 'id' | 'email' | 'firstName' | 'lastName' | 'profilePicture'>;
+export type UpdateUserRequest = Pick<User, 'id' | 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role'>;
 
 export const userApi = createApi({
   reducerPath: 'userApi',
@@ -25,19 +38,19 @@ export const userApi = createApi({
 
   tagTypes: ['User'],
 
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     getUsers: builder.query<User[], void>({
       query: () => ({ url: '/users' }),
       providesTags: ['User'],
     }),
 
     getUserById: builder.query<User, number | string>({
-      query: (id) => `/users/${id}`,
+      query: id => `/users/${id}`,
       providesTags: ['User'],
     }),
 
     createUser: builder.mutation<User, CreateUserRequest>({
-      query: (payload) => ({
+      query: payload => ({
         url: '/users',
         method: 'POST',
         body: payload,
@@ -55,7 +68,7 @@ export const userApi = createApi({
     }),
 
     deleteUser: builder.mutation<void, number>({
-      query: (userId) => ({
+      query: userId => ({
         url: `/users/${userId}`,
         method: 'DELETE',
       }),
@@ -70,12 +83,45 @@ export const userApi = createApi({
       }),
     }),
 
-    forgotPassword: builder.mutation<void, ForgotPasswordRequest>({
-      query: (payload) => ({
+    forgotPassword: builder.mutation<ForgotPasswordResponse, ForgotPasswordRequest>({
+      query: payload => ({
         url: '/users/forgot-password',
         method: 'POST',
         body: payload,
       }),
+    }),
+
+    signUp: builder.mutation<User, SignUpRequest>({
+      query: payload => ({
+        url: '/users/signup',
+        method: 'POST',
+        body: payload,
+      }),
+    }),
+
+    activateAccount: builder.mutation<User, ActivateAccountRequest>({
+      query: ({ token, ...payload }) => ({
+        url: `/users/activate-account/${token}`,
+        method: 'PUT',
+        body: payload,
+      }),
+    }),
+
+    resetPassword: builder.mutation<User, ResetPasswordRequest>({
+      query: ({ token, ...payload }) => ({
+        url: `/users/reset-password/${token}`,
+        method: 'PUT',
+        body: payload,
+      }),
+    }),
+
+    updateProfile: builder.mutation<User, UpdateProfileRequest>({
+      query: ({ id, ...payload }) => ({
+        url: `/users/profile/${id}`,
+        method: 'PUT',
+        body: payload,
+      }),
+      invalidatesTags: ['User'],
     }),
 
     resendActivationEmail: builder.mutation<void, ResendActivationEmailRequest>({
@@ -88,12 +134,16 @@ export const userApi = createApi({
 });
 
 export const {
+  useActivateAccountMutation,
+  useChangePasswordMutation,
+  useCreateUserMutation,
+  useDeleteUserMutation,
+  useForgotPasswordMutation,
   useGetUsersQuery,
   useGetUserByIdQuery,
-  useCreateUserMutation,
-  useUpdateUserMutation,
-  useDeleteUserMutation,
-  useChangePasswordMutation,
-  useForgotPasswordMutation,
   useResendActivationEmailMutation,
+  useResetPasswordMutation,
+  useSignUpMutation,
+  useUpdateProfileMutation,
+  useUpdateUserMutation,
 } = userApi;

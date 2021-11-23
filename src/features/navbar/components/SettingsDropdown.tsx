@@ -88,10 +88,10 @@ export const SettingsDropdown: FC<Props> = ({ user, onNavbarToggle, onSignOut, a
         </ProfileInfoWrapper>
         <VerticalDivider />
         <NavDropdownItemsWrapper>
-          <NavDropdown.Item as={Link} to='/user/profile'>
+          <NavDropdown.Item as={Link} to={`/user/profile/${user.id}`}>
             Profile
           </NavDropdown.Item>
-          <NavDropdown.Item as={Link} to={`/users/change-password/${user.id}`}>
+          <NavDropdown.Item as={Link} to={`/user/change-password/${user.id}`}>
             Change Password
           </NavDropdown.Item>
           <NavDropdown.Item onClick={onNavbarToggle}>Toggle Navigation Bar</NavDropdown.Item>
