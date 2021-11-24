@@ -39,6 +39,23 @@ export const SubmitButton = styled(BootstrapButton)`
   margin: 0;
 `;
 
+export const CustomButton = styled(BootstrapButton)`
+  background-color: ${props => props.theme.buttons.backgroundColor};
+  border-color: ${props => props.theme.buttons.backgroundColor};
+  color: ${props => props.theme.buttons.text};
+  width: ${props => props.theme.buttons.width};
+
+  &:hover {
+    background-color: ${props => props.theme.buttons.hoverBackgroundColor};
+    border-color: ${props => props.theme.buttons.hoverBorderColor};
+  }
+
+  &:disabled {
+    background-color: ${props => props.theme.buttons.disabledBackgroundColor};
+    border-color: ${props => props.theme.buttons.disabledBorderColor};
+  }
+`;
+
 export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
