@@ -1,11 +1,12 @@
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
 import { useForgotPasswordMutation } from 'common/api/userApi';
 import * as notificationService from 'common/services/notification';
 import { handleApiError } from 'common/api/handleApiError';
 import { ForgotPasswordForm, FormData } from '../components/ForgotPasswordForm';
+import { PageWrapper } from 'common/styles/page';
+import { StyledFormWrapper, Title } from 'common/styles/form';
 
 export const ForgotPasswordPage: FC = () => {
   const history = useHistory();

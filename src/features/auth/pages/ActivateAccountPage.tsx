@@ -1,11 +1,12 @@
 import { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
 import { useActivateAccountMutation } from 'common/api/userApi';
 import { handleApiError } from 'common/api/handleApiError';
 import * as notificationService from 'common/services/notification';
 import { ActivateAccountForm, FormData } from '../components/ActivateAccountForm';
+import { PageWrapper } from 'common/styles/page';
+import { StyledFormWrapper, Title } from 'common/styles/form';
 
 export const ActivateAccountPage: FC = () => {
   const history = useHistory();

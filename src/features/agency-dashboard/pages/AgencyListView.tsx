@@ -6,10 +6,10 @@ import { Link, useHistory } from 'react-router-dom';
 import { FC } from 'react';
 import Container from 'react-bootstrap/Container';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
-import { CreateButton } from 'features/styles/PageStyles';
 import { HasPermission, useRbac } from 'features/rbac';
 import { useDeleteAgencyMutation, useGetAgenciesQuery } from 'common/api/agencyApi';
 import * as notificationService from 'common/services/notification';
+import { CreateButton } from 'common/styles/button';
 
 type AgencyTableItem = {
   id: number;
@@ -45,7 +45,7 @@ export const AgencyListView: FC = () => {
   ];
 
   // Transform Agency objects returned from the API into the table item data format expected by the table.
-  const items: AgencyTableItem[] = agencies.map((agency) => ({
+  const items: AgencyTableItem[] = agencies.map(agency => ({
     id: agency.id,
     name: agency.agencyName,
     actions: [
@@ -71,7 +71,7 @@ export const AgencyListView: FC = () => {
       key: 'actions',
       renderer: ({ actions, id }: AgencyTableItem) => (
         <>
-          {actions.map((action) => (
+          {actions.map(action => (
             <ActionButton key={id} {...action} />
           ))}
         </>

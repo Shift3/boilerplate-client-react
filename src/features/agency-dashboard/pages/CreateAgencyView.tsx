@@ -1,9 +1,10 @@
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AgencyDetailForm, FormData } from '../components/AgencyDetailForm';
-import { PageWrapper, Title, StyledFormWrapper } from '../../styles/PageStyles';
 import { useCreateAgencyMutation } from 'common/api/agencyApi';
 import * as notificationService from 'common/services/notification';
+import { PageWrapper } from 'common/styles/page';
+import { StyledFormWrapper, Title } from 'common/styles/form';
 
 export const CreateAgencyView: FC = () => {
   const history = useHistory();

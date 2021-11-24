@@ -1,10 +1,11 @@
 import { FC, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { PageWrapper, Title, StyledFormWrapper } from '../../styles/PageStyles';
 import { AgencyDetailForm, FormData } from '../components/AgencyDetailForm';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { useGetAgencyByIdQuery, useUpdateAgencyMutation } from 'common/api/agencyApi';
 import * as notificationService from 'common/services/notification';
+import { PageWrapper } from 'common/styles/page';
+import { StyledFormWrapper, Title } from 'common/styles/form';
 
 export interface RouteParams {
   id: string;

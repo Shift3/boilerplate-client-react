@@ -4,7 +4,7 @@ import { FC, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { CancelButton, ButtonWrapper, SubmitButton } from 'features/styles/PageStyles';
+import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
 
 export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>;
 
@@ -71,7 +71,7 @@ export const UserDetailForm: FC<Props> = ({
 
   // Update role id in response to role select value changing.
   useEffect(() => {
-    const role = availableRoles.find((role) => role.roleName === watchRoleName);
+    const role = availableRoles.find(role => role.roleName === watchRoleName);
 
     if (role) {
       setValue('role.id', role?.id);
@@ -80,7 +80,7 @@ export const UserDetailForm: FC<Props> = ({
 
   // Update agency id in response to agency select value changing.
   useEffect(() => {
-    const agency = availableAgencies.find((agency) => agency.agencyName === watchAgencyName);
+    const agency = availableAgencies.find(agency => agency.agencyName === watchAgencyName);
 
     if (agency) {
       setValue('agency.id', agency?.id);
@@ -110,7 +110,7 @@ export const UserDetailForm: FC<Props> = ({
           <option value='' disabled hidden>
             Select a role
           </option>
-          {availableRoles.map((role) => (
+          {availableRoles.map(role => (
             <option key={role.id} value={role.roleName}>
               {role.roleName}
             </option>
@@ -131,7 +131,7 @@ export const UserDetailForm: FC<Props> = ({
               Select an agency
             </option>
 
-            {availableAgencies.map((agency) => (
+            {availableAgencies.map(agency => (
               <option key={agency.id} value={agency.agencyName}>
                 {agency.agencyName}
               </option>

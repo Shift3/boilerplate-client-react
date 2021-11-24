@@ -6,10 +6,10 @@ import { FC } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Link, useHistory } from 'react-router-dom';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
-import { CreateButton } from 'features/styles/PageStyles';
 import { HasPermission, useRbac } from 'features/rbac';
 import { useDeleteAgentMutation, useGetAgentsQuery } from 'common/api/agentApi';
 import * as notificationService from 'common/services/notification';
+import { CreateButton } from 'common/styles/button';
 
 type AgentTableItem = {
   id: number;
@@ -55,7 +55,7 @@ export const AgentListView: FC = () => {
   ];
 
   // Transform Agent objects returned from the API into the table item data format expected by the table.
-  const items: AgentTableItem[] = agents.map((agent) => ({
+  const items: AgentTableItem[] = agents.map(agent => ({
     id: agent.id,
     name: agent.name,
     description: agent.description,
@@ -82,7 +82,7 @@ export const AgentListView: FC = () => {
       key: 'actions',
       renderer: ({ actions, id }: AgentTableItem) => (
         <>
-          {actions.map((action) => (
+          {actions.map(action => (
             <ActionButton key={id} {...action} />
           ))}
         </>

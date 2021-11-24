@@ -1,11 +1,12 @@
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
-import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
 import { useSignUpMutation } from 'common/api/userApi';
 import { handleApiError } from 'common/api/handleApiError';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import * as notificationService from 'common/services/notification';
 import { FormData, SignUpForm } from '../components/SignUpForm';
+import { PageWrapper } from 'common/styles/page';
+import { StyledFormWrapper, Title } from 'common/styles/form';
 
 export const SignUpPage: FC = () => {
   const history = useHistory();

@@ -1,12 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Agent } from 'common/models';
+import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
 import { FC, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { Constants } from 'utils/constants';
 import { stateList } from 'utils/states';
 import * as yup from 'yup';
-import { CancelButton, ButtonWrapper, SubmitButton } from 'features/styles/PageStyles';
 
 export type FormData = Pick<Agent, 'name' | 'email' | 'description' | 'phoneNumber' | 'address' | 'thumbnail'>;
 

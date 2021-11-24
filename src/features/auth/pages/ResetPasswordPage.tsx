@@ -1,11 +1,12 @@
 import { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
 import { handleApiError } from 'common/api/handleApiError';
 import * as notificationService from 'common/services/notification';
 import { useResetPasswordMutation } from 'common/api/userApi';
 import { FormData, ResetPasswordForm } from '../components/ResetPasswordForm';
+import { PageWrapper } from 'common/styles/page';
+import { StyledFormWrapper, Title } from 'common/styles/form';
 
 export const ResetPasswordPage: FC = () => {
   const history = useHistory();
