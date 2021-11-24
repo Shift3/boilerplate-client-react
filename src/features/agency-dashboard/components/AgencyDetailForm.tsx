@@ -4,7 +4,7 @@ import { Agency } from 'common/models';
 import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { CancelButton, ButtonWrapper, SubmitButton } from 'features/styles/PageStyles';
+import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
 
 export type FormData = Pick<Agency, 'agencyName'>;
 

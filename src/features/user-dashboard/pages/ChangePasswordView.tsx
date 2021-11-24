@@ -5,10 +5,11 @@ import { ErrorResponse } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { authSlice } from 'features/auth/authSlice';
 import { useAuth } from 'features/auth/hooks';
-import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ChangePasswordForm, FormData } from '../components/ChangePasswordForm';
+import { PageWrapper } from 'common/styles/page';
+import { StyledFormWrapper, Title } from 'common/styles/form';
 
 export const ChangePasswordPage: FC = () => {
   const { user } = useAuth();

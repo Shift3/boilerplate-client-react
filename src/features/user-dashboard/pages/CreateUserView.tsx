@@ -2,12 +2,13 @@ import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useGetRolesQuery } from 'common/api/roleApi';
 import { useCreateUserMutation } from 'common/api/userApi';
-import { PageWrapper, Title, StyledFormWrapper } from 'features/styles/PageStyles';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
 import { useRbac } from 'features/rbac';
 import { useAuth } from 'features/auth/hooks';
 import { useGetAgenciesQuery } from 'common/api/agencyApi';
 import * as notificationService from 'common/services/notification';
+import { PageWrapper } from 'common/styles/page';
+import { StyledFormWrapper, Title } from 'common/styles/form';
 
 export const CreateUserView: FC = () => {
   const history = useHistory();
@@ -19,7 +20,7 @@ export const CreateUserView: FC = () => {
     skip: !userHasPermission('agency:read'),
   });
 
-  const availableRoles = roles.filter((role) => userHasPermission({ permission: 'role:read', data: role }));
+  const availableRoles = roles.filter(role => userHasPermission({ permission: 'role:read', data: role }));
 
   const availableAgencies = userHasPermission('agency:read') ? agencies : [];
 

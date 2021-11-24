@@ -4,11 +4,12 @@ import { useAuth } from 'features/auth/hooks';
 import { useRbac } from 'features/rbac';
 import { FC, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { PageWrapper, Title, StyledFormWrapper } from '../../styles/PageStyles';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
 import { useGetRolesQuery } from 'common/api/roleApi';
 import { useGetUserByIdQuery, useUpdateUserMutation } from 'common/api/userApi';
 import * as notificationService from 'common/services/notification';
+import { PageWrapper } from 'common/styles/page';
+import { StyledFormWrapper, Title } from 'common/styles/form';
 
 interface RouteParams {
   id: string;
@@ -26,7 +27,7 @@ export const UpdateUserView: FC = () => {
     skip: !userHasPermission('agency:read'),
   });
 
-  const availableRoles = roles.filter((role) => userHasPermission({ permission: 'role:read', data: role }));
+  const availableRoles = roles.filter(role => userHasPermission({ permission: 'role:read', data: role }));
   const availableAgencies = agencies.length !== 0 ? agencies : [auth.user!.agency];
 
   useEffect(() => {

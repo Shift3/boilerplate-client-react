@@ -2,9 +2,9 @@ import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
-import { ButtonWrapper, CancelButton, SubmitButton } from '../../styles/PageStyles';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
+import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
 
 export type FormData = {
   oldPassword: string;

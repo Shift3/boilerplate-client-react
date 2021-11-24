@@ -2,7 +2,6 @@ import { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useAuth } from 'features/auth/hooks';
-import { PageWrapper, StyledFormWrapper, Title } from 'features/styles/PageStyles';
 import { useUpdateProfileMutation } from 'common/api/userApi';
 import { handleApiError } from 'common/api/handleApiError';
 import { useAppDispatch } from 'app/redux';
@@ -10,6 +9,8 @@ import { authSlice } from 'features/auth/authSlice';
 import * as notificationService from 'common/services/notification';
 import * as authLocalStorage from 'features/auth/authLocalStorage';
 import { FormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
+import { PageWrapper } from 'common/styles/page';
+import { StyledFormWrapper, Title } from 'common/styles/form';
 
 type RouteParams = {
   id: string;

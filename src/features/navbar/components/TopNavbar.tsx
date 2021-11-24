@@ -1,4 +1,4 @@
-import { CustomButton } from 'features/auth/components/button/styled';
+import { CustomButton } from 'common/styles/button';
 import { useAuth } from 'features/auth/hooks';
 import { FC } from 'react';
 import Nav from 'react-bootstrap/Nav';
@@ -27,7 +27,7 @@ export const TopNavbar: FC<Props> = ({ onNavbarToggle }) => {
           <Navbar.Toggle aria-controls='responsive-navbar-nav' />
           <Navbar.Collapse id='responsive-navbar-nav' className='justify-content-between'>
             <Nav>
-              {navLinks.map((link) => (
+              {navLinks.map(link => (
                 <CustomNavLink key={link.id} link={link} />
               ))}
             </Nav>

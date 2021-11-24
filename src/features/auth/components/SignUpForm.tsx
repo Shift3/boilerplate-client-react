@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import * as yup from 'yup';
-import { ButtonWrapper, CancelButton, SubmitButton } from 'features/styles/PageStyles';
 import { Constants } from 'utils/constants';
+import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
 
 export type FormData = {
   email: string;

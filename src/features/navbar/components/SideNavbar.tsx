@@ -1,4 +1,4 @@
-import { CustomButton } from 'features/auth/components/button/styled';
+import { CustomButton } from 'common/styles/button';
 import { useAuth } from 'features/auth/hooks';
 import { FC } from 'react';
 import Nav from 'react-bootstrap/Nav';
@@ -12,7 +12,7 @@ import { Logo } from './Logo';
 import { SettingsDropdown } from './SettingsDropdown';
 
 const FlexGrow = styled.div<{ proportion: number }>`
-  flex-grow: ${(props) => props.proportion};
+  flex-grow: ${props => props.proportion};
 `;
 
 type Props = {
@@ -33,7 +33,7 @@ export const SideNavbar: FC<Props> = ({ onNavbarToggle }) => {
         {user ? (
           <>
             <Nav className='d-flex flex-column'>
-              {navLinks.map((link) => (
+              {navLinks.map(link => (
                 <CustomNavLink key={link.id} link={link} />
               ))}
             </Nav>

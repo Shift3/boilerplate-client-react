@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import Modal, { ModalProps } from 'react-bootstrap/Modal';
-import { CancelButton, SubmitButton } from '../../../features/styles/PageStyles';
 import { ConfirmationModalProps } from './types';
 import styled from 'styled-components';
+import { CancelButton, SubmitButton } from 'common/styles/button';
 
 // Based on the styled-components docs at https://styled-components.com/docs/api#caveat-with-function-components,
 // in order for typechecking to work correctly with styled components that extend a function components, we need
@@ -16,17 +16,17 @@ export const StyledModal = styled(BootstrapModal)`
 
   & .modal-content {
     padding: 50px;
-    background-color: ${(props) => props.theme.modals.confirmation.contentBackgroundColor};
-    border-color: ${(props) => props.theme.modals.confirmation.contentBorderColor};
+    background-color: ${props => props.theme.modals.confirmation.contentBackgroundColor};
+    border-color: ${props => props.theme.modals.confirmation.contentBorderColor};
   }
 
   & .modal-title {
-    color: ${(props) => props.theme.modals.confirmation.titleTextColor};
+    color: ${props => props.theme.modals.confirmation.titleTextColor};
   }
 
   & .modal-body {
     padding: 10px 0;
-    color: ${(props) => props.theme.modals.confirmation.bodyTextColor};
+    color: ${props => props.theme.modals.confirmation.bodyTextColor};
   }
 
   & .modal-footer {

@@ -12,9 +12,9 @@ import { FC } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Link, useHistory } from 'react-router-dom';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
-import { CreateButton } from 'features/styles/PageStyles';
 import { HasPermission, useRbac } from 'features/rbac';
 import * as notificationService from 'common/services/notification';
+import { CreateButton } from 'common/styles/button';
 
 type UserTableItem = {
   id: number;
@@ -91,7 +91,7 @@ export const UserListView: FC = () => {
     { key: 'actions', label: 'ACTIONS' },
   ];
 
-  const items: UserTableItem[] = users.map((user) => ({
+  const items: UserTableItem[] = users.map(user => ({
     id: user.id,
     lastName: user.lastName,
     firstName: user.firstName,
@@ -144,7 +144,7 @@ export const UserListView: FC = () => {
       key: 'actions',
       renderer: ({ actions, id }: UserTableItem) => (
         <>
-          {actions.map((action) => (
+          {actions.map(action => (
             <ActionButton key={id} {...action} />
           ))}
         </>
