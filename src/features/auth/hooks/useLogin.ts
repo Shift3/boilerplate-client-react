@@ -1,8 +1,7 @@
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { useAppDispatch } from 'app/redux';
 import { useLoginMutation } from 'common/api/authApi';
-import { ErrorResponse } from 'common/models';
-import * as notificationService from 'common/services/notification';
+import { handleApiError } from 'common/api/handleApiError';
 import { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as authLocalStorage from '../authLocalStorage';
@@ -33,17 +32,7 @@ export const useLogin: UseLoginHook = () => {
         authLocalStorage.saveAuthState(auth);
         history.replace('/agents');
       } catch (error) {
-        const fetchError = error as FetchBaseQueryError;
-
-        if ('data' in fetchError) {
-          const { data } = fetchError;
-          const { message } = data as ErrorResponse;
-          notificationService.showErrorMessage(message);
-        } else if (!navigator.onLine) {
-          notificationService.showErrorMessage('No Internet Connection.');
-        } else {
-          notificationService.showErrorMessage('Unable to complete request');
-        }
+        handleApiError(error as FetchBaseQueryError);
       }
     },
     [login, dispatch, history],
