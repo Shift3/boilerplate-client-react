@@ -341,7 +341,3 @@ const PersonForm = () => {
 ```
 
 For more information, see the [useForm](https://react-hook-form.com/api/useform) and [@hookform/resolvers](https://github.com/react-hook-form/resolvers) documentation.
-
-### Staging Build
-
-### Additional Resources
