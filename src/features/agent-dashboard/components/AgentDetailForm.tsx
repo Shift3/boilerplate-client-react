@@ -66,6 +66,11 @@ export const AgentDetailForm: FC<Props> = ({
     trigger();
   }, [trigger]);
 
+  const normalizePhoneNumber = (value: string) => {
+    value = value.replace(/\D+/g, '');
+    return `${value.substring(0, 3)} ${value.substring(3, 6)} ${value.substring(6, value.length)}`.trim();
+  }
+
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Group controlId='create-agent-form-agent-name'>
@@ -85,7 +90,11 @@ export const AgentDetailForm: FC<Props> = ({
       </Form.Group>
       <Form.Group>
         <Form.Label>Phone Number</Form.Label>
-        <Form.Control type='tel' {...register('phoneNumber')} isInvalid={!!errors.phoneNumber} />
+        <Form.Control type='tel' {...register('phoneNumber')} isInvalid={!!errors.phoneNumber} 
+          onChange={(event) => {
+            const { value } = event.target;
+            event.target.value = normalizePhoneNumber(value);
+          }} />
         <Form.Control.Feedback type='invalid'>{errors.phoneNumber?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
