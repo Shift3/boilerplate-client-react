@@ -5,8 +5,8 @@ import { ErrorResponse } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { authSlice } from 'features/auth/authSlice';
 import { useAuth } from 'features/auth/hooks';
-import { FC, useState } from 'react';
-import { useHistory, Prompt } from 'react-router-dom';
+import { FC } from 'react';
+import { useHistory } from 'react-router-dom';
 import { ChangePasswordForm, FormData } from '../components/ChangePasswordForm';
 import { PageWrapper } from 'common/styles/page';
 import { StyledFormWrapper, Title } from 'common/styles/form';
@@ -16,10 +16,8 @@ export const ChangePasswordPage: FC = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const [changePassword] = useChangePasswordMutation();
-  const [shouldNavigate, setShouldNavigate] = useState<boolean>(true);
 
   const onFormSubmit = async (data: FormData) => {
-    setShouldNavigate((prev) => !prev);
     const request: ChangePasswordRequest = { id: user!.id, ...data };
 
     try {
@@ -40,7 +38,6 @@ export const ChangePasswordPage: FC = () => {
       <StyledFormWrapper data-testid='wrapper'>
         <Title>Change Password</Title>
         <ChangePasswordForm onSubmit={onFormSubmit} onCancel={onFormCancel} />
-        <Prompt when={shouldNavigate} message="You have unsaved changes, would you still like to leave?" />
       </StyledFormWrapper>
     </PageWrapper>
   );

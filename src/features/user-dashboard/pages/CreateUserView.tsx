@@ -1,5 +1,5 @@
-import { FC, useState } from 'react';
-import { useHistory, Prompt } from 'react-router-dom';
+import { FC } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useGetRolesQuery } from 'common/api/roleApi';
 import { useCreateUserMutation } from 'common/api/userApi';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
@@ -19,7 +19,6 @@ export const CreateUserView: FC = () => {
   const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery(undefined, {
     skip: !userHasPermission('agency:read'),
   });
-  const [shouldNavigate, setShouldNavigate] = useState<boolean>(true);
 
   const availableRoles = roles.filter(role => userHasPermission({ permission: 'role:read', data: role }));
 
@@ -37,7 +36,6 @@ export const CreateUserView: FC = () => {
   };
 
   const handleFormSubmit = async (data: FormData) => {
-    setShouldNavigate((prev) => !prev);
     try {
       await createUser({ ...data, profilePicture: '' }).unwrap();
       notificationService.showSuccessMessage(
@@ -63,7 +61,6 @@ export const CreateUserView: FC = () => {
             onCancel={handleFormCancel}
             onSubmit={handleFormSubmit}
           />
-          <Prompt when={shouldNavigate} message="You have unsaved changes, would you still like to leave?" />
         </StyledFormWrapper>
       )}
     </PageWrapper>
