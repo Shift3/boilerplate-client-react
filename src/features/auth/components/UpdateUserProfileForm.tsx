@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
+import { FormPrompt } from 'common/components/FormPrompt';
 
 export type FormData = {
   firstName: string;
@@ -29,6 +30,7 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, onCancel, defaultVa
     formState: { errors, isValid },
     handleSubmit,
     register,
+    control,
     trigger,
   } = useForm({
     resolver: yupResolver(schema),
@@ -68,6 +70,7 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, onCancel, defaultVa
         <SubmitButton type='submit' disabled={!isValid}>
           UPDATE
         </SubmitButton>
+        <FormPrompt control={control} />
       </ButtonWrapper>
     </Form>
   );

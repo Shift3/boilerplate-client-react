@@ -1,5 +1,5 @@
-import { FC, useState } from 'react';
-import { useHistory, useParams, Prompt } from 'react-router-dom';
+import { FC } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useAuth } from 'features/auth/hooks';
 import { useUpdateProfileMutation } from 'common/api/userApi';
@@ -22,11 +22,9 @@ export const UpdateUserProfilePage: FC = () => {
   const { token, user } = useAuth();
   const [updateProfile] = useUpdateProfileMutation();
   const dispatch = useAppDispatch();
-  const [shouldNavigate, setShouldNavigate] = useState<boolean>(true);
 
   const onSubmit = async (formData: FormData) => {
     const data = { id: Number(id), ...formData, profilePicture: '' };
-    setShouldNavigate((prev) => !prev);
     try {
       const updatedUser = await updateProfile(data).unwrap();
       const newAuth = { token, user: updatedUser };
@@ -54,7 +52,6 @@ export const UpdateUserProfilePage: FC = () => {
             email: user?.email ?? '',
           }}
         />
-        <Prompt when={shouldNavigate} message="You have unsaved changes, would you still like to leave?" />
       </StyledFormWrapper>
     </PageWrapper>
   );

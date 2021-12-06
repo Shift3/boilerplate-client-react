@@ -5,6 +5,7 @@ import { Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
+import { FormPrompt } from 'common/components/FormPrompt';
 
 export type FormData = {
   email: string;
@@ -33,6 +34,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit, onCancel }) => {
     formState: { errors, isValid },
     handleSubmit,
     register,
+    control,
     trigger,
   } = useForm({
     resolver: yupResolver(schema),
@@ -110,6 +112,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit, onCancel }) => {
           SIGN UP
         </SubmitButton>
       </ButtonWrapper>
+      <FormPrompt control={control} />
     </Form>
   );
 };

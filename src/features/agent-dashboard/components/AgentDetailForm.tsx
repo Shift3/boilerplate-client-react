@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { FormPrompt } from 'common/components/FormPrompt';
 import { Agent } from 'common/models';
 import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
 import { FC, useEffect } from 'react';
@@ -47,6 +48,7 @@ export const AgentDetailForm: FC<Props> = ({
   onCancel,
 }) => {
   const {
+    control,
     register,
     formState: { errors, isValid },
     handleSubmit,
@@ -125,6 +127,7 @@ export const AgentDetailForm: FC<Props> = ({
           {submitButtonLabel}
         </SubmitButton>
       </ButtonWrapper>
+      <FormPrompt control={control} />
     </Form>
   );
 };

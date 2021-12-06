@@ -5,6 +5,7 @@ import { Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
+import { FormPrompt } from 'common/components/FormPrompt';
 
 export type FormData = {
   newPassword: string;
@@ -36,6 +37,7 @@ export const ResetPasswordForm: FC<Props> = ({ onSubmit, onCancel }) => {
   const {
     formState: { errors, isValid },
     handleSubmit,
+    control,
     register,
     trigger,
   } = useForm({
@@ -81,6 +83,7 @@ export const ResetPasswordForm: FC<Props> = ({ onSubmit, onCancel }) => {
           SUBMIT
         </SubmitButton>
       </ButtonWrapper>
+      <FormPrompt control={control} />
     </Form>
   );
 };
