@@ -1,4 +1,4 @@
-import { Prompt } from 'react-router';
+import { Prompt } from 'react-router-dom';
 import { Control, useFormState } from 'react-hook-form';
 import { FormData } from '../../../features/agent-dashboard/components/AgentDetailForm';
 
