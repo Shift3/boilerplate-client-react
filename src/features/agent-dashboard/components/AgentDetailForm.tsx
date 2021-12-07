@@ -39,6 +39,29 @@ const schema = yup.object().shape({
   }),
 });
 
+const formatPhoneNumber = (value: string): string => {
+  value = value.replace(/\D+/g, '');
+
+  if (value.length < 4 && value.length >= 1) {
+    return `${value.substring(0, 3)}`.trim();
+  }
+
+  if (value.length < 7 && value.length >= 4){
+    return `(${value.substring(0, 3)}) ${value.substring(3, 6)}`.trim();
+  }
+
+  if (value.length >= 7) {
+    return `(${value.substring(0, 3)}) ${value.substring(3, 6)}-${value.substring(6,value.length)}`.trim();
+  }
+
+  return '';
+}
+
+const cleanFormData = (data: FormData): FormData => {
+  data.phoneNumber = data.phoneNumber.replace(/\s/g, '');
+  return data;
+}
+
 export const AgentDetailForm: FC<Props> = ({
   defaultValues = {},
   submitButtonLabel = 'SUBMIT',
