@@ -1,7 +1,6 @@
 import { useLogin } from 'features/auth/hooks';
 import { FC } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
 import { FormData, LogInForm } from '../components/LoginForm';
 import { ForgotPasswordLink } from '../components/ForgotPasswordLink';
 import { RegisterCallToAction } from '../components/RegisterCallToAction';
@@ -43,7 +42,6 @@ const Title = styled.div`
 `;
 
 export const LogInPage: FC = () => {
-  const history = useHistory();
   const { login } = useLogin();
 
   const onSubmit = async (credentials: FormData) => {
