@@ -50,14 +50,12 @@ export const LogInPage: FC = () => {
     login(credentials);
   };
 
-  const onCancel = () => history.push('/auth/login');
-
   return (
     <Wrapper data-testid='wrapper'>
       <StyledContainer>
         <LeftColumn>
           <Title>Member Log In</Title>
-          <LogInForm onSubmit={onSubmit} onCancel={onCancel} />
+          <LogInForm onSubmit={onSubmit} />
           <ForgotPasswordLink />
         </LeftColumn>
         <RightColumn>
