@@ -43,7 +43,7 @@ export const Constants: IConstant = {
     // eslint-disable-next-line no-useless-escape
     EMAIL_REGEX: /^[a-z0-9!#$%&'*+\/=?^_\`{|}~.-]+@[a-z0-9]([a-z0-9-])+(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i,
     SYMBOL_REGEX: /[-+_!@#$%^&*,.?]/,
-    US_PHONE_REGEX: /(^\d{3} \d{3} \d{4}$)/,
+    US_PHONE_REGEX: /(^\(\d{3}\) \d{3}-\d{4}$)/,
     LOWERCASE_REGEX: /(?=.*[a-z])/,
     UPPERCASE_REGEX: /(?=.*[A-Z])/,
   },
