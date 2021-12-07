@@ -51,6 +51,8 @@ export const AgentDetailForm: FC<Props> = ({
     formState: { errors, isValid },
     handleSubmit,
     trigger,
+    watch,
+    setValue
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
@@ -61,18 +63,22 @@ export const AgentDetailForm: FC<Props> = ({
     },
   });
 
+  const phoneNumber = watch('phoneNumber');
+
   // Trigger validation on first render.
   useEffect(() => {
     trigger();
   }, [trigger]);
-
-  const normalizePhoneNumber = (value: string) => {
-    value = value.replace(/\D+/g, '');
-    return `${value.substring(0, 3)} ${value.substring(3, 6)} ${value.substring(6, value.length)}`.trim();
-  }
+  
+  useEffect(() => {
+    if (phoneNumber) {
+      setValue("phoneNumber", formatPhoneNumber(phoneNumber), 
+      {shouldValidate: true});
+    }
+  }, [setValue, phoneNumber]);
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit((data: FormData) => onSubmit(cleanFormData(data)))}>
       <Form.Group controlId='create-agent-form-agent-name'>
         <Form.Label>Name</Form.Label>
         <Form.Control type='text' {...register('name')} isInvalid={!!errors.name} />
@@ -90,11 +96,7 @@ export const AgentDetailForm: FC<Props> = ({
       </Form.Group>
       <Form.Group>
         <Form.Label>Phone Number</Form.Label>
-        <Form.Control type='tel' {...register('phoneNumber')} isInvalid={!!errors.phoneNumber} 
-          onChange={(event) => {
-            const { value } = event.target;
-            event.target.value = normalizePhoneNumber(value);
-          }} />
+        <Form.Control type='tel' {...register('phoneNumber')} isInvalid={!!errors.phoneNumber} />
         <Form.Control.Feedback type='invalid'>{errors.phoneNumber?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
