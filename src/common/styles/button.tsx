@@ -69,3 +69,13 @@ export const ButtonWrapper = styled.div`
     margin-right: 0;
   }
 `;
+
+export const LoginButton = styled(BootstrapButton)`
+  color: ${props => props.theme.buttons.submitTextColor};
+  background-color: ${props => props.theme.buttons.submitBackgroundColor};
+  border-color: ${props => props.theme.buttons.submitBorderColor};
+  min-width: 146px;
+  min-height: 24px;
+  padding: 10px;
+  margin: 0;
+`;

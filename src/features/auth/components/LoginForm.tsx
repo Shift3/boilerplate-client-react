@@ -4,7 +4,7 @@ import { FC } from 'react';
 import Form from 'react-bootstrap/Form';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
-import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
+import { ButtonWrapper, LoginButton } from 'common/styles/button';
 
 export type FormData = {
   email: string;
@@ -13,7 +13,6 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
-  onCancel: () => void;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
@@ -21,7 +20,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
   password: yup.string().required(Constants.errorMessages.PASSWORD_REQUIRED),
 });
 
-export const LogInForm: FC<Props> = ({ onCancel, onSubmit }) => {
+export const LogInForm: FC<Props> = ({ onSubmit }) => {
   const {
     formState: { errors, isValid },
     handleSubmit,
@@ -60,10 +59,9 @@ export const LogInForm: FC<Props> = ({ onCancel, onSubmit }) => {
         </Form.Control.Feedback>
       </Form.Group>
       <ButtonWrapper>
-        <CancelButton onClick={onCancel}>CANCEL</CancelButton>
-        <SubmitButton type='submit' disabled={!isValid}>
+        <LoginButton type='submit' disabled={!isValid}>
           LOG IN
-        </SubmitButton>
+        </LoginButton>
       </ButtonWrapper>
     </Form>
   );
