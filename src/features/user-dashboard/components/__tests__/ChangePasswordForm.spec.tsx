@@ -21,7 +21,7 @@ describe('ChangePasswordForm', () => {
     await act(async () => {
       render(
         <ThemeProvider theme={theme}>
-          <ChangePasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+          <ChangePasswordForm onSubmit={mockOnSubmit} />
         </ThemeProvider>,
       );
     });
@@ -34,7 +34,6 @@ describe('ChangePasswordForm', () => {
     expect(screen.getByLabelText(/Current Password/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/New Password/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Confirm Password/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'CANCEL' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'SUBMIT' })).toBeInTheDocument();
   });
 
