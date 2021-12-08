@@ -5,7 +5,6 @@ import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
 
 const mockOnSubmit = jest.fn();
-const mockOnCancel = jest.fn();
 
 describe('ResetPasswordForm', () => {
   beforeEach(async () => {
