@@ -3,17 +3,22 @@ import userEvent from '@testing-library/user-event';
 import { ResetPasswordForm } from '../ResetPasswordForm';
 import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
+import { Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
 
 const mockOnSubmit = jest.fn();
 const mockOnCancel = jest.fn();
 
 describe('ResetPasswordForm', () => {
   beforeEach(async () => {
+    const history = createMemoryHistory();
     await act(async () => {
       render(
-        <ThemeProvider theme={AppTheme}>
-          <ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
-        </ThemeProvider>,
+        <Router history={history}>
+          <ThemeProvider theme={AppTheme}>
+            <ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+          </ThemeProvider>,
+        </Router>
       );
     });
   });

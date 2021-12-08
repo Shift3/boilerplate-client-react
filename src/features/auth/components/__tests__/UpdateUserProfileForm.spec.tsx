@@ -3,6 +3,8 @@ import userEvent from '@testing-library/user-event';
 import { UpdateUserProfileForm } from '../UpdateUserProfileForm';
 import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
+import { Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
 
 const mockOnSubmit = jest.fn();
 const mockOnCancel = jest.fn();
@@ -14,11 +16,14 @@ const defaultValues = {
 
 describe('UpdateUserProfileForm', () => {
   beforeEach(async () => {
+    const history = createMemoryHistory();
     await act(async () => {
       render(
-        <ThemeProvider theme={AppTheme}>
-          <UpdateUserProfileForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} defaultValues={defaultValues} />
-        </ThemeProvider>,
+        <Router history={history}>
+          <ThemeProvider theme={AppTheme}>
+            <UpdateUserProfileForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} defaultValues={defaultValues} />
+          </ThemeProvider>,
+        </Router>
       );
     });
     mockOnSubmit.mockReset();
