@@ -12,7 +12,7 @@ describe('ResetPasswordForm', () => {
     await act(async () => {
       render(
         <ThemeProvider theme={AppTheme}>
-          <ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+          <ResetPasswordForm onSubmit={mockOnSubmit} />
         </ThemeProvider>,
       );
     });
