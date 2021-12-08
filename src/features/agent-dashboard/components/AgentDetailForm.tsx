@@ -1,9 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { PhoneInput } from 'common/components/PhoneInput';
 import { Agent } from 'common/models';
 import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
 import { FC, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { Constants } from 'utils/constants';
 import { stateList } from 'utils/states';
 import * as yup from 'yup';
@@ -39,28 +40,6 @@ const schema = yup.object().shape({
   }),
 });
 
-const formatPhoneNumber = (value: string): string => {
-  value = value.replace(/\D+/g, '');
-
-  if (value.length < 4 && value.length >= 1) {
-    return `${value.substring(0, 3)}`.trim();
-  }
-
-  if (value.length < 7 && value.length >= 4){
-    return `(${value.substring(0, 3)}) ${value.substring(3, 6)}`.trim();
-  }
-
-  if (value.length >= 7) {
-    return `(${value.substring(0, 3)}) ${value.substring(3, 6)}-${value.substring(6,value.length)}`.trim();
-  }
-
-  return '';
-}
-
-const cleanFormData = (data: FormData): FormData => {
-  data.phoneNumber = data.phoneNumber.replace(/\s/g, '');
-  return data;
-}
 
 export const AgentDetailForm: FC<Props> = ({
   defaultValues = {},
@@ -74,8 +53,7 @@ export const AgentDetailForm: FC<Props> = ({
     formState: { errors, isValid },
     handleSubmit,
     trigger,
-    watch,
-    setValue
+    control
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
@@ -86,22 +64,13 @@ export const AgentDetailForm: FC<Props> = ({
     },
   });
 
-  const phoneNumber = watch('phoneNumber');
-
   // Trigger validation on first render.
   useEffect(() => {
     trigger();
   }, [trigger]);
   
-  useEffect(() => {
-    if (phoneNumber) {
-      setValue("phoneNumber", formatPhoneNumber(phoneNumber), 
-      {shouldValidate: true});
-    }
-  }, [setValue, phoneNumber]);
-
   return (
-    <Form onSubmit={handleSubmit((data: FormData) => onSubmit(cleanFormData(data)))}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Group controlId='create-agent-form-agent-name'>
         <Form.Label>Name</Form.Label>
         <Form.Control type='text' {...register('name')} isInvalid={!!errors.name} />
@@ -119,7 +88,13 @@ export const AgentDetailForm: FC<Props> = ({
       </Form.Group>
       <Form.Group>
         <Form.Label>Phone Number</Form.Label>
-        <Form.Control type='tel' {...register('phoneNumber')} isInvalid={!!errors.phoneNumber} />
+        <Controller
+              name='phoneNumber'
+              control={control}
+              render={({ field }) => (
+                <PhoneInput value={field.value ?? ''} onChange={field.onChange} invalid={!!errors.phoneNumber} />
+            )}
+          />
         <Form.Control.Feedback type='invalid'>{errors.phoneNumber?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
