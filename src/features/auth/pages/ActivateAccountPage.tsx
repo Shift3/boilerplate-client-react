@@ -31,7 +31,7 @@ export const ActivateAccountPage: FC = () => {
     <PageWrapper>
       <StyledFormWrapper data-testid='wrapper'>
         <Title>Activate Account</Title>
-        <ActivateAccountForm onSubmit={onSubmit} onCancel={onCancel} />
+        <ActivateAccountForm onSubmit={onSubmit} />
       </StyledFormWrapper>
     </PageWrapper>
   );
