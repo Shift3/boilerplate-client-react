@@ -1,7 +1,6 @@
 import { useLogin } from 'features/auth/hooks';
 import { FC } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
 import { FormData, LogInForm } from '../components/LoginForm';
 import { ForgotPasswordLink } from '../components/ForgotPasswordLink';
 import { RegisterCallToAction } from '../components/RegisterCallToAction';
@@ -43,21 +42,18 @@ const Title = styled.div`
 `;
 
 export const LogInPage: FC = () => {
-  const history = useHistory();
   const { login } = useLogin();
 
   const onSubmit = async (credentials: FormData) => {
     login(credentials);
   };
 
-  const onCancel = () => history.push('/auth/login');
-
   return (
     <Wrapper data-testid='wrapper'>
       <StyledContainer>
         <LeftColumn>
           <Title>Member Log In</Title>
-          <LogInForm onSubmit={onSubmit} onCancel={onCancel} />
+          <LogInForm onSubmit={onSubmit} />
           <ForgotPasswordLink />
         </LeftColumn>
         <RightColumn>

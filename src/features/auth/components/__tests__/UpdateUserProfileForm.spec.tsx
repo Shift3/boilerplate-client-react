@@ -5,7 +5,6 @@ import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
 
 const mockOnSubmit = jest.fn();
-const mockOnCancel = jest.fn();
 const defaultValues = {
   firstName: 'Firstname',
   lastName: 'Lastname',
@@ -17,7 +16,7 @@ describe('UpdateUserProfileForm', () => {
     await act(async () => {
       render(
         <ThemeProvider theme={AppTheme}>
-          <UpdateUserProfileForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} defaultValues={defaultValues} />
+          <UpdateUserProfileForm onSubmit={mockOnSubmit} defaultValues={defaultValues} />
         </ThemeProvider>,
       );
     });

@@ -31,13 +31,11 @@ export const ChangePasswordPage: FC = () => {
     history.push('/agents');
   };
 
-  const onFormCancel = () => history.goBack();
-
   return (
     <PageWrapper>
       <StyledFormWrapper data-testid='wrapper'>
         <Title>Change Password</Title>
-        <ChangePasswordForm onSubmit={onFormSubmit} onCancel={onFormCancel} />
+        <ChangePasswordForm onSubmit={onFormSubmit}/>
       </StyledFormWrapper>
     </PageWrapper>
   );

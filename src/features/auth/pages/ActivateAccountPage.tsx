@@ -25,13 +25,11 @@ export const ActivateAccountPage: FC = () => {
     }
   };
 
-  const onCancel = () => history.push('/auth/login');
-
   return (
     <PageWrapper>
       <StyledFormWrapper data-testid='wrapper'>
         <Title>Activate Account</Title>
-        <ActivateAccountForm onSubmit={onSubmit} onCancel={onCancel} />
+        <ActivateAccountForm onSubmit={onSubmit} />
       </StyledFormWrapper>
     </PageWrapper>
   );
