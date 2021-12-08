@@ -25,8 +25,6 @@ export const ActivateAccountPage: FC = () => {
     }
   };
 
-  const onCancel = () => history.push('/auth/login');
-
   return (
     <PageWrapper>
       <StyledFormWrapper data-testid='wrapper'>
