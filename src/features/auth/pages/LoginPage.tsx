@@ -44,10 +44,10 @@ const Title = styled.div`
 export const LogInPage: FC = () => {
   const { login } = useLogin();
 
-  const onSubmit = async (credentials: FormData) => {
+  const onSubmit = (credentials: FormData) => {
     login(credentials);
   };
-
+  
   return (
     <Wrapper data-testid='wrapper'>
       <StyledContainer>

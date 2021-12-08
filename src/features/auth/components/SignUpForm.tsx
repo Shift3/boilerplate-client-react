@@ -30,7 +30,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const SignUpForm: FC<Props> = ({ onSubmit, onCancel }) => {
   const {
-    formState: { errors, isSubmitting},
+    formState: { errors, isValid, isSubmitting},
     handleSubmit,
     register,
     trigger,
@@ -106,8 +106,8 @@ export const SignUpForm: FC<Props> = ({ onSubmit, onCancel }) => {
       </Form.Group>
       <ButtonWrapper>
         <CancelButton onClick={onCancel}>CANCEL</CancelButton>
-        <SubmitButton type='submit' disabled={isSubmitting} className="btn btn-primary mr-1">
-        {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
+        <SubmitButton type='submit' disabled={!isValid} className="btn btn-primary mr-1">
+        {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"/>}
           SIGN UP
         </SubmitButton>
       </ButtonWrapper>
