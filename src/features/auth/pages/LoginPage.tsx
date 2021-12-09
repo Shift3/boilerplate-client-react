@@ -45,7 +45,11 @@ export const LogInPage: FC = () => {
   const { login } = useLogin();
 
   const onSubmit = async (credentials: FormData) => {
-    login(credentials);
+    await new Promise(resolve => {
+     setTimeout(resolve, 2000);
+  });
+
+  await login(credentials);
   };
 
   return (
