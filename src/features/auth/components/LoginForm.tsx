@@ -4,7 +4,8 @@ import { FC } from 'react';
 import Form from 'react-bootstrap/Form';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
-import { ButtonWrapper, SubmitButton } from 'common/styles/button';
+import { ButtonWrapper } from 'common/styles/button';
+import { SubmitButton } from 'common/components/SubmitButton';
 
 export type FormData = {
   email: string;
@@ -22,7 +23,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const LogInForm: FC<Props> = ({ onSubmit }) => {
   const {
-    formState: { errors, isValid, isSubmitting },
+    formState: { errors },
     handleSubmit,
     register,
   } = useForm({
@@ -59,10 +60,7 @@ export const LogInForm: FC<Props> = ({ onSubmit }) => {
         </Form.Control.Feedback>
       </Form.Group>
       <ButtonWrapper>
-        <SubmitButton type='submit' disabled={!isValid || isSubmitting} className="btn btn-primary mr-1">
-        {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"/>}
-          LOG IN
-        </SubmitButton>
+        <SubmitButton text='LOG IN' />
       </ButtonWrapper>
     </Form>
   );
