@@ -19,6 +19,8 @@ export type Props = {
   onCancel: () => void;
 };
 
+const notBlank = (val: string) => val.trim();
+
 const schema = yup.object().shape({
   name: yup.string().required('Name is required.'),
   email: yup.string().email().required('Email is required.'),
@@ -32,11 +34,17 @@ const schema = yup.object().shape({
     .required('Phone number is required.'),
   thumbnail: yup.string(),
   address: yup.object().shape({
-    address1: yup.string().required('Address is required.'),
+    address1: yup.string().optional(),
     address2: yup.string(),
-    city: yup.string().required('City is required.'),
-    state: yup.string().required('State is required.'),
-    zipCode: yup.string().required('Zip Code is required'),
+    city: yup.string().when(
+      'address1',
+      { is: notBlank, then: yup.string().required('City is required.') }),
+    state: yup.string().when(
+      'address1',
+      { is: notBlank, then: yup.string().required('State is required.') }),
+    zipCode: yup.string().when(
+      'address1',
+      { is: notBlank, then: yup.string().required('Zip code is required.') }),
   }),
 });
 
