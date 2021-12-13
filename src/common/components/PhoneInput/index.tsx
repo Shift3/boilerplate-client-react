@@ -23,14 +23,14 @@ const formatPhoneNumber = (value: string): string => {
     return value.replace(/\D/g, '');
   };
   
-  type PhoneProps = {
+  type Props = {
     placeholder?: string;
     value: string;
     invalid: boolean;
     onChange: (value: string) => void;
   };
   
-  export const PhoneInput: FC<PhoneProps> = ({ placeholder = '', value, invalid, onChange }) => {
+  export const PhoneInput: FC<Props> = ({ placeholder = '', value, invalid, onChange }) => {
     const formatted = formatPhoneNumber(value);
   
     const handleChange: React.ChangeEventHandler<HTMLInputElement> = e => {
