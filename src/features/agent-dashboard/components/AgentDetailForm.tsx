@@ -1,9 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { PhoneInput } from 'common/components/PhoneInput';
 import { Agent } from 'common/models';
 import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
 import { FC, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { Constants } from 'utils/constants';
 import { stateList } from 'utils/states';
 import * as yup from 'yup';
@@ -39,6 +40,7 @@ const schema = yup.object().shape({
   }),
 });
 
+
 export const AgentDetailForm: FC<Props> = ({
   defaultValues = {},
   submitButtonLabel = 'SUBMIT',
@@ -51,6 +53,7 @@ export const AgentDetailForm: FC<Props> = ({
     formState: { errors, isValid },
     handleSubmit,
     trigger,
+    control
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
@@ -65,7 +68,7 @@ export const AgentDetailForm: FC<Props> = ({
   useEffect(() => {
     trigger();
   }, [trigger]);
-
+  
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Group controlId='create-agent-form-agent-name'>
@@ -85,7 +88,13 @@ export const AgentDetailForm: FC<Props> = ({
       </Form.Group>
       <Form.Group>
         <Form.Label>Phone Number</Form.Label>
-        <Form.Control type='tel' {...register('phoneNumber')} isInvalid={!!errors.phoneNumber} />
+        <Controller
+              name='phoneNumber'
+              control={control}
+              render={({ field }) => (
+                <PhoneInput value={field.value ?? ''} onChange={field.onChange} invalid={!!errors.phoneNumber} />
+            )}
+          />
         <Form.Control.Feedback type='invalid'>{errors.phoneNumber?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
