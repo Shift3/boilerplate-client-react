@@ -24,16 +24,15 @@ export const CancelButton = styled(BootstrapButton)`
   background-color: ${props => props.theme.buttons.cancelBackgroundColor};
   border-color: ${props => props.theme.buttons.cancelBorderColor};
   padding: 0.5rem 1rem;
+  width: 40%;
 `;
 
 export const SubmitButton = styled(BootstrapButton)`
   color: ${props => props.theme.buttons.submitTextColor};
   background-color: ${props => props.theme.buttons.submitBackgroundColor};
   border-color: ${props => props.theme.buttons.submitBorderColor};
-  min-width: 146px;
-  min-height: 24px;
-  padding: 10px;
-  margin: 0;
+  padding: 0.5rem 1rem;
+  width: 40%;
 `;
 
 export const CustomButton = styled(BootstrapButton)`
