@@ -22,13 +22,11 @@ export const ForgotPasswordPage: FC = () => {
     }
   };
 
-  const onCancel = () => history.push('/auth/login');
-
   return (
     <PageWrapper>
       <StyledFormWrapper data-testid='wrapper'>
         <Title>Forgot Password</Title>
-        <ForgotPasswordForm onSubmit={onSubmit} onCancel={onCancel} />
+        <ForgotPasswordForm onSubmit={onSubmit} />
       </StyledFormWrapper>
     </PageWrapper>
   );
