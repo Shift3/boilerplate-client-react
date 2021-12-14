@@ -54,8 +54,7 @@ export const AgentDetailForm: FC<Props> = ({
     register,
     formState: { errors, isValid },
     handleSubmit,
-    trigger,
-    control
+    trigger
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
