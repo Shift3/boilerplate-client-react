@@ -19,7 +19,8 @@ export type Props = {
   onCancel: () => void;
 };
 
-const notBlank = (val: string) => val.trim();
+const isBlank = (val: string) => !val || !val.trim();
+const notBlank = (val: string) => !isBlank(val);
 
 const schema = yup.object().shape({
   name: yup.string().required('Name is required.'),
@@ -61,7 +62,8 @@ export const AgentDetailForm: FC<Props> = ({
     formState: { errors, isValid },
     handleSubmit,
     trigger,
-    control
+    control,
+    watch
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
@@ -71,6 +73,8 @@ export const AgentDetailForm: FC<Props> = ({
       address: { ...defaultValues.address, state: defaultValues?.address?.state ?? '' },
     },
   });
+
+  const isLineOneBlank = function() { return isBlank(watch('address.address1')) };
 
   // Trigger validation on first render.
   useEffect(() => {
@@ -112,17 +116,20 @@ export const AgentDetailForm: FC<Props> = ({
       </Form.Group>
       <Form.Group>
         <Form.Label>Address2</Form.Label>
-        <Form.Control type='text' {...register('address.address2')} isValid={!!errors.address?.address2} />
+        <Form.Control type='text' {...register('address.address2')} isValid={!!errors.address?.address2}
+          disabled={ isLineOneBlank() } />
         <Form.Control.Feedback type='invalid'>{errors.address?.address2?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label>City</Form.Label>
-        <Form.Control type='text' {...register('address.city')} isInvalid={!!errors.address?.city} />
+        <Form.Control type='text' {...register('address.city')} isInvalid={!!errors.address?.city}
+          disabled={ isLineOneBlank() } />
         <Form.Control.Feedback type='invalid'>{errors.address?.city?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label>State</Form.Label>
-        <Form.Select {...register('address.state')} isInvalid={!!errors.address?.state}>
+        <Form.Select {...register('address.state')} isInvalid={!!errors.address?.state}
+          disabled={ isLineOneBlank() } >
           {stateList.map(({ name, value }) => (
             <option key={value} value={value}>
               {name}
@@ -133,7 +140,8 @@ export const AgentDetailForm: FC<Props> = ({
       </Form.Group>
       <Form.Group>
         <Form.Label>Zip Code</Form.Label>
-        <Form.Control type='text' {...register('address.zipCode')} isInvalid={!!errors.address?.zipCode} />
+        <Form.Control type='text' {...register('address.zipCode')} isInvalid={!!errors.address?.zipCode}
+          disabled={ isLineOneBlank() } />
         <Form.Control.Feedback type='invalid'>{errors.address?.zipCode?.message}</Form.Control.Feedback>
       </Form.Group>
       <ButtonWrapper>
