@@ -5,7 +5,20 @@ import Form from 'react-bootstrap/Form';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { ButtonWrapper } from 'common/styles/button';
-import { SubmitButton } from 'common/components/SubmitButton';
+import Button, { ButtonProps } from 'react-bootstrap/Button';
+import styled from 'styled-components';
+
+const BootstrapButton: FC<ButtonProps> = ({ children, ...rest }) => <Button {...rest}>{children}</Button>;
+
+const StyledSubmitButton = styled(BootstrapButton)`
+  color: ${props => props.theme.buttons.submitTextColor};
+  background-color: ${props => props.theme.buttons.submitBackgroundColor};
+  border-color: ${props => props.theme.buttons.submitBorderColor};
+  min-width: 146px;
+  min-height: 24px;
+  padding: 10px;
+  margin: 0;
+`;
 
 export type FormData = {
   email: string;
@@ -23,7 +36,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const LogInForm: FC<Props> = ({ onSubmit }) => {
   const {
-    formState: { errors },
+    formState: { errors, isValid, isSubmitting },
     handleSubmit,
     register,
   } = useForm({
@@ -60,7 +73,10 @@ export const LogInForm: FC<Props> = ({ onSubmit }) => {
         </Form.Control.Feedback>
       </Form.Group>
       <ButtonWrapper>
-        <SubmitButton text='LOG IN' />
+        <StyledSubmitButton type='submit' disabled={!isValid || isSubmitting} className='btn btn-primary mr-1'>
+          {isSubmitting && <span className='spinner-border spinner-border-sm mr-1'/>}
+          LOG IN
+        </StyledSubmitButton>
       </ButtonWrapper>
     </Form>
   );
