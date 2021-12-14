@@ -51,7 +51,7 @@ export const ForgotPasswordForm: FC<Props> = ({ onSubmit }) => {
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
         <LoadingButton disabled={!isValid} loading={isSubmitting}>
-          LOG IN
+          SUBMIT
         </LoadingButton>
       </div>
     </Form>
