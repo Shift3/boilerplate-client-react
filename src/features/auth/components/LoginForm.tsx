@@ -4,21 +4,7 @@ import { FC } from 'react';
 import Form from 'react-bootstrap/Form';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
-import { ButtonWrapper } from 'common/styles/button';
-import Button, { ButtonProps } from 'react-bootstrap/Button';
-import styled from 'styled-components';
-
-const BootstrapButton: FC<ButtonProps> = ({ children, ...rest }) => <Button {...rest}>{children}</Button>;
-
-const StyledSubmitButton = styled(BootstrapButton)`
-  color: ${props => props.theme.buttons.submitTextColor};
-  background-color: ${props => props.theme.buttons.submitBackgroundColor};
-  border-color: ${props => props.theme.buttons.submitBorderColor};
-  min-width: 146px;
-  min-height: 24px;
-  padding: 10px;
-  margin: 0;
-`;
+import { SubmitButton } from 'common/components/SubmitButton';
 
 export type FormData = {
   email: string;
@@ -72,12 +58,9 @@ export const LogInForm: FC<Props> = ({ onSubmit }) => {
           {errors.password?.message}
         </Form.Control.Feedback>
       </Form.Group>
-      <ButtonWrapper>
-        <StyledSubmitButton type='submit' disabled={!isValid || isSubmitting} className='btn btn-primary mr-1'>
-          {isSubmitting && <span className='spinner-border spinner-border-sm mr-1'/>}
-          LOG IN
-        </StyledSubmitButton>
-      </ButtonWrapper>
+        <div className='d-grid gap-2 mt-3'>
+          <SubmitButton disabled={!isValid} loading={isSubmitting}>LOG IN</SubmitButton>
+        </div>
     </Form>
   );
 };
