@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
-import { ButtonWrapper, SubmitButton } from 'common/styles/button';
+import { LoadingButton } from 'common/components/LoadingButton';
 
 export type FormData = {
   oldPassword: string;
@@ -37,7 +37,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const ChangePasswordForm: FC<Props> = ({ onSubmit }) => {
   const {
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
     handleSubmit,
     register,
     trigger,
@@ -98,11 +98,11 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit }) => {
           </Form.Control.Feedback>
         )}
       </Form.Group>
-      <ButtonWrapper>
-        <SubmitButton type='submit' disabled={!isValid}>
+      <div className='d-grid gap-2 mt-3'>
+        <LoadingButton disabled={!isValid} loading={isSubmitting}>
           SUBMIT
-        </SubmitButton>
-      </ButtonWrapper>
+        </LoadingButton>
+      </div>
     </Form>
   );
 };
