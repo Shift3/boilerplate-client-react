@@ -25,13 +25,11 @@ export const ResetPasswordPage: FC = () => {
     }
   };
 
-  const onCancel = () => history.push('/auth/login');
-
   return (
     <PageWrapper>
       <StyledFormWrapper>
         <Title>Reset Password</Title>
-        <ResetPasswordForm onSubmit={onSubmit} onCancel={onCancel} />
+        <ResetPasswordForm onSubmit={onSubmit} />
       </StyledFormWrapper>
     </PageWrapper>
   );

@@ -7,7 +7,6 @@ import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 
 const mockOnSubmit = jest.fn();
-const mockOnCancel = jest.fn();
 
 describe('ResetPasswordForm', () => {
   beforeEach(async () => {
@@ -16,7 +15,7 @@ describe('ResetPasswordForm', () => {
       render(
         <Router history={history}>
           <ThemeProvider theme={AppTheme}>
-            <ResetPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+            <ResetPasswordForm onSubmit={mockOnSubmit} />
           </ThemeProvider>,
         </Router>
       );

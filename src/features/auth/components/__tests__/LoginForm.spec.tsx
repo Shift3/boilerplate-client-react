@@ -5,13 +5,12 @@ import AppTheme from 'utils/styleValues';
 import userEvent from '@testing-library/user-event';
 
 const mockOnSubmit = jest.fn();
-const mockOnCancel = jest.fn();
 
 describe('LoginForm', () => {
   beforeEach(async () => {
     render(
       <ThemeProvider theme={AppTheme}>
-        <LogInForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+        <LogInForm onSubmit={mockOnSubmit} />
       </ThemeProvider>,
     );
     mockOnSubmit.mockReset();

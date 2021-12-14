@@ -7,7 +7,6 @@ import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 
 const mockOnSubmit = jest.fn();
-const mockOnCancel = jest.fn();
 const defaultValues = {
   firstName: 'Firstname',
   lastName: 'Lastname',
@@ -21,7 +20,7 @@ describe('UpdateUserProfileForm', () => {
       render(
         <Router history={history}>
           <ThemeProvider theme={AppTheme}>
-            <UpdateUserProfileForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} defaultValues={defaultValues} />
+            <UpdateUserProfileForm onSubmit={mockOnSubmit} defaultValues={defaultValues} />
           </ThemeProvider>,
         </Router>
       );

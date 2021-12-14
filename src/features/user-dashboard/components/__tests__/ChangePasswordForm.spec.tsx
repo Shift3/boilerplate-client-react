@@ -25,7 +25,7 @@ describe('ChangePasswordForm', () => {
       render(
         <Router history={history}>
           <ThemeProvider theme={theme}>
-            <ChangePasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+            <ChangePasswordForm onSubmit={mockOnSubmit} />
           </ThemeProvider>,
         </Router>
       );
@@ -39,7 +39,6 @@ describe('ChangePasswordForm', () => {
     expect(screen.getByLabelText(/Current Password/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/New Password/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Confirm Password/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'CANCEL' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'SUBMIT' })).toBeInTheDocument();
   });
 

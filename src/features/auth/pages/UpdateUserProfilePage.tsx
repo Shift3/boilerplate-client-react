@@ -38,15 +38,12 @@ export const UpdateUserProfilePage: FC = () => {
     }
   };
 
-  const onCancel = () => history.goBack();
-
   return (
     <PageWrapper>
       <StyledFormWrapper>
         <Title>Update Profile</Title>
         <UpdateUserProfileForm
           onSubmit={onSubmit}
-          onCancel={onCancel}
           defaultValues={{
             firstName: user?.firstName ?? '',
             lastName: user?.lastName ?? '',

@@ -5,14 +5,13 @@ import AppTheme from 'utils/styleValues';
 import { ActivateAccountForm } from '../ActivateAccountForm';
 
 const mockOnSubmit = jest.fn();
-const mockOnCancel = jest.fn();
 
 describe('ActivateAccountForm', () => {
   beforeEach(async () => {
     await act(async () => {
       render(
         <ThemeProvider theme={AppTheme}>
-          <ActivateAccountForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+          <ActivateAccountForm onSubmit={mockOnSubmit} />
         </ThemeProvider>,
       );
     });

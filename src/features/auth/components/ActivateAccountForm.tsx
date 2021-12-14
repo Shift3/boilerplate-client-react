@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
-import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
+import { ButtonWrapper, SubmitButton } from 'common/styles/button';
 
 export type FormData = {
   newPassword: string;
@@ -13,7 +13,6 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
-  onCancel: () => void;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
@@ -32,7 +31,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
     .oneOf([yup.ref('newPassword')], Constants.errorMessages.PASSWORD_MUST_MATCH),
 });
 
-export const ActivateAccountForm: FC<Props> = ({ onSubmit, onCancel }) => {
+export const ActivateAccountForm: FC<Props> = ({ onSubmit}) => {
   const {
     formState: { errors, isValid },
     handleSubmit,
@@ -77,7 +76,6 @@ export const ActivateAccountForm: FC<Props> = ({ onSubmit, onCancel }) => {
         </Form.Control.Feedback>
       </Form.Group>
       <ButtonWrapper>
-        <CancelButton onClick={onCancel}>CANCEL</CancelButton>
         <SubmitButton type='submit' disabled={!isValid}>
           SUBMIT
         </SubmitButton>

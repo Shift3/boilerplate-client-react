@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
-import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
+import { ButtonWrapper, SubmitButton } from 'common/styles/button';
 import { FormPrompt } from 'common/components/FormPrompt';
 
 export type FormData = {
@@ -15,7 +15,6 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
-  onCancel: () => void;
   defaultValues?: Partial<FormData>;
 };
 
@@ -25,7 +24,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
   email: yup.string().required(Constants.errorMessages.EMAIL_REQUIRED).email(Constants.errorMessages.INVALID_EMAIL),
 });
 
-export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, onCancel, defaultValues }) => {
+export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) => {
   const {
     formState: { errors, isValid },
     handleSubmit,
@@ -66,7 +65,6 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, onCancel, defaultVa
         </Form.Control.Feedback>
       </Form.Group>
       <ButtonWrapper>
-        <CancelButton onClick={onCancel}>CANCEL</CancelButton>
         <SubmitButton type='submit' disabled={!isValid}>
           UPDATE
         </SubmitButton>
