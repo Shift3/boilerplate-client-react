@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
-import { ButtonWrapper, SubmitButton } from 'common/styles/button';
+import { LoadingButton } from 'common/components/LoadingButton';
 
 export type FormData = {
   firstName: string;
@@ -25,7 +25,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) => {
   const {
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
     handleSubmit,
     register,
     trigger,
@@ -62,11 +62,11 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) =>
           {errors.email?.message}
         </Form.Control.Feedback>
       </Form.Group>
-      <ButtonWrapper>
-        <SubmitButton type='submit' disabled={!isValid}>
+      <div className='d-grid gap-2 mt-3'>
+        <LoadingButton disabled={!isValid} loading={isSubmitting}>
           UPDATE
-        </SubmitButton>
-      </ButtonWrapper>
+        </LoadingButton>
+      </div>
     </Form>
   );
 };

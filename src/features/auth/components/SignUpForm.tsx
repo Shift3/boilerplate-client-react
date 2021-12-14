@@ -4,7 +4,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
-import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
+import { CancelButton } from 'common/styles/button';
+import { LoadingButton } from 'common/components/LoadingButton';
 
 export type FormData = {
   email: string;
@@ -30,7 +31,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const SignUpForm: FC<Props> = ({ onSubmit, onCancel }) => {
   const {
-    formState: { errors, isValid, isSubmitting},
+    formState: { errors, isValid, isSubmitting },
     handleSubmit,
     register,
     trigger,
@@ -104,13 +105,14 @@ export const SignUpForm: FC<Props> = ({ onSubmit, onCancel }) => {
           {errors.lastName?.message}
         </Form.Control.Feedback>
       </Form.Group>
-      <ButtonWrapper>
-        <CancelButton onClick={onCancel}>CANCEL</CancelButton>
-        <SubmitButton type='submit' disabled={!isValid || isSubmitting} className="btn btn-primary mr-1">
-        {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"/>}
+      <div className='d-grid gap-2 mt-4'>
+        <LoadingButton disabled={!isValid} loading={isSubmitting}>
           SIGN UP
-        </SubmitButton>
-      </ButtonWrapper>
+        </LoadingButton>
+      </div>
+      <div className='d-grid mt-3'>
+        <CancelButton onClick={onCancel}>CANCEL</CancelButton>
+      </div>
     </Form>
   );
 };
