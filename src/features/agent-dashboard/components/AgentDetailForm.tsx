@@ -74,7 +74,8 @@ export const AgentDetailForm: FC<Props> = ({
     },
   });
 
-  const isLineOneBlank = function() { return isBlank(watch('address.address1')) };
+  function isLineOneBlank() { return isBlank(watch('address.address1')) };
+  function isLineOneFilled() { return !isLineOneBlank() };
 
   // Trigger validation on first render.
   useEffect(() => {
@@ -122,13 +123,15 @@ export const AgentDetailForm: FC<Props> = ({
       </Form.Group>
       <Form.Group>
         <Form.Label>City</Form.Label>
-        <Form.Control type='text' {...register('address.city')} isInvalid={!!errors.address?.city}
+        <Form.Control type='text' {...register('address.city')}
+          isInvalid={isLineOneFilled() && !!errors.address?.city}
           disabled={ isLineOneBlank() } />
         <Form.Control.Feedback type='invalid'>{errors.address?.city?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label>State</Form.Label>
-        <Form.Select {...register('address.state')} isInvalid={!!errors.address?.state}
+        <Form.Select {...register('address.state')}
+          isInvalid={isLineOneFilled() && !!errors.address?.state}
           disabled={ isLineOneBlank() } >
           {stateList.map(({ name, value }) => (
             <option key={value} value={value}>
@@ -140,7 +143,8 @@ export const AgentDetailForm: FC<Props> = ({
       </Form.Group>
       <Form.Group>
         <Form.Label>Zip Code</Form.Label>
-        <Form.Control type='text' {...register('address.zipCode')} isInvalid={!!errors.address?.zipCode}
+        <Form.Control type='text' {...register('address.zipCode')}
+          isInvalid={isLineOneFilled() && !!errors.address?.zipCode}
           disabled={ isLineOneBlank() } />
         <Form.Control.Feedback type='invalid'>{errors.address?.zipCode?.message}</Form.Control.Feedback>
       </Form.Group>
