@@ -37,10 +37,6 @@ export const UpdateUserView: FC = () => {
     }
   }, [getUserError, history]);
 
-  const handleFormCancel = () => {
-    history.goBack();
-  };
-
   const handleFormSubmit = async (data: FormData) => {
     try {
       await updateUser({ id: Number(id), ...data }).unwrap();
@@ -62,7 +58,6 @@ export const UpdateUserView: FC = () => {
             defaultValues={user}
             submitButtonLabel='UPDATE'
             onSubmit={handleFormSubmit}
-            onCancel={handleFormCancel}
           />
         </StyledFormWrapper>
       </WithLoadingOverlay>
