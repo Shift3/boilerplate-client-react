@@ -31,7 +31,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
     .oneOf([yup.ref('newPassword')], Constants.errorMessages.PASSWORD_MUST_MATCH),
 });
 
-export const ActivateAccountForm: FC<Props> = ({ onSubmit}) => {
+export const ActivateAccountForm: FC<Props> = ({ onSubmit }) => {
   const {
     formState: { errors, isValid },
     handleSubmit,
