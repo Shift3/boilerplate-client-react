@@ -24,10 +24,6 @@ export const UpdateAgencyView: FC = () => {
     }
   }, [error, history]);
 
-  const handleFormCancel = () => {
-    history.goBack();
-  };
-
   const handleFormSubmit = async (data: FormData) => {
     try {
       await updateAgency({ id: Number(id), ...data }).unwrap();
@@ -47,7 +43,6 @@ export const UpdateAgencyView: FC = () => {
             defaultValues={{ agencyName: agency?.agencyName ?? '' }}
             submitButtonLabel='UPDATE'
             onSubmit={handleFormSubmit}
-            onCancel={handleFormCancel}
           />
         </StyledFormWrapper>
       </WithLoadingOverlay>
