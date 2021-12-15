@@ -77,13 +77,26 @@ export const AgentDetailForm: FC<Props> = ({
   function isLineOneBlank() { return isBlank(watch('address.address1')) };
   function isLineOneFilled() { return !isLineOneBlank() };
 
+  /**
+   * Submits agent data with either a complete address or nothing at all, to
+   * prevent errors due to partial or empty address data.
+   * 
+   * This works in tandem with validation rules, which enforce filling in all
+   * address fields if the first line is filled in.
+   * */
+  function withOptionalAddress(data: FormData) {
+    onSubmit({
+      ...data,
+      address: isLineOneBlank() ? undefined : data.address})
+  };
+
   // Trigger validation on first render.
   useEffect(() => {
     trigger();
   }, [trigger]);
   
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(withOptionalAddress)}>
       <Form.Group controlId='create-agent-form-agent-name'>
         <Form.Label>Name</Form.Label>
         <Form.Control type='text' {...register('name')} isInvalid={!!errors.name} />
