@@ -56,9 +56,8 @@ export const UpdateUserView: FC = () => {
   };
 
   return (
-    <>
-    <BreadcrumbComponent path={['Home', 'User List','Update User']} />
     <PageWrapper>
+      <BreadcrumbComponent path={['Home', 'User List','Update User']} />
       <WithLoadingOverlay isLoading={isLoadingUser || isLoadingRoles || isLoadingAgencies}>
         <StyledFormWrapper>
           <Title>Update User</Title>
@@ -73,6 +72,5 @@ export const UpdateUserView: FC = () => {
         </StyledFormWrapper>
       </WithLoadingOverlay>
     </PageWrapper>
-    </>
   );
 };

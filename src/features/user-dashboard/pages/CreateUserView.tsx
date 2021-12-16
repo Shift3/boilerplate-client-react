@@ -54,9 +54,8 @@ export const CreateUserView: FC = () => {
   const isLoading = isLoadingRoles || isLoadingAgencies;
 
   return (
-    <>
-    <BreadcrumbComponent path={['Home', 'User List','Create User']}/>
     <PageWrapper>
+      <BreadcrumbComponent path={['Home', 'User List','Create User']}/>
       {!isLoading && (
         <StyledFormWrapper>
           <Title>Create User</Title>
@@ -70,6 +69,5 @@ export const CreateUserView: FC = () => {
         </StyledFormWrapper>
       )}
     </PageWrapper>
-    </>
   );
 };

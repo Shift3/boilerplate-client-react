@@ -36,14 +36,12 @@ export const ChangePasswordPage: FC = () => {
   };
 
   return (
-    <>
-    <BreadcrumbComponent path={['Home', 'Change Password']}/>
     <PageWrapper>
+      <BreadcrumbComponent path={['Home', 'Change Password']}/>
       <StyledFormWrapper data-testid='wrapper'>
         <Title>Change Password</Title>
         <ChangePasswordForm onSubmit={onFormSubmit}/>
       </StyledFormWrapper>
     </PageWrapper>
-    </>
   );
 };

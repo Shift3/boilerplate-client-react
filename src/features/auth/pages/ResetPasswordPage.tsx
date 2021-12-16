@@ -7,6 +7,7 @@ import { useResetPasswordMutation } from 'common/api/userApi';
 import { FormData, ResetPasswordForm } from '../components/ResetPasswordForm';
 import { PageWrapper } from 'common/styles/page';
 import { StyledFormWrapper, Title } from 'common/styles/form';
+import { BreadcrumbComponent } from 'common/components/Breadcrumb';
 
 export const ResetPasswordPage: FC = () => {
   const history = useHistory();
@@ -30,6 +31,7 @@ export const ResetPasswordPage: FC = () => {
 
   return (
     <PageWrapper>
+      <BreadcrumbComponent path={['Login', 'Reset Password']} />
       <StyledFormWrapper>
         <Title>Reset Password</Title>
         <ResetPasswordForm onSubmit={onSubmit} />

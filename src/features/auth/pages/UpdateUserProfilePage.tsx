@@ -43,9 +43,8 @@ export const UpdateUserProfilePage: FC = () => {
   };
 
   return (
-    <>
-    <BreadcrumbComponent path={['Home', 'Update Profile']} />
     <PageWrapper>
+      <BreadcrumbComponent path={['Home', 'Update Profile']} />
       <StyledFormWrapper>
         <Title>Update Profile</Title>
         <UpdateUserProfileForm
@@ -58,6 +57,5 @@ export const UpdateUserProfilePage: FC = () => {
         />
       </StyledFormWrapper>
     </PageWrapper>
-    </>
   );
 };

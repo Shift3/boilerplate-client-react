@@ -29,14 +29,12 @@ export const CreateAgentView: FC = () => {
   };
 
   return (
-    <>
-    <BreadcrumbComponent path={['Home', 'Agent List', 'Create Agent']} />
     <PageWrapper>
+      <BreadcrumbComponent path={['Home', 'Agent List', 'Create Agent']} />
       <StyledFormWrapper>
         <Title>Create Agent </Title>
         <AgentDetailForm submitButtonLabel='CREATE' onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
       </StyledFormWrapper>
     </PageWrapper>
-    </>
   );
 };

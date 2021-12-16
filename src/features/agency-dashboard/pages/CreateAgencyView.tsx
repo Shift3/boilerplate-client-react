@@ -29,14 +29,12 @@ export const CreateAgencyView: FC = () => {
   };
 
   return (
-    <>
-    <BreadcrumbComponent path={['Home', 'Agency List', 'Create Agency']}/>
     <PageWrapper>
+      <BreadcrumbComponent path={['Home', 'Agency List', 'Create Agency']}/>
       <StyledFormWrapper>
         <Title>Create Agency</Title>
         <AgencyDetailForm submitButtonLabel='CREATE' onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
       </StyledFormWrapper>
     </PageWrapper>
-    </>
   );
 };
