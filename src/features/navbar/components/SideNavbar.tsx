@@ -1,54 +1,76 @@
-import { CustomButton } from 'common/styles/button';
 import { useAuth } from 'features/auth/hooks';
 import { FC } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLogoutModal } from '../hooks/useLogoutModal';
 import { useNavLinks } from '../hooks/useNavLinks';
-import { CustomNavLink } from './CustomNavLink';
+import { CustomNavAction, CustomNavLink } from './CustomNavLink';
 import { Logo } from './Logo';
-import { SettingsDropdown } from './SettingsDropdown';
-
-const FlexGrow = styled.div<{ proportion: number }>`
-  flex-grow: ${props => props.proportion};
-`;
+import { NavUserDetails } from './SettingsDropdown';
 
 type Props = {
-  onNavbarToggle: () => void;
 };
 
-export const SideNavbar: FC<Props> = ({ onNavbarToggle }) => {
+const BitwiseNavbar = styled(Navbar)`
+  background: ${props => props.theme.nav.backgroundColor};
+  align-items: flex-start;
+  padding: 2rem;
+  position: fixed;
+  overflow-y: auto;
+  width: 280px;
+  height: 100vh;
+  z-index: 1;
+  box-shadow: 1px 0 0 0 #dadada;
+
+  .navbar-brand > img {
+    width: 64px;
+    margin-left: 1rem;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+    opacity: 0.9;
+    border-radius: 12px;
+  }
+
+  .nav-wrap {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .navbar-nav:first-of-type {
+      flex: 1;
+    }
+
+    .navbar-nav:nth-of-type(2) {
+      margin-bottom: 1rem;
+    }
+  }
+
+`;
+
+export const SideNavbar: FC<Props> = () => {
   const { user } = useAuth();
   const navLinks = useNavLinks();
   const { openLogoutModal } = useLogoutModal();
 
   return (
-    <Navbar className='d-flex flex-column h-100 py-0 shadow'>
-      <FlexGrow proportion={1}>
-        <Logo />
-      </FlexGrow>
-      <FlexGrow proportion={2}>
-        {user ? (
-          <>
-            <Nav className='d-flex flex-column'>
-              {navLinks.map(link => (
-                <CustomNavLink key={link.id} link={link} />
-              ))}
-            </Nav>
-            <Nav>
-              <SettingsDropdown user={user} onNavbarToggle={onNavbarToggle} onSignOut={openLogoutModal} />
-            </Nav>
-          </>
-        ) : (
-          <Nav>
-            <Link to='/auth/login'>
-              <CustomButton>LOGIN/CREATE ACCOUNT</CustomButton>
-            </Link>
+    <BitwiseNavbar className='flex-column h-100 py-0'>
+      <Logo />
+      {user ? (
+        <div className='nav-wrap w-100'>
+          <Nav className='flex-column'>
+            {navLinks.map(link => (
+              <CustomNavLink key={link.id} link={link} />
+            ))}
           </Nav>
-        )}
-      </FlexGrow>
-    </Navbar>
+          <Nav className='flex-column'>
+            <NavUserDetails user={user} />  
+            <CustomNavAction onClick={openLogoutModal} label='Sign Out' icon='sign-out-alt' />
+          </Nav>
+        </div>
+      ) : (
+        <></>
+      )}
+    </BitwiseNavbar>
   );
 };

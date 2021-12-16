@@ -28,7 +28,7 @@ describe('UpdateUserProfileForm', () => {
   });
 
   it('should submit form if all form fields are valid', async () => {
-    await act(async () => userEvent.click(screen.getByRole('button', { name: 'UPDATE' })));
+    await act(async () => userEvent.click(screen.getByRole('button', { name: 'Update' })));
     expect(mockOnSubmit).toHaveBeenCalledWith(defaultValues, expect.any(Object));
   });
 
@@ -40,7 +40,7 @@ describe('UpdateUserProfileForm', () => {
     userEvent.type(lastNameInput, '567');
 
     await act(async () => {
-      userEvent.click(screen.getByRole('button', { name: 'UPDATE' }));
+      userEvent.click(screen.getByRole('button', { name: 'Update' }));
     });
 
     expect(await screen.findAllByRole('alert')).toHaveLength(2);

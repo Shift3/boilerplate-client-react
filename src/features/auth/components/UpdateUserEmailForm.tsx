@@ -1,11 +1,10 @@
 import { FC } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
-import { SubmitButton } from 'common/styles/button';
 
 export type UserEmailFormData = {
   email: string;
@@ -38,15 +37,14 @@ export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues }) => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
-        <Form.Label htmlFor='email'>Email</Form.Label>
         <Form.Control id='email' type='email' {...register('email')} isInvalid={!!errors.email} />
         <Form.Control.Feedback type='invalid' role='alert'>
           {errors.email?.message}
         </Form.Control.Feedback>
       </Form.Group>
-      <div className='d-grid gap-2 mt-3'>
-        <LoadingButton type='submit' as={SubmitButton} disabled={!isValid} loading={isSubmitting}>
-          UPDATE
+      <div className='mt-3'>
+        <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
+          Change my Email
         </LoadingButton>
       </div>
     </Form>

@@ -35,14 +35,9 @@ describe('ChangePasswordForm', () => {
 
   it('should render form fields', () => {
     expect(screen.getByLabelText(/Current Password/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Current Password/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/New Password/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Confirm Password/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'SUBMIT' })).toBeInTheDocument();
-  });
-
-  it('should validate form and show error messages on render', () => {
-    expect(screen.getAllByRole('alert')).toHaveLength(3);
+    expect(screen.getByRole('button', { name: 'Submit' })).toBeInTheDocument();
   });
 
   it('should submit form if all form fields are valid', async () => {
@@ -57,7 +52,7 @@ describe('ChangePasswordForm', () => {
       userEvent.type(confirmNewPasswordInput, validFormData.confirmPassword);
     });
 
-    await act(async () => userEvent.click(screen.getByRole('button', { name: 'SUBMIT' })));
+    await act(async () => userEvent.click(screen.getByRole('button', { name: 'Submit' })));
 
     expect(mockOnSubmit).toHaveBeenCalledWith(validFormData, expect.any(Object));
   });

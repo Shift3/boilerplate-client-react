@@ -1,17 +1,18 @@
-import { FC, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useGetAgenciesQuery } from 'common/api/agencyApi';
 import { useGetRolesQuery } from 'common/api/roleApi';
 import { useCreateUserMutation } from 'common/api/userApi';
-import { FormData, UserDetailForm } from '../components/UserDetailForm';
-import { useRbac } from 'features/rbac';
-import { useAuth } from 'features/auth/hooks';
-import { useGetAgenciesQuery } from 'common/api/agencyApi';
-import * as notificationService from 'common/services/notification';
-import { PageWrapper } from 'common/styles/page';
-import { StyledFormWrapper, Title } from 'common/styles/form';
+import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
+import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { Agency, PaginatedResult } from 'common/models';
-import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
+import * as notificationService from 'common/services/notification';
+import { StyledFormWrapper } from 'common/styles/form';
+import { useAuth } from 'features/auth/hooks';
+import { useRbac } from 'features/rbac';
+import { FC, useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { FormData, UserDetailForm } from '../components/UserDetailForm';
 
 export const CreateUserView: FC = () => {
   const history = useHistory();
@@ -64,20 +65,36 @@ export const CreateUserView: FC = () => {
   };
 
   return (
-    <PageWrapper>
-      <WithLoadingOverlay isLoading={isLoadingRoles || isLoadingAgencies}>
-        <StyledFormWrapper>
-          <Title>Create User</Title>
-          <UserDetailForm
-            availableRoles={availableRoles}
-            availableAgencies={availableAgencies}
-            defaultValues={defaultValues}
-            submitButtonLabel='CREATE'
-            onSubmit={handleFormSubmit}
-            onAgencySelectScrollToBottom={getNextPage}
-          />
-        </StyledFormWrapper>
-      </WithLoadingOverlay>
-    </PageWrapper>
+    <SmallContainer>
+      <PageCrumb>
+        <Link to='/users'>
+          <FontAwesomeIcon icon={["fas", "chevron-left"]} />  Back to User List
+        </Link>
+      </PageCrumb>
+
+      <PageHeader>
+        <div>
+          <h1>Create User</h1>
+          <p className='text-muted'>Add a new user to the system.</p>
+        </div>
+      </PageHeader>
+
+      <FormCard>
+        <FormCard.Body>
+            <WithLoadingOverlay isLoading={isLoadingRoles || isLoadingAgencies}>
+              <StyledFormWrapper>
+                <UserDetailForm
+                  availableRoles={availableRoles}
+                  availableAgencies={availableAgencies}
+                  defaultValues={defaultValues}
+                  submitButtonLabel='Create'
+                  onSubmit={handleFormSubmit}
+                  onAgencySelectScrollToBottom={getNextPage}
+                />
+              </StyledFormWrapper>
+            </WithLoadingOverlay>
+        </FormCard.Body>
+      </FormCard>
+    </SmallContainer>
   );
 };

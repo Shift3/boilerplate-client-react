@@ -3,8 +3,8 @@ import FormPrompt from 'common/components/FormPrompt';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { PhoneInput } from 'common/components/PhoneInput';
 import { Agent } from 'common/models';
-import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
 import { FC, useEffect } from 'react';
+import { Button, Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
 import { Constants } from 'utils/constants';
@@ -47,14 +47,12 @@ const schema = yup.object().shape({
 
 export const AgentDetailForm: FC<Props> = ({
   defaultValues = {},
-  submitButtonLabel = 'SUBMIT',
-  cancelButtonLabel = 'CANCEL',
   onSubmit,
-  onCancel,
+  submitButtonLabel = 'Submit',
 }) => {
   const {
     register,
-    formState: { errors, isValid, isDirty, isSubmitting },
+    formState: { errors, isValid, isDirty, isSubmitted, isSubmitting },
     handleSubmit,
     trigger,
     control,
@@ -85,11 +83,6 @@ export const AgentDetailForm: FC<Props> = ({
     });
   };
 
-  // Trigger validation on first render (for all fields).
-  useEffect(() => {
-    trigger();
-  }, [trigger]);
-
   // Trigger address validation when the first line changes.
   useEffect(() => {
     trigger('address.city');
@@ -99,22 +92,25 @@ export const AgentDetailForm: FC<Props> = ({
 
   return (
     <Form onSubmit={handleSubmit(withOptionalAddress)}>
-      <Form.Group controlId='create-agent-form-agent-name'>
-        <Form.Label>Name</Form.Label>
-        <Form.Control type='text' {...register('name')} isInvalid={!!errors.name} />
-        <Form.Control.Feedback type='invalid'>{errors.name?.message}</Form.Control.Feedback>
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Email</Form.Label>
-        <Form.Control type='email' {...register('email')} isInvalid={!!errors.email} />
-        <Form.Control.Feedback type='invalid'>{errors.email?.message}</Form.Control.Feedback>
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Description</Form.Label>
-        <Form.Control type='text' {...register('description')} isInvalid={!!errors.description} />
-        <Form.Control.Feedback type='invalid'>{errors.description?.message}</Form.Control.Feedback>
-      </Form.Group>
-      <Form.Group>
+      <h5>Personal</h5>
+      <Row className='mb-2'>
+        <Col>
+          <Form.Group controlId='create-agent-form-agent-name'>
+            <Form.Label>Name</Form.Label>
+            <Form.Control type='text' {...register('name')} isInvalid={!!errors.name} />
+            <Form.Control.Feedback type='invalid'>{errors.name?.message}</Form.Control.Feedback>
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group>
+            <Form.Label>Email</Form.Label>
+            <Form.Control type='email' {...register('email')} isInvalid={!!errors.email} />
+            <Form.Control.Feedback type='invalid'>{errors.email?.message}</Form.Control.Feedback>
+          </Form.Group>
+        </Col>
+      </Row>
+
+      <Form.Group className='mb-2'>
         <Form.Label>Phone Number</Form.Label>
         <Controller
           name='phoneNumber'
@@ -125,12 +121,22 @@ export const AgentDetailForm: FC<Props> = ({
         />
         <Form.Control.Feedback type='invalid'>{errors.phoneNumber?.message}</Form.Control.Feedback>
       </Form.Group>
+
       <Form.Group>
+        <Form.Label>Description</Form.Label>
+        <Form.Control as='textarea' {...register('description')} isInvalid={!!errors.description} />
+        <Form.Control.Feedback type='invalid'>{errors.description?.message}</Form.Control.Feedback>
+      </Form.Group>
+
+      <h5 className='mt-3'>Address</h5>
+
+      <Form.Group className='mb-2'>
         <Form.Label>Address</Form.Label>
         <Form.Control type='text' {...register('address.address1')} isInvalid={!!errors.address?.address1} />
         <Form.Control.Feedback type='invalid'>{errors.address?.address1?.message}</Form.Control.Feedback>
       </Form.Group>
-      <Form.Group>
+
+      <Form.Group className='mb-2'>
         <Form.Label>Address2</Form.Label>
         <Form.Control
           type='text'
@@ -140,48 +146,47 @@ export const AgentDetailForm: FC<Props> = ({
         />
         <Form.Control.Feedback type='invalid'>{errors.address?.address2?.message}</Form.Control.Feedback>
       </Form.Group>
-      <Form.Group>
-        <Form.Label>City</Form.Label>
-        <Form.Control
-          type='text'
-          {...register('address.city')}
-          isInvalid={!!errors.address?.city}
-          disabled={isBlank(firstAddressLine)}
-        />
-        <Form.Control.Feedback type='invalid'>{errors.address?.city?.message}</Form.Control.Feedback>
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>State</Form.Label>
-        <Form.Select
-          {...register('address.state')}
-          isInvalid={!!errors.address?.state}
-          disabled={isBlank(firstAddressLine)}
-        >
-          {stateList.map(({ name, value }) => (
-            <option key={value} value={value}>
-              {name}
-            </option>
-          ))}
-        </Form.Select>
-        <Form.Control.Feedback type='invalid'>{errors.address?.state?.message}</Form.Control.Feedback>
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Zip Code</Form.Label>
-        <Form.Control
-          type='text'
-          {...register('address.zipCode')}
-          isInvalid={!!errors.address?.zipCode}
-          disabled={isBlank(firstAddressLine)}
-        />
-        <Form.Control.Feedback type='invalid'>{errors.address?.zipCode?.message}</Form.Control.Feedback>
-      </Form.Group>
-      <ButtonWrapper>
-        <CancelButton onClick={onCancel}>{cancelButtonLabel}</CancelButton>
-        <LoadingButton type='submit' as={SubmitButton} disabled={!isValid} loading={isSubmitting}>
+
+      <Row>
+        <Col>
+          <Form.Group>
+            <Form.Label>City</Form.Label>
+            <Form.Control type='text' {...register('address.city')} isInvalid={!!errors.address?.city} />
+            <Form.Control.Feedback type='invalid'>{errors.address?.city?.message}</Form.Control.Feedback>
+          </Form.Group>
+        </Col>
+
+        <Col>
+          <Form.Group>
+            <Form.Label>State</Form.Label>
+            <Form.Select {...register('address.state')} isInvalid={!!errors.address?.state}>
+              {stateList.map(({ name, value }) => (
+                <option key={value} value={value}>
+                  {name}
+                </option>
+              ))}
+            </Form.Select>
+            <Form.Control.Feedback type='invalid'>{errors.address?.state?.message}</Form.Control.Feedback>
+          </Form.Group>
+        </Col>
+
+        <Col>
+          <Form.Group>
+            <Form.Label>Zip Code</Form.Label>
+            <Form.Control type='text' {...register('address.zipCode')} isInvalid={!!errors.address?.zipCode} />
+            <Form.Control.Feedback type='invalid'>{errors.address?.zipCode?.message}</Form.Control.Feedback>
+          </Form.Group>
+        </Col>
+      </Row>
+      
+      <div className='mt-3'>
+        <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
           {submitButtonLabel}
         </LoadingButton>
-      </ButtonWrapper>
-      <FormPrompt isDirty={isDirty} isSubmitting={isSubmitting} />
+      </div>
+
+      <FormPrompt isDirty={isDirty} isSubmitting={isSubmitted} />
+
     </Form>
   );
 };

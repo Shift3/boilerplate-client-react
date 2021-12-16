@@ -1,14 +1,14 @@
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useDeleteAgencyMutation } from 'common/api/agencyApi';
-import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
+import { handleApiError } from 'common/api/handleApiError';
+import { ActionButtonProps } from 'common/components/ActionButton';
 import { Agency } from 'common/models';
+import * as notificationService from 'common/services/notification';
+import { ActionButton } from 'common/styles/button';
 import { useConfirmationModal } from 'features/confirmation-modal';
 import { useRbac } from 'features/rbac';
 import { useCallback, useMemo } from 'react';
-import { useHistory } from 'react-router-dom';
 import { Column } from 'react-table';
-import * as notificationService from 'common/services/notification';
-import { handleApiError } from 'common/api/handleApiError';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 
 export type AgencyTableItem = {
   id: number;
@@ -22,7 +22,6 @@ export type UseAgencyTableData = (agencies?: Agency[]) => {
 };
 
 export const useAgencyTableData: UseAgencyTableData = (agencies = []) => {
-  const history = useHistory();
   const { userHasPermission } = useRbac();
   const [deleteAgency] = useDeleteAgencyMutation();
   const { openModal } = useConfirmationModal();
@@ -53,9 +52,18 @@ export const useAgencyTableData: UseAgencyTableData = (agencies = []) => {
       { accessor: 'name', Header: 'Agency Name' },
       {
         accessor: 'actions',
-        Header: 'Actions',
-        Cell: ({ value: actions, row }) =>
-          actions.map(action => <ActionButton key={`${action.icon}-${row.id}`} {...action} />),
+        Header: '',
+        Cell: ({ value: actions }) => (
+          <>
+            {actions.map(action => (
+              <>
+                <ActionButton {...action}>
+                  {action.tooltipText}
+                </ActionButton>
+              </>
+            ))}
+          </>
+        )
       },
     ],
     [],
@@ -69,20 +77,18 @@ export const useAgencyTableData: UseAgencyTableData = (agencies = []) => {
         name: agency.agencyName,
         actions: [
           {
-            icon: 'edit',
-            tooltipText: 'Edit',
-            onClick: () => history.push(`/agencies/update-agency/${agency.id}`),
-            show: userHasPermission('agency:update'),
-          },
-          {
             icon: 'trash-alt',
             tooltipText: 'Delete',
-            onClick: () => handleDelete(agency),
+            onClick: (e) => {
+              e.stopPropagation();
+              handleDelete(agency);
+            },
             show: userHasPermission('agency:delete'),
+            primaryColor: 'dangerRed'
           },
         ],
       })),
-    [agencies, userHasPermission, handleDelete, history],
+    [agencies, userHasPermission, handleDelete ],
   );
 
   return { columns, data };

@@ -17,5 +17,6 @@ export type CustomRenderer<TableItem extends BaseTableItem> = {
 export type GenericTableProps<TableItem extends BaseTableItem> = {
   headers: TableHeader<TableItem>[];
   items: TableItem[];
+  onRowClick?: (item: TableItem) => void,
   customRenderers?: CustomRenderer<TableItem>[];
 };

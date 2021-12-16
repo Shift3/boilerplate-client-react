@@ -1,7 +1,7 @@
 import { FC } from "react";
 import Form from 'react-bootstrap/Form';
 
-const formatPhoneNumber = (value: string): string => {
+export const formatPhoneNumber = (value: string): string => {
     value = value.replace(/\D/g, '');
 
     if (value.length < 4 && value.length >= 1) {

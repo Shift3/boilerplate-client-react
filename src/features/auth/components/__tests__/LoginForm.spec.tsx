@@ -1,17 +1,26 @@
-import { LogInForm } from '../LoginForm';
 import { act, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { createAppStore } from 'app/redux';
+import { createMemoryHistory } from 'history';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
-import userEvent from '@testing-library/user-event';
+import { LogInForm } from '../LoginForm';
 
 const mockOnSubmit = jest.fn();
 
 describe('LoginForm', () => {
   beforeEach(async () => {
+    const history = createMemoryHistory();
     render(
-      <ThemeProvider theme={AppTheme}>
-        <LogInForm onSubmit={mockOnSubmit} />
-      </ThemeProvider>,
+      <Router history={history}>
+        <Provider store={createAppStore()}>
+          <ThemeProvider theme={AppTheme}>
+            <LogInForm onSubmit={mockOnSubmit} />
+          </ThemeProvider>,
+        </Provider>
+      </Router>
     );
     mockOnSubmit.mockReset();
   });
@@ -30,7 +39,7 @@ describe('LoginForm', () => {
       userEvent.type(passwordInput, testFormData.password);
     });
 
-    await act(async () => userEvent.click(screen.getByRole('button', { name: 'LOG IN' })));
+    await act(async () => userEvent.click(screen.getByRole('button', { name: 'Log In' })));
 
     expect(mockOnSubmit).toHaveBeenCalledWith(testFormData, expect.any(Object));
   });
@@ -43,7 +52,7 @@ describe('LoginForm', () => {
     userEvent.type(passwordInput, '123');
 
     await act(async () => {
-      userEvent.click(screen.getByRole('button', { name: 'LOG IN' }));
+      userEvent.click(screen.getByRole('button', { name: 'Log In' }));
     });
 
     expect(await screen.findAllByRole('alert')).toHaveLength(2);

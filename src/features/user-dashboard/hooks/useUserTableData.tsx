@@ -1,12 +1,16 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import portraitPlaceholder from 'assets/img/portrait_placeholder.png';
 import { useDeleteUserMutation, useForgotPasswordMutation, useResendActivationEmailMutation } from 'common/api/userApi';
-import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
+import { ActionButtonProps } from 'common/components/ActionButton';
+import { CircularImg } from 'common/components/Common';
 import { User } from 'common/models';
+import * as notificationService from 'common/services/notification';
+import { ActionButton, TableActions } from 'common/styles/button';
 import { useConfirmationModal } from 'features/confirmation-modal';
 import { useRbac } from 'features/rbac';
 import { useCallback, useMemo } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Badge, Button } from 'react-bootstrap';
 import { Column } from 'react-table';
-import * as notificationService from 'common/services/notification';
 
 export type UserTableItem = {
   id: number;
@@ -24,7 +28,6 @@ export type UseUserTableData = (agents?: User[]) => {
 };
 
 export const useUserTableData: UseUserTableData = (users = []) => {
-  const history = useHistory();
   const [resendActivationEmail] = useResendActivationEmailMutation();
   const [deleteUser] = useDeleteUserMutation();
   const [sendForgotPasswordEmail] = useForgotPasswordMutation();
@@ -32,13 +35,6 @@ export const useUserTableData: UseUserTableData = (users = []) => {
   const { userHasPermission } = useRbac();
 
   const getUsersFullName = (user: User) => `${user.firstName} ${user.lastName}`;
-
-  const navigateToUpdateView = useCallback(
-    (user: User) => {
-      history.push(`/users/update-user/${user.id}`);
-    },
-    [history],
-  );
 
   const handleResendActivationEmail = useCallback(
     (user: User) => {
@@ -82,31 +78,78 @@ export const useUserTableData: UseUserTableData = (users = []) => {
     [openModal, sendForgotPasswordEmail],
   );
 
+  const roleColor = (role: string) => {
+    return {
+      'Super Administrator': 'danger',
+      'Admin': 'warning',
+      'User': 'secondary',
+      'Editor': 'info'
+    }[role] || 'secondary';
+  }
+
   // Set up columns and headers
   const columns: Column<UserTableItem>[] = useMemo(
     () => [
-      { accessor: 'lastName', Header: 'Last Name' },
-      { accessor: 'firstName', Header: 'First Name' },
-      { accessor: 'email', Header: 'Email' },
-      { accessor: 'role', Header: 'Role' },
+      { 
+        accessor: 'lastName', 
+        Header: 'Name',
+        Cell: ({ row }) => (
+          <div className='d-flex d-row align-items-center mr-3'>
+            <CircularImg radius={32} src={portraitPlaceholder} alt="Profile" />
+
+            <div className='d-flex flex-column'>
+              <span>
+                {row.original.firstName}&nbsp;
+                {row.original.lastName}
+              </span>
+              <small className='text-muted'>{row.original.email}</small>
+            </div>
+          </div>
+        )
+      },
+      { 
+        accessor: 'role',
+        Header: 'Role',
+        Cell: ({ value: role }) => (
+          <Badge pill bg={roleColor(role)}>{role}</Badge>
+        )
+      },
       {
         accessor: 'activatedAt',
         Header: 'Activated',
         Cell: ({ value: activatedAt }) => (
           <>
             {activatedAt instanceof Date ? (
-              new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(activatedAt)
+              <time dateTime={activatedAt.toISOString()}>
+                { new Intl.DateTimeFormat('en-US', {dateStyle: 'long' }).format(activatedAt) }
+              </time>
             ) : (
-              <ActionButton {...activatedAt} />
+              <>
+                <ActionButton {...activatedAt}>
+                  {activatedAt.tooltipText}
+                </ActionButton>
+              </>
             )}
           </>
         ),
       },
       {
         accessor: 'actions',
-        Header: 'Actions',
-        Cell: ({ value: actions, row }) =>
-          actions.map(action => <ActionButton key={`${action.icon}-${row.id}`} {...action} />),
+        Header: '',
+        Cell: ({ value: actions }) => (
+          <TableActions>
+            <Button onClick={e => e.stopPropagation()}>
+              <FontAwesomeIcon icon={['fas', 'ellipsis-h']} size='xs' />
+            </Button>
+            <div>
+              {actions.map(action => (
+                <ActionButton {...action}>
+                  {action.tooltipText}
+                </ActionButton>
+              ))}
+            </div>
+          </TableActions>
+        )
       },
     ],
     [],
@@ -126,31 +169,37 @@ export const useUserTableData: UseUserTableData = (users = []) => {
           : {
               icon: 'envelope',
               tooltipText: 'Resend Activation Email',
-              onClick: () => handleResendActivationEmail(user),
+              primaryColor: 'primaryBlue',
+              onClick: (e) => {
+                e.stopPropagation();
+                handleResendActivationEmail(user);
+              },
               show: userHasPermission({ permission: 'user:resend-activation-email', data: user }),
-            },
+        },
         actions: [
           {
-            icon: 'edit',
-            tooltipText: 'Edit',
-            onClick: () => navigateToUpdateView(user),
-            show: userHasPermission({ permission: 'user:update', data: user }),
+            icon: 'lock',
+            tooltipText: 'Reset Password',
+            onClick: (e) => {
+              e.stopPropagation();
+              handlePasswordReset(user);
+            },
+            primaryColor: 'primaryBlue',
+            show: userHasPermission({ permission: 'user:send-reset-password-email', data: user }),
           },
           {
             icon: 'trash-alt',
             tooltipText: 'Delete',
-            onClick: () => handleDelete(user),
+            onClick: (e) => {
+              e.stopPropagation();
+              handleDelete(user);
+            },
+            primaryColor: 'dangerRed',
             show: userHasPermission({ permission: 'user:delete', data: user }),
-          },
-          {
-            icon: 'lock',
-            tooltipText: 'Reset Password',
-            onClick: () => handlePasswordReset(user),
-            show: userHasPermission({ permission: 'user:send-reset-password-email', data: user }),
           },
         ],
       })),
-    [users, userHasPermission, handleDelete, handlePasswordReset, handleResendActivationEmail, navigateToUpdateView],
+    [users, userHasPermission, handleDelete, handlePasswordReset, handleResendActivationEmail],
   );
 
   return { columns, data };

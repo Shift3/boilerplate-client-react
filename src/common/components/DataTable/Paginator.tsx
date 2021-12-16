@@ -1,11 +1,10 @@
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { CustomSelect } from 'common/components';
 import { FC } from 'react';
-import { Container } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { CustomSelect } from 'common/components';
 
 type Props = {
   page: number;
@@ -43,35 +42,33 @@ export const Paginator: FC<Props> = ({
   const __pageSizeOptions = pageSizeOptions.map(option => ({ label: option.toString(), value: option.toString() }));
 
   return (
-    <div>
-      <Container fluid>
-        <Row>
-          {/* Page size selector */}
-          <Col>
-            <div style={{ display: 'inline-block', width: '100px', marginRight: '10px' }}>
-              <CustomSelect<PageSizeOption>
-                placeholder=''
-                options={__pageSizeOptions}
-                defaultValue={defaultOption}
-                onChange={option => onPageSizeChange(Number(option.value))}
-              />
-            </div>
-            <span>Items per page</span>
-          </Col>
-          {/* Display the range of results currently showing */}
-          <Col className='d-flex justify-content-end align-items-center'>
-            <span>
-              {rangeStart} - {rangeEnd} of {count}
-            </span>
-            <Button variant='link' disabled={!hasPreviousPage} onClick={onPreviousPageClick}>
-              <FontAwesomeIcon icon={faChevronLeft} />{' '}
-            </Button>
-            <Button variant='link' disabled={!hasNextPage} onClick={onNextPageClick}>
-              <FontAwesomeIcon icon={faChevronRight} />
-            </Button>
-          </Col>
-        </Row>
-      </Container>
+    <div className='table-paginator'>
+      <Row>
+        {/* Page size selector */}
+        <Col className='d-flex align-items-center'>
+          <div style={{ display: 'inline-block', width: '100px', marginRight: '10px' }}>
+            <CustomSelect<PageSizeOption>
+              placeholder=''
+              options={__pageSizeOptions}
+              defaultValue={defaultOption}
+              onChange={option => onPageSizeChange(Number(option.value))}
+            />
+          </div>
+          <span className='text-muted'>items per page</span>
+        </Col>
+        {/* Display the range of results currently showing */}
+        <Col className='d-flex justify-content-end align-items-center'>
+          <span className='text-muted' style={{ marginRight: '10px' }}>
+            {rangeStart} - {rangeEnd} of {count}
+          </span>
+          <Button variant='link' disabled={!hasPreviousPage} onClick={onPreviousPageClick}>
+            <FontAwesomeIcon icon={faChevronLeft} />{' '}
+          </Button>
+          <Button variant='link' disabled={!hasNextPage} onClick={onNextPageClick}>
+            <FontAwesomeIcon icon={faChevronRight} />
+          </Button>
+        </Col>
+      </Row>
     </div>
   );
 };

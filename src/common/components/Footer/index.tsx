@@ -5,10 +5,10 @@ import { Constants } from 'utils/constants';
 const Wrapper = styled.footer`
   padding-top: 5px;
   text-align: center;
-  background-color: ${(props) => props.theme.footer.backgroundColor};
-  color: ${(props) => props.theme.footer.textColor};
+  color: #999;
   bottom: 0;
-  width: 100vw;
+  padding-left: 280px;
+  max-width: 100vw;
   height: ${(props) => props.theme.footer.height};
 `;
 
@@ -21,7 +21,7 @@ export const copyrightDate: string =
 export const Footer: FC = () => (
   <Wrapper data-testid='footer'>
     <span>
-      &copy; Bitwise Technology Consulting - {version} Staging &nbsp; {copyrightDate}
+      {copyrightDate} &copy; Bitwise Technology Consulting - {version} Staging
     </span>
   </Wrapper>
 );

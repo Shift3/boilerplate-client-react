@@ -78,7 +78,7 @@ describe('GenericTable', () => {
     );
     const headers = container.querySelectorAll('th');
     headers.forEach((th, index) => {
-      expect(th.textContent).toBe(testTableHeaders[index].label);
+      expect(th.textContent).toContain(testTableHeaders[index].label);
     });
   });
 
