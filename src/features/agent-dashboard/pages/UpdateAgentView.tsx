@@ -24,6 +24,9 @@ export const UpdateAgentView: FC = () => {
       history.replace('/agents');
     }
   }, [error, history]);
+  useEffect(() => {
+    document.title = "Update Agent";
+  });
 
   const handleFormCancel = () => {
     history.goBack();

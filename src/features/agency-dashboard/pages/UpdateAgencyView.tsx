@@ -25,6 +25,10 @@ export const UpdateAgencyView: FC = () => {
     }
   }, [error, history]);
 
+  useEffect(() => {
+    document.title = "Update Agency";
+  });
+
   const handleFormCancel = () => {
     history.goBack();
   };

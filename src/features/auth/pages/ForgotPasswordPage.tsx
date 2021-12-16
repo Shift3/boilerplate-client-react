@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useForgotPasswordMutation } from 'common/api/userApi';
@@ -23,6 +23,9 @@ export const ForgotPasswordPage: FC = () => {
   };
 
   const onCancel = () => history.push('/auth/login');
+  useEffect (() => {
+    document.title = "Forgot Password"
+  })
 
   return (
     <PageWrapper>
