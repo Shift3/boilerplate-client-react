@@ -10,6 +10,7 @@ import { useGetUserByIdQuery, useUpdateUserMutation } from 'common/api/userApi';
 import * as notificationService from 'common/services/notification';
 import { PageWrapper } from 'common/styles/page';
 import { StyledFormWrapper, Title } from 'common/styles/form';
+import { BreadcrumbComponent } from 'common/components/Breadcrumb';
 
 interface RouteParams {
   id: string;
@@ -52,6 +53,8 @@ export const UpdateUserView: FC = () => {
   };
 
   return (
+    <>
+    <BreadcrumbComponent path={['Home', 'User List','Update User']} />
     <PageWrapper>
       <WithLoadingOverlay isLoading={isLoadingUser || isLoadingRoles || isLoadingAgencies}>
         <StyledFormWrapper>
@@ -67,5 +70,6 @@ export const UpdateUserView: FC = () => {
         </StyledFormWrapper>
       </WithLoadingOverlay>
     </PageWrapper>
+    </>
   );
 };

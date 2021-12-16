@@ -5,6 +5,7 @@ import { useCreateAgencyMutation } from 'common/api/agencyApi';
 import * as notificationService from 'common/services/notification';
 import { PageWrapper } from 'common/styles/page';
 import { StyledFormWrapper, Title } from 'common/styles/form';
+import { BreadcrumbComponent } from 'common/components/Breadcrumb';
 
 export const CreateAgencyView: FC = () => {
   const history = useHistory();
@@ -25,11 +26,14 @@ export const CreateAgencyView: FC = () => {
   };
 
   return (
+    <>
+    <BreadcrumbComponent path={['Home', 'Agency List', 'Create Agency']}/>
     <PageWrapper>
       <StyledFormWrapper>
         <Title>Create Agency</Title>
         <AgencyDetailForm submitButtonLabel='CREATE' onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
       </StyledFormWrapper>
     </PageWrapper>
+    </>
   );
 };

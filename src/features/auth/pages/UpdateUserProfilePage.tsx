@@ -11,6 +11,7 @@ import * as authLocalStorage from 'features/auth/authLocalStorage';
 import { FormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
 import { PageWrapper } from 'common/styles/page';
 import { StyledFormWrapper, Title } from 'common/styles/form';
+import { BreadcrumbComponent } from 'common/components/Breadcrumb'
 
 type RouteParams = {
   id: string;
@@ -39,6 +40,8 @@ export const UpdateUserProfilePage: FC = () => {
   };
 
   return (
+    <>
+    <BreadcrumbComponent path={['Home', 'Update Profile']} />
     <PageWrapper>
       <StyledFormWrapper>
         <Title>Update Profile</Title>
@@ -52,5 +55,6 @@ export const UpdateUserProfilePage: FC = () => {
         />
       </StyledFormWrapper>
     </PageWrapper>
+    </>
   );
 };

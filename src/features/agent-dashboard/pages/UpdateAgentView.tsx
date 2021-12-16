@@ -6,6 +6,7 @@ import { useGetAgentByIdQuery, useUpdateAgentMutation } from 'common/api/agentAp
 import * as notificationService from 'common/services/notification';
 import { PageWrapper } from 'common/styles/page';
 import { StyledFormWrapper, Title } from 'common/styles/form';
+import { BreadcrumbComponent } from 'common/components/Breadcrumb';
 
 export interface RouteParams {
   id: string;
@@ -40,6 +41,8 @@ export const UpdateAgentView: FC = () => {
   };
 
   return (
+    <>
+    <BreadcrumbComponent path={['Home', 'Agent List', 'Update Agent']}/>
     <PageWrapper>
       <WithLoadingOverlay isLoading={isLoadingAgent}>
         <StyledFormWrapper>
@@ -53,5 +56,6 @@ export const UpdateAgentView: FC = () => {
         </StyledFormWrapper>
       </WithLoadingOverlay>
     </PageWrapper>
+  </>
   );
 };

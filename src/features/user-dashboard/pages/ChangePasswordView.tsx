@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom';
 import { ChangePasswordForm, FormData } from '../components/ChangePasswordForm';
 import { PageWrapper } from 'common/styles/page';
 import { StyledFormWrapper, Title } from 'common/styles/form';
+import { BreadcrumbComponent } from 'common/components/Breadcrumb';
 
 export const ChangePasswordPage: FC = () => {
   const { user } = useAuth();
@@ -32,11 +33,14 @@ export const ChangePasswordPage: FC = () => {
   };
 
   return (
+    <>
+    <BreadcrumbComponent path={['Home', 'Change Password']}/>
     <PageWrapper>
       <StyledFormWrapper data-testid='wrapper'>
         <Title>Change Password</Title>
         <ChangePasswordForm onSubmit={onFormSubmit}/>
       </StyledFormWrapper>
     </PageWrapper>
+    </>
   );
 };

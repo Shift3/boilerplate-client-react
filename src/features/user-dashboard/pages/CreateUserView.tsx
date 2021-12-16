@@ -9,6 +9,7 @@ import { useGetAgenciesQuery } from 'common/api/agencyApi';
 import * as notificationService from 'common/services/notification';
 import { PageWrapper } from 'common/styles/page';
 import { StyledFormWrapper, Title } from 'common/styles/form';
+import { BreadcrumbComponent } from 'common/components/Breadcrumb';
 
 export const CreateUserView: FC = () => {
   const history = useHistory();
@@ -50,6 +51,8 @@ export const CreateUserView: FC = () => {
   const isLoading = isLoadingRoles || isLoadingAgencies;
 
   return (
+    <>
+    <BreadcrumbComponent path={['Home', 'User List','Create User']}/>
     <PageWrapper>
       {!isLoading && (
         <StyledFormWrapper>
@@ -64,5 +67,6 @@ export const CreateUserView: FC = () => {
         </StyledFormWrapper>
       )}
     </PageWrapper>
+    </>
   );
 };

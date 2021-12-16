@@ -5,6 +5,7 @@ import { useCreateAgentMutation } from 'common/api/agentApi';
 import * as notificationService from 'common/services/notification';
 import { PageWrapper } from 'common/styles/page';
 import { StyledFormWrapper, Title } from 'common/styles/form';
+import { BreadcrumbComponent } from 'common/components/Breadcrumb';
 
 export const CreateAgentView: FC = () => {
   const history = useHistory();
@@ -25,11 +26,14 @@ export const CreateAgentView: FC = () => {
   };
 
   return (
+    <>
+    <BreadcrumbComponent path={['Home', 'Agent List', 'Create Agent']} />
     <PageWrapper>
       <StyledFormWrapper>
         <Title>Create Agent </Title>
         <AgentDetailForm submitButtonLabel='CREATE' onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
       </StyledFormWrapper>
     </PageWrapper>
+    </>
   );
 };
