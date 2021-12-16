@@ -8,7 +8,7 @@ import {
   useGetUsersQuery,
   useResendActivationEmailMutation,
 } from 'common/api/userApi';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Link, useHistory } from 'react-router-dom';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
@@ -34,6 +34,9 @@ export const UserListView: FC = () => {
   const [forgotPassword] = useForgotPasswordMutation();
   const [resendActivationEmail] = useResendActivationEmailMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
+  useEffect (() => {
+    document.title = "React Boilerplate"
+  });
 
   const getUsersFullName = (user: User) => `${user.firstName} ${user.lastName}`;
 

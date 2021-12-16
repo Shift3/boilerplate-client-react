@@ -3,7 +3,7 @@ import ActionButton, { ActionButtonProps } from 'common/components/ActionButton'
 import { useConfirmationModal } from 'common/hooks';
 import { Agency } from 'common/models';
 import { Link, useHistory } from 'react-router-dom';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { HasPermission, useRbac } from 'features/rbac';
@@ -23,6 +23,9 @@ export const AgencyListView: FC = () => {
   const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery();
   const [deleteAgency] = useDeleteAgencyMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
+  useEffect (() => {
+    document.title = "React Boilerplate"
+  });
 
   const handleDelete = (agency: Agency) => {
     const message = `Delete ${agency.agencyName}?`;
