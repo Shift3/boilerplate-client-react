@@ -75,19 +75,18 @@ export const AgentDetailForm: FC<Props> = ({
   });
 
   const firstAddressLine = watch('address.address1');
-  function isLineOneBlank() { return isBlank(firstAddressLine) };
 
   /**
    * Submits agent data with either a complete address or nothing at all, to
    * prevent errors due to partial or empty address data.
    * 
-   * This works in tandem with validation rules, which enforce filling in all
-   * address fields if the first line is filled in.
+   * Note this relies on validation rules, which enforce filling in all address
+   * fields if the first line is filled in.
    * */
-  function withOptionalAddress(data: FormData) {
+  const withOptionalAddress = (data: FormData) => {
     onSubmit({
       ...data,
-      address: isLineOneBlank() ? undefined : data.address})
+      address: isBlank(firstAddressLine) ? undefined : data.address})
   };
 
   // Trigger validation on first render.
@@ -131,19 +130,19 @@ export const AgentDetailForm: FC<Props> = ({
       <Form.Group>
         <Form.Label>Address2</Form.Label>
         <Form.Control type='text' {...register('address.address2')} isValid={!!errors.address?.address2}
-          disabled={ isLineOneBlank() } />
+          disabled={ isBlank(firstAddressLine) } />
         <Form.Control.Feedback type='invalid'>{errors.address?.address2?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label>City</Form.Label>
         <Form.Control type='text' {...register('address.city')} isInvalid={!!errors.address?.city}
-          disabled={ isLineOneBlank() } />
+          disabled={ isBlank(firstAddressLine) } />
         <Form.Control.Feedback type='invalid'>{errors.address?.city?.message}</Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
         <Form.Label>State</Form.Label>
         <Form.Select {...register('address.state')} isInvalid={!!errors.address?.state}
-          disabled={ isLineOneBlank() } >
+          disabled={ isBlank(firstAddressLine) } >
           {stateList.map(({ name, value }) => (
             <option key={value} value={value}>
               {name}
@@ -155,7 +154,7 @@ export const AgentDetailForm: FC<Props> = ({
       <Form.Group>
         <Form.Label>Zip Code</Form.Label>
         <Form.Control type='text' {...register('address.zipCode')} isInvalid={!!errors.address?.zipCode}
-          disabled={ isLineOneBlank() } />
+          disabled={ isBlank(firstAddressLine) } />
         <Form.Control.Feedback type='invalid'>{errors.address?.zipCode?.message}</Form.Control.Feedback>
       </Form.Group>
       <ButtonWrapper>
