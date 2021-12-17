@@ -74,7 +74,8 @@ export const AgentDetailForm: FC<Props> = ({
     },
   });
 
-  function isLineOneBlank() { return isBlank(watch('address.address1')) };
+  const firstAddressLine = watch('address.address1');
+  function isLineOneBlank() { return isBlank(firstAddressLine) };
   function isLineOneFilled() { return !isLineOneBlank() };
 
   /**
@@ -93,7 +94,7 @@ export const AgentDetailForm: FC<Props> = ({
   // Trigger validation on first render.
   useEffect(() => {
     trigger();
-  }, [trigger]);
+  }, [trigger, firstAddressLine]);
   
   return (
     <Form onSubmit={handleSubmit(withOptionalAddress)}>
