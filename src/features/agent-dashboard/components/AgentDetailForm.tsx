@@ -89,9 +89,16 @@ export const AgentDetailForm: FC<Props> = ({
       address: isBlank(firstAddressLine) ? undefined : data.address})
   };
 
-  // Trigger validation on first render.
+  // Trigger validation on first render (for all fields).
   useEffect(() => {
     trigger();
+  }, [trigger]);
+
+  // Trigger address validation when the first line changes.
+  useEffect(() => {
+    trigger('address.city');
+    trigger('address.state');
+    trigger('address.zipCode');
   }, [trigger, firstAddressLine]);
   
   return (
