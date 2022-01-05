@@ -9,6 +9,6 @@ export interface Agent {
   phoneNumber: string;
   categoryList: unknown[];
   documentList: unknown[];
-  address: Address;
+  address?: Address;
   agency: unknown;
 }
