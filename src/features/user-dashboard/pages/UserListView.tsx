@@ -29,11 +29,12 @@ type UserTableItem = {
 export const UserListView: FC = () => {
   const history = useHistory();
   const { userHasPermission } = useRbac();
-  const { data: users = [], isLoading: isLoadingUsers } = useGetUsersQuery();
+  const { data: users = [], isLoading: isLoadingUsers, isFetching: isFetchingUsers } = useGetUsersQuery();
   const [deleteUser] = useDeleteUserMutation();
   const [forgotPassword] = useForgotPasswordMutation();
   const [resendActivationEmail] = useResendActivationEmailMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
+  const isPageLoading = isLoadingUsers || isFetchingUsers;
 
   const getUsersFullName = (user: User) => `${user.firstName} ${user.lastName}`;
 
@@ -161,7 +162,7 @@ export const UserListView: FC = () => {
           </Link>
         </div>
       </HasPermission>
-      <WithLoadingOverlay isLoading={isLoadingUsers}>
+      <WithLoadingOverlay isLoading={isPageLoading}>
         <GenericTable<UserTableItem> headers={headers} items={items} customRenderers={customRenderers} />
       </WithLoadingOverlay>
       <ConfirmationModal />
