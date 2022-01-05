@@ -20,16 +20,19 @@ type AgencyTableItem = {
 export const AgencyListView: FC = () => {
   const history = useHistory();
   const { userHasPermission } = useRbac();
-  const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery();
+  const { data: agencies = [], isLoading: isLoadingAgencies, isFetching: isFetchingAgencies } = useGetAgenciesQuery();
   const [deleteAgency] = useDeleteAgencyMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
 
   const handleDelete = (agency: Agency) => {
     const message = `Delete ${agency.agencyName}?`;
 
+    const isPageLoading = isLoadingAgencies || isFetchingAgencies;
+
     const onConfirm = () => {
       deleteAgency(agency.id);
       closeModal();
+      
       notificationService.showSuccessMessage('Agency deleted.');
     };
 
