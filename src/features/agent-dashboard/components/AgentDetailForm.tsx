@@ -64,7 +64,6 @@ export const AgentDetailForm: FC<Props> = ({
     formState: { errors, isValid },
     handleSubmit,
     trigger,
-    control,
     watch
   } = useForm<FormData>({
     resolver: yupResolver(schema),
