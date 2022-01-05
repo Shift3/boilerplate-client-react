@@ -1,11 +1,11 @@
 import { FC, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useFormState } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { ButtonWrapper, SubmitButton } from 'common/styles/button';
-import { FormPrompt } from 'common/components/FormPrompt';
+import { Prompt } from 'react-router-dom';
 
 export type FormData = {
   oldPassword: string;
@@ -47,6 +47,8 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit }) => {
     resolver: yupResolver(schema),
     mode: 'all',
   });
+
+  const { isDirty } = useFormState({control});
 
   // Trigger validation on first render.
   useEffect(() => {
@@ -105,7 +107,7 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit }) => {
           SUBMIT
         </SubmitButton>
       </ButtonWrapper>
-      <FormPrompt control={control} />
+      <Prompt when={isDirty} message="There are unsaved changes, would you still like to leave?" />
     </Form>
   );
 };
