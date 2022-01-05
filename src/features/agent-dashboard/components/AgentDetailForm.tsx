@@ -1,14 +1,14 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FormPrompt } from 'common/components/FormPrompt';
 import { PhoneInput } from 'common/components/PhoneInput';
 import { Agent } from 'common/models';
 import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
 import { FC, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm, useFormState } from 'react-hook-form';
 import { Constants } from 'utils/constants';
 import { stateList } from 'utils/states';
 import * as yup from 'yup';
+import { Prompt } from 'react-router-dom';
 
 export type FormData = Pick<Agent, 'name' | 'email' | 'description' | 'phoneNumber' | 'address' | 'thumbnail'>;
 
@@ -89,6 +89,8 @@ export const AgentDetailForm: FC<Props> = ({
       ...data,
       address: isBlank(firstAddressLine) ? undefined : data.address})
   };
+
+  const { isDirty } = useFormState({control});
 
   // Trigger validation on first render (for all fields).
   useEffect(() => {
@@ -171,7 +173,7 @@ export const AgentDetailForm: FC<Props> = ({
           {submitButtonLabel}
         </SubmitButton>
       </ButtonWrapper>
-      <FormPrompt control={control} />
+      <Prompt when={isDirty} message="There are unsaved changes, would you still like to leave?" />
     </Form>
   );
 };

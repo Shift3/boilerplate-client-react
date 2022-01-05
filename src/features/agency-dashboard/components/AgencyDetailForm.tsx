@@ -2,9 +2,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import { Agency } from 'common/models';
 import { FC, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useFormState } from 'react-hook-form';
 import * as yup from 'yup';
 import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
+import { Prompt } from 'react-router-dom';
 
 export type FormData = Pick<Agency, 'agencyName'>;
 
@@ -28,11 +29,14 @@ export const AgencyDetailForm: FC<Props> = ({
   onSubmit,
 }) => {
   const {
+    control,
     formState: { errors, isValid },
     handleSubmit,
     register,
     trigger,
   } = useForm<FormData>({ resolver: yupResolver(schema), mode: 'all', defaultValues });
+
+  const { isDirty } = useFormState({control});
 
   // Trigger validation on first render.
   useEffect(() => {
@@ -52,6 +56,7 @@ export const AgencyDetailForm: FC<Props> = ({
           {submitButtonLabel}
         </SubmitButton>
       </ButtonWrapper>
+      <Prompt when={isDirty} message="There are unsaved changes, would you still like to leave?" />
     </Form>
   );
 };
