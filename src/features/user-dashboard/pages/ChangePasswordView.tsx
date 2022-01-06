@@ -5,7 +5,7 @@ import { ErrorResponse } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { authSlice } from 'features/auth/authSlice';
 import { useAuth } from 'features/auth/hooks';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ChangePasswordForm, FormData } from '../components/ChangePasswordForm';
 import { PageWrapper } from 'common/styles/page';
@@ -17,9 +17,6 @@ export const ChangePasswordPage: FC = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const [changePassword] = useChangePasswordMutation();
-  useEffect(()=> {
-    document.title = 'Change Password';
-  });
 
   const onFormSubmit = async (data: FormData) => {
     const request: ChangePasswordRequest = { id: user!.id, ...data };

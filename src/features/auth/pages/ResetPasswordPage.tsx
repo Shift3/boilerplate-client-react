@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { handleApiError } from 'common/api/handleApiError';
@@ -13,9 +13,6 @@ export const ResetPasswordPage: FC = () => {
   const history = useHistory();
   const { token } = useParams<{ token: string }>();
   const [resetPassword] = useResetPasswordMutation();
-  useEffect(() => {
-    document.title = "Reset Password";
-  });
 
   const onSubmit = async (formData: FormData) => {
     const data = { ...formData, token };

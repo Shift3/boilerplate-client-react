@@ -37,9 +37,6 @@ export const UpdateUserView: FC = () => {
       history.replace('/users');
     }
   }, [getUserError, history]);
-  useEffect(() => {
-    document.title = "Update User";
-  });
 
   const handleFormCancel = () => {
     history.goBack();

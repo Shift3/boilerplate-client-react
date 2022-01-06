@@ -1,5 +1,5 @@
 import { useLogin } from 'features/auth/hooks';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import styled from 'styled-components';
 import { FormData, LogInForm } from '../components/LoginForm';
 import { ForgotPasswordLink } from '../components/ForgotPasswordLink';
@@ -43,9 +43,6 @@ const Title = styled.div`
 
 export const LogInPage: FC = () => {
   const { login } = useLogin();
-  useEffect (() => {
-    document.title = "React Boilerplate"
-  });
 
   const onSubmit = async (credentials: FormData) => {
     login(credentials);

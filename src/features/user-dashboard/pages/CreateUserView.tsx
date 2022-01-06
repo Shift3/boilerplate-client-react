@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useGetRolesQuery } from 'common/api/roleApi';
 import { useCreateUserMutation } from 'common/api/userApi';
@@ -19,9 +19,6 @@ export const CreateUserView: FC = () => {
   const { data: roles = [], isLoading: isLoadingRoles } = useGetRolesQuery();
   const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery(undefined, {
     skip: !userHasPermission('agency:read'),
-  });
-  useEffect(() => {
-    document.title = "Create User";
   });
 
   const availableRoles = roles.filter(role => userHasPermission({ permission: 'role:read', data: role }));

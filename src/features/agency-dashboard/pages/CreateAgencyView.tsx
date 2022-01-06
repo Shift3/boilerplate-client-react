@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AgencyDetailForm, FormData } from '../components/AgencyDetailForm';
 import { useCreateAgencyMutation } from 'common/api/agencyApi';
@@ -10,9 +10,6 @@ import { BreadcrumbComponent } from 'common/components/Breadcrumb';
 export const CreateAgencyView: FC = () => {
   const history = useHistory();
   const [createAgency] = useCreateAgencyMutation();
-  useEffect (() => {
-    document.title = "Create Agency"
-  })
 
   const handleFormCancel = () => {
     history.goBack();

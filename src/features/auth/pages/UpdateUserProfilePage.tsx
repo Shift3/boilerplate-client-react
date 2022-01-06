@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useAuth } from 'features/auth/hooks';
@@ -23,9 +23,6 @@ export const UpdateUserProfilePage: FC = () => {
   const { token, user } = useAuth();
   const [updateProfile] = useUpdateProfileMutation();
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    document.title = "Update User Profile";
-  });
 
   const onSubmit = async (formData: FormData) => {
     const data = { id: Number(id), ...formData, profilePicture: '' };
