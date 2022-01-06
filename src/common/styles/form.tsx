@@ -18,7 +18,7 @@ export const StyledForm = styled(BootstrapForm)`
 `;
 
 export const StyledFormWrapper = styled.div`
-  margin: 100px;
+  margin: 1rem 0;
   max-width: 500px;
   min-width: 500px;
   padding: 50px;

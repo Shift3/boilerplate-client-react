@@ -3,14 +3,14 @@ import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { useAuth } from 'features/auth/hooks';
 import { useRbac } from 'features/rbac';
 import { FC, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
 import { useGetRolesQuery } from 'common/api/roleApi';
 import { useGetUserByIdQuery, useUpdateUserMutation } from 'common/api/userApi';
 import * as notificationService from 'common/services/notification';
 import { PageWrapper } from 'common/styles/page';
 import { StyledFormWrapper, Title } from 'common/styles/form';
-import { BreadcrumbComponent } from 'common/components/Breadcrumb';
+import { Breadcrumb } from 'react-bootstrap';
 
 interface RouteParams {
   id: string;
@@ -54,11 +54,20 @@ export const UpdateUserView: FC = () => {
 
   return (
     <PageWrapper>
-      <Title>Update User View</Title>
-      <BreadcrumbComponent path={['Home', 'User List','Update User']} />
+      <Title>Update User</Title>
+      <Breadcrumb>
+        <Breadcrumb.Item linkAs={Link} linkProps={{to: '/'}} >
+          Home
+        </Breadcrumb.Item>
+        <Breadcrumb.Item linkAs={Link} linkProps={{to: '/users'}} >
+          User List
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>
+          Update User
+        </Breadcrumb.Item>
+      </Breadcrumb>
       <WithLoadingOverlay isLoading={isLoadingUser || isLoadingRoles || isLoadingAgencies}>
         <StyledFormWrapper>
-          <Title>Update User</Title>
           <UserDetailForm
             availableRoles={availableRoles}
             availableAgencies={availableAgencies}

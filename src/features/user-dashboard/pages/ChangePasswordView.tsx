@@ -6,11 +6,11 @@ import * as notificationService from 'common/services/notification';
 import { authSlice } from 'features/auth/authSlice';
 import { useAuth } from 'features/auth/hooks';
 import { FC } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { ChangePasswordForm, FormData } from '../components/ChangePasswordForm';
 import { PageWrapper } from 'common/styles/page';
 import { StyledFormWrapper, Title } from 'common/styles/form';
-import { BreadcrumbComponent } from 'common/components/Breadcrumb';
+import { Breadcrumb } from 'react-bootstrap';
 
 export const ChangePasswordPage: FC = () => {
   const { user } = useAuth();
@@ -34,10 +34,17 @@ export const ChangePasswordPage: FC = () => {
 
   return (
     <PageWrapper>
-      <Title>Change Password View</Title>
-      <BreadcrumbComponent path={['Home', 'Change Password']}/>
+      <Title>Change Password</Title>
+      <Breadcrumb>
+        <Breadcrumb.Item linkAs={Link} linkProps={{to: '/'}} >
+          Home
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>
+          Change Password
+        </Breadcrumb.Item>
+      </Breadcrumb>
+
       <StyledFormWrapper data-testid='wrapper'>
-        <Title>Change Password</Title>
         <ChangePasswordForm onSubmit={onFormSubmit}/>
       </StyledFormWrapper>
     </PageWrapper>

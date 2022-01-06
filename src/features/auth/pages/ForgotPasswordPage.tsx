@@ -7,7 +7,6 @@ import { handleApiError } from 'common/api/handleApiError';
 import { ForgotPasswordForm, FormData } from '../components/ForgotPasswordForm';
 import { PageWrapper } from 'common/styles/page';
 import { StyledFormWrapper, Title } from 'common/styles/form';
-import { BreadcrumbComponent } from 'common/components/Breadcrumb';
 
 export const ForgotPasswordPage: FC = () => {
   const history = useHistory();
@@ -27,8 +26,6 @@ export const ForgotPasswordPage: FC = () => {
 
   return (
     <PageWrapper>
-      <Title>Forgot Password Page</Title>
-      <BreadcrumbComponent path={['Login', 'Forgot Password']} />
       <StyledFormWrapper data-testid='wrapper'>
         <Title>Forgot Password</Title>
         <ForgotPasswordForm onSubmit={onSubmit} onCancel={onCancel} />

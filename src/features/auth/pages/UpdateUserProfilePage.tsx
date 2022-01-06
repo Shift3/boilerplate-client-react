@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useAuth } from 'features/auth/hooks';
 import { useUpdateProfileMutation } from 'common/api/userApi';
@@ -11,7 +11,7 @@ import * as authLocalStorage from 'features/auth/authLocalStorage';
 import { FormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
 import { PageWrapper } from 'common/styles/page';
 import { StyledFormWrapper, Title } from 'common/styles/form';
-import { BreadcrumbComponent } from 'common/components/Breadcrumb'
+import { Breadcrumb } from 'react-bootstrap';
 
 type RouteParams = {
   id: string;
@@ -41,10 +41,17 @@ export const UpdateUserProfilePage: FC = () => {
 
   return (
     <PageWrapper>
-      <Title>Update Profile Page</Title>
-      <BreadcrumbComponent path={['Home', 'Update Profile']} />
+      <Title>Update Profile</Title>
+      <Breadcrumb>
+        <Breadcrumb.Item linkAs={Link} linkProps={{to: '/'}} >
+          Home
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>
+          Update Profile
+        </Breadcrumb.Item>
+      </Breadcrumb>
+
       <StyledFormWrapper>
-        <Title>Update Profile</Title>
         <UpdateUserProfileForm
           onSubmit={onSubmit}
           defaultValues={{

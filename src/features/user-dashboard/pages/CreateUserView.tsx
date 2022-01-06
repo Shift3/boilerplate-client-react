@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useGetRolesQuery } from 'common/api/roleApi';
 import { useCreateUserMutation } from 'common/api/userApi';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
@@ -9,7 +9,7 @@ import { useGetAgenciesQuery } from 'common/api/agencyApi';
 import * as notificationService from 'common/services/notification';
 import { PageWrapper } from 'common/styles/page';
 import { StyledFormWrapper, Title } from 'common/styles/form';
-import { BreadcrumbComponent } from 'common/components/Breadcrumb';
+import { Breadcrumb } from 'react-bootstrap';
 
 export const CreateUserView: FC = () => {
   const history = useHistory();
@@ -52,11 +52,20 @@ export const CreateUserView: FC = () => {
 
   return (
     <PageWrapper>
-      <Title>Create User View</Title>
-      <BreadcrumbComponent path={['Home', 'User List','Create User']}/>
+      <Title>Create User</Title>
+      <Breadcrumb>
+        <Breadcrumb.Item linkAs={Link} linkProps={{to: '/'}} >
+          Home
+        </Breadcrumb.Item>
+        <Breadcrumb.Item linkAs={Link} linkProps={{to: '/users'}} >
+          User List
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>
+          Create User
+        </Breadcrumb.Item>
+      </Breadcrumb>
       {!isLoading && (
         <StyledFormWrapper>
-          <Title>Create User</Title>
           <UserDetailForm
             availableRoles={availableRoles}
             availableAgencies={availableAgencies}

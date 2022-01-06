@@ -1,11 +1,11 @@
 import { FC } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { AgencyDetailForm, FormData } from '../components/AgencyDetailForm';
 import { useCreateAgencyMutation } from 'common/api/agencyApi';
 import * as notificationService from 'common/services/notification';
 import { PageWrapper } from 'common/styles/page';
 import { StyledFormWrapper, Title } from 'common/styles/form';
-import { BreadcrumbComponent } from 'common/components/Breadcrumb';
+import { Breadcrumb } from 'react-bootstrap';
 
 export const CreateAgencyView: FC = () => {
   const history = useHistory();
@@ -27,10 +27,19 @@ export const CreateAgencyView: FC = () => {
 
   return (
     <PageWrapper>
-      <Title>Create Agency View</Title>
-      <BreadcrumbComponent path={['Home', 'Agency List', 'Create Agency']}/>
+      <Title>Create Agency</Title>
+      <Breadcrumb>
+        <Breadcrumb.Item linkAs={Link} linkProps={{to: '/'}} >
+          Home
+        </Breadcrumb.Item>
+        <Breadcrumb.Item linkAs={Link} linkProps={{to: '/agencies'}} >
+          Agency List
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>
+          Create Agency
+        </Breadcrumb.Item>
+      </Breadcrumb>
       <StyledFormWrapper>
-        <Title>Create Agency</Title>
         <AgencyDetailForm submitButtonLabel='CREATE' onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
       </StyledFormWrapper>
     </PageWrapper>

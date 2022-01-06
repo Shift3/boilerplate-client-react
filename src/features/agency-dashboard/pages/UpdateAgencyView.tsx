@@ -1,12 +1,12 @@
 import { FC, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { AgencyDetailForm, FormData } from '../components/AgencyDetailForm';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { useGetAgencyByIdQuery, useUpdateAgencyMutation } from 'common/api/agencyApi';
 import * as notificationService from 'common/services/notification';
 import { PageWrapper } from 'common/styles/page';
 import { StyledFormWrapper, Title } from 'common/styles/form';
-import { BreadcrumbComponent } from 'common/components/Breadcrumb';
+import { Breadcrumb } from 'react-bootstrap';
 
 export interface RouteParams {
   id: string;
@@ -41,11 +41,20 @@ export const UpdateAgencyView: FC = () => {
 
   return (
     <PageWrapper>
-      <Title>Update Agency View</Title>
-      <BreadcrumbComponent path={['Home', 'Agency List', 'Update Agency']} />
+      <Title>Update Agency</Title>
+      <Breadcrumb>
+        <Breadcrumb.Item linkAs={Link} linkProps={{to: '/'}} >
+          Home
+        </Breadcrumb.Item>
+        <Breadcrumb.Item linkAs={Link} linkProps={{to: '/agencies'}} >
+          Agency List
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>
+          Update Agency
+        </Breadcrumb.Item>
+      </Breadcrumb>
       <WithLoadingOverlay isLoading={isLoadingAgency}>
         <StyledFormWrapper>
-          <Title>Update Agency</Title>
           <AgencyDetailForm
             defaultValues={{ agencyName: agency?.agencyName ?? '' }}
             submitButtonLabel='UPDATE'
