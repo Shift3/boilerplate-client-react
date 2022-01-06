@@ -27,6 +27,7 @@ export const ForgotPasswordPage: FC = () => {
 
   return (
     <PageWrapper>
+      <Title>Forgot Password Page</Title>
       <BreadcrumbComponent path={['Login', 'Forgot Password']} />
       <StyledFormWrapper data-testid='wrapper'>
         <Title>Forgot Password</Title>

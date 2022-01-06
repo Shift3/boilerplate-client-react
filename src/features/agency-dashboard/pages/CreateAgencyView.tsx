@@ -27,6 +27,7 @@ export const CreateAgencyView: FC = () => {
 
   return (
     <PageWrapper>
+      <Title>Create Agency View</Title>
       <BreadcrumbComponent path={['Home', 'Agency List', 'Create Agency']}/>
       <StyledFormWrapper>
         <Title>Create Agency</Title>

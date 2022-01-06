@@ -52,6 +52,7 @@ export const CreateUserView: FC = () => {
 
   return (
     <PageWrapper>
+      <Title>Create User View</Title>
       <BreadcrumbComponent path={['Home', 'User List','Create User']}/>
       {!isLoading && (
         <StyledFormWrapper>

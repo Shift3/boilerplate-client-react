@@ -41,6 +41,7 @@ export const UpdateAgencyView: FC = () => {
 
   return (
     <PageWrapper>
+      <Title>Update Agency View</Title>
       <BreadcrumbComponent path={['Home', 'Agency List', 'Update Agency']} />
       <WithLoadingOverlay isLoading={isLoadingAgency}>
         <StyledFormWrapper>

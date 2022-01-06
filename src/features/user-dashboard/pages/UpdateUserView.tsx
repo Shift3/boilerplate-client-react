@@ -54,6 +54,7 @@ export const UpdateUserView: FC = () => {
 
   return (
     <PageWrapper>
+      <Title>Update User View</Title>
       <BreadcrumbComponent path={['Home', 'User List','Update User']} />
       <WithLoadingOverlay isLoading={isLoadingUser || isLoadingRoles || isLoadingAgencies}>
         <StyledFormWrapper>

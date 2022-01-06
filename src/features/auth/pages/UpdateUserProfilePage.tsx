@@ -41,6 +41,7 @@ export const UpdateUserProfilePage: FC = () => {
 
   return (
     <PageWrapper>
+      <Title>Update Profile Page</Title>
       <BreadcrumbComponent path={['Home', 'Update Profile']} />
       <StyledFormWrapper>
         <Title>Update Profile</Title>

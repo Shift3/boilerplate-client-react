@@ -34,6 +34,7 @@ export const ChangePasswordPage: FC = () => {
 
   return (
     <PageWrapper>
+      <Title>Change Password View</Title>
       <BreadcrumbComponent path={['Home', 'Change Password']}/>
       <StyledFormWrapper data-testid='wrapper'>
         <Title>Change Password</Title>

@@ -28,6 +28,7 @@ export const ResetPasswordPage: FC = () => {
 
   return (
     <PageWrapper>
+      <Title>Reset Password Page</Title>
       <BreadcrumbComponent path={['Login', 'Reset Password']} />
       <StyledFormWrapper>
         <Title>Reset Password</Title>
