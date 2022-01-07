@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
-import { useForm, useFormState } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { ButtonWrapper, SubmitButton } from 'common/styles/button';
@@ -26,18 +26,15 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) => {
   const {
-    formState: { errors, isValid },
+    formState: { errors, isValid, isDirty },
     handleSubmit,
     register,
-    control,
     trigger,
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
     defaultValues,
   });
-
-  const { isDirty } = useFormState({control});
 
   useEffect(() => {
     trigger();

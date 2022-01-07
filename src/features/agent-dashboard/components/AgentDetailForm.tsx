@@ -4,7 +4,7 @@ import { Agent } from 'common/models';
 import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
 import { FC, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
-import { Controller, useForm, useFormState } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { Constants } from 'utils/constants';
 import { stateList } from 'utils/states';
 import * as yup from 'yup';
@@ -61,7 +61,7 @@ export const AgentDetailForm: FC<Props> = ({
   const {
     control,
     register,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isDirty },
     handleSubmit,
     trigger,
     watch
@@ -89,8 +89,6 @@ export const AgentDetailForm: FC<Props> = ({
       ...data,
       address: isBlank(firstAddressLine) ? undefined : data.address})
   };
-
-  const { isDirty } = useFormState({control});
 
   // Trigger validation on first render (for all fields).
   useEffect(() => {

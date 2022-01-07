@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react';
-import { useForm, useFormState } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import * as yup from 'yup';
@@ -38,17 +38,14 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const ChangePasswordForm: FC<Props> = ({ onSubmit }) => {
   const {
-    formState: { errors, isValid },
+    formState: { errors, isValid, isDirty },
     handleSubmit,
-    control,
     register,
     trigger,
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
   });
-
-  const { isDirty } = useFormState({control});
 
   // Trigger validation on first render.
   useEffect(() => {
