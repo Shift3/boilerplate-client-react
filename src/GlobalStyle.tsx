@@ -18,8 +18,4 @@ export const GlobalStyle = createGlobalStyle`
         flex-direction: column;
         box-sizing: border-box;
     }
-    .mr-1 {
-        margin-right: 0.5rem;
-    }
-    `;
-export default GlobalStyle;
+`;

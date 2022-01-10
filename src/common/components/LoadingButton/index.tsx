@@ -14,12 +14,16 @@ const StyledButton = styled(BootstrapButton)`
   background-color: ${props => props.theme.buttons.submitBackgroundColor};
   border-color: ${props => props.theme.buttons.submitBorderColor};
   padding: 0.5rem 1rem;
+
+  & .spinner-border {
+    margin-right: 1em;
+  }
 `;
 
 export const LoadingButton: FC<LoadingButtonProps> = ({ disabled, loading, children }) => {
   return (
     <StyledButton type='submit' disabled={disabled || loading}>
-      {loading && <span className='spinner-border spinner-border-sm mr-1' />}
+      {loading && <span className='spinner-border spinner-border-sm' />}
       {children}
     </StyledButton>
   );
