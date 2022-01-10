@@ -1,6 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { Agency } from 'common/models';
 import { customBaseQuery } from 'common/api/customBaseQuery';
+import { PaginatedResult, PaginationParams } from './types';
 
 export const agencyApi = createApi({
   reducerPath: 'agencyApi',
@@ -14,19 +15,19 @@ export const agencyApi = createApi({
 
   tagTypes: ['Agency'],
 
-  endpoints: (builder) => ({
-    getAgencies: builder.query<Agency[], void>({
-      query: () => ({ url: '/agencies' }),
+  endpoints: builder => ({
+    getAgencies: builder.query<PaginatedResult<Agency>, PaginationParams>({
+      query: ({ page, pageSize }) => ({ url: `/agencies?page=${page}&$pageSize=${pageSize}` }),
       providesTags: ['Agency'],
     }),
 
     getAgencyById: builder.query<Agency, number | string>({
-      query: (id) => ({ url: `/agencies/${id}` }),
+      query: id => ({ url: `/agencies/${id}` }),
       providesTags: ['Agency'],
     }),
 
     createAgency: builder.mutation<Agency, Pick<Agency, 'agencyName'>>({
-      query: (payload) => ({
+      query: payload => ({
         url: '/agencies',
         method: 'POST',
         body: payload,
@@ -44,7 +45,7 @@ export const agencyApi = createApi({
     }),
 
     deleteAgency: builder.mutation<void, number>({
-      query: (agencyId) => ({
+      query: agencyId => ({
         url: `/agencies/${agencyId}`,
         method: 'DELETE',
       }),

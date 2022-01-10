@@ -1,6 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { Agent } from 'common/models/agent';
 import { customBaseQuery } from './customBaseQuery';
+import { PaginatedResult, PaginationParams } from './types';
 
 export type CreateAgentRequest = Pick<
   Agent,
@@ -24,19 +25,19 @@ export const agentApi = createApi({
 
   tagTypes: ['Agent'],
 
-  endpoints: (builder) => ({
-    getAgents: builder.query<Agent[], void>({
-      query: () => ({ url: '/agents' }),
+  endpoints: builder => ({
+    getAgents: builder.query<PaginatedResult<Agent>, PaginationParams>({
+      query: ({ page, pageSize }) => ({ url: `/agents&page=${page}&pageSize=${pageSize}` }),
       providesTags: ['Agent'],
     }),
 
     getAgentById: builder.query<Agent, number | string>({
-      query: (id) => ({ url: `/agents/${id}` }),
+      query: id => ({ url: `/agents/${id}` }),
       providesTags: ['Agent'],
     }),
 
     createAgent: builder.mutation<Agent, CreateAgentRequest>({
-      query: (payload) => ({
+      query: payload => ({
         url: '/agents',
         method: 'POST',
         body: payload,
@@ -54,7 +55,7 @@ export const agentApi = createApi({
     }),
 
     deleteAgent: builder.mutation<void, number>({
-      query: (agentId) => ({
+      query: agentId => ({
         url: `/agents/${agentId}`,
         method: 'DELETE',
       }),
