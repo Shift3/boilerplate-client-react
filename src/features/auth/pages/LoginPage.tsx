@@ -45,7 +45,7 @@ export const LogInPage: FC = () => {
   const { login } = useLogin();
 
   const onSubmit = async (credentials: FormData) => {
-    login(credentials);
+    await login(credentials);
   };
 
   return (

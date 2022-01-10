@@ -5,14 +5,13 @@ import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
 
 const mockOnSubmit = jest.fn();
-const mockOnCancel = jest.fn();
 
 describe('ForgotPasswordForm', () => {
   beforeEach(async () => {
     await act(async () => {
       render(
         <ThemeProvider theme={AppTheme}>
-          <ForgotPasswordForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+          <ForgotPasswordForm onSubmit={mockOnSubmit} />
         </ThemeProvider>,
       );
     });

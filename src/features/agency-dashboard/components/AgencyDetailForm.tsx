@@ -4,15 +4,13 @@ import { Agency } from 'common/models';
 import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
+import { LoadingButton } from 'common/components/LoadingButton';
 
 export type FormData = Pick<Agency, 'agencyName'>;
 
 export type Props = {
   defaultValues?: FormData;
   submitButtonLabel?: string;
-  cancelButtonLabel?: string;
-  onCancel: () => void;
   onSubmit: (data: FormData) => void;
 };
 
@@ -20,15 +18,9 @@ const schema = yup.object().shape({
   agencyName: yup.string().required('Agency Name is required.'),
 });
 
-export const AgencyDetailForm: FC<Props> = ({
-  defaultValues = {},
-  submitButtonLabel = 'SUBMIT',
-  cancelButtonLabel = 'CANCEL',
-  onCancel,
-  onSubmit,
-}) => {
+export const AgencyDetailForm: FC<Props> = ({ defaultValues = {}, onSubmit }) => {
   const {
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
     handleSubmit,
     register,
     trigger,
@@ -46,12 +38,11 @@ export const AgencyDetailForm: FC<Props> = ({
         <Form.Control type='text' isInvalid={!!errors.agencyName} {...register('agencyName')} />
         <Form.Control.Feedback type='invalid'>{errors.agencyName?.message}</Form.Control.Feedback>
       </Form.Group>
-      <ButtonWrapper>
-        <CancelButton onClick={onCancel}>{cancelButtonLabel}</CancelButton>
-        <SubmitButton type='submit' disabled={!isValid}>
-          {submitButtonLabel}
-        </SubmitButton>
-      </ButtonWrapper>
+      <div className='d-grid gap-2 mt-3'>
+        <LoadingButton disabled={!isValid} loading={isSubmitting}>
+          SUBMIT
+        </LoadingButton>
+      </div>
     </Form>
   );
 };

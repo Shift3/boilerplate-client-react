@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
-import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
+import { LoadingButton } from 'common/components/LoadingButton';
 
 export type FormData = {
   email: string;
@@ -12,16 +12,15 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
-  onCancel: () => void;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
   email: yup.string().required(Constants.errorMessages.EMAIL_REQUIRED).email(Constants.errorMessages.INVALID_EMAIL),
 });
 
-export const ForgotPasswordForm: FC<Props> = ({ onSubmit, onCancel }) => {
+export const ForgotPasswordForm: FC<Props> = ({ onSubmit }) => {
   const {
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
     handleSubmit,
     register,
     trigger,
@@ -50,12 +49,11 @@ export const ForgotPasswordForm: FC<Props> = ({ onSubmit, onCancel }) => {
           {errors.email?.message}
         </Form.Control.Feedback>
       </Form.Group>
-      <ButtonWrapper>
-        <CancelButton onClick={onCancel}>CANCEL</CancelButton>
-        <SubmitButton type='submit' disabled={!isValid}>
+      <div className='d-grid gap-2 mt-3'>
+        <LoadingButton disabled={!isValid} loading={isSubmitting}>
           SUBMIT
-        </SubmitButton>
-      </ButtonWrapper>
+        </LoadingButton>
+      </div>
     </Form>
   );
 };

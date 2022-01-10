@@ -31,10 +31,6 @@ export const CreateUserView: FC = () => {
     agency: !userHasPermission('agency:read') ? user?.agency : undefined,
   };
 
-  const handleFormCancel = () => {
-    history.goBack();
-  };
-
   const handleFormSubmit = async (data: FormData) => {
     try {
       await createUser({ ...data, profilePicture: '' }).unwrap();
@@ -58,7 +54,6 @@ export const CreateUserView: FC = () => {
             availableRoles={availableRoles}
             availableAgencies={availableAgencies}
             defaultValues={defaultValues}
-            onCancel={handleFormCancel}
             onSubmit={handleFormSubmit}
           />
         </StyledFormWrapper>

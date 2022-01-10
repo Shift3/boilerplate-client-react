@@ -10,10 +10,6 @@ export const CreateAgencyView: FC = () => {
   const history = useHistory();
   const [createAgency] = useCreateAgencyMutation();
 
-  const handleFormCancel = () => {
-    history.goBack();
-  };
-
   const handleFormSubmit = async (data: FormData) => {
     try {
       await createAgency(data).unwrap();
@@ -28,7 +24,7 @@ export const CreateAgencyView: FC = () => {
     <PageWrapper>
       <StyledFormWrapper>
         <Title>Create Agency</Title>
-        <AgencyDetailForm submitButtonLabel='CREATE' onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
+        <AgencyDetailForm submitButtonLabel='CREATE' onSubmit={handleFormSubmit} />
       </StyledFormWrapper>
     </PageWrapper>
   );

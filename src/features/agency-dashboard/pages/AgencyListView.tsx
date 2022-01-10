@@ -20,9 +20,10 @@ type AgencyTableItem = {
 export const AgencyListView: FC = () => {
   const history = useHistory();
   const { userHasPermission } = useRbac();
-  const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery();
+  const { data: agencies = [], isLoading: isLoadingAgencies, isFetching: isFetchingAgencies } = useGetAgenciesQuery();
   const [deleteAgency] = useDeleteAgencyMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
+  const isPageLoading = isLoadingAgencies || isFetchingAgencies;
 
   const handleDelete = (agency: Agency) => {
     const message = `Delete ${agency.agencyName}?`;
@@ -30,6 +31,7 @@ export const AgencyListView: FC = () => {
     const onConfirm = () => {
       deleteAgency(agency.id);
       closeModal();
+
       notificationService.showSuccessMessage('Agency deleted.');
     };
 
@@ -88,7 +90,7 @@ export const AgencyListView: FC = () => {
           </Link>
         </div>
       </HasPermission>
-      <WithLoadingOverlay isLoading={isLoadingAgencies}>
+      <WithLoadingOverlay isLoading={isPageLoading}>
         <GenericTable<AgencyTableItem> headers={headers} items={items} customRenderers={customRenderers} />
       </WithLoadingOverlay>
       <ConfirmationModal />

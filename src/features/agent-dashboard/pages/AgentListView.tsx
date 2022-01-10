@@ -23,9 +23,10 @@ type AgentTableItem = {
 export const AgentListView: FC = () => {
   const history = useHistory();
   const { userHasPermission } = useRbac();
-  const { data: agents = [], isLoading: isLoadingAgents } = useGetAgentsQuery();
+  const { data: agents = [], isLoading: isLoadingAgents, isFetching: isFetchingAgents } = useGetAgentsQuery();
   const [deleteAgent] = useDeleteAgentMutation();
   const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
+  const isPageLoading = isLoadingAgents || isFetchingAgents;
 
   const navigateToUpdateView = (agent: Agent) => {
     history.push(`/agents/update-agent/${agent.id}`);
@@ -99,7 +100,7 @@ export const AgentListView: FC = () => {
           </Link>
         </div>
       </HasPermission>
-      <WithLoadingOverlay isLoading={isLoadingAgents}>
+      <WithLoadingOverlay isLoading={isPageLoading}>
         <GenericTable<AgentTableItem> headers={headers} items={items} customRenderers={customRenderers} />
       </WithLoadingOverlay>
       <ConfirmationModal />
