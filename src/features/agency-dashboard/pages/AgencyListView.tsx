@@ -23,6 +23,7 @@ export const AgencyListView: FC = () => {
   const { data: agencies = [], isLoading: isLoadingAgencies, isFetching: isFetchingAgencies } = useGetAgenciesQuery();
   const [deleteAgency] = useDeleteAgencyMutation();
   const { openModal } = useConfirmationModal();
+
   const isPageLoading = isLoadingAgencies || isFetchingAgencies;
 
   const handleDelete = (agency: Agency) => {
@@ -30,6 +31,7 @@ export const AgencyListView: FC = () => {
 
     const onConfirm = async () => {
       await deleteAgency(agency.id);
+
       notificationService.showSuccessMessage('Agency deleted.');
     };
 
