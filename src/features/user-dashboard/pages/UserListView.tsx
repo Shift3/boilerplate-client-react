@@ -34,6 +34,7 @@ export const UserListView: FC = () => {
   const [forgotPassword] = useForgotPasswordMutation();
   const [resendActivationEmail] = useResendActivationEmailMutation();
   const { openModal } = useConfirmationModal();
+
   const isPageLoading = isLoadingUsers || isFetchingUsers;
 
   const getUsersFullName = (user: User) => `${user.firstName} ${user.lastName}`;
@@ -54,6 +55,7 @@ export const UserListView: FC = () => {
 
     const onConfirm = async () => {
       await deleteUser(user.id);
+
       notificationService.showSuccessMessage('User deleted.');
     };
 
