@@ -11,7 +11,6 @@ export type FormData = Pick<Agency, 'agencyName'>;
 export type Props = {
   defaultValues?: FormData;
   submitButtonLabel?: string;
-  cancelButtonLabel?: string;
   onSubmit: (data: FormData) => void;
 };
 
