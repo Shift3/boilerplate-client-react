@@ -5,7 +5,7 @@ import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
-import { Prompt } from 'react-router-dom';
+import FormPrompt from 'common/components/FormPrompt';
 
 export type FormData = Pick<Agency, 'agencyName'>;
 
@@ -29,7 +29,7 @@ export const AgencyDetailForm: FC<Props> = ({
   onSubmit,
 }) => {
   const {
-    formState: { errors, isValid, isDirty },
+    formState: { errors, isValid, isDirty, isSubmitting },
     handleSubmit,
     register,
     trigger,
@@ -53,7 +53,7 @@ export const AgencyDetailForm: FC<Props> = ({
           {submitButtonLabel}
         </SubmitButton>
       </ButtonWrapper>
-      <Prompt when={isDirty} message="There are unsaved changes, would you still like to leave?" />
+      <FormPrompt isDirty={isDirty} isSubmitting={isSubmitting} />
     </Form>
   );
 };

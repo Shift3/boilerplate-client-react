@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import FormPrompt from 'common/components/FormPrompt';
 import { PhoneInput } from 'common/components/PhoneInput';
 import { Agent } from 'common/models';
 import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
@@ -8,7 +9,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { Constants } from 'utils/constants';
 import { stateList } from 'utils/states';
 import * as yup from 'yup';
-import { Prompt } from 'react-router-dom';
 
 export type FormData = Pick<Agent, 'name' | 'email' | 'description' | 'phoneNumber' | 'address' | 'thumbnail'>;
 
@@ -61,7 +61,7 @@ export const AgentDetailForm: FC<Props> = ({
   const {
     control,
     register,
-    formState: { errors, isValid, isDirty },
+    formState: { errors, isValid, isDirty, isSubmitted },
     handleSubmit,
     trigger,
     watch
@@ -74,7 +74,6 @@ export const AgentDetailForm: FC<Props> = ({
       address: { ...defaultValues.address, state: defaultValues?.address?.state ?? '' },
     },
   });
-
   const firstAddressLine = watch('address.address1');
 
   /**
@@ -171,7 +170,7 @@ export const AgentDetailForm: FC<Props> = ({
           {submitButtonLabel}
         </SubmitButton>
       </ButtonWrapper>
-      <Prompt when={isDirty} message="There are unsaved changes, would you still like to leave?" />
+      <FormPrompt isDirty={isDirty} isSubmitting={isSubmitted} />
     </Form>
   );
 };

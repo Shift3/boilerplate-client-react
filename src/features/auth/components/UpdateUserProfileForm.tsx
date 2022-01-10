@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { ButtonWrapper, SubmitButton } from 'common/styles/button';
-import { Prompt } from 'react-router-dom';
+import FormPrompt from 'common/components/FormPrompt';
 
 export type FormData = {
   firstName: string;
@@ -26,7 +26,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) => {
   const {
-    formState: { errors, isValid, isDirty },
+    formState: { errors, isValid, isDirty, isSubmitting },
     handleSubmit,
     register,
     trigger,
@@ -67,8 +67,8 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) =>
         <SubmitButton type='submit' disabled={!isValid}>
           UPDATE
         </SubmitButton>
-        <Prompt when={isDirty} message="There are unsaved changes, would you still like to leave?" />
       </ButtonWrapper>
+      <FormPrompt isDirty={isDirty} isSubmitting={isSubmitting} />
     </Form>
   );
 };

@@ -5,7 +5,7 @@ import { Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
-import { Prompt } from 'react-router-dom';
+import FormPrompt from 'common/components/FormPrompt';
 
 export type FormData = {
   email: string;
@@ -31,7 +31,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const SignUpForm: FC<Props> = ({ onSubmit, onCancel }) => {
   const {
-    formState: { errors, isValid, isDirty },
+    formState: { errors, isValid, isDirty, isSubmitting },
     handleSubmit,
     register,
     trigger,
@@ -111,7 +111,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit, onCancel }) => {
           SIGN UP
         </SubmitButton>
       </ButtonWrapper>
-      <Prompt when={isDirty} message="There are unsaved changes, would you still like to leave?" />
+      <FormPrompt isDirty={isDirty} isSubmitting={isSubmitting} />
     </Form>
   );
 };
