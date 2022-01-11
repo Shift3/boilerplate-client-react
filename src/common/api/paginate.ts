@@ -1,6 +1,6 @@
 import { SerializedError } from '@reduxjs/toolkit';
 import { FetchBaseQueryError, QueryDefinition } from '@reduxjs/toolkit/dist/query';
-import { UseQuery, UseQueryStateOptions, UseQuerySubscription } from '@reduxjs/toolkit/dist/query/react/buildHooks';
+import { UseQuery, UseQueryStateOptions } from '@reduxjs/toolkit/dist/query/react/buildHooks';
 import { useCallback, useState } from 'react';
 import { UseQueryStateDefaultResult, UseQuerySubscriptionOptions } from 'rtk-query-config';
 import { customBaseQuery } from './customBaseQuery';
@@ -113,31 +113,37 @@ export const usePageableQuery = <ResultType, TagType extends string>(
   const hasPreviousPage = !!data && page > basePage;
 
   // Mutators
-  const _getPage = useCallback((_page: number) => {
-    if (_page < basePage) {
-      return;
-    }
-    setPage(_page);
-  }, []);
+  const _getPage = useCallback(
+    (_page: number) => {
+      if (_page < basePage) {
+        return;
+      }
+      setPage(_page);
+    },
+    [basePage, setPage],
+  );
 
   const _getNextPage = useCallback(() => {
     if (hasNextPage) {
       setPage(page => page + 1);
     }
-  }, []);
+  }, [hasNextPage, setPage]);
 
   const _getPreviousPage = useCallback(() => {
     if (hasPreviousPage) {
       setPage(page => page - 1);
     }
-  }, []);
+  }, [hasPreviousPage, setPage]);
 
-  const _setPageSize = useCallback((size: number) => {
-    if (size < minPageSize || size > maxPageSize) {
-      return;
-    }
-    setPageSize(size);
-  }, []);
+  const _setPageSize = useCallback(
+    (size: number) => {
+      if (size < minPageSize || size > maxPageSize) {
+        return;
+      }
+      setPageSize(size);
+    },
+    [minPageSize, maxPageSize, setPageSize],
+  );
 
   return {
     data: data?.results ?? [],
