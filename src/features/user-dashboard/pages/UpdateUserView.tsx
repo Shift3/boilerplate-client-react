@@ -10,6 +10,8 @@ import { useGetUserByIdQuery, useUpdateUserMutation } from 'common/api/userApi';
 import * as notificationService from 'common/services/notification';
 import { PageWrapper } from 'common/styles/page';
 import { StyledFormWrapper, Title } from 'common/styles/form';
+import { usePageableQuery } from 'common/api/paginate';
+import { Agency } from 'common/models';
 
 interface RouteParams {
   id: string;
@@ -23,9 +25,11 @@ export const UpdateUserView: FC = () => {
   const [updateUser] = useUpdateUserMutation();
   const { data: user, isLoading: isLoadingUser, error: getUserError } = useGetUserByIdQuery(id);
   const { data: roles = [], isLoading: isLoadingRoles } = useGetRolesQuery();
-  const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery(undefined, {
-    skip: !userHasPermission('agency:read'),
-  });
+  // TODO: fix skip option
+  const { data: agencies = [], isLoading: isLoadingAgencies } = usePageableQuery<Agency, 'Agency'>(useGetAgenciesQuery);
+  // const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery(undefined, {
+  //   skip: !userHasPermission('agency:read'),
+  // });
 
   const availableRoles = roles.filter(role => userHasPermission({ permission: 'role:read', data: role }));
   const availableAgencies = agencies.length !== 0 ? agencies : [auth.user!.agency];
