@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { Agent } from 'common/models/agent';
 import { customBaseQuery } from './customBaseQuery';
-import { PaginatedResult, PaginationParams } from './types';
+import { PagedResult, PageableQueryParams } from './paginate';
 
 export type CreateAgentRequest = Pick<
   Agent,
@@ -26,7 +26,7 @@ export const agentApi = createApi({
   tagTypes: ['Agent'],
 
   endpoints: builder => ({
-    getAgents: builder.query<PaginatedResult<Agent>, PaginationParams>({
+    getAgents: builder.query<PagedResult<Agent>, PageableQueryParams>({
       query: ({ page, pageSize }) => ({ url: `/agents&page=${page}&pageSize=${pageSize}` }),
       providesTags: ['Agent'],
     }),
