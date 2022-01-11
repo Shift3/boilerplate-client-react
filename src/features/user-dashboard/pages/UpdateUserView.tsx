@@ -25,11 +25,11 @@ export const UpdateUserView: FC = () => {
   const [updateUser] = useUpdateUserMutation();
   const { data: user, isLoading: isLoadingUser, error: getUserError } = useGetUserByIdQuery(id);
   const { data: roles = [], isLoading: isLoadingRoles } = useGetRolesQuery();
-  // TODO: fix skip option
-  const { data: agencies = [], isLoading: isLoadingAgencies } = usePageableQuery<Agency, 'Agency'>(useGetAgenciesQuery);
-  // const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery(undefined, {
-  //   skip: !userHasPermission('agency:read'),
-  // });
+  const { data: agencies = [], isLoading: isLoadingAgencies } = usePageableQuery<Agency, 'Agency'>(
+    useGetAgenciesQuery,
+    {},
+    { skip: !userHasPermission('agency:read') },
+  );
 
   const availableRoles = roles.filter(role => userHasPermission({ permission: 'role:read', data: role }));
   const availableAgencies = agencies.length !== 0 ? agencies : [auth.user!.agency];

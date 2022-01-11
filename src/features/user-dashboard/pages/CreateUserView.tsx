@@ -18,11 +18,11 @@ export const CreateUserView: FC = () => {
   const { userHasPermission } = useRbac();
   const [createUser] = useCreateUserMutation();
   const { data: roles = [], isLoading: isLoadingRoles } = useGetRolesQuery();
-  // TODO: fix skip option
-  const { data: agencies = [], isLoading: isLoadingAgencies } = usePageableQuery<Agency, 'Agency'>(useGetAgenciesQuery);
-  // const { data: agencies = [], isLoading: isLoadingAgencies } = useGetAgenciesQuery(undefined, {
-  //   skip: !userHasPermission('agency:read'),
-  // });
+  const { data: agencies = [], isLoading: isLoadingAgencies } = usePageableQuery<Agency, 'Agency'>(
+    useGetAgenciesQuery,
+    {},
+    { skip: !userHasPermission('agency:read') },
+  );
 
   const availableRoles = roles.filter(role => userHasPermission({ permission: 'role:read', data: role }));
 

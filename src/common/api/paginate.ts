@@ -1,7 +1,8 @@
 import { SerializedError } from '@reduxjs/toolkit';
 import { FetchBaseQueryError, QueryDefinition } from '@reduxjs/toolkit/dist/query';
-import { UseQuery } from '@reduxjs/toolkit/dist/query/react/buildHooks';
+import { UseQuery, UseQueryStateOptions, UseQuerySubscription } from '@reduxjs/toolkit/dist/query/react/buildHooks';
 import { useCallback, useState } from 'react';
+import { UseQueryStateDefaultResult, UseQuerySubscriptionOptions } from 'rtk-query-config';
 import { customBaseQuery } from './customBaseQuery';
 
 export interface PageableQueryParams {
@@ -77,7 +78,7 @@ type PageableQueryDefinition<ResultType, TagType extends string> = QueryDefiniti
 type PageableUseQueryHook<ResultType, TagType extends string> = UseQuery<PageableQueryDefinition<ResultType, TagType>>;
 
 // These defaults are set to sane values but can be configured by the developer if needed.
-const defaultPaginationConfig: Required<PageableQueryConfig> = {
+const defaultConfig: Required<PageableQueryConfig> = {
   basePage: 1,
   initialPage: 1,
   initialPageSize: 10,
@@ -88,17 +89,22 @@ const defaultPaginationConfig: Required<PageableQueryConfig> = {
 export const usePageableQuery = <ResultType, TagType extends string>(
   useQueryHook: PageableUseQueryHook<ResultType, TagType>,
   config?: PageableQueryConfig,
+  options?: UseQuerySubscriptionOptions &
+    UseQueryStateOptions<
+      PageableQueryDefinition<ResultType, TagType>,
+      UseQueryStateDefaultResult<PageableQueryDefinition<ResultType, TagType>>
+    >,
 ): PageableQueryManager<ResultType> => {
   // Override config with user provided values if present, otherwise use sane defaults.
   const { basePage, initialPage, initialPageSize, minPageSize, maxPageSize } = {
-    ...defaultPaginationConfig,
+    ...defaultConfig,
     ...config,
   };
 
   // Query state
   const [page, setPage] = useState(initialPage);
   const [pageSize, setPageSize] = useState(initialPageSize);
-  const { data, isLoading, isFetching, error } = useQueryHook({ page, pageSize });
+  const { data, isLoading, isFetching, error } = useQueryHook({ page, pageSize }, options);
 
   // Derived state
   const count = data?.meta.count ?? 0;
