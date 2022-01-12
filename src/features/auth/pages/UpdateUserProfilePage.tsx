@@ -25,7 +25,6 @@ export const UpdateUserProfilePage: FC = () => {
 
   const onSubmit = async (formData: FormData) => {
     const data = { id: Number(id), ...formData, profilePicture: '' };
-    
     try {
       const updatedUser = await updateProfile(data).unwrap();
       const newAuth = { token, user: updatedUser };
