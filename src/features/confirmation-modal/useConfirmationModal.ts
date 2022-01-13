@@ -1,5 +1,5 @@
 import { useAppDispatch } from 'app/redux';
-import { ConfirmationModalCallback, declineConfirmationModal, openConfirmationModal } from './slice';
+import { ConfirmationModalCallback, confirmConfirmationModal, declineConfirmationModal, openConfirmationModal } from './slice';
 
 export interface ConfirmationModalConfig {
     message?: string;
@@ -25,7 +25,7 @@ export const useConfirmationModal: useConfirmationModal = () => {
     }
 
     const confirmModal = () => {
-        //
+        dispatch(confirmConfirmationModal());
     }
 
     const declineModal = () => {

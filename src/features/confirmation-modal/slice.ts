@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 import { AppDispatch, RootState } from 'app/redux';
 
 export interface ConfirmationModalState {
@@ -35,25 +35,34 @@ export const confirmationModalSlice = createSlice({
     name: 'confirmationModal',
     initialState,
     reducers: {
-        modalOpened: (state: ConfirmationModalState, action: PayloadAction<ModalOpenedPayload>) => {
-           const {message, confirmButtonLabel, declineButtonLabel} = action.payload;
+      modalOpened: (state: ConfirmationModalState, action: PayloadAction<ModalOpenedPayload>) => {
+          const {message, confirmButtonLabel, declineButtonLabel} = action.payload;
 
-           state.show = true;
-           state.loading = false;
-           state.message = message || initialState.message;
-           state.declineButtonLabel = declineButtonLabel || initialState.declineButtonLabel;
-           state.confirmButtonLabel = confirmButtonLabel || initialState.confirmButtonLabel;
-        },
-        modalConfirmed: () => {
-            //
-        },
-        modalClosed: (state: ConfirmationModalState) => {
-          state.show = initialState.show;
-          state.loading = initialState.loading;
-          state.message = initialState.message;
-          state.declineButtonLabel = initialState.declineButtonLabel;
-          state.confirmButtonLabel = initialState.confirmButtonLabel;
-        },
+          state.show = true;
+          state.loading = false;
+          state.message = message || initialState.message;
+          state.declineButtonLabel = declineButtonLabel || initialState.declineButtonLabel;
+          state.confirmButtonLabel = confirmButtonLabel || initialState.confirmButtonLabel;
+      },
+
+      modalClosed: (state: ConfirmationModalState) => {
+        state.show = initialState.show;
+        state.loading = initialState.loading;
+        state.message = initialState.message;
+        state.declineButtonLabel = initialState.declineButtonLabel;
+        state.confirmButtonLabel = initialState.confirmButtonLabel;
+      },
+    },
+    extraReducers: (builder) => {
+      // eslint-disable-next-line  @typescript-eslint/no-use-before-define
+      builder.addCase(confirmConfirmationModal.pending, (state: ConfirmationModalState) => {
+        state.loading = true
+      });
+
+      // eslint-disable-next-line  @typescript-eslint/no-use-before-define
+      builder.addMatcher(isAnyOf(confirmConfirmationModal.fulfilled, confirmConfirmationModal.rejected), (state: ConfirmationModalState) => {
+        state.loading = false;
+      });
     }
 });
 
@@ -73,6 +82,17 @@ export const openConfirmationModal = createAsyncThunk<void, OpenModalArgs, { dis
     callbacks.onDecline = onDecline;
   
     dispatch(confirmationModalSlice.actions.modalOpened(modalOpenedPayload))
+});
+
+export const confirmConfirmationModal = createAsyncThunk<void, void, { dispatch: AppDispatch }>('confirmationModal/confirm', async (_, thunkApi) => {
+  const {onConfirm} = callbacks;
+  const {dispatch} = thunkApi;
+  
+  if (onConfirm) {
+    await onConfirm();
+  }
+
+  dispatch(confirmationModalSlice.actions.modalClosed());
 });
 
 export const declineConfirmationModal = createAsyncThunk<void, void, { dispatch: AppDispatch }>('confirmationModal/decline', async (_, thunkApi) => {

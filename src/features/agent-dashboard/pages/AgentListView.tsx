@@ -36,7 +36,7 @@ export const AgentListView: FC = () => {
     const message = `Delete ${agent.name}?`;
 
     const onConfirm = async () => {
-      deleteAgent(agent.id);
+      await deleteAgent(agent.id);
       notificationService.showSuccessMessage('Agent deleted.');
     };
 
