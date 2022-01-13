@@ -47,9 +47,6 @@ export const confirmationModalSlice = createSlice({
         modalConfirmed: () => {
             //
         },
-        modalDeclined: () => {
-            //
-        },
         modalClosed: (state: ConfirmationModalState) => {
           state.show = initialState.show;
           state.loading = initialState.loading;
@@ -76,6 +73,17 @@ export const openConfirmationModal = createAsyncThunk<void, OpenModalArgs, { dis
     callbacks.onDecline = onDecline;
   
     dispatch(confirmationModalSlice.actions.modalOpened(modalOpenedPayload))
-})
+});
+
+export const declineConfirmationModal = createAsyncThunk<void, void, { dispatch: AppDispatch }>('confirmationModal/decline', async (_, thunkApi) => {
+  const {onDecline} = callbacks;
+  const {dispatch} = thunkApi;
+
+  if (onDecline) {
+    await onDecline();
+  }
+
+  dispatch(confirmationModalSlice.actions.modalClosed());
+});
 
 export const selectConfirmationModalState = (state: RootState): ConfirmationModalState => state.confirmationModal;

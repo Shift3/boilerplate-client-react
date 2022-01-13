@@ -56,7 +56,9 @@ export const ConfirmationModal: FC = () => {
       <Modal.Body>Do you want to continue?</Modal.Body>
       <Modal.Footer>
         <CancelButton onClick={declineModal}>{declineButtonLabel}</CancelButton>
-        <CancelButton onClick={confirmModal}>{confirmButtonLabel}</CancelButton>
+        <LoadingButton loading={loading} onClick={confirmModal}>
+          {confirmButtonLabel}
+        </LoadingButton>
       </Modal.Footer>
     </StyledModal>
   );
