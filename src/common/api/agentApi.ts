@@ -27,7 +27,7 @@ export const agentApi = createApi({
 
   endpoints: builder => ({
     getAgents: builder.query<PagedResult<Agent>, PageableQueryParams>({
-      query: ({ page, pageSize }) => ({ url: `/agents&page=${page}&pageSize=${pageSize}` }),
+      query: ({ page, pageSize }) => ({ url: `/agents?page=${page}&pageSize=${pageSize}` }),
       providesTags: ['Agent'],
     }),
 
