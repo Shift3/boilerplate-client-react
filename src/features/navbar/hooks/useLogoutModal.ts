@@ -1,5 +1,5 @@
-import { useConfirmationModal } from 'common/hooks';
 import { useLogout } from 'features/auth/hooks';
+import { useConfirmationModal } from 'features/confirmation-modal';
 import { FC } from 'react';
 
 export type LogoutModalManager = {

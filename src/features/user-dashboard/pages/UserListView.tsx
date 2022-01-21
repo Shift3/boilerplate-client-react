@@ -1,6 +1,6 @@
 import { CustomRenderer, GenericTable, TableHeader } from 'common/components';
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
-import { useConfirmationModal } from 'common/hooks';
+import { useConfirmationModal } from 'features/confirmation-modal';
 import { User } from 'common/models';
 import {
   useDeleteUserMutation,
