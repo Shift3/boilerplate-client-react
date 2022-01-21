@@ -36,7 +36,7 @@ export const AgencyListView: FC = () => {
     openModal({
       message,
       confirmButtonLabel: 'DELETE',
-      onConfirm: onConfirm,
+      onConfirm,
     });
   };
 
