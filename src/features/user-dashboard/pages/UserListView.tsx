@@ -64,7 +64,8 @@ export const UserListView: FC = () => {
     const message = `Send Reset Password Email to ${getUsersFullName(user)}?`;
 
     const onConfirm = async () => {
-      forgotPassword({ email: user.email });
+      await forgotPassword({ email: user.email });
+      notificationService.showSuccessMessage(`Password reset email has been sent to ${user.email}`);
     };
 
     openModal({ message, onConfirm });
