@@ -9,7 +9,7 @@ import { HasPermission, useRbac } from 'features/rbac';
 import { useDeleteAgentMutation, useGetAgentsQuery } from 'common/api/agentApi';
 import * as notificationService from 'common/services/notification';
 import { CreateButton } from 'common/styles/button';
-import { useConfirmationModal } from 'features/confirmation-modal/useConfirmationModal';
+import { useConfirmationModal } from 'features/confirmation-modal';
 
 type AgentTableItem = {
   id: number;
