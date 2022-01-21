@@ -5,7 +5,6 @@ import styled from 'styled-components';
 const BootstrapButton: FC<ButtonProps> = ({ children, ...rest }) => <Button {...rest}>{children}</Button>;
 
 type LoadingButtonProps = ButtonProps & { loading: boolean };
-// type LoadingButtonProps = ButtonProps & { loading: boolean; as: FC<ButtonProps> };
 
 const StyledButton = styled(BootstrapButton)`
   color: ${props => props.theme.buttons.submitTextColor};
@@ -27,12 +26,3 @@ export const LoadingButton: FC<LoadingButtonProps> = ({ onClick, disabled, loadi
     </StyledButton>
   );
 };
-
-// export const LoadingButton: FC<LoadingButtonProps> = ({ onClick, disabled, loading, as: AsButton children }) => {
-//   return (
-//     <AsButton disabled={disabled || loading} onClick={onClick}>
-//       {loading && <span className='spinner-border spinner-border-sm' />}
-//       {children}
-//     </AsButton>
-//   );
-// };
