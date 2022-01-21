@@ -12,7 +12,7 @@ import { useConfirmationModal } from './useConfirmationModal';
 // to define the component and it's type first as done here.
 const BootstrapModal: FC<ModalProps> = ({ children, ...rest }) => <Modal {...rest}>{children}</Modal>;
 
-export const StyledModal = styled(BootstrapModal)`
+const StyledModal = styled(BootstrapModal)`
   & .modal-header {
     border: none;
   }
