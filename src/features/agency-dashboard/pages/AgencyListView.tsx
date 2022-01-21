@@ -9,7 +9,7 @@ import { HasPermission, useRbac } from 'features/rbac';
 import { useDeleteAgencyMutation, useGetAgenciesQuery } from 'common/api/agencyApi';
 import * as notificationService from 'common/services/notification';
 import { CreateButton } from 'common/styles/button';
-import { ConfirmationModal, useConfirmationModal } from 'features/confirmation-modal';
+import { useConfirmationModal } from 'features/confirmation-modal';
 
 type AgencyTableItem = {
   id: number;
@@ -22,22 +22,22 @@ export const AgencyListView: FC = () => {
   const { userHasPermission } = useRbac();
   const { data: agencies = [], isLoading: isLoadingAgencies, isFetching: isFetchingAgencies } = useGetAgenciesQuery();
   const [deleteAgency] = useDeleteAgencyMutation();
-  const { declineModal, confirmModal } = useConfirmationModal();
+  const { openModal } = useConfirmationModal();
   const isPageLoading = isLoadingAgencies || isFetchingAgencies;
 
   const handleDelete = (agency: Agency) => {
     const message = `Delete ${agency.agencyName}?`;
 
-    const onConfirm = () => {
-      deleteAgency(agency.id);
-      closeModal();
-
+    const onConfirm = async () => {
+      await deleteAgency(agency.id);
       notificationService.showSuccessMessage('Agency deleted.');
     };
 
-    const onCancel = () => closeModal();
-
-    openModal(message, onConfirm, onCancel);
+    openModal({
+      message,
+      confirmButtonLabel: 'DELETE',
+      onConfirm: onConfirm,
+    });
   };
 
   // Set up table headers
@@ -93,7 +93,6 @@ export const AgencyListView: FC = () => {
       <WithLoadingOverlay isLoading={isPageLoading}>
         <GenericTable<AgencyTableItem> headers={headers} items={items} customRenderers={customRenderers} />
       </WithLoadingOverlay>
-      <ConfirmationModal />
     </Container>
   );
 };
