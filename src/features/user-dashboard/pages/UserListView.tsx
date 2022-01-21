@@ -46,7 +46,7 @@ export const UserListView: FC = () => {
       notificationService.showSuccessMessage('Activation email has been sent.');
     };
 
-    openModal({ message, onConfirm });
+    openModal({ message, confirmButtonLabel: 'SEND', onConfirm });
   };
 
   const handleDelete = (user: User) => {
@@ -57,7 +57,7 @@ export const UserListView: FC = () => {
       notificationService.showSuccessMessage('User deleted.');
     };
 
-    openModal({ message, onConfirm });
+    openModal({ message, confirmButtonLabel: 'DELETE', onConfirm });
   };
 
   const handlePasswordReset = (user: User) => {
@@ -68,7 +68,7 @@ export const UserListView: FC = () => {
       notificationService.showSuccessMessage(`Password reset email has been sent to ${user.email}`);
     };
 
-    openModal({ message, onConfirm });
+    openModal({ message, confirmButtonLabel: 'SEND', onConfirm });
   };
 
   const navigateToUpdateView = (user: User) => {

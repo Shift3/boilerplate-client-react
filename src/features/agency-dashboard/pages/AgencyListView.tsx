@@ -33,11 +33,7 @@ export const AgencyListView: FC = () => {
       notificationService.showSuccessMessage('Agency deleted.');
     };
 
-    openModal({
-      message,
-      confirmButtonLabel: 'DELETE',
-      onConfirm,
-    });
+    openModal({ message, confirmButtonLabel: 'DELETE', onConfirm });
   };
 
   // Set up table headers

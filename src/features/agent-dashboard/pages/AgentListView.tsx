@@ -40,7 +40,7 @@ export const AgentListView: FC = () => {
       notificationService.showSuccessMessage('Agent deleted.');
     };
 
-    openModal({ message, onConfirm });
+    openModal({ message, confirmButtonLabel: 'DELETE', onConfirm });
   };
 
   // Set up table headers
