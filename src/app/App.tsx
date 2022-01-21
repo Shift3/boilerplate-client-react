@@ -14,13 +14,13 @@ import { ChangePasswordPage } from 'features/user-dashboard/pages/ChangePassword
 import { NotificationContainer } from 'common/components/Notification';
 import { NotFoundView } from 'common/components/NotFound';
 import { UpdateUserProfilePage } from 'features/auth/pages/UpdateUserProfilePage';
-import { ConfirmationModal } from 'features/confirmation-modal/ConfirmationModal';
+import { ConfirmationModal } from 'features/confirmation-modal';
 
 export const App: FC = () => (
   <ErrorBoundary>
     <ThemeProvider theme={AppTheme}>
-      <NotificationContainer />
       <ConfirmationModal />
+      <NotificationContainer />
       <HolyGrailLayout>
         <Switch>
           <Route path='/auth' component={AuthRoutes} />
