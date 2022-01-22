@@ -62,14 +62,14 @@ export const confirmationModalSlice = createSlice({
 });
 
 interface OpenModalArgs {
-  message?: string;
-  confirmButtonLabel?: string;
-  declineButtonLabel?: string;
-  onConfirm?: ConfirmationModalCallback;
-  onDecline?: ConfirmationModalCallback;
+  message: string;
+  confirmButtonLabel: string;
+  declineButtonLabel: string;
+  onConfirm: ConfirmationModalCallback;
+  onDecline: ConfirmationModalCallback;
 }
 
-export const openConfirmationModal = createAsyncThunk<void, OpenModalArgs, { dispatch: AppDispatch }>(
+export const openConfirmationModal = createAsyncThunk<void, Partial<OpenModalArgs>, { dispatch: AppDispatch }>(
   'confirmationModal/open',
   async (args, thunkApi) => {
     const { onConfirm, onDecline, ...modalOpenedPayload } = args;
