@@ -10,4 +10,5 @@ export interface User {
   profilePicture: string | null;
   agency: Agency;
   role: Role;
+  newEmail: string | null;
 }

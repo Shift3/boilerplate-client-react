@@ -13,4 +13,5 @@ export const UserFactory = Factory.define<User>(({ sequence, associations }) => 
   profilePicture: Faker.internet.avatar(),
   agency: associations.agency ?? AgencyFactory.build(),
   role: associations.role ?? RoleFactory.build(),
+  newEmail: Faker.internet.email(),
 }));
