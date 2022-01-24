@@ -1,9 +1,10 @@
 import { useAppDispatch } from 'app/redux';
+import { useCallback } from 'react';
 import {
   ConfirmationModalCallback,
   confirmConfirmationModal,
   declineConfirmationModal,
-  openConfirmationModal,
+  openConfirmationModal
 } from './slice';
 
 export interface ConfirmationModalConfig {
@@ -25,17 +26,24 @@ export type useConfirmationModal = () => ConfirmationModalManager;
 export const useConfirmationModal: useConfirmationModal = () => {
   const dispatch = useAppDispatch();
 
-  const openModal = (config: Partial<ConfirmationModalConfig> = {}) => {
+  const openModal = useCallback(
+    (config: Partial<ConfirmationModalConfig> = {}) => {
     dispatch(openConfirmationModal(config));
-  };
-
-  const confirmModal = () => {
+    },
+    [dispatch]
+  );
+  
+  const confirmModal = useCallback(
+    () => {
     dispatch(confirmConfirmationModal());
-  };
+    }, [dispatch]
+  );
 
-  const declineModal = () => {
+  const declineModal = useCallback(
+    () => {
     dispatch(declineConfirmationModal());
-  };
+  }, [dispatch]
+  );
 
   return {
     openModal,
