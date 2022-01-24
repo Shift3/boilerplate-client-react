@@ -1,16 +1,18 @@
 import { configureStore, ConfigureStoreOptions } from '@reduxjs/toolkit';
-import { authSlice } from 'features/auth/authSlice';
 import { agencyApi } from 'common/api/agencyApi';
 import { agentApi } from 'common/api/agentApi';
 import { authApi } from 'common/api/authApi';
 import { roleApi } from 'common/api/roleApi';
 import { userApi } from 'common/api/userApi';
+import { authSlice } from 'features/auth/authSlice';
+import { confirmationModalSlice } from 'features/confirmation-modal/slice';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const createAppStore = (options?: ConfigureStoreOptions['preloadedState'] | undefined) =>
   configureStore({
     reducer: {
       auth: authSlice.reducer,
+      confirmationModal: confirmationModalSlice.reducer,
       [agencyApi.reducerPath]: agencyApi.reducer,
       [agentApi.reducerPath]: agentApi.reducer,
       [authApi.reducerPath]: authApi.reducer,

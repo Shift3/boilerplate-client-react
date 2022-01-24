@@ -1,6 +1,5 @@
 import { CustomRenderer, GenericTable, TableHeader } from 'common/components';
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
-import { useConfirmationModal } from 'common/hooks';
 import { Agency } from 'common/models';
 import { Link, useHistory } from 'react-router-dom';
 import { FC } from 'react';
@@ -10,6 +9,7 @@ import { HasPermission, useRbac } from 'features/rbac';
 import { useDeleteAgencyMutation, useGetAgenciesQuery } from 'common/api/agencyApi';
 import * as notificationService from 'common/services/notification';
 import { CreateButton } from 'common/styles/button';
+import { useConfirmationModal } from 'features/confirmation-modal';
 
 type AgencyTableItem = {
   id: number;
@@ -22,22 +22,18 @@ export const AgencyListView: FC = () => {
   const { userHasPermission } = useRbac();
   const { data: agencies = [], isLoading: isLoadingAgencies, isFetching: isFetchingAgencies } = useGetAgenciesQuery();
   const [deleteAgency] = useDeleteAgencyMutation();
-  const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
+  const { openModal } = useConfirmationModal();
   const isPageLoading = isLoadingAgencies || isFetchingAgencies;
 
   const handleDelete = (agency: Agency) => {
     const message = `Delete ${agency.agencyName}?`;
 
-    const onConfirm = () => {
-      deleteAgency(agency.id);
-      closeModal();
-
+    const onConfirm = async () => {
+      await deleteAgency(agency.id);
       notificationService.showSuccessMessage('Agency deleted.');
     };
 
-    const onCancel = () => closeModal();
-
-    openModal(message, onConfirm, onCancel);
+    openModal({ message, confirmButtonLabel: 'DELETE', onConfirm });
   };
 
   // Set up table headers
@@ -93,7 +89,6 @@ export const AgencyListView: FC = () => {
       <WithLoadingOverlay isLoading={isPageLoading}>
         <GenericTable<AgencyTableItem> headers={headers} items={items} customRenderers={customRenderers} />
       </WithLoadingOverlay>
-      <ConfirmationModal />
     </Container>
   );
 };

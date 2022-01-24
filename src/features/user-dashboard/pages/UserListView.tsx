@@ -1,6 +1,5 @@
 import { CustomRenderer, GenericTable, TableHeader } from 'common/components';
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
-import { useConfirmationModal } from 'common/hooks';
 import { User } from 'common/models';
 import {
   useDeleteUserMutation,
@@ -15,6 +14,7 @@ import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { HasPermission, useRbac } from 'features/rbac';
 import * as notificationService from 'common/services/notification';
 import { CreateButton } from 'common/styles/button';
+import { useConfirmationModal } from 'features/confirmation-modal';
 
 type UserTableItem = {
   id: number;
@@ -33,7 +33,7 @@ export const UserListView: FC = () => {
   const [deleteUser] = useDeleteUserMutation();
   const [forgotPassword] = useForgotPasswordMutation();
   const [resendActivationEmail] = useResendActivationEmailMutation();
-  const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
+  const { openModal } = useConfirmationModal();
   const isPageLoading = isLoadingUsers || isFetchingUsers;
 
   const getUsersFullName = (user: User) => `${user.firstName} ${user.lastName}`;
@@ -41,42 +41,34 @@ export const UserListView: FC = () => {
   const handleResendActivationEmail = (user: User) => {
     const message = `Resend Activation Email to ${getUsersFullName(user)}?`;
 
-    const onConfirm = () => {
-      resendActivationEmail({ id: user.id });
-      closeModal();
+    const onConfirm = async () => {
+      await resendActivationEmail({ id: user.id });
       notificationService.showSuccessMessage('Activation email has been sent.');
     };
 
-    const onCancel = () => closeModal();
-
-    openModal(message, onConfirm, onCancel);
+    openModal({ message, confirmButtonLabel: 'SEND', onConfirm });
   };
 
   const handleDelete = (user: User) => {
     const message = `Delete ${getUsersFullName(user)}?`;
 
-    const onConfirm = () => {
-      deleteUser(user.id);
-      closeModal();
+    const onConfirm = async () => {
+      await deleteUser(user.id);
       notificationService.showSuccessMessage('User deleted.');
     };
 
-    const onCancel = () => closeModal();
-
-    openModal(message, onConfirm, onCancel);
+    openModal({ message, confirmButtonLabel: 'DELETE', onConfirm });
   };
 
   const handlePasswordReset = (user: User) => {
     const message = `Send Reset Password Email to ${getUsersFullName(user)}?`;
 
-    const onConfirm = () => {
-      forgotPassword({ email: user.email });
-      closeModal();
+    const onConfirm = async () => {
+      await forgotPassword({ email: user.email });
+      notificationService.showSuccessMessage(`Password reset email has been sent to ${user.email}`);
     };
 
-    const onCancel = () => closeModal();
-
-    openModal(message, onConfirm, onCancel);
+    openModal({ message, confirmButtonLabel: 'SEND', onConfirm });
   };
 
   const navigateToUpdateView = (user: User) => {
@@ -165,7 +157,6 @@ export const UserListView: FC = () => {
       <WithLoadingOverlay isLoading={isPageLoading}>
         <GenericTable<UserTableItem> headers={headers} items={items} customRenderers={customRenderers} />
       </WithLoadingOverlay>
-      <ConfirmationModal />
     </Container>
   );
 };

@@ -22,7 +22,7 @@ type Props = {
 export const SideNavbar: FC<Props> = ({ onNavbarToggle }) => {
   const { user } = useAuth();
   const navLinks = useNavLinks();
-  const { LogoutModal, openLogoutModal } = useLogoutModal();
+  const { openLogoutModal } = useLogoutModal();
 
   return (
     <Navbar className='d-flex flex-column h-100 py-0 shadow'>
@@ -39,7 +39,6 @@ export const SideNavbar: FC<Props> = ({ onNavbarToggle }) => {
             </Nav>
             <Nav>
               <SettingsDropdown user={user} onNavbarToggle={onNavbarToggle} onSignOut={openLogoutModal} />
-              <LogoutModal />
             </Nav>
           </>
         ) : (

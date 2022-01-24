@@ -1,6 +1,5 @@
 import { CustomRenderer, GenericTable, TableHeader } from 'common/components';
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
-import { useConfirmationModal } from 'common/hooks';
 import { Agent } from 'common/models';
 import { FC } from 'react';
 import Container from 'react-bootstrap/Container';
@@ -10,6 +9,7 @@ import { HasPermission, useRbac } from 'features/rbac';
 import { useDeleteAgentMutation, useGetAgentsQuery } from 'common/api/agentApi';
 import * as notificationService from 'common/services/notification';
 import { CreateButton } from 'common/styles/button';
+import { useConfirmationModal } from 'features/confirmation-modal';
 
 type AgentTableItem = {
   id: number;
@@ -25,7 +25,7 @@ export const AgentListView: FC = () => {
   const { userHasPermission } = useRbac();
   const { data: agents = [], isLoading: isLoadingAgents, isFetching: isFetchingAgents } = useGetAgentsQuery();
   const [deleteAgent] = useDeleteAgentMutation();
-  const { Modal: ConfirmationModal, openModal, closeModal } = useConfirmationModal();
+  const { openModal } = useConfirmationModal();
   const isPageLoading = isLoadingAgents || isFetchingAgents;
 
   const navigateToUpdateView = (agent: Agent) => {
@@ -35,15 +35,12 @@ export const AgentListView: FC = () => {
   const handleDelete = (agent: Agent) => {
     const message = `Delete ${agent.name}?`;
 
-    const onConfirm = () => {
-      deleteAgent(agent.id);
-      closeModal();
+    const onConfirm = async () => {
+      await deleteAgent(agent.id);
       notificationService.showSuccessMessage('Agent deleted.');
     };
 
-    const onCancel = () => closeModal();
-
-    openModal(message, onConfirm, onCancel);
+    openModal({ message, confirmButtonLabel: 'DELETE', onConfirm });
   };
 
   // Set up table headers
@@ -103,7 +100,6 @@ export const AgentListView: FC = () => {
       <WithLoadingOverlay isLoading={isPageLoading}>
         <GenericTable<AgentTableItem> headers={headers} items={items} customRenderers={customRenderers} />
       </WithLoadingOverlay>
-      <ConfirmationModal />
     </Container>
   );
 };
