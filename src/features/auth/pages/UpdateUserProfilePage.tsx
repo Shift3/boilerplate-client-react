@@ -4,7 +4,6 @@ import { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useAuth } from 'features/auth/hooks';
-import { User } from 'common/models';
 import {
   useRequestChangeEmailMutation,
   useResendChangeEmailVerificationEmailMutation,
