@@ -2,7 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { customBaseQuery } from 'common/api/customBaseQuery';
 import { Session } from 'common/models';
 import { User } from 'common/models/user';
-import { PagedResult, PageableQueryParams } from './paginate';
+import { PaginatedResult, PaginationQueryParams } from './pagination';
 
 export type ActivateAccountRequest = {
   token: string;
@@ -40,7 +40,7 @@ export const userApi = createApi({
   tagTypes: ['User'],
 
   endpoints: builder => ({
-    getUsers: builder.query<PagedResult<User>, PageableQueryParams>({
+    getUsers: builder.query<PaginatedResult<User>, PaginationQueryParams>({
       query: ({ page, pageSize }) => ({ url: `/users?page=${page}&pageSize=${pageSize}` }),
       providesTags: ['User'],
     }),
