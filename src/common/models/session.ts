@@ -1,6 +1,6 @@
 import { User } from '.';
 
 export interface Session {
-  jwtToken: string;
+  token: string;
   user: User;
 }
