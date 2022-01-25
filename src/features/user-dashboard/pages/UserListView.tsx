@@ -15,7 +15,7 @@ import { HasPermission, useRbac } from 'features/rbac';
 import * as notificationService from 'common/services/notification';
 import { CreateButton } from 'common/styles/button';
 import { useConfirmationModal } from 'features/confirmation-modal';
-import { usePageableQuery } from 'common/api/paginate';
+import { usePagination } from 'common/api/pagination';
 
 type UserTableItem = {
   id: number;
@@ -30,16 +30,14 @@ type UserTableItem = {
 export const UserListView: FC = () => {
   const history = useHistory();
   const { userHasPermission } = useRbac();
-  const {
-    data: users = [],
-    isLoading: isLoadingUsers,
-    isFetching: isFetchingUsers,
-  } = usePageableQuery<User, 'User'>(useGetUsersQuery);
+  const { page, pageSize } = usePagination();
+  const { data, isLoading, isFetching } = useGetUsersQuery({ page, pageSize });
   const [deleteUser] = useDeleteUserMutation();
   const [forgotPassword] = useForgotPasswordMutation();
   const [resendActivationEmail] = useResendActivationEmailMutation();
   const { openModal } = useConfirmationModal();
-  const isPageLoading = isLoadingUsers || isFetchingUsers;
+  const isPageLoading = isLoading || isFetching;
+  const users = data?.results ?? [];
 
   const getUsersFullName = (user: User) => `${user.firstName} ${user.lastName}`;
 

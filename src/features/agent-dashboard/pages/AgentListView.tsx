@@ -10,7 +10,7 @@ import { useDeleteAgentMutation, useGetAgentsQuery } from 'common/api/agentApi';
 import * as notificationService from 'common/services/notification';
 import { CreateButton } from 'common/styles/button';
 import { useConfirmationModal } from 'features/confirmation-modal';
-import { usePageableQuery } from 'common/api/paginate';
+import { usePagination } from 'common/api/pagination';
 
 type AgentTableItem = {
   id: number;
@@ -24,14 +24,12 @@ type AgentTableItem = {
 export const AgentListView: FC = () => {
   const history = useHistory();
   const { userHasPermission } = useRbac();
-  const {
-    data: agents = [],
-    isLoading: isLoadingAgents,
-    isFetching: isFetchingAgents,
-  } = usePageableQuery<Agent, 'Agent'>(useGetAgentsQuery);
+  const { page, pageSize } = usePagination();
+  const { data, isLoading, isFetching } = useGetAgentsQuery({ page, pageSize });
   const [deleteAgent] = useDeleteAgentMutation();
   const { openModal } = useConfirmationModal();
-  const isPageLoading = isLoadingAgents || isFetchingAgents;
+  const isPageLoading = isLoading || isFetching;
+  const agents = data?.results ?? [];
 
   const navigateToUpdateView = (agent: Agent) => {
     history.push(`/agents/update-agent/${agent.id}`);

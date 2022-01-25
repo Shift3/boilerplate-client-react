@@ -10,7 +10,7 @@ import { useDeleteAgencyMutation, useGetAgenciesQuery } from 'common/api/agencyA
 import * as notificationService from 'common/services/notification';
 import { CreateButton } from 'common/styles/button';
 import { useConfirmationModal } from 'features/confirmation-modal';
-import { usePageableQuery } from 'common/api/paginate';
+import { usePagination } from 'common/api/pagination';
 
 type AgencyTableItem = {
   id: number;
@@ -21,14 +21,12 @@ type AgencyTableItem = {
 export const AgencyListView: FC = () => {
   const history = useHistory();
   const { userHasPermission } = useRbac();
-  const {
-    data: agencies,
-    isLoading: isLoadingAgencies,
-    isFetching: isFetchingAgencies,
-  } = usePageableQuery<Agency, 'Agency'>(useGetAgenciesQuery);
+  const { page, pageSize } = usePagination();
+  const { data, isLoading, isFetching } = useGetAgenciesQuery({ page, pageSize });
   const [deleteAgency] = useDeleteAgencyMutation();
   const { openModal } = useConfirmationModal();
-  const isPageLoading = isLoadingAgencies || isFetchingAgencies;
+  const isPageLoading = isLoading || isFetching;
+  const agencies = data?.results ?? [];
 
   const handleDelete = (agency: Agency) => {
     const message = `Delete ${agency.agencyName}?`;
