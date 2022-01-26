@@ -1,14 +1,37 @@
-import { ReactElement } from 'react';
+import { PaginationManager } from 'common/api/pagination';
+import { ReactElement, useEffect, useMemo } from 'react';
+import { Button } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { Column, useTable } from 'react-table';
+import { Paginator } from './Paginator';
 
 type DataTableProps<D extends Record<string, unknown>> = {
   columns: Column<D>[];
   data: D[];
+  pagination?: {
+    page: number;
+    pageSize: number;
+    count: number;
+    pageCount: number;
+    hasPreviousPage: boolean;
+    hasNextPage: boolean;
+    pageSizeOptions: number[];
+    getPage: (page: number) => void;
+    getPreviousPage: () => void;
+    getNextPage: () => void;
+    setPageSize: (size: number) => void;
+  };
 };
 
-export const DataTable = <D extends Record<string, unknown>>({ columns, data }: DataTableProps<D>): ReactElement => {
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data });
+export const DataTable = <D extends Record<string, unknown>>({
+  columns,
+  data,
+  pagination,
+}: DataTableProps<D>): ReactElement => {
+  const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } = useTable({
+    columns,
+    data,
+  });
 
   return (
     <div className='shadow p-3 bg-body rounded'>
@@ -66,6 +89,23 @@ export const DataTable = <D extends Record<string, unknown>>({ columns, data }: 
           }
         </tbody>
       </Table>
+      {pagination && (
+        <Paginator
+          page={pagination.page}
+          count={pagination.count}
+          pageSize={pagination.pageSize}
+          pageCount={pagination.pageCount}
+          pageSizeOptions={pagination.pageSizeOptions}
+          hasPrev={pagination.hasPreviousPage}
+          hasNext={pagination.hasNextPage}
+          onPrevClick={pagination.getPreviousPage}
+          onNextClick={pagination.getNextPage}
+          onPageSizeChange={(size: number) => {
+            pagination.setPageSize(size);
+            pagination.getPage(1);
+          }}
+        />
+      )}
     </div>
   );
 };

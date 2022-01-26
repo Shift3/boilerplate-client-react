@@ -80,7 +80,7 @@ const defaultConfig: PaginationConfig = {
   basePage: 1,
   initialPage: 1,
   initialPageSize: 10,
-  minPageSize: 10,
+  minPageSize: 1,
   maxPageSize: 100,
 };
 

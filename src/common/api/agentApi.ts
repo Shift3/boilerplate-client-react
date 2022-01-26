@@ -27,7 +27,7 @@ export const agentApi = createApi({
 
   endpoints: builder => ({
     getAgents: builder.query<PaginatedResult<Agent>, PaginationQueryParams>({
-      query: ({ page, pageSize }) => ({ url: `/agents?page=${page}&pageSize=${pageSize}` }),
+      query: ({ page = 1, pageSize = 10 }) => ({ url: `/agents?page=${page}&pageSize=${pageSize}` }),
       providesTags: ['Agent'],
     }),
 

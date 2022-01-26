@@ -1,6 +1,6 @@
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
 import { Agent } from 'common/models';
-import { FC, useCallback, useEffect, useMemo } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Link, useHistory } from 'react-router-dom';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
@@ -25,20 +25,20 @@ type AgentTableItem = {
 export const AgentListView: FC = () => {
   const history = useHistory();
   const { userHasPermission } = useRbac();
-  const { page, pageSize, updateCount, updatePageCount } = usePagination();
-  const { data, isLoading, isFetching } = useGetAgentsQuery({ page, pageSize });
+  const pagination = usePagination();
+  const { data, isLoading, isFetching } = useGetAgentsQuery({ page: pagination.page, pageSize: pagination.pageSize });
   const [deleteAgent] = useDeleteAgentMutation();
   const { openModal } = useConfirmationModal();
   const agents = useMemo(() => data?.results ?? [], [data]);
   const isPageLoading = isLoading || isFetching;
 
   useEffect(() => {
-    updateCount(data?.meta.count ?? 0);
-  }, [data?.meta.count, updateCount]);
+    pagination.updateCount(data?.meta.count ?? 0);
+  }, [data?.meta.count, pagination.updateCount]);
 
   useEffect(() => {
-    updatePageCount(data?.meta.pageCount ?? 0);
-  }, [data?.meta.pageCount, updatePageCount]);
+    pagination.updatePageCount(data?.meta.pageCount ?? 0);
+  }, [data?.meta.pageCount, pagination.updatePageCount]);
 
   const navigateToUpdateView = useCallback(
     (agent: Agent) => {
@@ -114,7 +114,23 @@ export const AgentListView: FC = () => {
         </div>
       </HasPermission>
       <WithLoadingOverlay isLoading={isPageLoading}>
-        <DataTable<AgentTableItem> columns={columns} data={items} />
+        <DataTable<AgentTableItem>
+          columns={columns}
+          data={items}
+          pagination={{
+            page: pagination.page,
+            pageSize: pagination.pageSize,
+            count: pagination.count,
+            pageCount: pagination.pageCount,
+            hasNextPage: pagination.hasNextPage,
+            hasPreviousPage: pagination.hasPreviousPage,
+            pageSizeOptions: [5, 10, 25, 50, 100],
+            getPage: pagination.getPage,
+            getNextPage: pagination.getNextPage,
+            getPreviousPage: pagination.getPreviousPage,
+            setPageSize: pagination.setPageSize,
+          }}
+        />
       </WithLoadingOverlay>
     </Container>
   );
