@@ -1,6 +1,4 @@
-import { PaginationManager } from 'common/api/pagination';
-import { ReactElement, useEffect, useMemo } from 'react';
-import { Button } from 'react-bootstrap';
+import { ReactElement } from 'react';
 import Table from 'react-bootstrap/Table';
 import { Column, useTable } from 'react-table';
 import { Paginator } from './Paginator';

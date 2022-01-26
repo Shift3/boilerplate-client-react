@@ -1,6 +1,6 @@
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
 import { Agent } from 'common/models';
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Link, useHistory } from 'react-router-dom';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
