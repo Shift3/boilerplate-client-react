@@ -1,7 +1,7 @@
 import { CustomRenderer, GenericTable, TableHeader } from 'common/components';
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
 import { Agent } from 'common/models';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Link, useHistory } from 'react-router-dom';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
@@ -24,12 +24,20 @@ type AgentTableItem = {
 export const AgentListView: FC = () => {
   const history = useHistory();
   const { userHasPermission } = useRbac();
-  const { page, pageSize } = usePagination();
+  const { page, pageSize, updateCount, updatePageCount } = usePagination();
   const { data, isLoading, isFetching } = useGetAgentsQuery({ page, pageSize });
   const [deleteAgent] = useDeleteAgentMutation();
   const { openModal } = useConfirmationModal();
   const isPageLoading = isLoading || isFetching;
   const agents = data?.results ?? [];
+
+  useEffect(() => {
+    updateCount(data?.meta.count ?? 0);
+  }, [data?.meta.count, updateCount]);
+
+  useEffect(() => {
+    updatePageCount(data?.meta.pageCount ?? 0);
+  }, [data?.meta.pageCount, updatePageCount]);
 
   const navigateToUpdateView = (agent: Agent) => {
     history.push(`/agents/update-agent/${agent.id}`);
