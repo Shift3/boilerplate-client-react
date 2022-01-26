@@ -13,6 +13,10 @@ export type ChangePasswordRequest = Pick<User, 'id'> & {
   newPassword: string;
   confirmPassword: string;
 };
+export type ConfirmChangeEmailRequest = {
+  token: string;
+  verificationCode: number;
+};
 export type CreateUserRequest = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>;
 export type ForgotPasswordRequest = Pick<User, 'email'>;
 export type ForgotPasswordResponse = { message: string };
@@ -148,12 +152,22 @@ export const userApi = createApi({
         method: 'GET',
       }),
     }),
+
+    confirmChangeEmail: builder.mutation<User, ConfirmChangeEmailRequest>({
+      query: ({ token, ...payload }) => ({
+        url: `/users/confirm-change-email/${token}`,
+        method: 'PUT',
+        body: payload,
+      }),
+      invalidatesTags: ['User'],
+    }),
   }),
 });
 
 export const {
   useActivateAccountMutation,
   useChangePasswordMutation,
+  useConfirmChangeEmailMutation,
   useCreateUserMutation,
   useDeleteUserMutation,
   useForgotPasswordMutation,
