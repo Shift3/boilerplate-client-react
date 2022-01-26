@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { LoadingButton } from 'common/components/LoadingButton';
+import FormPrompt from 'common/components/FormPrompt';
 
 export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>;
 
@@ -30,7 +31,7 @@ const schema = yup.object().shape({
 
 export const UserDetailForm: FC<Props> = ({ availableRoles, availableAgencies, defaultValues = {}, onSubmit }) => {
   const {
-    formState: { errors, isValid, isSubmitting },
+    formState: { errors, isValid, isDirty, isSubmitting },
     handleSubmit,
     register,
     setValue,
@@ -135,6 +136,7 @@ export const UserDetailForm: FC<Props> = ({ availableRoles, availableAgencies, d
           SUBMIT
         </LoadingButton>
       </div>
+      <FormPrompt isDirty={isDirty} isSubmitting={isSubmitting} />
     </Form>
   );
 };
