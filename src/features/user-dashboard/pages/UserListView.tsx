@@ -6,7 +6,7 @@ import {
   useGetUsersQuery,
   useResendActivationEmailMutation,
 } from 'common/api/userApi';
-import { FC, useCallback, useMemo } from 'react';
+import { FC, useCallback, useEffect, useMemo } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Link, useHistory } from 'react-router-dom';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
@@ -31,14 +31,19 @@ type UserTableItem = {
 export const UserListView: FC = () => {
   const history = useHistory();
   const { userHasPermission } = useRbac();
-  const { page, pageSize } = usePagination();
-  const { data, isLoading, isFetching } = useGetUsersQuery({ page, pageSize });
+  const paginator = usePagination();
+  const { data, isLoading, isFetching } = useGetUsersQuery({ page: paginator.page, pageSize: paginator.pageSize });
   const [deleteUser] = useDeleteUserMutation();
   const [forgotPassword] = useForgotPasswordMutation();
   const [resendActivationEmail] = useResendActivationEmailMutation();
   const { openModal } = useConfirmationModal();
   const users = useMemo(() => data?.results ?? [], [data]);
   const isPageLoading = isLoading || isFetching;
+
+  useEffect(() => {
+    paginator.updateCount(data?.meta.count ?? 0);
+    paginator.updatePageCount(data?.meta.pageCount ?? 0);
+  }, [data?.meta.count, data?.meta.pageCount, paginator.updateCount, paginator.updatePageCount]);
 
   const getUsersFullName = (user: User) => `${user.firstName} ${user.lastName}`;
 
@@ -169,7 +174,23 @@ export const UserListView: FC = () => {
         </div>
       </HasPermission>
       <WithLoadingOverlay isLoading={isPageLoading}>
-        <DataTable<UserTableItem> columns={columns} data={items} />
+        <DataTable<UserTableItem>
+          columns={columns}
+          data={items}
+          pagination={{
+            page: paginator.page,
+            pageSize: paginator.pageSize,
+            count: paginator.count,
+            pageCount: paginator.pageCount,
+            hasNextPage: paginator.hasNextPage,
+            hasPreviousPage: paginator.hasPreviousPage,
+            pageSizeOptions: [5, 10, 25, 50, 100],
+            getPage: paginator.getPage,
+            getNextPage: paginator.getNextPage,
+            getPreviousPage: paginator.getPreviousPage,
+            setPageSize: paginator.setPageSize,
+          }}
+        />
       </WithLoadingOverlay>
     </Container>
   );
