@@ -1,8 +1,7 @@
-import { CustomRenderer, GenericTable, TableHeader } from 'common/components';
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
 import { Agency } from 'common/models';
 import { Link, useHistory } from 'react-router-dom';
-import { FC } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 import Container from 'react-bootstrap/Container';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { HasPermission, useRbac } from 'features/rbac';
@@ -11,6 +10,8 @@ import * as notificationService from 'common/services/notification';
 import { CreateButton } from 'common/styles/button';
 import { useConfirmationModal } from 'features/confirmation-modal';
 import { usePagination } from 'common/api/pagination';
+import { Column } from 'react-table';
+import { DataTable } from 'common/components/DataTable';
 
 type AgencyTableItem = {
   id: number;
@@ -25,60 +26,57 @@ export const AgencyListView: FC = () => {
   const { data, isLoading, isFetching } = useGetAgenciesQuery({ page, pageSize });
   const [deleteAgency] = useDeleteAgencyMutation();
   const { openModal } = useConfirmationModal();
+  const agencies = useMemo(() => data?.results ?? [], [data]);
   const isPageLoading = isLoading || isFetching;
-  const agencies = data?.results ?? [];
 
-  const handleDelete = (agency: Agency) => {
-    const message = `Delete ${agency.agencyName}?`;
+  const handleDelete = useCallback(
+    (agency: Agency) => {
+      const message = `Delete ${agency.agencyName}?`;
 
-    const onConfirm = async () => {
-      await deleteAgency(agency.id);
-      notificationService.showSuccessMessage('Agency deleted.');
-    };
+      const onConfirm = async () => {
+        await deleteAgency(agency.id);
+        notificationService.showSuccessMessage('Agency deleted.');
+      };
 
-    openModal({ message, confirmButtonLabel: 'DELETE', onConfirm });
-  };
+      openModal({ message, confirmButtonLabel: 'DELETE', onConfirm });
+    },
+    [deleteAgency, openModal],
+  );
 
-  // Set up table headers
-  const headers: TableHeader<AgencyTableItem>[] = [
-    { key: 'name', label: 'AGENCY NAME' },
-    { key: 'actions', label: 'ACTIONS' },
-  ];
-
-  // Transform Agency objects returned from the API into the table item data format expected by the table.
-  const items: AgencyTableItem[] = agencies.map(agency => ({
-    id: agency.id,
-    name: agency.agencyName,
-    actions: [
+  const columns: Column<AgencyTableItem>[] = useMemo(
+    () => [
+      { accessor: 'name', Header: 'Agency Name' },
       {
-        icon: 'edit',
-        tooltipText: 'Edit',
-        onClick: () => history.push(`/agencies/update-agency/${agency.id}`),
-        show: userHasPermission('agency:update'),
-      },
-      {
-        icon: 'trash-alt',
-        tooltipText: 'Delete',
-        onClick: () => handleDelete(agency),
-        show: userHasPermission('agency:delete'),
+        accessor: 'actions',
+        Header: 'Actions',
+        Cell: ({ value, row }) => value.map(props => <ActionButton key={`${row}-${props.icon}`} {...props} />),
       },
     ],
-  }));
+    [],
+  );
 
-  // Specify custom render methods for any property in the table items that need to be rendered as a custom component.
-  // Here we want the actions to be rendered using a custom component.
-  const customRenderers: CustomRenderer<AgencyTableItem>[] = [
-    {
-      key: 'actions',
-      renderer: ({ actions, id }: AgencyTableItem) => (
-        <>
-          {actions.map(action => (
-            <ActionButton key={id} {...action} />
-          ))}
-        </>
-      ),
-    },
-  ];
+  const items: AgencyTableItem[] = useMemo(
+    () =>
+      agencies.map(agency => ({
+        id: agency.id,
+        name: agency.agencyName,
+        actions: [
+          {
+            icon: 'edit',
+            tooltipText: 'Edit',
+            onClick: () => history.push(`/agencies/update-agency/${agency.id}`),
+            show: userHasPermission('agency:update'),
+          },
+          {
+            icon: 'trash-alt',
+            tooltipText: 'Delete',
+            onClick: () => handleDelete(agency),
+            show: userHasPermission('agency:delete'),
+          },
+        ],
+      })),
+    [agencies, userHasPermission, handleDelete, history],
+  );
 
   return (
     <Container>
@@ -90,7 +88,7 @@ export const AgencyListView: FC = () => {
         </div>
       </HasPermission>
       <WithLoadingOverlay isLoading={isPageLoading}>
-        <GenericTable<AgencyTableItem> headers={headers} items={items} customRenderers={customRenderers} />
+        <DataTable<AgencyTableItem> columns={columns} data={items} />
       </WithLoadingOverlay>
     </Container>
   );

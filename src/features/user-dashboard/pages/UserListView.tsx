@@ -1,4 +1,3 @@
-import { CustomRenderer, GenericTable, TableHeader } from 'common/components';
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
 import { User } from 'common/models';
 import {
@@ -7,7 +6,7 @@ import {
   useGetUsersQuery,
   useResendActivationEmailMutation,
 } from 'common/api/userApi';
-import { FC } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Link, useHistory } from 'react-router-dom';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
@@ -16,6 +15,8 @@ import * as notificationService from 'common/services/notification';
 import { CreateButton } from 'common/styles/button';
 import { useConfirmationModal } from 'features/confirmation-modal';
 import { usePagination } from 'common/api/pagination';
+import { DataTable } from 'common/components/DataTable';
+import { Column } from 'react-table';
 
 type UserTableItem = {
   id: number;
@@ -36,117 +37,127 @@ export const UserListView: FC = () => {
   const [forgotPassword] = useForgotPasswordMutation();
   const [resendActivationEmail] = useResendActivationEmailMutation();
   const { openModal } = useConfirmationModal();
+  const users = useMemo(() => data?.results ?? [], [data]);
   const isPageLoading = isLoading || isFetching;
-  const users = data?.results ?? [];
 
   const getUsersFullName = (user: User) => `${user.firstName} ${user.lastName}`;
 
-  const handleResendActivationEmail = (user: User) => {
-    const message = `Resend Activation Email to ${getUsersFullName(user)}?`;
+  const handleResendActivationEmail = useCallback(
+    (user: User) => {
+      const message = `Resend Activation Email to ${getUsersFullName(user)}?`;
 
-    const onConfirm = async () => {
-      await resendActivationEmail({ id: user.id });
-      notificationService.showSuccessMessage('Activation email has been sent.');
-    };
+      const onConfirm = async () => {
+        await resendActivationEmail({ id: user.id });
+        notificationService.showSuccessMessage('Activation email has been sent.');
+      };
 
-    openModal({ message, confirmButtonLabel: 'SEND', onConfirm });
-  };
+      openModal({ message, confirmButtonLabel: 'SEND', onConfirm });
+    },
+    [openModal, resendActivationEmail],
+  );
 
-  const handleDelete = (user: User) => {
-    const message = `Delete ${getUsersFullName(user)}?`;
+  const handleDelete = useCallback(
+    (user: User) => {
+      const message = `Delete ${getUsersFullName(user)}?`;
 
-    const onConfirm = async () => {
-      await deleteUser(user.id);
-      notificationService.showSuccessMessage('User deleted.');
-    };
+      const onConfirm = async () => {
+        await deleteUser(user.id);
+        notificationService.showSuccessMessage('User deleted.');
+      };
 
-    openModal({ message, confirmButtonLabel: 'DELETE', onConfirm });
-  };
+      openModal({ message, confirmButtonLabel: 'DELETE', onConfirm });
+    },
+    [openModal, deleteUser],
+  );
 
-  const handlePasswordReset = (user: User) => {
-    const message = `Send Reset Password Email to ${getUsersFullName(user)}?`;
+  const handlePasswordReset = useCallback(
+    (user: User) => {
+      const message = `Send Reset Password Email to ${getUsersFullName(user)}?`;
 
-    const onConfirm = async () => {
-      await forgotPassword({ email: user.email });
-      notificationService.showSuccessMessage(`Password reset email has been sent to ${user.email}`);
-    };
+      const onConfirm = async () => {
+        await forgotPassword({ email: user.email });
+        notificationService.showSuccessMessage(`Password reset email has been sent to ${user.email}`);
+      };
 
-    openModal({ message, confirmButtonLabel: 'SEND', onConfirm });
-  };
+      openModal({ message, confirmButtonLabel: 'SEND', onConfirm });
+    },
+    [openModal, forgotPassword],
+  );
 
-  const navigateToUpdateView = (user: User) => {
-    history.push(`/users/update-user/${user.id}`);
-  };
+  const navigateToUpdateView = useCallback(
+    (user: User) => {
+      history.push(`/users/update-user/${user.id}`);
+    },
+    [history],
+  );
 
-  const headers: TableHeader<UserTableItem>[] = [
-    { key: 'lastName', label: 'LAST NAME' },
-    { key: 'firstName', label: 'FIRST NAME' },
-    { key: 'email', label: 'EMAIL' },
-    { key: 'role', label: 'ROLE' },
-    { key: 'activatedAt', label: 'ACTIVATED' },
-    { key: 'actions', label: 'ACTIONS' },
-  ];
-
-  const items: UserTableItem[] = users.map(user => ({
-    id: user.id,
-    lastName: user.lastName,
-    firstName: user.firstName,
-    email: user.email,
-    role: user.role.roleName,
-    activatedAt: user.activatedAt
-      ? new Date(user.activatedAt)
-      : {
-          icon: 'envelope',
-          tooltipText: 'Resend Activation Email',
-          onClick: () => handleResendActivationEmail(user),
-          show: userHasPermission({ permission: 'user:resend-activation-email', data: user }),
-        },
-    actions: [
+  const columns: Column<UserTableItem>[] = useMemo(
+    () => [
+      { accessor: 'lastName', Header: 'Last Name' },
+      { accessor: 'firstName', Header: 'First Name' },
+      { accessor: 'email', Header: 'Email' },
+      { accessor: 'role', Header: 'Role' },
       {
-        icon: 'edit',
-        tooltipText: 'Edit',
-        onClick: () => navigateToUpdateView(user),
-        show: userHasPermission({ permission: 'user:update', data: user }),
+        accessor: 'activatedAt',
+        Header: 'Activated',
+        Cell: ({ value: activatedAt }) => (
+          <>
+            {activatedAt instanceof Date ? (
+              new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(activatedAt)
+            ) : (
+              <ActionButton {...activatedAt} />
+            )}
+          </>
+        ),
       },
       {
-        icon: 'trash-alt',
-        tooltipText: 'Delete',
-        onClick: () => handleDelete(user),
-        show: userHasPermission({ permission: 'user:delete', data: user }),
-      },
-      {
-        icon: 'lock',
-        tooltipText: 'Reset Password',
-        onClick: () => handlePasswordReset(user),
-        show: userHasPermission({ permission: 'user:send-reset-password-email', data: user }),
+        accessor: 'actions',
+        Header: 'Actions',
+        Cell: ({ value, row }) => value.map(props => <ActionButton key={`${row.id}-${props.icon}`} {...props} />),
       },
     ],
-  }));
+    [],
+  );
 
-  const customRenderers: CustomRenderer<UserTableItem>[] = [
-    {
-      key: 'activatedAt',
-      renderer: ({ activatedAt }) => (
-        <>
-          {activatedAt instanceof Date ? (
-            new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(activatedAt)
-          ) : (
-            <ActionButton {...activatedAt} />
-          )}
-        </>
-      ),
-    },
-    {
-      key: 'actions',
-      renderer: ({ actions, id }: UserTableItem) => (
-        <>
-          {actions.map(action => (
-            <ActionButton key={id} {...action} />
-          ))}
-        </>
-      ),
-    },
-  ];
+  const items: UserTableItem[] = useMemo(
+    () =>
+      users.map(user => ({
+        id: user.id,
+        lastName: user.lastName,
+        firstName: user.firstName,
+        email: user.email,
+        role: user.role.roleName,
+        activatedAt: user.activatedAt
+          ? new Date(user.activatedAt)
+          : {
+              icon: 'envelope',
+              tooltipText: 'Resend Activation Email',
+              onClick: () => handleResendActivationEmail(user),
+              show: userHasPermission({ permission: 'user:resend-activation-email', data: user }),
+            },
+        actions: [
+          {
+            icon: 'edit',
+            tooltipText: 'Edit',
+            onClick: () => navigateToUpdateView(user),
+            show: userHasPermission({ permission: 'user:update', data: user }),
+          },
+          {
+            icon: 'trash-alt',
+            tooltipText: 'Delete',
+            onClick: () => handleDelete(user),
+            show: userHasPermission({ permission: 'user:delete', data: user }),
+          },
+          {
+            icon: 'lock',
+            tooltipText: 'Reset Password',
+            onClick: () => handlePasswordReset(user),
+            show: userHasPermission({ permission: 'user:send-reset-password-email', data: user }),
+          },
+        ],
+      })),
+    [users, userHasPermission, handleDelete, handlePasswordReset, handleResendActivationEmail, navigateToUpdateView],
+  );
 
   return (
     <Container>
@@ -158,7 +169,7 @@ export const UserListView: FC = () => {
         </div>
       </HasPermission>
       <WithLoadingOverlay isLoading={isPageLoading}>
-        <GenericTable<UserTableItem> headers={headers} items={items} customRenderers={customRenderers} />
+        <DataTable<UserTableItem> columns={columns} data={items} />
       </WithLoadingOverlay>
     </Container>
   );
