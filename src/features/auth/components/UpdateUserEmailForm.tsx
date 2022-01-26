@@ -15,11 +15,14 @@ type Props = {
   defaultValues?: Partial<UserEmailFormData>;
 };
 
-const schema: yup.SchemaOf<UserEmailFormData> = yup.object().shape({
-  email: yup.string().required(Constants.errorMessages.EMAIL_REQUIRED).email(Constants.errorMessages.INVALID_EMAIL),
-});
-
 export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues }) => {
+  const schema: yup.SchemaOf<UserEmailFormData> = yup.object().shape({
+    email: yup.string()
+      .required(Constants.errorMessages.EMAIL_REQUIRED)
+      .email(Constants.errorMessages.INVALID_EMAIL)
+      .notOneOf([defaultValues?.email], Constants.errorMessages.SAME_EMAIL),
+  });
+
   const {
     formState: { errors, isValid, isSubmitting },
     handleSubmit,
