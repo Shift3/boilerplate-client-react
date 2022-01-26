@@ -1,7 +1,7 @@
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
 import { Agency } from 'common/models';
 import { Link, useHistory } from 'react-router-dom';
-import { FC, useCallback, useMemo } from 'react';
+import { FC, useCallback, useEffect, useMemo } from 'react';
 import Container from 'react-bootstrap/Container';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { HasPermission, useRbac } from 'features/rbac';
@@ -22,12 +22,17 @@ type AgencyTableItem = {
 export const AgencyListView: FC = () => {
   const history = useHistory();
   const { userHasPermission } = useRbac();
-  const { page, pageSize } = usePagination();
-  const { data, isLoading, isFetching } = useGetAgenciesQuery({ page, pageSize });
+  const paginator = usePagination();
+  const { data, isLoading, isFetching } = useGetAgenciesQuery({ page: paginator.page, pageSize: paginator.pageSize });
   const [deleteAgency] = useDeleteAgencyMutation();
   const { openModal } = useConfirmationModal();
   const agencies = useMemo(() => data?.results ?? [], [data]);
   const isPageLoading = isLoading || isFetching;
+
+  useEffect(() => {
+    paginator.updateCount(data?.meta.count ?? 0);
+    paginator.updatePageCount(data?.meta.pageCount ?? 0);
+  }, [data?.meta.count, data?.meta.pageCount, paginator.updateCount, paginator.updatePageCount]);
 
   const handleDelete = useCallback(
     (agency: Agency) => {
@@ -88,7 +93,23 @@ export const AgencyListView: FC = () => {
         </div>
       </HasPermission>
       <WithLoadingOverlay isLoading={isPageLoading}>
-        <DataTable<AgencyTableItem> columns={columns} data={items} />
+        <DataTable<AgencyTableItem>
+          columns={columns}
+          data={items}
+          pagination={{
+            page: paginator.page,
+            pageSize: paginator.pageSize,
+            count: paginator.count,
+            pageCount: paginator.pageCount,
+            hasNextPage: paginator.hasNextPage,
+            hasPreviousPage: paginator.hasPreviousPage,
+            pageSizeOptions: [5, 10, 25, 50, 100],
+            getPage: paginator.getPage,
+            getNextPage: paginator.getNextPage,
+            getPreviousPage: paginator.getPreviousPage,
+            setPageSize: paginator.setPageSize,
+          }}
+        />
       </WithLoadingOverlay>
     </Container>
   );
