@@ -1,8 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { customBaseQuery } from 'common/api/customBaseQuery';
-import { Session } from 'common/models';
+import { PaginatedResult, PaginationQueryParams, Session } from 'common/models';
 import { User } from 'common/models/user';
-import { PaginatedResult, PaginationQueryParams } from './pagination';
 
 export type ActivateAccountRequest = {
   token: string;

@@ -1,7 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { Agency } from 'common/models';
+import { Agency, PaginatedResult, PaginationQueryParams } from 'common/models';
 import { customBaseQuery } from 'common/api/customBaseQuery';
-import { PaginatedResult, PaginationQueryParams } from './pagination';
 
 export const agencyApi = createApi({
   reducerPath: 'agencyApi',
@@ -17,7 +16,7 @@ export const agencyApi = createApi({
 
   endpoints: builder => ({
     getAgencies: builder.query<PaginatedResult<Agency>, PaginationQueryParams>({
-      query: ({ page, pageSize }) => ({ url: `/agencies?page=${page}&$pageSize=${pageSize}` }),
+      query: ({ page = 1, pageSize = 10 }) => ({ url: `/agencies?page=${page}&pageSize=${pageSize}` }),
       providesTags: ['Agency'],
     }),
 

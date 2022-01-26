@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
+import { PaginatedResult, PaginationQueryParams } from 'common/models';
 import { Agent } from 'common/models/agent';
 import { customBaseQuery } from './customBaseQuery';
-import { PaginatedResult, PaginationQueryParams } from './pagination';
 
 export type CreateAgentRequest = Pick<
   Agent,
