@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useGetRolesQuery } from 'common/api/roleApi';
 import { useCreateUserMutation } from 'common/api/userApi';
@@ -9,25 +9,38 @@ import { useGetAgenciesQuery } from 'common/api/agencyApi';
 import * as notificationService from 'common/services/notification';
 import { PageWrapper } from 'common/styles/page';
 import { StyledFormWrapper, Title } from 'common/styles/form';
-import { usePagination } from 'common/api/pagination';
+import { usePSFQuery } from 'common/hooks';
+import { Agency, PaginatedResult } from 'common/models';
 
 export const CreateUserView: FC = () => {
   const history = useHistory();
   const { user } = useAuth();
   const { userHasPermission } = useRbac();
-  const { page, pageSize } = usePagination();
   const [createUser] = useCreateUserMutation();
   const { data: roles = [], isLoading: isLoadingRoles } = useGetRolesQuery();
-  const { data, isLoading: isLoadingAgencies } = useGetAgenciesQuery(
-    { page, pageSize },
-    { skip: !userHasPermission('agency:read') },
+  const {
+    data: agencyData,
+    isLoading: isLoadingAgencies,
+    page,
+    getNextPage,
+  } = usePSFQuery<PaginatedResult<Agency>>(useGetAgenciesQuery, { skip: !userHasPermission('agency:read') });
+  const [availableAgencies, setAvailableAgencies] = useState<Agency[]>([]);
+  const availableRoles = useMemo(
+    () => roles.filter(role => userHasPermission({ permission: 'role:read', data: role })),
+    [roles],
   );
+  const isLoading = isLoadingRoles || isLoadingAgencies;
 
-  const agencies = data?.results ?? [];
-
-  const availableRoles = roles.filter(role => userHasPermission({ permission: 'role:read', data: role }));
-
-  const availableAgencies = userHasPermission('agency:read') ? agencies : [];
+  // Append agencies to list of available agencies when the select input scrolls to the bottom
+  // and a new page of results is received. Note that this works because the page number only
+  // increases here since we only update it when a user scrolls to the bottom of a select and
+  // requests the next page. If page numbers could decrease as well, extra logic would be needed
+  // here to ensure that we don't re-append data from pages that have already been appeneded.
+  useEffect(() => {
+    if (agencyData?.results && agencyData.results.length) {
+      setAvailableAgencies(prev => [...prev, ...agencyData!.results]);
+    }
+  }, [page]);
 
   // If the user doesn't have permission to see list of agencies,then they can
   // only create a new user within their own agency. Hence, the agency will be
@@ -48,8 +61,6 @@ export const CreateUserView: FC = () => {
     }
   };
 
-  const isLoading = isLoadingRoles || isLoadingAgencies;
-
   return (
     <PageWrapper>
       {!isLoading && (
@@ -60,6 +71,7 @@ export const CreateUserView: FC = () => {
             availableAgencies={availableAgencies}
             defaultValues={defaultValues}
             onSubmit={handleFormSubmit}
+            onAgencySelectScrollToBottom={getNextPage}
           />
         </StyledFormWrapper>
       )}
