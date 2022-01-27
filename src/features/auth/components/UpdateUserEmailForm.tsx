@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -27,16 +27,11 @@ export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues }) => {
     formState: { errors, isValid, isSubmitting },
     handleSubmit,
     register,
-    trigger,
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
     defaultValues,
   });
-
-  useEffect(() => {
-    trigger();
-  }, [trigger]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>

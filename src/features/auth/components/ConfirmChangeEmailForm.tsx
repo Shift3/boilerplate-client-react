@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
@@ -16,6 +16,7 @@ type Props = {
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
   verificationCode: yup.number()
+    .transform(value => !value ? 0 : value)
     .required(Constants.errorMessages.VERIFICATION_CODE_REQUIRED)
     .lessThan(1000000, Constants.errorMessages.VERIFICATION_CODE_LENGTH_MISMATCH)
     .moreThan(99999, Constants.errorMessages.VERIFICATION_CODE_LENGTH_MISMATCH),
@@ -26,7 +27,6 @@ export const ConfirmChangeEmailForm: FC<Props> = ({ onSubmit }) => {
     formState: { errors, isValid, isSubmitting },
     handleSubmit,
     register,
-    trigger,
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
@@ -34,11 +34,6 @@ export const ConfirmChangeEmailForm: FC<Props> = ({ onSubmit }) => {
       verificationCode: 0
     },
   });
-
-  // Trigger validation on first render.
-  useEffect(() => {
-    trigger();
-  }, [trigger]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
