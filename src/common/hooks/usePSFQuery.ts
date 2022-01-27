@@ -1,14 +1,5 @@
-import { QueryDefinition } from '@reduxjs/toolkit/dist/query';
-import {
-  UseQuery,
-  UseQueryStateOptions,
-  UseQueryStateResult,
-  UseQuerySubscription,
-} from '@reduxjs/toolkit/dist/query/react/buildHooks';
-import { customBaseQuery } from 'common/api/customBaseQuery';
-import { PaginationQueryParams } from 'common/models';
 import { useCallback, useMemo, useReducer } from 'react';
-import { UseQuerySubscriptionOptions } from 'rtk-query-config';
+import { UseQuery, UseQueryOptions, UseQueryResult } from 'rtk-query-config';
 
 // --------------------------------------------------------------------------------------------------------------------
 type PaginationState = {
@@ -28,6 +19,15 @@ type PaginationActions = {
 };
 
 type PaginationManager = PaginationState & PaginationActions;
+
+const initialPaginationState: PaginationState = {
+  page: 1,
+  pageSize: 10,
+  count: 0,
+  pageCount: 0,
+  hasPreviousPage: false,
+  hasNextPage: false,
+};
 
 // --------------------------------------------------------------------------------------------------------------------
 type SortState = {
@@ -69,39 +69,20 @@ type PSFQueryAction =
   | { type: 'pagination/setPageSize'; payload: { size: number } };
 
 // --------------------------------------------------------------------------------------------------------------------
-type QueryArg = PaginationQueryParams;
-
-type QueryDef<ResultType> = QueryDefinition<QueryArg, typeof customBaseQuery, string, ResultType, string>;
-
-type UseQueryHook<ResultType> = UseQuery<QueryDef<ResultType>>;
-
-type QueryResult<ResultType> = UseQueryStateResult<QueryDef<ResultType>, Record<string, any>> &
-  ReturnType<UseQuerySubscription<QueryDef<ResultType>>>;
-
-type QueryOptions<ResultType> = UseQuerySubscriptionOptions &
-  UseQueryStateOptions<QueryDef<ResultType>, Record<string, any>>;
-
-// --------------------------------------------------------------------------------------------------------------------
 
 export const usePSFQuery = <ResultType>(
-  useQuery: UseQueryHook<ResultType>,
-  options?: QueryOptions<ResultType>,
-): QueryResult<ResultType> & PSFQueryManager => {
+  useQuery: UseQuery<ResultType>,
+  options?: UseQueryOptions,
+): UseQueryResult<ResultType> & PSFQueryManager => {
   // Set up the reducer that will create and manage the pagination, sort, and filter states of the query.
   // `useReducer` was prefferred over`useState` here because:
   //    - the state update logic is complex and the next state often depends on the previous state
   //    - there is a lot of state and individual calls to `useState` would be less performant
   const initialState: PSFQueryState = useMemo(
     () => ({
-      // pagination
-      page: 1,
-      pageSize: 10,
-      count: 0,
-      pageCount: 0,
-      hasPreviousPage: false,
-      hasNextPage: false,
-      // TODO: sort
-      // TODO: filter
+      ...initialPaginationState,
+      // TODO: initial sort state
+      // TODO: initial filter state
     }),
     [],
   );
@@ -128,7 +109,7 @@ export const usePSFQuery = <ResultType>(
   // Use the query hook.
   const { page, pageSize } = state;
   const queryArg = { page, pageSize };
-  const result = useQuery(queryArg, options);
+  const queryResult = useQuery(queryArg, options);
 
   // Additional action dispatchers that will be exposed as part of the public interface of the query manager.
   // Components or other custom hooks using the usePSFQuery hook can use these methods to update the pagination,
@@ -154,7 +135,7 @@ export const usePSFQuery = <ResultType>(
   );
 
   return {
-    ...result,
+    ...queryResult,
     ...state,
     getPage,
     getPreviousPage,
