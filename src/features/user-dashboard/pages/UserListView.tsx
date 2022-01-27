@@ -1,12 +1,12 @@
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
-import { User } from 'common/models';
+import { PaginatedResult, User } from 'common/models';
 import {
   useDeleteUserMutation,
   useForgotPasswordMutation,
   useGetUsersQuery,
   useResendActivationEmailMutation,
 } from 'common/api/userApi';
-import { FC, useCallback, useEffect, useMemo } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Link, useHistory } from 'react-router-dom';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
@@ -14,9 +14,9 @@ import { HasPermission, useRbac } from 'features/rbac';
 import * as notificationService from 'common/services/notification';
 import { CreateButton } from 'common/styles/button';
 import { useConfirmationModal } from 'features/confirmation-modal';
-import { usePagination } from 'common/api/pagination';
 import { DataTable } from 'common/components/DataTable';
 import { Column } from 'react-table';
+import { usePaginationManager, usePSFQuery } from 'common/hooks';
 
 type UserTableItem = {
   id: number;
@@ -31,19 +31,14 @@ type UserTableItem = {
 export const UserListView: FC = () => {
   const history = useHistory();
   const { userHasPermission } = useRbac();
-  const paginator = usePagination();
-  const { data, isLoading, isFetching } = useGetUsersQuery({ page: paginator.page, pageSize: paginator.pageSize });
+  const { data, isLoading, page, pageSize, getPage, changePageSize } =
+    usePSFQuery<PaginatedResult<User>>(useGetUsersQuery);
   const [deleteUser] = useDeleteUserMutation();
   const [forgotPassword] = useForgotPasswordMutation();
   const [resendActivationEmail] = useResendActivationEmailMutation();
   const { openModal } = useConfirmationModal();
   const users = useMemo(() => data?.results ?? [], [data]);
-  const isPageLoading = isLoading || isFetching;
-
-  useEffect(() => {
-    paginator.updateCount(data?.meta.count ?? 0);
-    paginator.updatePageCount(data?.meta.pageCount ?? 0);
-  }, [data?.meta.count, data?.meta.pageCount, paginator.updateCount, paginator.updatePageCount]);
+  const isPageLoading = isLoading;
 
   const getUsersFullName = (user: User) => `${user.firstName} ${user.lastName}`;
 
@@ -178,17 +173,13 @@ export const UserListView: FC = () => {
           columns={columns}
           data={items}
           pagination={{
-            page: paginator.page,
-            pageSize: paginator.pageSize,
-            count: paginator.count,
-            pageCount: paginator.pageCount,
-            hasNextPage: paginator.hasNextPage,
-            hasPreviousPage: paginator.hasPreviousPage,
+            page,
+            pageSize,
+            count: data?.meta.count || 0,
+            pageCount: data?.meta.pageCount || 0,
             pageSizeOptions: [5, 10, 25, 50, 100],
-            getPage: paginator.getPage,
-            getNextPage: paginator.getNextPage,
-            getPreviousPage: paginator.getPreviousPage,
-            setPageSize: paginator.setPageSize,
+            onPageChange: getPage,
+            onPageSizeChange: changePageSize,
           }}
         />
       </WithLoadingOverlay>
