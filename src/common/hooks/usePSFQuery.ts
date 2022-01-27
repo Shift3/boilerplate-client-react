@@ -121,12 +121,12 @@ export const usePSFQuery = <ResultType>(
 
   const getPreviousPage = useCallback(
     () => dispatch({ type: 'pagination/setPage', payload: { page: state.page - 1 } }),
-    [dispatch],
+    [dispatch, state.page],
   );
 
   const getNextPage = useCallback(
     () => dispatch({ type: 'pagination/setPage', payload: { page: state.page + 1 } }),
-    [dispatch],
+    [dispatch, state.page],
   );
 
   const changePageSize = useCallback(
