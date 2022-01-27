@@ -1,6 +1,6 @@
 import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
-import { Agent } from 'common/models';
-import { FC, useCallback, useEffect, useMemo } from 'react';
+import { Agent, PaginatedResult } from 'common/models';
+import { FC, useCallback, useMemo } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Link, useHistory } from 'react-router-dom';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
@@ -9,9 +9,9 @@ import { useDeleteAgentMutation, useGetAgentsQuery } from 'common/api/agentApi';
 import * as notificationService from 'common/services/notification';
 import { CreateButton } from 'common/styles/button';
 import { useConfirmationModal } from 'features/confirmation-modal';
-import { usePagination } from 'common/api/pagination';
 import { Column } from 'react-table';
 import { DataTable } from 'common/components/DataTable';
+import { usePSFQuery } from 'common/hooks';
 
 type AgentTableItem = {
   id: number;
@@ -25,20 +25,12 @@ type AgentTableItem = {
 export const AgentListView: FC = () => {
   const history = useHistory();
   const { userHasPermission } = useRbac();
-  const pagination = usePagination();
-  const { data, isLoading, isFetching } = useGetAgentsQuery({ page: pagination.page, pageSize: pagination.pageSize });
+  const { data, isLoading, page, pageSize, getPage, changePageSize } =
+    usePSFQuery<PaginatedResult<Agent>>(useGetAgentsQuery);
   const [deleteAgent] = useDeleteAgentMutation();
   const { openModal } = useConfirmationModal();
   const agents = useMemo(() => data?.results ?? [], [data]);
-  const isPageLoading = isLoading || isFetching;
-
-  useEffect(() => {
-    pagination.updateCount(data?.meta.count ?? 0);
-  }, [data?.meta.count, pagination.updateCount]);
-
-  useEffect(() => {
-    pagination.updatePageCount(data?.meta.pageCount ?? 0);
-  }, [data?.meta.pageCount, pagination.updatePageCount]);
+  const isPageLoading = isLoading;
 
   const navigateToUpdateView = useCallback(
     (agent: Agent) => {
@@ -118,17 +110,13 @@ export const AgentListView: FC = () => {
           columns={columns}
           data={items}
           pagination={{
-            page: pagination.page,
-            pageSize: pagination.pageSize,
-            count: pagination.count,
-            pageCount: pagination.pageCount,
-            hasNextPage: pagination.hasNextPage,
-            hasPreviousPage: pagination.hasPreviousPage,
+            page,
+            pageSize,
+            count: data?.meta.count || 0,
+            pageCount: data?.meta.pageCount || 0,
             pageSizeOptions: [5, 10, 25, 50, 100],
-            getPage: pagination.getPage,
-            getNextPage: pagination.getNextPage,
-            getPreviousPage: pagination.getPreviousPage,
-            setPageSize: pagination.setPageSize,
+            onPageChange: getPage,
+            onPageSizeChange: changePageSize,
           }}
         />
       </WithLoadingOverlay>
