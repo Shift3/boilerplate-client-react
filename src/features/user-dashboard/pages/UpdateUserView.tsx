@@ -37,15 +37,15 @@ export const UpdateUserView: FC = () => {
   // increases here since we only update it when a user scrolls to the bottom of a select and
   // requests the next page. If page numbers could decrease as well, extra logic would be needed
   // here to ensure that we don't re-append data from pages that have already been appeneded.
+  const hasAgencyData = !!agencyData?.results && !!agencyData.results.length;
   useEffect(
     () => {
       if (agencyData?.results && agencyData.results.length) {
         setAvailableAgencies(prev => [...prev, ...agencyData!.results]);
       }
     },
-    // isLoadingAgencies indicates that the query is currently loading for the first time, and has no data yet.
-    // It is needed as a dependency here because the page number does not change when the query is first called.
-    [page, isLoadingAgencies],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [page, hasAgencyData],
   );
 
   useEffect(() => {
