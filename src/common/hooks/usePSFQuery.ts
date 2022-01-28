@@ -1,5 +1,5 @@
 import { isPaginatedResult, PaginatedResult } from 'common/models';
-import { useCallback, useEffect, useMemo, useReducer } from 'react';
+import { useCallback, useEffect, useReducer } from 'react';
 import { UseQuery, UseQueryOptions, UseQueryResult } from 'rtk-query-config';
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -98,20 +98,17 @@ export const usePSFQuery = <ResultType>(
     // TODO
   };
 
+  const initialState: PSFQueryState = {
+    ...initialPaginationState,
+    ...initialSortState,
+    ...initialFilterState,
+  };
+
   // Set up the reducer that will create and manage the pagination, sort, and filter states of the query.
   // `useReducer` was prefferred over`useState` here because:
   //    - the state update logic is complex and the next state often depends on the previous state
   //    - there is a lot of state and individual calls to `useState` would be less performant
-  const initialState: PSFQueryState = useMemo(
-    () => ({
-      ...initialPaginationState,
-      ...initialSortState,
-      ...initialFilterState,
-    }),
-    [],
-  );
-
-  const reducer = useCallback((state: PSFQueryState = initialState, action: PSFQueryAction): PSFQueryState => {
+  const reducer = (state: PSFQueryState = initialState, action: PSFQueryAction): PSFQueryState => {
     switch (action.type) {
       case 'pagination/setPage': {
         const { page } = action.payload;
@@ -163,7 +160,7 @@ export const usePSFQuery = <ResultType>(
       default:
         return state;
     }
-  }, []);
+  };
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -175,8 +172,8 @@ export const usePSFQuery = <ResultType>(
   // Certain metadata is returned as part of the response from the server. For example, `count` and `pageCount`
   // are returned as part of the paginated result and can't be known ahead of time.
   useEffect(() => {
-    dispatch({ type: 'all/dataUpdated', payload: { data: queryResult.data } });
-  }, [queryResult.isSuccess]);
+    dispatch({ type: 'all/dataUpdated', payload: { data: queryResult?.data } });
+  }, [queryResult]);
 
   // Additional action dispatchers that will be exposed as part of the public interface of the query manager.
   // Components or other custom hooks using the usePSFQuery hook can use these methods to update the pagination,
