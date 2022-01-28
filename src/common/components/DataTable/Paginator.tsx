@@ -9,14 +9,14 @@ import { CustomSelect } from 'common/components';
 
 type Props = {
   page: number;
+  pageSize: number;
   count: number;
   pageCount: number;
-  pageSize: number;
   pageSizeOptions: number[];
-  hasNext: boolean;
-  hasPrev: boolean;
-  onNextClick: () => void;
-  onPrevClick: () => void;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+  onPreviousPageClick: () => void;
+  onNextPageClick: () => void;
   onPageSizeChange: (size: number) => void;
 };
 
@@ -27,14 +27,14 @@ type PageSizeOption = {
 
 export const Paginator: FC<Props> = ({
   page,
+  pageSize,
   count,
   pageCount,
-  pageSize,
   pageSizeOptions,
-  hasNext,
-  hasPrev,
-  onNextClick,
-  onPrevClick,
+  hasPreviousPage,
+  hasNextPage,
+  onPreviousPageClick,
+  onNextPageClick,
   onPageSizeChange,
 }) => {
   const rangeStart = pageSize * (page - 1) + 1;
@@ -63,10 +63,10 @@ export const Paginator: FC<Props> = ({
             <span>
               {rangeStart} - {rangeEnd} of {count}
             </span>
-            <Button variant='link' disabled={!hasPrev} onClick={onPrevClick}>
+            <Button variant='link' disabled={!hasPreviousPage} onClick={onPreviousPageClick}>
               <FontAwesomeIcon icon={faChevronLeft} />{' '}
             </Button>
-            <Button variant='link' disabled={!hasNext} onClick={onNextClick}>
+            <Button variant='link' disabled={!hasNextPage} onClick={onNextPageClick}>
               <FontAwesomeIcon icon={faChevronRight} />
             </Button>
           </Col>
