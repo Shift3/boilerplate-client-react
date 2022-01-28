@@ -8,11 +8,11 @@ type Props<T> = {
   isLoading?: boolean;
   isInvalid?: boolean;
   // Resolves option data to a string to be displayed as the label
-  getOptionLabel: (option: T) => string;
+  getOptionLabel?: (option: T) => string;
   // Resolves option data to a string to compare options and specify value attributes
-  getOptionValue: (option: T) => string;
+  getOptionValue?: (option: T) => string;
   // Handle change events on the select
-  onChange: (value: T) => void;
+  onChange?: (value: T) => void;
   // Fired when the user scrolls to the bottom of the menu. For example to handle loading
   // a new page of data if the data is paginated.
   onScrollToBottom?: (event: WheelEvent | TouchEvent) => void;
@@ -31,12 +31,16 @@ export const CustomSelect = <T,>({
   onChange,
   onScrollToBottom,
 }: Props<T>) => {
-  // The `Select` component from the react-select library has many features and different
-  // types of actions. For now, we are just handling selecting a new option value.
   const handleChange = (newValue: SingleValue<T>, actionMeta: ActionMeta<T>) => {
     const { action } = actionMeta;
-    if (action === 'select-option' && newValue) {
-      onChange(newValue);
+
+    // The `Select` component from the react-select library has many features and different
+    // types of actions. For now, we are just handling selecting a new option value.
+    if (action === 'select-option') {
+      // Note: SingleValue<T> = T | null so we have to perform type narrowing here
+      if (newValue && onChange) {
+        onChange(newValue);
+      }
     }
   };
 
