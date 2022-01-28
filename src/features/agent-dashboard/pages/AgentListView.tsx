@@ -1,7 +1,7 @@
 import { Agent, PaginatedResult } from 'common/models';
 import { FC, useMemo } from 'react';
 import Container from 'react-bootstrap/Container';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { HasPermission } from 'features/rbac';
 import { useGetAgentsQuery } from 'common/api/agentApi';
