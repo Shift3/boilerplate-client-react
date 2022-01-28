@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useMemo } from 'react';
+import { ReactElement, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import { Column, useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import { Paginator } from './Paginator';
@@ -36,36 +36,27 @@ export const DataTable = <D extends Record<string, unknown>>({
   const usePaginationPlugin = pagination !== undefined;
 
   // Determine which react-table plugins should be enabled.
-  const plugins = useMemo(
-    () => [
-      // The order in which plugins are specified matters to react-table.
-      // Order needs to be useFilter -> useSortBy -> usePagination.
-      ...(useFiltersPlugin ? [useFilters] : []),
-      ...(useSortByPlugin ? [useSortBy] : []),
-      ...(usePaginationPlugin ? [usePagination] : []),
-    ],
-    [useFiltersPlugin, useSortByPlugin, usePaginationPlugin],
-  );
+  const plugins = [
+    // The order in which plugins are specified matters to react-table.
+    // Order needs to be useFilter -> useSortBy -> usePagination.
+    ...(useFiltersPlugin ? [useFilters] : []),
+    ...(useSortByPlugin ? [useSortBy] : []),
+    ...(usePaginationPlugin ? [usePagination] : []),
+  ];
 
   // Generate the required initial state for the enabled plugins.
-  const initialState = useMemo(
-    () => ({
-      ...(useFiltersPlugin ? {} : {}), // TODO: add initial state for filtering
-      ...(useSortByPlugin ? {} : {}), // TODO: add initial state for sorting
-      ...(usePaginationPlugin ? { pageIndex: pagination.page, pageSize: pagination.pageSize } : {}),
-    }),
-    [useFiltersPlugin, useSortByPlugin, usePaginationPlugin, pagination?.page, pagination?.pageSize],
-  );
+  const initialState = {
+    ...(useFiltersPlugin ? {} : {}), // TODO: add initial state for filtering
+    ...(useSortByPlugin ? {} : {}), // TODO: add initial state for sorting
+    ...(usePaginationPlugin ? { pageIndex: pagination.page, pageSize: pagination.pageSize } : {}),
+  };
 
   // Generate the required table options for the enabled plugins.
-  const extraTableOptions = useMemo(
-    () => ({
-      ...(useFiltersPlugin ? {} : {}), // TODO: add table options for filtering
-      ...(useSortByPlugin ? {} : {}), // TODO: add table options for sorting
-      ...(usePaginationPlugin ? { manualPagination: true, pageCount: pagination.pageCount } : {}),
-    }),
-    [useFiltersPlugin, useSortByPlugin, usePaginationPlugin, pagination?.pageCount],
-  );
+  const extraTableOptions = {
+    ...(useFiltersPlugin ? {} : {}), // TODO: add table options for filtering
+    ...(useSortByPlugin ? {} : {}), // TODO: add table options for sorting
+    ...(usePaginationPlugin ? { manualPagination: true, pageCount: pagination.pageCount } : {}),
+  };
 
   // Create the table instance.
   const tableInstance = useTable(
