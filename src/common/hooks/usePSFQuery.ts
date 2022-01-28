@@ -170,10 +170,16 @@ export const usePSFQuery = <ResultType>(
   const queryResult = useQuery(queryArg, options);
 
   // Certain metadata is returned as part of the response from the server. For example, `count` and `pageCount`
-  // are returned as part of the paginated result and can't be known ahead of time.
-  useEffect(() => {
-    dispatch({ type: 'all/dataUpdated', payload: { data: queryResult?.data } });
-  }, [queryResult]);
+  // are returned as part of the paginated result and can't be known ahead of time. Whenever the data is updated
+  // we need to dispatch an action that updates the state that depends on this metadata.
+  const hasData = !!queryResult?.data;
+  useEffect(
+    () => {
+      dispatch({ type: 'all/dataUpdated', payload: { data: queryResult?.data } });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [hasData],
+  );
 
   // Additional action dispatchers that will be exposed as part of the public interface of the query manager.
   // Components or other custom hooks using the usePSFQuery hook can use these methods to update the pagination,
