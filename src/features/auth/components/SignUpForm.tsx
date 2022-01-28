@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { CancelButton } from 'common/styles/button';
 import { LoadingButton } from 'common/components/LoadingButton';
+import FormPrompt from 'common/components/FormPrompt';
 
 export type FormData = {
   email: string;
@@ -31,7 +32,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const SignUpForm: FC<Props> = ({ onSubmit, onCancel }) => {
   const {
-    formState: { errors, isValid, isSubmitting },
+    formState: { errors, isValid, isDirty, isSubmitting },
     handleSubmit,
     register,
     trigger,
@@ -113,6 +114,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit, onCancel }) => {
       <div className='d-grid mt-3'>
         <CancelButton onClick={onCancel}>CANCEL</CancelButton>
       </div>
+      <FormPrompt isDirty={isDirty} isSubmitting={isSubmitting} />
     </Form>
   );
 };

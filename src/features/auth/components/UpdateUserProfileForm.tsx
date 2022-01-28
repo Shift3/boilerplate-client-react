@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
+import FormPrompt from 'common/components/FormPrompt';
 
 export type FormData = {
   firstName: string;
@@ -25,7 +26,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) => {
   const {
-    formState: { errors, isValid, isSubmitting },
+    formState: { errors, isValid, isDirty, isSubmitting },
     handleSubmit,
     register,
     trigger,
@@ -67,6 +68,7 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) =>
           UPDATE
         </LoadingButton>
       </div>
+      <FormPrompt isDirty={isDirty} isSubmitting={isSubmitting} />
     </Form>
   );
 };

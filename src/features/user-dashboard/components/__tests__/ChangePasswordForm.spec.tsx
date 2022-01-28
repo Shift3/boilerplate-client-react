@@ -3,6 +3,8 @@ import userEvent from '@testing-library/user-event';
 import { ThemeProvider } from 'styled-components';
 import theme from 'utils/styleValues';
 import { ChangePasswordForm, FormData } from '../ChangePasswordForm';
+import { Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
 
 describe('ChangePasswordForm', () => {
   const validFormData: FormData = {
@@ -12,17 +14,19 @@ describe('ChangePasswordForm', () => {
   };
 
   const mockOnSubmit = jest.fn();
-  const mockOnCancel = jest.fn();
 
   beforeEach(async () => {
     // The render() needs to be wrapped in act() because the component has a useEffect() hook
     // that triggers form validation and modifies the form state right after the first render.
     // act() ensures that this update is processed and applied to the DOM before running tests.
     await act(async () => {
+      const history = createMemoryHistory();
       render(
-        <ThemeProvider theme={theme}>
-          <ChangePasswordForm onSubmit={mockOnSubmit} />
-        </ThemeProvider>,
+        <Router history={history}>
+          <ThemeProvider theme={theme}>
+            <ChangePasswordForm onSubmit={mockOnSubmit} />
+          </ThemeProvider>,
+        </Router>
       );
     });
 

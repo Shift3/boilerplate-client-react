@@ -6,6 +6,7 @@ import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { CustomSelect } from 'common/components';
+import FormPrompt from 'common/components/FormPrompt';
 
 export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>;
 
@@ -40,7 +41,7 @@ export const UserDetailForm: FC<Props> = ({
 }) => {
   const {
     control,
-    formState: { errors, isValid, isSubmitting },
+    formState: { errors, isValid, isDirty, isSubmitting },
     handleSubmit,
     register,
     trigger,
@@ -118,6 +119,7 @@ export const UserDetailForm: FC<Props> = ({
           {submitButtonLabel}
         </LoadingButton>
       </div>
+      <FormPrompt isDirty={isDirty} isSubmitting={isSubmitting} />
     </Form>
   );
 };
