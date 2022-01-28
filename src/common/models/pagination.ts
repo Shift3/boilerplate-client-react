@@ -30,7 +30,7 @@ export interface PaginatedResult<ResultType> {
   };
 }
 
-export const isPaginatedResult = <T>(data: PaginatedResult<T> | any): data is PaginatedResult<T> => {
+export const isPaginatedResult = <T>(data: PaginatedResult<T> | unknown): data is PaginatedResult<T> => {
   return (
     (data as PaginatedResult<T>)?.results !== undefined &&
     (data as PaginatedResult<T>)?.meta !== undefined &&
