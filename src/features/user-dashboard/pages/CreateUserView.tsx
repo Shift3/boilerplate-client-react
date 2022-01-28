@@ -72,6 +72,7 @@ export const CreateUserView: FC = () => {
             availableRoles={availableRoles}
             availableAgencies={availableAgencies}
             defaultValues={defaultValues}
+            submitButtonLabel='CREATE'
             onSubmit={handleFormSubmit}
             onAgencySelectScrollToBottom={getNextPage}
           />
