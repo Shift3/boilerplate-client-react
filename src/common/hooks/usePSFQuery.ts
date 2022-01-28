@@ -175,7 +175,6 @@ export const usePSFQuery = <ResultType>(
   // Certain metadata is returned as part of the response from the server. For example, `count` and `pageCount`
   // are returned as part of the paginated result and can't be known ahead of time.
   useEffect(() => {
-    console.log('new data');
     dispatch({ type: 'all/dataUpdated', payload: { data: queryResult.data } });
   }, [queryResult.isSuccess]);
 
