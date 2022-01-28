@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import Form from 'react-bootstrap/Form';
 import Select, { ActionMeta, SingleValue } from 'react-select';
 
@@ -30,7 +31,7 @@ export const CustomSelect = <T,>({
   getOptionValue,
   onChange,
   onScrollToBottom,
-}: Props<T>) => {
+}: Props<T>): ReactElement => {
   const handleChange = (newValue: SingleValue<T>, actionMeta: ActionMeta<T>) => {
     const { action } = actionMeta;
 
