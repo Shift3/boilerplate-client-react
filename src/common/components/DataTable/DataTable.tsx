@@ -1,6 +1,6 @@
-import { ReactElement, useEffect, useMemo } from 'react';
+import { ReactElement, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
-import { Column, TableInstance, useFilters, usePagination, useSortBy, useTable } from 'react-table';
+import { Column, useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import { Paginator } from './Paginator';
 
 export type DataTableProps<D extends Record<string, unknown>> = {
