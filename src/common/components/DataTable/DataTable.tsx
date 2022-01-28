@@ -1,12 +1,13 @@
-import { ReactElement, useEffect } from 'react';
+import { ReactElement, useEffect, useMemo } from 'react';
 import Table from 'react-bootstrap/Table';
-import { Column, useFilters, usePagination, useSortBy, useTable } from 'react-table';
+import { Column, TableInstance, useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import { Paginator } from './Paginator';
 
 export type DataTableProps<D extends Record<string, unknown>> = {
   columns: Column<D>[];
   data: D[];
   pagination?: {
+    basePage: 0 | 1; // Whether to treat page 0 or 1 as the first page of the result set.
     page: number;
     pageSize: number;
     count: number;
@@ -48,7 +49,7 @@ export const DataTable = <D extends Record<string, unknown>>({
   const initialState = {
     ...(useFiltersPlugin ? {} : {}), // TODO: add initial state for filtering
     ...(useSortByPlugin ? {} : {}), // TODO: add initial state for sorting
-    ...(usePaginationPlugin ? { pageIndex: pagination.page, pageSize: pagination.pageSize } : {}),
+    ...(usePaginationPlugin ? { pageIndex: 0, pageSize: pagination.pageSize } : {}),
   };
 
   // Generate the required table options for the enabled plugins.
@@ -97,7 +98,7 @@ export const DataTable = <D extends Record<string, unknown>>({
   useEffect(
     () => {
       if (usePaginationPlugin) {
-        pagination.onPageChange(pageIndex + 1);
+        pagination.onPageChange(pageIndex + pagination.basePage);
         pagination.onPageSizeChange(pageSize);
       }
     },
@@ -134,7 +135,7 @@ export const DataTable = <D extends Record<string, unknown>>({
       {/* If the usePagination plugin is enabled, render a paginator to allow users to page through the data. */}
       {usePaginationPlugin && (
         <Paginator
-          page={pageIndex + 1}
+          page={pageIndex + pagination.basePage}
           pageSize={pageSize}
           count={pagination.count}
           pageCount={pageCount}

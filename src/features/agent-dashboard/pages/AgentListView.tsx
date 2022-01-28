@@ -31,6 +31,7 @@ export const AgentListView: FC = () => {
           columns={columns}
           data={tableData}
           pagination={{
+            basePage: 1,
             page,
             pageSize,
             count: data?.meta.count || 0,
