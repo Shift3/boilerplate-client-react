@@ -103,12 +103,16 @@ export const DataTable = <D extends Record<string, unknown>>({
 
   // Since we are using manual controlled pagination, we need to let the controller know
   // any time there is a change to page index or page size.
-  useEffect(() => {
-    if (usePaginationPlugin) {
-      pagination.onPageChange(pageIndex + 1);
-      pagination.onPageSizeChange(pageSize);
-    }
-  }, [pageIndex, pageSize, usePaginationPlugin, pagination?.onPageChange, pagination?.onPageSizeChange]);
+  useEffect(
+    () => {
+      if (usePaginationPlugin) {
+        pagination.onPageChange(pageIndex + 1);
+        pagination.onPageSizeChange(pageSize);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [pageIndex, pageSize, usePaginationPlugin, pagination?.onPageChange, pagination?.onPageSizeChange],
+  );
 
   return (
     <div className='shadow p-3 bg-body rounded'>
