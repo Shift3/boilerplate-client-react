@@ -1,9 +1,9 @@
-import { ReactElement } from 'react';
+import { ReactElement, useEffect, useMemo } from 'react';
 import Table from 'react-bootstrap/Table';
-import { Column, useTable } from 'react-table';
+import { Column, useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import { Paginator } from './Paginator';
 
-type DataTableProps<D extends Record<string, unknown>> = {
+export type DataTableProps<D extends Record<string, unknown>> = {
   columns: Column<D>[];
   data: D[];
   pagination?: {
@@ -11,13 +11,15 @@ type DataTableProps<D extends Record<string, unknown>> = {
     pageSize: number;
     count: number;
     pageCount: number;
-    hasPreviousPage: boolean;
-    hasNextPage: boolean;
     pageSizeOptions: number[];
-    getPage: (page: number) => void;
-    getPreviousPage: () => void;
-    getNextPage: () => void;
-    setPageSize: (size: number) => void;
+    onPageChange: (page: number) => void;
+    onPageSizeChange: (size: number) => void;
+  };
+  sortBy?: {
+    // TODO
+  };
+  filters?: {
+    // TODO
   };
 };
 
@@ -25,83 +27,128 @@ export const DataTable = <D extends Record<string, unknown>>({
   columns,
   data,
   pagination,
+  sortBy,
+  filters,
 }: DataTableProps<D>): ReactElement => {
-  const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } = useTable({
-    columns,
-    data,
-  });
+  // Evaluate these conditions once instead of re-computing in multiple places.
+  const useFiltersPlugin = filters !== undefined;
+  const useSortByPlugin = sortBy !== undefined;
+  const usePaginationPlugin = pagination !== undefined;
+
+  // Determine which react-table plugins should be enabled.
+  const plugins = useMemo(
+    () => [
+      // The order in which plugins are specified matters to react-table.
+      // Order needs to be useFilter -> useSortBy -> usePagination.
+      ...(useFiltersPlugin ? [useFilters] : []),
+      ...(useSortByPlugin ? [useSortBy] : []),
+      ...(usePaginationPlugin ? [usePagination] : []),
+    ],
+    [useFiltersPlugin, useSortByPlugin, usePaginationPlugin],
+  );
+
+  // Generate the required initial state for the enabled plugins.
+  const initialState = useMemo(
+    () => ({
+      ...(useFiltersPlugin ? {} : {}), // TODO: add initial state for filtering
+      ...(useSortByPlugin ? {} : {}), // TODO: add initial state for sorting
+      ...(usePaginationPlugin ? { pageIndex: pagination.page, pageSize: pagination.pageSize } : {}),
+    }),
+    [useFiltersPlugin, useSortByPlugin, usePaginationPlugin, pagination?.page, pagination?.pageSize],
+  );
+
+  // Generate the required table options for the enabled plugins.
+  const extraTableOptions = useMemo(
+    () => ({
+      ...(useFiltersPlugin ? {} : {}), // TODO: add table options for filtering
+      ...(useSortByPlugin ? {} : {}), // TODO: add table options for sorting
+      ...(usePaginationPlugin ? { manualPagination: true, pageCount: pagination.pageCount } : {}),
+    }),
+    [useFiltersPlugin, useSortByPlugin, usePaginationPlugin, pagination?.pageCount],
+  );
+
+  // Create the table instance.
+  const tableInstance = useTable(
+    {
+      columns,
+      data,
+      initialState,
+      ...extraTableOptions,
+    },
+    ...plugins,
+  );
+
+  const {
+    // Basic instance props
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    prepareRow,
+    rows,
+    // Pagination specific props
+    page,
+    canPreviousPage,
+    canNextPage,
+    pageCount,
+    nextPage,
+    previousPage,
+    setPageSize,
+    // Instance state
+    state: { pageIndex, pageSize },
+  } = tableInstance;
+
+  // If the 'usePagination' plugin is enabled, the 'page' instance prop contains the table rows for the current page.
+  // Otherwise, the 'rows' instance prop contains the table rows.
+  const tableRows = usePaginationPlugin ? page : rows;
+
+  // Since we are using manual controlled pagination, we need to let the controller know
+  // any time there is a change to page index or page size.
+  useEffect(() => {
+    if (usePaginationPlugin) {
+      pagination.onPageChange(pageIndex + 1);
+      pagination.onPageSizeChange(pageSize);
+    }
+  }, [pageIndex, pageSize, usePaginationPlugin, pagination?.onPageChange, pagination?.onPageSizeChange]);
 
   return (
     <div className='shadow p-3 bg-body rounded'>
-      {/* apply the table props */}
       <Table {...getTableProps()} responsive hover>
         <thead>
-          {
-            // Loop over the header rows
-            headerGroups.map(headerGroup => (
-              // Apply the header row props
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {
-                  // Loop over the headers in each row
-                  headerGroup.headers.map(column => (
-                    // Apply the header cell props
-                    <th {...column.getHeaderProps()}>
-                      {
-                        // Render the header
-                        column.render('Header')
-                      }
-                    </th>
-                  ))
-                }
-              </tr>
-            ))
-          }
+          {headerGroups.map(headerGroup => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map(column => (
+                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+              ))}
+            </tr>
+          ))}
         </thead>
-        {/* Apply the table body props */}
+
         <tbody {...getTableBodyProps()}>
-          {
-            // Loop over the table rows
-            rows.map(row => {
-              // Prepare the row for display
-              prepareRow(row);
-              return (
-                // Apply the row props
-                <tr {...row.getRowProps()}>
-                  {
-                    // Loop over the rows cells
-                    row.cells.map(cell => {
-                      // Apply the cell props
-                      return (
-                        <td {...cell.getCellProps()}>
-                          {
-                            // Render the cell contents
-                            cell.render('Cell')
-                          }
-                        </td>
-                      );
-                    })
-                  }
-                </tr>
-              );
-            })
-          }
+          {tableRows.map(row => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map(cell => {
+                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+                })}
+              </tr>
+            );
+          })}
         </tbody>
       </Table>
-      {pagination && (
+      {/* If the usePagination plugin is enabled, render a paginator to allow users to page through the data. */}
+      {usePaginationPlugin && (
         <Paginator
-          page={pagination.page}
+          page={pageIndex + 1}
+          pageSize={pageSize}
           count={pagination.count}
-          pageSize={pagination.pageSize}
-          pageCount={pagination.pageCount}
+          pageCount={pageCount}
           pageSizeOptions={pagination.pageSizeOptions}
-          hasPrev={pagination.hasPreviousPage}
-          hasNext={pagination.hasNextPage}
-          onPrevClick={pagination.getPreviousPage}
-          onNextClick={pagination.getNextPage}
-          onPageSizeChange={(size: number) => {
-            pagination.setPageSize(size);
-            pagination.getPage(1);
-          }}
+          hasPreviousPage={canPreviousPage}
+          hasNextPage={canNextPage}
+          onPreviousPageClick={previousPage}
+          onNextPageClick={nextPage}
+          onPageSizeChange={setPageSize}
         />
       )}
     </div>
