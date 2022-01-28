@@ -28,9 +28,15 @@ export type ResetPasswordRequest = {
   confirmPassword: string;
 };
 export type SignUpRequest = Pick<User, 'email' | 'firstName' | 'lastName'>;
-export type UpdateProfileRequest = Pick<User, 'id' | 'firstName' | 'lastName' | 'profilePicture'>;
-export type UpdateUserRequest = Pick<User, 'id' | 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role'>;
+export type UpdateProfileRequest = Pick<User, 'id' | 'firstName' | 'lastName'>;
+export type UpdateUserRequest = Pick<User, 'id' | 'email' | 'firstName' | 'lastName' | 'role'>;
 export type UserChangeEmailRequest = Pick<User, 'id' | 'email'>;
+export type UpdateProfilePhotoRequest = {
+  id: number;
+  // FormData is associated with HTMLFormElement and not with the form component schema. 
+  profilePicture: FormData;
+}
+export type DeleteProfilePhotoRequest = Pick<User, 'id'>
 
 export const userApi = createApi({
   reducerPath: 'userApi',
@@ -161,6 +167,23 @@ export const userApi = createApi({
       }),
       invalidatesTags: ['User'],
     }),
+
+    updateProfilePhoto: builder.mutation<User, UpdateProfilePhotoRequest>({
+      query: ({ id, profilePicture }) => ({
+        url: `/users/${id}/profile-picture`,
+        method: 'PUT',
+        body: profilePicture, 
+      }),
+      invalidatesTags: ['User']
+    }),
+
+    deleteProfilePhoto: builder.mutation<User, DeleteProfilePhotoRequest>({
+      query: ({ id }) => ({
+        url: `/users/${id}/profile-picture`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['User']
+    })
   }),
 });
 
@@ -180,4 +203,6 @@ export const {
   useSignUpMutation,
   useUpdateProfileMutation,
   useUpdateUserMutation,
+  useUpdateProfilePhotoMutation,
+  useDeleteProfilePhotoMutation
 } = userApi;

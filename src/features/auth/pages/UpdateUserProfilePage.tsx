@@ -8,17 +8,21 @@ import { useAuth } from 'features/auth/hooks';
 import {
   useRequestChangeEmailMutation,
   useResendChangeEmailVerificationEmailMutation,
-  useUpdateProfileMutation,
+  useUpdateProfileMutation
 } from 'common/api/userApi';
 import { handleApiError } from 'common/api/handleApiError';
 import { useAppDispatch } from 'app/redux';
 import { authSlice } from 'features/auth/authSlice';
 import * as notificationService from 'common/services/notification';
 import * as authLocalStorage from 'features/auth/authLocalStorage';
-import { FormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
 import { UserEmailFormData, UpdateUserEmailForm } from '../components/UpdateUserEmailForm';
+import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
+import { ProfilePhotoFormData, UpdateProfilePhotoForm } from '../../user-profile/components/UpdateProfilePhotoForm';
 import { PageWrapper } from 'common/styles/page';
 import { StyledFormWrapper, Title } from 'common/styles/form';
+import { useUpdateProfilePhoto, useDeleteProfilePhoto } from 'features/user-profile/hooks';
+
+import { DeleteButton } from 'common/styles/button';
 
 type RouteParams = {
   id: string;
@@ -47,11 +51,12 @@ export const UpdateUserProfilePage: FC = () => {
   const [updateProfile] = useUpdateProfileMutation();
   const [requestChangeEmail] = useRequestChangeEmailMutation();
   const [resendChangeEmailVerificationEmail] = useResendChangeEmailVerificationEmailMutation();
+  const { updateUserProfilePhoto } = useUpdateProfilePhoto();
+  const { deleteUserProfilePhoto } = useDeleteProfilePhoto();
   const dispatch = useAppDispatch();
 
-  const onSubmit = async (formData: FormData) => {
-    const data = { id: Number(id), ...formData, profilePicture: '' };
-
+  const onSubmit = async (formData: ProfileFormData) => {
+    const data = { id: Number(id), ...formData };
     try {
       const updatedUser = await updateProfile(data).unwrap();
       const newAuth = { token, user: updatedUser };
@@ -86,6 +91,35 @@ export const UpdateUserProfilePage: FC = () => {
     } catch (error) {
       handleApiError(error as FetchBaseQueryError);
     }
+  }
+
+  const onSubmitNewProfilePhoto = async (formData: ProfilePhotoFormData) => {
+    
+    if (formData.profilePicture) {
+      const file = formData.profilePicture[0];
+
+      const photoFormData = new FormData();
+      if (file instanceof Blob) {
+        photoFormData.append("file", file);
+        photoFormData.append("type", file.type);
+      }
+      const data = { profilePicture: photoFormData, id: Number(id) };
+
+      await updateUserProfilePhoto(data);
+    }
+  }
+
+  const handleDeleteProfilePhoto = async () => {
+    const data = { id: Number(id) };
+
+    await deleteUserProfilePhoto(data);
+  }
+
+  const profilePictureIsDefined = () => {
+    if (user) {
+      return !!user.profilePicture;
+    }
+    return false;
   }
 
   return (
@@ -131,6 +165,17 @@ export const UpdateUserProfilePage: FC = () => {
                   }}
                 />
             </StyledFormWrapper>
+            <StyledFormWrapper style={{ margin: '20px auto' }}>
+              <Title>Profile Photo</Title>
+              <UpdateProfilePhotoForm
+                onSubmit={onSubmitNewProfilePhoto}
+              />
+              <div className='d-grid grid-2 mt-3'>
+                <DeleteButton disabled={!profilePictureIsDefined()} onClick={handleDeleteProfilePhoto}>
+                  DELETE
+                </DeleteButton>
+            </div>
+          </StyledFormWrapper>
           </Col>
         </Row>
       </Container>

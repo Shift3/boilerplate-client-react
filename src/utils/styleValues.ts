@@ -33,6 +33,13 @@ export default {
     createTextColor: colors.white,
     createHoverBackgroundColor: colors.accent,
     createHoverBorderColor: colors.accent,
+    deleteBackgroundColor: colors.lightBackground,
+    deleteBorderColor: colors.dangerRed,
+    deleteTextColor: colors.dangerRed,
+    deleteHoverBackgroundColor: colors.dangerRed,
+    deleteHoverBorderColor: colors.dangerRed,
+    deleteDisabledTextColor: colors.darkAccent,
+    deleteDisabledBorderColor: colors.darkAccent
   },
 
   footer: {

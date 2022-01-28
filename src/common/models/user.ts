@@ -1,5 +1,6 @@
 import { Agency } from './agency';
 import { Role } from './role';
+import { Image } from './image';
 
 export interface User {
   id: number;
@@ -7,7 +8,7 @@ export interface User {
   activatedAt: string | null;
   firstName: string;
   lastName: string;
-  profilePicture: string | null;
+  profilePicture: Image | null;
   agency: Agency;
   role: Role;
   newEmail: string | null;

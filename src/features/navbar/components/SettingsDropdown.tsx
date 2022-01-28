@@ -8,8 +8,8 @@ import NavDropdown, { NavDropdownProps } from 'react-bootstrap/NavDropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // App imports
-import portraitPlaceholder from 'assets/img/portrait_placeholder.png';
 import { User } from 'common/models';
+import { UserProfileImage } from './UserProfileImage';
 
 // Based on the styled-components docs at https://styled-components.com/docs/api#caveat-with-function-components,
 // in order for typechecking to work correctly with styled components that extend a function components, we need
@@ -76,13 +76,11 @@ export const SettingsDropdown: FC<Props> = ({ user, onNavbarToggle, onSignOut, a
     </>
   );
 
-  const fullName = `${user.firstName} ${user.lastName}`;
-
   return (
     <StyledNavDropdown id='profile-nav-dropdown' title={dropdownTitle} align={alignRight ? 'end' : 'start'}>
       <DropdownMenuContainer>
         <ProfileInfoWrapper>
-          <img src={user.profilePicture || portraitPlaceholder} alt={fullName} />
+          <UserProfileImage user={user} size='xs' />
           <div>{user.firstName}</div>
           <div>{user.lastName}</div>
         </ProfileInfoWrapper>

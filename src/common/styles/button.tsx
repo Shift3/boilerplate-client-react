@@ -35,6 +35,25 @@ export const SubmitButton = styled(BootstrapButton)`
   width: 40%;
 `;
 
+export const DeleteButton = styled(BootstrapButton)`
+  color: ${props => props.theme.buttons.deleteTextColor};
+  background-color: ${props => props.theme.buttons.deleteBackgroundColor};
+  border-color: ${props => props.theme.buttons.deleteBorderColor};
+  padding: 0.5rem 1rem;
+  width: 40%;
+
+  &:hover {
+    background-color: ${props => props.theme.buttons.deleteHoverBackgroundColor};
+    border-color: ${props => props.theme.buttons.deleteHoverBorderColor};
+  }
+
+  &:disabled {
+    background-color: ${props => props.theme.buttons.disabledBackgroundColor};
+    border-color: ${props => props.theme.buttons.deleteDisabledBorderColor};
+    color: ${props => props.theme.buttons.deleteDisabledTextColor};
+  }
+`;
+
 export const LoginButton = styled(BootstrapButton)`
   color: ${props => props.theme.buttons.submitTextColor};
   background-color: ${props => props.theme.buttons.submitBackgroundColor};

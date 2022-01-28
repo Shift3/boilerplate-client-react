@@ -8,17 +8,17 @@ import { LoadingButton } from 'common/components/LoadingButton';
 import FormPrompt from 'common/components/FormPrompt';
 import { SubmitButton } from 'common/styles/button';
 
-export type FormData = {
+export type ProfileFormData = {
   firstName: string;
   lastName: string;
 };
 
 type Props = {
-  onSubmit: (data: FormData) => void;
-  defaultValues?: Partial<FormData>;
+  onSubmit: (data: ProfileFormData) => void;
+  defaultValues?: Partial<ProfileFormData>;
 };
 
-const schema: yup.SchemaOf<FormData> = yup.object().shape({
+const schema: yup.SchemaOf<ProfileFormData> = yup.object().shape({
   firstName: yup.string().trim().required(Constants.errorMessages.FIRST_NAME_REQUIRED),
   lastName: yup.string().trim().required(Constants.errorMessages.LAST_NAME_REQUIRED),
 });
