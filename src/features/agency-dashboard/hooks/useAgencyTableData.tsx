@@ -21,7 +21,7 @@ export type UseAgencyTableData = (agencies?: Agency[]) => {
   data: AgencyTableItem[];
 };
 
-export const useAgencyTableData: UseAgencyTableData = (agencies: Agency[] = []) => {
+export const useAgencyTableData: UseAgencyTableData = (agencies = []) => {
   const history = useHistory();
   const { userHasPermission } = useRbac();
   const [deleteAgency] = useDeleteAgencyMutation();
