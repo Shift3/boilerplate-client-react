@@ -32,31 +32,31 @@ export const DataTable = <D extends Record<string, unknown>>({
   filters,
 }: DataTableProps<D>): ReactElement => {
   // Evaluate these conditions once instead of re-computing in multiple places.
-  const useFiltersPlugin = filters !== undefined;
-  const useSortByPlugin = sortBy !== undefined;
-  const usePaginationPlugin = pagination !== undefined;
+  const filtersEnabled = filters !== undefined;
+  const sortByEnabled = sortBy !== undefined;
+  const paginationEnabled = pagination !== undefined;
 
   // Determine which react-table plugins should be enabled.
   const plugins = [
     // The order in which plugins are specified matters to react-table.
     // Order needs to be useFilter -> useSortBy -> usePagination.
-    ...(useFiltersPlugin ? [useFilters] : []),
-    ...(useSortByPlugin ? [useSortBy] : []),
-    ...(usePaginationPlugin ? [usePagination] : []),
+    ...(filtersEnabled ? [useFilters] : []),
+    ...(sortByEnabled ? [useSortBy] : []),
+    ...(paginationEnabled ? [usePagination] : []),
   ];
 
   // Generate the required initial state for the enabled plugins.
   const initialState = {
-    ...(useFiltersPlugin ? {} : {}), // TODO: add initial state for filtering
-    ...(useSortByPlugin ? {} : {}), // TODO: add initial state for sorting
-    ...(usePaginationPlugin ? { pageIndex: 0, pageSize: pagination.pageSize } : {}),
+    ...(filtersEnabled ? {} : {}), // TODO: add initial state for filtering
+    ...(sortByEnabled ? {} : {}), // TODO: add initial state for sorting
+    ...(paginationEnabled ? { pageIndex: 0, pageSize: pagination.pageSize } : {}),
   };
 
   // Generate the required table options for the enabled plugins.
   const extraTableOptions = {
-    ...(useFiltersPlugin ? {} : {}), // TODO: add table options for filtering
-    ...(useSortByPlugin ? {} : {}), // TODO: add table options for sorting
-    ...(usePaginationPlugin ? { manualPagination: true, pageCount: pagination.pageCount } : {}),
+    ...(filtersEnabled ? {} : {}), // TODO: add table options for filtering
+    ...(sortByEnabled ? {} : {}), // TODO: add table options for sorting
+    ...(paginationEnabled ? { manualPagination: true, pageCount: pagination.pageCount } : {}),
   };
 
   // Create the table instance.
@@ -91,19 +91,19 @@ export const DataTable = <D extends Record<string, unknown>>({
 
   // If the 'usePagination' plugin is enabled, the 'page' instance prop contains the table rows for the current page.
   // Otherwise, the 'rows' instance prop contains the table rows.
-  const tableRows = usePaginationPlugin ? page : rows;
+  const tableRows = paginationEnabled ? page : rows;
 
   // Since we are using manual controlled pagination, we need to let the controller know
   // any time there is a change to page index or page size.
   useEffect(
     () => {
-      if (usePaginationPlugin) {
+      if (paginationEnabled) {
         pagination.onPageChange(pageIndex + pagination.basePage);
         pagination.onPageSizeChange(pageSize);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [pageIndex, pageSize, usePaginationPlugin, pagination?.onPageChange, pagination?.onPageSizeChange],
+    [pageIndex, pageSize, paginationEnabled, pagination?.onPageChange, pagination?.onPageSizeChange],
   );
 
   return (
@@ -133,7 +133,7 @@ export const DataTable = <D extends Record<string, unknown>>({
         </tbody>
       </Table>
       {/* If the usePagination plugin is enabled, render a paginator to allow users to page through the data. */}
-      {usePaginationPlugin && (
+      {paginationEnabled && (
         <Paginator
           page={pageIndex + pagination.basePage}
           pageSize={pageSize}
