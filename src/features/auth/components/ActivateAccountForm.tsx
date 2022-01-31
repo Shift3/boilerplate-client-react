@@ -5,6 +5,7 @@ import { Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
+import { SubmitButton } from 'common/styles/button';
 
 export type FormData = {
   newPassword: string;
