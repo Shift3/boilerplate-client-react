@@ -43,7 +43,6 @@ export const AgencyDetailForm: FC<Props> = ({ defaultValues = {}, onSubmit }) =>
         <Form.Control.Feedback type='invalid'>{errors.agencyName?.message}</Form.Control.Feedback>
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
-        {/* <LoadingButton disabled={!isValid} loading={isSubmitting}> */}
         <LoadingButton
           loading={submitButtonLoading}
           as={SubmitButton}
