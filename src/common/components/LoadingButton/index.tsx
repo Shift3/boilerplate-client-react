@@ -4,12 +4,6 @@ import styled from 'styled-components';
 
 const BootstrapButton: FC<ButtonProps> = Button;
 
-const CancelButton = styled(BootstrapButton).attrs({
-  variant: 'danger',
-})`
-  width: 100px;
-`;
-
 interface LoadingButtonProps extends Omit<ButtonProps, 'as'> {
   loading: boolean;
   as: FC<ButtonProps>;

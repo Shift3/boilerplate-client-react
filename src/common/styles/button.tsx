@@ -37,6 +37,19 @@ export const SubmitButton = styled(BootstrapButton).attrs({
   width: 40%;
 `;
 
+export const LoginButton = styled(BootstrapButton).attrs({
+  variant: 'success',
+})`
+  color: ${props => props.theme.buttons.submitTextColor};
+  background-color: ${props => props.theme.buttons.submitBackgroundColor};
+  border-color: ${props => props.theme.buttons.submitBorderColor};
+  padding: 0.5rem 1rem;
+
+  & .spinner-border {
+    margin-right: 1em;
+  }
+`;
+
 export const CustomButton = styled(BootstrapButton)`
   background-color: ${props => props.theme.buttons.backgroundColor};
   border-color: ${props => props.theme.buttons.backgroundColor};
