@@ -35,7 +35,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const ResetPasswordForm: FC<Props> = ({ onSubmit }) => {
   const {
-    formState: { errors, isValid, isDirty, isSubmitting },
+    formState: { errors, isDirty, isSubmitting },
     handleSubmit,
     register,
     trigger,

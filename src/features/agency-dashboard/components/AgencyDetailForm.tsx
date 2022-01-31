@@ -22,7 +22,7 @@ const schema = yup.object().shape({
 
 export const AgencyDetailForm: FC<Props> = ({ defaultValues = {}, onSubmit }) => {
   const {
-    formState: { errors, isValid, isDirty, isSubmitting },
+    formState: { errors, isDirty, isSubmitting },
     handleSubmit,
     register,
     trigger,

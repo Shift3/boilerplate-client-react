@@ -1,8 +1,5 @@
 import { FC } from 'react';
-import { Button, ButtonProps, Spinner } from 'react-bootstrap';
-import styled from 'styled-components';
-
-const BootstrapButton: FC<ButtonProps> = Button;
+import { ButtonProps, Spinner } from 'react-bootstrap';
 
 interface LoadingButtonProps extends Omit<ButtonProps, 'as'> {
   loading: boolean;

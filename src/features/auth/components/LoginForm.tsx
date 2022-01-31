@@ -23,7 +23,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const LogInForm: FC<Props> = ({ onSubmit }) => {
   const {
-    formState: { errors, isValid, isSubmitting },
+    formState: { errors },
     handleSubmit,
     register,
   } = useForm({
@@ -62,14 +62,14 @@ export const LogInForm: FC<Props> = ({ onSubmit }) => {
         </Form.Control.Feedback>
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
-        <LoadingButton 
+        <LoadingButton
           loading={loginButtonLoading}
           as={LoginButton}
           onClick={() => {
             setLoginButtonloading(true);
             setTimeout(() => setLoginButtonloading(false), 3000);
           }}
-          >
+        >
           LOG IN
         </LoadingButton>
       </div>
