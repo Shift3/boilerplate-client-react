@@ -21,6 +21,7 @@ export const App: FC = () => (
     <ThemeProvider theme={AppTheme}>
       <ConfirmationModal />
       <NotificationContainer />
+      <ConfirmationModal />
       <HolyGrailLayout>
         <Switch>
           <Route path='/auth' component={AuthRoutes} />

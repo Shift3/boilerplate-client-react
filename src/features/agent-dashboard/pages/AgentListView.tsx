@@ -26,7 +26,6 @@ export const AgentListView: FC = () => {
   const { data: agents = [], isLoading: isLoadingAgents, isFetching: isFetchingAgents } = useGetAgentsQuery();
   const [deleteAgent] = useDeleteAgentMutation();
   const { openModal } = useConfirmationModal();
-
   const isPageLoading = isLoadingAgents || isFetchingAgents;
 
   const navigateToUpdateView = (agent: Agent) => {
@@ -38,7 +37,6 @@ export const AgentListView: FC = () => {
 
     const onConfirm = async () => {
       await deleteAgent(agent.id);
-
       notificationService.showSuccessMessage('Agent deleted.');
     };
 
