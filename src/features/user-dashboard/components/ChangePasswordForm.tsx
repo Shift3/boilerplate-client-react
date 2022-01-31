@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
 import FormPrompt from 'common/components/FormPrompt';
+import { SubmitButton } from 'common/styles/button';
 
 export type FormData = {
   oldPassword: string;
@@ -38,7 +39,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const ChangePasswordForm: FC<Props> = ({ onSubmit }) => {
   const {
-    formState: { errors, isValid, isDirty, isSubmitting },
+    formState: { errors, isDirty, isSubmitting },
     handleSubmit,
     register,
     trigger,
@@ -51,6 +52,8 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit }) => {
   useEffect(() => {
     trigger();
   }, [trigger]);
+
+  const [submitButtonLoading, setSubmitButtonloading] = useState(false);
 
   return (
     <Form name='change-password-form' onSubmit={handleSubmit(onSubmit)}>
@@ -100,7 +103,14 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit }) => {
         )}
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
-        <LoadingButton disabled={!isValid} loading={isSubmitting}>
+        <LoadingButton
+          loading={submitButtonLoading}
+          as={SubmitButton}
+          onClick={() => {
+            setSubmitButtonloading(true);
+            setTimeout(() => setSubmitButtonloading(false), 3000);
+          }}
+        >
           SUBMIT
         </LoadingButton>
       </div>
