@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
 import FormPrompt from 'common/components/FormPrompt';
+import { SubmitButton } from 'common/styles/button';
 
 export type FormData = {
   firstName: string;
@@ -38,6 +39,8 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) =>
     trigger();
   }, [trigger]);
 
+  const [submitButtonLoading, setSubmitButtonloading] = useState(false);
+
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
@@ -55,7 +58,14 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) =>
         </Form.Control.Feedback>
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
-        <LoadingButton disabled={!isValid} loading={isSubmitting}>
+        <LoadingButton
+          loading={submitButtonLoading}
+          as={SubmitButton}
+          onClick={() => {
+            setSubmitButtonloading(true);
+            setTimeout(() => setSubmitButtonloading(false), 3000);
+          }}
+        >
           UPDATE
         </LoadingButton>
       </div>
