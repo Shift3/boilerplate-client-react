@@ -1,10 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import { Agency } from 'common/models';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { LoadingButton } from 'common/components/LoadingButton';
+import { SubmitButton } from 'common/styles/button';
 import FormPrompt from 'common/components/FormPrompt';
 
 export type FormData = Pick<Agency, 'agencyName'>;
@@ -21,7 +22,7 @@ const schema = yup.object().shape({
 
 export const AgencyDetailForm: FC<Props> = ({ defaultValues = {}, onSubmit }) => {
   const {
-    formState: { errors, isValid, isDirty, isSubmitting},
+    formState: { errors, isValid, isDirty, isSubmitting },
     handleSubmit,
     register,
     trigger,
@@ -32,6 +33,8 @@ export const AgencyDetailForm: FC<Props> = ({ defaultValues = {}, onSubmit }) =>
     trigger();
   }, [trigger]);
 
+  const [submitButtonLoading, setSubmitButtonloading] = useState(false);
+
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Group controlId='create-agency-form-agency-name'>
@@ -40,7 +43,15 @@ export const AgencyDetailForm: FC<Props> = ({ defaultValues = {}, onSubmit }) =>
         <Form.Control.Feedback type='invalid'>{errors.agencyName?.message}</Form.Control.Feedback>
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
-        <LoadingButton disabled={!isValid} loading={isSubmitting}>
+        {/* <LoadingButton disabled={!isValid} loading={isSubmitting}> */}
+        <LoadingButton
+          loading={submitButtonLoading}
+          as={SubmitButton}
+          onClick={() => {
+            setSubmitButtonloading(true);
+            setTimeout(() => setSubmitButtonloading(false), 3000);
+          }}
+        >
           SUBMIT
         </LoadingButton>
       </div>

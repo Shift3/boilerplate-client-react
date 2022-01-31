@@ -27,7 +27,9 @@ export const CancelButton = styled(BootstrapButton)`
   width: 40%;
 `;
 
-export const SubmitButton = styled(BootstrapButton)`
+export const SubmitButton = styled(BootstrapButton).attrs({
+  variant: 'success',
+})`
   color: ${props => props.theme.buttons.submitTextColor};
   background-color: ${props => props.theme.buttons.submitBackgroundColor};
   border-color: ${props => props.theme.buttons.submitBorderColor};
