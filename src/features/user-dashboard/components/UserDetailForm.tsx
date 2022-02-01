@@ -2,9 +2,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Agency, Role, User } from 'common/models';
 import { FC, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { LoadingButton } from 'common/components/LoadingButton';
+import { CustomSelect } from 'common/components';
 import FormPrompt from 'common/components/FormPrompt';
 
 export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>;
@@ -15,68 +16,45 @@ export interface Props {
   defaultValues?: Partial<FormData>;
   submitButtonLabel?: string;
   onSubmit: (data: FormData) => void;
+  onAgencySelectScrollToBottom: () => void;
 }
 
-const schema = yup.object().shape({
+const schema = yup.object({
   firstName: yup.string().required('First Name is required.'),
   lastName: yup.string().required('Last Name is required.'),
   email: yup.string().email().required('Email is required.'),
-  role: yup.object().shape({
+  role: yup.object({
     roleName: yup.string().required('Role is required.'),
   }),
-  agency: yup.object().shape({
+  agency: yup.object({
     agencyName: yup.string().required('Agency is required.'),
   }),
 });
 
-export const UserDetailForm: FC<Props> = ({ availableRoles, availableAgencies, defaultValues = {}, onSubmit }) => {
+export const UserDetailForm: FC<Props> = ({
+  availableRoles,
+  availableAgencies,
+  defaultValues = {},
+  submitButtonLabel = 'SUBMIT',
+  onSubmit,
+  onAgencySelectScrollToBottom,
+}) => {
   const {
+    control,
     formState: { errors, isValid, isDirty, isSubmitting },
     handleSubmit,
     register,
-    setValue,
     trigger,
-    watch,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
-    defaultValues: {
-      ...defaultValues,
-      // Make dropdowns default to empty instead of first option if no valid default passed.
-      role: {
-        roleName: defaultValues?.role?.roleName ?? '',
-      },
-      agency: {
-        agencyName: defaultValues?.agency?.agencyName ?? '',
-      },
-    },
+    defaultValues,
   });
-
-  const watchRoleName = watch('role.roleName');
-  const watchAgencyName = watch('agency.agencyName');
 
   // Trigger validation on first render.
   useEffect(() => {
     trigger();
   }, [trigger]);
-
-  // Update role id in response to role select value changing.
-  useEffect(() => {
-    const role = availableRoles.find(role => role.roleName === watchRoleName);
-
-    if (role) {
-      setValue('role.id', role?.id);
-    }
-  }, [watchRoleName, availableRoles, setValue]);
-
-  // Update agency id in response to agency select value changing.
-  useEffect(() => {
-    const agency = availableAgencies.find(agency => agency.agencyName === watchAgencyName);
-
-    if (agency) {
-      setValue('agency.id', agency?.id);
-    }
-  }, [watchAgencyName, availableAgencies, setValue]);
 
   return (
     <Form name='create-user-form' onSubmit={handleSubmit(onSubmit)}>
@@ -97,43 +75,48 @@ export const UserDetailForm: FC<Props> = ({ availableRoles, availableAgencies, d
       </Form.Group>
       <Form.Group controlId='create-user-form-role'>
         <Form.Label>Role</Form.Label>
-        <Form.Select id='role' aria-label='Role' {...register('role.roleName')} isInvalid={!!errors.role?.roleName}>
-          <option value='' disabled hidden>
-            Select a role
-          </option>
-          {availableRoles.map(role => (
-            <option key={role.id} value={role.roleName}>
-              {role.roleName}
-            </option>
-          ))}
-        </Form.Select>
+        <Controller
+          control={control}
+          name='role'
+          render={({ field: { onChange } }) => (
+            <CustomSelect<Role>
+              placeholder='Select a role...'
+              defaultValue={defaultValues.role}
+              options={availableRoles}
+              getOptionLabel={role => role.roleName}
+              getOptionValue={role => role.roleName}
+              onChange={onChange}
+              isInvalid={!!errors.role}
+            />
+          )}
+        />
         <Form.Control.Feedback type='invalid'>{errors.role?.roleName?.message}</Form.Control.Feedback>
       </Form.Group>
       {availableAgencies.length > 0 && (
         <Form.Group>
           <Form.Label>Agency</Form.Label>
-          <Form.Select
-            id='agency'
-            aria-label='Select User Agency'
-            {...register('agency.agencyName')}
-            isInvalid={!!errors.agency?.agencyName}
-          >
-            <option value='' disabled hidden>
-              Select an agency
-            </option>
-
-            {availableAgencies.map(agency => (
-              <option key={agency.id} value={agency.agencyName}>
-                {agency.agencyName}
-              </option>
-            ))}
-          </Form.Select>
+          <Controller
+            control={control}
+            name='agency'
+            render={({ field: { onChange } }) => (
+              <CustomSelect<Agency>
+                placeholder='Select an agency...'
+                defaultValue={defaultValues.agency}
+                options={availableAgencies}
+                getOptionLabel={agency => agency.agencyName}
+                getOptionValue={agency => agency.agencyName}
+                onScrollToBottom={onAgencySelectScrollToBottom}
+                onChange={onChange}
+                isInvalid={!!errors.agency}
+              />
+            )}
+          />
           <Form.Control.Feedback type='invalid'>{errors.agency?.agencyName?.message}</Form.Control.Feedback>
         </Form.Group>
       )}
       <div className='d-grid gap-2 mt-3'>
         <LoadingButton disabled={!isValid} loading={isSubmitting}>
-          SUBMIT
+          {submitButtonLabel}
         </LoadingButton>
       </div>
       <FormPrompt isDirty={isDirty} isSubmitting={isSubmitting} />

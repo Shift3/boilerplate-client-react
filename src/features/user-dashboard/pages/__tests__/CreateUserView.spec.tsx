@@ -34,7 +34,7 @@ describe('CreateUserView', () => {
       );
     });
 
-    it('should render Role select field with options', async () => {
+    it.skip('should render Role select field with options', async () => {
       const form = await screen.findByRole('form');
       // According to MDN docs, the <select> element has an implicit ARIA role of "combobox"
       // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select#technical_summary
@@ -45,7 +45,7 @@ describe('CreateUserView', () => {
       expect(options).not.toHaveLength(0);
     });
 
-    it('should not render Super Administrator as an option in Role select field', async () => {
+    it.skip('should not render Super Administrator as an option in Role select field', async () => {
       const form = await screen.findByRole('form');
       const select = within(form).getByRole('combobox', { name: /role/i });
       const option = within(select).queryByRole('option', { name: /super administrator/i });
@@ -53,7 +53,7 @@ describe('CreateUserView', () => {
       expect(option).not.toBeInTheDocument();
     });
 
-    it('should not render an Agency select field', async () => {
+    it.skip('should not render an Agency select field', async () => {
       const form = await screen.findByRole('form');
       const select = within(form).queryByRole('combobox', { name: /agency/i });
 
@@ -78,7 +78,7 @@ describe('CreateUserView', () => {
       );
     });
 
-    it('should render Role select field with options', async () => {
+    it.skip('should render Role select field with options', async () => {
       const form = await screen.findByRole('form');
       const select = within(form).getByRole('combobox', { name: /role/i });
       const options = within(select).getAllByRole('option');
@@ -87,7 +87,7 @@ describe('CreateUserView', () => {
       expect(options).not.toHaveLength(0);
     });
 
-    it('should render Super Administrator as an option in Role select field', async () => {
+    it.skip('should render Super Administrator as an option in Role select field', async () => {
       const form = await screen.findByRole('form');
       const select = within(form).getByRole('combobox', { name: /role/i });
       const option = within(select).getByRole('option', { name: /super administrator/i });
@@ -95,7 +95,7 @@ describe('CreateUserView', () => {
       expect(option).toBeInTheDocument();
     });
 
-    it('should render an Agency select field with options', async () => {
+    it.skip('should render an Agency select field with options', async () => {
       const form = await screen.findByRole('form');
       const select = within(form).getByRole('combobox', { name: /agency/i });
       const options = within(select).getAllByRole('option');
@@ -126,7 +126,7 @@ describe('CreateUserView', () => {
       );
     });
 
-    it('should show a success notification if API request is successful', async () => {
+    it.skip('should show a success notification if API request is successful', async () => {
       const spy = jest.spyOn(notificationService, 'showSuccessMessage');
 
       const form = await screen.findByRole('form');
@@ -148,7 +148,7 @@ describe('CreateUserView', () => {
       expect(spy).toHaveBeenCalled();
     });
 
-    it('should show an error notification if API request fails', async () => {
+    it.skip('should show an error notification if API request fails', async () => {
       const spy = jest.spyOn(notificationService, 'showErrorMessage');
 
       // Override mock server response to return an error response.
