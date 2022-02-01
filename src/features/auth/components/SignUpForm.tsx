@@ -108,7 +108,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit, onCancel }) => {
       </Form.Group>
       <div className='d-grid gap-2 mt-4'>
         <LoadingButton type='submit' as={SubmitButton} disabled={!isValid} loading={isSubmitting}>
-          SUBMIT
+          SIGN UP
         </LoadingButton>
       </div>
       <div className='d-grid mt-3'>
