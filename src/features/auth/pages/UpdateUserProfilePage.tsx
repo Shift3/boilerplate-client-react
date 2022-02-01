@@ -1,6 +1,7 @@
 import Button from 'react-bootstrap/Button';
 import styled from 'styled-components';
 import { FC } from 'react';
+import { Row, Col, Container } from 'react-bootstrap';
 import { useHistory, useParams } from 'react-router-dom';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useAuth } from 'features/auth/hooks';
@@ -89,42 +90,50 @@ export const UpdateUserProfilePage: FC = () => {
 
   return (
     <PageWrapper>
-      <StyledFormWrapper>
-        <Title>Update Profile</Title>
-        <UpdateUserProfileForm
-          onSubmit={onSubmit}
-          defaultValues={{
-            firstName: user?.firstName ?? '',
-            lastName: user?.lastName ?? '',
-          }}
-        />
-      </StyledFormWrapper>
+      <Container>
+        <Row>
+          <Col xs={12} xl={6}>
+            <StyledFormWrapper style={{ margin: '20px auto' }}>
+              <Title>Update Profile</Title>
+              <UpdateUserProfileForm
+                onSubmit={onSubmit}
+                defaultValues={{
+                  firstName: user?.firstName ?? '',
+                  lastName: user?.lastName ?? '',
+                }}
+              />
+            </StyledFormWrapper>
+          </Col>
 
-      <StyledFormWrapper>
-        <Title>Update Email</Title>
-          { user?.newEmail && (
-            <Wrapper>
-              <Text>
-                <p data-testid='updateUserExistingEmailChangeInfoContent'>An email change has already been requested for your account.</p>
-              </Text>
-              <ResendVerificationEmailButton
-                data-testid='resendVerificationEmailButton'
-                onClick={ handleResendChangeEmailVerificationEmail }
-              >
-                RESEND VERIFICATION EMAIL
-              </ResendVerificationEmailButton>
-              <Text>
-                <p data-testid='updateUserEmailChangeInfoContent'>If you would like to request email change to another email, enter the new email below.</p>
-              </Text>
-            </Wrapper>
-          )}
-          <UpdateUserEmailForm
-            onSubmit={onSubmitRequestEmailChange}
-            defaultValues={{
-              email: user?.email ?? '',
-            }}
-          />
-      </StyledFormWrapper>
+          <Col xs={12} xl={6}>
+            <StyledFormWrapper style={{ margin: '20px auto' }}>
+              <Title>Update Email</Title>
+                { user?.newEmail && (
+                  <Wrapper>
+                    <Text>
+                      <p data-testid='updateUserExistingEmailChangeInfoContent'>An email change has already been requested for your account.</p>
+                    </Text>
+                    <ResendVerificationEmailButton
+                      data-testid='resendVerificationEmailButton'
+                      onClick={ handleResendChangeEmailVerificationEmail }
+                    >
+                      RESEND VERIFICATION EMAIL
+                    </ResendVerificationEmailButton>
+                    <Text>
+                      <p data-testid='updateUserEmailChangeInfoContent'>If you would like to request email change to another email, enter the new email below.</p>
+                    </Text>
+                  </Wrapper>
+                )}
+                <UpdateUserEmailForm
+                  onSubmit={onSubmitRequestEmailChange}
+                  defaultValues={{
+                    email: user?.email ?? '',
+                  }}
+                />
+            </StyledFormWrapper>
+          </Col>
+        </Row>
+      </Container>
     </PageWrapper>
   );
 };
