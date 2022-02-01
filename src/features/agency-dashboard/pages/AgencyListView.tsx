@@ -13,7 +13,7 @@ import { AgencyTableItem, useAgencyTableData } from '../hooks/useAgencyTableData
 
 export const AgencyListView: FC = () => {
   const history = useHistory();
-  const { data, isLoading, page, pageSize, getPage, changePageSize } =
+  const { data, isLoading, page, pageSize, getPage, changePageSize, changeSortBy } =
     usePSFQuery<PaginatedResult<Agency>>(useGetAgenciesQuery);
   const agencies = useMemo(() => data?.results ?? [], [data]);
   const { columns, data: tableData } = useAgencyTableData(agencies);
@@ -26,7 +26,6 @@ export const AgencyListView: FC = () => {
           <h1>Agency List</h1>
           <p className='text-muted'>Agencies are able to view a seperate set of information.</p>
         </div>
-
         <HasPermission perform='agency:create'>
           <div>
             <Link to='/agencies/create-agency'>
@@ -40,8 +39,8 @@ export const AgencyListView: FC = () => {
           <WithLoadingOverlay isLoading={isPageLoading}>
             <DataTable<AgencyTableItem>
               columns={columns}
-              onRowClick={(item) => history.push(`agencies/update-agency/${item.id}`)}
               data={tableData}
+              onRowClick={item => history.push(`agencies/update-agency/${item.id}`)}
               pagination={{
                 basePage: 1,
                 page,
@@ -51,6 +50,9 @@ export const AgencyListView: FC = () => {
                 pageSizeOptions: [5, 10, 25, 50, 100],
                 onPageChange: getPage,
                 onPageSizeChange: changePageSize,
+              }}
+              sorting={{
+                onSortByChange: changeSortBy,
               }}
             />
           </WithLoadingOverlay>

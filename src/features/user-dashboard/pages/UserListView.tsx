@@ -12,12 +12,12 @@ import { Link, useHistory } from 'react-router-dom';
 import { UserTableItem, useUserTableData } from '../hooks/useUserTableData';
 
 export const UserListView: FC = () => {
-  const { data, isLoading, page, pageSize, getPage, changePageSize } =
+  const history = useHistory();
+  const { data, isLoading, page, pageSize, getPage, changePageSize, changeSortBy } =
     usePSFQuery<PaginatedResult<User>>(useGetUsersQuery);
   const users = useMemo(() => data?.results ?? [], [data]);
   const { columns, data: tableData } = useUserTableData(users);
   const isPageLoading = isLoading;
-  const history = useHistory();
 
   return (
     <Container>
@@ -26,7 +26,6 @@ export const UserListView: FC = () => {
           <h1>User List</h1>
           <p className='text-muted'>Active and invited users in the system.</p>
         </div>
-
         <HasPermission perform='user:create'>
           <div>
             <Link to='/users/create-user'>
@@ -35,14 +34,13 @@ export const UserListView: FC = () => {
           </div>
         </HasPermission>
       </PageHeader>
-
       <TableCard>
         <TableCard.Body>
           <WithLoadingOverlay isLoading={isPageLoading}>
             <DataTable<UserTableItem>
               columns={columns}
-              onRowClick={(item) => history.push(`users/update-user/${item.id}`)}
               data={tableData}
+              onRowClick={item => history.push(`users/update-user/${item.id}`)}
               pagination={{
                 basePage: 1,
                 page,
@@ -52,6 +50,9 @@ export const UserListView: FC = () => {
                 pageSizeOptions: [5, 10, 25, 50, 100],
                 onPageChange: getPage,
                 onPageSizeChange: changePageSize,
+              }}
+              sorting={{
+                onSortByChange: changeSortBy,
               }}
             />
           </WithLoadingOverlay>

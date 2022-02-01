@@ -79,26 +79,25 @@ export const useUserTableData: UseUserTableData = (users = []) => {
   );
 
   const roleVariant = (role: RoleType) => {
-    if (!role)
-      return '';
+    if (!role) return '';
 
     return {
       'Super Administrator': 'danger',
-      'Admin': 'warning',
-      'User': 'secondary',
-      'Editor': 'info',
+      Admin: 'warning',
+      User: 'secondary',
+      Editor: 'info',
     }[role];
-  }
+  };
 
   // Set up columns and headers
   const columns: Column<UserTableItem>[] = useMemo(
     () => [
-      { 
-        accessor: 'lastName', 
+      {
+        accessor: 'lastName',
         Header: 'Name',
         Cell: ({ row }) => (
           <div className='d-flex d-row align-items-center mr-3'>
-            <CircularImg radius={32} src={portraitPlaceholder} alt="Profile" />
+            <CircularImg radius={32} src={portraitPlaceholder} alt='Profile' />
 
             <div className='d-flex flex-column'>
               <span>
@@ -108,14 +107,17 @@ export const useUserTableData: UseUserTableData = (users = []) => {
               <small className='text-muted'>{row.original.email}</small>
             </div>
           </div>
-        )
+        ),
       },
-      { 
+      {
         accessor: 'role',
         Header: 'Role',
         Cell: ({ value: role }) => (
-          <SubtleBadge pill variant={roleVariant(role)}>{role}</SubtleBadge>
-        )
+          <SubtleBadge pill variant={roleVariant(role)}>
+            {role}
+          </SubtleBadge>
+        ),
+        disableSortBy: true,
       },
       {
         accessor: 'activatedAt',
@@ -124,17 +126,16 @@ export const useUserTableData: UseUserTableData = (users = []) => {
           <>
             {activatedAt instanceof Date ? (
               <time dateTime={activatedAt.toISOString()}>
-                { new Intl.DateTimeFormat('en-US', {dateStyle: 'long' }).format(activatedAt) }
+                {new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(activatedAt)}
               </time>
             ) : (
               <>
-                <ActionButton {...activatedAt}>
-                  {activatedAt.text}
-                </ActionButton>
+                <ActionButton {...activatedAt}>{activatedAt.text}</ActionButton>
               </>
             )}
           </>
         ),
+        disableSortBy: true,
       },
       {
         accessor: 'actions',
@@ -152,9 +153,10 @@ export const useUserTableData: UseUserTableData = (users = []) => {
                   ))}
                 </div>
               </TableActions>
-            ): null}
+            ) : null}
           </>
-        )
+        ),
+        disableSortBy: true,
       },
     ],
     [],
@@ -173,16 +175,16 @@ export const useUserTableData: UseUserTableData = (users = []) => {
           ? new Date(user.activatedAt)
           : {
               text: 'Resend Activation Email',
-              onClick: (e) => {
+              onClick: e => {
                 e.stopPropagation();
                 handleResendActivationEmail(user);
               },
               show: userHasPermission({ permission: 'user:resend-activation-email', data: user }),
-        },
+            },
         actions: [
           {
             text: 'Reset Password',
-            onClick: (e) => {
+            onClick: e => {
               e.stopPropagation();
               handlePasswordReset(user);
             },
@@ -190,7 +192,7 @@ export const useUserTableData: UseUserTableData = (users = []) => {
           },
           {
             text: 'Delete',
-            onClick: (e) => {
+            onClick: e => {
               e.stopPropagation();
               handleDelete(user);
             },
