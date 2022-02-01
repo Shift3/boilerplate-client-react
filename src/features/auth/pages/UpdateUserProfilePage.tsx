@@ -23,6 +23,22 @@ type RouteParams = {
   id: string;
 };
 
+const Wrapper = styled.div`
+  margin-bottom: 20px;
+`;
+
+const Text = styled.div`
+  color: ${(props) => props.theme.forms.textColor};
+  margin: 20px auto 0;
+`;
+
+const ResendVerificationEmailButton = styled(Button)`
+  color: ${(props) => props.theme.buttons.submitTextColor};
+  background-color: ${(props) => props.theme.buttons.submitBackgroundColor};
+  border-color: ${(props) => props.theme.buttons.submitBorderColor};
+  width: 100%;
+`;
+
 export const UpdateUserProfilePage: FC = () => {
   const history = useHistory();
   const { id } = useParams<RouteParams>();
@@ -61,22 +77,6 @@ export const UpdateUserProfilePage: FC = () => {
       handleApiError(error as FetchBaseQueryError);
     }
   }
-
-  const Wrapper = styled.div`
-    margin-bottom: 20px;
-  `;
-
-  const Text = styled.div`
-    color: ${(props) => props.theme.forms.textColor};
-    margin: 20px auto 0;
-  `;
-
-  const ResendVerificationEmailButton = styled(Button)`
-    color: ${(props) => props.theme.buttons.submitTextColor};
-    background-color: ${(props) => props.theme.buttons.submitBackgroundColor};
-    border-color: ${(props) => props.theme.buttons.submitBorderColor};
-    width: 100%;
-  `;
 
   const handleResendChangeEmailVerificationEmail = () => {
     try {
