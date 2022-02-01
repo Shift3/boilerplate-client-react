@@ -10,7 +10,6 @@ const mockOnSubmit = jest.fn();
 const defaultValues = {
   firstName: 'Firstname',
   lastName: 'Lastname',
-  email: 'test@test.com',
 };
 
 describe('UpdateUserProfileForm', () => {
@@ -40,13 +39,10 @@ describe('UpdateUserProfileForm', () => {
     const lastNameInput = screen.getByLabelText(/Last Name/i);
     userEvent.type(lastNameInput, '567');
 
-    const emailInput = screen.getByLabelText(/Email/i);
-    userEvent.type(emailInput, 'abc123');
-
     await act(async () => {
       userEvent.click(screen.getByRole('button', { name: 'UPDATE' }));
     });
 
-    expect(await screen.findAllByRole('alert')).toHaveLength(3);
+    expect(await screen.findAllByRole('alert')).toHaveLength(2);
   });
 });

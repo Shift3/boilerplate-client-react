@@ -13,18 +13,24 @@ export type ChangePasswordRequest = Pick<User, 'id'> & {
   newPassword: string;
   confirmPassword: string;
 };
+export type ConfirmChangeEmailRequest = {
+  token: string;
+  verificationCode: number;
+};
 export type CreateUserRequest = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>;
 export type ForgotPasswordRequest = Pick<User, 'email'>;
 export type ForgotPasswordResponse = { message: string };
 export type ResendActivationEmailRequest = Pick<User, 'id'>;
+export type ResendChangeEmailVerificationEmailRequest = Pick<User, 'id'>;
 export type ResetPasswordRequest = {
   token: string;
   newPassword: string;
   confirmPassword: string;
 };
 export type SignUpRequest = Pick<User, 'email' | 'firstName' | 'lastName'>;
-export type UpdateProfileRequest = Pick<User, 'id' | 'email' | 'firstName' | 'lastName' | 'profilePicture'>;
+export type UpdateProfileRequest = Pick<User, 'id' | 'firstName' | 'lastName' | 'profilePicture'>;
 export type UpdateUserRequest = Pick<User, 'id' | 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role'>;
+export type UserChangeEmailRequest = Pick<User, 'id' | 'email'>;
 
 export const userApi = createApi({
   reducerPath: 'userApi',
@@ -124,11 +130,36 @@ export const userApi = createApi({
       invalidatesTags: ['User'],
     }),
 
+    requestChangeEmail: builder.mutation<User, UserChangeEmailRequest>({
+      query: ({ id, ...payload }) => ({
+        url: `/users/request-change-email/${id}`,
+        method: `PUT`,
+        body: payload,
+      }),
+      invalidatesTags: ['User'],
+    }),
+
     resendActivationEmail: builder.mutation<void, ResendActivationEmailRequest>({
       query: ({ id }) => ({
         url: `/users/resend-activation-email/${id}`,
         method: 'GET',
       }),
+    }),
+
+    resendChangeEmailVerificationEmail: builder.mutation<void, ResendChangeEmailVerificationEmailRequest>({
+      query: ({ id }) => ({
+        url: `/users/resend-change-email-verification-email/${id}`,
+        method: 'GET',
+      }),
+    }),
+
+    confirmChangeEmail: builder.mutation<User, ConfirmChangeEmailRequest>({
+      query: ({ token, ...payload }) => ({
+        url: `/users/confirm-change-email/${token}`,
+        method: 'PUT',
+        body: payload,
+      }),
+      invalidatesTags: ['User'],
     }),
   }),
 });
@@ -136,12 +167,15 @@ export const userApi = createApi({
 export const {
   useActivateAccountMutation,
   useChangePasswordMutation,
+  useConfirmChangeEmailMutation,
   useCreateUserMutation,
   useDeleteUserMutation,
   useForgotPasswordMutation,
   useGetUsersQuery,
   useGetUserByIdQuery,
+  useRequestChangeEmailMutation,
   useResendActivationEmailMutation,
+  useResendChangeEmailVerificationEmailMutation,
   useResetPasswordMutation,
   useSignUpMutation,
   useUpdateProfileMutation,

@@ -28,6 +28,9 @@ interface IErrorMessages {
   CONFIRM_PASSWORD_REQUIRED: string;
   ROLE_REQUIRED: string;
   AGENCY_REQUIRED: string;
+  SAME_EMAIL: string;
+  VERIFICATION_CODE_REQUIRED: string;
+  VERIFICATION_CODE_LENGTH_MISMATCH: string;
 }
 
 export interface IConstant {
@@ -66,7 +69,10 @@ export const Constants: IConstant = {
     NEW_PASSWORD_REQUIRED: 'New password is required.',
     CONFIRM_PASSWORD_REQUIRED: 'Confirm password is required.',
     ROLE_REQUIRED: 'Role is required.',
-    AGENCY_REQUIRED: 'Agency is required.'
+    AGENCY_REQUIRED: 'Agency is required.',
+    SAME_EMAIL: 'Email must be different from current value.',
+    VERIFICATION_CODE_REQUIRED: 'Verification code is required.',
+    VERIFICATION_CODE_LENGTH_MISMATCH: 'Verification code must contain 6 digits.'
   },
   version: environment.version,
   creationYear: 2021,
