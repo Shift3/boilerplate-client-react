@@ -1,30 +1,26 @@
-import { useConfirmationModal } from 'common/hooks';
 import { useLogout } from 'features/auth/hooks';
-import { FC } from 'react';
+import { useConfirmationModal } from 'features/confirmation-modal';
 
 export type LogoutModalManager = {
-  /**
-   * The managed modal component.
-   */
-  LogoutModal: FC;
-
-  /**
-   * Opens the modal.
-   */
   openLogoutModal: () => void;
 };
 
-export const useLogoutModal = (): LogoutModalManager => {
-  const { logout } = useLogout();
-  const { Modal, openModal, closeModal } = useConfirmationModal();
+export type UseLogoutModal = () => LogoutModalManager;
 
-  const handleLogout = () => {
-    logout();
-    closeModal();
+export const useLogoutModal: UseLogoutModal = () => {
+  const { logout } = useLogout();
+  const { openModal } = useConfirmationModal();
+
+  const openLogoutModal = () => {
+    openModal({
+      message: 'This will end your login session.',
+      confirmButtonLabel: 'LOGOUT',
+      declineButtonLabel: 'CANCEL',
+      onConfirm: logout,
+    });
   };
 
   return {
-    LogoutModal: Modal,
-    openLogoutModal: () => openModal('This will end your login session.', handleLogout, closeModal),
+    openLogoutModal,
   };
 };

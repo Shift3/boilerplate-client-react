@@ -17,7 +17,7 @@ type Props = {
 export const TopNavbar: FC<Props> = ({ onNavbarToggle }) => {
   const { user } = useAuth();
   const navLinks = useNavLinks();
-  const { LogoutModal, openLogoutModal } = useLogoutModal();
+  const { openLogoutModal } = useLogoutModal();
 
   return (
     <Navbar collapseOnSelect expand='lg' className='shadow px-3'>
@@ -33,7 +33,6 @@ export const TopNavbar: FC<Props> = ({ onNavbarToggle }) => {
             </Nav>
             <Nav>
               <SettingsDropdown user={user} onNavbarToggle={onNavbarToggle} onSignOut={openLogoutModal} alignRight />
-              <LogoutModal />
             </Nav>
           </Navbar.Collapse>
         </>
