@@ -41,7 +41,7 @@ export const ConfirmChangeEmailForm: FC<Props> = ({ onSubmit }) => {
         <Form.Label htmlFor='verificationCode'>Verification Code</Form.Label>
         <Form.Control
           id='verificationCode'
-          type='number'
+          type='text'
           {...register('verificationCode')}
           isInvalid={!!errors.verificationCode}
         />
