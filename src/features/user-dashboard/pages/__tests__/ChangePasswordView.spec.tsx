@@ -71,13 +71,13 @@ describe('ChangePasswordPage', () => {
     });
 
     describe('success', () => {
-      const jwtToken = 'newfaketoken';
+      const refreshedToken = 'newfaketoken';
 
       beforeEach(async () => {
         // Mock the API response
         server.use(
           rest.put(`${baseUrl}/users/change-password/:id`, (req, res, ctx) => {
-            const newSession: Session = { jwtToken, user: testAuth.user! };
+            const newSession: Session = { token: refreshedToken, user: testAuth.user! };
             return res(ctx.json(newSession));
           }),
         );
@@ -105,13 +105,13 @@ describe('ChangePasswordPage', () => {
         expect(spy).toHaveBeenCalled();
       });
 
-      it('should update auth session token to new jwt token returned from API', async () => {
+      it('should update auth session token to new token returned from API', async () => {
         // Wait for promise from API response to resolve.
         await waitFor(async () => flushPromises());
 
         const { auth } = store.getState() as RootState;
 
-        expect(auth.token).toBe(jwtToken);
+        expect(auth.token).toBe(refreshedToken);
       });
 
       it('should navigate user to agent list view', async () => {

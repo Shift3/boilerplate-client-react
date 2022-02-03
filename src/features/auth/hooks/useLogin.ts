@@ -26,8 +26,7 @@ export const useLogin: UseLoginHook = () => {
     async (credentials: Credentials) => {
       try {
         const session = await login(credentials).unwrap();
-        const { jwtToken: token, user } = session;
-        const auth = { token, user };
+        const auth = { token: session.token, user: session.user };
         dispatch(authSlice.actions.userLoggedIn(auth));
         authLocalStorage.saveAuthState(auth);
         history.replace('/agents');
