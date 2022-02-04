@@ -77,10 +77,9 @@ export const ResetPasswordForm: FC<Props> = ({ onSubmit }) => {
         </Form.Control.Feedback>
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
-        <LoadingButton as={SubmitButton} disabled={!isValid} loading={isSubmitting}>
+        <LoadingButton type='submit' as={SubmitButton} disabled={!isValid} loading={isSubmitting}>
           SUBMIT
         </LoadingButton>
-        s
       </div>
       <FormPrompt isDirty={isDirty} isSubmitting={isSubmitting} />
     </Form>

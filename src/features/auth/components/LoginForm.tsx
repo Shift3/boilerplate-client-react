@@ -60,7 +60,7 @@ export const LogInForm: FC<Props> = ({ onSubmit }) => {
         </Form.Control.Feedback>
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
-        <LoadingButton as={LoginButton} disabled={!isValid} loading={isSubmitting}>
+        <LoadingButton type='submit' as={LoginButton} disabled={!isValid} loading={isSubmitting}>
           LOG IN
         </LoadingButton>
       </div>

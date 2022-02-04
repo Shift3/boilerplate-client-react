@@ -177,7 +177,7 @@ export const AgentDetailForm: FC<Props> = ({
       </Form.Group>
       <ButtonWrapper>
         <CancelButton onClick={onCancel}>{cancelButtonLabel}</CancelButton>
-        <LoadingButton as={SubmitButton} disabled={!isValid} loading={isSubmitting}>
+        <LoadingButton type='submit' as={SubmitButton} disabled={!isValid} loading={isSubmitting}>
           {submitButtonLabel}
         </LoadingButton>
       </ButtonWrapper>
