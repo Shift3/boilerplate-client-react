@@ -1,12 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Agency, Role, User } from 'common/models';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { CustomSelect } from 'common/components';
 import FormPrompt from 'common/components/FormPrompt';
+import { SubmitButton } from 'common/styles/button';
 
 export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>;
 
@@ -50,6 +51,11 @@ export const UserDetailForm: FC<Props> = ({
     mode: 'all',
     defaultValues,
   });
+
+  // Trigger validation on first render.
+  useEffect(() => {
+    trigger();
+  }, [trigger]);
 
   // Trigger validation on first render.
   useEffect(() => {
@@ -115,7 +121,7 @@ export const UserDetailForm: FC<Props> = ({
         </Form.Group>
       )}
       <div className='d-grid gap-2 mt-3'>
-        <LoadingButton disabled={!isValid} loading={isSubmitting}>
+        <LoadingButton as={SubmitButton} disabled={!isValid} loading={isSubmitting}>
           {submitButtonLabel}
         </LoadingButton>
       </div>
