@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Agency, Role, User } from 'common/models';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';

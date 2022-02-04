@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import FormPrompt from 'common/components/FormPrompt';
+import { LoadingButton } from 'common/components/LoadingButton';
 import { PhoneInput } from 'common/components/PhoneInput';
 import { Agent } from 'common/models';
 import { ButtonWrapper, CancelButton, SubmitButton } from 'common/styles/button';
@@ -53,7 +54,7 @@ export const AgentDetailForm: FC<Props> = ({
 }) => {
   const {
     register,
-    formState: { errors, isValid, isDirty, isSubmitted },
+    formState: { errors, isValid, isDirty, isSubmitting },
     handleSubmit,
     trigger,
     control,
@@ -176,11 +177,11 @@ export const AgentDetailForm: FC<Props> = ({
       </Form.Group>
       <ButtonWrapper>
         <CancelButton onClick={onCancel}>{cancelButtonLabel}</CancelButton>
-        <SubmitButton type='submit' disabled={!isValid}>
+        <LoadingButton as={SubmitButton} disabled={!isValid} loading={isSubmitting}>
           {submitButtonLabel}
-        </SubmitButton>
+        </LoadingButton>
       </ButtonWrapper>
-      <FormPrompt isDirty={isDirty} isSubmitting={isSubmitted} />
+      <FormPrompt isDirty={isDirty} isSubmitting={isSubmitting} />
     </Form>
   );
 };

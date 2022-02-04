@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
@@ -32,7 +32,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const SignUpForm: FC<Props> = ({ onSubmit, onCancel }) => {
   const {
-    formState: { errors, isDirty, isSubmitting },
+    formState: { errors, isDirty, isSubmitting, isValid },
     handleSubmit,
     register,
     trigger,
@@ -45,8 +45,6 @@ export const SignUpForm: FC<Props> = ({ onSubmit, onCancel }) => {
   useEffect(() => {
     trigger();
   }, [trigger]);
-
-  const [submitButtonLoading, setSubmitButtonloading] = useState(false);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -109,15 +107,8 @@ export const SignUpForm: FC<Props> = ({ onSubmit, onCancel }) => {
         </Form.Control.Feedback>
       </Form.Group>
       <div className='d-grid gap-2 mt-4'>
-        <LoadingButton
-          loading={submitButtonLoading}
-          as={SubmitButton}
-          onClick={() => {
-            setSubmitButtonloading(true);
-            setTimeout(() => setSubmitButtonloading(false), 3000);
-          }}
-        >
-          SIGN UP
+        <LoadingButton as={SubmitButton} disabled={!isValid} loading={isSubmitting}>
+          SUBMIT
         </LoadingButton>
       </div>
       <div className='d-grid mt-3'>

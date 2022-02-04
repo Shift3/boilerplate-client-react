@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import Form from 'react-bootstrap/Form';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
@@ -23,15 +23,13 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const LogInForm: FC<Props> = ({ onSubmit }) => {
   const {
-    formState: { errors },
+    formState: { errors, isValid, isSubmitting },
     handleSubmit,
     register,
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
   });
-
-  const [loginButtonLoading, setLoginButtonloading] = useState(false);
 
   return (
     <Form data-testid='loginForm' onSubmit={handleSubmit(onSubmit)}>
@@ -62,14 +60,7 @@ export const LogInForm: FC<Props> = ({ onSubmit }) => {
         </Form.Control.Feedback>
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
-        <LoadingButton
-          loading={loginButtonLoading}
-          as={LoginButton}
-          onClick={() => {
-            setLoginButtonloading(true);
-            setTimeout(() => setLoginButtonloading(false), 3000);
-          }}
-        >
+        <LoadingButton as={LoginButton} disabled={!isValid} loading={isSubmitting}>
           LOG IN
         </LoadingButton>
       </div>

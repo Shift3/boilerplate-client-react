@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -25,7 +25,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) => {
   const {
-    formState: { errors, isDirty, isSubmitting },
+    formState: { errors, isDirty, isSubmitting, isValid },
     handleSubmit,
     register,
     trigger,
@@ -38,8 +38,6 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) =>
   useEffect(() => {
     trigger();
   }, [trigger]);
-
-  const [submitButtonLoading, setSubmitButtonloading] = useState(false);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -58,15 +56,8 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) =>
         </Form.Control.Feedback>
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
-        <LoadingButton
-          loading={submitButtonLoading}
-          as={SubmitButton}
-          onClick={() => {
-            setSubmitButtonloading(true);
-            setTimeout(() => setSubmitButtonloading(false), 3000);
-          }}
-        >
-          UPDATE
+        <LoadingButton as={SubmitButton} disabled={!isValid} loading={isSubmitting}>
+          SUBMIT
         </LoadingButton>
       </div>
       <FormPrompt isDirty={isDirty} isSubmitting={isSubmitting} />
