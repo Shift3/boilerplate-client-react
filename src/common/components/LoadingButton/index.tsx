@@ -6,9 +6,15 @@ interface LoadingButtonProps extends Omit<ButtonProps, 'as'> {
   as: FC<ButtonProps>;
 }
 
-export const LoadingButton: FC<LoadingButtonProps> = ({ as: ButtonComponent, loading, children, ...buttonProps }) => {
+export const LoadingButton: FC<LoadingButtonProps> = ({
+  as: ButtonComponent,
+  loading,
+  children,
+  disabled,
+  ...buttonProps
+}) => {
   return (
-    <ButtonComponent {...buttonProps} disabled={loading}>
+    <ButtonComponent {...buttonProps} disabled={disabled || loading}>
       {loading && <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' />}
       {children}
     </ButtonComponent>

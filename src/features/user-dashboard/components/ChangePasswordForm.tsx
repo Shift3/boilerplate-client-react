@@ -39,7 +39,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const ChangePasswordForm: FC<Props> = ({ onSubmit }) => {
   const {
-    formState: { errors, isDirty, isSubmitting },
+    formState: { errors, isDirty, isSubmitting, isValid },
     handleSubmit,
     register,
     trigger,
@@ -52,8 +52,6 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit }) => {
   useEffect(() => {
     trigger();
   }, [trigger]);
-
-  const [submitButtonLoading, setSubmitButtonloading] = useState(false);
 
   return (
     <Form name='change-password-form' onSubmit={handleSubmit(onSubmit)}>
@@ -103,14 +101,7 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit }) => {
         )}
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
-        <LoadingButton
-          loading={submitButtonLoading}
-          as={SubmitButton}
-          onClick={() => {
-            setSubmitButtonloading(true);
-            setTimeout(() => setSubmitButtonloading(false), 3000);
-          }}
-        >
+        <LoadingButton type='submit' as={SubmitButton} disabled={!isValid} loading={isSubmitting}>
           SUBMIT
         </LoadingButton>
       </div>

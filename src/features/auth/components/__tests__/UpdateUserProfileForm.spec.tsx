@@ -20,15 +20,16 @@ describe('UpdateUserProfileForm', () => {
         <Router history={history}>
           <ThemeProvider theme={AppTheme}>
             <UpdateUserProfileForm onSubmit={mockOnSubmit} defaultValues={defaultValues} />
-          </ThemeProvider>,
-        </Router>
+          </ThemeProvider>
+          ,
+        </Router>,
       );
     });
     mockOnSubmit.mockReset();
   });
 
   it('should submit form if all form fields are valid', async () => {
-    await act(async () => userEvent.click(screen.getByRole('button', { name: 'UPDATE' })));
+    await act(async () => userEvent.click(screen.getByRole('button', { name: 'SUBMIT' })));
     expect(mockOnSubmit).toHaveBeenCalledWith(defaultValues, expect.any(Object));
   });
 
@@ -40,7 +41,7 @@ describe('UpdateUserProfileForm', () => {
     userEvent.type(lastNameInput, '567');
 
     await act(async () => {
-      userEvent.click(screen.getByRole('button', { name: 'UPDATE' }));
+      userEvent.click(screen.getByRole('button', { name: 'SUBMIT' }));
     });
 
     expect(await screen.findAllByRole('alert')).toHaveLength(2);
