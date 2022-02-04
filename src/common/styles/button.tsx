@@ -27,9 +27,7 @@ export const CancelButton = styled(BootstrapButton)`
   width: 40%;
 `;
 
-export const SubmitButton = styled(BootstrapButton).attrs({
-  variant: 'success',
-})`
+export const SubmitButton = styled(BootstrapButton)`
   color: ${props => props.theme.buttons.submitTextColor};
   background-color: ${props => props.theme.buttons.submitBackgroundColor};
   border-color: ${props => props.theme.buttons.submitBorderColor};
@@ -37,9 +35,7 @@ export const SubmitButton = styled(BootstrapButton).attrs({
   width: 40%;
 `;
 
-export const LoginButton = styled(BootstrapButton).attrs({
-  variant: 'success',
-})`
+export const LoginButton = styled(BootstrapButton)`
   color: ${props => props.theme.buttons.submitTextColor};
   background-color: ${props => props.theme.buttons.submitBackgroundColor};
   border-color: ${props => props.theme.buttons.submitBorderColor};
