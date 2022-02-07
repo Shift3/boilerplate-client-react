@@ -21,7 +21,6 @@ describe('UpdateUserProfileForm', () => {
           <ThemeProvider theme={AppTheme}>
             <UpdateUserProfileForm onSubmit={mockOnSubmit} defaultValues={defaultValues} />
           </ThemeProvider>
-          ,
         </Router>,
       );
     });
