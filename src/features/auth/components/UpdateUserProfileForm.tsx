@@ -57,7 +57,7 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) =>
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
         <LoadingButton type='submit' as={SubmitButton} disabled={!isValid} loading={isSubmitting}>
-          SUBMIT
+          UPDATE
         </LoadingButton>
       </div>
       <FormPrompt isDirty={isDirty} isSubmitting={isSubmitting} />
