@@ -77,14 +77,12 @@ export const useAgencyTableData: UseAgencyTableData = (agencies = []) => {
         name: agency.agencyName,
         actions: [
           {
-            icon: 'trash-alt',
             tooltipText: 'Delete',
             onClick: (e) => {
               e.stopPropagation();
               handleDelete(agency);
             },
             show: userHasPermission('agency:delete'),
-            primaryColor: 'dangerRed'
           },
         ],
       })),

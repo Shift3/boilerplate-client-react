@@ -167,9 +167,7 @@ export const useUserTableData: UseUserTableData = (users = []) => {
         activatedAt: user.activatedAt
           ? new Date(user.activatedAt)
           : {
-              icon: 'envelope',
               tooltipText: 'Resend Activation Email',
-              primaryColor: 'primaryBlue',
               onClick: (e) => {
                 e.stopPropagation();
                 handleResendActivationEmail(user);
@@ -178,23 +176,19 @@ export const useUserTableData: UseUserTableData = (users = []) => {
         },
         actions: [
           {
-            icon: 'lock',
             tooltipText: 'Reset Password',
             onClick: (e) => {
               e.stopPropagation();
               handlePasswordReset(user);
             },
-            primaryColor: 'primaryBlue',
             show: userHasPermission({ permission: 'user:send-reset-password-email', data: user }),
           },
           {
-            icon: 'trash-alt',
             tooltipText: 'Delete',
             onClick: (e) => {
               e.stopPropagation();
               handleDelete(user);
             },
-            primaryColor: 'dangerRed',
             show: userHasPermission({ permission: 'user:delete', data: user }),
           },
         ],

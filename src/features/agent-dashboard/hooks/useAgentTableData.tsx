@@ -84,14 +84,12 @@ export const useAgentTableData: UseAgentTableData = (agents = []) => {
         phoneNumber: agent.phoneNumber,
         actions: [
           {
-            icon: 'trash-alt',
             tooltipText: 'Delete',
             onClick: (e) => {
               e.stopPropagation();
               handleDelete(agent);
             },
             show: userHasPermission({ permission: 'agent:delete', data: agent }),
-            primaryColor: 'dangerRed',
           },
         ],
       })),
