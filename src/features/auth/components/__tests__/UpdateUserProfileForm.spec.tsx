@@ -20,8 +20,8 @@ describe('UpdateUserProfileForm', () => {
         <Router history={history}>
           <ThemeProvider theme={AppTheme}>
             <UpdateUserProfileForm onSubmit={mockOnSubmit} defaultValues={defaultValues} />
-          </ThemeProvider>,
-        </Router>
+          </ThemeProvider>
+        </Router>,
       );
     });
     mockOnSubmit.mockReset();

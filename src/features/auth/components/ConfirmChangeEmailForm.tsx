@@ -5,6 +5,7 @@ import { Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
+import { SubmitButton } from 'common/styles/button';
 
 export type FormData = {
   verificationCode: number;
@@ -15,8 +16,9 @@ type Props = {
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
-  verificationCode: yup.number()
-    .transform(value => !value ? 0 : value)
+  verificationCode: yup
+    .number()
+    .transform(value => (!value ? 0 : value))
     .required(Constants.errorMessages.VERIFICATION_CODE_REQUIRED)
     .lessThan(1000000, Constants.errorMessages.VERIFICATION_CODE_LENGTH_MISMATCH)
     .moreThan(99999, Constants.errorMessages.VERIFICATION_CODE_LENGTH_MISMATCH),
@@ -31,7 +33,7 @@ export const ConfirmChangeEmailForm: FC<Props> = ({ onSubmit }) => {
     resolver: yupResolver(schema),
     mode: 'all',
     defaultValues: {
-      verificationCode: 0
+      verificationCode: 0,
     },
   });
 
@@ -50,7 +52,7 @@ export const ConfirmChangeEmailForm: FC<Props> = ({ onSubmit }) => {
         </Form.Control.Feedback>
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
-        <LoadingButton disabled={!isValid} loading={isSubmitting}>
+        <LoadingButton as={SubmitButton} disabled={!isValid} loading={isSubmitting}>
           SUBMIT
         </LoadingButton>
       </div>

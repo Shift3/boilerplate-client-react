@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
+import { LoginButton } from 'common/styles/button';
 
 export type FormData = {
   email: string;
@@ -59,7 +60,7 @@ export const LogInForm: FC<Props> = ({ onSubmit }) => {
         </Form.Control.Feedback>
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
-        <LoadingButton disabled={!isValid} loading={isSubmitting}>
+        <LoadingButton type='submit' as={LoginButton} disabled={!isValid} loading={isSubmitting}>
           LOG IN
         </LoadingButton>
       </div>

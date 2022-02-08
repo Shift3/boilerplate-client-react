@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
 import FormPrompt from 'common/components/FormPrompt';
+import { SubmitButton } from 'common/styles/button';
 
 export type FormData = {
   oldPassword: string;
@@ -38,7 +39,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const ChangePasswordForm: FC<Props> = ({ onSubmit }) => {
   const {
-    formState: { errors, isValid, isDirty, isSubmitting },
+    formState: { errors, isDirty, isSubmitting, isValid },
     handleSubmit,
     register,
     trigger,
@@ -100,7 +101,7 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit }) => {
         )}
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
-        <LoadingButton disabled={!isValid} loading={isSubmitting}>
+        <LoadingButton type='submit' as={SubmitButton} disabled={!isValid} loading={isSubmitting}>
           SUBMIT
         </LoadingButton>
       </div>

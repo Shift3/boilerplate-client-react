@@ -5,6 +5,7 @@ import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { LoadingButton } from 'common/components/LoadingButton';
+import { SubmitButton } from 'common/styles/button';
 import FormPrompt from 'common/components/FormPrompt';
 
 export type FormData = Pick<Agency, 'agencyName'>;
@@ -21,7 +22,7 @@ const schema = yup.object().shape({
 
 export const AgencyDetailForm: FC<Props> = ({ defaultValues = {}, onSubmit }) => {
   const {
-    formState: { errors, isValid, isDirty, isSubmitting},
+    formState: { errors, isDirty, isSubmitting, isValid },
     handleSubmit,
     register,
     trigger,
@@ -40,7 +41,7 @@ export const AgencyDetailForm: FC<Props> = ({ defaultValues = {}, onSubmit }) =>
         <Form.Control.Feedback type='invalid'>{errors.agencyName?.message}</Form.Control.Feedback>
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
-        <LoadingButton disabled={!isValid} loading={isSubmitting}>
+        <LoadingButton type='submit' as={SubmitButton} disabled={!isValid} loading={isSubmitting}>
           SUBMIT
         </LoadingButton>
       </div>

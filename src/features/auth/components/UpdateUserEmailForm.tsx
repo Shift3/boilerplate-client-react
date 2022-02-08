@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
+import { SubmitButton } from 'common/styles/button';
 
 export type UserEmailFormData = {
   email: string;
@@ -17,7 +18,8 @@ type Props = {
 
 export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues }) => {
   const schema: yup.SchemaOf<UserEmailFormData> = yup.object().shape({
-    email: yup.string()
+    email: yup
+      .string()
       .required(Constants.errorMessages.EMAIL_REQUIRED)
       .email(Constants.errorMessages.INVALID_EMAIL)
       .notOneOf([defaultValues?.email], Constants.errorMessages.SAME_EMAIL),
@@ -43,7 +45,7 @@ export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues }) => {
         </Form.Control.Feedback>
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
-        <LoadingButton disabled={!isValid} loading={isSubmitting}>
+        <LoadingButton type='submit' as={SubmitButton} disabled={!isValid} loading={isSubmitting}>
           UPDATE
         </LoadingButton>
       </div>

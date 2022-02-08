@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
-import { CancelButton } from 'common/styles/button';
+import { CancelButton, SubmitButton } from 'common/styles/button';
 import { LoadingButton } from 'common/components/LoadingButton';
 import FormPrompt from 'common/components/FormPrompt';
 
@@ -32,7 +32,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const SignUpForm: FC<Props> = ({ onSubmit, onCancel }) => {
   const {
-    formState: { errors, isValid, isDirty, isSubmitting },
+    formState: { errors, isDirty, isSubmitting, isValid },
     handleSubmit,
     register,
     trigger,
@@ -107,7 +107,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit, onCancel }) => {
         </Form.Control.Feedback>
       </Form.Group>
       <div className='d-grid gap-2 mt-4'>
-        <LoadingButton disabled={!isValid} loading={isSubmitting}>
+        <LoadingButton type='submit' as={SubmitButton} disabled={!isValid} loading={isSubmitting}>
           SIGN UP
         </LoadingButton>
       </div>

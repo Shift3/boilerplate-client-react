@@ -1,28 +1,22 @@
 import { FC } from 'react';
-import Button, { ButtonProps } from 'react-bootstrap/Button';
-import styled from 'styled-components';
+import { ButtonProps, Spinner } from 'react-bootstrap';
 
-const BootstrapButton: FC<ButtonProps> = ({ children, ...rest }) => <Button {...rest}>{children}</Button>;
+interface LoadingButtonProps extends Omit<ButtonProps, 'as'> {
+  loading: boolean;
+  as: FC<ButtonProps>;
+}
 
-type LoadingButtonProps = ButtonProps & { loading: boolean };
-
-const StyledButton = styled(BootstrapButton)`
-  color: ${props => props.theme.buttons.submitTextColor};
-  background-color: ${props => props.theme.buttons.submitBackgroundColor};
-  border-color: ${props => props.theme.buttons.submitBorderColor};
-  padding: 0.5rem 1rem;
-  // width: 40%;
-
-  & .spinner-border {
-    margin-right: 1em;
-  }
-`;
-
-export const LoadingButton: FC<LoadingButtonProps> = ({ onClick, disabled, loading, children }) => {
+export const LoadingButton: FC<LoadingButtonProps> = ({
+  as: ButtonComponent,
+  loading,
+  children,
+  disabled,
+  ...buttonProps
+}) => {
   return (
-    <StyledButton type='submit' disabled={disabled || loading} onClick={onClick}>
-      {loading && <span className='spinner-border spinner-border-sm' />}
+    <ButtonComponent {...buttonProps} disabled={disabled || loading}>
+      {loading && <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' />}
       {children}
-    </StyledButton>
+    </ButtonComponent>
   );
 };
