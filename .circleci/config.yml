@@ -100,13 +100,13 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - test
+      - test:
           filters:
             branches:
               except:
                 - development
                 - feature/deploy-fixes
-      - test-coverage
+      - test-coverage:
           filters:
             branches:
               except:
@@ -114,7 +114,13 @@ workflows:
                 - feature/deploy-fixes
   deploy-staging:
     jobs:
-      - test
+      - test:
+          filters:
+            branches:
+              only:
+                - development
+                - feature/deploy-fixes
+
       - deploy-staging:
           requires:
             - test
