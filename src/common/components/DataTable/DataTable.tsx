@@ -1,10 +1,10 @@
 import { ReactElement, useEffect } from 'react';
-import Table from 'react-bootstrap/Table';
-import { Column, useFilters, usePagination, useSortBy, useTable } from 'react-table';
+import { Column, useFilters, useFlexLayout, usePagination, useSortBy, useTable } from 'react-table';
 import { Paginator } from './Paginator';
 
 export type DataTableProps<D extends Record<string, unknown>> = {
   columns: Column<D>[];
+  onRowClick?: (item: D) => void;
   data: D[];
   pagination?: {
     basePage: 0 | 1; // Whether to treat page 0 or 1 as the first page of the result set.
@@ -29,6 +29,7 @@ export const DataTable = <D extends Record<string, unknown>>({
   data,
   pagination,
   sortBy,
+  onRowClick,
   filters,
 }: DataTableProps<D>): ReactElement => {
   // Evaluate these conditions once instead of re-computing in multiple places.
@@ -67,6 +68,7 @@ export const DataTable = <D extends Record<string, unknown>>({
       initialState,
       ...extraTableOptions,
     },
+    useFlexLayout,
     ...plugins,
   );
 
@@ -107,31 +109,35 @@ export const DataTable = <D extends Record<string, unknown>>({
   );
 
   return (
-    <div className='shadow p-3 bg-body rounded'>
-      <Table {...getTableProps()} responsive hover>
-        <thead>
+    <div>
+      <div className="table" {...getTableProps()}>
+        <div className="thead">
           {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
+            <div className="tr" {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                <div className="th" {...column.getHeaderProps()}>{column.render('Header')}</div>
               ))}
-            </tr>
+            </div>
           ))}
-        </thead>
+        </div>
 
-        <tbody {...getTableBodyProps()}>
+        <div className="tbody" {...getTableBodyProps()}>
           {tableRows.map(row => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()}>
+              <div className="tr" aria-hidden="true" onClick={() => {
+                if (onRowClick)
+                  onRowClick(row.original);
+                }}{...row.getRowProps()}
+              >
                 {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+                  return <div className="td" {...cell.getCellProps()}>{cell.render('Cell')}</div>;
                 })}
-              </tr>
+              </div>
             );
           })}
-        </tbody>
-      </Table>
+        </div>
+      </div>
       {/* If the usePagination plugin is enabled, render a paginator to allow users to page through the data. */}
       {paginationEnabled && (
         <Paginator

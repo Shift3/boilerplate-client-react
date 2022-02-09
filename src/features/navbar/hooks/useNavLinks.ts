@@ -18,7 +18,7 @@ export const useNavLinks = (): NavLinkConfig[] => {
   }
 
   if (userHasPermission('user:read')) {
-    navLinks.push({ id: 2, icon: 'users', label: 'Users', path: '/users' });
+    navLinks.push({ id: 2, icon: 'user', label: 'Users', path: '/users' });
   }
 
   if (userHasPermission('agency:read')) {

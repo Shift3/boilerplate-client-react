@@ -1,12 +1,19 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
+  faBan,
   faBuilding,
   faCheck,
   faChevronLeft,
   faChevronRight,
+  faCog,
   faEdit,
+  faEllipsisH,
   faEnvelope,
+  faEye,
+  faEyeSlash,
   faLock,
+  faSignOutAlt,
+  faSort,
   faStethoscope,
   faTrashAlt,
   faUser,
@@ -39,6 +46,13 @@ library.add(
   faTrashAlt,
   faUser,
   faUsers,
+  faEye,
+  faEyeSlash,
+  faSignOutAlt,
+  faSort,
+  faEllipsisH,
+  faBan,
+  faCog
 );
 
 /* TODO: - CMS 3/23/21

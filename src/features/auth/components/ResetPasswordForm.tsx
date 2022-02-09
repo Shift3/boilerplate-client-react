@@ -1,12 +1,11 @@
 import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import FormPrompt from 'common/components/FormPrompt';
 import { LoadingButton } from 'common/components/LoadingButton';
-import { SubmitButton } from 'common/styles/button';
 
 export type FormData = {
   newPassword: string;
@@ -76,9 +75,9 @@ export const ResetPasswordForm: FC<Props> = ({ onSubmit }) => {
           {errors.confirmPassword?.message}
         </Form.Control.Feedback>
       </Form.Group>
-      <div className='d-grid gap-2 mt-3'>
-        <LoadingButton type='submit' as={SubmitButton} disabled={!isValid} loading={isSubmitting}>
-          SUBMIT
+      <div className='mt-3'>
+        <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
+          Submit
         </LoadingButton>
       </div>
       <FormPrompt isDirty={isDirty} isSubmitting={isSubmitting} />

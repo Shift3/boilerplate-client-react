@@ -1,12 +1,12 @@
-import { FC } from 'react';
-import { useHistory } from 'react-router-dom';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { useForgotPasswordMutation } from 'common/api/userApi';
-import * as notificationService from 'common/services/notification';
 import { handleApiError } from 'common/api/handleApiError';
+import { useForgotPasswordMutation } from 'common/api/userApi';
+import { FrontPageLayout, Title } from 'common/components/FrontPageLayout';
+import * as notificationService from 'common/services/notification';
+import { FC } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { ForgotPasswordForm, FormData } from '../components/ForgotPasswordForm';
-import { PageWrapper } from 'common/styles/page';
-import { StyledFormWrapper, Title } from 'common/styles/form';
+
 
 export const ForgotPasswordPage: FC = () => {
   const history = useHistory();
@@ -23,11 +23,16 @@ export const ForgotPasswordPage: FC = () => {
   };
 
   return (
-    <PageWrapper>
-      <StyledFormWrapper data-testid='wrapper'>
-        <Title>Forgot Password</Title>
-        <ForgotPasswordForm onSubmit={onSubmit} />
-      </StyledFormWrapper>
-    </PageWrapper>
+    <FrontPageLayout>
+      <Title>Forgot Password</Title>
+      <p className="text-muted">Enter the email associated with your account and we'll send you instruction on how to reset your password.</p>
+      <ForgotPasswordForm onSubmit={onSubmit} />
+
+      <div className='mt-2 mb-2'>
+        <small>
+          Remember your password? <Link to="/auth/login">Go back to login</Link>
+        </small>
+      </div>
+    </FrontPageLayout>
   );
 };

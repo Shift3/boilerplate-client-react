@@ -1,12 +1,11 @@
-import { FC, useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Form } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
-import { Constants } from 'utils/constants';
-import { LoadingButton } from 'common/components/LoadingButton';
 import FormPrompt from 'common/components/FormPrompt';
-import { SubmitButton } from 'common/styles/button';
+import { LoadingButton } from 'common/components/LoadingButton';
+import { FC } from 'react';
+import { Button, Form } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
+import { Constants } from 'utils/constants';
+import * as yup from 'yup';
 
 export type FormData = {
   firstName: string;
@@ -28,16 +27,11 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) =>
     formState: { errors, isDirty, isSubmitting, isValid },
     handleSubmit,
     register,
-    trigger,
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
     defaultValues,
   });
-
-  useEffect(() => {
-    trigger();
-  }, [trigger]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -55,11 +49,12 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) =>
           {errors.lastName?.message}
         </Form.Control.Feedback>
       </Form.Group>
-      <div className='d-grid gap-2 mt-3'>
-        <LoadingButton type='submit' as={SubmitButton} disabled={!isValid} loading={isSubmitting}>
-          UPDATE
+      <div className='mt-3'>
+        <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
+          Update
         </LoadingButton>
       </div>
+
       <FormPrompt isDirty={isDirty} isSubmitting={isSubmitting} />
     </Form>
   );

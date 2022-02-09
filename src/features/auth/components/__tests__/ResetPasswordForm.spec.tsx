@@ -36,13 +36,13 @@ describe('ResetPasswordForm', () => {
       userEvent.type(confirmNewPasswordInput, testFormData.confirmPassword);
     });
 
-    await act(async () => userEvent.click(screen.getByRole('button', { name: 'SUBMIT' })));
+    await act(async () => userEvent.click(screen.getByRole('button', { name: 'Submit' })));
 
     expect(mockOnSubmit).toHaveBeenCalledWith(testFormData, expect.any(Object));
   });
 
   it('should disable the submit button when fields are invalid', async () => {
-    const button = screen.getByRole('button', { name: 'SUBMIT' });
+    const button = screen.getByRole('button', { name: 'Submit' });
     expect(button.hasAttribute('disabled')).toBeTruthy();
   });
 
@@ -60,7 +60,7 @@ describe('ResetPasswordForm', () => {
       userEvent.type(confirmNewPasswordInput, testFormData.confirmPassword);
     });
 
-    const button = screen.getByRole('button', { name: 'SUBMIT' });
+    const button = screen.getByRole('button', { name: 'Submit' });
     expect(button.hasAttribute('disabled')).toBeFalsy();
   });
 
@@ -72,7 +72,7 @@ describe('ResetPasswordForm', () => {
     userEvent.type(confirmNewPasswordInput, 'Testpassword123!');
 
     await act(async () => {
-      userEvent.click(screen.getByRole('button', { name: 'SUBMIT' }));
+      userEvent.click(screen.getByRole('button', { name: 'Submit' }));
     });
 
     expect(await screen.findAllByRole('alert')).toHaveLength(2);
