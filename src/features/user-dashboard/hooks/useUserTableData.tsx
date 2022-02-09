@@ -137,18 +137,22 @@ export const useUserTableData: UseUserTableData = (users = []) => {
         accessor: 'actions',
         Header: '',
         Cell: ({ value: actions }) => (
-          <TableActions>
-            <Button onClick={e => e.stopPropagation()}>
-              <FontAwesomeIcon icon={['fas', 'ellipsis-h']} size='xs' />
-            </Button>
-            <div>
-              {actions.map(action => (
-                <ActionButton {...action}>
-                  {action.tooltipText}
-                </ActionButton>
-              ))}
-            </div>
-          </TableActions>
+          <>
+            {actions.filter(action => action.show).length > 0 ? (
+              <TableActions>
+                <Button onClick={e => e.stopPropagation()}>
+                  <FontAwesomeIcon icon={['fas', 'ellipsis-h']} size='xs' />
+                </Button>
+                <div>
+                  {actions.map(action => (
+                    <ActionButton {...action}>
+                      {action.tooltipText}
+                    </ActionButton>
+                  ))}
+                </div>
+              </TableActions>
+            ): null}
+          </>
         )
       },
     ],

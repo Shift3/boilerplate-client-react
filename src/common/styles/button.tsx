@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import Button, { ButtonProps } from 'react-bootstrap/Button';
 import styled from 'styled-components';
+import { ActionButtonProps } from '../components/ActionButton/types';
 
 const BootstrapButton: FC<ButtonProps> = ({ children, ...rest }) => <Button {...rest}>{children}</Button>;
 
@@ -74,8 +75,7 @@ export const TableActions = styled.div`
   }
 `;
 
-
-export const ActionButton = styled(BootstrapButton)`
+export const ActionButtonStyles = styled(BootstrapButton)`
     border-radius: 6px;
     border: none;
     color: #333;
@@ -101,6 +101,14 @@ export const ActionButton = styled(BootstrapButton)`
       box-shadow: none;
     }
 `;
+
+
+export const ActionButton: FC<ActionButtonProps> = ({ tooltipText, onClick, show }) =>
+  show ? (
+      <ActionButtonStyles role='button' tabIndex={0} onClick={onClick}>
+        {tooltipText}
+      </ActionButtonStyles>
+  ) : null;
 
 export const SecondaryButton = styled(BootstrapButton)`
   color: #60A5FA;
