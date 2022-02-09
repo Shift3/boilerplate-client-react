@@ -105,8 +105,6 @@ workflows:
   deploy-staging:
     jobs:
       - deploy-staging:
-          requires:
-            - test
           filters:
             branches:
               only:
