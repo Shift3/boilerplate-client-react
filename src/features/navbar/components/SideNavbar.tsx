@@ -7,7 +7,7 @@ import { useLogoutModal } from '../hooks/useLogoutModal';
 import { useNavLinks } from '../hooks/useNavLinks';
 import { CustomNavAction, CustomNavLink } from './CustomNavLink';
 import { Logo } from './Logo';
-import { NavUserDetails } from './SettingsDropdown';
+import { NavUserDetails } from './NavUserDetails';
 
 type Props = {
 };
