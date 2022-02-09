@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import Button, { ButtonProps } from 'react-bootstrap/Button';
 import styled from 'styled-components';
-import { ActionButtonProps } from '../components/ActionButton/types';
 
 const BootstrapButton: FC<ButtonProps> = ({ children, ...rest }) => <Button {...rest}>{children}</Button>;
 
@@ -102,6 +101,12 @@ export const ActionButtonStyles = styled(BootstrapButton)`
     }
 `;
 
+
+export type ActionButtonProps = {
+  tooltipText: string;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  show?: boolean;
+};
 
 export const ActionButton: FC<ActionButtonProps> = ({ tooltipText, onClick, show }) =>
   show ? (

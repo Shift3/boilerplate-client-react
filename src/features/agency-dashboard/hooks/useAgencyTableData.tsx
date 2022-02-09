@@ -1,10 +1,9 @@
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useDeleteAgencyMutation } from 'common/api/agencyApi';
 import { handleApiError } from 'common/api/handleApiError';
-import { ActionButtonProps } from 'common/components/ActionButton';
 import { Agency } from 'common/models';
 import * as notificationService from 'common/services/notification';
-import { ActionButton } from 'common/styles/button';
+import { ActionButton, ActionButtonProps } from 'common/styles/button';
 import { useConfirmationModal } from 'features/confirmation-modal';
 import { useRbac } from 'features/rbac';
 import { useCallback, useMemo } from 'react';

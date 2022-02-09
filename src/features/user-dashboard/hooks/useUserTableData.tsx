@@ -1,11 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import portraitPlaceholder from 'assets/img/portrait_placeholder.png';
 import { useDeleteUserMutation, useForgotPasswordMutation, useResendActivationEmailMutation } from 'common/api/userApi';
-import { ActionButtonProps } from 'common/components/ActionButton';
 import { CircularImg } from 'common/components/Common';
 import { RoleType, User } from 'common/models';
 import * as notificationService from 'common/services/notification';
-import { ActionButton, TableActions } from 'common/styles/button';
+import { ActionButton, ActionButtonProps, TableActions } from 'common/styles/button';
 import { useConfirmationModal } from 'features/confirmation-modal';
 import { useRbac } from 'features/rbac';
 import { useCallback, useMemo } from 'react';
@@ -18,7 +17,7 @@ export type UserTableItem = {
   firstName: string;
   lastName: string;
   activatedAt: Date | ActionButtonProps;
-  role: string;
+  role: RoleType;
   actions: ActionButtonProps[];
 };
 
