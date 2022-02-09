@@ -10,7 +10,7 @@ export type SortIndicatorProps = {
 export const SortIndicator: FC<SortIndicatorProps> = ({ isSorted, isDesc }) => {
   return (
     <span>
-      {!isSorted && <FontAwesomeIcon icon={faSort} className='text-muted' />}
+      {!isSorted && <FontAwesomeIcon icon={faSort} />}
       {isSorted && !isDesc && <FontAwesomeIcon icon={faSortUp} />}
       {isSorted && isDesc && <FontAwesomeIcon icon={faSortDown} />}
     </span>
