@@ -1,7 +1,9 @@
 import { Badge } from "react-bootstrap";
 import styled, { css } from "styled-components";
 
-export const SubtleBadge = styled(Badge)`
+export const SubtleBadge = styled(Badge)<{
+    variant?: 'warning' | 'danger' | 'secondary' | 'info'
+}>`
     padding: 0.4rem 0.75rem;
 
     ${props => props.variant === 'warning' && css`
