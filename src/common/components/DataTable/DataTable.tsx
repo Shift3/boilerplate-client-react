@@ -141,14 +141,14 @@ export const DataTable = <D extends Record<string, unknown>>({
                 <>
                   {sortByEnabled && column.canSort ? (
                     // Add the sorting props to control sorting and sort direction indicator.
-                    <th className='th' {...column.getHeaderProps(column.getSortByToggleProps())}>
+                    <div className='th' {...column.getHeaderProps(column.getSortByToggleProps())}>
                       {column.render('Header')}{' '}
                       <SortIndicator isSorted={column.isSorted} isDesc={column.isSortedDesc} />
-                    </th>
+                    </div>
                   ) : (
-                    <th className='th' {...column.getHeaderProps()}>
+                    <div className='th' {...column.getHeaderProps()}>
                       {column.render('Header')}
-                    </th>
+                    </div>
                   )}
                 </>
               ))}
