@@ -40,7 +40,7 @@ export const AgentListView: FC = () => {
       <TableCard>
         <Card.Body>
           <WithLoadingOverlay isLoading={isPageLoading}>
-          {(data?.meta.count || 0) > 0 ? (
+          {data?.meta.count ? (
             <>
               <DataTable<AgentTableItem>
                 columns={columns}
