@@ -101,10 +101,23 @@ workflows:
   build_and_test:
     jobs:
       - test
+          filters:
+            branches:
+              except:
+                - development
+                - feature/deploy-fixes
       - test-coverage
+          filters:
+            branches:
+              except:
+                - development
+                - feature/deploy-fixes
   deploy-staging:
     jobs:
+      - test
       - deploy-staging:
+          requires:
+            - test
           filters:
             branches:
               only:
