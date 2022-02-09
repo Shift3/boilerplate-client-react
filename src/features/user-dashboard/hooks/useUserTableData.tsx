@@ -129,7 +129,7 @@ export const useUserTableData: UseUserTableData = (users = []) => {
             ) : (
               <>
                 <ActionButton {...activatedAt}>
-                  {activatedAt.tooltipText}
+                  {activatedAt.text}
                 </ActionButton>
               </>
             )}
@@ -148,9 +148,7 @@ export const useUserTableData: UseUserTableData = (users = []) => {
                 </Button>
                 <div>
                   {actions.map(action => (
-                    <ActionButton {...action}>
-                      {action.tooltipText}
-                    </ActionButton>
+                    <ActionButton key={action.text} {...action} />
                   ))}
                 </div>
               </TableActions>
@@ -174,7 +172,7 @@ export const useUserTableData: UseUserTableData = (users = []) => {
         activatedAt: user.activatedAt
           ? new Date(user.activatedAt)
           : {
-              tooltipText: 'Resend Activation Email',
+              text: 'Resend Activation Email',
               onClick: (e) => {
                 e.stopPropagation();
                 handleResendActivationEmail(user);
@@ -183,7 +181,7 @@ export const useUserTableData: UseUserTableData = (users = []) => {
         },
         actions: [
           {
-            tooltipText: 'Reset Password',
+            text: 'Reset Password',
             onClick: (e) => {
               e.stopPropagation();
               handlePasswordReset(user);
@@ -191,7 +189,7 @@ export const useUserTableData: UseUserTableData = (users = []) => {
             show: userHasPermission({ permission: 'user:send-reset-password-email', data: user }),
           },
           {
-            tooltipText: 'Delete',
+            text: 'Delete',
             onClick: (e) => {
               e.stopPropagation();
               handleDelete(user);

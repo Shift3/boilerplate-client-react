@@ -103,15 +103,15 @@ export const ActionButtonStyles = styled(BootstrapButton)`
 
 
 export type ActionButtonProps = {
-  tooltipText: string;
+  text: string;
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   show?: boolean;
 };
 
-export const ActionButton: FC<ActionButtonProps> = ({ tooltipText, onClick, show }) =>
+export const ActionButton: FC<ActionButtonProps> = ({ text, onClick, show }) =>
   show ? (
       <ActionButtonStyles role='button' tabIndex={0} onClick={onClick}>
-        {tooltipText}
+        {text}
       </ActionButtonStyles>
   ) : null;
 

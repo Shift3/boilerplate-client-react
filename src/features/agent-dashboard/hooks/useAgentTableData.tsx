@@ -60,11 +60,7 @@ export const useAgentTableData: UseAgentTableData = (agents = []) => {
         Cell: ({ value: actions }) => (
           <>
             {actions.map(action => (
-              <>
-                <ActionButton {...action}>
-                  {action.tooltipText}
-                </ActionButton>
-              </>
+              <ActionButton key={action.text} {...action} />
             ))}
           </>
         )
@@ -83,7 +79,7 @@ export const useAgentTableData: UseAgentTableData = (agents = []) => {
         phoneNumber: agent.phoneNumber,
         actions: [
           {
-            tooltipText: 'Delete',
+            text: 'Delete',
             onClick: (e) => {
               e.stopPropagation();
               handleDelete(agent);

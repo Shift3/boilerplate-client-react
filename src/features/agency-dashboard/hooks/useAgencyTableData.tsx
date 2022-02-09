@@ -55,11 +55,7 @@ export const useAgencyTableData: UseAgencyTableData = (agencies = []) => {
         Cell: ({ value: actions }) => (
           <>
             {actions.map(action => (
-              <>
-                <ActionButton {...action}>
-                  {action.tooltipText}
-                </ActionButton>
-              </>
+              <ActionButton key={action.text} {...action} />
             ))}
           </>
         )
@@ -76,7 +72,7 @@ export const useAgencyTableData: UseAgencyTableData = (agencies = []) => {
         name: agency.agencyName,
         actions: [
           {
-            tooltipText: 'Delete',
+            text: 'Delete',
             onClick: (e) => {
               e.stopPropagation();
               handleDelete(agency);
