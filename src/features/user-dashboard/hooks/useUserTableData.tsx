@@ -5,10 +5,11 @@ import { CircularImg } from 'common/components/Common';
 import { RoleType, User } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { ActionButton, ActionButtonProps, TableActions } from 'common/styles/button';
+import { SubtleBadge } from 'common/styles/utilities';
 import { useConfirmationModal } from 'features/confirmation-modal';
 import { useRbac } from 'features/rbac';
 import { useCallback, useMemo } from 'react';
-import { Badge, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { Column } from 'react-table';
 
 export type UserTableItem = {
@@ -77,7 +78,7 @@ export const useUserTableData: UseUserTableData = (users = []) => {
     [openModal, sendForgotPasswordEmail],
   );
 
-  const roleColor = (role: RoleType) => {
+  const roleVariant = (role: RoleType) => {
     if (!role)
       return '';
 
@@ -113,7 +114,7 @@ export const useUserTableData: UseUserTableData = (users = []) => {
         accessor: 'role',
         Header: 'Role',
         Cell: ({ value: role }) => (
-          <Badge pill bg={roleColor(role)}>{role}</Badge>
+          <SubtleBadge pill variant={roleVariant(role)}>{role}</SubtleBadge>
         )
       },
       {
