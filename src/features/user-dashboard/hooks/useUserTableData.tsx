@@ -3,7 +3,7 @@ import portraitPlaceholder from 'assets/img/portrait_placeholder.png';
 import { useDeleteUserMutation, useForgotPasswordMutation, useResendActivationEmailMutation } from 'common/api/userApi';
 import { ActionButtonProps } from 'common/components/ActionButton';
 import { CircularImg } from 'common/components/Common';
-import { User } from 'common/models';
+import { RoleType, User } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { ActionButton, TableActions } from 'common/styles/button';
 import { useConfirmationModal } from 'features/confirmation-modal';
@@ -78,13 +78,16 @@ export const useUserTableData: UseUserTableData = (users = []) => {
     [openModal, sendForgotPasswordEmail],
   );
 
-  const roleColor = (role: string) => {
+  const roleColor = (role: RoleType) => {
+    if (!role)
+      return '';
+
     return {
       'Super Administrator': 'danger',
       'Admin': 'warning',
       'User': 'secondary',
-      'Editor': 'info'
-    }[role] || 'secondary';
+      'Editor': 'info',
+    }[role];
   }
 
   // Set up columns and headers
