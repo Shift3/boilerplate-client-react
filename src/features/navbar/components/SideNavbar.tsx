@@ -9,9 +9,6 @@ import { CustomNavAction, CustomNavLink } from './CustomNavLink';
 import { Logo } from './Logo';
 import { NavUserDetails } from './NavUserDetails';
 
-type Props = {
-};
-
 const BitwiseNavbar = styled(Navbar)`
   background: ${props => props.theme.nav.backgroundColor};
   align-items: flex-start;
@@ -48,7 +45,7 @@ const BitwiseNavbar = styled(Navbar)`
 
 `;
 
-export const SideNavbar: FC<Props> = () => {
+export const SideNavbar: FC = () => {
   const { user } = useAuth();
   const navLinks = useNavLinks();
   const { openLogoutModal } = useLogoutModal();
