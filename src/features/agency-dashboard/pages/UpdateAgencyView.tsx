@@ -7,7 +7,7 @@ import * as notificationService from 'common/services/notification';
 import { StyledFormWrapper } from 'common/styles/form';
 import { useAuth } from 'features/auth/hooks';
 import { useConfirmationModal } from 'features/confirmation-modal';
-import { useRbac } from 'features/rbac';
+import { HasPermission } from 'features/rbac';
 import { FC, useEffect } from 'react';
 import { Button, Card, Col, Row } from 'react-bootstrap';
 import { Link, useHistory, useParams } from 'react-router-dom';
@@ -23,7 +23,6 @@ export const UpdateAgencyView: FC = () => {
   const { user } = useAuth();
   const [updateAgency] = useUpdateAgencyMutation();
   const { data: agency, isLoading: isLoadingAgency, error } = useGetAgencyByIdQuery(id);
-  const { userHasPermission } = useRbac();
   const [deleteAgency] = useDeleteAgencyMutation();
   const { openModal } = useConfirmationModal();
 
@@ -70,16 +69,13 @@ export const UpdateAgencyView: FC = () => {
           <p className='text-muted'>Update agency details here.</p>
         </div>
 
-        {userHasPermission({ 
-          permission: 'agency:delete',
-          data: user
-        }) ? (
+        <HasPermission perform={{ permission: 'agency:delete', data: user }}>
           <div>
             <Button onClick={() => handleDelete(agency as Agency)} variant='danger'>
               <FontAwesomeIcon icon={["fas", "trash-alt"]} /> Delete
             </Button>
           </div>
-        ) : ''}
+        </HasPermission>
       </PageHeader>
 
       <Row>
