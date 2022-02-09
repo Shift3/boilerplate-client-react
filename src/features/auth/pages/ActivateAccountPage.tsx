@@ -5,7 +5,7 @@ import { FrontPageLayout, Title } from 'common/components/FrontPageLayout';
 import * as notificationService from 'common/services/notification';
 import { StyledFormWrapper } from 'common/styles/form';
 import { FC } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { ActivateAccountForm, FormData } from '../components/ActivateAccountForm';
 
 export const ActivateAccountPage: FC = () => {
@@ -31,6 +31,11 @@ export const ActivateAccountPage: FC = () => {
       <p className="text-muted">Just one more step! Choose a password to active your account.</p>
       <StyledFormWrapper data-testid='wrapper'>
         <ActivateAccountForm onSubmit={onSubmit} />
+        <div className='mt-2 mb-2'>
+          <small>
+            Ended up here by mistake? <Link to="/auth/login">Log In</Link>
+          </small>
+        </div>
       </StyledFormWrapper>
     </FrontPageLayout>
   );
