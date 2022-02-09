@@ -11,7 +11,7 @@ import { Column } from 'react-table';
 
 export type AgencyTableItem = {
   id: number;
-  name: string;
+  agencyName: string;
   actions: ActionButtonProps[];
 };
 
@@ -48,7 +48,7 @@ export const useAgencyTableData: UseAgencyTableData = (agencies = []) => {
   // an array of objects and requires custom rendering logic specified by the "Cell" prop.
   const columns: Column<AgencyTableItem>[] = useMemo(
     () => [
-      { accessor: 'name', Header: 'Agency Name' },
+      { accessor: 'agencyName', Header: 'Agency Name' },
       {
         accessor: 'actions',
         Header: '',
@@ -58,7 +58,8 @@ export const useAgencyTableData: UseAgencyTableData = (agencies = []) => {
               <ActionButton key={action.text} {...action} />
             ))}
           </>
-        )
+        ),
+        disableSortBy: true,
       },
     ],
     [],
@@ -69,11 +70,11 @@ export const useAgencyTableData: UseAgencyTableData = (agencies = []) => {
     () =>
       agencies.map(agency => ({
         id: agency.id,
-        name: agency.agencyName,
+        agencyName: agency.agencyName,
         actions: [
           {
             text: 'Delete',
-            onClick: (e) => {
+            onClick: e => {
               e.stopPropagation();
               handleDelete(agency);
             },
@@ -81,7 +82,7 @@ export const useAgencyTableData: UseAgencyTableData = (agencies = []) => {
           },
         ],
       })),
-    [agencies, userHasPermission, handleDelete ],
+    [agencies, userHasPermission, handleDelete],
   );
 
   return { columns, data };

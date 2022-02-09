@@ -14,6 +14,8 @@ import {
   faLock,
   faSignOutAlt,
   faSort,
+  faSortDown,
+  faSortUp,
   faStethoscope,
   faTrashAlt,
   faUser,
@@ -35,24 +37,26 @@ import 'react-toastify/dist/ReactToastify.min.css';
 // so you add them once in your React app and reference them in any component
 // https://fontawesome.com/v5.15/how-to-use/on-the-web/using-with/react
 library.add(
+  faBan,
   faBuilding,
   faCheck,
   faChevronLeft,
   faChevronRight,
+  faCog,
   faEdit,
+  faEllipsisH,
   faEnvelope,
+  faEye,
+  faEyeSlash,
   faLock,
+  faSignOutAlt,
+  faSort,
+  faSortDown,
+  faSortUp,
   faStethoscope,
   faTrashAlt,
   faUser,
   faUsers,
-  faEye,
-  faEyeSlash,
-  faSignOutAlt,
-  faSort,
-  faEllipsisH,
-  faBan,
-  faCog
 );
 
 /* TODO: - CMS 3/23/21

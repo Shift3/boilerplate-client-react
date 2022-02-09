@@ -1,7 +1,9 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { customBaseQuery } from 'common/api/customBaseQuery';
 import { PaginatedResult, PaginationQueryParams, Session } from 'common/models';
+import { SortingQueryParams } from 'common/models/sorting';
 import { User } from 'common/models/user';
+import { QueryParamsBuilder } from './queryParamsBuilder';
 
 export type ActivateAccountRequest = {
   token: string;
@@ -45,8 +47,11 @@ export const userApi = createApi({
   tagTypes: ['User'],
 
   endpoints: builder => ({
-    getUsers: builder.query<PaginatedResult<User>, PaginationQueryParams>({
-      query: ({ page, pageSize }) => ({ url: `/users?page=${page}&pageSize=${pageSize}` }),
+    getUsers: builder.query<PaginatedResult<User>, PaginationQueryParams & SortingQueryParams>({
+      query: ({ page, pageSize, sortBy }) => {
+        const queryParams = new QueryParamsBuilder().setPaginationParams(page, pageSize).setSortParam(sortBy).build();
+        return { url: `/users?${queryParams}` };
+      },
       providesTags: ['User'],
     }),
 

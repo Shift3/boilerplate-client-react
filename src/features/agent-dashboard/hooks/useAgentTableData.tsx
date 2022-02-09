@@ -45,14 +45,10 @@ export const useAgentTableData: UseAgentTableData = (agents = []) => {
     () => [
       { accessor: 'name', Header: 'Agent Name' },
       { accessor: 'email', Header: 'Email' },
-      { 
-        accessor: 'phoneNumber', 
-        Header: 'Phone Number' ,
-        Cell: ({ value }) => (
-          <span>
-            {formatPhoneNumber(value)}
-          </span>
-        )
+      {
+        accessor: 'phoneNumber',
+        Header: 'Phone Number',
+        Cell: ({ value }) => <span>{formatPhoneNumber(value)}</span>,
       },
       {
         accessor: 'actions',
@@ -63,7 +59,8 @@ export const useAgentTableData: UseAgentTableData = (agents = []) => {
               <ActionButton key={action.text} {...action} />
             ))}
           </>
-        )
+        ),
+        disableSortBy: true,
       },
     ],
     [],
@@ -80,7 +77,7 @@ export const useAgentTableData: UseAgentTableData = (agents = []) => {
         actions: [
           {
             text: 'Delete',
-            onClick: (e) => {
+            onClick: e => {
               e.stopPropagation();
               handleDelete(agent);
             },
@@ -88,7 +85,7 @@ export const useAgentTableData: UseAgentTableData = (agents = []) => {
           },
         ],
       })),
-    [agents, userHasPermission, handleDelete ],
+    [agents, userHasPermission, handleDelete],
   );
 
   return {

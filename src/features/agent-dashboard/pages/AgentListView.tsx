@@ -14,12 +14,12 @@ import { Link, useHistory } from 'react-router-dom';
 import { AgentTableItem, useAgentTableData } from '../hooks/useAgentTableData';
 
 export const AgentListView: FC = () => {
-  const { data, isLoading, page, pageSize, getPage, changePageSize } =
+  const history = useHistory();
+  const { data, isLoading, page, pageSize, getPage, changePageSize, changeSortBy } =
     usePSFQuery<PaginatedResult<Agent>>(useGetAgentsQuery);
   const agents = useMemo(() => data?.results ?? [], [data]);
   const { columns, data: tableData } = useAgentTableData(agents);
   const isPageLoading = isLoading;
-  const history = useHistory();
 
   return (
     <Container>
@@ -36,45 +36,43 @@ export const AgentListView: FC = () => {
           </div>
         </HasPermission>
       </PageHeader>
-
       <TableCard>
         <Card.Body>
           <WithLoadingOverlay isLoading={isPageLoading}>
-          {data?.meta.count ? (
-            <>
-              <DataTable<AgentTableItem>
-                columns={columns}
-                onRowClick={(item) => history.push(`agents/update-agent/${item.id}`)}
-                data={tableData}
-                pagination={{
-                  basePage: 1,
-                  page,
-                  pageSize,
-                  count: data?.meta.count || 0,
-                  pageCount: data?.meta.pageCount || 0,
-                  pageSizeOptions: [5, 10, 25, 50, 100],
-                  onPageChange: getPage,
-                  onPageSizeChange: changePageSize,
-                }}
-              />
-            </>
-          ) : (
-            <NoContent>
-              <FontAwesomeIcon className='text-muted' size='2x' icon={['fas', 'stethoscope']} />
-              <p className='lead mb-0'>No Agents</p>
+            {data?.meta.count ? (
+              <>
+                <DataTable<AgentTableItem>
+                  columns={columns}
+                  data={tableData}
+                  onRowClick={item => history.push(`agents/update-agent/${item.id}`)}
+                  pagination={{
+                    basePage: 1,
+                    page,
+                    pageSize,
+                    count: data?.meta.count || 0,
+                    pageCount: data?.meta.pageCount || 0,
+                    pageSizeOptions: [5, 10, 25, 50, 100],
+                    onPageChange: getPage,
+                    onPageSizeChange: changePageSize,
+                  }}
+                  sorting={{
+                    onSortByChange: changeSortBy,
+                  }}
+                />
+              </>
+            ) : (
+              <NoContent>
+                <FontAwesomeIcon className='text-muted' size='2x' icon={['fas', 'stethoscope']} />
+                <p className='lead mb-0'>No Agents</p>
 
-              <HasPermission perform='agent:create'>
-                <p className='text-muted'>
-                  Get started by creating a new agent.
-                </p>
-                <Link to='/agents/create-agent'>
-                  <SecondaryButton>
-                    Add Agent
-                  </SecondaryButton>
-                </Link>
-              </HasPermission>
-            </NoContent>
-          )}
+                <HasPermission perform='agent:create'>
+                  <p className='text-muted'>Get started by creating a new agent.</p>
+                  <Link to='/agents/create-agent'>
+                    <SecondaryButton>Add Agent</SecondaryButton>
+                  </Link>
+                </HasPermission>
+              </NoContent>
+            )}
           </WithLoadingOverlay>
         </Card.Body>
       </TableCard>
