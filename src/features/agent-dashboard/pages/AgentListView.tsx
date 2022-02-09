@@ -62,14 +62,17 @@ export const AgentListView: FC = () => {
             <NoContent>
               <FontAwesomeIcon className='text-muted' size='2x' icon={['fas', 'stethoscope']} />
               <p className='lead mb-0'>No Agents</p>
-              <p className='text-muted'>
-                Get started by creating a new agent.
-              </p>
-              <Link to='/agents/create-agent'>
-                <SecondaryButton>
-                  Add Agent
-                </SecondaryButton>
-              </Link>
+
+              <HasPermission perform='agent:create'>
+                <p className='text-muted'>
+                  Get started by creating a new agent.
+                </p>
+                <Link to='/agents/create-agent'>
+                  <SecondaryButton>
+                    Add Agent
+                  </SecondaryButton>
+                </Link>
+              </HasPermission>
             </NoContent>
           )}
           </WithLoadingOverlay>
