@@ -1,5 +1,4 @@
 import { useDeleteAgentMutation } from 'common/api/agentApi';
-import { formatPhoneNumber } from 'common/components/PhoneInput';
 import { Agent } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { ActionButton, ActionButtonProps } from 'common/styles/button';
@@ -7,6 +6,7 @@ import { useConfirmationModal } from 'features/confirmation-modal';
 import { useRbac } from 'features/rbac';
 import { useCallback, useMemo } from 'react';
 import { Column } from 'react-table';
+import { formatPhoneNumber } from 'utils/phone';
 
 export type AgentTableItem = {
   id: number;
