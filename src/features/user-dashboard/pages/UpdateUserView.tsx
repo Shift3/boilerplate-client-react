@@ -84,7 +84,7 @@ export const UpdateUserView: FC = () => {
       <FormCard>
         <FormCard.Body>
           <WithLoadingOverlay isLoading={isLoadingUser || isLoadingRoles || isLoadingAgencies}>
-      			<StyledFormWrapper>
+            <StyledFormWrapper>
               <UserDetailForm
                 availableRoles={availableRoles}
                 availableAgencies={availableAgencies}
@@ -93,8 +93,8 @@ export const UpdateUserView: FC = () => {
                 onSubmit={handleFormSubmit}
                 onAgencySelectScrollToBottom={getNextPage}
               />
-      			</StyledFormWrapper>
-    		  </WithLoadingOverlay>
+            </StyledFormWrapper>
+          </WithLoadingOverlay>
         </FormCard.Body>
       </FormCard>
     </SmallContainer>
