@@ -5,6 +5,4 @@ export interface Agency {
   deletedAt?: string;
   deletedBy?: number;
   agencyName: string;
-
-  userCount: number;
 }

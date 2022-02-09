@@ -6,5 +6,4 @@ export const AgencyFactory = Factory.define<Agency>(({ sequence }) => ({
   id: sequence,
   createdAt: new Date(),
   agencyName: Faker.company.companyName(),
-  userCount: 0,
 }));
