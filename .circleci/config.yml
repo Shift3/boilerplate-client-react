@@ -105,13 +105,11 @@ workflows:
             branches:
               ignore:
                 - development
-                - feature/deploy-fixes
       - test-coverage:
           filters:
             branches:
               ignore:
                 - development
-                - feature/deploy-fixes
   deploy-staging:
     jobs:
       - test:
@@ -119,8 +117,6 @@ workflows:
             branches:
               only:
                 - development
-                - feature/deploy-fixes
-
       - deploy-staging:
           requires:
             - test
@@ -128,7 +124,6 @@ workflows:
             branches:
               only:
                 - development
-                - feature/deploy-fixes
   deploy_wiki:
     jobs:
       - deploy-wiki:
