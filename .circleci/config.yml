@@ -94,7 +94,30 @@ jobs:
           aws-region: STAGING_AWS_DEFAULT_REGION
           aws-access-key-id: STAGING_AWS_ACCESS_KEY_ID
           aws-secret-access-key: STAGING_AWS_SECRET_ACCESS_KEY 
-          to: 's3://$S3_BUCKET_NAME'
+          to: 's3://$STAGING_S3_BUCKET_NAME'
+  deploy-production:
+    docker:
+      - image: 'circleci/node:14'
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore yarn package cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Set up dependencies
+          command: yarn install
+      - run:
+          name: Build the project
+          command: yarn run predeploy:production
+      - aws-s3/sync:
+          arguments: |
+            --delete
+          from: './build'
+          aws-region: PRODUCTION_AWS_DEFAULT_REGION
+          aws-access-key-id: PRODUCTION_AWS_ACCESS_KEY_ID
+          aws-secret-access-key: PRODUCTION_AWS_SECRET_ACCESS_KEY 
+          to: 's3://$PRODUCTION_S3_BUCKET_NAME'
 
 workflows:
   version: 2
@@ -105,11 +128,13 @@ workflows:
             branches:
               ignore:
                 - development
+                - master
       - test-coverage:
           filters:
             branches:
               ignore:
                 - development
+                - master
   deploy-staging:
     jobs:
       - test:
@@ -117,6 +142,7 @@ workflows:
             branches:
               only:
                 - development
+                - master
       - deploy-staging:
           requires:
             - test
@@ -124,6 +150,13 @@ workflows:
             branches:
               only:
                 - development
+      - deploy-production:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - master
   deploy_wiki:
     jobs:
       - deploy-wiki:
