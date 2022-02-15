@@ -134,51 +134,58 @@ Update the `apiRoute` property in `environment.staging.ts` with the provisioned 
 
 ### Build and Deploy
 
-The boilerplate project provides three ways to build and deploy the application to the staging environment.
+The boilerplate can either be deployed manually, or automatically via CircleCI. The preferred way to deploy is with automatic deployments. The default CircleCI configuration will deploy to the staging environment when there are new commits pushed to the `development` branch, and will deploy to production when new commits are pushed to the `main` branch.
 
-1. Manually set the `BUILD_DIRECTORY_PATH` and `AWS_SANDBOX_URL` environment variables to your project values. Then, use `yarn` to run the `deploy:staging` script. For example:
+#### CircleCI Deployments
 
-```bash
-export BUILD_DIRECTORY_PATH=./build
+After your CircleCI project is set up, the only thing you need to do to get deployments working for production and staging is to set 4 environment variables in the CircleCI project settings.
 
-export AWS_SANDBOX_URL=example.shift3sandbox.com
+* `STAGING_S3_BUCKET_NAME`
+	- This is the full S3 bucket name to deploy to.
+	- `my-app-bucket.shift3sandbox.com`
+* `STAGING_AWS_ACCESS_KEY_ID`
+  - The AWS access key ID used to authenticate with AWS.
+  - `AKIAIOSFODNN7EXAMPLE`
+* `STAGING_AWS_SECRET_ACCESS_KEY`
+	- The AWS secret key used to authenticate with AWS.
+	- `wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY`
+* `STAGING_AWS_DEFAULT_REGION`
+	- The default region your infrastructure is deployed to.
+	- `us-west-2`
 
-yarn run deploy:staging
-```
+Once these are set up, your project will be **automatically deployed** whenever new commits to the `development` branch are pushed to Github.
 
-2. In the provided `deploy_staging.sh` script, set the `BUILD_DIRECTORY_PATH` and `AWS_SANDBOX_URL` variables to your project values. Then, run the `deploy_staging.sh` script.
+Production deploys from the `main` branch use the same set of environment variables, just with `PRODUCTION` instead of `STAGING` int the names. The list of those variables follow:
 
-```bash
-# use the sh command
-sh deploy_staging.sh
+* `PRODUCTION_S3_BUCKET_NAME`
+* `PRODUCTION_AWS_ACCESS_KEY_ID`
+* `PRODUCTION_AWS_SECRET_ACCESS_KEY`
+* `PRODUCTION_AWS_DEFAULT_REGION`
 
-# or, make the script executable
-sudo chmod +x ./deploy_staging.sh
+#### Manual Deployments
 
-# then run as
-./deploy_staging
-```
+You can also manually deploy, however this requires you to have the AWS CLI setup locally and loaded with your credentials. The automatic deployments are recommended.
 
-3. In `package.json`, updated the `"deploy:staging"` script by replacing the `$BUILD_DIRECTORY_PATH` and `$AWS_SANDBOX_URL` placeholders with your project values. Then use `yarn` to run the `deploy:staging` script. For example:
+In `package.json`, updated the `"deploy:staging"` and the `deploy:production` npm script by replacing the `$BUILD_DIRECTORY_PATH` and `$AWS_SANDBOX_URL` placeholders with your project values. For example:
 
-```json
-// Update deploy:staging script
+```javascript
+// package.json
 {
   ...,
   "scripts": {
     ...
-    "deploy:staging": "aws s3 sync ./build s3://example.shift3sandbox.com --profile shift3 --delete"
+    "deploy:staging": "aws s3 sync ./build s3://example-staging.shift3sandbox.com --profile shift3 --delete"
+    "deploy:production": "aws s3 sync ./build s3://example-prod.shift3sandbox.com --profile shift3 --delete"
     ...
   }
 }
 ```
 
+Then use `yarn` to run the `deploy:staging` or `deploy:production` script.
+
 ```bash
-# then run
 yarn run deploy:staging
 ```
-
-**_Warning:_** If you update the `deploy:staging` script as described in the third method, the first two methods will no longer work.
 
 ## Development
 
@@ -218,7 +225,7 @@ Currently the issue templates may have some things you don't want or need in you
 
 ### Initializing the Project
 
-If this project is being cloned to start a new project, there are a few things that need to be updated to make it work. The project name will need to be updated in the `README.md`, `package.json`, CircleCI `config.yml`. The README also refers to the boilerplate, both in the text and in the CircleCI badges.
+If this project is being cloned to start a new project, there are a few things that need to be updated to make it work. The project name will need to be updated in the `README.md`, `package.json`. The README also refers to the boilerplate, both in the text and in the CircleCI badges.
 
 The project `environment` files will need to be updated with the path to the APIs. The development `environment.dev.ts`  and `environment.prod.ts` files assumes a local development server of `http://localhost:3000`, which might need to be updated.
 
@@ -237,7 +244,7 @@ This project is configured to work with CircleCI. CircleCI is a continuous integ
 
 The CI hanldes building the application, running tests, and running linters. All of these jobs must pass in order for the CI build to be successful.
 
-This project has set up the CircleCI configuration [here](https://github.com/Shift3/boilerplate-client-react/blob/development/.circleci/config.yml). The project name needs to match the new project name for the builds to succeed.
+This project has set up the CircleCI configuration [here](.circleci/config.yml)
 
 It is recommended to use the above configuration, however if you choose to alter the configuration please visit the official CircleCI docs for guidance 'https://circleci.com/docs/2.0/config-intro/'.
 

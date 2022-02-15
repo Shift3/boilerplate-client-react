@@ -5,7 +5,7 @@ orbs:
 
 jobs:
   test:
-    working_directory: ~/boilerplate-client-react
+    working_directory: ~/repo
     docker:
       - image: 'circleci/node:14-browsers'
     steps:
@@ -39,7 +39,7 @@ jobs:
             NODE_OPTIONS: --max_old_space_size=4096
 
   test-coverage:
-    working_directory: ~/boilerplate-client-react
+    working_directory: ~/repo
     docker:
       - image: 'circleci/node:14-browsers'
     steps:
@@ -61,7 +61,7 @@ jobs:
           path: coverage
 
   deploy-wiki:
-    working_directory: ~/boilerplate-client-react
+    working_directory: ~/repo
     docker:
       - image: 'circleci/node:14'
     steps:
@@ -142,7 +142,6 @@ workflows:
             branches:
               only:
                 - development
-                - master
       - deploy-staging:
           requires:
             - test
@@ -150,6 +149,13 @@ workflows:
             branches:
               only:
                 - development
+  deploy-production:
+    jobs:
+      - test:
+          filters:
+            branches:
+              only:
+                - master
       - deploy-production:
           requires:
             - test
@@ -163,4 +169,4 @@ workflows:
           filters:
             branches:
               only:
-                - development
+                - master
