@@ -4,18 +4,141 @@ import styled from 'styled-components';
 
 const BootstrapButton: FC<ButtonProps> = ({ children, ...rest }) => <Button {...rest}>{children}</Button>;
 
-export const CreateButton = styled(BootstrapButton)`
-  color: ${props => props.theme.buttons.createTextColor};
-  background-color: ${props => props.theme.buttons.createBackgroundColor};
-  border-color: ${props => props.theme.buttons.createBorderColor};
-  min-width: 146px;
-  min-height: 24px;
-  padding: 10px;
-  margin: 0;
+export const TableActions = styled.div`
+  position: relative;
+  width: 100%;
+
+  & > button {
+    border: none;
+    background: transparent;
+    color: #333;
+
+    path {
+      fill: #333;
+    }
+
+    &:hover,
+    &:focus {
+      background: transparent;
+      border: none;
+      color: #333;
+      path {
+        fill: #333;
+      }
+    }
+  }
+
+  div {
+    transition-timing-function: ease;
+    transition-duration: 0.5s;
+    transition-property: max-width, opacity, padding-right;
+    opacity: 0;
+    max-width: 0;
+    position: absolute;
+    right: 2rem;
+    background: transparent;
+    overflow: hidden;
+    top: calc(50% - 1px);
+    transform: translateY(-50%);
+    white-space: nowrap;
+    padding: 0;
+    border-radius: 6px;
+
+    button {
+      display: inline-block;
+
+      &:first-of-type:not(:last-of-type) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      &:last-of-type:not(:first-of-type) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-left: none;
+      }
+
+      &:not(:first-of-type):not(:last-of-type) {
+        border-radius: 0;
+        border-left: none;
+      }
+    }
+  }
+
+  & > button:hover + div,
+  & > button:focus + div,
+  div:hover {
+    padding: 1rem;
+    max-width: 100vw;
+    opacity: 1;
+  }
+`;
+
+export const ActionButtonStyles = styled(BootstrapButton)`
+    border-radius: 6px;
+    border: none;
+    color: #333;
+    font-size: 0.8rem;
+    border: 1px solid #ccc;
+    background: white;
+    font-weight: 400;
+    transition: 0.15s ease all;
+    padding: 2px 8px;
+    white-space: nowrap;
+
+    &:hover {
+      background: #ddd;
+      border: 1px solid #ccc;
+      color: #333;
+      box-shadow: none;
+    }
+
+    &:active, &:focus {
+      background: white;
+      color: #333;
+      border: 1px solid #ccc;
+      box-shadow: none;
+    }
+`;
+
+
+export type ActionButtonProps = {
+  text: string;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  show?: boolean;
+};
+
+export const ActionButton: FC<ActionButtonProps> = ({ text, onClick, show }) =>
+  show ? (
+      <ActionButtonStyles role='button' tabIndex={0} onClick={onClick}>
+        {text}
+      </ActionButtonStyles>
+  ) : null;
+
+export const SecondaryButton = styled(BootstrapButton)`
+  color: #60A5FA;
+  background: #DBEAFE;
+  border: 1px solid #DBEAFE;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
 
   &:hover {
-    background-color: ${props => props.theme.buttons.createHoverBackgroundColor};
-    border-color: ${props => props.theme.buttons.createHoverBorderColor};
+    background: #BFDBFE;
+    color: #3B82F6;
+    border: 1px solid #DBEAFE;
+  }
+`;
+
+export const CreateButton = styled(BootstrapButton)`
+  color: ${props => props.theme.buttons.primaryTextColor};
+  background-color: ${props => props.theme.buttons.primaryBackgroundColor};
+  border-color: ${props => props.theme.buttons.primaryBorderColor};
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+
+  &:hover {
+    background-color: ${props => props.theme.buttons.primaryHoverBackgroundColor};
+    border-color: ${props => props.theme.buttons.primaryHoverBorderColor};
   }
 `;
 
@@ -23,34 +146,13 @@ export const CancelButton = styled(BootstrapButton)`
   color: ${props => props.theme.buttons.cancelTextColor};
   background-color: ${props => props.theme.buttons.cancelBackgroundColor};
   border-color: ${props => props.theme.buttons.cancelBorderColor};
-  padding: 0.5rem 1rem;
-  width: 40%;
-`;
-
-export const SubmitButton = styled(BootstrapButton)`
-  color: ${props => props.theme.buttons.submitTextColor};
-  background-color: ${props => props.theme.buttons.submitBackgroundColor};
-  border-color: ${props => props.theme.buttons.submitBorderColor};
-  padding: 0.5rem 1rem;
-  width: 40%;
-`;
-
-export const DeleteButton = styled(BootstrapButton)`
-  color: ${props => props.theme.buttons.deleteTextColor};
-  background-color: ${props => props.theme.buttons.deleteBackgroundColor};
-  border-color: ${props => props.theme.buttons.deleteBorderColor};
-  padding: 0.5rem 1rem;
-  width: 40%;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
 
   &:hover {
-    background-color: ${props => props.theme.buttons.deleteHoverBackgroundColor};
-    border-color: ${props => props.theme.buttons.deleteHoverBorderColor};
-  }
-
-  &:disabled {
-    background-color: ${props => props.theme.buttons.disabledBackgroundColor};
-    border-color: ${props => props.theme.buttons.deleteDisabledBorderColor};
-    color: ${props => props.theme.buttons.deleteDisabledTextColor};
+    background-color: ${props => props.theme.buttons.cancelBackgroundColor};
+    border-color: ${props => props.theme.buttons.cancelBorderColor};
+    color: black;
   }
 `;
 
@@ -70,6 +172,8 @@ export const CustomButton = styled(BootstrapButton)`
   border-color: ${props => props.theme.buttons.backgroundColor};
   color: ${props => props.theme.buttons.text};
   width: ${props => props.theme.buttons.width};
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
 
   &:hover {
     background-color: ${props => props.theme.buttons.hoverBackgroundColor};
@@ -78,7 +182,9 @@ export const CustomButton = styled(BootstrapButton)`
 
   &:disabled {
     background-color: ${props => props.theme.buttons.disabledBackgroundColor};
-    border-color: ${props => props.theme.buttons.disabledBorderColor};
+    border-color: #999;
+    border: ${props => props.theme.buttons.disabledBackgroundColor};;
+    color: #999;
   }
 `;
 
@@ -89,6 +195,7 @@ export const ButtonWrapper = styled.div`
 
   & button {
     margin-right: 10px;
+    border-radius: 6px;
   }
 
   & button:last-of-type {

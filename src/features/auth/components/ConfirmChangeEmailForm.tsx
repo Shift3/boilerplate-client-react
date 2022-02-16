@@ -1,11 +1,10 @@
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
-import { SubmitButton } from 'common/styles/button';
 
 export type FormData = {
   verificationCode: number;
@@ -33,15 +32,15 @@ export const ConfirmChangeEmailForm: FC<Props> = ({ onSubmit }) => {
     resolver: yupResolver(schema),
     mode: 'all',
     defaultValues: {
-      verificationCode: 0,
+      verificationCode: ''
     },
   });
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
-        <Form.Label htmlFor='verificationCode'>Verification Code</Form.Label>
         <Form.Control
+          autoFocus
           id='verificationCode'
           type='text'
           {...register('verificationCode')}
@@ -52,8 +51,8 @@ export const ConfirmChangeEmailForm: FC<Props> = ({ onSubmit }) => {
         </Form.Control.Feedback>
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
-        <LoadingButton type="submit" as={SubmitButton} disabled={!isValid} loading={isSubmitting}>
-          SUBMIT
+        <LoadingButton as={Button} disabled={!isValid} loading={isSubmitting}>
+          Change my Email
         </LoadingButton>
       </div>
     </Form>

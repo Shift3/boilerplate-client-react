@@ -1,12 +1,16 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import portraitPlaceholder from 'assets/img/portrait_placeholder.png';
 import { useDeleteUserMutation, useForgotPasswordMutation, useResendActivationEmailMutation } from 'common/api/userApi';
-import ActionButton, { ActionButtonProps } from 'common/components/ActionButton';
-import { User } from 'common/models';
+import { CircularImg } from 'common/components/Common';
+import { RoleType, User } from 'common/models';
+import * as notificationService from 'common/services/notification';
+import { ActionButton, ActionButtonProps, TableActions } from 'common/styles/button';
+import { SubtleBadge } from 'common/styles/utilities';
 import { useConfirmationModal } from 'features/confirmation-modal';
 import { useRbac } from 'features/rbac';
 import { useCallback, useMemo } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 import { Column } from 'react-table';
-import * as notificationService from 'common/services/notification';
 
 export type UserTableItem = {
   id: number;
@@ -14,7 +18,7 @@ export type UserTableItem = {
   firstName: string;
   lastName: string;
   activatedAt: Date | ActionButtonProps;
-  role: string;
+  role: RoleType;
   actions: ActionButtonProps[];
 };
 
@@ -24,7 +28,6 @@ export type UseUserTableData = (agents?: User[]) => {
 };
 
 export const useUserTableData: UseUserTableData = (users = []) => {
-  const history = useHistory();
   const [resendActivationEmail] = useResendActivationEmailMutation();
   const [deleteUser] = useDeleteUserMutation();
   const [sendForgotPasswordEmail] = useForgotPasswordMutation();
@@ -32,13 +35,6 @@ export const useUserTableData: UseUserTableData = (users = []) => {
   const { userHasPermission } = useRbac();
 
   const getUsersFullName = (user: User) => `${user.firstName} ${user.lastName}`;
-
-  const navigateToUpdateView = useCallback(
-    (user: User) => {
-      history.push(`/users/update-user/${user.id}`);
-    },
-    [history],
-  );
 
   const handleResendActivationEmail = useCallback(
     (user: User) => {
@@ -82,31 +78,85 @@ export const useUserTableData: UseUserTableData = (users = []) => {
     [openModal, sendForgotPasswordEmail],
   );
 
+  const roleVariant = (role: RoleType) => {
+    if (!role) return '';
+
+    return {
+      'Super Administrator': 'danger',
+      Admin: 'warning',
+      User: 'secondary',
+      Editor: 'info',
+    }[role];
+  };
+
   // Set up columns and headers
   const columns: Column<UserTableItem>[] = useMemo(
     () => [
-      { accessor: 'lastName', Header: 'Last Name' },
-      { accessor: 'firstName', Header: 'First Name' },
-      { accessor: 'email', Header: 'Email' },
-      { accessor: 'role', Header: 'Role' },
+      {
+        accessor: 'lastName',
+        Header: 'Name',
+        Cell: ({ row }) => (
+          <div className='d-flex d-row align-items-center mr-3'>
+            <CircularImg radius={32} src={portraitPlaceholder} alt='Profile' />
+
+            <div className='d-flex flex-column'>
+              <span>
+                {row.original.firstName}&nbsp;
+                {row.original.lastName}
+              </span>
+              <small className='text-muted'>{row.original.email}</small>
+            </div>
+          </div>
+        ),
+      },
+      {
+        accessor: 'role',
+        Header: 'Role',
+        Cell: ({ value: role }) => (
+          <SubtleBadge pill variant={roleVariant(role)}>
+            {role}
+          </SubtleBadge>
+        ),
+        disableSortBy: true,
+      },
       {
         accessor: 'activatedAt',
         Header: 'Activated',
         Cell: ({ value: activatedAt }) => (
           <>
             {activatedAt instanceof Date ? (
-              new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(activatedAt)
+              <time dateTime={activatedAt.toISOString()}>
+                {new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(activatedAt)}
+              </time>
             ) : (
-              <ActionButton {...activatedAt} />
+              <>
+                <ActionButton {...activatedAt}>{activatedAt.text}</ActionButton>
+              </>
             )}
           </>
         ),
+        disableSortBy: true,
       },
       {
         accessor: 'actions',
-        Header: 'Actions',
-        Cell: ({ value: actions, row }) =>
-          actions.map(action => <ActionButton key={`${action.icon}-${row.id}`} {...action} />),
+        Header: '',
+        Cell: ({ value: actions }) => (
+          <>
+            {actions.filter(action => action.show).length > 0 ? (
+              <TableActions>
+                <Button onClick={e => e.stopPropagation()}>
+                  <FontAwesomeIcon icon={['fas', 'ellipsis-h']} size='xs' />
+                </Button>
+                <div>
+                  {actions.map(action => (
+                    <ActionButton key={action.text} {...action} />
+                  ))}
+                </div>
+              </TableActions>
+            ) : null}
+          </>
+        ),
+        disableSortBy: true,
       },
     ],
     [],
@@ -124,33 +174,33 @@ export const useUserTableData: UseUserTableData = (users = []) => {
         activatedAt: user.activatedAt
           ? new Date(user.activatedAt)
           : {
-              icon: 'envelope',
-              tooltipText: 'Resend Activation Email',
-              onClick: () => handleResendActivationEmail(user),
+              text: 'Resend Activation Email',
+              onClick: e => {
+                e.stopPropagation();
+                handleResendActivationEmail(user);
+              },
               show: userHasPermission({ permission: 'user:resend-activation-email', data: user }),
             },
         actions: [
           {
-            icon: 'edit',
-            tooltipText: 'Edit',
-            onClick: () => navigateToUpdateView(user),
-            show: userHasPermission({ permission: 'user:update', data: user }),
-          },
-          {
-            icon: 'trash-alt',
-            tooltipText: 'Delete',
-            onClick: () => handleDelete(user),
-            show: userHasPermission({ permission: 'user:delete', data: user }),
-          },
-          {
-            icon: 'lock',
-            tooltipText: 'Reset Password',
-            onClick: () => handlePasswordReset(user),
+            text: 'Reset Password',
+            onClick: e => {
+              e.stopPropagation();
+              handlePasswordReset(user);
+            },
             show: userHasPermission({ permission: 'user:send-reset-password-email', data: user }),
+          },
+          {
+            text: 'Delete',
+            onClick: e => {
+              e.stopPropagation();
+              handleDelete(user);
+            },
+            show: userHasPermission({ permission: 'user:delete', data: user }),
           },
         ],
       })),
-    [users, userHasPermission, handleDelete, handlePasswordReset, handleResendActivationEmail, navigateToUpdateView],
+    [users, userHasPermission, handleDelete, handlePasswordReset, handleResendActivationEmail],
   );
 
   return { columns, data };

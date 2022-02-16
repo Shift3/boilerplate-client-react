@@ -31,6 +31,7 @@
             }
         ],
         "arrow-body-style": "off",
+        "react/no-unescaped-entities": "off",
         "no-param-reassign": "off",
         "import/prefer-default-export": "off",
         "no-shadow": "off",
@@ -41,7 +42,8 @@
         "react/self-closing-comp": "warn",
         "react/jsx-props-no-spreading": "off",
         "react/react-in-jsx-scope": "off",
-        "react/require-default-props": "off"
+        "react/require-default-props": "off",
+        "react/no-unused-prop-types": "off"
     },
     "settings": {
         "import/resolver": {

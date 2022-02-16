@@ -1,12 +1,12 @@
-import { FC } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { useActivateAccountMutation } from 'common/api/userApi';
 import { handleApiError } from 'common/api/handleApiError';
+import { useActivateAccountMutation } from 'common/api/userApi';
+import { FrontPageLayout, Title } from 'common/components/FrontPageLayout';
 import * as notificationService from 'common/services/notification';
+import { StyledFormWrapper } from 'common/styles/form';
+import { FC } from 'react';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { ActivateAccountForm, FormData } from '../components/ActivateAccountForm';
-import { PageWrapper } from 'common/styles/page';
-import { StyledFormWrapper, Title } from 'common/styles/form';
 
 export const ActivateAccountPage: FC = () => {
   const history = useHistory();
@@ -26,11 +26,17 @@ export const ActivateAccountPage: FC = () => {
   };
 
   return (
-    <PageWrapper>
+    <FrontPageLayout>
+      <Title>Activate Account</Title>
+      <p className="text-muted">Just one more step! Choose a password to active your account.</p>
       <StyledFormWrapper data-testid='wrapper'>
-        <Title>Activate Account</Title>
         <ActivateAccountForm onSubmit={onSubmit} />
+        <div className='mt-2 mb-2'>
+          <small>
+            Ended up here by mistake? <Link to="/auth/login">Log In</Link>
+          </small>
+        </div>
       </StyledFormWrapper>
-    </PageWrapper>
+    </FrontPageLayout>
   );
 };

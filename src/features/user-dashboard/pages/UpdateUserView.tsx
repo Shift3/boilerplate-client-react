@@ -1,16 +1,17 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetAgenciesQuery } from 'common/api/agencyApi';
-import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
-import { useRbac } from 'features/rbac';
-import { FC, useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
-import { FormData, UserDetailForm } from '../components/UserDetailForm';
 import { useGetRolesQuery } from 'common/api/roleApi';
 import { useGetUserByIdQuery, useUpdateUserMutation } from 'common/api/userApi';
-import * as notificationService from 'common/services/notification';
-import { PageWrapper } from 'common/styles/page';
-import { StyledFormWrapper, Title } from 'common/styles/form';
+import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
+import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { Agency, PaginatedResult } from 'common/models';
+import * as notificationService from 'common/services/notification';
+import { StyledFormWrapper } from 'common/styles/form';
+import { useRbac } from 'features/rbac';
+import { FC, useEffect, useState } from 'react';
+import { Link, useHistory, useParams } from 'react-router-dom';
+import { FormData, UserDetailForm } from '../components/UserDetailForm';
 
 interface RouteParams {
   id: string;
@@ -66,20 +67,36 @@ export const UpdateUserView: FC = () => {
   };
 
   return (
-    <PageWrapper>
-      <WithLoadingOverlay isLoading={isLoadingUser || isLoadingRoles || isLoadingAgencies}>
-        <StyledFormWrapper>
-          <Title>Update User</Title>
-          <UserDetailForm
-            availableRoles={availableRoles}
-            availableAgencies={availableAgencies}
-            defaultValues={user}
-            submitButtonLabel='UPDATE'
-            onSubmit={handleFormSubmit}
-            onAgencySelectScrollToBottom={getNextPage}
-          />
-        </StyledFormWrapper>
-      </WithLoadingOverlay>
-    </PageWrapper>
+    <SmallContainer>
+      <PageCrumb>
+        <Link to='/users'>
+          <FontAwesomeIcon icon={["fas", "chevron-left"]} />  Back to User List
+        </Link>
+      </PageCrumb>
+
+      <PageHeader>
+        <div>
+          <h1>Update User</h1>
+          <p className='text-muted'>Update this users details and roles here.</p>
+        </div>
+      </PageHeader>
+
+      <FormCard>
+        <FormCard.Body>
+          <WithLoadingOverlay isLoading={isLoadingUser || isLoadingRoles || isLoadingAgencies}>
+            <StyledFormWrapper>
+              <UserDetailForm
+                availableRoles={availableRoles}
+                availableAgencies={availableAgencies}
+                defaultValues={user}
+                submitButtonLabel='Save'
+                onSubmit={handleFormSubmit}
+                onAgencySelectScrollToBottom={getNextPage}
+              />
+            </StyledFormWrapper>
+          </WithLoadingOverlay>
+        </FormCard.Body>
+      </FormCard>
+    </SmallContainer>
   );
 };

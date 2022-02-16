@@ -1,48 +1,45 @@
-import Button from 'react-bootstrap/Button';
-import styled from 'styled-components';
-import { FC } from 'react';
-import { Row, Col, Container } from 'react-bootstrap';
-import { useHistory, useParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useAuth } from 'features/auth/hooks';
+import { handleApiError } from 'common/api/handleApiError';
+import { useAppDispatch } from 'app/redux';
 import {
-  useRequestChangeEmailMutation,
+  ChangePasswordRequest, useChangePasswordMutation, useRequestChangeEmailMutation,
   useResendChangeEmailVerificationEmailMutation,
   useUpdateProfileMutation
 } from 'common/api/userApi';
-import { handleApiError } from 'common/api/handleApiError';
-import { useAppDispatch } from 'app/redux';
-import { authSlice } from 'features/auth/authSlice';
+import { PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
+import { ErrorResponse } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import * as authLocalStorage from 'features/auth/authLocalStorage';
-import { UserEmailFormData, UpdateUserEmailForm } from '../components/UpdateUserEmailForm';
 import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
 import { ProfilePhotoFormData, UpdateProfilePhotoForm } from '../../user-profile/components/UpdateProfilePhotoForm';
-import { PageWrapper } from 'common/styles/page';
-import { StyledFormWrapper, Title } from 'common/styles/form';
 import { useUpdateProfilePhoto, useDeleteProfilePhoto } from 'features/user-profile/hooks';
-
-import { DeleteButton } from 'common/styles/button';
+import { authSlice } from 'features/auth/authSlice';
+import { ChangePasswordForm, FormData as ForgotPasswordFormData } from 'features/user-dashboard/components/ChangePasswordForm';
+import { FC, useState } from 'react';
+import { Alert, Col, Nav, Row } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import { Link, useHistory, useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import { UpdateUserEmailForm, UserEmailFormData } from '../components/UpdateUserEmailForm';
+import { UserProfileImage } from 'features/navbar/components/UserProfileImage';
 
 type RouteParams = {
   id: string;
 };
 
-const Wrapper = styled.div`
-  margin-bottom: 20px;
-`;
+const ProfileNav = styled(Nav)`
+  padding-right: 4rem;
+  a {
+    padding-left: 0;
+    color: #333;
 
-const Text = styled.div`
-  color: ${(props) => props.theme.forms.textColor};
-  margin: 20px auto 0;
-`;
-
-const ResendVerificationEmailButton = styled(Button)`
-  color: ${(props) => props.theme.buttons.submitTextColor};
-  background-color: ${(props) => props.theme.buttons.submitBackgroundColor};
-  border-color: ${(props) => props.theme.buttons.submitBorderColor};
-  width: 100%;
-`;
+    &.active {
+      font-weight: bold;
+    }
+  }
+`
 
 export const UpdateUserProfilePage: FC = () => {
   const history = useHistory();
@@ -53,7 +50,9 @@ export const UpdateUserProfilePage: FC = () => {
   const [resendChangeEmailVerificationEmail] = useResendChangeEmailVerificationEmailMutation();
   const { updateUserProfilePhoto } = useUpdateProfilePhoto();
   const { deleteUserProfilePhoto } = useDeleteProfilePhoto();
+  const [changePassword] = useChangePasswordMutation();
   const dispatch = useAppDispatch();
+  const [tab, setTab] = useState('profile');
 
   const onSubmit = async (formData: ProfileFormData) => {
     const data = { id: Number(id), ...formData };
@@ -121,14 +120,52 @@ export const UpdateUserProfilePage: FC = () => {
     }
     return false;
   }
+  const onChangePasswordFormSubmit = async (data: ForgotPasswordFormData) => {
+    const request: ChangePasswordRequest = { id: user!.id, ...data };
+
+    try {
+      const session = await changePassword(request).unwrap();
+      dispatch(authSlice.actions.userLoggedIn({ token: session.token, user: session.user }));
+      notificationService.showSuccessMessage('Password updated.');
+    } catch (error) {
+      notificationService.showErrorMessage(((error as FetchBaseQueryError).data as ErrorResponse).message);
+    }
+
+    history.push('/agents');
+  };
 
   return (
-    <PageWrapper>
-      <Container>
-        <Row>
-          <Col xs={12} xl={6}>
-            <StyledFormWrapper style={{ margin: '20px auto' }}>
-              <Title>Update Profile</Title>
+    <SmallContainer>
+      <PageCrumb>
+        <Link to='/agents'>
+          <FontAwesomeIcon icon={["fas", "chevron-left"]} />  Back to Agent List
+        </Link>
+      </PageCrumb>
+
+      <PageHeader className='mb-3'>
+        <div className='d-flex'>
+          <UserProfileImage user={user} size="xs" />
+          <div>
+            <h1>{user?.firstName} {user?.lastName[0]}.</h1>
+            <p className='text-muted'>Your account settings.</p>
+          </div>
+        </div>
+      </PageHeader>
+
+      <ProfileNav defaultActiveKey="/home">
+        <ProfileNav.Link onClick={() => setTab('profile')} className={tab === 'profile' ? 'active' : ''}>Profile</ProfileNav.Link>
+        <ProfileNav.Link onClick={() => setTab('security')} className={tab === 'security' ? 'active' : ''}>Security and Password</ProfileNav.Link>
+      </ProfileNav>
+      <hr className='mt-0' />
+      
+      {tab === 'profile' ? (
+        <>
+          <Row>
+            <Col md='5'>
+              <h5>General Information</h5>
+              <p className="text-muted">This information will be used to identify you in our system</p>
+            </Col>
+            <Col>
               <UpdateUserProfileForm
                 onSubmit={onSubmit}
                 defaultValues={{
@@ -136,49 +173,86 @@ export const UpdateUserProfilePage: FC = () => {
                   lastName: user?.lastName ?? '',
                 }}
               />
-            </StyledFormWrapper>
-          </Col>
+            </Col>
+          </Row>
 
-          <Col xs={12} xl={6}>
-            <StyledFormWrapper style={{ margin: '20px auto' }}>
-              <Title>Update Email</Title>
+          <hr />
+
+          <Row>
+            <Col md='5'>
+              <h5>Email Address</h5>
+              <p className="text-muted">
+                Your email address on file will be used to communicate with you.
+                Changing your email requires you to confirm your new email
+                address.
+              </p>
+            </Col>
+            <Col>
                 { user?.newEmail && (
-                  <Wrapper>
-                    <Text>
-                      <p data-testid='updateUserExistingEmailChangeInfoContent'>An email change has already been requested for your account.</p>
-                    </Text>
-                    <ResendVerificationEmailButton
-                      data-testid='resendVerificationEmailButton'
-                      onClick={ handleResendChangeEmailVerificationEmail }
-                    >
-                      RESEND VERIFICATION EMAIL
-                    </ResendVerificationEmailButton>
-                    <Text>
-                      <p data-testid='updateUserEmailChangeInfoContent'>If you would like to request email change to another email, enter the new email below.</p>
-                    </Text>
-                  </Wrapper>
+                  <Alert variant='warning'>
+                    <div>
+                      <p data-testid='updateUserExistingEmailChangeInfoContent'>
+                        You requested an email change. A verification email has
+                        been sent to <b>{user.newEmail}</b>.  To confirm your
+                        new email, please follow the directions in the
+                        verification email.
+                      </p>
+                      <Button
+                        variant='warning'
+                        data-testid='resendVerificationEmailButton'
+                        onClick={handleResendChangeEmailVerificationEmail}
+                      >
+                        Resend Verification Email
+                      </Button>
+                    </div>
+                  </Alert>
+                  
                 )}
+
                 <UpdateUserEmailForm
                   onSubmit={onSubmitRequestEmailChange}
                   defaultValues={{
                     email: user?.email ?? '',
                   }}
                 />
-            </StyledFormWrapper>
-            <StyledFormWrapper style={{ margin: '20px auto' }}>
-              <Title>Profile Photo</Title>
+            </Col>
+          </Row>
+        
+          <Row>
+            <Col md='5'>
+              <h5>Profile Photo</h5>
+              <p className='text-muted'>
+                This is the photo of you that other users in the system will be able to see.
+              </p>
+            </Col>
+            <Col>
               <UpdateProfilePhotoForm
                 onSubmit={onSubmitNewProfilePhoto}
               />
-              <div className='d-grid grid-2 mt-3'>
-                <DeleteButton disabled={!profilePictureIsDefined()} onClick={handleDeleteProfilePhoto}>
-                  DELETE
-                </DeleteButton>
-            </div>
-          </StyledFormWrapper>
-          </Col>
-        </Row>
-      </Container>
-    </PageWrapper>
+              <Button className="mt-3" variant='danger' disabled={!profilePictureIsDefined()} onClick={handleDeleteProfilePhoto}>
+                DELETE
+              </Button>
+            </Col>
+          </Row>
+        </>
+      ) : ''}
+
+      {tab === 'security' ? (
+        <>
+          <Row>
+            <Col md='5'>
+              <h5>Change Password</h5>
+              <p className="text-muted">
+                Password must be 8 characters or more. Password must contain a lowercase, uppercase, special character, and a number.
+              </p>
+            </Col>
+            <Col>
+              <ChangePasswordForm onSubmit={onChangePasswordFormSubmit} />
+            </Col>
+          </Row>
+        </>
+      ) : ''}
+
+    </SmallContainer>
   );
 };

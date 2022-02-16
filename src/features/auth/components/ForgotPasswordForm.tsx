@@ -1,11 +1,10 @@
-import { FC, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Form } from 'react-bootstrap';
-import * as yup from 'yup';
-import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
-import { SubmitButton } from 'common/styles/button';
+import { FC } from 'react';
+import { Button, Form } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
+import { Constants } from 'utils/constants';
+import * as yup from 'yup';
 
 export type FormData = {
   email: string;
@@ -24,16 +23,10 @@ export const ForgotPasswordForm: FC<Props> = ({ onSubmit }) => {
     formState: { errors, isValid, isSubmitting },
     handleSubmit,
     register,
-    trigger,
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
   });
-
-  // Trigger validation on first render.
-  useEffect(() => {
-    trigger();
-  }, [trigger]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -51,8 +44,8 @@ export const ForgotPasswordForm: FC<Props> = ({ onSubmit }) => {
         </Form.Control.Feedback>
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
-        <LoadingButton type='submit' as={SubmitButton} disabled={!isValid} loading={isSubmitting}>
-          SUBMIT
+        <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
+          Submit
         </LoadingButton>
       </div>
     </Form>

@@ -32,10 +32,10 @@ describe('<LoginPage/>', () => {
       expect(getRoles(forgotPasswordLink)).toHaveProperty('link');
     });
 
-    it('Should render a create account button', () => {
-      const createAccountButton = screen.getByText(/create account/i);
-      expect(createAccountButton).not.toBeNull();
-      expect(getRoles(createAccountButton)).toHaveProperty('button');
+    it('Should render a create account link', () => {
+      const createAccountLink = screen.getByText(/register/i);
+      expect(createAccountLink).not.toBeNull();
+      expect(getRoles(createAccountLink)).toHaveProperty('link');
     });
   });
 
@@ -62,8 +62,8 @@ describe('<LoginPage/>', () => {
       expect(history.location.pathname).toBe('/auth/forgot-password');
     });
 
-    it('Should navigate to "/auth/signup" when the "CREATE ACCOUNT" button is clicked', () => {
-      const createAccountButton = screen.getByText(/create account/i);
+    it('Should navigate to "/auth/signup" when the "Register" link is clicked', () => {
+      const createAccountButton = screen.getByText(/register/i);
       userEvent.click(createAccountButton);
       expect(history.location.pathname).toBe('/auth/signup');
     });

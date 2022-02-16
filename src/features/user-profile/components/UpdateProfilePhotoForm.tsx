@@ -1,12 +1,11 @@
 import { FC, useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
 import FormPrompt from 'common/components/FormPrompt';
-import { SubmitButton } from 'common/styles/button';
 
 export type ProfilePhotoFormData = {
   profilePicture: FileList | null;
@@ -72,11 +71,9 @@ export const UpdateProfilePhotoForm: FC<Props> = ({ onSubmit, defaultValues }) =
           {errors.profilePicture?.message}
         </Form.Control.Feedback>
       </Form.Group>
-      <div className='d-grid gap-2 mt-3'>
-        <LoadingButton type='submit' as={SubmitButton} disabled={imgPreviewState.src === '' || !isValid}  loading={isSubmitting}>
-          UPDATE
-        </LoadingButton>
-      </div>
+      <LoadingButton className="mt-3" type='submit' as={Button} disabled={imgPreviewState.src === '' || !isValid}  loading={isSubmitting}>
+        UPDATE
+      </LoadingButton>
       <FormPrompt isDirty={isDirty} isSubmitting={isSubmitting} />
     </Form>
   );

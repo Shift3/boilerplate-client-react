@@ -6,16 +6,31 @@ export const GlobalStyle = createGlobalStyle`
     *::before {
         margin: 0;
         padding: 0;
-        box-sizing: inherit;
+        box-sizing: border-box;
     }
+
     html,
     body {
         min-height: 100vh;
-        width: 100vw;
+        background: #fafafa;
     }
-    body {
-        display: flex;
-        flex-direction: column;
-        box-sizing: border-box;
+
+    a {
+        text-decoration: none;
+        color: #3b82f6;
     }
-`;
+
+    button.btn:disabled {
+        cursor: not-allowed;
+        pointer-events: unset;
+    }
+
+    label {
+        margin-bottom: .25rem !important;
+        margin-top: 0;
+        font-size: 0.825rem;
+        font-weight: 500;
+        color: #555;
+    }
+    `;
+export default GlobalStyle;

@@ -1,4 +1,4 @@
-import { isPaginatedResult, PaginatedResult } from 'common/models';
+import { isPaginatedResult, PaginatedResult, SortOrder } from 'common/models';
 import { useCallback, useEffect, useReducer } from 'react';
 import { UseQuery, UseQueryOptions, UseQueryResult } from 'rtk-query-config';
 
@@ -38,12 +38,12 @@ const defaultPaginationConfig: PaginationConfig = {
 };
 
 // --------------------------------------------------------------------------------------------------------------------
-type SortState = {
-  // TODO
-};
+type SortState = { sortBy: SortOrder | undefined };
 
 type SortActions = {
-  // TODO
+  // If sortBy is defined, sorts the result set by the specified property and direction.
+  // Otherwise, returns the unsorted result set.
+  changeSortBy: (sortBy: SortOrder | undefined) => void;
 };
 
 type SortManager = SortState & SortActions;
@@ -65,6 +65,7 @@ type PSFQueryState = PaginationState & SortState & FilterState;
 type PSFQueryAction =
   | { type: 'pagination/setPage'; payload: { page: number } }
   | { type: 'pagination/setPageSize'; payload: { size: number } }
+  | { type: 'sort/setSortBy'; payload: { sortBy: SortOrder | undefined } }
   | { type: 'all/dataUpdated'; payload: { data: PaginatedResult<unknown> | unknown } };
 
 export type PSFQueryManager = PaginationManager & SortManager & FilterManager;
@@ -91,7 +92,7 @@ export const usePSFQuery = <ResultType>(
   };
 
   const initialSortState: SortState = {
-    // TODO
+    sortBy: undefined,
   };
 
   const initialFilterState: FilterState = {
@@ -137,6 +138,13 @@ export const usePSFQuery = <ResultType>(
         return state;
       }
 
+      case 'sort/setSortBy': {
+        const { sortBy } = action.payload;
+        const { basePage } = config;
+        // Reset page to 0 since changing sorting will change the contents of all the pages.
+        return { ...state, page: basePage, sortBy };
+      }
+
       case 'all/dataUpdated': {
         const { data } = action.payload;
         let newState = { ...state };
@@ -165,8 +173,8 @@ export const usePSFQuery = <ResultType>(
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // Use the query hook.
-  const { page, pageSize } = state;
-  const queryArg = { page, pageSize };
+  const { page, pageSize, sortBy } = state;
+  const queryArg = { page, pageSize, sortBy };
   const queryResult = useQuery(queryArg, options);
 
   // Certain metadata is returned as part of the response from the server. For example, `count` and `pageCount`
@@ -204,6 +212,11 @@ export const usePSFQuery = <ResultType>(
     [dispatch],
   );
 
+  const changeSortBy = useCallback(
+    (sortBy: SortOrder | undefined) => dispatch({ type: 'sort/setSortBy', payload: { sortBy } }),
+    [dispatch],
+  );
+
   return {
     ...queryResult,
     ...state,
@@ -211,5 +224,6 @@ export const usePSFQuery = <ResultType>(
     getPreviousPage,
     getNextPage,
     changePageSize,
+    changeSortBy,
   };
 };

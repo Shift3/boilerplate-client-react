@@ -1,11 +1,10 @@
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+import { handleApiError } from 'common/api/handleApiError';
+import { useConfirmChangeEmailMutation } from 'common/api/userApi';
+import { FrontPageLayout, Title } from 'common/components/FrontPageLayout';
+import * as notificationService from 'common/services/notification';
 import { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { useConfirmChangeEmailMutation } from 'common/api/userApi';
-import * as notificationService from 'common/services/notification';
-import { handleApiError } from 'common/api/handleApiError';
-import { PageWrapper } from 'common/styles/page';
-import { StyledFormWrapper, Title } from 'common/styles/form';
 import { ConfirmChangeEmailForm, FormData } from '../components/ConfirmChangeEmailForm';
 
 export const ConfirmChangeEmailPage: FC = () => {
@@ -25,11 +24,13 @@ export const ConfirmChangeEmailPage: FC = () => {
   };
 
   return (
-    <PageWrapper>
-      <StyledFormWrapper data-testid='wrapper'>
-        <Title>Verify Email Change</Title>
-        <ConfirmChangeEmailForm onSubmit={onSubmit} />
-      </StyledFormWrapper>
-    </PageWrapper>
+    <FrontPageLayout>
+      <Title>Verify Email Change</Title>
+      <p className='text-muted'>
+        You have requested an email change. Enter the verification code
+        you received in your email.
+      </p>
+      <ConfirmChangeEmailForm onSubmit={onSubmit} />
+    </FrontPageLayout>
   );
 };

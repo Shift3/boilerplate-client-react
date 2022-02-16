@@ -1,4 +1,8 @@
 version: 2.1
+
+orbs: 
+  aws-s3: circleci/aws-s3@3.0.0
+
 jobs:
   test:
     working_directory: ~/boilerplate-client-react
@@ -68,16 +72,62 @@ jobs:
       - run:
           name: Deploy wiki
           command: bash .circleci/deploy_wiki.sh
+  deploy-staging:
+    docker:
+      - image: 'circleci/node:14'
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore yarn package cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Set up dependencies
+          command: yarn install
+      - run:
+          name: Build the project
+          command: yarn run predeploy:staging
+      - aws-s3/sync:
+          arguments: |
+            --delete
+          from: './build'
+          aws-region: STAGING_AWS_DEFAULT_REGION
+          aws-access-key-id: STAGING_AWS_ACCESS_KEY_ID
+          aws-secret-access-key: STAGING_AWS_SECRET_ACCESS_KEY 
+          to: 's3://$S3_BUCKET_NAME'
 
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - test
-      - test-coverage
+      - test:
+          filters:
+            branches:
+              ignore:
+                - development
+      - test-coverage:
+          filters:
+            branches:
+              ignore:
+                - development
+  deploy-staging:
+    jobs:
+      - test:
+          filters:
+            branches:
+              only:
+                - development
+      - deploy-staging:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - development
   deploy_wiki:
     jobs:
       - deploy-wiki:
           filters:
             branches:
-              only: development
+              only:
+                - development

@@ -46,13 +46,13 @@ describe('SignupForm', () => {
       userEvent.type(lastNameInput, testFormData.lastName);
     });
 
-    await act(async () => userEvent.click(screen.getByRole('button', { name: 'SIGN UP' })));
+    await act(async () => userEvent.click(screen.getByRole('button', { name: 'Register' })));
 
     expect(mockOnSubmit).toHaveBeenCalledWith(testFormData, expect.any(Object));
   });
 
   it('should disable the submit button when fields are invalid', async () => {
-    const button = screen.getByRole('button', { name: 'SIGN UP' });
+    const button = screen.getByRole('button', { name: 'Register' });
     expect(button.hasAttribute('disabled')).toBeTruthy();
   });
 
@@ -78,7 +78,7 @@ describe('SignupForm', () => {
       userEvent.type(lastNameInput, testFormData.lastName);
     });
 
-    const button = screen.getByRole('button', { name: 'SIGN UP' });
+    const button = screen.getByRole('button', { name: 'Register' });
     expect(button.hasAttribute('disabled')).toBeFalsy();
   });
 
@@ -96,7 +96,7 @@ describe('SignupForm', () => {
     userEvent.type(lastNameInput, '456!&');
 
     await act(async () => {
-      userEvent.click(screen.getByRole('button', { name: 'SIGN UP' }));
+      userEvent.click(screen.getByRole('button', { name: 'Register' }));
     });
     expect(await screen.findAllByRole('alert')).toHaveLength(4);
   });

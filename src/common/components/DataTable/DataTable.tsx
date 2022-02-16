@@ -1,11 +1,13 @@
+import { SortOrder } from 'common/models/sorting';
 import { ReactElement, useEffect } from 'react';
-import Table from 'react-bootstrap/Table';
-import { Column, useFilters, usePagination, useSortBy, useTable } from 'react-table';
+import { Column, useFilters, useFlexLayout, usePagination, useSortBy, useTable } from 'react-table';
 import { Paginator } from './Paginator';
+import { SortIndicator } from './SortIndicator';
 
 export type DataTableProps<D extends Record<string, unknown>> = {
   columns: Column<D>[];
   data: D[];
+  onRowClick?: (item: D) => void;
   pagination?: {
     basePage: 0 | 1; // Whether to treat page 0 or 1 as the first page of the result set.
     page: number;
@@ -16,8 +18,8 @@ export type DataTableProps<D extends Record<string, unknown>> = {
     onPageChange: (page: number) => void;
     onPageSizeChange: (size: number) => void;
   };
-  sortBy?: {
-    // TODO
+  sorting?: {
+    onSortByChange: (sortBy: SortOrder | undefined) => void;
   };
   filters?: {
     // TODO
@@ -27,13 +29,14 @@ export type DataTableProps<D extends Record<string, unknown>> = {
 export const DataTable = <D extends Record<string, unknown>>({
   columns,
   data,
+  onRowClick,
   pagination,
-  sortBy,
+  sorting,
   filters,
 }: DataTableProps<D>): ReactElement => {
   // Evaluate these conditions once instead of re-computing in multiple places.
   const filtersEnabled = filters !== undefined;
-  const sortByEnabled = sortBy !== undefined;
+  const sortByEnabled = sorting !== undefined;
   const paginationEnabled = pagination !== undefined;
 
   // Determine which react-table plugins should be enabled.
@@ -55,7 +58,14 @@ export const DataTable = <D extends Record<string, unknown>>({
   // Generate the required table options for the enabled plugins.
   const extraTableOptions = {
     ...(filtersEnabled ? {} : {}), // TODO: add table options for filtering
-    ...(sortByEnabled ? {} : {}), // TODO: add table options for sorting
+    ...(sortByEnabled
+      ? {
+          manualSortBy: true,
+          disableMultiSort: true,
+          disableSortRemove: false,
+          autoResetSortBy: false,
+        }
+      : {}),
     ...(paginationEnabled ? { manualPagination: true, pageCount: pagination.pageCount } : {}),
   };
 
@@ -67,6 +77,7 @@ export const DataTable = <D extends Record<string, unknown>>({
       initialState,
       ...extraTableOptions,
     },
+    useFlexLayout,
     ...plugins,
   );
 
@@ -77,6 +88,7 @@ export const DataTable = <D extends Record<string, unknown>>({
     headerGroups,
     prepareRow,
     rows,
+    // Sorting specific props
     // Pagination specific props
     page,
     canPreviousPage,
@@ -86,12 +98,25 @@ export const DataTable = <D extends Record<string, unknown>>({
     previousPage,
     setPageSize,
     // Instance state
-    state: { pageIndex, pageSize },
+    state: { pageIndex, pageSize, sortBy },
   } = tableInstance;
 
   // If the 'usePagination' plugin is enabled, the 'page' instance prop contains the table rows for the current page.
   // Otherwise, the 'rows' instance prop contains the table rows.
   const tableRows = paginationEnabled ? page : rows;
+
+  useEffect(
+    () => {
+      if (sortByEnabled) {
+        const sortOrder: SortOrder | undefined = sortBy.length
+          ? { property: sortBy[0].id, direction: sortBy[0].desc ? 'DESC' : 'ASC' }
+          : undefined;
+        sorting.onSortByChange(sortOrder);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [sortBy, sortByEnabled, sorting?.onSortByChange],
+  );
 
   // Since we are using manual controlled pagination, we need to let the controller know
   // any time there is a change to page index or page size.
@@ -107,31 +132,53 @@ export const DataTable = <D extends Record<string, unknown>>({
   );
 
   return (
-    <div className='shadow p-3 bg-body rounded'>
-      <Table {...getTableProps()} responsive hover>
-        <thead>
+    <div>
+      <div className='table' {...getTableProps()}>
+        <div className='thead'>
           {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
+            <div className='tr' {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                <>
+                  {sortByEnabled && column.canSort ? (
+                    // Add the sorting props to control sorting and sort direction indicator.
+                    <div className='th' {...column.getHeaderProps(column.getSortByToggleProps())}>
+                      {column.render('Header')}{' '}
+                      <SortIndicator isSorted={column.isSorted} isDesc={column.isSortedDesc} />
+                    </div>
+                  ) : (
+                    <div className='th' {...column.getHeaderProps()}>
+                      {column.render('Header')}
+                    </div>
+                  )}
+                </>
               ))}
-            </tr>
+            </div>
           ))}
-        </thead>
-
-        <tbody {...getTableBodyProps()}>
+        </div>
+        <div className='tbody' {...getTableBodyProps()}>
           {tableRows.map(row => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()}>
+              <div
+                className='tr'
+                aria-hidden='true'
+                onClick={() => {
+                  if (onRowClick) onRowClick(row.original);
+                }}
+                {...row.getRowProps()}
+              >
                 {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+                  return (
+                    <div className='td' {...cell.getCellProps()}>
+                      {cell.render('Cell')}
+                    </div>
+                  );
                 })}
-              </tr>
+              </div>
             );
           })}
-        </tbody>
-      </Table>
+        </div>
+      </div>
       {/* If the usePagination plugin is enabled, render a paginator to allow users to page through the data. */}
       {paginationEnabled && (
         <Paginator

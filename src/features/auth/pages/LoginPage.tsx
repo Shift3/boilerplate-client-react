@@ -1,45 +1,8 @@
+import { FrontPageLayout, Title } from 'common/components/FrontPageLayout';
 import { useLogin } from 'features/auth/hooks';
 import { FC } from 'react';
-import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { FormData, LogInForm } from '../components/LoginForm';
-import { ForgotPasswordLink } from '../components/ForgotPasswordLink';
-import { RegisterCallToAction } from '../components/RegisterCallToAction';
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  background-color: ${props => props.theme.app.backgroundColor};
-`;
-
-const StyledContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  border-radius: 5px;
-  height: 50%;
-  width: 850px;
-  min-height: 420px;
-  padding: 60px;
-  background-color: ${props => props.theme.forms.backgroundColor};
-`;
-
-const LeftColumn = styled.div`
-  width: 55%;
-`;
-
-const RightColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 35%;
-`;
-
-const Title = styled.div`
-  color: ${props => props.theme.forms.title};
-  font-size: 2.4em;
-  font-style: bold;
-  margin-bottom: 5px;
-`;
 
 export const LogInPage: FC = () => {
   const { login } = useLogin();
@@ -49,17 +12,15 @@ export const LogInPage: FC = () => {
   };
 
   return (
-    <Wrapper data-testid='wrapper'>
-      <StyledContainer>
-        <LeftColumn>
-          <Title>Member Log In</Title>
-          <LogInForm onSubmit={onSubmit} />
-          <ForgotPasswordLink />
-        </LeftColumn>
-        <RightColumn>
-          <RegisterCallToAction />
-        </RightColumn>
-      </StyledContainer>
-    </Wrapper>
+    <FrontPageLayout>
+      <Title>Member Log In</Title>
+      <p className="text-muted">Welcome back to Bitwise Admin, the best admin panel on the internet.</p>
+      <LogInForm onSubmit={onSubmit} />
+      <div className='mt-2'>
+        <small>
+          Don't have an account? <Link to="/auth/signup">Register for one!</Link>
+        </small>
+      </div>
+    </FrontPageLayout>
   );
 };
