@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "version": "0.3.4",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
