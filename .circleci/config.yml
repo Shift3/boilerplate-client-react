@@ -128,13 +128,13 @@ workflows:
             branches:
               ignore:
                 - development
-                - master
+                - main
       - test-coverage:
           filters:
             branches:
               ignore:
                 - development
-                - master
+                - main
   deploy-staging:
     jobs:
       - test:
@@ -155,18 +155,18 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - main
       - deploy-production:
           requires:
             - test
           filters:
             branches:
               only:
-                - master
+                - main
   deploy_wiki:
     jobs:
       - deploy-wiki:
           filters:
             branches:
               only:
-                - master
+                - main
