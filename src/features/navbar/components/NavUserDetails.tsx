@@ -1,6 +1,4 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import portraitPlaceholder from 'assets/img/portrait_placeholder.png';
-import { CircularImg } from 'common/components/Common';
 import { User } from 'common/models';
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -50,11 +48,10 @@ type Props = {
 
 export const NavUserDetails: FC<Props> = ({ user }) => {
   const history = useHistory();
-  const fullName = `${user.firstName} ${user.lastName}`;
 
   return (
     <ProfileInfoWrapper onClick={() => history.push(`/user/profile/${user.id}`) }>
-      <UserProfileImage user={user} size="xs" />
+      <UserProfileImage user={user} size="xs" radius={32} />
 
       <div>
         <div>{user.firstName} {user.lastName.charAt(0)}.</div>

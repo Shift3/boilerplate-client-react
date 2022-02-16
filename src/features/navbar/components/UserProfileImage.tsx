@@ -5,9 +5,11 @@ import portraitPlaceholder from 'assets/img/portrait_placeholder.png';
 type Props = {
     user: User | null;
     size: string;
+    radius: number;
 };
 
-export const UserProfileImage: FC<Props> = ({ user, size }) => {
+export const UserProfileImage: FC<Props> = ({ user, size, radius }) => {
+
     let imageSource = '';
     const fullName = user ? `${user.firstName} ${user.lastName}` : 'User';
 
@@ -23,6 +25,6 @@ export const UserProfileImage: FC<Props> = ({ user, size }) => {
     }
 
     return (
-        <img src={imageSource} alt={fullName} />
+        <img className='rounded-circle' style={{ marginRight: '.75rem', height: radius, width: radius }} src={imageSource} alt={fullName} />
     )
 };

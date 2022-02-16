@@ -144,7 +144,7 @@ export const UpdateUserProfilePage: FC = () => {
 
       <PageHeader className='mb-3'>
         <div className='d-flex'>
-          <UserProfileImage user={user} size="xs" />
+          <UserProfileImage user={user} size="xs" radius={64} />
           <div>
             <h1>{user?.firstName} {user?.lastName[0]}.</h1>
             <p className='text-muted'>Your account settings.</p>
@@ -220,7 +220,7 @@ export const UpdateUserProfilePage: FC = () => {
         
           <Row>
             <Col md='5'>
-              <h5>Profile Photo</h5>
+              <h5>Photo</h5>
               <p className='text-muted'>
                 This is the photo of you that other users in the system will be able to see.
               </p>
