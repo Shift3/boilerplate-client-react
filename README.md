@@ -37,9 +37,10 @@ This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react
     - [Staging Build](#staging-build)
     - [Additional Resources](#additional-resources)
 
-## Staging URL
+## Demo
 
-<https://boilerplate-client-react.shift3sandbox.com/>
+You can see a demo of the project on either our [production site](https://boilerplate-client-react-prod.shift3sandbox.com) or
+to see a demo with new features, you can check out our [staging site](https://boilerplate-client-react.shift3sandbox.com/)
 
 ## Quick Start
 
