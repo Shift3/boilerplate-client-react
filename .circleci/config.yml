@@ -139,14 +139,12 @@ workflows:
               ignore:
                 - development
                 - main
-                - feature/production-deploys
       - test-coverage:
           filters:
             branches:
               ignore:
                 - development
                 - main
-                - feature/production-deploys
   deploy-staging:
     jobs:
       - test:
@@ -168,7 +166,6 @@ workflows:
             branches:
               only:
                 - main
-                - feature/production-deploys
       - deploy-production:
           requires:
             - test
@@ -176,7 +173,6 @@ workflows:
             branches:
               only:
                 - main
-                - feature/production-deploys
   deploy_wiki:
     jobs:
       - deploy-wiki:
