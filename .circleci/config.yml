@@ -1,0 +1,182 @@
+version: 2.1
+
+orbs: 
+  aws-s3: circleci/aws-s3@3.0.0
+
+commands:
+  deploy:
+    parameters:
+      aws_default_region_env:
+        type: env_var_name
+      aws_access_key_env:
+        type: env_var_name
+      aws_secret_key_env:
+        type: env_var_name
+      aws_s3_bucket_env:
+        type: env_var_name
+      environment:
+        type: string
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore yarn package cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Set up dependencies
+          command: yarn install
+      - run:
+          name: Build the project
+          command: yarn run predeploy:<<parameters.environment>>
+      - aws-s3/sync:
+          arguments: |
+            --delete
+          from: './build'
+          aws-region: <<parameters.aws_default_region_env>>
+          aws-access-key-id: <<parameters.aws_access_key_env>>
+          aws-secret-access-key: <<parameters.aws_secret_key_env>>
+          to: 's3://$<<parameters.aws_s3_bucket_env>>'
+
+
+jobs:
+  test:
+    working_directory: ~/repo
+    docker:
+      - image: 'circleci/node:14-browsers'
+    steps:
+      - checkout
+      - run: sudo apt-get update
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Set up Dependencies
+          command: |
+            yarn install
+      - run:
+          name: Test Server
+          command: |
+            yarn start
+          background: true
+          environment:
+            NODE_OPTIONS: --max_old_space_size=4096
+      - run:
+          name: Build and Lint
+          command: |
+            yarn build         
+      - run:
+          name: Test Frontend
+          command: |
+            export CI=true
+            yarn test-ci
+          environment:
+            NODE_OPTIONS: --max_old_space_size=4096
+
+  test-coverage:
+    working_directory: ~/repo
+    docker:
+      - image: 'circleci/node:14-browsers'
+    steps:
+      - checkout
+      - run: sudo apt-get update
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Run Jest and Collect Coverage Reports
+          command: |
+            export CI=true
+            yarn install
+            yarn test-cov-ci
+          environment:
+            NODE_OPTIONS: --max_old_space_size=4096
+      - store_artifacts:
+          path: coverage
+
+  deploy-wiki:
+    working_directory: ~/repo
+    docker:
+      - image: 'circleci/node:14'
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "57:05:87:cd:7b:4c:40:65:aa:bd:f4:97:c5:1a:c9:24"
+      - checkout
+      - run:
+          name: Deploy wiki
+          command: bash .circleci/deploy_wiki.sh
+  deploy-staging:
+    docker:
+      - image: 'circleci/node:14'
+    steps:
+      - deploy:
+          aws_access_key_env: STAGING_AWS_ACCESS_KEY_ID
+          aws_secret_key_env: STAGING_AWS_SECRET_ACCESS_KEY
+          aws_default_region_env: STAGING_AWS_DEFAULT_REGION
+          aws_s3_bucket_env: STAGING_S3_BUCKET_NAME
+          environment: staging
+          
+  deploy-production:
+    docker:
+      - image: 'circleci/node:14'
+    steps:
+      - deploy:
+          aws_access_key_env: PRODUCTION_AWS_ACCESS_KEY_ID
+          aws_secret_key_env: PRODUCTION_AWS_SECRET_ACCESS_KEY
+          aws_default_region_env: PRODUCTION_AWS_DEFAULT_REGION
+          aws_s3_bucket_env: PRODUCTION_S3_BUCKET_NAME
+          environment: production
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - test:
+          filters:
+            branches:
+              ignore:
+                - development
+                - main
+      - test-coverage:
+          filters:
+            branches:
+              ignore:
+                - development
+                - main
+  deploy-staging:
+    jobs:
+      - test:
+          filters:
+            branches:
+              only:
+                - development
+      - deploy-staging:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - development
+  deploy-production:
+    jobs:
+      - test:
+          filters:
+            branches:
+              only:
+                - main
+      - deploy-production:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - main
+  deploy_wiki:
+    jobs:
+      - deploy-wiki:
+          filters:
+            branches:
+              only:
+                - main
