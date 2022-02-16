@@ -3,9 +3,44 @@ version: 2.1
 orbs: 
   aws-s3: circleci/aws-s3@3.0.0
 
+commands:
+  deploy:
+    parameters:
+      aws_default_region_env:
+        type: env_var_name
+      aws_access_key_env:
+        type: env_var_name
+      aws_secret_key_env:
+        type: env_var_name
+      aws_s3_bucket_env:
+        type: env_var_name
+      environment:
+        type: string
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore yarn package cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Set up dependencies
+          command: yarn install
+      - run:
+          name: Build the project
+          command: yarn run predeploy:<<parameters.environment>>
+      - aws-s3/sync:
+          arguments: |
+            --delete
+          from: './build'
+          aws-region: <<parameters.aws_default_region_env>>
+          aws-access-key-id: <<parameters.aws_access_key_env>>
+          aws-secret-access-key: <<parameters.aws_secret_key_env>>
+          to: 's3://$<<parameters.aws_s3_bucket_env>>'
+
+
 jobs:
   test:
-    working_directory: ~/boilerplate-client-react
+    working_directory: ~/repo
     docker:
       - image: 'circleci/node:14-browsers'
     steps:
@@ -39,7 +74,7 @@ jobs:
             NODE_OPTIONS: --max_old_space_size=4096
 
   test-coverage:
-    working_directory: ~/boilerplate-client-react
+    working_directory: ~/repo
     docker:
       - image: 'circleci/node:14-browsers'
     steps:
@@ -61,7 +96,7 @@ jobs:
           path: coverage
 
   deploy-wiki:
-    working_directory: ~/boilerplate-client-react
+    working_directory: ~/repo
     docker:
       - image: 'circleci/node:14'
     steps:
@@ -76,25 +111,23 @@ jobs:
     docker:
       - image: 'circleci/node:14'
     steps:
-      - checkout
-      - restore_cache:
-          name: Restore yarn package cache
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
-      - run:
-          name: Set up dependencies
-          command: yarn install
-      - run:
-          name: Build the project
-          command: yarn run predeploy:staging
-      - aws-s3/sync:
-          arguments: |
-            --delete
-          from: './build'
-          aws-region: STAGING_AWS_DEFAULT_REGION
-          aws-access-key-id: STAGING_AWS_ACCESS_KEY_ID
-          aws-secret-access-key: STAGING_AWS_SECRET_ACCESS_KEY 
-          to: 's3://$S3_BUCKET_NAME'
+      - deploy:
+          aws_access_key_env: STAGING_AWS_ACCESS_KEY_ID
+          aws_secret_key_env: STAGING_AWS_SECRET_ACCESS_KEY
+          aws_default_region_env: STAGING_AWS_DEFAULT_REGION
+          aws_s3_bucket_env: STAGING_S3_BUCKET_NAME
+          environment: staging
+          
+  deploy-production:
+    docker:
+      - image: 'circleci/node:14'
+    steps:
+      - deploy:
+          aws_access_key_env: PRODUCTION_AWS_ACCESS_KEY_ID
+          aws_secret_key_env: PRODUCTION_AWS_SECRET_ACCESS_KEY
+          aws_default_region_env: PRODUCTION_AWS_DEFAULT_REGION
+          aws_s3_bucket_env: PRODUCTION_S3_BUCKET_NAME
+          environment: production
 
 workflows:
   version: 2
@@ -105,11 +138,13 @@ workflows:
             branches:
               ignore:
                 - development
+                - main
       - test-coverage:
           filters:
             branches:
               ignore:
                 - development
+                - main
   deploy-staging:
     jobs:
       - test:
@@ -124,10 +159,24 @@ workflows:
             branches:
               only:
                 - development
+  deploy-production:
+    jobs:
+      - test:
+          filters:
+            branches:
+              only:
+                - main
+      - deploy-production:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - main
   deploy_wiki:
     jobs:
       - deploy-wiki:
           filters:
             branches:
               only:
-                - development
+                - main
