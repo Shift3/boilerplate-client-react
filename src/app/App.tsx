@@ -44,12 +44,14 @@ const BannerWrapper = styled.div<{
 }>`
   ${StagingBanner} {
     display: none;
+    visibility: hidden;
   }
 
 
   ${props => props.bannerShowing ? css`
     ${StagingBanner} {
       display: block;
+      visibility: visible;
     }
 
     ${BitwiseNavbar} {
