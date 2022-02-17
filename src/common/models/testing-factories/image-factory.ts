@@ -1,6 +1,6 @@
 import { Factory } from 'fishery';
 import { Image } from '../image';
-import { FileMetaDataFactory } from './fileMetaData-factory';
+import { FileMetaDataFactory } from './file-meta-data-factory';
 import { ThumbnailFactory } from './thumbnail-factory';
 
 export const ImageFactory = Factory.define<Image>(({ sequence }) => ({

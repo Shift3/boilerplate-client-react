@@ -36,7 +36,7 @@ describe('UpdateProfilePhotoForm', () => {
         userEvent.upload(profilePictureInput, file);
     });
 
-    await act(async () => userEvent.click(screen.getByRole('button', { name: 'UPDATE' })));
+    await act(async () => userEvent.click(screen.getByRole('button', { name: 'Update' })));
 
     expect(mockOnSubmit).toHaveBeenCalledWith({ profilePicture: profilePictureInput.files }, expect.any(Object));
   });
@@ -55,7 +55,7 @@ describe('UpdateProfilePhotoForm', () => {
 
   it('should show alert when no file has been uploaded', async () => {
     await act(async () => {
-      userEvent.click(screen.getByRole('button', { name: 'UPDATE' }));
+      userEvent.click(screen.getByRole('button', { name: 'Update' }));
     });
 
     expect(await screen.findAllByRole('alert')).toHaveLength(1);
