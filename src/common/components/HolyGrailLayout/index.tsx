@@ -22,7 +22,7 @@ const HolyGrailLeft = styled.aside`
   flex-grow: 0;
 `;
 
-const HolyGrailContent = styled.main`
+export const HolyGrailContent = styled.main`
   flex-grow: 1;
   margin-top: 2rem;
   margin-left: 280px;
