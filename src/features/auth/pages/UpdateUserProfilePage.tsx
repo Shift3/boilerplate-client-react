@@ -230,7 +230,7 @@ export const UpdateUserProfilePage: FC = () => {
                 onSubmit={onSubmitNewProfilePhoto}
               />
               <Button className="mt-3" variant='danger' disabled={!profilePictureIsDefined()} onClick={handleDeleteProfilePhoto}>
-                DELETE
+                Delete
               </Button>
             </Col>
           </Row>

@@ -62,7 +62,7 @@ export const UpdateProfilePhotoForm: FC<Props> = ({ onSubmit, defaultValues }) =
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Group className='d-flex flex-column'>
         {imgPreviewState.src !== '' ?
-          <img src={imgPreviewState.src} alt={imgPreviewState.alt} /> :
+          <img className='img-fluid img-thumbnail' src={imgPreviewState.src} alt={imgPreviewState.alt} /> :
           null
         }
         <Form.Label htmlFor='profilePicture'>Photo</Form.Label>
@@ -72,7 +72,7 @@ export const UpdateProfilePhotoForm: FC<Props> = ({ onSubmit, defaultValues }) =
         </Form.Control.Feedback>
       </Form.Group>
       <LoadingButton className="mt-3" type='submit' as={Button} disabled={imgPreviewState.src === '' || !isValid}  loading={isSubmitting}>
-        UPDATE
+        Update
       </LoadingButton>
       <FormPrompt isDirty={isDirty} isSubmitting={isSubmitting} />
     </Form>

@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { User, Thumbnail } from 'common/models';
 import portraitPlaceholder from 'assets/img/portrait_placeholder.png';
+import { CircularImg } from 'common/components/Common';
 
 type Props = {
     user: User | null;
@@ -25,6 +26,6 @@ export const UserProfileImage: FC<Props> = ({ user, size, radius }) => {
     }
 
     return (
-        <img className='rounded-circle' style={{ marginRight: '.75rem', height: radius, width: radius }} src={imageSource} alt={fullName} />
+        <CircularImg radius={radius} src={imageSource} alt={fullName}  />
     )
 };
