@@ -42,7 +42,16 @@ const StagingBanner = styled(Alert).attrs({
 const BannerWrapper = styled.div<{
   bannerShowing: boolean
 }>`
+  ${StagingBanner} {
+    display: none;
+  }
+
+
   ${props => props.bannerShowing ? css`
+    ${StagingBanner} {
+      display: block;
+    }
+
     ${BitwiseNavbar} {
       padding-top: 56px !important;
     }
@@ -59,13 +68,10 @@ export const App: FC = () => (
       <ConfirmationModal />
       <NotificationContainer />
 
-      {environment.environment === 'staging' ? (
+      <BannerWrapper bannerShowing={environment.environment === 'staging'}>
         <StagingBanner>
           You are currently on the <b>staging</b> server.
         </StagingBanner>
-      ) : null}
-
-      <BannerWrapper bannerShowing={environment.environment === 'staging'}>
         <Switch>
             <Route path='/auth' component={AuthRoutes} />
             <HolyGrailLayout>
