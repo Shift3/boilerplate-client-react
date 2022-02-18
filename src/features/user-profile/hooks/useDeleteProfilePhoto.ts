@@ -27,9 +27,13 @@ export const useDeleteProfilePhoto: UseDeleteProfilePhotoHook = () => {
         async (data: DeleteProfilePhotoRequest) => {
             try {
                 await deleteProfilePhoto(data).unwrap();
-                dispatch(authSlice.actions.userUpdatedProfilePicture(null));
-                authLocalStorage.saveAuthState({ ...authLocalStorage.getAuthState(), user: getUserWithNullProfilePicture() } as AuthState);
-                notificationService.showSuccessMessage('Profile Photo Deleted');
+                const auth: AuthState | null = authLocalStorage.getAuthState();
+
+                if (auth) {
+                    dispatch(authSlice.actions.userUpdatedProfilePicture(null));
+                    authLocalStorage.saveAuthState({ ...auth, user: getUserWithNullProfilePicture() });
+                    notificationService.showSuccessMessage('Profile Photo Deleted');
+                }            
             } catch (error) {
                 handleApiError(error as FetchBaseQueryError);
             }
