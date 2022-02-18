@@ -9,15 +9,15 @@ type UserTransientParams = {
   hasNewEmail?: boolean;
 }
 
-export const UserFactory = Factory.define<User, UserTransientParams>(({ transientParams, sequence, associations }) => {
+export const UserFactory = Factory.define<User, UserTransientParams>(({ params, transientParams, sequence, associations }) => {
   const { hasNewEmail } = transientParams;
 
   return {
     id: sequence,
     email: Faker.internet.email(),
     activatedAt: Faker.date.recent().toISOString(),
-    firstName: associations.firstName ?? Faker.name.firstName(),
-    lastName: associations.lastName ?? Faker.name.lastName(),
+    firstName: params.firstName ?? Faker.name.firstName(),
+    lastName: params.lastName ?? Faker.name.lastName(),
     profilePicture: associations.profilePicture ?? ImageFactory.build(),
     agency: associations.agency ?? AgencyFactory.build(),
     role: associations.role ?? RoleFactory.build(),

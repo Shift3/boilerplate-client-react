@@ -5,7 +5,7 @@ import { UserProfileImage } from '../UserProfileImage';
 
 describe('with generated profile picture', () => {
   
-    const testUser: User = UserFactory.build({}, { associations: { firstName: "Test", lastName: "User" } });
+    const testUser: User = UserFactory.build({ firstName: "Test", lastName: "User" });
 
     it('should have a http url for img tag\'s src attribute', () => {
         render(<UserProfileImage user={testUser} size="xs" radius={32} />);
