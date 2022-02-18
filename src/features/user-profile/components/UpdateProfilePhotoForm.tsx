@@ -16,7 +16,12 @@ type Props = {
   defaultValues?: Partial<ProfilePhotoFormData>;
 };
 
-const checkProfilePhotoFormat = (value: FileList) => value.length !== 0 ? Constants.SUPPORTED_PROFILE_PHOTO_FORMATS.includes(value[0].type) : true;
+const checkProfilePhotoFormat = (value: FileList) => {
+  if (value) { // This check is necessary when the form's state is reset after the form is submitted.
+    return value.length !== 0 ? Constants.SUPPORTED_PROFILE_PHOTO_FORMATS.includes(value[0].type) : true;
+  }
+  return true;
+}
 
 const schema: yup.SchemaOf<ProfilePhotoFormData> = yup.object().shape({
   profilePicture: yup.mixed().notRequired().test('fileFormat', Constants.errorMessages.VALID_PROFILE_PHOTO_FORMAT, value => checkProfilePhotoFormat(value))
@@ -28,6 +33,8 @@ export const UpdateProfilePhotoForm: FC<Props> = ({ onSubmit, defaultValues }) =
     handleSubmit,
     register,
     trigger,
+    reset,
+    formState
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
@@ -41,7 +48,11 @@ export const UpdateProfilePhotoForm: FC<Props> = ({ onSubmit, defaultValues }) =
 
   useEffect(() => {
     trigger();
-  }, [trigger]);
+    if (formState.isSubmitSuccessful) {
+      reset({ profilePicture: null });
+      setImagePreview({ src: '', alt: '' });
+    }
+  }, [trigger, reset, formState.isSubmitSuccessful]);
 
   const handleImage = (e: React.BaseSyntheticEvent) => {
     if (e.target.files[0]) {

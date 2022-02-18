@@ -2,7 +2,6 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { useAppDispatch } from 'app/redux';
 import { handleApiError } from 'common/api/handleApiError';
 import { useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
 import { authSlice, AuthState } from '../../auth/authSlice';
 import * as notificationService from 'common/services/notification';
 import { useDeleteProfilePhotoMutation, DeleteProfilePhotoRequest } from 'common/api/userApi';
@@ -13,7 +12,6 @@ export type UseDeleteProfilePhotoHook = () => {
 };
 
 export const useDeleteProfilePhoto: UseDeleteProfilePhotoHook = () => {
-    const history = useHistory();
     const dispatch = useAppDispatch();
     const [deleteProfilePhoto] = useDeleteProfilePhotoMutation();
 
@@ -32,12 +30,11 @@ export const useDeleteProfilePhoto: UseDeleteProfilePhotoHook = () => {
                 dispatch(authSlice.actions.userUpdatedProfilePicture(null));
                 authLocalStorage.saveAuthState({ ...authLocalStorage.getAuthState(), user: getUserWithNullProfilePicture() } as AuthState);
                 notificationService.showSuccessMessage('Profile Photo Deleted');
-                history.replace('/agents');
             } catch (error) {
                 handleApiError(error as FetchBaseQueryError);
             }
         },
-        [deleteProfilePhoto, dispatch, history],
+        [deleteProfilePhoto, dispatch],
     );
 
     return { deleteUserProfilePhoto };
