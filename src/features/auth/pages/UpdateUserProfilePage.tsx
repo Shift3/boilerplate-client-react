@@ -13,8 +13,8 @@ import { ErrorResponse } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import * as authLocalStorage from 'features/auth/authLocalStorage';
 import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
-import { ProfilePhotoFormData, UpdateProfilePhotoForm } from '../../user-profile/components/UpdateProfilePhotoForm';
-import { useUpdateProfilePhoto, useDeleteProfilePhoto } from 'features/user-profile/hooks';
+import { ProfilePictureFormData, UpdateProfilePictureForm } from '../../user-profile/components/UpdateProfilePictureForm';
+import { useUpdateProfilePicture, useDeleteProfilePicture } from 'features/user-profile/hooks';
 import { authSlice } from 'features/auth/authSlice';
 import { ChangePasswordForm, FormData as ForgotPasswordFormData } from 'features/user-dashboard/components/ChangePasswordForm';
 import { FC, useState } from 'react';
@@ -23,7 +23,7 @@ import Button from 'react-bootstrap/Button';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { UpdateUserEmailForm, UserEmailFormData } from '../components/UpdateUserEmailForm';
-import { UserProfileImage } from 'features/navbar/components/UserProfileImage';
+import { UserProfilePicture } from 'features/navbar/components/UserProfilePicture';
 
 type RouteParams = {
   id: string;
@@ -48,8 +48,8 @@ export const UpdateUserProfilePage: FC = () => {
   const [updateProfile] = useUpdateProfileMutation();
   const [requestChangeEmail] = useRequestChangeEmailMutation();
   const [resendChangeEmailVerificationEmail] = useResendChangeEmailVerificationEmailMutation();
-  const { updateUserProfilePhoto } = useUpdateProfilePhoto();
-  const { deleteUserProfilePhoto } = useDeleteProfilePhoto();
+  const { updateUserProfilePicture } = useUpdateProfilePicture();
+  const { deleteUserProfilePicture } = useDeleteProfilePicture();
   const [changePassword] = useChangePasswordMutation();
   const dispatch = useAppDispatch();
   const [tab, setTab] = useState('profile');
@@ -92,26 +92,26 @@ export const UpdateUserProfilePage: FC = () => {
     }
   }
 
-  const onSubmitNewProfilePhoto = async (formData: ProfilePhotoFormData) => {
+  const onSubmitNewProfilePicture = async (formData: ProfilePictureFormData) => {
     
     if (formData.profilePicture) {
       const file = formData.profilePicture[0];
 
-      const photoFormData = new FormData();
+      const profilePictureFormData = new FormData();
       if (file instanceof Blob) {
-        photoFormData.append("file", file);
-        photoFormData.append("type", file.type);
+        profilePictureFormData.append("file", file);
+        profilePictureFormData.append("type", file.type);
       }
-      const data = { profilePicture: photoFormData, id: Number(id) };
+      const data = { profilePicture: profilePictureFormData, id: Number(id) };
 
-      await updateUserProfilePhoto(data);
+      await updateUserProfilePicture(data);
     }
   }
 
-  const handleDeleteProfilePhoto = async () => {
+  const handleDeleteProfilePicture = async () => {
     const data = { id: Number(id) };
 
-    await deleteUserProfilePhoto(data);
+    await deleteUserProfilePicture(data);
   }
 
   const profilePictureIsDefined = () => {
@@ -144,7 +144,7 @@ export const UpdateUserProfilePage: FC = () => {
 
       <PageHeader className='mb-3'>
         <div className='d-flex'>
-          <UserProfileImage user={user} size="xs" radius={64} />
+          <UserProfilePicture user={user} size="xs" radius={64} />
           <div>
             <h1>{user?.firstName} {user?.lastName[0]}.</h1>
             <p className='text-muted'>Your account settings.</p>
@@ -226,10 +226,10 @@ export const UpdateUserProfilePage: FC = () => {
               </p>
             </Col>
             <Col>
-              <UpdateProfilePhotoForm
-                onSubmit={onSubmitNewProfilePhoto}
+              <UpdateProfilePictureForm
+                onSubmit={onSubmitNewProfilePicture}
               />
-              <Button className="mt-3" variant='danger' disabled={!profilePictureIsDefined()} onClick={handleDeleteProfilePhoto}>
+              <Button className="mt-3" variant='danger' disabled={!profilePictureIsDefined()} onClick={handleDeleteProfilePicture}>
                 Delete
               </Button>
             </Col>

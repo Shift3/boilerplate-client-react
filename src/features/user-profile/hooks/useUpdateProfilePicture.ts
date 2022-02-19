@@ -4,21 +4,21 @@ import { handleApiError } from 'common/api/handleApiError';
 import { useCallback } from 'react';
 import { authSlice, AuthState } from '../../auth/authSlice';
 import * as notificationService from 'common/services/notification';
-import { useUpdateProfilePhotoMutation, UpdateProfilePhotoRequest } from 'common/api/userApi';
+import { useUpdateProfilePictureMutation, UpdateProfilePictureRequest } from 'common/api/userApi';
 import * as authLocalStorage from '../../auth/authLocalStorage';
 
-export type UseUpdateProfilePhotoHook = () => {
-    updateUserProfilePhoto: (data: UpdateProfilePhotoRequest) => Promise<void>;
+export type UseUpdateProfilePictureHook = () => {
+    updateUserProfilePicture: (data: UpdateProfilePictureRequest) => Promise<void>;
 };
 
-export const useUpdateProfilePhoto: UseUpdateProfilePhotoHook = () => {
+export const useUpdateProfilePicture: UseUpdateProfilePictureHook = () => {
     const dispatch = useAppDispatch();
-    const [updateProfilePhoto] = useUpdateProfilePhotoMutation();
+    const [updateProfilePicture] = useUpdateProfilePictureMutation();
 
-    const updateUserProfilePhoto = useCallback(
-        async (data: UpdateProfilePhotoRequest) => {
+    const updateUserProfilePicture = useCallback(
+        async (data: UpdateProfilePictureRequest) => {
             try {
-                const updatedUser = await updateProfilePhoto(data).unwrap();
+                const updatedUser = await updateProfilePicture(data).unwrap();
                 const auth: AuthState | null = authLocalStorage.getAuthState();
                 const { profilePicture } = updatedUser;
 
@@ -31,8 +31,8 @@ export const useUpdateProfilePhoto: UseUpdateProfilePhotoHook = () => {
                 handleApiError(error as FetchBaseQueryError);
             }
         },
-        [updateProfilePhoto, dispatch],
+        [updateProfilePicture, dispatch],
     );
 
-    return { updateUserProfilePhoto };
+    return { updateUserProfilePicture };
 };

@@ -1,2 +1,2 @@
-export * from './useDeleteProfilePhoto';
-export * from './useUpdateProfilePhoto';
+export * from './useDeleteProfilePicture';
+export * from './useUpdateProfilePicture';

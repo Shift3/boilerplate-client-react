@@ -31,7 +31,7 @@ interface IErrorMessages {
   SAME_EMAIL: string;
   VERIFICATION_CODE_REQUIRED: string;
   VERIFICATION_CODE_LENGTH_MISMATCH: string;
-  VALID_PROFILE_PHOTO_FORMAT: string;
+  VALID_PROFILE_PICTURE_FORMAT: string;
 }
 
 export interface IConstant {
@@ -39,7 +39,7 @@ export interface IConstant {
   errorMessages: IErrorMessages;
   version: string;
   creationYear: number;
-  SUPPORTED_PROFILE_PHOTO_FORMATS: string[]
+  SUPPORTED_PROFILE_PICTURE_FORMATS: string[]
 }
 
 export const Constants: IConstant = {
@@ -75,9 +75,9 @@ export const Constants: IConstant = {
     SAME_EMAIL: 'Email must be different from current value.',
     VERIFICATION_CODE_REQUIRED: 'Verification code is required.',
     VERIFICATION_CODE_LENGTH_MISMATCH: 'Verification code must contain 6 digits.',
-    VALID_PROFILE_PHOTO_FORMAT: 'Must select a supported image type (.jpeg, .jpg, or .png).'
+    VALID_PROFILE_PICTURE_FORMAT: 'Must select a supported image type (.jpeg, .jpg, or .png).'
   },
   version: environment.version,
   creationYear: 2021,
-  SUPPORTED_PROFILE_PHOTO_FORMATS: ['image/jpg', 'image/jpeg', 'image/png']
+  SUPPORTED_PROFILE_PICTURE_FORMATS: ['image/jpg', 'image/jpeg', 'image/png']
 };

@@ -1,6 +1,6 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { UpdateProfilePhotoForm } from '../UpdateProfilePhotoForm';
+import { UpdateProfilePictureForm } from '../UpdateProfilePictureForm';
 import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
 import { Router } from 'react-router-dom';
@@ -8,7 +8,7 @@ import { createMemoryHistory } from 'history';
 
 const mockOnSubmit = jest.fn();
 
-describe('UpdateProfilePhotoForm', () => {
+describe('UpdateProfilePictureForm', () => {
 
   const file = new File(["test"], "testpicture.png", { type: "image/png" });
   global.URL.createObjectURL = jest.fn();
@@ -19,7 +19,7 @@ describe('UpdateProfilePhotoForm', () => {
       render(
         <Router history={history}>
           <ThemeProvider theme={AppTheme}>
-            <UpdateProfilePhotoForm onSubmit={mockOnSubmit} />
+            <UpdateProfilePictureForm onSubmit={mockOnSubmit} />
           </ThemeProvider>,
         </Router>
       );

@@ -9,7 +9,7 @@ type Props = {
     radius: number;
 };
 
-export const UserProfileImage: FC<Props> = ({ user, size, radius }) => {
+export const UserProfilePicture: FC<Props> = ({ user, size, radius }) => {
 
     let imageSource = '';
     const fullName = user ? `${user.firstName} ${user.lastName}` : 'User';

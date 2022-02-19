@@ -5,7 +5,7 @@ import * as notificationService from 'common/services/notification';
 import { ActionButton, ActionButtonProps, TableActions } from 'common/styles/button';
 import { SubtleBadge } from 'common/styles/utilities';
 import { useConfirmationModal } from 'features/confirmation-modal';
-import { UserProfileImage } from 'features/navbar/components/UserProfileImage';
+import { UserProfilePicture } from 'features/navbar/components/UserProfilePicture';
 import { useRbac } from 'features/rbac';
 import { useCallback, useMemo } from 'react';
 import { Button } from 'react-bootstrap';
@@ -97,7 +97,7 @@ export const useUserTableData: UseUserTableData = (users = []) => {
         Header: 'Name',
         Cell: ({ row }) => (
           <div className='d-flex d-row align-items-center mr-3'>
-            <UserProfileImage user={{ profilePicture: row.original.profilePicture } as User} size="xs" radius={32} />
+            <UserProfilePicture user={{ profilePicture: row.original.profilePicture } as User} size="xs" radius={32} />
 
             <div className='d-flex flex-column'>
               <span>

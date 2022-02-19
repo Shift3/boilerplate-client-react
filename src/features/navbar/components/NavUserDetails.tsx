@@ -3,7 +3,7 @@ import { User } from 'common/models';
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { UserProfileImage } from './UserProfileImage';
+import { UserProfilePicture } from './UserProfilePicture';
 
 const ProfileInfoWrapper = styled.div`
   background: #efefef;
@@ -51,7 +51,7 @@ export const NavUserDetails: FC<Props> = ({ user }) => {
 
   return (
     <ProfileInfoWrapper onClick={() => history.push(`/user/profile/${user.id}`) }>
-      <UserProfileImage user={user} size="xs" radius={32} />
+      <UserProfilePicture user={user} size="xs" radius={32} />
 
       <div>
         <div>{user.firstName} {user.lastName.charAt(0)}.</div>

@@ -4,16 +4,16 @@ import { handleApiError } from 'common/api/handleApiError';
 import { useCallback } from 'react';
 import { authSlice, AuthState } from '../../auth/authSlice';
 import * as notificationService from 'common/services/notification';
-import { useDeleteProfilePhotoMutation, DeleteProfilePhotoRequest } from 'common/api/userApi';
+import { useDeleteProfilePictureMutation, DeleteProfilePictureRequest } from 'common/api/userApi';
 import * as authLocalStorage from '../../auth/authLocalStorage';
 
-export type UseDeleteProfilePhotoHook = () => {
-    deleteUserProfilePhoto: (data: DeleteProfilePhotoRequest) => Promise<void>;
+export type UseDeleteProfilePictureHook = () => {
+    deleteUserProfilePicture: (data: DeleteProfilePictureRequest) => Promise<void>;
 };
 
-export const useDeleteProfilePhoto: UseDeleteProfilePhotoHook = () => {
+export const useDeleteProfilePicture: UseDeleteProfilePictureHook = () => {
     const dispatch = useAppDispatch();
-    const [deleteProfilePhoto] = useDeleteProfilePhotoMutation();
+    const [deleteProfilePicture] = useDeleteProfilePictureMutation();
 
     const getUserWithNullProfilePicture = () => {
         const user = authLocalStorage.getAuthState()?.user ?? null;
@@ -23,10 +23,10 @@ export const useDeleteProfilePhoto: UseDeleteProfilePhotoHook = () => {
         return user;
     }
 
-    const deleteUserProfilePhoto = useCallback(
-        async (data: DeleteProfilePhotoRequest) => {
+    const deleteUserProfilePicture = useCallback(
+        async (data: DeleteProfilePictureRequest) => {
             try {
-                await deleteProfilePhoto(data).unwrap();
+                await deleteProfilePicture(data).unwrap();
                 const auth: AuthState | null = authLocalStorage.getAuthState();
 
                 if (auth) {
@@ -38,8 +38,8 @@ export const useDeleteProfilePhoto: UseDeleteProfilePhotoHook = () => {
                 handleApiError(error as FetchBaseQueryError);
             }
         },
-        [deleteProfilePhoto, dispatch],
+        [deleteProfilePicture, dispatch],
     );
 
-    return { deleteUserProfilePhoto };
+    return { deleteUserProfilePicture };
 };
