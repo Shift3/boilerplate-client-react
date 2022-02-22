@@ -7,10 +7,11 @@ import { RoleFactory } from './role-factory';
 
 type UserTransientParams = {
   hasNewEmail?: boolean;
+  hasProfilePicture: boolean;
 }
 
 export const UserFactory = Factory.define<User, UserTransientParams>(({ params, transientParams, sequence, associations }) => {
-  const { hasNewEmail } = transientParams;
+  const { hasNewEmail, hasProfilePicture } = transientParams;
 
   return {
     id: sequence,
@@ -18,7 +19,7 @@ export const UserFactory = Factory.define<User, UserTransientParams>(({ params, 
     activatedAt: Faker.date.recent().toISOString(),
     firstName: params.firstName ?? Faker.name.firstName(),
     lastName: params.lastName ?? Faker.name.lastName(),
-    profilePicture: associations.profilePicture ?? ImageFactory.build(),
+    profilePicture: hasProfilePicture ? (associations.profilePicture ?? ImageFactory.build()) : null,
     agency: associations.agency ?? AgencyFactory.build(),
     role: associations.role ?? RoleFactory.build(),
     newEmail: hasNewEmail ? Faker.internet.email() : null,
