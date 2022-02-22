@@ -217,6 +217,8 @@ export const UpdateUserProfilePage: FC = () => {
                 />
             </Col>
           </Row>
+
+          <hr />
         
           <Row>
             <Col md='5'>
