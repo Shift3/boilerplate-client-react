@@ -13,7 +13,7 @@ import { UserTableItem, useUserTableData } from '../hooks/useUserTableData';
 
 export const UserListView: FC = () => {
   const history = useHistory();
-  const { data, isLoading, page, pageSize, getPage, changePageSize, changeSortBy } =
+  const { data, isLoading, page, pageSize, getPage, changePageSize, changeSortBy, isFetching } =
     usePSFQuery<PaginatedResult<User>>(useGetUsersQuery);
   const users = useMemo(() => data?.results ?? [], [data]);
   const { columns, data: tableData } = useUserTableData(users);
@@ -54,6 +54,7 @@ export const UserListView: FC = () => {
               sorting={{
                 onSortByChange: changeSortBy,
               }}
+              isLoading={isFetching}
             />
           </WithLoadingOverlay>
         </TableCard.Body>

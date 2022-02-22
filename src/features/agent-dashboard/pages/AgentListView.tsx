@@ -15,7 +15,7 @@ import { AgentTableItem, useAgentTableData } from '../hooks/useAgentTableData';
 
 export const AgentListView: FC = () => {
   const history = useHistory();
-  const { data, isLoading, page, pageSize, getPage, changePageSize, changeSortBy } =
+  const { data, isLoading, page, pageSize, getPage, changePageSize, changeSortBy, isFetching } =
     usePSFQuery<PaginatedResult<Agent>>(useGetAgentsQuery);
   const agents = useMemo(() => data?.results ?? [], [data]);
   const { columns, data: tableData } = useAgentTableData(agents);
@@ -58,6 +58,7 @@ export const AgentListView: FC = () => {
                   sorting={{
                     onSortByChange: changeSortBy,
                   }}
+                  isLoading={isFetching}
                 />
               </>
             ) : (

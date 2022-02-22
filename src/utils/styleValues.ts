@@ -10,6 +10,7 @@ export const colors = {
   black: '#333333',
   dangerRed: '#DC2626',
   faded: '#999',
+  translucentGray: '#99999980',
 };
 
 export default {
@@ -90,6 +91,10 @@ export default {
     headerBackgroundColor: colors.primaryBlue,
     headerTextColor: colors.white,
     backgroundColor: colors.primaryBlue,
-    textColor: colors.primaryBlue
+    textColor: colors.primaryBlue,
+  },
+
+  spinner: {
+    overlayBackgroundColor: colors.translucentGray,
   }
 };
