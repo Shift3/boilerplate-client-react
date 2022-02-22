@@ -4,17 +4,23 @@ import { useAppDispatch } from 'app/redux';
 import portraitPlaceholder from 'assets/img/portrait_placeholder.png';
 import { handleApiError } from 'common/api/handleApiError';
 import {
-  ChangePasswordRequest, useChangePasswordMutation, useRequestChangeEmailMutation,
+  ChangePasswordRequest,
+  useChangePasswordMutation,
+  useRequestChangeEmailMutation,
   useResendChangeEmailVerificationEmailMutation,
-  useUpdateProfileMutation
+  useUpdateProfileMutation,
 } from 'common/api/userApi';
 import { CircularImg, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
+import { HolyGrailLayout } from 'common/components/HolyGrailLayout';
 import { ErrorResponse } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import * as authLocalStorage from 'features/auth/authLocalStorage';
 import { authSlice } from 'features/auth/authSlice';
 import { useAuth } from 'features/auth/hooks';
-import { ChangePasswordForm, FormData as ForgotPasswordFormData } from 'features/user-dashboard/components/ChangePasswordForm';
+import {
+  ChangePasswordForm,
+  FormData as ForgotPasswordFormData,
+} from 'features/user-dashboard/components/ChangePasswordForm';
 import { FC, useState } from 'react';
 import { Alert, Col, Nav, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
@@ -37,7 +43,7 @@ const ProfileNav = styled(Nav)`
       font-weight: bold;
     }
   }
-`
+`;
 
 export const UpdateUserProfilePage: FC = () => {
   const history = useHistory();
@@ -73,12 +79,14 @@ export const UpdateUserProfilePage: FC = () => {
       const newAuth = { token, user: updatedUser };
       dispatch(authSlice.actions.userLoggedIn(newAuth));
       authLocalStorage.saveAuthState(newAuth);
-      notificationService.showSuccessMessage('Email Verification sent. Follow the instructions in the email to proceed.');
+      notificationService.showSuccessMessage(
+        'Email Verification sent. Follow the instructions in the email to proceed.',
+      );
       history.push('/agents');
     } catch (error) {
       handleApiError(error as FetchBaseQueryError);
     }
-  }
+  };
 
   const handleResendChangeEmailVerificationEmail = () => {
     try {
@@ -87,7 +95,7 @@ export const UpdateUserProfilePage: FC = () => {
     } catch (error) {
       handleApiError(error as FetchBaseQueryError);
     }
-  }
+  };
 
   const onChangePasswordFormSubmit = async (data: ForgotPasswordFormData) => {
     const request: ChangePasswordRequest = { id: user!.id, ...data };
@@ -104,67 +112,71 @@ export const UpdateUserProfilePage: FC = () => {
   };
 
   return (
-    <SmallContainer>
-      <PageCrumb>
-        <Link to='/agents'>
-          <FontAwesomeIcon icon={["fas", "chevron-left"]} />  Back to Agent List
-        </Link>
-      </PageCrumb>
+    <HolyGrailLayout>
+      <SmallContainer>
+        <PageCrumb>
+          <Link to='/agents'>
+            <FontAwesomeIcon icon={['fas', 'chevron-left']} /> Back to Agent List
+          </Link>
+        </PageCrumb>
 
-      <PageHeader className='mb-3'>
-        <div className='d-flex'>
-          <CircularImg radius={64} src={user?.profilePicture || portraitPlaceholder} alt="Profile" />
-          <div>
-            <h1>{user?.firstName} {user?.lastName[0]}.</h1>
-            <p className='text-muted'>Your account settings.</p>
+        <PageHeader className='mb-3'>
+          <div className='d-flex'>
+            <CircularImg radius={64} src={user?.profilePicture || portraitPlaceholder} alt='Profile' />
+            <div>
+              <h1>
+                {user?.firstName} {user?.lastName[0]}.
+              </h1>
+              <p className='text-muted'>Your account settings.</p>
+            </div>
           </div>
-        </div>
-      </PageHeader>
+        </PageHeader>
 
-      <ProfileNav defaultActiveKey="/home">
-        <ProfileNav.Link onClick={() => setTab('profile')} className={tab === 'profile' ? 'active' : ''}>Profile</ProfileNav.Link>
-        <ProfileNav.Link onClick={() => setTab('security')} className={tab === 'security' ? 'active' : ''}>Security and Password</ProfileNav.Link>
-      </ProfileNav>
-      <hr className='mt-0' />
-      
-      {tab === 'profile' ? (
-        <>
-          <Row>
-            <Col md='5'>
-              <h5>General Information</h5>
-              <p className="text-muted">This information will be used to identify you in our system</p>
-            </Col>
-            <Col>
-              <UpdateUserProfileForm
-                onSubmit={onSubmit}
-                defaultValues={{
-                  firstName: user?.firstName ?? '',
-                  lastName: user?.lastName ?? '',
-                }}
-              />
-            </Col>
-          </Row>
+        <ProfileNav defaultActiveKey='/home'>
+          <ProfileNav.Link onClick={() => setTab('profile')} className={tab === 'profile' ? 'active' : ''}>
+            Profile
+          </ProfileNav.Link>
+          <ProfileNav.Link onClick={() => setTab('security')} className={tab === 'security' ? 'active' : ''}>
+            Security and Password
+          </ProfileNav.Link>
+        </ProfileNav>
+        <hr className='mt-0' />
 
-          <hr />
+        {tab === 'profile' ? (
+          <>
+            <Row>
+              <Col md='5'>
+                <h5>General Information</h5>
+                <p className='text-muted'>This information will be used to identify you in our system</p>
+              </Col>
+              <Col>
+                <UpdateUserProfileForm
+                  onSubmit={onSubmit}
+                  defaultValues={{
+                    firstName: user?.firstName ?? '',
+                    lastName: user?.lastName ?? '',
+                  }}
+                />
+              </Col>
+            </Row>
 
-          <Row>
-            <Col md='5'>
-              <h5>Email Address</h5>
-              <p className="text-muted">
-                Your email address on file will be used to communicate with you.
-                Changing your email requires you to confirm your new email
-                address.
-              </p>
-            </Col>
-            <Col>
-                { user?.newEmail && (
+            <hr />
+
+            <Row>
+              <Col md='5'>
+                <h5>Email Address</h5>
+                <p className='text-muted'>
+                  Your email address on file will be used to communicate with you. Changing your email requires you to
+                  confirm your new email address.
+                </p>
+              </Col>
+              <Col>
+                {user?.newEmail && (
                   <Alert variant='warning'>
                     <div>
                       <p data-testid='updateUserExistingEmailChangeInfoContent'>
-                        You requested an email change. A verification email has
-                        been sent to <b>{user.newEmail}</b>.  To confirm your
-                        new email, please follow the directions in the
-                        verification email.
+                        You requested an email change. A verification email has been sent to <b>{user.newEmail}</b>. To
+                        confirm your new email, please follow the directions in the verification email.
                       </p>
                       <Button
                         variant='warning'
@@ -175,7 +187,6 @@ export const UpdateUserProfilePage: FC = () => {
                       </Button>
                     </div>
                   </Alert>
-                  
                 )}
 
                 <UpdateUserEmailForm
@@ -184,27 +195,32 @@ export const UpdateUserProfilePage: FC = () => {
                     email: user?.email ?? '',
                   }}
                 />
-            </Col>
-          </Row>
-        </>
-      ) : ''}
+              </Col>
+            </Row>
+          </>
+        ) : (
+          ''
+        )}
 
-      {tab === 'security' ? (
-        <>
-          <Row>
-            <Col md='5'>
-              <h5>Change Password</h5>
-              <p className="text-muted">
-                Password must be 8 characters or more. Password must contain a lowercase, uppercase, special character, and a number.
-              </p>
-            </Col>
-            <Col>
-              <ChangePasswordForm onSubmit={onChangePasswordFormSubmit} />
-            </Col>
-          </Row>
-        </>
-      ) : ''}
-
-    </SmallContainer>
+        {tab === 'security' ? (
+          <>
+            <Row>
+              <Col md='5'>
+                <h5>Change Password</h5>
+                <p className='text-muted'>
+                  Password must be 8 characters or more. Password must contain a lowercase, uppercase, special
+                  character, and a number.
+                </p>
+              </Col>
+              <Col>
+                <ChangePasswordForm onSubmit={onChangePasswordFormSubmit} />
+              </Col>
+            </Row>
+          </>
+        ) : (
+          ''
+        )}
+      </SmallContainer>
+    </HolyGrailLayout>
   );
 };

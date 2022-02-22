@@ -1,6 +1,7 @@
 import { useGetAgenciesQuery } from 'common/api/agencyApi';
 import { PageHeader, TableCard } from 'common/components/Common';
 import { DataTable } from 'common/components/DataTable';
+import { HolyGrailLayout } from 'common/components/HolyGrailLayout';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { Agency, PaginatedResult } from 'common/models';
@@ -20,44 +21,46 @@ export const AgencyListView: FC = () => {
   const isPageLoading = isLoading;
 
   return (
-    <Container>
-      <PageHeader>
-        <div>
-          <h1>Agency List</h1>
-          <p className='text-muted'>Agencies are able to view a seperate set of information.</p>
-        </div>
-        <HasPermission perform='agency:create'>
+    <HolyGrailLayout>
+      <Container>
+        <PageHeader>
           <div>
-            <Link to='/agencies/create-agency'>
-              <CreateButton>Add Agency</CreateButton>
-            </Link>
+            <h1>Agency List</h1>
+            <p className='text-muted'>Agencies are able to view a seperate set of information.</p>
           </div>
-        </HasPermission>
-      </PageHeader>
-      <TableCard>
-        <TableCard.Body>
-          <WithLoadingOverlay isLoading={isPageLoading}>
-            <DataTable<AgencyTableItem>
-              columns={columns}
-              data={tableData}
-              onRowClick={item => history.push(`agencies/update-agency/${item.id}`)}
-              pagination={{
-                basePage: 1,
-                page,
-                pageSize,
-                count: data?.meta.count || 0,
-                pageCount: data?.meta.pageCount || 0,
-                pageSizeOptions: [5, 10, 25, 50, 100],
-                onPageChange: getPage,
-                onPageSizeChange: changePageSize,
-              }}
-              sorting={{
-                onSortByChange: changeSortBy,
-              }}
-            />
-          </WithLoadingOverlay>
-        </TableCard.Body>
-      </TableCard>
-    </Container>
+          <HasPermission perform='agency:create'>
+            <div>
+              <Link to='/agencies/create-agency'>
+                <CreateButton>Add Agency</CreateButton>
+              </Link>
+            </div>
+          </HasPermission>
+        </PageHeader>
+        <TableCard>
+          <TableCard.Body>
+            <WithLoadingOverlay isLoading={isPageLoading}>
+              <DataTable<AgencyTableItem>
+                columns={columns}
+                data={tableData}
+                onRowClick={item => history.push(`agencies/update-agency/${item.id}`)}
+                pagination={{
+                  basePage: 1,
+                  page,
+                  pageSize,
+                  count: data?.meta.count || 0,
+                  pageCount: data?.meta.pageCount || 0,
+                  pageSizeOptions: [5, 10, 25, 50, 100],
+                  onPageChange: getPage,
+                  onPageSizeChange: changePageSize,
+                }}
+                sorting={{
+                  onSortByChange: changeSortBy,
+                }}
+              />
+            </WithLoadingOverlay>
+          </TableCard.Body>
+        </TableCard>
+      </Container>
+    </HolyGrailLayout>
   );
 };

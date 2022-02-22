@@ -3,6 +3,7 @@ import { useGetAgenciesQuery } from 'common/api/agencyApi';
 import { useGetRolesQuery } from 'common/api/roleApi';
 import { useCreateUserMutation } from 'common/api/userApi';
 import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
+import { HolyGrailLayout } from 'common/components/HolyGrailLayout';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { Agency, PaginatedResult } from 'common/models';
@@ -65,22 +66,23 @@ export const CreateUserView: FC = () => {
   };
 
   return (
-    <SmallContainer>
-      <PageCrumb>
-        <Link to='/users'>
-          <FontAwesomeIcon icon={["fas", "chevron-left"]} />  Back to User List
-        </Link>
-      </PageCrumb>
+    <HolyGrailLayout>
+      <SmallContainer>
+        <PageCrumb>
+          <Link to='/users'>
+            <FontAwesomeIcon icon={['fas', 'chevron-left']} /> Back to User List
+          </Link>
+        </PageCrumb>
 
-      <PageHeader>
-        <div>
-          <h1>Create User</h1>
-          <p className='text-muted'>Add a new user to the system.</p>
-        </div>
-      </PageHeader>
+        <PageHeader>
+          <div>
+            <h1>Create User</h1>
+            <p className='text-muted'>Add a new user to the system.</p>
+          </div>
+        </PageHeader>
 
-      <FormCard>
-        <FormCard.Body>
+        <FormCard>
+          <FormCard.Body>
             <WithLoadingOverlay isLoading={isLoadingRoles || isLoadingAgencies}>
               <StyledFormWrapper>
                 <UserDetailForm
@@ -93,8 +95,9 @@ export const CreateUserView: FC = () => {
                 />
               </StyledFormWrapper>
             </WithLoadingOverlay>
-        </FormCard.Body>
-      </FormCard>
-    </SmallContainer>
+          </FormCard.Body>
+        </FormCard>
+      </SmallContainer>
+    </HolyGrailLayout>
   );
 };

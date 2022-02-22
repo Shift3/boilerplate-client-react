@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetAgentsQuery } from 'common/api/agentApi';
 import { NoContent, PageHeader, TableCard } from 'common/components/Common';
 import { DataTable } from 'common/components/DataTable';
+import { HolyGrailLayout } from 'common/components/HolyGrailLayout';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { Agent, PaginatedResult } from 'common/models';
@@ -22,60 +23,62 @@ export const AgentListView: FC = () => {
   const isPageLoading = isLoading;
 
   return (
-    <Container>
-      <PageHeader>
-        <div>
-          <h1>Agent List</h1>
-          <p className='text-muted'>All agents in the system.</p>
-        </div>
-        <HasPermission perform='agent:create'>
+    <HolyGrailLayout>
+      <Container>
+        <PageHeader>
           <div>
-            <Link to='/agents/create-agent'>
-              <CreateButton>Add Agent</CreateButton>
-            </Link>
+            <h1>Agent List</h1>
+            <p className='text-muted'>All agents in the system.</p>
           </div>
-        </HasPermission>
-      </PageHeader>
-      <TableCard>
-        <Card.Body>
-          <WithLoadingOverlay isLoading={isPageLoading}>
-            {data?.meta.count ? (
-              <>
-                <DataTable<AgentTableItem>
-                  columns={columns}
-                  data={tableData}
-                  onRowClick={item => history.push(`agents/update-agent/${item.id}`)}
-                  pagination={{
-                    basePage: 1,
-                    page,
-                    pageSize,
-                    count: data?.meta.count || 0,
-                    pageCount: data?.meta.pageCount || 0,
-                    pageSizeOptions: [5, 10, 25, 50, 100],
-                    onPageChange: getPage,
-                    onPageSizeChange: changePageSize,
-                  }}
-                  sorting={{
-                    onSortByChange: changeSortBy,
-                  }}
-                />
-              </>
-            ) : (
-              <NoContent>
-                <FontAwesomeIcon className='text-muted' size='2x' icon={['fas', 'stethoscope']} />
-                <p className='lead mb-0'>No Agents</p>
+          <HasPermission perform='agent:create'>
+            <div>
+              <Link to='/agents/create-agent'>
+                <CreateButton>Add Agent</CreateButton>
+              </Link>
+            </div>
+          </HasPermission>
+        </PageHeader>
+        <TableCard>
+          <Card.Body>
+            <WithLoadingOverlay isLoading={isPageLoading}>
+              {data?.meta.count ? (
+                <>
+                  <DataTable<AgentTableItem>
+                    columns={columns}
+                    data={tableData}
+                    onRowClick={item => history.push(`agents/update-agent/${item.id}`)}
+                    pagination={{
+                      basePage: 1,
+                      page,
+                      pageSize,
+                      count: data?.meta.count || 0,
+                      pageCount: data?.meta.pageCount || 0,
+                      pageSizeOptions: [5, 10, 25, 50, 100],
+                      onPageChange: getPage,
+                      onPageSizeChange: changePageSize,
+                    }}
+                    sorting={{
+                      onSortByChange: changeSortBy,
+                    }}
+                  />
+                </>
+              ) : (
+                <NoContent>
+                  <FontAwesomeIcon className='text-muted' size='2x' icon={['fas', 'stethoscope']} />
+                  <p className='lead mb-0'>No Agents</p>
 
-                <HasPermission perform='agent:create'>
-                  <p className='text-muted'>Get started by creating a new agent.</p>
-                  <Link to='/agents/create-agent'>
-                    <SecondaryButton>Add Agent</SecondaryButton>
-                  </Link>
-                </HasPermission>
-              </NoContent>
-            )}
-          </WithLoadingOverlay>
-        </Card.Body>
-      </TableCard>
-    </Container>
+                  <HasPermission perform='agent:create'>
+                    <p className='text-muted'>Get started by creating a new agent.</p>
+                    <Link to='/agents/create-agent'>
+                      <SecondaryButton>Add Agent</SecondaryButton>
+                    </Link>
+                  </HasPermission>
+                </NoContent>
+              )}
+            </WithLoadingOverlay>
+          </Card.Body>
+        </TableCard>
+      </Container>
+    </HolyGrailLayout>
   );
 };

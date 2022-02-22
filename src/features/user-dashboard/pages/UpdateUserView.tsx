@@ -3,6 +3,7 @@ import { useGetAgenciesQuery } from 'common/api/agencyApi';
 import { useGetRolesQuery } from 'common/api/roleApi';
 import { useGetUserByIdQuery, useUpdateUserMutation } from 'common/api/userApi';
 import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
+import { HolyGrailLayout } from 'common/components/HolyGrailLayout';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { Agency, PaginatedResult } from 'common/models';
@@ -67,36 +68,38 @@ export const UpdateUserView: FC = () => {
   };
 
   return (
-    <SmallContainer>
-      <PageCrumb>
-        <Link to='/users'>
-          <FontAwesomeIcon icon={["fas", "chevron-left"]} />  Back to User List
-        </Link>
-      </PageCrumb>
+    <HolyGrailLayout>
+      <SmallContainer>
+        <PageCrumb>
+          <Link to='/users'>
+            <FontAwesomeIcon icon={['fas', 'chevron-left']} /> Back to User List
+          </Link>
+        </PageCrumb>
 
-      <PageHeader>
-        <div>
-          <h1>Update User</h1>
-          <p className='text-muted'>Update this users details and roles here.</p>
-        </div>
-      </PageHeader>
+        <PageHeader>
+          <div>
+            <h1>Update User</h1>
+            <p className='text-muted'>Update this users details and roles here.</p>
+          </div>
+        </PageHeader>
 
-      <FormCard>
-        <FormCard.Body>
-          <WithLoadingOverlay isLoading={isLoadingUser || isLoadingRoles || isLoadingAgencies}>
-            <StyledFormWrapper>
-              <UserDetailForm
-                availableRoles={availableRoles}
-                availableAgencies={availableAgencies}
-                defaultValues={user}
-                submitButtonLabel='Save'
-                onSubmit={handleFormSubmit}
-                onAgencySelectScrollToBottom={getNextPage}
-              />
-            </StyledFormWrapper>
-          </WithLoadingOverlay>
-        </FormCard.Body>
-      </FormCard>
-    </SmallContainer>
+        <FormCard>
+          <FormCard.Body>
+            <WithLoadingOverlay isLoading={isLoadingUser || isLoadingRoles || isLoadingAgencies}>
+              <StyledFormWrapper>
+                <UserDetailForm
+                  availableRoles={availableRoles}
+                  availableAgencies={availableAgencies}
+                  defaultValues={user}
+                  submitButtonLabel='Save'
+                  onSubmit={handleFormSubmit}
+                  onAgencySelectScrollToBottom={getNextPage}
+                />
+              </StyledFormWrapper>
+            </WithLoadingOverlay>
+          </FormCard.Body>
+        </FormCard>
+      </SmallContainer>
+    </HolyGrailLayout>
   );
 };

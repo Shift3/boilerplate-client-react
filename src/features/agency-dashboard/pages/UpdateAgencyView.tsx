@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDeleteAgencyMutation, useGetAgencyByIdQuery, useUpdateAgencyMutation } from 'common/api/agencyApi';
 import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
+import { HolyGrailLayout } from 'common/components/HolyGrailLayout';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { Agency } from 'common/models';
 import * as notificationService from 'common/services/notification';
@@ -56,46 +57,47 @@ export const UpdateAgencyView: FC = () => {
   };
 
   return (
-    <SmallContainer>
-      <PageCrumb>
-        <Link to='/agencies'>
-          <FontAwesomeIcon icon={["fas", "chevron-left"]} />  Back to Agency List
-        </Link>
-      </PageCrumb>
+    <HolyGrailLayout>
+      <SmallContainer>
+        <PageCrumb>
+          <Link to='/agencies'>
+            <FontAwesomeIcon icon={['fas', 'chevron-left']} /> Back to Agency List
+          </Link>
+        </PageCrumb>
 
-      <PageHeader>
-        <div>
-          <h1>Edit Agency</h1>
-          <p className='text-muted'>Update agency details here.</p>
-        </div>
-
-        <HasPermission perform={{ permission: 'agency:delete', data: user }}>
+        <PageHeader>
           <div>
-            <Button onClick={() => handleDelete(agency as Agency)} variant='danger'>
-              <FontAwesomeIcon icon={["fas", "trash-alt"]} /> Delete
-            </Button>
+            <h1>Edit Agency</h1>
+            <p className='text-muted'>Update agency details here.</p>
           </div>
-        </HasPermission>
-      </PageHeader>
 
-      <Row>
-        <Col>
-          <FormCard>
-            <Card.Body>
-              <WithLoadingOverlay isLoading={isLoadingAgency}>
-                <StyledFormWrapper>
-                  <AgencyDetailForm
-                    defaultValues={{ agencyName: agency?.agencyName ?? '' }}
-                    submitButtonLabel='Save'
-                    onSubmit={handleFormSubmit}
-                  />
-                </StyledFormWrapper>
-              </WithLoadingOverlay>
-            </Card.Body>
-          </FormCard>
-        </Col>
-      </Row>
-      
-    </SmallContainer>
+          <HasPermission perform={{ permission: 'agency:delete', data: user }}>
+            <div>
+              <Button onClick={() => handleDelete(agency as Agency)} variant='danger'>
+                <FontAwesomeIcon icon={['fas', 'trash-alt']} /> Delete
+              </Button>
+            </div>
+          </HasPermission>
+        </PageHeader>
+
+        <Row>
+          <Col>
+            <FormCard>
+              <Card.Body>
+                <WithLoadingOverlay isLoading={isLoadingAgency}>
+                  <StyledFormWrapper>
+                    <AgencyDetailForm
+                      defaultValues={{ agencyName: agency?.agencyName ?? '' }}
+                      submitButtonLabel='Save'
+                      onSubmit={handleFormSubmit}
+                    />
+                  </StyledFormWrapper>
+                </WithLoadingOverlay>
+              </Card.Body>
+            </FormCard>
+          </Col>
+        </Row>
+      </SmallContainer>
+    </HolyGrailLayout>
   );
 };

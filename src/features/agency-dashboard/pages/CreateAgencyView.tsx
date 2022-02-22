@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useCreateAgencyMutation } from 'common/api/agencyApi';
 import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
+import { HolyGrailLayout } from 'common/components/HolyGrailLayout';
 import * as notificationService from 'common/services/notification';
 import { StyledFormWrapper } from 'common/styles/form';
 import { FC } from 'react';
@@ -23,27 +24,29 @@ export const CreateAgencyView: FC = () => {
   };
 
   return (
-    <SmallContainer>
-      <PageCrumb>
-        <Link to='/agencies'>
-          <FontAwesomeIcon icon={["fas", "chevron-left"]} />  Back to Agency List
-        </Link>
-      </PageCrumb>
+    <HolyGrailLayout>
+      <SmallContainer>
+        <PageCrumb>
+          <Link to='/agencies'>
+            <FontAwesomeIcon icon={['fas', 'chevron-left']} /> Back to Agency List
+          </Link>
+        </PageCrumb>
 
-      <PageHeader>
-        <div>
-          <h1>Create Agency</h1>
-          <p className='text-muted'>Create a new agency.</p>
-        </div>
-      </PageHeader>
+        <PageHeader>
+          <div>
+            <h1>Create Agency</h1>
+            <p className='text-muted'>Create a new agency.</p>
+          </div>
+        </PageHeader>
 
-      <FormCard>
-        <Card.Body>
-          <StyledFormWrapper>
-            <AgencyDetailForm submitButtonLabel='Create' onSubmit={handleFormSubmit} />
-          </StyledFormWrapper>
-        </Card.Body>
-      </FormCard>
-    </SmallContainer>
+        <FormCard>
+          <Card.Body>
+            <StyledFormWrapper>
+              <AgencyDetailForm submitButtonLabel='Create' onSubmit={handleFormSubmit} />
+            </StyledFormWrapper>
+          </Card.Body>
+        </FormCard>
+      </SmallContainer>
+    </HolyGrailLayout>
   );
 };

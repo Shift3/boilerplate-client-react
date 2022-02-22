@@ -9,8 +9,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import styled, { css, ThemeProvider } from 'styled-components';
 import { GlobalStyle } from '../GlobalStyle';
 import AppTheme from 'utils/styleValues';
-import { HolyGrailContent, HolyGrailLayout } from 'common/components/HolyGrailLayout';
-import { ChangePasswordPage } from 'features/user-dashboard/pages/ChangePasswordView';
+import { HolyGrailContent } from 'common/components/HolyGrailLayout';
 import { NotificationContainer } from 'common/components/Notification';
 import { NotFoundView } from 'common/components/NotFound';
 import { UpdateUserProfilePage } from 'features/auth/pages/UpdateUserProfilePage';
@@ -20,7 +19,7 @@ import { BitwiseNavbar } from 'features/navbar';
 import { environment } from 'environment';
 
 const StagingBanner = styled(Alert).attrs({
-  variant: 'warning'
+  variant: 'warning',
 })`
   text-align: center;
   border-radius: 0;
@@ -29,39 +28,35 @@ const StagingBanner = styled(Alert).attrs({
   z-index: 99;
   left: 0;
   right: 0;
-  background: repeating-linear-gradient(
-    45deg,
-    #fff3cd,
-    #fff3cd 20px,
-    #fdefc3 20px,
-    #fdefc3 40px
-  );
+  background: repeating-linear-gradient(45deg, #fff3cd, #fff3cd 20px, #fdefc3 20px, #fdefc3 40px);
   border-bottom: 1px #dadada solid;
 `;
 
 const BannerWrapper = styled.div<{
-  bannerShowing: boolean
+  bannerShowing: boolean;
 }>`
   ${StagingBanner} {
     display: none;
     visibility: hidden;
   }
 
+  ${props =>
+    props.bannerShowing
+      ? css`
+          ${StagingBanner} {
+            display: block;
+            visibility: visible;
+          }
 
-  ${props => props.bannerShowing ? css`
-    ${StagingBanner} {
-      display: block;
-      visibility: visible;
-    }
+          ${BitwiseNavbar} {
+            padding-top: 56px !important;
+          }
 
-    ${BitwiseNavbar} {
-      padding-top: 56px !important;
-    }
-
-    ${HolyGrailContent} {
-      padding-top: 56px;
-    }
-  ` : null}
+          ${HolyGrailContent} {
+            padding-top: 56px;
+          }
+        `
+      : null}
 `;
 
 export const App: FC = () => (
@@ -69,24 +64,20 @@ export const App: FC = () => (
     <ThemeProvider theme={AppTheme}>
       <ConfirmationModal />
       <NotificationContainer />
-
       <BannerWrapper bannerShowing={environment.environment === 'staging'}>
         <StagingBanner>
           You are currently on the <b>staging</b> server.
         </StagingBanner>
         <Switch>
-            <Route path='/auth' component={AuthRoutes} />
-            <HolyGrailLayout>
-              <PrivateRoute exact path='/user/profile/:id' component={UpdateUserProfilePage} />
-              <PrivateRoute exact path='/user/change-password/:id' component={ChangePasswordPage} />
-              <PrivateRoute path='/agents' component={AgentRoutes} />
-              <PrivateRoute path='/agencies' component={AgencyRoutes} requiredRoles={['Super Administrator']} />
-              <PrivateRoute path='/users' component={UserRoutes} requiredRoles={['Admin', 'Super Administrator']} />
-              <PrivateRoute exact path='/'>
-                <Redirect to='/agents' />
-              </PrivateRoute>
-            </HolyGrailLayout>
-            <Route component={NotFoundView} />
+          <Route path='/auth' component={AuthRoutes} />
+          <PrivateRoute exact path='/user/profile/:id' component={UpdateUserProfilePage} />
+          <PrivateRoute path='/agents' component={AgentRoutes} />
+          <PrivateRoute path='/agencies' component={AgencyRoutes} requiredRoles={['Super Administrator']} />
+          <PrivateRoute path='/users' component={UserRoutes} requiredRoles={['Admin', 'Super Administrator']} />
+          <PrivateRoute exact path='/'>
+            <Redirect to='/agents' />
+          </PrivateRoute>
+          <Route component={NotFoundView} />
         </Switch>
       </BannerWrapper>
     </ThemeProvider>
