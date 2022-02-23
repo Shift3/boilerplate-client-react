@@ -1,12 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import portraitPlaceholder from 'assets/img/portrait_placeholder.png';
 import { useDeleteUserMutation, useForgotPasswordMutation, useResendActivationEmailMutation } from 'common/api/userApi';
-import { CircularImg } from 'common/components/Common';
-import { RoleType, User } from 'common/models';
+import { Image, RoleType, User } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { ActionButton, ActionButtonProps, TableActions } from 'common/styles/button';
 import { SubtleBadge } from 'common/styles/utilities';
 import { useConfirmationModal } from 'features/confirmation-modal';
+import { UserProfilePicture } from 'features/navbar/components/UserProfilePicture';
 import { useRbac } from 'features/rbac';
 import { useCallback, useMemo } from 'react';
 import { Button } from 'react-bootstrap';
@@ -19,6 +18,7 @@ export type UserTableItem = {
   lastName: string;
   activatedAt: Date | ActionButtonProps;
   role: RoleType;
+  profilePicture: Image | null;
   actions: ActionButtonProps[];
 };
 
@@ -97,7 +97,7 @@ export const useUserTableData: UseUserTableData = (users = []) => {
         Header: 'Name',
         Cell: ({ row }) => (
           <div className='d-flex d-row align-items-center mr-3'>
-            <CircularImg radius={32} src={portraitPlaceholder} alt='Profile' />
+            <UserProfilePicture user={{ profilePicture: row.original.profilePicture } as User} size="xs" radius={32} />
 
             <div className='d-flex flex-column'>
               <span>
@@ -171,6 +171,7 @@ export const useUserTableData: UseUserTableData = (users = []) => {
         firstName: user.firstName,
         email: user.email,
         role: user.role.roleName,
+        profilePicture: user.profilePicture,
         activatedAt: user.activatedAt
           ? new Date(user.activatedAt)
           : {

@@ -54,7 +54,7 @@ export const CreateUserView: FC = () => {
 
   const handleFormSubmit = async (data: FormData) => {
     try {
-      await createUser({ ...data, profilePicture: '' }).unwrap();
+      await createUser({ ...data, profilePicture: null }).unwrap();
       notificationService.showSuccessMessage(
         `An email has been sent to ${data.email} with instructions to finish activating the account.`,
       );

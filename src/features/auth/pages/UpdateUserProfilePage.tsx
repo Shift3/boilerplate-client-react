@@ -1,19 +1,21 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { useAppDispatch } from 'app/redux';
-import portraitPlaceholder from 'assets/img/portrait_placeholder.png';
+import { useAuth } from 'features/auth/hooks';
 import { handleApiError } from 'common/api/handleApiError';
+import { useAppDispatch } from 'app/redux';
 import {
   ChangePasswordRequest, useChangePasswordMutation, useRequestChangeEmailMutation,
   useResendChangeEmailVerificationEmailMutation,
   useUpdateProfileMutation
 } from 'common/api/userApi';
-import { CircularImg, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
+import { PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
 import { ErrorResponse } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import * as authLocalStorage from 'features/auth/authLocalStorage';
+import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
+import { ProfilePictureFormData, UpdateProfilePictureForm } from '../../user-profile/components/UpdateProfilePictureForm';
+import { useUpdateProfilePicture, useDeleteProfilePicture } from 'features/user-profile/hooks';
 import { authSlice } from 'features/auth/authSlice';
-import { useAuth } from 'features/auth/hooks';
 import { ChangePasswordForm, FormData as ForgotPasswordFormData } from 'features/user-dashboard/components/ChangePasswordForm';
 import { FC, useState } from 'react';
 import { Alert, Col, Nav, Row } from 'react-bootstrap';
@@ -21,7 +23,7 @@ import Button from 'react-bootstrap/Button';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { UpdateUserEmailForm, UserEmailFormData } from '../components/UpdateUserEmailForm';
-import { FormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
+import { UserProfilePicture } from 'features/navbar/components/UserProfilePicture';
 
 type RouteParams = {
   id: string;
@@ -46,13 +48,14 @@ export const UpdateUserProfilePage: FC = () => {
   const [updateProfile] = useUpdateProfileMutation();
   const [requestChangeEmail] = useRequestChangeEmailMutation();
   const [resendChangeEmailVerificationEmail] = useResendChangeEmailVerificationEmailMutation();
+  const { updateUserProfilePicture } = useUpdateProfilePicture();
+  const { deleteUserProfilePicture } = useDeleteProfilePicture();
   const [changePassword] = useChangePasswordMutation();
   const dispatch = useAppDispatch();
   const [tab, setTab] = useState('profile');
 
-  const onSubmit = async (formData: FormData) => {
-    const data = { id: Number(id), ...formData, profilePicture: '' };
-
+  const onSubmit = async (formData: ProfileFormData) => {
+    const data = { id: Number(id), ...formData };
     try {
       const updatedUser = await updateProfile(data).unwrap();
       const newAuth = { token, user: updatedUser };
@@ -89,6 +92,34 @@ export const UpdateUserProfilePage: FC = () => {
     }
   }
 
+  const onSubmitNewProfilePicture = async (formData: ProfilePictureFormData) => {
+    
+    if (formData.profilePicture) {
+      const file = formData.profilePicture[0];
+
+      const profilePictureFormData = new FormData();
+      if (file instanceof Blob) {
+        profilePictureFormData.append("file", file);
+        profilePictureFormData.append("type", file.type);
+      }
+      const data = { profilePicture: profilePictureFormData, id: Number(id) };
+
+      await updateUserProfilePicture(data);
+    }
+  }
+
+  const handleDeleteProfilePicture = async () => {
+    const data = { id: Number(id) };
+
+    await deleteUserProfilePicture(data);
+  }
+
+  const profilePictureIsDefined = () => {
+    if (user) {
+      return !!user.profilePicture;
+    }
+    return false;
+  }
   const onChangePasswordFormSubmit = async (data: ForgotPasswordFormData) => {
     const request: ChangePasswordRequest = { id: user!.id, ...data };
 
@@ -113,7 +144,7 @@ export const UpdateUserProfilePage: FC = () => {
 
       <PageHeader className='mb-3'>
         <div className='d-flex'>
-          <CircularImg radius={64} src={user?.profilePicture || portraitPlaceholder} alt="Profile" />
+          <UserProfilePicture user={user} size="xs" radius={64} />
           <div>
             <h1>{user?.firstName} {user?.lastName[0]}.</h1>
             <p className='text-muted'>Your account settings.</p>
@@ -184,6 +215,25 @@ export const UpdateUserProfilePage: FC = () => {
                     email: user?.email ?? '',
                   }}
                 />
+            </Col>
+          </Row>
+
+          <hr />
+        
+          <Row>
+            <Col md='5'>
+              <h5>Photo</h5>
+              <p className='text-muted'>
+                This is the photo of you that other users in the system will be able to see.
+              </p>
+            </Col>
+            <Col>
+              <UpdateProfilePictureForm
+                onSubmit={onSubmitNewProfilePicture}
+              />
+              <Button className="mt-3" variant='danger' disabled={!profilePictureIsDefined()} onClick={handleDeleteProfilePicture}>
+                Delete
+              </Button>
             </Col>
           </Row>
         </>
