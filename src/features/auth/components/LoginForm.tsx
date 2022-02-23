@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { LoginButton } from 'common/styles/button';
@@ -77,7 +78,7 @@ export const LogInForm: FC<Props> = ({ onSubmit }) => {
             isInvalid={!!errors.password}
           />
           <TogglePasswordButton variant='outline-secondary' onClick={() => setShowingPassword(!showingPassword)}>
-            <FontAwesomeIcon icon={['fas', showingPassword ? 'eye-slash' : 'eye']} />
+            <FontAwesomeIcon icon={showingPassword ? faEyeSlash : faEye } />
           </TogglePasswordButton>
           <Form.Control.Feedback type='invalid' role='alert'>
             {errors.password?.message}
