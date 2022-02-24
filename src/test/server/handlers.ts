@@ -1,5 +1,5 @@
 import { User } from 'common/models';
-import { AgencyFactory, RoleFactory, UserFactory } from 'common/models/testing-factories';
+import { RoleFactory, UserFactory } from 'common/models/testing-factories';
 import { environment } from 'environment';
 import { StatusCodes } from 'http-status-codes';
 import { rest } from 'msw';
@@ -7,13 +7,6 @@ import { rest } from 'msw';
 export const baseUrl = environment.apiRoute;
 
 export const handlers = [
-  rest.get(`${baseUrl}/agencies`, (req, res, ctx) => {
-    return res(
-      ctx.status(StatusCodes.OK),
-      ctx.json([AgencyFactory.build({ agencyName: 'Main' }), AgencyFactory.build({ agencyName: 'Public' })]),
-    );
-  }),
-
   rest.get(`${baseUrl}/roles`, (req, res, ctx) => {
     return res(
       ctx.status(StatusCodes.OK),

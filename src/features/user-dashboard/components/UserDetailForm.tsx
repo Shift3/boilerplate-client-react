@@ -2,22 +2,20 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { CustomSelect } from 'common/components';
 import FormPrompt from 'common/components/FormPrompt';
 import { LoadingButton } from 'common/components/LoadingButton';
-import { Agency, Role, User } from 'common/models';
+import { Role, User } from 'common/models';
 import { FC } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>;
+export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role'>;
 
 export interface Props {
   availableRoles: Role[];
-  availableAgencies: Agency[];
   defaultValues?: Partial<FormData>;
   submitButtonLabel?: string;
   onSubmit: (data: FormData) => void;
-  onAgencySelectScrollToBottom: () => void;
 }
 
 const schema = yup.object({
@@ -27,17 +25,12 @@ const schema = yup.object({
   role: yup.object({
     roleName: yup.string().required('Role is required.'),
   }),
-  agency: yup.object({
-    agencyName: yup.string().required('Agency is required.'),
-  }),
 });
 
 export const UserDetailForm: FC<Props> = ({
   availableRoles,
-  availableAgencies,
   defaultValues = {},
   onSubmit,
-  onAgencySelectScrollToBottom,
   submitButtonLabel = 'Submit',
 }) => {
   const {
@@ -101,28 +94,6 @@ export const UserDetailForm: FC<Props> = ({
         <Form.Control.Feedback type='invalid'>{errors.role?.roleName?.message}</Form.Control.Feedback>
       </Form.Group>
 
-      {availableAgencies.length > 0 && (
-        <Form.Group>
-          <Form.Label>Agency</Form.Label>
-          <Controller
-            control={control}
-            name='agency'
-            render={({ field: { onChange } }) => (
-              <CustomSelect<Agency>
-                placeholder='Select an agency...'
-                defaultValue={defaultValues.agency}
-                options={availableAgencies}
-                getOptionLabel={agency => agency.agencyName}
-                getOptionValue={agency => agency.agencyName}
-                onScrollToBottom={onAgencySelectScrollToBottom}
-                onChange={onChange}
-                isInvalid={!!errors.agency}
-              />
-            )}
-          />
-          <Form.Control.Feedback type='invalid'>{errors.agency?.agencyName?.message}</Form.Control.Feedback>
-        </Form.Group>
-      )}
       <div className='mt-3'>
         <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
           {submitButtonLabel}
