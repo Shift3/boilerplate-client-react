@@ -1,7 +1,6 @@
 import * as Faker from 'faker';
 import { Factory } from 'fishery';
 import { User } from '../user';
-import { AgencyFactory } from './agency-factory';
 import { ImageFactory } from './image-factory';
 import { RoleFactory } from './role-factory';
 
@@ -20,7 +19,6 @@ export const UserFactory = Factory.define<User, UserTransientParams>(({ params, 
     firstName: params.firstName ?? Faker.name.firstName(),
     lastName: params.lastName ?? Faker.name.lastName(),
     profilePicture: hasProfilePicture ? (associations.profilePicture ?? ImageFactory.build()) : null,
-    agency: associations.agency ?? AgencyFactory.build(),
     role: associations.role ?? RoleFactory.build(),
     newEmail: hasNewEmail ? Faker.internet.email() : null,
   }

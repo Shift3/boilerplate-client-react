@@ -19,7 +19,7 @@ export type ConfirmChangeEmailRequest = {
   token: string;
   verificationCode: number;
 };
-export type CreateUserRequest = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role' | 'agency'>;
+export type CreateUserRequest = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role'>;
 export type ForgotPasswordRequest = Pick<User, 'email'>;
 export type ForgotPasswordResponse = { message: string };
 export type ResendActivationEmailRequest = Pick<User, 'id'>;
