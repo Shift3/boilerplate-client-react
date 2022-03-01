@@ -1,4 +1,4 @@
-import { CenteredSpinnerContainer, SpinnerOverlay } from 'common/styles/utilities';
+import { CenteredSpinnerContainer } from 'common/styles/utilities';
 import { FC } from 'react';
 import { LoadingSpinner } from '.';
 
@@ -9,7 +9,6 @@ export const DisablerLoadingOverlay: FC = () => {
       <CenteredSpinnerContainer>
         <LoadingSpinner />
       </CenteredSpinnerContainer>
-      <SpinnerOverlay />
     </div>
   )
 };

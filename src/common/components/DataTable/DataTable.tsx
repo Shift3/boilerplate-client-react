@@ -4,6 +4,7 @@ import { Column, useFilters, useFlexLayout, usePagination, useSortBy, useTable }
 import { DisablerLoadingOverlay } from 'common/components/LoadingSpinner';
 import { Paginator } from './Paginator';
 import { SortIndicator } from './SortIndicator';
+import { DimmableContent } from 'common/styles/utilities';
 
 export type DataTableProps<D extends Record<string, unknown>> = {
   isLoading: boolean;
@@ -135,7 +136,7 @@ export const DataTable = <D extends Record<string, unknown>>({
   );
 
   return (
-    <div>
+    <DimmableContent dim={isLoading}>
       <div className='d-flex flex-column'>
         { isLoading ? <DisablerLoadingOverlay /> : null }
         <div className='table' {...getTableProps()}>
@@ -200,6 +201,6 @@ export const DataTable = <D extends Record<string, unknown>>({
           />
         )}
       </div>
-    </div>
+    </DimmableContent>
   );
 };
