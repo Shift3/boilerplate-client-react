@@ -30,6 +30,7 @@ export const SubtleBadge = styled(Badge)<{
 export const SpinnerOverlay = styled.div`
     height: 100%;
     width: 100%;
+    border-radius: 6px;
     background-color: ${props => props.theme.spinner.overlayBackgroundColor};
     position: absolute;
     z-index: 1040; // consistent with Bootstrap's $zindex-modal-backdrop value
