@@ -36,7 +36,7 @@ export const AgentListView: FC = () => {
           </div>
         </HasPermission>
       </PageHeader>
-      <TableCard>
+      <TableCard hideOverflow={isFetching}>
         <Card.Body>
           <WithLoadingOverlay isLoading={isPageLoading}>
             {data?.meta.count ? (

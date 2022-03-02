@@ -1,10 +1,9 @@
 import { SortOrder } from 'common/models/sorting';
 import { ReactElement, useEffect } from 'react';
 import { Column, useFilters, useFlexLayout, usePagination, useSortBy, useTable } from 'react-table';
-import { DisablerLoadingOverlay } from 'common/components/LoadingSpinner';
+import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { Paginator } from './Paginator';
 import { SortIndicator } from './SortIndicator';
-import { DimmableContent } from 'common/styles/utilities';
 
 export type DataTableProps<D extends Record<string, unknown>> = {
   isLoading: boolean;
@@ -136,9 +135,8 @@ export const DataTable = <D extends Record<string, unknown>>({
   );
 
   return (
-    <DimmableContent dim={isLoading}>
+    <WithLoadingOverlay isLoading={isLoading}>
       <div className='d-flex flex-column'>
-        { isLoading ? <DisablerLoadingOverlay /> : null }
         <div className='table' {...getTableProps()}>
           <div className='thead'>
             {headerGroups.map(headerGroup => (
@@ -201,6 +199,6 @@ export const DataTable = <D extends Record<string, unknown>>({
           />
         )}
       </div>
-    </DimmableContent>
+    </WithLoadingOverlay>
   );
 };
