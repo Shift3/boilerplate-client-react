@@ -44,7 +44,7 @@ export const AgentListView: FC = () => {
           isLoading={isFetching}
         />
       );
-    } 
+    }
 
     return (
       <NoContent>
@@ -76,15 +76,11 @@ export const AgentListView: FC = () => {
           </div>
         </HasPermission>
       </PageHeader>
-      <TableCard hideOverflow={isFetching}>
+      <TableCard $hideOverflow={isFetching}>
         <Card.Body>
           <WithLoadingOverlay isLoading={isPageLoading}>
-            { data?.meta ? renderDataTableOrNoAgentsView(data.meta.count) : 
-            <TableCard>
-              <Card.Body>
-                <NoContent />
-              </Card.Body>
-            </TableCard> }
+            {data?.meta ? renderDataTableOrNoAgentsView(data.meta.count) :
+              <NoContent />}
           </WithLoadingOverlay>
         </Card.Body>
       </TableCard>

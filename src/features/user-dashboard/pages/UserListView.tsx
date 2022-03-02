@@ -34,7 +34,7 @@ export const UserListView: FC = () => {
           </div>
         </HasPermission>
       </PageHeader>
-      <TableCard hideOverflow={isFetching}>
+      <TableCard $hideOverflow={isFetching}>
         <TableCard.Body>
           <WithLoadingOverlay isLoading={isPageLoading}>
             { data?.meta ? 
