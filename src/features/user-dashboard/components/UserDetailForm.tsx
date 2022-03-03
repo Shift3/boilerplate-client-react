@@ -22,9 +22,7 @@ const schema = yup.object({
   firstName: yup.string().required('First Name is required.'),
   lastName: yup.string().required('Last Name is required.'),
   email: yup.string().email().required('Email is required.'),
-  role: yup.object({
-    roleName: yup.string().required('Role is required.'),
-  }),
+  role: yup.string().required('Role is required.'),
 });
 
 export const UserDetailForm: FC<Props> = ({
@@ -33,6 +31,12 @@ export const UserDetailForm: FC<Props> = ({
   onSubmit,
   submitButtonLabel = 'Submit',
 }) => {
+
+  const options: [{ label: string, value: string }?] = [];
+  availableRoles.forEach(role => {
+    options.push({ label: role, value: role });
+  });
+
   const {
     control,
     formState: { errors, isValid, isDirty, isSubmitting },
@@ -83,15 +87,13 @@ export const UserDetailForm: FC<Props> = ({
             <CustomSelect<Role>
               placeholder='Select a role...'
               defaultValue={defaultValues.role}
-              options={availableRoles}
-              getOptionLabel={role => role.roleName}
-              getOptionValue={role => role.roleName}
+              options={options}
               onChange={onChange}
               isInvalid={!!errors.role}
             />
           )}
         />
-        <Form.Control.Feedback type='invalid'>{errors.role?.roleName?.message}</Form.Control.Feedback>
+        <Form.Control.Feedback type='invalid'>{errors.role?.message}</Form.Control.Feedback>
       </Form.Group>
 
       <div className='mt-3'>

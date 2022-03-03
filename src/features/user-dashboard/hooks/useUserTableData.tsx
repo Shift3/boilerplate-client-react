@@ -170,7 +170,7 @@ export const useUserTableData: UseUserTableData = (users = []) => {
         lastName: user.lastName,
         firstName: user.firstName,
         email: user.email,
-        role: user.role.roleName,
+        role: user.role,
         profilePicture: user.profilePicture,
         activatedAt: user.activatedAt
           ? new Date(user.activatedAt)

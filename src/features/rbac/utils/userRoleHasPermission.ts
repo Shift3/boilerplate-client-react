@@ -8,7 +8,7 @@ export const userRoleHasPermission = (
   user: User,
   data?: unknown,
 ): boolean => {
-  const permissionMap = rules[user.role.roleName];
+  const permissionMap = rules[user.role];
 
   if (!permissionMap) {
     return false;

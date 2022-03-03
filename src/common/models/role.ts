@@ -8,7 +8,9 @@ export const RoleHierarchy: Record<RoleType, number> = {
   '': 0,
 };
 
-export interface Role {
-  id: number;
-  roleName: RoleType;
-}
+export enum Role {
+  USER = 'User',
+  EDITOR = 'Editor',
+  ADMIN = 'Admin',
+  SUPER_ADMIN = 'Super Administrator',
+};
