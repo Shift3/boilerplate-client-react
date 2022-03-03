@@ -14,3 +14,9 @@ export enum Role {
   ADMIN = 'Admin',
   SUPER_ADMIN = 'Super Administrator',
 };
+
+export type RoleOption = {
+  label: string,
+  value: Role
+};
+

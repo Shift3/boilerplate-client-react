@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { CustomSelect } from 'common/components';
 import FormPrompt from 'common/components/FormPrompt';
 import { LoadingButton } from 'common/components/LoadingButton';
-import { Role, User } from 'common/models';
+import { Role, User, RoleOption } from 'common/models';
 import { FC } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
@@ -24,11 +24,6 @@ const schema = yup.object({
   email: yup.string().email().required('Email is required.'),
   role: yup.string().required('Role is required.'),
 });
-
-type RoleOption = {
-  label: string,
-  value: Role
-};
 
 export const UserDetailForm: FC<Props> = ({
   availableRoles,
