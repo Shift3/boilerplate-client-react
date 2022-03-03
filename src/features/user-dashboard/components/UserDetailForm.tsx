@@ -92,7 +92,7 @@ export const UserDetailForm: FC<Props> = ({
               placeholder='Select a role...'
               defaultValue={{label: defaultValues?.role?.toString() || "", value: defaultValues?.role || Role.USER}}
               options={options}
-              onChange={onChange}
+              onChange={option => onChange(option.value)}
               isInvalid={!!errors.role}
             />
           )}
