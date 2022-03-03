@@ -25,14 +25,18 @@ const schema = yup.object({
   role: yup.string().required('Role is required.'),
 });
 
+type RoleOption = {
+  label: string,
+  value: Role
+};
+
 export const UserDetailForm: FC<Props> = ({
   availableRoles,
   defaultValues = {},
   onSubmit,
   submitButtonLabel = 'Submit',
 }) => {
-
-  const options: [{ label: string, value: string }?] = [];
+  const options: RoleOption[] = [];
   availableRoles.forEach(role => {
     options.push({ label: role, value: role });
   });
@@ -84,9 +88,9 @@ export const UserDetailForm: FC<Props> = ({
           control={control}
           name='role'
           render={({ field: { onChange } }) => (
-            <CustomSelect<Role>
+            <CustomSelect<RoleOption>
               placeholder='Select a role...'
-              defaultValue={defaultValues.role}
+              defaultValue={{label: defaultValues?.role?.toString() || "", value: defaultValues?.role || Role.USER}}
               options={options}
               onChange={onChange}
               isInvalid={!!errors.role}
