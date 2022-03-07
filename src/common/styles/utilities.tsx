@@ -49,6 +49,7 @@ export const DimmableContent = styled.div<{
           bottom: 5;
           background: white;
           opacity: 0.5;
+          border-radius: transparent;
         }
       ` : null
     }
