@@ -55,7 +55,7 @@ export const NavUserDetails: FC<Props> = ({ user }) => {
 
       <div>
         <div>{user.firstName} {user.lastName.charAt(0)}.</div>
-        <small>{user.role.roleName}</small>
+        <small>{user.role.toString()}</small>
         <span>
           <FontAwesomeIcon icon={['fas', 'cog']} size='2x' />
         </span>

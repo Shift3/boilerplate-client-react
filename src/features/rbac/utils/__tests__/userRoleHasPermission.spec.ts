@@ -1,11 +1,10 @@
 import { Role, User } from 'common/models';
-import { RoleFactory, UserFactory } from 'common/models/testing-factories';
+import { UserFactory } from 'common/models/testing-factories';
 import { RbacRules } from 'features/rbac/rules';
 import { userRoleHasPermission } from '../userRoleHasPermission';
 
 describe('userRoleHasPermission()', () => {
-  const role: Role = RoleFactory.build({ roleName: 'Editor' });
-  const user: User = UserFactory.build({}, { associations: { role } });
+  const user: User = UserFactory.build({role: Role.EDITOR});
 
   it('should return false if user role is not in rbac rules', () => {
     const rules: RbacRules = {};
@@ -15,7 +14,7 @@ describe('userRoleHasPermission()', () => {
 
   it('should return false if rbac rules do not have rule for specified permission', () => {
     const rules: RbacRules = {
-      [user.role.roleName]: {},
+      [user.role]: {},
     };
 
     expect(userRoleHasPermission(rules, 'user:create', user)).toBeFalsy();
@@ -23,7 +22,7 @@ describe('userRoleHasPermission()', () => {
 
   it('should return true if rule for specified permission is true', () => {
     const rules: RbacRules = {
-      [user.role.roleName]: {
+      [user.role]: {
         'user:create': true,
       },
     };
@@ -33,7 +32,7 @@ describe('userRoleHasPermission()', () => {
 
   it('should return false if rule for specified permission is false', () => {
     const rules: RbacRules = {
-      [user.role.roleName]: {
+      [user.role]: {
         'user:create': false,
       },
     };
@@ -43,7 +42,7 @@ describe('userRoleHasPermission()', () => {
 
   it('should return true if rule for specified permission evaluates to true', () => {
     const rules: RbacRules = {
-      [user.role.roleName]: {
+      [user.role]: {
         'user:create': jest.fn().mockReturnValueOnce(true),
       },
     };
@@ -53,7 +52,7 @@ describe('userRoleHasPermission()', () => {
 
   it('should return false if rule for specified permission evaluates to true', () => {
     const rules: RbacRules = {
-      [user.role.roleName]: {
+      [user.role]: {
         'user:create': jest.fn().mockReturnValueOnce(false),
       },
     };

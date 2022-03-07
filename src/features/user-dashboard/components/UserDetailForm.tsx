@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { CustomSelect } from 'common/components';
 import FormPrompt from 'common/components/FormPrompt';
 import { LoadingButton } from 'common/components/LoadingButton';
-import { Role, User } from 'common/models';
+import { Role, User, RoleOption } from 'common/models';
 import { FC } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
@@ -22,9 +22,7 @@ const schema = yup.object({
   firstName: yup.string().required('First Name is required.'),
   lastName: yup.string().required('Last Name is required.'),
   email: yup.string().email().required('Email is required.'),
-  role: yup.object({
-    roleName: yup.string().required('Role is required.'),
-  }),
+  role: yup.string().required('Role is required.'),
 });
 
 export const UserDetailForm: FC<Props> = ({
@@ -33,6 +31,11 @@ export const UserDetailForm: FC<Props> = ({
   onSubmit,
   submitButtonLabel = 'Submit',
 }) => {
+  const options: RoleOption[] = [];
+  availableRoles.forEach(role => {
+    options.push({ label: role, value: role });
+  });
+
   const {
     control,
     formState: { errors, isValid, isDirty, isSubmitting },
@@ -80,18 +83,16 @@ export const UserDetailForm: FC<Props> = ({
           control={control}
           name='role'
           render={({ field: { onChange } }) => (
-            <CustomSelect<Role>
+            <CustomSelect<RoleOption>
               placeholder='Select a role...'
-              defaultValue={defaultValues.role}
-              options={availableRoles}
-              getOptionLabel={role => role.roleName}
-              getOptionValue={role => role.roleName}
-              onChange={onChange}
+              defaultValue={{label: defaultValues?.role?.toString() || "", value: defaultValues?.role || Role.USER}}
+              options={options}
+              onChange={option => onChange(option.value)}
               isInvalid={!!errors.role}
             />
           )}
         />
-        <Form.Control.Feedback type='invalid'>{errors.role?.roleName?.message}</Form.Control.Feedback>
+        <Form.Control.Feedback type='invalid'>{errors.role?.message}</Form.Control.Feedback>
       </Form.Group>
 
       <div className='mt-3'>
