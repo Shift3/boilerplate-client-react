@@ -66,8 +66,7 @@ export const PageHeader = styled.div`
   }
 `;
 
-export const TableCard = styled(Card)<{
-}>`
+export const TableCard = styled(Card)`
   background: white;
   border-radius: 6px;
   border: none;
