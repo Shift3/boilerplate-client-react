@@ -12,7 +12,7 @@ export const PrivateRoute: React.FC<Props> = ({ requiredRoles = [], ...rest }) =
     return <Redirect to='/auth/login' />;
   }
 
-  if (requiredRoles.length === 0 || requiredRoles.includes(user.role.roleName)) {
+  if (requiredRoles.length === 0 || requiredRoles.includes(user.role)) {
     return <Route {...rest} />;
   }
 

@@ -45,8 +45,7 @@ const rules: RbacRules = {
     'agent:read': true,
     'agent:update': true,
     'agent:delete': true,
-    'role:read': (user: User, role: unknown) =>
-      RoleHierarchy[user.role.roleName] >= RoleHierarchy[(role as Role).roleName],
+    'role:read': (user: User, role: unknown) => RoleHierarchy[user.role] >= RoleHierarchy[(role as Role)],
     'user:create': true,
     'user:read': true,
     'user:update': true,

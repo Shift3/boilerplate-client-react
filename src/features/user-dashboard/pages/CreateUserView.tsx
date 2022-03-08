@@ -1,8 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useGetRolesQuery } from 'common/api/roleApi';
 import { useCreateUserMutation } from 'common/api/userApi';
 import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
-import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
+import {Role} from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { StyledFormWrapper } from 'common/styles/form';
 import { useRbac } from 'features/rbac';
@@ -14,7 +13,7 @@ export const CreateUserView: FC = () => {
   const history = useHistory();
   const { userHasPermission } = useRbac();
   const [createUser] = useCreateUserMutation();
-  const { data: roles = [], isLoading: isLoadingRoles } = useGetRolesQuery();
+  const roles = Object.values(Role);
   const availableRoles = roles.filter(role => userHasPermission({ permission: 'role:read', data: role }));
   const defaultValues: Partial<FormData> = {};
 
@@ -47,16 +46,14 @@ export const CreateUserView: FC = () => {
 
       <FormCard>
         <FormCard.Body>
-            <WithLoadingOverlay isLoading={isLoadingRoles} containerHasRoundedCorners containerBorderRadius='6px'>
-              <StyledFormWrapper>
-                <UserDetailForm
-                  availableRoles={availableRoles}
-                  defaultValues={defaultValues}
-                  submitButtonLabel='Create'
-                  onSubmit={handleFormSubmit}
-                />
-              </StyledFormWrapper>
-            </WithLoadingOverlay>
+            <StyledFormWrapper>
+              <UserDetailForm
+                availableRoles={availableRoles}
+                defaultValues={defaultValues}
+                submitButtonLabel='Create'
+                onSubmit={handleFormSubmit}
+              />
+            </StyledFormWrapper>
         </FormCard.Body>
       </FormCard>
     </SmallContainer>

@@ -1,8 +1,8 @@
 import { Store } from '@reduxjs/toolkit';
 import { render, screen } from '@testing-library/react';
 import { createAppStore } from 'app/redux';
-import { RoleType } from 'common/models';
-import { RoleFactory, UserFactory } from 'common/models/testing-factories';
+import { Role, RoleType } from 'common/models';
+import { UserFactory } from 'common/models/testing-factories';
 import { createMemoryHistory, MemoryHistory } from 'history';
 import { FC } from 'react';
 import { Provider } from 'react-redux';
@@ -14,14 +14,11 @@ describe('PrivateRoute', () => {
   const agentListViewPath = '/agents';
   const testPath = '/test/path';
 
-  const editorRole = RoleFactory.build({ roleName: 'Editor' });
-  const adminRole = RoleFactory.build({ roleName: 'Admin' });
-
   const basicUser = UserFactory.build();
-  const editorUser = UserFactory.build({}, { associations: { role: editorRole } });
-  const adminUser = UserFactory.build({}, { associations: { role: adminRole } });
+  const editorUser = UserFactory.build({role: Role.EDITOR});
+  const adminUser = UserFactory.build({role: Role.ADMIN});
 
-  const TestComponent: FC = () => <div data-testid='test-component'></div>;
+  const TestComponent: FC = () => <div data-testid='test-component' />;
 
   describe('when a user is not authenticated', () => {
     let history: MemoryHistory;

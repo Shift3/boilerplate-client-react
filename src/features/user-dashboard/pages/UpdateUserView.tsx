@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useGetRolesQuery } from 'common/api/roleApi';
 import { useGetUserByIdQuery, useUpdateUserMutation } from 'common/api/userApi';
 import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
+import {Role} from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { StyledFormWrapper } from 'common/styles/form';
 import { useRbac } from 'features/rbac';
@@ -20,7 +20,7 @@ export const UpdateUserView: FC = () => {
   const { userHasPermission } = useRbac();
   const [updateUser] = useUpdateUserMutation();
   const { data: user, isLoading: isLoadingUser, error: getUserError } = useGetUserByIdQuery(id);
-  const { data: roles = [], isLoading: isLoadingRoles } = useGetRolesQuery();
+  const roles = Object.values(Role);
 
   const availableRoles = roles.filter(role => userHasPermission({ permission: 'role:read', data: role }));
 
@@ -58,7 +58,7 @@ export const UpdateUserView: FC = () => {
 
       <FormCard>
         <FormCard.Body>
-          <WithLoadingOverlay isLoading={isLoadingUser || isLoadingRoles} containerHasRoundedCorners containerBorderRadius='6px'>
+          <WithLoadingOverlay isLoading={isLoadingUser} containerHasRoundedCorners containerBorderRadius='6px'>
             <StyledFormWrapper>
               <UserDetailForm
                 availableRoles={availableRoles}
