@@ -76,9 +76,9 @@ export const AgentListView: FC = () => {
           </div>
         </HasPermission>
       </PageHeader>
-      <TableCard $hideOverflow={isFetching}>
+      <TableCard>
         <Card.Body>
-          <WithLoadingOverlay isLoading={isPageLoading}>
+          <WithLoadingOverlay isLoading={isPageLoading} containerHasRoundedCorners containerBorderRadius='6px'>
             {data?.meta ? renderDataTableOrNoAgentsView(data.meta.count) :
               <NoContent />}
           </WithLoadingOverlay>

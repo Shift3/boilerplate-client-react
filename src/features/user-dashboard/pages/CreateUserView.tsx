@@ -47,7 +47,7 @@ export const CreateUserView: FC = () => {
 
       <FormCard>
         <FormCard.Body>
-            <WithLoadingOverlay isLoading={isLoadingRoles}>
+            <WithLoadingOverlay isLoading={isLoadingRoles} containerHasRoundedCorners containerBorderRadius='6px'>
               <StyledFormWrapper>
                 <UserDetailForm
                   availableRoles={availableRoles}

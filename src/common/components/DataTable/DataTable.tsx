@@ -135,7 +135,7 @@ export const DataTable = <D extends Record<string, unknown>>({
   );
 
   return (
-    <WithLoadingOverlay isLoading={isLoading}>
+    <WithLoadingOverlay isLoading={isLoading} containerHasRoundedCorners containerBorderRadius='6px'>
       <div className='d-flex flex-column'>
         <div className='table' {...getTableProps()}>
           <div className='thead'>

@@ -58,7 +58,7 @@ export const UpdateUserView: FC = () => {
 
       <FormCard>
         <FormCard.Body>
-          <WithLoadingOverlay isLoading={isLoadingUser || isLoadingRoles}>
+          <WithLoadingOverlay isLoading={isLoadingUser || isLoadingRoles} containerHasRoundedCorners containerBorderRadius='6px'>
             <StyledFormWrapper>
               <UserDetailForm
                 availableRoles={availableRoles}

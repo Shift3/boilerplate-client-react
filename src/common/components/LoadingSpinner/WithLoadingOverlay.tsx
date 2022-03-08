@@ -4,9 +4,11 @@ import { LoadingSpinner } from './LoadingSpinner';
 
 export type Props = {
   isLoading: boolean;
+  containerHasRoundedCorners: boolean;
+  containerBorderRadius: string;
 };
 
-export const WithLoadingOverlay: FC<Props> = ({ isLoading, children }) => {
+export const WithLoadingOverlay: FC<Props> = ({ isLoading, containerHasRoundedCorners, containerBorderRadius, children }) => {
 
   const [isDelayComplete, setIsDelayComplete] = useState(false);
 
@@ -25,7 +27,7 @@ export const WithLoadingOverlay: FC<Props> = ({ isLoading, children }) => {
   );
 
   return (
-    <DimmableContent dim={!isDelayComplete}>
+    <DimmableContent dim={!isDelayComplete} containerHasRoundedCorners={containerHasRoundedCorners} containerBorderRadius={containerBorderRadius}>
       { !isDelayComplete ? 
         <CenteredSpinnerContainer>
           <LoadingSpinner />

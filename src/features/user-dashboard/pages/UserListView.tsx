@@ -34,9 +34,9 @@ export const UserListView: FC = () => {
           </div>
         </HasPermission>
       </PageHeader>
-      <TableCard $hideOverflow={isFetching}>
+      <TableCard>
         <TableCard.Body>
-          <WithLoadingOverlay isLoading={isPageLoading}>
+          <WithLoadingOverlay isLoading={isPageLoading} containerHasRoundedCorners containerBorderRadius='6px' >
             { data?.meta ? 
               <DataTable<UserTableItem>
                 columns={columns}

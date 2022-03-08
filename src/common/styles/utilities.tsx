@@ -36,20 +36,22 @@ export const CenteredSpinnerContainer = styled.div`
 `;
 
 export const DimmableContent = styled.div<{
-    dim: boolean
+    dim: boolean,
+    containerHasRoundedCorners: boolean,
+    containerBorderRadius: string
   }>`
     ${props =>
       props.dim ? css`
         &:after {
           content: '';
           position: absolute;
-          left: 5;
-          right: 5;
-          top: 5;
-          bottom: 5;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
           background: white;
           opacity: 0.5;
-          border-radius: transparent;
+          border-radius: ${props.containerHasRoundedCorners ? props.containerBorderRadius : '0px'};
         }
       ` : null
     }
