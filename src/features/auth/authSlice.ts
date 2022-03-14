@@ -30,6 +30,11 @@ export const authSlice = createSlice({
       state.user = null;
     },
 
+    userUpdatedProfile: (state: AuthState, action: PayloadAction<User>) => {
+      const updatedUser: User = action.payload;
+      state.user = updatedUser;
+    },
+
     userUpdatedProfilePicture: (state: AuthState, action: PayloadAction<Image | null>) => {
       const updatedProfilePicture: Image | null = action.payload;
       if (state.user) {

@@ -6,7 +6,6 @@ import { useAppDispatch } from 'app/redux';
 import {
   ChangePasswordRequest, useChangePasswordMutation, useRequestChangeEmailMutation,
   useResendChangeEmailVerificationEmailMutation,
-  useUpdateProfileMutation
 } from 'common/api/userApi';
 import { PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
 import { ErrorResponse } from 'common/models';
@@ -14,7 +13,7 @@ import * as notificationService from 'common/services/notification';
 import * as authLocalStorage from 'features/auth/authLocalStorage';
 import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
 import { ProfilePictureFormData, UpdateProfilePictureForm } from '../components/UpdateProfilePictureForm';
-import { useUpdateProfilePicture, useDeleteProfilePicture } from 'features/user-profile/hooks';
+import { useUpdateProfilePicture, useDeleteProfilePicture, useUpdateProfile } from 'features/user-profile/hooks';
 import { authSlice } from 'features/auth/authSlice';
 import { ChangePasswordForm, FormData as ForgotPasswordFormData } from 'features/user-dashboard/components/ChangePasswordForm';
 import { FC, useState } from 'react';
@@ -45,9 +44,9 @@ export const UpdateUserProfilePage: FC = () => {
   const history = useHistory();
   const { id } = useParams<RouteParams>();
   const { token, user } = useAuth();
-  const [updateProfile] = useUpdateProfileMutation();
   const [requestChangeEmail] = useRequestChangeEmailMutation();
   const [resendChangeEmailVerificationEmail] = useResendChangeEmailVerificationEmailMutation();
+  const { updateUserProfile } = useUpdateProfile();
   const { updateUserProfilePicture } = useUpdateProfilePicture();
   const { deleteUserProfilePicture } = useDeleteProfilePicture();
   const [changePassword] = useChangePasswordMutation();
@@ -56,16 +55,8 @@ export const UpdateUserProfilePage: FC = () => {
 
   const onSubmit = async (formData: ProfileFormData) => {
     const data = { id: Number(id), ...formData };
-    try {
-      const updatedUser = await updateProfile(data).unwrap();
-      const newAuth = { token, user: updatedUser };
-      dispatch(authSlice.actions.userLoggedIn(newAuth));
-      authLocalStorage.saveAuthState(newAuth);
-      notificationService.showSuccessMessage('Profile updated.');
-      history.push('/agents');
-    } catch (error) {
-      handleApiError(error as FetchBaseQueryError);
-    }
+
+    await updateUserProfile(data);
   };
 
   const onSubmitRequestEmailChange = async (formData: UserEmailFormData) => {

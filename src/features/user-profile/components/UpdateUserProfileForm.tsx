@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import FormPrompt from 'common/components/FormPrompt';
 import { LoadingButton } from 'common/components/LoadingButton';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Constants } from 'utils/constants';
@@ -27,11 +27,22 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) =>
     formState: { errors, isDirty, isSubmitting, isValid },
     handleSubmit,
     register,
+    trigger,
+    reset,
+    formState,
+    getValues
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
     defaultValues,
   });
+
+  useEffect(() => {
+    trigger();
+    if (formState.isSubmitSuccessful) {
+      reset({ firstName: getValues().firstName, lastName: getValues().lastName });
+    }
+  }, [trigger, reset, formState.isSubmitSuccessful, getValues]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
