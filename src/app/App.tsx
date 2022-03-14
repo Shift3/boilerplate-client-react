@@ -11,7 +11,7 @@ import AppTheme from 'utils/styleValues';
 import { HolyGrailContent, HolyGrailLayout } from 'common/components/HolyGrailLayout';
 import { NotificationContainer } from 'common/components/Notification';
 import { NotFoundView } from 'common/components/NotFound';
-import { UpdateUserProfilePage } from 'features/auth/pages/UpdateUserProfilePage';
+import { UpdateUserProfilePage } from 'features/user-profile/pages/UpdateUserProfilePage';
 import { ConfirmationModal } from 'features/confirmation-modal';
 import { Alert } from 'react-bootstrap';
 import { BitwiseNavbar } from 'features/navbar';

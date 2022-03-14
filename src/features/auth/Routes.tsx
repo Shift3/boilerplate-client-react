@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { ActivateAccountPage } from './pages/ActivateAccountPage';
-import { ConfirmChangeEmailPage } from './pages/ConfirmChangeEmailPage';
+import { ConfirmChangeEmailPage } from '../user-profile/pages/ConfirmChangeEmailPage';
 import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
 import { LogInPage } from './pages/LoginPage';
 import { ResetPasswordPage } from './pages/ResetPasswordPage';

@@ -13,7 +13,7 @@ import { ErrorResponse } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import * as authLocalStorage from 'features/auth/authLocalStorage';
 import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
-import { ProfilePictureFormData, UpdateProfilePictureForm } from '../../user-profile/components/UpdateProfilePictureForm';
+import { ProfilePictureFormData, UpdateProfilePictureForm } from '../components/UpdateProfilePictureForm';
 import { useUpdateProfilePicture, useDeleteProfilePicture } from 'features/user-profile/hooks';
 import { authSlice } from 'features/auth/authSlice';
 import { ChangePasswordForm, FormData as ForgotPasswordFormData } from 'features/user-dashboard/components/ChangePasswordForm';
