@@ -29,12 +29,11 @@ const schema: yup.SchemaOf<ProfilePictureFormData> = yup.object().shape({
 
 export const UpdateProfilePictureForm: FC<Props> = ({ onSubmit, defaultValues }) => {
   const {
-    formState: { errors, isValid, isDirty, isSubmitting },
+    formState: { errors, isValid, isDirty, isSubmitting, isSubmitSuccessful },
     handleSubmit,
     register,
     trigger,
-    reset,
-    formState
+    reset
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
@@ -48,11 +47,11 @@ export const UpdateProfilePictureForm: FC<Props> = ({ onSubmit, defaultValues })
 
   useEffect(() => {
     trigger();
-    if (formState.isSubmitSuccessful) {
+    if (isSubmitSuccessful) {
       reset({ profilePicture: null });
       setImagePreview({ src: '', alt: '' });
     }
-  }, [trigger, reset, formState.isSubmitSuccessful]);
+  }, [trigger, reset, isSubmitSuccessful]);
 
   const handleImage = (e: React.BaseSyntheticEvent) => {
     if (e.target.files[0]) {

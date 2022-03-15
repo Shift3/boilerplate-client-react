@@ -24,12 +24,10 @@ const schema: yup.SchemaOf<ProfileFormData> = yup.object().shape({
 
 export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) => {
   const {
-    formState: { errors, isDirty, isSubmitting, isValid },
+    formState: { errors, isDirty, isSubmitting, isValid, isSubmitSuccessful },
     handleSubmit,
     register,
-    trigger,
     reset,
-    formState,
     getValues
   } = useForm({
     resolver: yupResolver(schema),
@@ -38,11 +36,10 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) =>
   });
 
   useEffect(() => {
-    trigger();
-    if (formState.isSubmitSuccessful) {
+    if (isSubmitSuccessful) {
       reset({ firstName: getValues().firstName, lastName: getValues().lastName });
     }
-  }, [trigger, reset, formState.isSubmitSuccessful, getValues]);
+  }, [reset, isSubmitSuccessful, getValues]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
