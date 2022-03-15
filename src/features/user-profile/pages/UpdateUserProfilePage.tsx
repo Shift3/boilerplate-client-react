@@ -12,7 +12,7 @@ import { ErrorResponse } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
 import { ProfilePictureFormData, UpdateProfilePictureForm } from '../components/UpdateProfilePictureForm';
-import { useUpdateProfilePicture, useDeleteProfilePicture, useUpdateProfile, useChangeEmailRequest } from 'features/user-profile/hooks';
+import { useUpdateProfilePicture, useDeleteProfilePicture, useUpdateUserProfile, useChangeEmailRequest } from 'features/user-profile/hooks';
 import { authSlice } from 'features/auth/authSlice';
 import { ChangePasswordForm, FormData as ForgotPasswordFormData } from 'features/user-dashboard/components/ChangePasswordForm';
 import { FC, useState } from 'react';
@@ -44,7 +44,7 @@ export const UpdateUserProfilePage: FC = () => {
   const { id } = useParams<RouteParams>();
   const { user } = useAuth();
   const [resendChangeEmailVerificationEmail] = useResendChangeEmailVerificationEmailMutation();
-  const { updateUserProfile } = useUpdateProfile();
+  const { updateUserProfile } = useUpdateUserProfile();
   const { changeEmailRequest } = useChangeEmailRequest();
   const { updateUserProfilePicture } = useUpdateProfilePicture();
   const { deleteUserProfilePicture } = useDeleteProfilePicture();

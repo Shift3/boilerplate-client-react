@@ -7,11 +7,11 @@ import * as notificationService from 'common/services/notification';
 import { useUpdateProfileMutation, UpdateProfileRequest } from 'common/api/userApi';
 import * as authLocalStorage from '../../auth/authLocalStorage';
 
-export type UseUpdateProfileHook = () => {
+export type UseUpdateUserProfileHook = () => {
     updateUserProfile: (data: UpdateProfileRequest) => Promise<void>;
 };
 
-export const useUpdateProfile: UseUpdateProfileHook = () => {
+export const useUpdateUserProfile: UseUpdateUserProfileHook = () => {
     const dispatch = useAppDispatch();
     const [updateProfile] = useUpdateProfileMutation();
 
