@@ -4,16 +4,15 @@ import { useAuth } from 'features/auth/hooks';
 import { handleApiError } from 'common/api/handleApiError';
 import { useAppDispatch } from 'app/redux';
 import {
-  ChangePasswordRequest, useChangePasswordMutation, useRequestChangeEmailMutation,
+  ChangePasswordRequest, useChangePasswordMutation,
   useResendChangeEmailVerificationEmailMutation,
 } from 'common/api/userApi';
 import { PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
 import { ErrorResponse } from 'common/models';
 import * as notificationService from 'common/services/notification';
-import * as authLocalStorage from 'features/auth/authLocalStorage';
 import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
 import { ProfilePictureFormData, UpdateProfilePictureForm } from '../components/UpdateProfilePictureForm';
-import { useUpdateProfilePicture, useDeleteProfilePicture, useUpdateProfile } from 'features/user-profile/hooks';
+import { useUpdateProfilePicture, useDeleteProfilePicture, useUpdateProfile, useChangeEmailRequest } from 'features/user-profile/hooks';
 import { authSlice } from 'features/auth/authSlice';
 import { ChangePasswordForm, FormData as ForgotPasswordFormData } from 'features/user-dashboard/components/ChangePasswordForm';
 import { FC, useState } from 'react';
@@ -43,10 +42,10 @@ const ProfileNav = styled(Nav)`
 export const UpdateUserProfilePage: FC = () => {
   const history = useHistory();
   const { id } = useParams<RouteParams>();
-  const { token, user } = useAuth();
-  const [requestChangeEmail] = useRequestChangeEmailMutation();
+  const { user } = useAuth();
   const [resendChangeEmailVerificationEmail] = useResendChangeEmailVerificationEmailMutation();
   const { updateUserProfile } = useUpdateProfile();
+  const { changeEmailRequest } = useChangeEmailRequest();
   const { updateUserProfilePicture } = useUpdateProfilePicture();
   const { deleteUserProfilePicture } = useDeleteProfilePicture();
   const [changePassword] = useChangePasswordMutation();
@@ -62,16 +61,7 @@ export const UpdateUserProfilePage: FC = () => {
   const onSubmitRequestEmailChange = async (formData: UserEmailFormData) => {
     const data = { id: Number(id), ...formData };
 
-    try {
-      const updatedUser = await requestChangeEmail(data).unwrap();
-      const newAuth = { token, user: updatedUser };
-      dispatch(authSlice.actions.userLoggedIn(newAuth));
-      authLocalStorage.saveAuthState(newAuth);
-      notificationService.showSuccessMessage('Email Verification sent. Follow the instructions in the email to proceed.');
-      history.push('/agents');
-    } catch (error) {
-      handleApiError(error as FetchBaseQueryError);
-    }
+    await changeEmailRequest(data);
   }
 
   const handleResendChangeEmailVerificationEmail = () => {
