@@ -1,5 +1,5 @@
 import { useGetUsersQuery } from 'common/api/userApi';
-import { PageHeader, TableCard } from 'common/components/Common';
+import { NoContent, PageHeader, TableCard } from 'common/components/Common';
 import { DataTable } from 'common/components/DataTable';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
@@ -13,7 +13,7 @@ import { UserTableItem, useUserTableData } from '../hooks/useUserTableData';
 
 export const UserListView: FC = () => {
   const history = useHistory();
-  const { data, isLoading, page, pageSize, getPage, changePageSize, changeSortBy } =
+  const { data, isLoading, page, pageSize, getPage, changePageSize, changeSortBy, isFetching } =
     usePSFQuery<PaginatedResult<User>>(useGetUsersQuery);
   const users = useMemo(() => data?.results ?? [], [data]);
   const { columns, data: tableData } = useUserTableData(users);
@@ -36,25 +36,29 @@ export const UserListView: FC = () => {
       </PageHeader>
       <TableCard>
         <TableCard.Body>
-          <WithLoadingOverlay isLoading={isPageLoading}>
-            <DataTable<UserTableItem>
-              columns={columns}
-              data={tableData}
-              onRowClick={item => history.push(`users/update-user/${item.id}`)}
-              pagination={{
-                basePage: 1,
-                page,
-                pageSize,
-                count: data?.meta.count || 0,
-                pageCount: data?.meta.pageCount || 0,
-                pageSizeOptions: [5, 10, 25, 50, 100],
-                onPageChange: getPage,
-                onPageSizeChange: changePageSize,
-              }}
-              sorting={{
-                onSortByChange: changeSortBy,
-              }}
-            />
+          <WithLoadingOverlay isLoading={isPageLoading} containerHasRoundedCorners containerBorderRadius='6px' >
+            { data?.meta ? 
+              <DataTable<UserTableItem>
+                columns={columns}
+                data={tableData}
+                onRowClick={item => history.push(`users/update-user/${item.id}`)}
+                pagination={{
+                  basePage: 1,
+                  page,
+                  pageSize,
+                  count: data?.meta.count || 0,
+                  pageCount: data?.meta.pageCount || 0,
+                  pageSizeOptions: [5, 10, 25, 50, 100],
+                  onPageChange: getPage,
+                  onPageSizeChange: changePageSize,
+                }}
+                sorting={{
+                  onSortByChange: changeSortBy,
+                }}
+                isLoading={isFetching}
+              /> :    
+              <NoContent />
+            }
           </WithLoadingOverlay>
         </TableCard.Body>
       </TableCard>
