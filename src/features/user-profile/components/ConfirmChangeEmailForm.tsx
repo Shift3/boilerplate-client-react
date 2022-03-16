@@ -5,6 +5,8 @@ import { Button, Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+import { FormServerError } from 'common/components/FormServerError/FormServerError';
 
 export type FormData = {
   verificationCode: number;
@@ -12,6 +14,7 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
+  submissionError: FetchBaseQueryError | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
@@ -23,7 +26,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
     .moreThan(99999, Constants.errorMessages.VERIFICATION_CODE_LENGTH_MISMATCH),
 });
 
-export const ConfirmChangeEmailForm: FC<Props> = ({ onSubmit }) => {
+export const ConfirmChangeEmailForm: FC<Props> = ({ onSubmit, submissionError }) => {
   const {
     formState: { errors, isValid, isSubmitting },
     handleSubmit,
@@ -49,6 +52,7 @@ export const ConfirmChangeEmailForm: FC<Props> = ({ onSubmit }) => {
         <Form.Control.Feedback type='invalid' role='alert'>
           {errors.verificationCode?.message}
         </Form.Control.Feedback>
+        <FormServerError fieldName='verificationCode' serverError={submissionError} />
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
         <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>

@@ -26,6 +26,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { UpdateUserEmailForm, UserEmailFormData } from '../components/UpdateUserEmailForm';
 import { UserProfilePicture } from 'features/navbar/components/UserProfilePicture';
+import { isFetchBaseQueryError } from 'common/error/utilities';
 
 type RouteParams = {
   id: string;
@@ -55,15 +56,29 @@ export const UpdateUserProfilePage: FC = () => {
   const [changePassword] = useChangePasswordMutation();
   const dispatch = useAppDispatch();
   const [tab, setTab] = useState('profile');
+  const [submissionError, setSubmissionError] = useState<FetchBaseQueryError | null>(null);
+
 
   const onSubmit = async (formData: ProfileFormData) => {
     const data = { id: Number(id), ...formData };
-    await updateUserProfile(data);
+    try {
+      await updateUserProfile(data);
+    } catch (error) {
+      if (isFetchBaseQueryError(error)) {
+        setSubmissionError(error);
+      }
+    }
   };
 
   const onSubmitRequestEmailChange = async (formData: UserEmailFormData) => {
     const data = { id: Number(id), ...formData };
-    await changeEmailRequest(data);
+    try {
+      await changeEmailRequest(data);
+    } catch (error) {
+      if (isFetchBaseQueryError(error)) {
+        setSubmissionError(error);
+      }
+    }
   }
 
   const handleResendChangeEmailVerificationEmail = () => {
@@ -71,6 +86,9 @@ export const UpdateUserProfilePage: FC = () => {
       resendChangeEmailVerificationEmail({ id: Number(id) });
       notificationService.showSuccessMessage('Change Email verification email has been sent.');
     } catch (error) {
+      if (isFetchBaseQueryError(error)) {
+        setSubmissionError(error);
+      }
       handleApiError(error as FetchBaseQueryError);
     }
   };
@@ -86,15 +104,27 @@ export const UpdateUserProfilePage: FC = () => {
       }
       const data = { profilePicture: profilePictureFormData, id: Number(id) };
 
-      await updateUserProfilePicture(data);
+      try {
+        await updateUserProfilePicture(data);
+      } catch (error) {
+        if (isFetchBaseQueryError(error)) {
+          setSubmissionError(error);
+        }
+      }
     }
   };
 
   const handleDeleteProfilePicture = async () => {
     const data = { id: Number(id) };
 
-    await deleteUserProfilePicture(data);
-  };
+    try {
+      await deleteUserProfilePicture(data);
+    } catch (error) {
+      if (isFetchBaseQueryError(error)) {
+        setSubmissionError(error);
+      }
+    }
+  }
 
   const profilePictureIsDefined = () => {
     if (user) {
@@ -110,6 +140,9 @@ export const UpdateUserProfilePage: FC = () => {
       dispatch(authSlice.actions.userLoggedIn({ token: session.token, user: session.user }));
       notificationService.showSuccessMessage('Password updated.');
     } catch (error) {
+      if (isFetchBaseQueryError(error)) {
+        setSubmissionError(error);
+      }
       notificationService.showErrorMessage(((error as FetchBaseQueryError).data as ErrorResponse).message);
     }
 
@@ -160,6 +193,7 @@ export const UpdateUserProfilePage: FC = () => {
                   firstName: user?.firstName ?? '',
                   lastName: user?.lastName ?? '',
                 }}
+                submissionError={submissionError}
               />
             </Col>
           </Row>
@@ -193,12 +227,13 @@ export const UpdateUserProfilePage: FC = () => {
                 </Alert>
               )}
 
-              <UpdateUserEmailForm
-                onSubmit={onSubmitRequestEmailChange}
-                defaultValues={{
-                  email: user?.email ?? '',
-                }}
-              />
+                <UpdateUserEmailForm
+                  onSubmit={onSubmitRequestEmailChange}
+                  defaultValues={{
+                    email: user?.email ?? '',
+                  }}
+                  submissionError={submissionError}
+                />
             </Col>
           </Row>
 
@@ -210,15 +245,14 @@ export const UpdateUserProfilePage: FC = () => {
               <p className='text-muted'>This is the photo of you that other users in the system will be able to see.</p>
             </Col>
             <Col>
-              <UpdateProfilePictureForm onSubmit={onSubmitNewProfilePicture} />
-              <Button
-                className='mt-3'
-                variant='danger'
-                disabled={!profilePictureIsDefined()}
-                onClick={handleDeleteProfilePicture}
-              >
+              <UpdateProfilePictureForm
+                onSubmit={onSubmitNewProfilePicture}
+                submissionError={submissionError}
+              />
+              <Button className="mt-3" variant='danger' disabled={!profilePictureIsDefined()} onClick={handleDeleteProfilePicture}>
                 Delete
               </Button>
+              
             </Col>
           </Row>
         </>
@@ -237,7 +271,7 @@ export const UpdateUserProfilePage: FC = () => {
               </p>
             </Col>
             <Col>
-              <ChangePasswordForm onSubmit={onChangePasswordFormSubmit} />
+              <ChangePasswordForm onSubmit={onChangePasswordFormSubmit} submissionError={submissionError} />
             </Col>
           </Row>
         </>

@@ -36,6 +36,7 @@ export const useDeleteProfilePicture: UseDeleteProfilePictureHook = () => {
                 }            
             } catch (error) {
                 handleApiError(error as FetchBaseQueryError);
+                throw error;
             }
         },
         [deleteProfilePicture, dispatch],

@@ -1,10 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useGetAgentByIdQuery, useUpdateAgentMutation } from 'common/api/agentApi';
 import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
+import { isFetchBaseQueryError } from 'common/error/utilities';
 import * as notificationService from 'common/services/notification';
 import { StyledFormWrapper } from 'common/styles/form';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
@@ -18,6 +20,7 @@ export const UpdateAgentView: FC = () => {
   const navigate = useNavigate();
   const [updateAgent] = useUpdateAgentMutation();
   const { data: agent, isLoading: isLoadingAgent, error } = useGetAgentByIdQuery(id!);
+  const [submissionError, setSubmissionError] = useState<FetchBaseQueryError | null>(null);
 
   useEffect(() => {
     if (error) {
@@ -37,6 +40,9 @@ export const UpdateAgentView: FC = () => {
       notificationService.showSuccessMessage('Agent updated.');
       navigate('/agents');
     } catch (error) {
+      if (isFetchBaseQueryError(error)) {
+        setSubmissionError(error);
+      }
       notificationService.showErrorMessage('Unable to update agent.');
     }
   };
@@ -65,6 +71,7 @@ export const UpdateAgentView: FC = () => {
                 submitButtonLabel='Save'
                 onSubmit={handleFormSubmit}
                 onCancel={handleFormCancel}
+                submissionError={submissionError}
               />
             </StyledFormWrapper>
           </WithLoadingOverlay>

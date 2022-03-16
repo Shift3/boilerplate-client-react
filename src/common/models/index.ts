@@ -9,3 +9,4 @@ export * from './thumbnail';
 export * from './fileMetaData';
 export * from './image';
 export * from './filtering';
+export * from './errorIndexType';

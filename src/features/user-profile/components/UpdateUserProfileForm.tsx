@@ -1,4 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+import { FormServerError } from 'common/components/FormServerError/FormServerError';
 import { LoadingButton } from 'common/components/LoadingButton';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
 import { FC, useEffect } from 'react';
@@ -15,6 +17,7 @@ export type ProfileFormData = {
 type Props = {
   onSubmit: (data: ProfileFormData) => void;
   defaultValues?: Partial<ProfileFormData>;
+  submissionError: FetchBaseQueryError | null;
 };
 
 const schema: yup.SchemaOf<ProfileFormData> = yup.object().shape({
@@ -22,7 +25,7 @@ const schema: yup.SchemaOf<ProfileFormData> = yup.object().shape({
   lastName: yup.string().trim().required(Constants.errorMessages.LAST_NAME_REQUIRED),
 });
 
-export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) => {
+export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues, submissionError }) => {
   const {
     formState: { errors, isDirty, isValid, isSubmitting, isSubmitted, isSubmitSuccessful },
     handleSubmit,
@@ -50,6 +53,7 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) =>
           <Form.Control.Feedback type='invalid' role='alert'>
             {errors.firstName?.message}
           </Form.Control.Feedback>
+          <FormServerError fieldName='firstName' serverError={submissionError} />
         </Form.Group>
         <Form.Group>
           <Form.Label htmlFor='lastName'>Last Name</Form.Label>
@@ -57,6 +61,7 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) =>
           <Form.Control.Feedback type='invalid' role='alert'>
             {errors.lastName?.message}
           </Form.Control.Feedback>
+          <FormServerError fieldName='lastName' serverError={submissionError} />
         </Form.Group>
         <div className='mt-3'>
           <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>

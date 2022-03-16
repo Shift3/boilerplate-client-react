@@ -1,12 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useGetUserByIdQuery, useUpdateUserMutation } from 'common/api/userApi';
 import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
-import { Role } from 'common/models';
+import { isFetchBaseQueryError } from 'common/error/utilities';
+import {Role} from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { StyledFormWrapper } from 'common/styles/form';
 import { useRbac } from 'features/rbac';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
 
@@ -23,6 +25,7 @@ export const UpdateUserView: FC = () => {
   const roles = Object.values(Role);
 
   const availableRoles = roles.filter(role => userHasPermission({ permission: 'role:read', data: role }));
+  const [submissionError, setSubmissionError] = useState<FetchBaseQueryError | null>(null);
 
   useEffect(() => {
     if (getUserError) {
@@ -37,6 +40,9 @@ export const UpdateUserView: FC = () => {
       navigate('/users');
       notificationService.showSuccessMessage('User updated.');
     } catch (error) {
+      if (isFetchBaseQueryError(error)) {
+        setSubmissionError(error);
+      }
       notificationService.showErrorMessage('Unable to update user');
     }
   };
@@ -65,6 +71,7 @@ export const UpdateUserView: FC = () => {
                 defaultValues={user}
                 submitButtonLabel='Save'
                 onSubmit={handleFormSubmit}
+                submissionError={submissionError}
               />
             </StyledFormWrapper>
           </WithLoadingOverlay>

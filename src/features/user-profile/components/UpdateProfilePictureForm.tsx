@@ -6,6 +6,8 @@ import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+import { FormServerError } from 'common/components/FormServerError/FormServerError';
 
 export type ProfilePictureFormData = {
   profilePicture: FileList | null;
@@ -14,6 +16,7 @@ export type ProfilePictureFormData = {
 type Props = {
   onSubmit: (data: ProfilePictureFormData) => void;
   defaultValues?: Partial<ProfilePictureFormData>;
+  submissionError: FetchBaseQueryError | null;
 };
 
 const checkProfilePictureFormat = (value: FileList) => {
@@ -33,7 +36,7 @@ const schema: yup.SchemaOf<ProfilePictureFormData> = yup.object().shape({
     ),
 });
 
-export const UpdateProfilePictureForm: FC<Props> = ({ onSubmit, defaultValues }) => {
+export const UpdateProfilePictureForm: FC<Props> = ({ onSubmit, defaultValues, submissionError }) => {
   const {
     formState: { errors, isValid, isDirty, isSubmitting, isSubmitted, isSubmitSuccessful },
     handleSubmit,
@@ -78,29 +81,18 @@ export const UpdateProfilePictureForm: FC<Props> = ({ onSubmit, defaultValues })
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Form.Group className='d-flex flex-column'>
-          {imgPreviewState.src !== '' ? (
-            <img className='img-fluid img-thumbnail' src={imgPreviewState.src} alt={imgPreviewState.alt} />
-          ) : null}
+          {imgPreviewState.src !== '' ?
+            <img className='img-fluid img-thumbnail' src={imgPreviewState.src} alt={imgPreviewState.alt} /> :
+            null
+          }
           <Form.Label htmlFor='profilePicture'>Photo</Form.Label>
-          <Form.Control
-            id='profilePicture'
-            type='file'
-            accept={Constants.SUPPORTED_PROFILE_PICTURE_FORMATS.join(',')}
-            {...register('profilePicture')}
-            onChange={handleImage}
-            isInvalid={!!errors.profilePicture}
-          />
+          <Form.Control id="profilePicture" type="file" accept={Constants.SUPPORTED_PROFILE_PICTURE_FORMATS.join(',')}  {...register('profilePicture')} onChange={handleImage} isInvalid={!!errors.profilePicture} />
           <Form.Control.Feedback type='invalid' role='alert'>
             {errors.profilePicture?.message}
           </Form.Control.Feedback>
+          <FormServerError fieldName='profilePicture' serverError={submissionError} />
         </Form.Group>
-        <LoadingButton
-          className='mt-3'
-          type='submit'
-          as={Button}
-          disabled={imgPreviewState.src === '' || !isValid}
-          loading={isSubmitting}
-        >
+        <LoadingButton className="mt-3" type='submit' as={Button} disabled={imgPreviewState.src === '' || !isValid} loading={isSubmitting}>
           Update
         </LoadingButton>
       </Form>

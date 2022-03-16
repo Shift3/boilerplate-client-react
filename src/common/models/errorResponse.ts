@@ -1,5 +1,7 @@
+import { ErrorIndexType } from ".";
+
 export interface ErrorResponse {
-  error: string;
+  error: ErrorIndexType | string;
   message: string;
   statusCode: number;
 }

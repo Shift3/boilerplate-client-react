@@ -1,15 +1,18 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useCreateAgentMutation } from 'common/api/agentApi';
 import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
+import { isFetchBaseQueryError } from 'common/error/utilities';
 import * as notificationService from 'common/services/notification';
 import { StyledFormWrapper } from 'common/styles/form';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
 
 export const CreateAgentView: FC = () => {
   const navigate = useNavigate();
   const [createAgent] = useCreateAgentMutation();
+  const [submissionError, setSubmissionError] = useState<FetchBaseQueryError | null>(null);
 
   const handleFormCancel = () => {
     navigate(-1);
@@ -21,6 +24,9 @@ export const CreateAgentView: FC = () => {
       notificationService.showSuccessMessage('Agent created.');
       navigate('/agents');
     } catch (error) {
+      if (isFetchBaseQueryError(error)) {
+        setSubmissionError(error);
+      }
       notificationService.showErrorMessage('Unable to add agent.');
     }
   };
@@ -42,7 +48,7 @@ export const CreateAgentView: FC = () => {
       <FormCard>
         <FormCard.Body>
           <StyledFormWrapper>
-            <AgentDetailForm submitButtonLabel='Create' onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
+            <AgentDetailForm submitButtonLabel='Create' onCancel={handleFormCancel} onSubmit={handleFormSubmit} submissionError={submissionError} />
           </StyledFormWrapper>
         </FormCard.Body>
       </FormCard>

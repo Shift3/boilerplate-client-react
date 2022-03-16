@@ -1,4 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+import FormPrompt from 'common/components/FormPrompt';
+import { FormServerError } from 'common/components/FormServerError/FormServerError';
 import { LoadingButton } from 'common/components/LoadingButton';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
 import { FC } from 'react';
@@ -16,6 +19,7 @@ export type FormData = {
 type Props = {
   onSubmit: (data: FormData) => void;
   onCancel: () => void;
+  submissionError: FetchBaseQueryError | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
@@ -29,7 +33,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
   lastName: yup.string().trim().required(Constants.errorMessages.LAST_NAME_REQUIRED),
 });
 
-export const SignUpForm: FC<Props> = ({ onSubmit }) => {
+export const SignUpForm: FC<Props> = ({ onSubmit, submissionError }) => {
   const {
     formState: { errors, isDirty, isSubmitting, isSubmitted, isValid },
     handleSubmit,
@@ -57,6 +61,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
             <Form.Control.Feedback type='invalid' role='alert'>
               {errors.firstName?.message}
             </Form.Control.Feedback>
+            <FormServerError fieldName='firstName' serverError={submissionError} />
           </Form.Group>
 
           <Form.Group as={Col}>
@@ -73,6 +78,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
             <Form.Control.Feedback type='invalid' role='alert'>
               {errors.lastName?.message}
             </Form.Control.Feedback>
+            <FormServerError fieldName='lastName' serverError={submissionError} />
           </Form.Group>
         </Row>
 
@@ -88,6 +94,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
           <Form.Control.Feedback type='invalid' role='alert'>
             {errors.email?.message}
           </Form.Control.Feedback>
+          <FormServerError fieldName='email' serverError={submissionError} />
         </Form.Group>
         <Form.Group>
           <Form.Label htmlFor='confirmEmail' placeholder='Confirm email'>
@@ -103,6 +110,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
           <Form.Control.Feedback type='invalid' role='alert'>
             {errors.confirmEmail?.message}
           </Form.Control.Feedback>
+          <FormServerError fieldName='confirmEmail' serverError={submissionError} />
         </Form.Group>
 
         <div className='d-grid gap-2 mt-4'>

@@ -32,6 +32,7 @@ export const useLogin: UseLoginHook = () => {
         navigate('/agents', { replace: true });
       } catch (error) {
         handleApiError(error as FetchBaseQueryError);
+        throw error;
       }
     },
     [login, dispatch, navigate],

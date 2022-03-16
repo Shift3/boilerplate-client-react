@@ -6,6 +6,8 @@ import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+import { FormServerError } from 'common/components/FormServerError/FormServerError';
 
 export type FormData = {
   newPassword: string;
@@ -14,6 +16,7 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
+  submissionError: FetchBaseQueryError | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
@@ -32,7 +35,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
     .oneOf([yup.ref('newPassword')], Constants.errorMessages.PASSWORD_MUST_MATCH),
 });
 
-export const ResetPasswordForm: FC<Props> = ({ onSubmit }) => {
+export const ResetPasswordForm: FC<Props> = ({ onSubmit, submissionError }) => {
   const {
     formState: { errors, isDirty, isSubmitting, isSubmitted, isValid },
     handleSubmit,
@@ -62,6 +65,7 @@ export const ResetPasswordForm: FC<Props> = ({ onSubmit }) => {
           <Form.Control.Feedback type='invalid' role='alert'>
             {errors.newPassword?.message}
           </Form.Control.Feedback>
+          <FormServerError fieldName='newPassword' serverError={submissionError} />
         </Form.Group>
         <Form.Group>
           <Form.Label htmlFor='confirmPassword'>Confirm Password</Form.Label>
@@ -75,6 +79,7 @@ export const ResetPasswordForm: FC<Props> = ({ onSubmit }) => {
           <Form.Control.Feedback type='invalid' role='alert'>
             {errors.confirmPassword?.message}
           </Form.Control.Feedback>
+          <FormServerError fieldName='confirmPassword' serverError={submissionError} />
         </Form.Group>
         <div className='mt-3'>
           <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>

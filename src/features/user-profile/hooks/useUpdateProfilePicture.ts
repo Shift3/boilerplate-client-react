@@ -29,6 +29,7 @@ export const useUpdateProfilePicture: UseUpdateProfilePictureHook = () => {
                 } 
             } catch (error) {
                 handleApiError(error as FetchBaseQueryError);
+                throw error;
             }
         },
         [updateProfilePicture, dispatch],

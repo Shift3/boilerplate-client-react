@@ -11,6 +11,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Constants } from 'utils/constants';
 import * as yup from 'yup';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+import { FormServerError } from 'common/components/FormServerError/FormServerError';
 
 export type FormData = {
   email: string;
@@ -19,6 +21,7 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
+  submissionError: FetchBaseQueryError | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
@@ -40,7 +43,7 @@ const TogglePasswordButton = styled(Button)`
   border-color: #ced4da;
 `;
 
-export const LogInForm: FC<Props> = ({ onSubmit }) => {
+export const LogInForm: FC<Props> = ({ onSubmit, submissionError }) => {
   const {
     formState: { errors, isValid, isSubmitting },
     handleSubmit,
@@ -66,6 +69,7 @@ export const LogInForm: FC<Props> = ({ onSubmit }) => {
         <Form.Control.Feedback type='invalid' role='alert'>
           {errors.email?.message}
         </Form.Control.Feedback>
+        <FormServerError fieldName='email' serverError={submissionError} />
       </Form.Group>
       <Form.Group>
         <Form.Label htmlFor='password'>Password</Form.Label>
@@ -83,6 +87,7 @@ export const LogInForm: FC<Props> = ({ onSubmit }) => {
           <Form.Control.Feedback type='invalid' role='alert'>
             {errors.password?.message}
           </Form.Control.Feedback>
+          <FormServerError fieldName='password' serverError={submissionError} />
         </InputGroup>
       </Form.Group>
       <ForgotPassword>

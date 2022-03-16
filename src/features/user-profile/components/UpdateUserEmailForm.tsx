@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+import { FormServerError } from 'common/components/FormServerError/FormServerError';
 
 export type UserEmailFormData = {
   email: string;
@@ -13,9 +15,10 @@ export type UserEmailFormData = {
 type Props = {
   onSubmit: (data: UserEmailFormData) => void;
   defaultValues?: Partial<UserEmailFormData>;
+  submissionError: FetchBaseQueryError | null;
 };
 
-export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues }) => {
+export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues, submissionError }) => {
   const schema: yup.SchemaOf<UserEmailFormData> = yup.object().shape({
     email: yup
       .string()
@@ -49,6 +52,7 @@ export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues }) => {
         <Form.Control.Feedback type='invalid' role='alert'>
           {errors.email?.message}
         </Form.Control.Feedback>
+        <FormServerError fieldName='email' serverError={submissionError} />
       </Form.Group>
       <div className='mt-3'>
         <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
