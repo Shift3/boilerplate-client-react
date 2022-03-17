@@ -9,7 +9,7 @@ import { Agent, PaginatedResult } from 'common/models';
 import { SecondaryButton, CreateButton } from 'common/styles/button';
 import { HasPermission } from 'features/rbac';
 import { FC, useMemo } from 'react';
-import { Card, Form } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import { Link, useHistory } from 'react-router-dom';
 import { AgentTableItem, useAgentTableData } from '../hooks/useAgentTableData';

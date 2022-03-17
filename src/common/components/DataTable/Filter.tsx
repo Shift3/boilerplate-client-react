@@ -1,13 +1,9 @@
-/* eslint-disable react/no-array-index-key */
 import { FilterOp } from 'common/models';
 import { FC, useMemo, useState } from 'react';
 import { FilterBadges } from './FilterBadges';
 import { FilterDropdown } from './FilterDropdown';
 import { FilterSearchBar } from './FilterSearchBar';
 
-// ----------------------------------------------------------------------------
-// Main Filter Component
-// ----------------------------------------------------------------------------
 export type OperationOption = {
   operation: FilterOp;
   operationLabel: string;

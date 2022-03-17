@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { customBaseQuery } from 'common/api/customBaseQuery';
-import { PaginatedResult, PaginationQueryParams, Session } from 'common/models';
+import { FilterQueryParams, PaginatedResult, PaginationQueryParams, Session } from 'common/models';
 import { SortingQueryParams } from 'common/models/sorting';
 import { User } from 'common/models/user';
 import { QueryParamsBuilder } from './queryParamsBuilder';
@@ -35,10 +35,10 @@ export type UpdateUserRequest = Pick<User, 'id' | 'email' | 'firstName' | 'lastN
 export type UserChangeEmailRequest = Pick<User, 'id' | 'email'>;
 export type UpdateProfilePictureRequest = {
   id: number;
-  // FormData is associated with HTMLFormElement and not with the form component schema. 
+  // FormData is associated with HTMLFormElement and not with the form component schema.
   profilePicture: FormData;
-}
-export type DeleteProfilePictureRequest = Pick<User, 'id'>
+};
+export type DeleteProfilePictureRequest = Pick<User, 'id'>;
 
 export const userApi = createApi({
   reducerPath: 'userApi',
@@ -53,9 +53,13 @@ export const userApi = createApi({
   tagTypes: ['User'],
 
   endpoints: builder => ({
-    getUsers: builder.query<PaginatedResult<User>, PaginationQueryParams & SortingQueryParams>({
-      query: ({ page, pageSize, sortBy }) => {
-        const queryParams = new QueryParamsBuilder().setPaginationParams(page, pageSize).setSortParam(sortBy).build();
+    getUsers: builder.query<PaginatedResult<User>, PaginationQueryParams & SortingQueryParams & FilterQueryParams>({
+      query: ({ page, pageSize, sortBy, filters }) => {
+        const queryParams = new QueryParamsBuilder()
+          .setPaginationParams(page, pageSize)
+          .setSortParam(sortBy)
+          .setFilterParam(filters)
+          .build();
         return { url: `/users?${queryParams}` };
       },
       providesTags: ['User'],
@@ -177,9 +181,9 @@ export const userApi = createApi({
       query: ({ id, profilePicture }) => ({
         url: `/users/${id}/profile-picture`,
         method: 'PUT',
-        body: profilePicture, 
+        body: profilePicture,
       }),
-      invalidatesTags: ['User']
+      invalidatesTags: ['User'],
     }),
 
     deleteProfilePicture: builder.mutation<User, DeleteProfilePictureRequest>({
@@ -187,8 +191,8 @@ export const userApi = createApi({
         url: `/users/${id}/profile-picture`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['User']
-    })
+      invalidatesTags: ['User'],
+    }),
   }),
 });
 
@@ -209,5 +213,5 @@ export const {
   useUpdateProfileMutation,
   useUpdateUserMutation,
   useUpdateProfilePictureMutation,
-  useDeleteProfilePictureMutation
+  useDeleteProfilePictureMutation,
 } = userApi;
