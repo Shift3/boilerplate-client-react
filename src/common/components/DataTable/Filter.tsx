@@ -27,32 +27,34 @@ export type AppliedFilterInfo = {
 };
 
 export type DataTableFilterProps = {
-  defaultFilter: FilterInfo;
-  extraFilters?: FilterInfo[];
+  filters: FilterInfo[];
+  defaultFilterAttribute: string;
+  defaultFilterOperation: FilterOp;
   onSetFilter: (attribute: string, operation: FilterOp, value: string) => void;
   onRemoveFilter: (attribute: string, operation: FilterOp) => void;
   onClearFilters: () => void;
 };
 
 export const DataTableFilter: FC<DataTableFilterProps> = ({
-  defaultFilter,
-  extraFilters = [],
+  filters = [],
+  defaultFilterAttribute,
+  defaultFilterOperation,
   onSetFilter,
   onRemoveFilter,
   onClearFilters,
 }) => {
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState<AppliedFilterInfo[]>([]);
-  const availableFilters = useMemo(
-    () =>
-      extraFilters.filter(
-        extraFilter => !appliedFilters.find(appliedFilter => appliedFilter.filter.attribute === extraFilter.attribute),
-      ),
-    [appliedFilters],
+  const availableFilters = filters.filter(
+    filter => !appliedFilters.find(appliedFilter => appliedFilter.filter.attribute === filter.attribute),
+  );
+  const defaultAttributeLabel = useMemo(
+    () => filters.find(filter => filter.attribute === defaultFilterAttribute)?.attributeLabel,
+    [filters, defaultFilterAttribute],
   );
 
   const handleDropdownToggle = () => {
-    if (extraFilters && extraFilters.length) {
+    if (filters.length) {
       setShowFilterDropdown(show => !show);
     }
   };
@@ -62,15 +64,20 @@ export const DataTableFilter: FC<DataTableFilterProps> = ({
   };
 
   const handleSearch = (value: string) => {
-    onSetFilter(defaultFilter.attribute, defaultFilter.operationOptions[0].operation, value);
-    setAppliedFilters(appliedFilters => [
-      ...appliedFilters,
-      {
-        filter: defaultFilter,
-        selectedOperation: 0,
-        value,
-      },
-    ]);
+    const filter = availableFilters.find(filter => filter.attribute === defaultFilterAttribute);
+    const selectedOperation = filter?.operationOptions.findIndex(op => op.operation === defaultFilterOperation) ?? -1;
+
+    if (filter && selectedOperation >= 0) {
+      onSetFilter(defaultFilterAttribute, defaultFilterOperation, value);
+      setAppliedFilters(appliedFilters => [
+        ...appliedFilters,
+        {
+          filter,
+          selectedOperation,
+          value,
+        },
+      ]);
+    }
   };
 
   const handleFilterApply = (selectedAttribute: number, selectedOperation: number, value: string) => {
@@ -119,7 +126,7 @@ export const DataTableFilter: FC<DataTableFilterProps> = ({
       <FilterSearchBar
         onSearch={handleSearch}
         onToggle={handleDropdownToggle}
-        placeholder={`Search by ${defaultFilter.attributeLabel}...`}
+        placeholder={`Search by ${defaultAttributeLabel}...`}
         hasExtraFilters={availableFilters.length > 0}
         clearFilters={handleFiltersClear}
       />

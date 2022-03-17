@@ -16,54 +16,49 @@ import { AgentTableItem, useAgentTableData } from '../hooks/useAgentTableData';
 
 export const AgentListView: FC = () => {
   const history = useHistory();
-  const { data, isLoading, page, pageSize, getPage, changePageSize, changeSortBy, filters, addFilter, removeFilter, resetFilters } =
-    usePSFQuery<PaginatedResult<Agent>>(useGetAgentsQuery);
+  const {
+    data,
+    isLoading,
+    page,
+    pageSize,
+    getPage,
+    changePageSize,
+    changeSortBy,
+    addFilter,
+    removeFilter,
+    resetFilters,
+  } = usePSFQuery<PaginatedResult<Agent>>(useGetAgentsQuery);
   const agents = useMemo(() => data?.results ?? [], [data]);
   const { columns, data: tableData } = useAgentTableData(agents);
   const isPageLoading = isLoading;
 
-  const SelectFilterUI: FC<{ value: string; onChange: (value: string) => void }> = ({ value, onChange }) => {
-    return (
-      <Form.Select value={value} onChange={e => onChange(e.target.value)}>
-        <option value='one'>One</option>
-        <option value='two'>Two</option>
-        <option value='three'>Three</option>
-      </Form.Select>
-    );
-  };
-
-  const defaultFilter: FilterInfo = {
-    attribute: 'name',
-    attributeLabel: 'Name',
-    operationOptions: [
+  const filters: FilterInfo[] = useMemo(
+    () => [
       {
-        operation: 'icontains',
-        operationLabel: 'contains',
+        attribute: 'name',
+        attributeLabel: 'Name',
+        operationOptions: [
+          {
+            operation: 'eq',
+            operationLabel: 'is',
+          },
+          {
+            operation: 'icontains',
+            operationLabel: 'contains',
+          },
+          {
+            operation: 'startswith',
+            operationLabel: 'starts with',
+          },
+          {
+            operation: 'endswith',
+            operationLabel: 'ends with',
+          },
+        ],
       },
     ],
-  };
-
-  const extraFilters: FilterInfo[] = [
-    {
-      attribute: 'name',
-      attributeLabel: 'Name',
-      operationOptions: [
-        {
-          operation: 'eq',
-          operationLabel: 'is',
-          InputUI: SelectFilterUI,
-        },
-        {
-          operation: 'startswith',
-          operationLabel: 'starts with',
-        },
-        {
-          operation: 'endswith',
-          operationLabel: 'ends with',
-        },
-      ],
-    },
-  ];
+    [],
+  );
 
   return (
     <Container>
@@ -81,8 +76,9 @@ export const AgentListView: FC = () => {
         </HasPermission>
       </PageHeader>
       <DataTableFilter
-        defaultFilter={defaultFilter}
-        extraFilters={extraFilters}
+        filters={filters}
+        defaultFilterAttribute='name'
+        defaultFilterOperation='icontains'
         onSetFilter={addFilter}
         onRemoveFilter={removeFilter}
         onClearFilters={resetFilters}
