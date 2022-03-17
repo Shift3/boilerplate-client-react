@@ -1,4 +1,5 @@
 /* eslint-disable react/no-array-index-key */
+import { FilterOp } from 'common/models';
 import { FC, useMemo, useState } from 'react';
 import { FilterBadges } from './FilterBadges';
 import { FilterDropdown } from './FilterDropdown';
@@ -8,7 +9,7 @@ import { FilterSearchBar } from './FilterSearchBar';
 // Main Filter Component
 // ----------------------------------------------------------------------------
 export type OperationOption = {
-  operation: string;
+  operation: FilterOp;
   operationLabel: string;
   InputUI?: FC<{ value: string; onChange: (value: string) => void }>;
 };
@@ -28,8 +29,8 @@ export type AppliedFilterInfo = {
 export type DataTableFilterProps = {
   defaultFilter: FilterInfo;
   extraFilters?: FilterInfo[];
-  onSetFilter: (attribute: string, operation: string, value: string) => void;
-  onRemoveFilter: (attribute: string, operation: string) => void;
+  onSetFilter: (attribute: string, operation: FilterOp, value: string) => void;
+  onRemoveFilter: (attribute: string, operation: FilterOp) => void;
   onClearFilters: () => void;
 };
 

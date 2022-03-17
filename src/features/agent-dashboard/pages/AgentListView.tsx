@@ -2,24 +2,72 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetAgentsQuery } from 'common/api/agentApi';
 import { NoContent, PageHeader, TableCard } from 'common/components/Common';
 import { DataTable } from 'common/components/DataTable';
+import { DataTableFilter, FilterInfo } from 'common/components/DataTable/Filter';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { Agent, PaginatedResult } from 'common/models';
 import { SecondaryButton, CreateButton } from 'common/styles/button';
 import { HasPermission } from 'features/rbac';
 import { FC, useMemo } from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, Form } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import { Link, useHistory } from 'react-router-dom';
 import { AgentTableItem, useAgentTableData } from '../hooks/useAgentTableData';
 
 export const AgentListView: FC = () => {
   const history = useHistory();
-  const { data, isLoading, page, pageSize, getPage, changePageSize, changeSortBy } =
+  const { data, isLoading, page, pageSize, getPage, changePageSize, changeSortBy, filters, addFilter, removeFilter } =
     usePSFQuery<PaginatedResult<Agent>>(useGetAgentsQuery);
   const agents = useMemo(() => data?.results ?? [], [data]);
   const { columns, data: tableData } = useAgentTableData(agents);
   const isPageLoading = isLoading;
+
+  const SelectFilterUI: FC<{ value: string; onChange: (value: string) => void }> = ({ value, onChange }) => {
+    return (
+      <Form.Select value={value} onChange={e => onChange(e.target.value)}>
+        <option value='one'>One</option>
+        <option value='two'>Two</option>
+        <option value='three'>Three</option>
+      </Form.Select>
+    );
+  };
+
+  const clearAllFilters = () => {
+    console.log('remove all');
+  };
+
+  const defaultFilter: FilterInfo = {
+    attribute: 'name',
+    attributeLabel: 'Name',
+    operationOptions: [
+      {
+        operation: 'icontains',
+        operationLabel: 'contains',
+      },
+    ],
+  };
+
+  const extraFilters: FilterInfo[] = [
+    {
+      attribute: 'name',
+      attributeLabel: 'Name',
+      operationOptions: [
+        {
+          operation: 'eq',
+          operationLabel: 'is',
+          InputUI: SelectFilterUI,
+        },
+        {
+          operation: 'startswith',
+          operationLabel: 'starts with',
+        },
+        {
+          operation: 'endswith',
+          operationLabel: 'ends with',
+        },
+      ],
+    },
+  ];
 
   return (
     <Container>
@@ -36,6 +84,13 @@ export const AgentListView: FC = () => {
           </div>
         </HasPermission>
       </PageHeader>
+      <DataTableFilter
+        defaultFilter={defaultFilter}
+        extraFilters={extraFilters}
+        onSetFilter={addFilter}
+        onRemoveFilter={removeFilter}
+        onClearFilters={clearAllFilters}
+      />
       <TableCard>
         <Card.Body>
           <WithLoadingOverlay isLoading={isPageLoading}>

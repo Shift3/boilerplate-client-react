@@ -54,8 +54,8 @@ type FilterState = {
 };
 
 type FilterActions = {
-  addFilter: (attr: string, op: FilterOp, value: string) => void;
-  removeFilter: (attr: string, op: FilterOp) => void;
+  addFilter: (attribute: string, operation: FilterOp, value: string) => void;
+  removeFilter: (attribute: string, operation: FilterOp) => void;
   resetFilters: () => void;
 };
 
