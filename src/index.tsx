@@ -5,7 +5,6 @@ import {
   faCheck,
   faChevronLeft,
   faChevronRight,
-  faCircleXmark,
   faCog,
   faEdit,
   faEllipsisH,
@@ -22,6 +21,7 @@ import {
   faTrashAlt,
   faUser,
   faUsers,
+  faX,
 } from '@fortawesome/free-solid-svg-icons';
 import * as Sentry from '@sentry/react';
 import { store } from 'app/redux';
@@ -44,7 +44,6 @@ library.add(
   faCheck,
   faChevronLeft,
   faChevronRight,
-  faCircleXmark,
   faCog,
   faEdit,
   faEllipsisH,
@@ -61,6 +60,7 @@ library.add(
   faTrashAlt,
   faUser,
   faUsers,
+  faX,
 );
 
 /* TODO: - CMS 3/23/21

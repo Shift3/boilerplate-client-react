@@ -16,18 +16,23 @@ const StyledContainer = styled.div`
 
 const StyledFilterBadge = styled(Badge).attrs({ pill: true })`
   display: flex;
-  gap: 10px;
+  align-items: center;
+  gap: 15px;
   padding: 0.4rem 0.75rem;
   background-color: #eae6e5 !important;
   color: #666;
   cursor: pointer;
 
-  p {
+  div {
     word-spacing: 5px;
     margin: 0;
 
     span {
       color: #212529;
+    }
+
+    span[role='button'] {
+      color: #666;
     }
   }
 `;
@@ -71,14 +76,14 @@ const FilterBadge: FC<{
   return (
     <div>
       <StyledFilterBadge tabIndex={0} onClick={toggleEditMenu} onKeyDown={handleBadgeKeyDown}>
-        <p>
+        <div>
           <span>{appliedFilter.filter.attributeLabel}</span>{' '}
           {appliedFilter.filter.operationOptions[appliedFilter.selectedOperation].operationLabel}{' '}
           <span>{appliedFilter.value}</span>
-        </p>
+        </div>
         <div>
           <span role='button' tabIndex={0} onClick={onClose} onKeyDown={handleCloseIconKeyDown}>
-            <FontAwesomeIcon icon='circle-xmark' />
+            <FontAwesomeIcon icon='x' />
           </span>
         </div>
       </StyledFilterBadge>
