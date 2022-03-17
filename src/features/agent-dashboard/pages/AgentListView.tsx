@@ -16,7 +16,7 @@ import { AgentTableItem, useAgentTableData } from '../hooks/useAgentTableData';
 
 export const AgentListView: FC = () => {
   const history = useHistory();
-  const { data, isLoading, page, pageSize, getPage, changePageSize, changeSortBy, filters, addFilter, removeFilter } =
+  const { data, isLoading, page, pageSize, getPage, changePageSize, changeSortBy, filters, addFilter, removeFilter, resetFilters } =
     usePSFQuery<PaginatedResult<Agent>>(useGetAgentsQuery);
   const agents = useMemo(() => data?.results ?? [], [data]);
   const { columns, data: tableData } = useAgentTableData(agents);
@@ -30,10 +30,6 @@ export const AgentListView: FC = () => {
         <option value='three'>Three</option>
       </Form.Select>
     );
-  };
-
-  const clearAllFilters = () => {
-    console.log('remove all');
   };
 
   const defaultFilter: FilterInfo = {
@@ -89,7 +85,7 @@ export const AgentListView: FC = () => {
         extraFilters={extraFilters}
         onSetFilter={addFilter}
         onRemoveFilter={removeFilter}
-        onClearFilters={clearAllFilters}
+        onClearFilters={resetFilters}
       />
       <TableCard>
         <Card.Body>

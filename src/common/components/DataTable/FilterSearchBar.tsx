@@ -1,11 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FC, useState } from 'react';
+import React, { FC, useState } from 'react';
+import { Dropdown } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import styled from 'styled-components';
 
-const StyledToggle = styled(Button)`
+const StyledFilterMenuToggle = styled(Button)`
   background-color: #e9ecef;
   border: 1px solid #ced4da;
   color: #212529;
@@ -17,12 +18,39 @@ const StyledToggle = styled(Button)`
   }
 `;
 
+const StyledExtraMenu = styled.div`
+  & > a,
+  & > a:active,
+  & > a:focus,
+  & > a:hover {
+    background-color: transparent;
+    border: none;
+    color: #212529;
+  }
+`;
+
+const ExtraMenuToggle = React.forwardRef<HTMLButtonElement, { onClick: React.MouseEventHandler<HTMLElement> }>(
+  ({ children, onClick }, ref) => (
+    <Button
+      href=''
+      ref={ref}
+      onClick={e => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      {children}
+    </Button>
+  ),
+);
+
 export const FilterSearchBar: FC<{
   onSearch: (value: string) => void;
   onToggle: () => void;
   hasExtraFilters?: boolean;
   placeholder?: string;
-}> = ({ onSearch, onToggle, placeholder = 'Search...', hasExtraFilters }) => {
+  clearFilters: () => void;
+}> = ({ onSearch, onToggle, placeholder = 'Search...', hasExtraFilters, clearFilters }) => {
   const [searchValue, setSearchValue] = useState('');
 
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -43,9 +71,9 @@ export const FilterSearchBar: FC<{
   return (
     <Form onSubmit={handleSearchSubmit}>
       <InputGroup>
-        <StyledToggle onClick={handleToggle} disabled={!hasExtraFilters}>
+        <StyledFilterMenuToggle onClick={handleToggle} disabled={!hasExtraFilters}>
           <FontAwesomeIcon icon='filter' />
-        </StyledToggle>
+        </StyledFilterMenuToggle>
         <Form.Control
           type='text'
           placeholder={placeholder}
@@ -55,6 +83,16 @@ export const FilterSearchBar: FC<{
         <Button type='submit' disabled={!searchValue}>
           Search
         </Button>
+        <StyledExtraMenu>
+          <Dropdown>
+            <Dropdown.Toggle as={ExtraMenuToggle}>
+              <FontAwesomeIcon icon='ellipsis-h' />
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={clearFilters}>Clear All Filters</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </StyledExtraMenu>
       </InputGroup>
     </Form>
   );

@@ -109,6 +109,11 @@ export const DataTableFilter: FC<DataTableFilterProps> = ({
     });
   };
 
+  const handleFiltersClear = () => {
+    setAppliedFilters([]);
+    onClearFilters();
+  };
+
   return (
     <div>
       <FilterSearchBar
@@ -116,6 +121,7 @@ export const DataTableFilter: FC<DataTableFilterProps> = ({
         onToggle={handleDropdownToggle}
         placeholder={`Search by ${defaultFilter.attributeLabel}...`}
         hasExtraFilters={availableFilters.length > 0}
+        clearFilters={handleFiltersClear}
       />
 
       <FilterBadges appliedFilters={appliedFilters} onUpdate={handleUpdate} onRemove={handleFilterRemove} />
