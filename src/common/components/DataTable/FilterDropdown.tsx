@@ -1,5 +1,5 @@
 import { CancelButton } from 'common/styles/button';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
@@ -63,8 +63,12 @@ const DefaultFilterInput: FC<{ value: string; onChange: (value: string) => void 
   <Form.Control type='text' value={value} onChange={e => onChange(e.target.value)} />
 );
 
-const DropdownContainer: FC<{ show?: boolean }> = ({ show, children }) => (
-  <StyledDropdown hidden={!show}>{children}</StyledDropdown>
+const DropdownContainer = React.forwardRef<HTMLDivElement, { show?: boolean; children: React.ReactNode }>(
+  ({ show, children }, ref) => (
+    <StyledDropdown hidden={!show} ref={ref}>
+      {children}
+    </StyledDropdown>
+  ),
 );
 
 const AttributeDropdownMenu: FC<{
@@ -113,8 +117,6 @@ export const OperationDropdownMenu: FC<{
     }
   };
 
-  console.log('filter', filter);
-
   return (
     <StyledDropdownMenu hidden={!show}>
       <Form onSubmit={handleApply}>
@@ -157,12 +159,13 @@ export type FilterDropdownProps = {
 export const FilterDropdown: FC<FilterDropdownProps> = ({ show = false, filters, onClose, onApply }) => {
   const [selectedAttribute, setSelectedAttribute] = useState<number>();
   const [selectedOperation, setSelectedOperation] = useState<number>();
+  const dropdownContainerRef = useRef<HTMLDivElement>(null);
 
-  const handleFilterCancel = () => {
+  const handleFilterCancel = useCallback(() => {
     onClose();
     setSelectedAttribute(undefined);
     setSelectedOperation(undefined);
-  };
+  }, [onClose]);
 
   const handleFilterApply = (value: string) => {
     if (selectedAttribute !== undefined && selectedOperation !== undefined) {
@@ -173,8 +176,39 @@ export const FilterDropdown: FC<FilterDropdownProps> = ({ show = false, filters,
     }
   };
 
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Esc' || e.key === 'Escape') {
+        handleFilterCancel();
+      }
+    };
+
+    const handleClickOutside = (e: MouseEvent) => {
+      const boundingRect = dropdownContainerRef.current?.getBoundingClientRect();
+
+      if (boundingRect) {
+        if (
+          e.clientX < boundingRect.x ||
+          e.clientX > boundingRect.x + boundingRect.width ||
+          e.clientY < boundingRect.y ||
+          e.clientY > boundingRect.y + boundingRect.height
+        ) {
+          handleFilterCancel();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleEsc);
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('keydown', handleEsc);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [handleFilterCancel]);
+
   return (
-    <DropdownContainer show={show}>
+    <DropdownContainer show={show} ref={dropdownContainerRef}>
       <AttributeDropdownMenu
         show={show}
         filters={filters}

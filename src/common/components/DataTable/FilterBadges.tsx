@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FC, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import Badge from 'react-bootstrap/Badge';
 import styled from 'styled-components';
 import { AppliedFilterInfo } from './Filter';
@@ -51,6 +51,7 @@ const FilterBadge: FC<{
 }> = ({ appliedFilter, onUpdate, onClose }) => {
   const [showEditMenu, setShowEditMenu] = useState(false);
   const [selectedOperation, setSelectedOperation] = useState(appliedFilter.selectedOperation);
+  const dropdownContainerRef = useRef<HTMLDivElement>(null);
 
   const toggleEditMenu = () => setShowEditMenu(show => !show);
 
@@ -73,6 +74,37 @@ const FilterBadge: FC<{
     setShowEditMenu(false);
   };
 
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Esc' || e.key === 'Escape') {
+        handleCancel();
+      }
+    };
+
+    const handleClickOutside = (e: MouseEvent) => {
+      const boundingRect = dropdownContainerRef.current?.getBoundingClientRect();
+
+      if (boundingRect) {
+        if (
+          e.clientX < boundingRect.x ||
+          e.clientX > boundingRect.x + boundingRect.width ||
+          e.clientY < boundingRect.y ||
+          e.clientY > boundingRect.y + boundingRect.height
+        ) {
+          handleCancel();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleEsc);
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('keydown', handleEsc);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <div>
       <StyledFilterBadge tabIndex={0} onClick={toggleEditMenu} onKeyDown={handleBadgeKeyDown}>
@@ -88,7 +120,7 @@ const FilterBadge: FC<{
         </div>
       </StyledFilterBadge>
       {showEditMenu && (
-        <StyledDropdownContainer>
+        <StyledDropdownContainer ref={dropdownContainerRef}>
           <OperationDropdownMenu
             show={showEditMenu}
             filter={appliedFilter.filter}
