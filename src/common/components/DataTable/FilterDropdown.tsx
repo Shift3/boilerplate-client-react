@@ -113,6 +113,8 @@ export const OperationDropdownMenu: FC<{
     }
   };
 
+  console.log('filter', filter);
+
   return (
     <StyledDropdownMenu hidden={!show}>
       <Form onSubmit={handleApply}>
@@ -156,21 +158,20 @@ export const FilterDropdown: FC<FilterDropdownProps> = ({ show = false, filters,
   const [selectedAttribute, setSelectedAttribute] = useState<number>();
   const [selectedOperation, setSelectedOperation] = useState<number>();
 
-  const handleFilterCancel = () => onClose();
+  const handleFilterCancel = () => {
+    onClose();
+    setSelectedAttribute(undefined);
+    setSelectedOperation(undefined);
+  };
 
   const handleFilterApply = (value: string) => {
     if (selectedAttribute !== undefined && selectedOperation !== undefined) {
       onApply(selectedAttribute, selectedOperation, value);
       onClose();
-    }
-  };
-
-  useEffect(() => {
-    if (!show) {
       setSelectedAttribute(undefined);
       setSelectedOperation(undefined);
     }
-  }, [show]);
+  };
 
   return (
     <DropdownContainer show={show}>
