@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC, useEffect, useRef, useState } from 'react';
 import Badge from 'react-bootstrap/Badge';
 import styled from 'styled-components';
-import { AppliedFilterInfo } from './Filter';
+import { AppliedFilterInfo } from './DataTableFilters';
 import { OperationDropdownMenu } from './FilterDropdown';
 
 // ----------------------------------------------------------------------------

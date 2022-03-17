@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetAgentsQuery } from 'common/api/agentApi';
 import { NoContent, PageHeader, TableCard } from 'common/components/Common';
 import { DataTable } from 'common/components/DataTable';
-import { DataTableFilter, FilterInfo } from 'common/components/DataTable/Filter';
+import { DataTableFilters, FilterInfo } from 'common/components/DataTable/DataTableFilters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { Agent, PaginatedResult } from 'common/models';
@@ -75,7 +75,7 @@ export const AgentListView: FC = () => {
           </div>
         </HasPermission>
       </PageHeader>
-      <DataTableFilter
+      <DataTableFilters
         filters={filters}
         defaultFilterAttribute='name'
         defaultFilterOperation='icontains'

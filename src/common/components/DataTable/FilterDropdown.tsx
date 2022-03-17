@@ -5,7 +5,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import styled, { css } from 'styled-components';
-import { FilterInfo } from './Filter';
+import { FilterInfo } from './DataTableFilters';
 
 // ----------------------------------------------------------------------------
 // Styled components

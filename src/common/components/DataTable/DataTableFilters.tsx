@@ -31,7 +31,7 @@ export type DataTableFilterProps = {
   onClearFilters: () => void;
 };
 
-export const DataTableFilter: FC<DataTableFilterProps> = ({
+export const DataTableFilters: FC<DataTableFilterProps> = ({
   filters = [],
   defaultFilterAttribute,
   defaultFilterOperation,
