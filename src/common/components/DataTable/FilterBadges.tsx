@@ -47,8 +47,8 @@ const StyledDropdownContainer = styled.div`
 const FilterBadge: FC<{
   appliedFilter: AppliedFilterInfo;
   onUpdate: (selectedOperation: number, value: string) => void;
-  onClose: () => void;
-}> = ({ appliedFilter, onUpdate, onClose }) => {
+  onRemove: () => void;
+}> = ({ appliedFilter, onUpdate, onRemove }) => {
   const [showEditMenu, setShowEditMenu] = useState(false);
   const [selectedOperation, setSelectedOperation] = useState(appliedFilter.selectedOperation);
   const dropdownContainerRef = useRef<HTMLDivElement>(null);
@@ -63,7 +63,7 @@ const FilterBadge: FC<{
 
   const handleCloseIconKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     if (e.key === 'Enter') {
-      onClose();
+      onRemove();
     }
   };
 
@@ -114,7 +114,7 @@ const FilterBadge: FC<{
           <span>{appliedFilter.value}</span>
         </div>
         <div>
-          <span role='button' tabIndex={0} onClick={onClose} onKeyDown={handleCloseIconKeyDown}>
+          <span role='button' tabIndex={0} onClick={onRemove} onKeyDown={handleCloseIconKeyDown}>
             <FontAwesomeIcon icon='x' />
           </span>
         </div>
@@ -154,7 +154,7 @@ export const FilterBadges: FC<FilterBadgesProps> = ({ appliedFilters, onUpdate, 
           key={appliedFilter.filter.attribute}
           appliedFilter={appliedFilter}
           onUpdate={handleUpdate(index)}
-          onClose={() => onRemove(index)}
+          onRemove={() => onRemove(index)}
         />
       ))}
     </StyledContainer>
