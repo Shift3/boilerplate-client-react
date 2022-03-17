@@ -5,7 +5,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import styled, { css } from 'styled-components';
-import { UIFilterDescription } from './Filter';
+import { FilterInfo } from './Filter';
 
 // ----------------------------------------------------------------------------
 // Styled components
@@ -69,7 +69,7 @@ const DropdownContainer: FC<{ show?: boolean }> = ({ show, children }) => (
 
 const AttributeDropdownMenu: FC<{
   show?: boolean;
-  filters: UIFilterDescription[];
+  filters: FilterInfo[];
   selected?: number;
   onSelect: (index: number) => void;
 }> = ({ show, filters, selected, onSelect }) => {
@@ -84,15 +84,16 @@ const AttributeDropdownMenu: FC<{
   );
 };
 
-const OperationDropdownMenu: FC<{
+export const OperationDropdownMenu: FC<{
   show?: boolean;
-  filter: UIFilterDescription;
+  filter: FilterInfo;
   selected?: number;
+  defaultValue?: string;
   onSelect: (index: number) => void;
   onCancel: () => void;
   onApply: (value: string) => void;
-}> = ({ show, filter, selected, onSelect, onCancel, onApply }) => {
-  const [value, setValue] = useState('');
+}> = ({ show, filter, selected, defaultValue, onSelect, onCancel, onApply }) => {
+  const [value, setValue] = useState(defaultValue ?? '');
 
   const handleOperationSelect = (index: number) => {
     if (selected !== index) {
@@ -115,7 +116,7 @@ const OperationDropdownMenu: FC<{
   return (
     <StyledDropdownMenu hidden={!show}>
       <Form onSubmit={handleApply}>
-        {filter.availableOperations.map((op, index) => {
+        {filter.operationOptions.map((op, index) => {
           const FilterInput = op.InputUI ?? DefaultFilterInput;
           return (
             <StyledDropdownItem key={op.operation} onClick={() => handleOperationSelect(index)}>
@@ -146,7 +147,7 @@ const OperationDropdownMenu: FC<{
 // ----------------------------------------------------------------------------
 export type FilterDropdownProps = {
   show?: boolean;
-  filters: UIFilterDescription[];
+  filters: FilterInfo[];
   onClose: () => void;
   onApply: (selectedAttribute: number, selectedOperation: number, value: string) => void;
 };
