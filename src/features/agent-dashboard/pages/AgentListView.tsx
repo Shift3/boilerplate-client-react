@@ -19,6 +19,7 @@ export const AgentListView: FC = () => {
   const {
     data,
     isLoading,
+    isFetching,
     page,
     pageSize,
     getPage,
@@ -60,6 +61,46 @@ export const AgentListView: FC = () => {
     [],
   );
 
+  const renderDataTableOrNoAgentsView = (count: number) => {
+    if (count !== 0) {
+      return (
+        <DataTable<AgentTableItem>
+          columns={columns}
+          data={tableData}
+          onRowClick={item => history.push(`agents/update-agent/${item.id}`)}
+          pagination={{
+            basePage: 1,
+            page,
+            pageSize,
+            count: data?.meta.count || 0,
+            pageCount: data?.meta.pageCount || 0,
+            pageSizeOptions: [5, 10, 25, 50, 100],
+            onPageChange: getPage,
+            onPageSizeChange: changePageSize,
+          }}
+          sorting={{
+            onSortByChange: changeSortBy,
+          }}
+          isLoading={isFetching}
+        />
+      );
+    }
+
+    return (
+      <NoContent>
+        <FontAwesomeIcon className='text-muted' size='2x' icon={['fas', 'stethoscope']} />
+        <p className='lead mb-0'>No Agents</p>
+
+        <HasPermission perform='agent:create'>
+          <p className='text-muted'>Get started by creating a new agent.</p>
+          <Link to='/agents/create-agent'>
+            <SecondaryButton>Add Agent</SecondaryButton>
+          </Link>
+        </HasPermission>
+      </NoContent>
+    )
+  }
+
   return (
     <Container>
       <PageHeader>
@@ -85,41 +126,9 @@ export const AgentListView: FC = () => {
       />
       <TableCard>
         <Card.Body>
-          <WithLoadingOverlay isLoading={isPageLoading}>
-            {data?.meta.count ? (
-              <>
-                <DataTable<AgentTableItem>
-                  columns={columns}
-                  data={tableData}
-                  onRowClick={item => history.push(`agents/update-agent/${item.id}`)}
-                  pagination={{
-                    basePage: 1,
-                    page,
-                    pageSize,
-                    count: data?.meta.count || 0,
-                    pageCount: data?.meta.pageCount || 0,
-                    pageSizeOptions: [5, 10, 25, 50, 100],
-                    onPageChange: getPage,
-                    onPageSizeChange: changePageSize,
-                  }}
-                  sorting={{
-                    onSortByChange: changeSortBy,
-                  }}
-                />
-              </>
-            ) : (
-              <NoContent>
-                <FontAwesomeIcon className='text-muted' size='2x' icon={['fas', 'stethoscope']} />
-                <p className='lead mb-0'>No Agents</p>
-
-                <HasPermission perform='agent:create'>
-                  <p className='text-muted'>Get started by creating a new agent.</p>
-                  <Link to='/agents/create-agent'>
-                    <SecondaryButton>Add Agent</SecondaryButton>
-                  </Link>
-                </HasPermission>
-              </NoContent>
-            )}
+          <WithLoadingOverlay isLoading={isPageLoading} containerHasRoundedCorners containerBorderRadius='6px'>
+            {data?.meta ? renderDataTableOrNoAgentsView(data.meta.count) :
+              <NoContent />}
           </WithLoadingOverlay>
         </Card.Body>
       </TableCard>

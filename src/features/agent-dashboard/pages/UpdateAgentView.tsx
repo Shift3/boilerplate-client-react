@@ -58,7 +58,7 @@ export const UpdateAgentView: FC = () => {
 
       <FormCard>
         <Card.Body>
-          <WithLoadingOverlay isLoading={isLoadingAgent}>
+          <WithLoadingOverlay isLoading={isLoadingAgent} containerHasRoundedCorners containerBorderRadius='6px'>
             <StyledFormWrapper>
               <AgentDetailForm
                 defaultValues={agent}

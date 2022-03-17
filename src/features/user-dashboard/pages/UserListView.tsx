@@ -1,5 +1,5 @@
 import { useGetUsersQuery } from 'common/api/userApi';
-import { PageHeader, TableCard } from 'common/components/Common';
+import { NoContent, PageHeader, TableCard } from 'common/components/Common';
 import { DataTable } from 'common/components/DataTable';
 import { DataTableFilters, FilterInfo } from 'common/components/DataTable/DataTableFilters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
@@ -17,6 +17,7 @@ export const UserListView: FC = () => {
   const {
     data,
     isLoading,
+    isFetching,
     page,
     pageSize,
     getPage,
@@ -105,25 +106,29 @@ export const UserListView: FC = () => {
       />
       <TableCard>
         <TableCard.Body>
-          <WithLoadingOverlay isLoading={isPageLoading}>
-            <DataTable<UserTableItem>
-              columns={columns}
-              data={tableData}
-              onRowClick={item => history.push(`users/update-user/${item.id}`)}
-              pagination={{
-                basePage: 1,
-                page,
-                pageSize,
-                count: data?.meta.count || 0,
-                pageCount: data?.meta.pageCount || 0,
-                pageSizeOptions: [5, 10, 25, 50, 100],
-                onPageChange: getPage,
-                onPageSizeChange: changePageSize,
-              }}
-              sorting={{
-                onSortByChange: changeSortBy,
-              }}
-            />
+          <WithLoadingOverlay isLoading={isPageLoading} containerHasRoundedCorners containerBorderRadius='6px' >
+            { data?.meta ? 
+              <DataTable<UserTableItem>
+                columns={columns}
+                data={tableData}
+                onRowClick={item => history.push(`users/update-user/${item.id}`)}
+                pagination={{
+                  basePage: 1,
+                  page,
+                  pageSize,
+                  count: data?.meta.count || 0,
+                  pageCount: data?.meta.pageCount || 0,
+                  pageSizeOptions: [5, 10, 25, 50, 100],
+                  onPageChange: getPage,
+                  onPageSizeChange: changePageSize,
+                }}
+                sorting={{
+                  onSortByChange: changeSortBy,
+                }}
+                isLoading={isFetching}
+              /> :    
+              <NoContent />
+            }
           </WithLoadingOverlay>
         </TableCard.Body>
       </TableCard>
