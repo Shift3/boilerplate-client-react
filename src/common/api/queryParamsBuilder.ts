@@ -1,4 +1,4 @@
-import { SortOrder } from 'common/models';
+import { Filter, SortOrder } from 'common/models';
 
 export class QueryParamsBuilder {
   private queryParams: URLSearchParams;
@@ -25,6 +25,10 @@ export class QueryParamsBuilder {
     }
     const value = sortBy.direction === 'DESC' ? `-${sortBy.property}` : sortBy.property;
     return this.setParam('sort', value);
+  }
+
+  public setFilterParam(filters: Filter[]): QueryParamsBuilder {
+    return this.setParam('filter', filters.map(f => `${f.attr}__${f.op}:${f.value}`).join(','));
   }
 
   public build(): string {

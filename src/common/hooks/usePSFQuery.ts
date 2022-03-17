@@ -1,4 +1,4 @@
-import { isPaginatedResult, PaginatedResult, SortOrder } from 'common/models';
+import { Filter, FilterOp, isPaginatedResult, PaginatedResult, SortOrder } from 'common/models';
 import { useCallback, useEffect, useReducer } from 'react';
 import { UseQuery, UseQueryOptions, UseQueryResult } from 'rtk-query-config';
 
@@ -50,11 +50,13 @@ type SortManager = SortState & SortActions;
 
 // --------------------------------------------------------------------------------------------------------------------
 type FilterState = {
-  // TODO
+  filters: Filter[];
 };
 
 type FilterActions = {
-  // TODO
+  addFilter: (attr: string, op: FilterOp, value: string) => void;
+  removeFilter: (attr: string, op: FilterOp) => void;
+  resetFilters: () => void;
 };
 
 type FilterManager = FilterState & FilterActions;
@@ -66,6 +68,9 @@ type PSFQueryAction =
   | { type: 'pagination/setPage'; payload: { page: number } }
   | { type: 'pagination/setPageSize'; payload: { size: number } }
   | { type: 'sort/setSortBy'; payload: { sortBy: SortOrder | undefined } }
+  | { type: 'filter/add'; payload: { attr: string; op: FilterOp; value: string } }
+  | { type: 'filter/remove'; payload: { attr: string; op: FilterOp } }
+  | { type: 'filter/reset' }
   | { type: 'all/dataUpdated'; payload: { data: PaginatedResult<unknown> | unknown } };
 
 export type PSFQueryManager = PaginationManager & SortManager & FilterManager;
@@ -96,7 +101,7 @@ export const usePSFQuery = <ResultType>(
   };
 
   const initialFilterState: FilterState = {
-    // TODO
+    filters: [],
   };
 
   const initialState: PSFQueryState = {
@@ -141,8 +146,31 @@ export const usePSFQuery = <ResultType>(
       case 'sort/setSortBy': {
         const { sortBy } = action.payload;
         const { basePage } = config;
-        // Reset page to 0 since changing sorting will change the contents of all the pages.
+        // Reset page to the first page since changing sorting will change the contents of all the pages.
         return { ...state, page: basePage, sortBy };
+      }
+
+      case 'filter/add': {
+        const { basePage } = config;
+        const { filters: oldFilters } = state;
+        const { payload } = action;
+        const newFilters = !oldFilters.find(filter => filter.attr === payload.attr && filter.op === payload.op)
+          ? [...oldFilters, payload]
+          : oldFilters;
+        return { ...state, page: basePage, filters: newFilters };
+      }
+
+      case 'filter/remove': {
+        const { basePage } = config;
+        const { payload } = action;
+        const { filters } = state;
+        const newFilters = filters.filter(filter => filter.attr !== payload.attr && filter.op !== payload.op);
+        return { ...state, page: basePage, filters: newFilters };
+      }
+
+      case 'filter/reset': {
+        const { basePage } = config;
+        return { ...state, page: basePage, filters: [] };
       }
 
       case 'all/dataUpdated': {
@@ -173,8 +201,8 @@ export const usePSFQuery = <ResultType>(
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // Use the query hook.
-  const { page, pageSize, sortBy } = state;
-  const queryArg = { page, pageSize, sortBy };
+  const { page, pageSize, sortBy, filters } = state;
+  const queryArg = { page, pageSize, sortBy, filters };
   const queryResult = useQuery(queryArg, options);
 
   // Certain metadata is returned as part of the response from the server. For example, `count` and `pageCount`
@@ -217,6 +245,18 @@ export const usePSFQuery = <ResultType>(
     [dispatch],
   );
 
+  const addFilter = useCallback(
+    (attr: string, op: FilterOp, value: string) => dispatch({ type: 'filter/add', payload: { attr, op, value } }),
+    [dispatch],
+  );
+
+  const removeFilter = useCallback(
+    (attr: string, op: FilterOp) => dispatch({ type: 'filter/remove', payload: { attr, op } }),
+    [dispatch],
+  );
+
+  const resetFilters = useCallback(() => dispatch({ type: 'filter/reset' }), [dispatch]);
+
   return {
     ...queryResult,
     ...state,
@@ -225,5 +265,8 @@ export const usePSFQuery = <ResultType>(
     getNextPage,
     changePageSize,
     changeSortBy,
+    addFilter,
+    removeFilter,
+    resetFilters,
   };
 };
