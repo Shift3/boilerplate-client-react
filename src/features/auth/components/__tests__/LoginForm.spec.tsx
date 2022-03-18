@@ -1,9 +1,8 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createAppStore } from 'app/redux';
-import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
 import { LogInForm } from '../LoginForm';
@@ -12,15 +11,14 @@ const mockOnSubmit = jest.fn();
 
 describe('LoginForm', () => {
   beforeEach(async () => {
-    const history = createMemoryHistory();
     render(
-      <Router history={history}>
+      <MemoryRouter>
         <Provider store={createAppStore()}>
           <ThemeProvider theme={AppTheme}>
             <LogInForm onSubmit={mockOnSubmit} />
-          </ThemeProvider>,
+          </ThemeProvider>
         </Provider>
-      </Router>
+      </MemoryRouter>,
     );
     mockOnSubmit.mockReset();
   });

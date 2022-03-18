@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import FormPrompt from 'common/components/FormPrompt';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { PhoneInput } from 'common/components/PhoneInput';
+import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
 import { Agent } from 'common/models';
 import { FC, useEffect } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
@@ -45,14 +45,10 @@ const schema = yup.object().shape({
   }),
 });
 
-export const AgentDetailForm: FC<Props> = ({
-  defaultValues = {},
-  onSubmit,
-  submitButtonLabel = 'Submit',
-}) => {
+export const AgentDetailForm: FC<Props> = ({ defaultValues = {}, onSubmit, submitButtonLabel = 'Submit' }) => {
   const {
     register,
-    formState: { errors, isValid, isDirty, isSubmitted, isSubmitting },
+    formState: { errors, isValid, isDirty, isSubmitting },
     handleSubmit,
     trigger,
     control,
@@ -91,102 +87,101 @@ export const AgentDetailForm: FC<Props> = ({
   }, [trigger, firstAddressLine]);
 
   return (
-    <Form onSubmit={handleSubmit(withOptionalAddress)}>
-      <h5>Personal</h5>
-      <Row className='mb-2'>
-        <Col>
-          <Form.Group controlId='create-agent-form-agent-name'>
-            <Form.Label>Name</Form.Label>
-            <Form.Control type='text' {...register('name')} isInvalid={!!errors.name} />
-            <Form.Control.Feedback type='invalid'>{errors.name?.message}</Form.Control.Feedback>
-          </Form.Group>
-        </Col>
-        <Col>
-          <Form.Group>
-            <Form.Label>Email</Form.Label>
-            <Form.Control type='email' {...register('email')} isInvalid={!!errors.email} />
-            <Form.Control.Feedback type='invalid'>{errors.email?.message}</Form.Control.Feedback>
-          </Form.Group>
-        </Col>
-      </Row>
+    <WithUnsavedChangesPrompt when={isDirty && !isSubmitting}>
+      <Form onSubmit={handleSubmit(withOptionalAddress)}>
+        <h5>Personal</h5>
+        <Row className='mb-2'>
+          <Col>
+            <Form.Group controlId='create-agent-form-agent-name'>
+              <Form.Label>Name</Form.Label>
+              <Form.Control type='text' {...register('name')} isInvalid={!!errors.name} />
+              <Form.Control.Feedback type='invalid'>{errors.name?.message}</Form.Control.Feedback>
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group>
+              <Form.Label>Email</Form.Label>
+              <Form.Control type='email' {...register('email')} isInvalid={!!errors.email} />
+              <Form.Control.Feedback type='invalid'>{errors.email?.message}</Form.Control.Feedback>
+            </Form.Group>
+          </Col>
+        </Row>
 
-      <Form.Group className='mb-2'>
-        <Form.Label>Phone Number</Form.Label>
-        <Controller
-          name='phoneNumber'
-          control={control}
-          render={({ field }) => (
-            <PhoneInput value={field.value ?? ''} onChange={field.onChange} invalid={!!errors.phoneNumber} />
-          )}
-        />
-        <Form.Control.Feedback type='invalid'>{errors.phoneNumber?.message}</Form.Control.Feedback>
-      </Form.Group>
+        <Form.Group className='mb-2'>
+          <Form.Label>Phone Number</Form.Label>
+          <Controller
+            name='phoneNumber'
+            control={control}
+            render={({ field }) => (
+              <PhoneInput value={field.value ?? ''} onChange={field.onChange} invalid={!!errors.phoneNumber} />
+            )}
+          />
+          <Form.Control.Feedback type='invalid'>{errors.phoneNumber?.message}</Form.Control.Feedback>
+        </Form.Group>
 
-      <Form.Group>
-        <Form.Label>Description</Form.Label>
-        <Form.Control as='textarea' {...register('description')} isInvalid={!!errors.description} />
-        <Form.Control.Feedback type='invalid'>{errors.description?.message}</Form.Control.Feedback>
-      </Form.Group>
+        <Form.Group>
+          <Form.Label>Description</Form.Label>
+          <Form.Control as='textarea' {...register('description')} isInvalid={!!errors.description} />
+          <Form.Control.Feedback type='invalid'>{errors.description?.message}</Form.Control.Feedback>
+        </Form.Group>
 
-      <h5 className='mt-3'>Address</h5>
+        <h5 className='mt-3'>Address</h5>
 
-      <Form.Group className='mb-2'>
-        <Form.Label>Address</Form.Label>
-        <Form.Control type='text' {...register('address.address1')} isInvalid={!!errors.address?.address1} />
-        <Form.Control.Feedback type='invalid'>{errors.address?.address1?.message}</Form.Control.Feedback>
-      </Form.Group>
+        <Form.Group className='mb-2'>
+          <Form.Label>Address</Form.Label>
+          <Form.Control type='text' {...register('address.address1')} isInvalid={!!errors.address?.address1} />
+          <Form.Control.Feedback type='invalid'>{errors.address?.address1?.message}</Form.Control.Feedback>
+        </Form.Group>
 
-      <Form.Group className='mb-2'>
-        <Form.Label>Address2</Form.Label>
-        <Form.Control
-          type='text'
-          {...register('address.address2')}
-          isValid={!!errors.address?.address2}
-          disabled={isBlank(firstAddressLine)}
-        />
-        <Form.Control.Feedback type='invalid'>{errors.address?.address2?.message}</Form.Control.Feedback>
-      </Form.Group>
+        <Form.Group className='mb-2'>
+          <Form.Label>Address2</Form.Label>
+          <Form.Control
+            type='text'
+            {...register('address.address2')}
+            isValid={!!errors.address?.address2}
+            disabled={isBlank(firstAddressLine)}
+          />
+          <Form.Control.Feedback type='invalid'>{errors.address?.address2?.message}</Form.Control.Feedback>
+        </Form.Group>
 
-      <Row>
-        <Col>
-          <Form.Group>
-            <Form.Label>City</Form.Label>
-            <Form.Control type='text' {...register('address.city')} isInvalid={!!errors.address?.city} />
-            <Form.Control.Feedback type='invalid'>{errors.address?.city?.message}</Form.Control.Feedback>
-          </Form.Group>
-        </Col>
+        <Row>
+          <Col>
+            <Form.Group>
+              <Form.Label>City</Form.Label>
+              <Form.Control type='text' {...register('address.city')} isInvalid={!!errors.address?.city} />
+              <Form.Control.Feedback type='invalid'>{errors.address?.city?.message}</Form.Control.Feedback>
+            </Form.Group>
+          </Col>
 
-        <Col>
-          <Form.Group>
-            <Form.Label>State</Form.Label>
-            <Form.Select {...register('address.state')} isInvalid={!!errors.address?.state}>
-              {stateList.map(({ name, value }) => (
-                <option key={value} value={value}>
-                  {name}
-                </option>
-              ))}
-            </Form.Select>
-            <Form.Control.Feedback type='invalid'>{errors.address?.state?.message}</Form.Control.Feedback>
-          </Form.Group>
-        </Col>
+          <Col>
+            <Form.Group>
+              <Form.Label>State</Form.Label>
+              <Form.Select {...register('address.state')} isInvalid={!!errors.address?.state}>
+                {stateList.map(({ name, value }) => (
+                  <option key={value} value={value}>
+                    {name}
+                  </option>
+                ))}
+              </Form.Select>
+              <Form.Control.Feedback type='invalid'>{errors.address?.state?.message}</Form.Control.Feedback>
+            </Form.Group>
+          </Col>
 
-        <Col>
-          <Form.Group>
-            <Form.Label>Zip Code</Form.Label>
-            <Form.Control type='text' {...register('address.zipCode')} isInvalid={!!errors.address?.zipCode} />
-            <Form.Control.Feedback type='invalid'>{errors.address?.zipCode?.message}</Form.Control.Feedback>
-          </Form.Group>
-        </Col>
-      </Row>
-      
-      <div className='mt-3'>
-        <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
-          {submitButtonLabel}
-        </LoadingButton>
-      </div>
+          <Col>
+            <Form.Group>
+              <Form.Label>Zip Code</Form.Label>
+              <Form.Control type='text' {...register('address.zipCode')} isInvalid={!!errors.address?.zipCode} />
+              <Form.Control.Feedback type='invalid'>{errors.address?.zipCode?.message}</Form.Control.Feedback>
+            </Form.Group>
+          </Col>
+        </Row>
 
-      <FormPrompt isDirty={isDirty} isSubmitting={isSubmitted} />
-
-    </Form>
+        <div className='mt-3'>
+          <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
+            {submitButtonLabel}
+          </LoadingButton>
+        </div>
+      </Form>
+    </WithUnsavedChangesPrompt>
   );
 };

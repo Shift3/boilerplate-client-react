@@ -30,6 +30,7 @@
                 "tsx": "never"
             }
         ],
+        "camelcase": "off",
         "arrow-body-style": "off",
         "react/no-unescaped-entities": "off",
         "no-param-reassign": "off",

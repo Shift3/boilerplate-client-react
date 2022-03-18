@@ -1,14 +1,14 @@
 import { useAppDispatch } from 'app/redux';
 import { useLogoutMutation } from 'common/api/authApi';
 import { useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as authLocalStorage from '../authLocalStorage';
 import { authSlice } from '../authSlice';
 
 export type UseLogoutHook = () => { logout: () => Promise<void>; isLoading: boolean };
 
 export const useLogout: UseLogoutHook = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [logout, { isLoading }] = useLogoutMutation();
 
@@ -21,9 +21,9 @@ export const useLogout: UseLogoutHook = () => {
     } finally {
       dispatch(authSlice.actions.userLoggedOut());
       authLocalStorage.clearAuthState();
-      history.replace('/auth/login');
+      navigate('/auth/login', { replace: true });
     }
-  }, [logout, dispatch, history]);
+  }, [logout, dispatch, navigate]);
 
   return { logout: logoutUser, isLoading };
 };

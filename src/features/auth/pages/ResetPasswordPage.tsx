@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { handleApiError } from 'common/api/handleApiError';
 import * as notificationService from 'common/services/notification';
@@ -9,8 +9,8 @@ import { PageWrapper } from 'common/styles/page';
 import { StyledFormWrapper, Title } from 'common/styles/form';
 
 export const ResetPasswordPage: FC = () => {
-  const history = useHistory();
-  const { token } = useParams<{ token: string }>();
+  const navigate = useNavigate();
+  const { token = '' } = useParams<{ token: string }>();
   const [resetPassword] = useResetPasswordMutation();
 
   const onSubmit = async (formData: FormData) => {
@@ -19,7 +19,7 @@ export const ResetPasswordPage: FC = () => {
     try {
       await resetPassword(data).unwrap();
       notificationService.showSuccessMessage('The password was reset successfully. Please log in.');
-      history.push('/auth/login');
+      navigate('/auth/login');
     } catch (error) {
       handleApiError(error as FetchBaseQueryError);
     }

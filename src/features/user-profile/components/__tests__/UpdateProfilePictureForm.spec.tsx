@@ -3,25 +3,26 @@ import userEvent from '@testing-library/user-event';
 import { UpdateProfilePictureForm } from '../UpdateProfilePictureForm';
 import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
-import { Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
+import { MemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { createAppStore } from 'app/redux';
 
 const mockOnSubmit = jest.fn();
 
 describe('UpdateProfilePictureForm', () => {
-
-  const file = new File(["test"], "testpicture.png", { type: "image/png" });
+  const file = new File(['test'], 'testpicture.png', { type: 'image/png' });
   global.URL.createObjectURL = jest.fn();
 
   beforeEach(async () => {
-    const history = createMemoryHistory();
     await act(async () => {
       render(
-        <Router history={history}>
-          <ThemeProvider theme={AppTheme}>
-            <UpdateProfilePictureForm onSubmit={mockOnSubmit} />
-          </ThemeProvider>,
-        </Router>
+        <MemoryRouter>
+          <Provider store={createAppStore()}>
+            <ThemeProvider theme={AppTheme}>
+              <UpdateProfilePictureForm onSubmit={mockOnSubmit} />
+            </ThemeProvider>
+          </Provider>
+        </MemoryRouter>,
       );
     });
     mockOnSubmit.mockReset();
@@ -33,7 +34,7 @@ describe('UpdateProfilePictureForm', () => {
     const profilePictureInput = getProfilePictureInput();
 
     await act(async () => {
-        userEvent.upload(profilePictureInput, file);
+      userEvent.upload(profilePictureInput, file);
     });
 
     await act(async () => userEvent.click(screen.getByRole('button', { name: 'Update' })));
@@ -45,7 +46,7 @@ describe('UpdateProfilePictureForm', () => {
     const profilePictureInput = getProfilePictureInput();
 
     await act(async () => {
-        userEvent.upload(profilePictureInput, file);
+      userEvent.upload(profilePictureInput, file);
     });
 
     expect(profilePictureInput.files ? profilePictureInput.files[0] : null).toStrictEqual(file);

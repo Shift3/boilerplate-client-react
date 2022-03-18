@@ -2,24 +2,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetUserByIdQuery, useUpdateUserMutation } from 'common/api/userApi';
 import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
-import {Role} from 'common/models';
+import { Role } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { StyledFormWrapper } from 'common/styles/form';
 import { useRbac } from 'features/rbac';
 import { FC, useEffect } from 'react';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
 
-interface RouteParams {
+type RouteParams = {
   id: string;
 }
 
 export const UpdateUserView: FC = () => {
   const { id } = useParams<RouteParams>();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { userHasPermission } = useRbac();
   const [updateUser] = useUpdateUserMutation();
-  const { data: user, isLoading: isLoadingUser, error: getUserError } = useGetUserByIdQuery(id);
+  const { data: user, isLoading: isLoadingUser, error: getUserError } = useGetUserByIdQuery(Number(id));
   const roles = Object.values(Role);
 
   const availableRoles = roles.filter(role => userHasPermission({ permission: 'role:read', data: role }));
@@ -27,14 +27,14 @@ export const UpdateUserView: FC = () => {
   useEffect(() => {
     if (getUserError) {
       notificationService.showErrorMessage('Unable to load user. Returning to user list.');
-      history.replace('/users');
+      navigate('/users', { replace: true });
     }
-  }, [getUserError, history]);
+  }, [getUserError, navigate]);
 
   const handleFormSubmit = async (data: FormData) => {
     try {
       await updateUser({ id: Number(id), ...data }).unwrap();
-      history.push('/users');
+      navigate('/users');
       notificationService.showSuccessMessage('User updated.');
     } catch (error) {
       notificationService.showErrorMessage('Unable to update user');
@@ -45,7 +45,7 @@ export const UpdateUserView: FC = () => {
     <SmallContainer>
       <PageCrumb>
         <Link to='/users'>
-          <FontAwesomeIcon icon={["fas", "chevron-left"]} />  Back to User List
+          <FontAwesomeIcon icon={['fas', 'chevron-left']} /> Back to User List
         </Link>
       </PageCrumb>
 

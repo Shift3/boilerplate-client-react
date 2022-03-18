@@ -4,8 +4,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
-import FormPrompt from 'common/components/FormPrompt';
 import { LoadingButton } from 'common/components/LoadingButton';
+import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
 
 export type FormData = {
   newPassword: string;
@@ -48,39 +48,40 @@ export const ResetPasswordForm: FC<Props> = ({ onSubmit }) => {
   }, [trigger]);
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
-      <Form.Group>
-        <Form.Label htmlFor='newPassword'>New Password</Form.Label>
-        <Form.Control
-          id='newPassword'
-          type='password'
-          {...register('newPassword')}
-          placeholder='Enter new password'
-          isInvalid={!!errors.newPassword}
-        />
-        <Form.Control.Feedback type='invalid' role='alert'>
-          {errors.newPassword?.message}
-        </Form.Control.Feedback>
-      </Form.Group>
-      <Form.Group>
-        <Form.Label htmlFor='confirmPassword'>Confirm Password</Form.Label>
-        <Form.Control
-          id='confirmPassword'
-          type='password'
-          {...register('confirmPassword')}
-          placeholder='Confirm password'
-          isInvalid={!!errors.confirmPassword}
-        />
-        <Form.Control.Feedback type='invalid' role='alert'>
-          {errors.confirmPassword?.message}
-        </Form.Control.Feedback>
-      </Form.Group>
-      <div className='mt-3'>
-        <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
-          Submit
-        </LoadingButton>
-      </div>
-      <FormPrompt isDirty={isDirty} isSubmitting={isSubmitting} />
-    </Form>
+    <WithUnsavedChangesPrompt when={isDirty && !isSubmitting}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form.Group>
+          <Form.Label htmlFor='newPassword'>New Password</Form.Label>
+          <Form.Control
+            id='newPassword'
+            type='password'
+            {...register('newPassword')}
+            placeholder='Enter new password'
+            isInvalid={!!errors.newPassword}
+          />
+          <Form.Control.Feedback type='invalid' role='alert'>
+            {errors.newPassword?.message}
+          </Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label htmlFor='confirmPassword'>Confirm Password</Form.Label>
+          <Form.Control
+            id='confirmPassword'
+            type='password'
+            {...register('confirmPassword')}
+            placeholder='Confirm password'
+            isInvalid={!!errors.confirmPassword}
+          />
+          <Form.Control.Feedback type='invalid' role='alert'>
+            {errors.confirmPassword?.message}
+          </Form.Control.Feedback>
+        </Form.Group>
+        <div className='mt-3'>
+          <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
+            Submit
+          </LoadingButton>
+        </div>
+      </Form>
+    </WithUnsavedChangesPrompt>
   );
 };
