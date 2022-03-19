@@ -16,11 +16,11 @@ type RouteParams = {
 };
 
 export const UpdateUserView: FC = () => {
-  const { id } = useParams<RouteParams>();
+  const { id = '' } = useParams<RouteParams>();
   const navigate = useNavigate();
   const { userHasPermission } = useRbac();
   const [updateUser] = useUpdateUserMutation();
-  const { data: user, isLoading: isLoadingUser, isFetching, error: getUserError } = useGetUserByIdQuery(Number(id));
+  const { data: user, isLoading: isLoadingUser, isFetching, error: getUserError } = useGetUserByIdQuery(id);
   const roles = Object.values(Role);
 
   const availableRoles = roles.filter(role => userHasPermission({ permission: 'role:read', data: role }));
@@ -35,7 +35,13 @@ export const UpdateUserView: FC = () => {
 
   const handleFormSubmit = async (data: FormData) => {
     try {
-      await updateUser({ id: Number(id), ...data }).unwrap();
+      await updateUser({
+        id,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        role: data.role,
+        email: data.email,
+      }).unwrap();
       navigate('/users');
       notificationService.showSuccessMessage('User updated.');
     } catch (error) {
@@ -65,21 +71,18 @@ export const UpdateUserView: FC = () => {
 
       <FormCard>
         <FormCard.Body>
-          <WithLoadingOverlay
-            isLoading={isLoadingUser || isFetching}
-            isInitialLoad={isLoadingUser && isFetching}
-            containerHasRoundedCorners
-            containerBorderRadius='6px'
-          >
-            <StyledFormWrapper>
-              <UserDetailForm
-                availableRoles={availableRoles}
-                defaultValues={user}
-                submitButtonLabel='Save'
-                onSubmit={handleFormSubmit}
-                serverValidationErrors={submissionError}
-              />
-            </StyledFormWrapper>
+          <WithLoadingOverlay isLoading={isLoadingUser} isInitialLoad={isLoadingUser && isFetching} containerHasRoundedCorners containerBorderRadius='6px'>
+            {!isLoadingUser ? (
+              <StyledFormWrapper>
+                <UserDetailForm
+                  availableRoles={availableRoles}
+                  defaultValues={user}
+                  submitButtonLabel='Save'
+                  onSubmit={handleFormSubmit}
+                  serverValidationErrors={submissionError}
+                />
+              </StyledFormWrapper>
+            ) : null}
           </WithLoadingOverlay>
         </FormCard.Body>
       </FormCard>

@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useAuth } from 'features/auth/hooks';
-import { handleApiError } from 'common/api/handleApiError';
+import { handleApiError, isFetchBaseQueryError } from 'common/api/handleApiError';
 import { useAppDispatch } from 'app/redux';
 import {
   ChangePasswordRequest,
@@ -19,7 +18,6 @@ import {
   useUpdateUserProfile,
   useChangeEmailRequest,
 } from 'features/user-profile/hooks';
-import { authSlice } from 'features/auth/authSlice';
 import {
   ChangePasswordForm,
   FormData as ForgotPasswordFormData,
@@ -31,7 +29,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { UpdateUserEmailForm, UserEmailFormData } from '../components/UpdateUserEmailForm';
 import { UserProfilePicture } from 'features/navbar/components/UserProfilePicture';
-import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
+import { isErrorResponse } from 'common/error/utilities';
 
 type RouteParams = {
   id: string;
@@ -51,7 +49,7 @@ const ProfileNav = styled(Nav)`
 
 export const UpdateUserProfilePage: FC = () => {
   const navigate = useNavigate();
-  const { id } = useParams<RouteParams>();
+  const { id = '' } = useParams<RouteParams>();
   const { user } = useAuth();
   const [resendChangeEmailVerificationEmail] = useResendChangeEmailVerificationEmailMutation();
   const { updateUserProfile } = useUpdateUserProfile();
@@ -73,7 +71,7 @@ export const UpdateUserProfilePage: FC = () => {
     useState<ServerValidationErrors<ForgotPasswordFormData> | null>(null);
 
   const onSubmit = async (formData: ProfileFormData) => {
-    const data = { id: Number(id), ...formData };
+    const data = { id, ...formData };
     try {
       await updateUserProfile(data);
     } catch (error) {
@@ -86,7 +84,7 @@ export const UpdateUserProfilePage: FC = () => {
   };
 
   const onSubmitRequestEmailChange = async (formData: UserEmailFormData) => {
-    const data = { id: Number(id), ...formData };
+    const data = { id, ...formData };
     try {
       await changeEmailRequest(data);
     } catch (error) {
@@ -100,10 +98,14 @@ export const UpdateUserProfilePage: FC = () => {
 
   const handleResendChangeEmailVerificationEmail = () => {
     try {
-      resendChangeEmailVerificationEmail({ id: Number(id) });
+      resendChangeEmailVerificationEmail({ id });
       notificationService.showSuccessMessage('Change Email verification email has been sent.');
     } catch (error) {
-      handleApiError(error as FetchBaseQueryError);
+      if (isFetchBaseQueryError(error)) {
+        handleApiError(error);
+      } else {
+        throw error;
+      }
     }
   };
 
@@ -116,7 +118,7 @@ export const UpdateUserProfilePage: FC = () => {
         profilePictureFormData.append('file', file);
         profilePictureFormData.append('type', file.type);
       }
-      const data = { profilePicture: profilePictureFormData, id: Number(id) };
+      const data = { profilePicture: profilePictureFormData, id };
 
       try {
         await updateUserProfilePicture(data);
@@ -131,8 +133,7 @@ export const UpdateUserProfilePage: FC = () => {
   };
 
   const handleDeleteProfilePicture = async () => {
-    const data = { id: Number(id) };
-
+    const data = { id };
     await deleteUserProfilePicture(data);
   };
 
@@ -146,18 +147,15 @@ export const UpdateUserProfilePage: FC = () => {
     const request: ChangePasswordRequest = { id: user!.id, ...data };
 
     try {
-      const session = await changePassword(request).unwrap();
-      dispatch(authSlice.actions.userLoggedIn({ token: session.token, user: session.user }));
+      await changePassword(request);
       notificationService.showSuccessMessage('Password updated.');
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
-        if (isErrorResponse<ForgotPasswordFormData>(error?.data)) {
-          setPasswordSubmissionError(error?.data?.error);
-        }
+        if (isErrorResponse(error.data)) notificationService.showErrorMessage(error.data.message);
+        else handleApiError(error);
+      } else {
+        throw error;
       }
-      notificationService.showErrorMessage(
-        ((error as FetchBaseQueryError).data as ErrorResponse<ForgotPasswordFormData>).message,
-      );
     }
 
     navigate('/agents');
@@ -173,7 +171,7 @@ export const UpdateUserProfilePage: FC = () => {
 
       <PageHeader className='mb-3'>
         <div className='d-flex'>
-          <UserProfilePicture user={user} size='xs' radius={64} />
+          <UserProfilePicture user={user} size='sm' radius={64} />
           <div>
             <h1>
               {user?.firstName} {user?.lastName[0]}.

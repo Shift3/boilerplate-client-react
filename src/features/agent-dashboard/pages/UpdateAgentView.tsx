@@ -66,21 +66,18 @@ export const UpdateAgentView: FC = () => {
 
       <FormCard>
         <Card.Body>
-          <WithLoadingOverlay
-            isLoading={isLoadingAgent || isFetching}
-            isInitialLoad={isLoadingAgent && isFetching}
-            containerHasRoundedCorners
-            containerBorderRadius='6px'
-          >
-            <StyledFormWrapper>
-              <AgentDetailForm
-                defaultValues={agent}
-                submitButtonLabel='Save'
-                onSubmit={handleFormSubmit}
-                onCancel={handleFormCancel}
-                serverValidationErrors={submissionError}
-              />
-            </StyledFormWrapper>
+          <WithLoadingOverlay isInitialLoad={isLoadingAgent && isFetching} isLoading={isLoadingAgent} containerHasRoundedCorners containerBorderRadius='6px'>
+            { !isLoadingAgent ? (
+              <StyledFormWrapper>
+                <AgentDetailForm
+                  defaultValues={agent}
+                  submitButtonLabel='Save'
+                  onSubmit={handleFormSubmit}
+                  onCancel={handleFormCancel}
+                  serverValidationErrors={submissionError}
+                />
+              </StyledFormWrapper>
+            ) : null }
           </WithLoadingOverlay>
         </Card.Body>
       </FormCard>

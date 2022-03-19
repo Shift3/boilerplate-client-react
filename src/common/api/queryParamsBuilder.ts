@@ -24,11 +24,15 @@ export class QueryParamsBuilder {
       return this;
     }
     const value = sortBy.direction === 'DESC' ? `-${sortBy.property}` : sortBy.property;
-    return this.setParam('sort', value);
+    return this.setParam('ordering', value);
   }
 
   public setFilterParam(filters: Filter[]): QueryParamsBuilder {
-    return this.setParam('filter', filters.map(f => `${f.attr}__${f.op}:${f.value}`).join(','));
+    filters.forEach(f => {
+      if (f.op !== 'eq') this.setParam(`${f.attr}__${f.op}`, f.value);
+      else this.setParam(f.attr, f.value);
+    });
+    return this;
   }
 
   public build(): string {

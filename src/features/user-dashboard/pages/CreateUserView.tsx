@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useCreateUserMutation } from 'common/api/userApi';
+import { useInviteUserMutation } from 'common/api/userApi';
 import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
 import { Role, ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
@@ -13,7 +13,7 @@ import { FormData, UserDetailForm } from '../components/UserDetailForm';
 export const CreateUserView: FC = () => {
   const navigate = useNavigate();
   const { userHasPermission } = useRbac();
-  const [createUser] = useCreateUserMutation();
+  const [inviteUser] = useInviteUserMutation();
   const roles = Object.values(Role);
   const availableRoles = roles.filter(role => userHasPermission({ permission: 'role:read', data: role }));
   const defaultValues: Partial<FormData> = {};
@@ -21,7 +21,7 @@ export const CreateUserView: FC = () => {
 
   const handleFormSubmit = async (data: FormData) => {
     try {
-      await createUser({ ...data, profilePicture: null }).unwrap();
+      await inviteUser({ ...data }).unwrap();
       notificationService.showSuccessMessage(
         `An email has been sent to ${data.email} with instructions to finish activating the account.`,
       );

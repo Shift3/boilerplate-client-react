@@ -3,6 +3,12 @@ import { ErrorResponse } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { StatusCodes } from 'http-status-codes';
 
+export function isFetchBaseQueryError(
+  error: unknown
+): error is FetchBaseQueryError {
+  return typeof error === 'object' && error != null && 'status' in error
+}
+
 export const handleApiError = <T>(error: FetchBaseQueryError): void => {
   let message: string;
 

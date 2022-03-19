@@ -1,18 +1,16 @@
-export type RoleType = 'Super Administrator' | 'Admin' | 'Editor' | 'User' | '';
+export type RoleType = 'ADMIN' | 'EDITOR' | 'USER' | '';
 
 export const RoleHierarchy: Record<RoleType, number> = {
-  'Super Administrator': 4,
-  Admin: 3,
-  Editor: 2,
-  User: 1,
+  ADMIN: 3,
+  EDITOR: 2,
+  USER: 1,
   '': 0,
 };
 
 export enum Role {
-  USER = 'User',
-  EDITOR = 'Editor',
-  ADMIN = 'Admin',
-  SUPER_ADMIN = 'Super Administrator',
+  USER = 'USER',
+  EDITOR = 'EDITOR',
+  ADMIN = 'ADMIN',
 };
 
 export type RoleOption = {
