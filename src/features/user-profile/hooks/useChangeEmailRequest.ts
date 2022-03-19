@@ -1,5 +1,4 @@
 import { useAppDispatch } from 'app/redux';
-import { handleApiError, isFetchBaseQueryError } from 'common/api/handleApiError';
 import { useCallback } from 'react';
 import { authSlice, AuthState } from '../../auth/authSlice';
 import * as notificationService from 'common/services/notification';
@@ -28,11 +27,8 @@ export const useChangeEmailRequest: UseChangeEmailRequestHook = () => {
           );
         }
       } catch (error) {
-        if (isFetchBaseQueryError(error)) {
-          handleApiError(error);
-        } else {
-          throw error;
-        }
+        notificationService.showErrorMessage('Unable to send email verification.');
+        throw error;
       }
     },
     [requestChangeEmail, dispatch],

@@ -7,35 +7,36 @@ import { useUpdateProfilePictureMutation, UpdateProfilePictureRequest } from 'co
 import * as authLocalStorage from '../../auth/authLocalStorage';
 
 export type UseUpdateProfilePictureHook = () => {
-    updateUserProfilePicture: (data: UpdateProfilePictureRequest) => Promise<void>;
+  updateUserProfilePicture: (data: UpdateProfilePictureRequest) => Promise<void>;
 };
 
 export const useUpdateProfilePicture: UseUpdateProfilePictureHook = () => {
-    const dispatch = useAppDispatch();
-    const [updateProfilePicture] = useUpdateProfilePictureMutation();
+  const dispatch = useAppDispatch();
+  const [updateProfilePicture] = useUpdateProfilePictureMutation();
 
-    const updateUserProfilePicture = useCallback(
-        async (data: UpdateProfilePictureRequest) => {
-            try {
-                const updatedUser = await updateProfilePicture(data).unwrap();
-                const auth: AuthState | null = authLocalStorage.getAuthState();
-                const { profilePicture } = updatedUser;
+  const updateUserProfilePicture = useCallback(
+    async (data: UpdateProfilePictureRequest) => {
+      try {
+        const updatedUser = await updateProfilePicture(data).unwrap();
+        const auth: AuthState | null = authLocalStorage.getAuthState();
+        const { profilePicture } = updatedUser;
 
-                if (profilePicture && auth) {
-                    dispatch(authSlice.actions.userUpdatedProfilePicture(profilePicture));
-                    authLocalStorage.saveAuthState({ ...auth, user: updatedUser });
-                    notificationService.showSuccessMessage('Profile Photo Updated');
-                }
-            } catch (error) {
-                if (isFetchBaseQueryError(error)) {
-                    handleApiError(error);
-                } else {
-                    throw error;
-                }
-            }
-        },
-        [updateProfilePicture, dispatch],
-    );
+        if (profilePicture && auth) {
+          dispatch(authSlice.actions.userUpdatedProfilePicture(profilePicture));
+          authLocalStorage.saveAuthState({ ...auth, user: updatedUser });
+          notificationService.showSuccessMessage('Profile Photo Updated');
+        }
+      } catch (error) {
+        notificationService.showErrorMessage('Unable to upload profile picture.');
+        if (isFetchBaseQueryError(error)) {
+          handleApiError(error);
+        } else {
+          throw error;
+        }
+      }
+    },
+    [updateProfilePicture, dispatch],
+  );
 
-    return { updateUserProfilePicture };
+  return { updateUserProfilePicture };
 };

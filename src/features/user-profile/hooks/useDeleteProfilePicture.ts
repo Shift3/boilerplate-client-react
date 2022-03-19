@@ -33,6 +33,7 @@ export const useDeleteProfilePicture: UseDeleteProfilePictureHook = () => {
           notificationService.showSuccessMessage('Profile Photo Deleted');
         }
       } catch (error) {
+        notificationService.showErrorMessage('Unable to delete profile picture.');
         if (isFetchBaseQueryError(error)) {
           handleApiError(error);
         } else {

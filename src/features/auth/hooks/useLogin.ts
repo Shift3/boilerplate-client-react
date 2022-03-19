@@ -5,6 +5,7 @@ import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as authLocalStorage from '../authLocalStorage';
 import { authSlice } from '../authSlice';
+import * as notificationService from 'common/services/notification';
 
 export interface Credentials {
   email: string;
@@ -30,6 +31,7 @@ export const useLogin: UseLoginHook = () => {
         authLocalStorage.saveAuthState(auth);
         navigate('/agents', { replace: true });
       } catch (error) {
+        notificationService.showErrorMessage('Unable to log in.');
         if (isFetchBaseQueryError(error)) {
           handleApiError(error);
         } else {

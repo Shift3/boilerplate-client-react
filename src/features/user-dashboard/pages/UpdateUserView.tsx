@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { isFetchBaseQueryError } from 'common/api/handleApiError';
 import { useGetUserByIdQuery, useUpdateUserMutation } from 'common/api/userApi';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
-import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
+import { isObject } from 'common/error/utilities';
 import { Role, ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { FormCard, StyledFormWrapper } from 'common/styles/form';
@@ -24,7 +25,7 @@ export const UpdateUserView: FC = () => {
   const roles = Object.values(Role);
 
   const availableRoles = roles.filter(role => userHasPermission({ permission: 'role:read', data: role }));
-  const [submissionError, setSubmissionError] = useState<ServerValidationErrors<FormData> | null>(null);
+  const [formValidationErrors, setFormValidationErrors] = useState<ServerValidationErrors<FormData> | null>(null);
 
   useEffect(() => {
     if (getUserError) {
@@ -45,12 +46,14 @@ export const UpdateUserView: FC = () => {
       navigate('/users');
       notificationService.showSuccessMessage('User updated.');
     } catch (error) {
+      notificationService.showErrorMessage('Unable to update user.');
       if (isFetchBaseQueryError(error)) {
-        if (isErrorResponse<FormData>(error?.data)) {
-          setSubmissionError(error?.data?.error);
+        if (isObject(error?.data)) {
+          setFormValidationErrors(error?.data);
         }
+      } else {
+        throw error;
       }
-      notificationService.showErrorMessage('Unable to update user');
     }
   };
 
@@ -79,7 +82,7 @@ export const UpdateUserView: FC = () => {
                   defaultValues={user}
                   submitButtonLabel='Save'
                   onSubmit={handleFormSubmit}
-                  serverValidationErrors={submissionError}
+                  serverValidationErrors={formValidationErrors}
                 />
               </StyledFormWrapper>
             ) : null}

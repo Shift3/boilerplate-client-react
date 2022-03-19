@@ -1,8 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from 'common/components/LoadingButton';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
-import { addServerErrors } from 'common/error/utilities';
-import { ServerValidationErrors } from 'common/models';
 import { FC, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -17,7 +15,6 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
-  serverValidationErrors: ServerValidationErrors<FormData> | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
@@ -39,22 +36,23 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
     .oneOf([yup.ref('newPassword')], Constants.errorMessages.PASSWORD_MUST_MATCH),
 });
 
-export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
+export const ChangePasswordForm: FC<Props> = ({ onSubmit }) => {
   const {
-    formState: { errors, isDirty, isSubmitting, isSubmitted, isValid },
+    formState: { errors, isDirty, isSubmitting, isSubmitted, isValid, isSubmitSuccessful },
     handleSubmit,
     register,
-    setError,
+    reset,
+    getValues,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
   });
 
   useEffect(() => {
-    if (serverValidationErrors) {
-      addServerErrors(serverValidationErrors, setError);
+    if (isSubmitSuccessful) {
+      reset();
     }
-  }, [serverValidationErrors, setError]);
+  }, [reset, isSubmitSuccessful, getValues]);
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>

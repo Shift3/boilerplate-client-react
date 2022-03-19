@@ -1,11 +1,9 @@
 import { handleApiError, isFetchBaseQueryError } from 'common/api/handleApiError';
 import { useActivateAccountMutation } from 'common/api/userApi';
 import { FrontPageLayout, Title } from 'common/components/FrontPageLayout';
-import { isErrorResponse } from 'common/error/utilities';
-import { ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { StyledFormWrapper } from 'common/styles/form';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ActivateAccountForm, FormData } from '../components/ActivateAccountForm';
 
@@ -13,7 +11,6 @@ export const ActivateAccountPage: FC = () => {
   const navigate = useNavigate();
   const { token = '', uid = '' } = useParams<{ token: string; uid: string }>();
   const [activateAccount] = useActivateAccountMutation();
-  const [submissionError, setSubmissionError] = useState<ServerValidationErrors<FormData> | null>(null);
 
   const onSubmit = async (formData: FormData) => {
     const data = { ...formData, token, uid };
@@ -23,12 +20,9 @@ export const ActivateAccountPage: FC = () => {
       notificationService.showSuccessMessage('This account has been activated. Please log in.');
       navigate('/auth/login');
     } catch (error) {
+      notificationService.showErrorMessage('Unable to activate account.');
       if (isFetchBaseQueryError(error)) {
-        if (isErrorResponse<FormData>(error?.data)) {
-          setSubmissionError((error?.data).error);
-        } else {
-          handleApiError(error);
-        }
+        handleApiError(error);
       } else {
         throw error;
       }
@@ -40,7 +34,7 @@ export const ActivateAccountPage: FC = () => {
       <Title>Activate Account</Title>
       <p className='text-muted'>Just one more step! Choose a password to active your account.</p>
       <StyledFormWrapper data-testid='wrapper'>
-        <ActivateAccountForm onSubmit={onSubmit} serverValidationErrors={submissionError} />
+        <ActivateAccountForm onSubmit={onSubmit} />
         <div className='mt-2 mb-2'>
           <small>
             Ended up here by mistake? <Link to='/auth/login'>Log In</Link>

@@ -6,8 +6,6 @@ import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
-import { ServerValidationErrors } from 'common/models';
-import { addServerErrors } from 'common/error/utilities';
 
 export type ProfilePictureFormData = {
   profilePicture: FileList | null;
@@ -16,7 +14,6 @@ export type ProfilePictureFormData = {
 type Props = {
   onSubmit: (data: ProfilePictureFormData) => void;
   defaultValues?: Partial<ProfilePictureFormData>;
-  serverValidationErrors: ServerValidationErrors<ProfilePictureFormData> | null;
 };
 
 const checkProfilePictureFormat = (value: FileList) => {
@@ -36,14 +33,13 @@ const schema: yup.SchemaOf<ProfilePictureFormData> = yup.object().shape({
     ),
 });
 
-export const UpdateProfilePictureForm: FC<Props> = ({ onSubmit, defaultValues, serverValidationErrors }) => {
+export const UpdateProfilePictureForm: FC<Props> = ({ onSubmit, defaultValues }) => {
   const {
     formState: { errors, isValid, isDirty, isSubmitting, isSubmitted, isSubmitSuccessful },
     handleSubmit,
     register,
     trigger,
     reset,
-    setError,
   } = useForm<ProfilePictureFormData>({
     resolver: yupResolver(schema),
     mode: 'all',
@@ -61,10 +57,7 @@ export const UpdateProfilePictureForm: FC<Props> = ({ onSubmit, defaultValues, s
       reset({ profilePicture: null });
       setImagePreview({ src: '', alt: '' });
     }
-    if (serverValidationErrors) {
-      addServerErrors(serverValidationErrors, setError);
-    }
-  }, [trigger, reset, isSubmitSuccessful, serverValidationErrors, setError]);
+  }, [trigger, reset, isSubmitSuccessful]);
 
   const handleImage = (e: React.BaseSyntheticEvent) => {
     if (e.target.files[0]) {
