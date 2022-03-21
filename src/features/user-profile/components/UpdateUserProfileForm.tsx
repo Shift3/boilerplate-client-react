@@ -37,7 +37,7 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) =>
 
   useEffect(() => {
     if (isSubmitSuccessful) {
-      reset({ firstName: getValues().firstName, lastName: getValues().lastName });
+      reset(getValues());
     }
   }, [reset, isSubmitSuccessful, getValues]);
 

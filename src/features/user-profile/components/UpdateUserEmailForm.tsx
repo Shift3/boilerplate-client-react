@@ -38,7 +38,7 @@ export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues }) => {
 
   useEffect(() => {
     if (isSubmitSuccessful) {
-      reset({ email: getValues().email });
+      reset(getValues());
     }
   }, [reset, isSubmitSuccessful, getValues]);
 
