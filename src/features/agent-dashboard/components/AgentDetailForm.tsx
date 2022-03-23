@@ -48,7 +48,7 @@ const schema = yup.object().shape({
 export const AgentDetailForm: FC<Props> = ({ defaultValues = {}, onSubmit, submitButtonLabel = 'Submit' }) => {
   const {
     register,
-    formState: { errors, isValid, isDirty, isSubmitting },
+    formState: { errors, isValid, isDirty, isSubmitting, isSubmitted},
     handleSubmit,
     trigger,
     control,
@@ -87,7 +87,7 @@ export const AgentDetailForm: FC<Props> = ({ defaultValues = {}, onSubmit, submi
   }, [trigger, firstAddressLine]);
 
   return (
-    <WithUnsavedChangesPrompt when={isDirty && !isSubmitting}>
+    <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
       <Form onSubmit={handleSubmit(withOptionalAddress)}>
         <h5>Personal</h5>
         <Row className='mb-2'>

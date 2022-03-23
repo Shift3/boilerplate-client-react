@@ -38,7 +38,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const ChangePasswordForm: FC<Props> = ({ onSubmit }) => {
   const {
-    formState: { errors, isDirty, isSubmitting, isValid },
+    formState: { errors, isDirty, isSubmitting, isSubmitted, isValid },
     handleSubmit,
     register,
   } = useForm({
@@ -47,7 +47,7 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit }) => {
   });
 
   return (
-    <WithUnsavedChangesPrompt when={isDirty && !isSubmitting}>
+    <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
       <Form name='change-password-form' onSubmit={handleSubmit(onSubmit)}>
         <Form.Group className='position-relative'>
           <Form.Label htmlFor='currentPassword'>Current Password</Form.Label>

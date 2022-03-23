@@ -24,7 +24,7 @@ const schema: yup.SchemaOf<ProfileFormData> = yup.object().shape({
 
 export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) => {
   const {
-    formState: { errors, isDirty, isSubmitting, isValid, isSubmitSuccessful },
+    formState: { errors, isDirty, isValid, isSubmitting, isSubmitted, isSubmitSuccessful },
     handleSubmit,
     register,
     reset,
@@ -42,7 +42,7 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) =>
   }, [reset, isSubmitSuccessful, getValues]);
 
   return (
-    <WithUnsavedChangesPrompt when={isDirty && !isSubmitting}>
+    <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Form.Group>
           <Form.Label htmlFor='firstName'>First Name</Form.Label>

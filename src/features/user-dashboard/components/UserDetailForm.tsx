@@ -38,7 +38,7 @@ export const UserDetailForm: FC<Props> = ({
 
   const {
     control,
-    formState: { errors, isValid, isDirty, isSubmitting },
+    formState: { errors, isValid, isDirty, isSubmitting, isSubmitted },
     handleSubmit,
     register,
   } = useForm<FormData>({
@@ -48,7 +48,7 @@ export const UserDetailForm: FC<Props> = ({
   });
 
   return (
-    <WithUnsavedChangesPrompt when={isDirty && !isSubmitting}>
+    <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
       <Form name='create-user-form' onSubmit={handleSubmit(onSubmit)}>
         <h5>Profile</h5>
         <Row className='mb-2'>

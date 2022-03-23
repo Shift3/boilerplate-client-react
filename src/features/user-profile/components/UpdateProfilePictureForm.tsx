@@ -35,7 +35,7 @@ const schema: yup.SchemaOf<ProfilePictureFormData> = yup.object().shape({
 
 export const UpdateProfilePictureForm: FC<Props> = ({ onSubmit, defaultValues }) => {
   const {
-    formState: { errors, isValid, isDirty, isSubmitting, isSubmitSuccessful },
+    formState: { errors, isValid, isDirty, isSubmitting, isSubmitted, isSubmitSuccessful },
     handleSubmit,
     register,
     trigger,
@@ -75,7 +75,7 @@ export const UpdateProfilePictureForm: FC<Props> = ({ onSubmit, defaultValues })
   };
 
   return (
-    <WithUnsavedChangesPrompt when={isDirty && !isSubmitting}>
+    <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Form.Group className='d-flex flex-column'>
           {imgPreviewState.src !== '' ? (

@@ -31,7 +31,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const SignUpForm: FC<Props> = ({ onSubmit }) => {
   const {
-    formState: { errors, isDirty, isSubmitting, isValid },
+    formState: { errors, isDirty, isSubmitting, isSubmitted, isValid },
     handleSubmit,
     register,
   } = useForm({
@@ -40,7 +40,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
   });
 
   return (
-    <WithUnsavedChangesPrompt when={isDirty && !isSubmitting}>
+    <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Row>
           <Form.Group as={Col}>
