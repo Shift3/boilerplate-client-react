@@ -4,12 +4,12 @@ import { useConfirmChangeEmailMutation } from 'common/api/userApi';
 import { FrontPageLayout, Title } from 'common/components/FrontPageLayout';
 import * as notificationService from 'common/services/notification';
 import { FC } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ConfirmChangeEmailForm, FormData } from '../components/ConfirmChangeEmailForm';
 
 export const ConfirmChangeEmailPage: FC = () => {
-  const history = useHistory();
-  const { token } = useParams<{ token: string }>();
+  const navigate = useNavigate();
+  const { token = '' } = useParams<{ token: string }>();
   const [confirmChangeEmail] = useConfirmChangeEmailMutation();
 
   const onSubmit = async (formData: FormData) => {
@@ -17,7 +17,7 @@ export const ConfirmChangeEmailPage: FC = () => {
       const requestPayload = { ...formData, token };
       await confirmChangeEmail(requestPayload).unwrap();
       notificationService.showSuccessMessage('Email change successful.');
-      history.push('/auth/login');
+      navigate('/auth/login');
     } catch (error) {
       handleApiError(error as FetchBaseQueryError);
     }
@@ -27,8 +27,7 @@ export const ConfirmChangeEmailPage: FC = () => {
     <FrontPageLayout>
       <Title>Verify Email Change</Title>
       <p className='text-muted'>
-        You have requested an email change. Enter the verification code
-        you received in your email.
+        You have requested an email change. Enter the verification code you received in your email.
       </p>
       <ConfirmChangeEmailForm onSubmit={onSubmit} />
     </FrontPageLayout>

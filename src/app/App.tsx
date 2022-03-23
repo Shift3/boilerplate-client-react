@@ -1,21 +1,20 @@
 import { ErrorBoundary } from '@sentry/react';
-import { Routes as AgentRoutes } from 'features/agent-dashboard/Routes';
-import { Routes as AuthRoutes } from 'features/auth/Routes';
-import { PrivateRoute } from 'features/auth/components/privateRoute.tsx';
-import { Routes as UserRoutes } from 'features/user-dashboard/Routes';
 import { FC } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import styled, { css, ThemeProvider } from 'styled-components';
 import { GlobalStyle } from '../GlobalStyle';
 import AppTheme from 'utils/styleValues';
 import { HolyGrailContent, HolyGrailLayout } from 'common/components/HolyGrailLayout';
 import { NotificationContainer } from 'common/components/Notification';
 import { NotFoundView } from 'common/components/NotFound';
-import { UpdateUserProfilePage } from 'features/auth/pages/UpdateUserProfilePage';
+import { UpdateUserProfilePage } from 'features/user-profile/pages/UpdateUserProfilePage';
 import { ConfirmationModal } from 'features/confirmation-modal';
 import { Alert } from 'react-bootstrap';
 import { BitwiseNavbar } from 'features/navbar';
 import { environment } from 'environment';
+import { AgentRoutes } from 'features/agent-dashboard';
+import { UserRoutes } from 'features/user-dashboard';
+import { AuthRoutes, RequireAuth } from 'features/auth';
 
 const StagingBanner = styled(Alert).attrs({
   variant: 'warning',
@@ -68,20 +67,37 @@ export const App: FC = () => (
         <StagingBanner>
           You are currently on the <b>staging</b> server.
         </StagingBanner>
-        <Switch>
-          <Route path='/auth' component={AuthRoutes} />
-          <PrivateRoute exact path='/user/profile/:id'>
-            <HolyGrailLayout>
-              <UpdateUserProfilePage />
-            </HolyGrailLayout>
-          </PrivateRoute>
-          <PrivateRoute path='/agents' component={AgentRoutes} />
-          <PrivateRoute path='/users' component={UserRoutes} requiredRoles={['Admin', 'Super Administrator']} />
-          <PrivateRoute exact path='/'>
-            <Redirect to='/agents' />
-          </PrivateRoute>
-          <Route component={NotFoundView} />
-        </Switch>
+        <Routes>
+          <Route path='/auth/*' element={<AuthRoutes />} />
+          <Route
+            path='/user/profile/:id'
+            element={
+              <RequireAuth>
+                <HolyGrailLayout>
+                  <UpdateUserProfilePage />
+                </HolyGrailLayout>
+              </RequireAuth>
+            }
+          />
+          <Route
+            path='/agents/*'
+            element={
+              <RequireAuth>
+                <AgentRoutes />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path='/users/*'
+            element={
+              <RequireAuth allowedRoles={['Admin', 'Super Administrator']}>
+                <UserRoutes />
+              </RequireAuth>
+            }
+          />
+          <Route path='/' element={<Navigate to='/agents' />} />
+          <Route path='*' element={<NotFoundView />} />
+        </Routes>
       </BannerWrapper>
     </ThemeProvider>
     <GlobalStyle />

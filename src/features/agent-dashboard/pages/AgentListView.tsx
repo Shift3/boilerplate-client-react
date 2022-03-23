@@ -11,11 +11,11 @@ import { HasPermission } from 'features/rbac';
 import { FC, useMemo } from 'react';
 import { Card } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AgentTableItem, useAgentTableData } from '../hooks/useAgentTableData';
 
 export const AgentListView: FC = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const {
     data,
     isLoading,
@@ -67,7 +67,7 @@ export const AgentListView: FC = () => {
         <DataTable<AgentTableItem>
           columns={columns}
           data={tableData}
-          onRowClick={item => history.push(`agents/update-agent/${item.id}`)}
+          onRowClick={item => navigate(`/agents/update-agent/${item.id}`)}
           pagination={{
             basePage: 1,
             page,
@@ -98,8 +98,8 @@ export const AgentListView: FC = () => {
           </Link>
         </HasPermission>
       </NoContent>
-    )
-  }
+    );
+  };
 
   return (
     <Container>
@@ -127,8 +127,7 @@ export const AgentListView: FC = () => {
       <TableCard>
         <Card.Body>
           <WithLoadingOverlay isLoading={isPageLoading} containerHasRoundedCorners containerBorderRadius='6px'>
-            {data?.meta ? renderDataTableOrNoAgentsView(data.meta.count) :
-              <NoContent />}
+            {data?.meta ? renderDataTableOrNoAgentsView(data.meta.count) : <NoContent />}
           </WithLoadingOverlay>
         </Card.Body>
       </TableCard>

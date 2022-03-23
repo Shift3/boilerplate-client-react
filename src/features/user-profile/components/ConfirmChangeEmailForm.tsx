@@ -51,7 +51,7 @@ export const ConfirmChangeEmailForm: FC<Props> = ({ onSubmit }) => {
         </Form.Control.Feedback>
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
-        <LoadingButton as={Button} disabled={!isValid} loading={isSubmitting}>
+        <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
           Change my Email
         </LoadingButton>
       </div>

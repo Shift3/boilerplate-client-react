@@ -1,5 +1,5 @@
 import { render, screen, getRoles } from '@testing-library/react';
-import { Router } from 'react-router-dom';
+import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
 import { expectInDocByTestId } from 'utils/test';
 import { Provider } from 'react-redux';
 import { createAppStore } from 'app/redux';
@@ -11,16 +11,19 @@ import { LogInPage } from '../LoginPage';
 
 describe('<LoginPage/>', () => {
   describe('Rendering', () => {
+    let history: MemoryHistory;
+
     beforeEach(() => {
-      const history = createMemoryHistory();
+      history = createMemoryHistory();
+
       render(
-        <Router history={history}>
+        <HistoryRouter history={history}>
           <Provider store={createAppStore()}>
             <ThemeProvider theme={AppTheme}>
               <LogInPage />
             </ThemeProvider>
           </Provider>
-        </Router>,
+        </HistoryRouter>,
       );
     });
 
@@ -46,13 +49,13 @@ describe('<LoginPage/>', () => {
       history = createMemoryHistory();
 
       render(
-        <Router history={history}>
+        <HistoryRouter history={history}>
           <Provider store={createAppStore()}>
             <ThemeProvider theme={AppTheme}>
               <LogInPage />
             </ThemeProvider>
           </Provider>
-        </Router>,
+        </HistoryRouter>,
       );
     });
 

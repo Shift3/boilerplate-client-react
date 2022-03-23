@@ -6,28 +6,28 @@ import * as notificationService from 'common/services/notification';
 import { StyledFormWrapper } from 'common/styles/form';
 import { FC, useEffect } from 'react';
 import { Card } from 'react-bootstrap';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
 
-export interface RouteParams {
+export type RouteParams  = {
   id: string;
 }
 
 export const UpdateAgentView: FC = () => {
   const { id } = useParams<RouteParams>();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [updateAgent] = useUpdateAgentMutation();
-  const { data: agent, isLoading: isLoadingAgent, error } = useGetAgentByIdQuery(id);
+  const { data: agent, isLoading: isLoadingAgent, error } = useGetAgentByIdQuery(id!);
 
   useEffect(() => {
     if (error) {
       notificationService.showErrorMessage('Unable to load agent. Returning to agent list.');
-      history.replace('/agents');
+      navigate('/agents', { replace: true });
     }
-  }, [error, history]);
+  }, [error, navigate]);
 
   const handleFormCancel = () => {
-    history.goBack();
+    navigate(-1);
   };
 
   const handleFormSubmit = async (data: FormData) => {
@@ -35,7 +35,7 @@ export const UpdateAgentView: FC = () => {
     try {
       await updateAgent(updateRequest).unwrap();
       notificationService.showSuccessMessage('Agent updated.');
-      history.push('/agents');
+      navigate('/agents');
     } catch (error) {
       notificationService.showErrorMessage('Unable to update agent.');
     }
@@ -45,7 +45,7 @@ export const UpdateAgentView: FC = () => {
     <SmallContainer>
       <PageCrumb>
         <Link to='/agents'>
-          <FontAwesomeIcon icon={["fas", "chevron-left"]} />  Back to Agent List
+          <FontAwesomeIcon icon={['fas', 'chevron-left']} /> Back to Agent List
         </Link>
       </PageCrumb>
 
