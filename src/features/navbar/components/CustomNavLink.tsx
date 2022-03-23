@@ -1,26 +1,27 @@
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC } from 'react';
-import { NavItem } from 'react-bootstrap';
+import { NavItem, NavLinkProps } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { NavLinkConfig } from '../hooks/useNavLinks';
 
 type Props = {
   link: NavLinkConfig;
 };
 
-const NavLinkStyles = styled(NavLink)`
+const NavLinkStyles = styled(NavLink)<NavLinkProps>`
   width: 100%;
   font-size: 1rem;
   position: relative;
-  padding: .65rem 1.5rem;
+  padding: 0.65rem 1.5rem;
   border-radius: 6px;
   margin-bottom: 0.25rem;
-  i, svg {
+  i,
+  svg {
     position: absolute;
     left: 1rem;
-    top: .9rem;
+    top: 0.9rem;
   }
   span {
     padding-left: 1.5rem;
@@ -34,15 +35,16 @@ const NavLinkStyles = styled(NavLink)`
     color: ${props => props.theme.buttons.backgroundColor};
   }
 
-  &.active {
-    background: ${props => props.theme.buttons.backgroundColor};
-    color: white;
-  }
-
+  ${props =>
+    props.active &&
+    css`
+      background: ${props => props.theme.buttons.backgroundColor};
+      color: white;
+    `}
 `;
 
 export const CustomNavLink: FC<Props> = ({ link }) => (
-  <NavLinkStyles to={link.path} activeClassName='active'>
+  <NavLinkStyles to={link.path}>
     <div>
       <FontAwesomeIcon icon={link.icon} />
       <span>{link.label}</span>
@@ -51,9 +53,9 @@ export const CustomNavLink: FC<Props> = ({ link }) => (
 );
 
 export const CustomNavAction: FC<{
-  icon: IconName,
-  label: string,
-  onClick: () => void,
+  icon: IconName;
+  label: string;
+  onClick: () => void;
 }> = ({ icon, label, onClick }) => (
   <NavLinkStyles as={NavItem} onClick={onClick}>
     <FontAwesomeIcon icon={icon} />

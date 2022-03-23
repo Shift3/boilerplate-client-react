@@ -8,11 +8,11 @@ import { CreateButton } from 'common/styles/button';
 import { HasPermission } from 'features/rbac';
 import { FC, useMemo } from 'react';
 import Container from 'react-bootstrap/Container';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserTableItem, useUserTableData } from '../hooks/useUserTableData';
 
 export const UserListView: FC = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { data, isLoading, page, pageSize, getPage, changePageSize, changeSortBy, isFetching } =
     usePSFQuery<PaginatedResult<User>>(useGetUsersQuery);
   const users = useMemo(() => data?.results ?? [], [data]);
@@ -36,12 +36,12 @@ export const UserListView: FC = () => {
       </PageHeader>
       <TableCard>
         <TableCard.Body>
-          <WithLoadingOverlay isLoading={isPageLoading} containerHasRoundedCorners containerBorderRadius='6px' >
-            { data?.meta ? 
+          <WithLoadingOverlay isLoading={isPageLoading} containerHasRoundedCorners containerBorderRadius='6px'>
+            {data?.meta ? (
               <DataTable<UserTableItem>
                 columns={columns}
                 data={tableData}
-                onRowClick={item => history.push(`users/update-user/${item.id}`)}
+                onRowClick={item => navigate(`/users/update-user/${item.id}`)}
                 pagination={{
                   basePage: 1,
                   page,
@@ -56,9 +56,10 @@ export const UserListView: FC = () => {
                   onSortByChange: changeSortBy,
                 }}
                 isLoading={isFetching}
-              /> :    
+              />
+            ) : (
               <NoContent />
-            }
+            )}
           </WithLoadingOverlay>
         </TableCard.Body>
       </TableCard>

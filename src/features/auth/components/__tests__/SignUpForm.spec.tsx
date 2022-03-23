@@ -3,22 +3,24 @@ import userEvent from '@testing-library/user-event';
 import { SignUpForm } from '../SignUpForm';
 import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
-import { Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
+import { MemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { createAppStore } from 'app/redux';
 
 const mockOnSubmit = jest.fn();
 const mockOnCancel = jest.fn();
 
 describe('SignupForm', () => {
   beforeEach(async () => {
-    const history = createMemoryHistory();
     await act(async () => {
       render(
-        <Router history={history}>
-          <ThemeProvider theme={AppTheme}>
-            <SignUpForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
-          </ThemeProvider>,        
-        </Router>
+        <MemoryRouter>
+          <Provider store={createAppStore()}>
+            <ThemeProvider theme={AppTheme}>
+              <SignUpForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+            </ThemeProvider>
+          </Provider>
+        </MemoryRouter>,
       );
     });
     mockOnSubmit.mockReset();

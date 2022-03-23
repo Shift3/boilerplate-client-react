@@ -1,12 +1,12 @@
 import Button from 'react-bootstrap/Button';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div``;
 
 const Title = styled.div`
-  color: ${(props) => props.theme.forms.titleColor};
+  color: ${props => props.theme.forms.titleColor};
   font-size: 2.4em;
   font-style: bold;
   width: 90%;
@@ -16,20 +16,20 @@ const Title = styled.div`
 `;
 
 const CreateAccountButton = styled(Button)`
-  color: ${(props) => props.theme.forms.white};
-  background-color: ${(props) => props.theme.forms.buttonColor};
+  color: ${props => props.theme.forms.white};
+  background-color: ${props => props.theme.forms.buttonColor};
 `;
 
 const Text = styled.div`
-  color: ${(props) => props.theme.forms.textColor};
+  color: ${props => props.theme.forms.textColor};
   margin-top: 20px;
   margin-bottom: 40px;
 `;
 
 export const RegisterCallToAction: FC = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
-  const navigateToSignup = () => history.push('/auth/signup');
+  const navigateToSignup = () => navigate('/auth/signup');
 
   return (
     <Wrapper>
