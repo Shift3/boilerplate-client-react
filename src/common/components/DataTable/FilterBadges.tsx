@@ -5,9 +5,6 @@ import styled from 'styled-components';
 import { AppliedFilterInfo } from './DataTableFilters';
 import { OperationDropdownMenu } from './FilterDropdown';
 
-// ----------------------------------------------------------------------------
-// Styled components
-// ----------------------------------------------------------------------------
 const StyledContainer = styled.div`
   display: flex;
   gap: 10px;
@@ -42,8 +39,6 @@ const StyledDropdownContainer = styled.div`
   z-index: 9999;
 `;
 
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
 const FilterBadge: FC<{
   appliedFilter: AppliedFilterInfo;
   onUpdate: (selectedOperation: number, value: string) => void;
@@ -136,8 +131,6 @@ const FilterBadge: FC<{
   );
 };
 
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
 export type FilterBadgesProps = {
   appliedFilters: AppliedFilterInfo[];
   onUpdate: (index: number, selectedOperation: number, value: string) => void;
