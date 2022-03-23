@@ -27,7 +27,7 @@ export const AgentListView: FC = () => {
         <DataTable<AgentTableItem>
           columns={columns}
           data={tableData}
-          onRowClick={item => navigate(`agents/update-agent/${item.id}`)}
+          onRowClick={item => navigate(`/agents/update-agent/${item.id}`)}
           pagination={{
             basePage: 1,
             page,

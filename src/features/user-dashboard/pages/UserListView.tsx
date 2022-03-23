@@ -41,7 +41,7 @@ export const UserListView: FC = () => {
               <DataTable<UserTableItem>
                 columns={columns}
                 data={tableData}
-                onRowClick={item => navigate(`users/update-user/${item.id}`)}
+                onRowClick={item => navigate(`/users/update-user/${item.id}`)}
                 pagination={{
                   basePage: 1,
                   page,
