@@ -28,10 +28,30 @@ const StyledDropdownMenu = styled(Card).attrs({ className: 'shadow' })`
   }
 `;
 
-const StyledDropdownItem = styled(Dropdown.Item)<{ selected?: boolean }>`
+const StyledDropdownItem = styled.a<{ selected?: boolean }>`
+    display: block;
+    width: 100%;
+    padding 0.25rem 1rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+
+    &:focus,
+    &:hover {
+        color: #1e2125;
+        background-color: #e9ecef;
+    }
+
   &:active {
     background-color: #e9ecef;
   }
+
   ${props =>
     props.selected &&
     css`
@@ -64,6 +84,23 @@ const DefaultFilterInput: FC<{ value: string; onChange: (value: string) => void 
   <Form.Control type='text' value={value} onChange={e => onChange(e.target.value)} />
 );
 
+const DropdownItem: FC<{ selected: boolean; onClick: React.MouseEventHandler }> = ({ children, selected, onClick }) => {
+  const targetRef = useRef<HTMLElement | null>(null);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+    if (e.key === 'Enter') {
+      targetRef.current = e.target as HTMLElement;
+      targetRef.current.click();
+    }
+  };
+
+  return (
+    <StyledDropdownItem tabIndex={0} selected={selected} onClick={onClick} onKeyDown={handleKeyDown}>
+      {children}
+    </StyledDropdownItem>
+  );
+};
+
 const DropdownContainer = React.forwardRef<HTMLDivElement, { show?: boolean; children: React.ReactNode }>(
   ({ show, children }, ref) => (
     <StyledDropdown hidden={!show} ref={ref}>
@@ -81,9 +118,9 @@ const AttributeDropdownMenu: FC<{
   return (
     <StyledDropdownMenu hidden={!show}>
       {filters.map((filter, index) => (
-        <StyledDropdownItem key={filter.attribute} selected={index === selected} onClick={() => onSelect(index)}>
+        <DropdownItem key={filter.attribute} selected={index === selected} onClick={() => onSelect(index)}>
           {filter.attributeLabel}
-        </StyledDropdownItem>
+        </DropdownItem>
       ))}
     </StyledDropdownMenu>
   );
@@ -124,7 +161,7 @@ export const OperationDropdownMenu: FC<{
         {filter.operationOptions.map((op, index) => {
           const FilterInput = op.InputUI ?? DefaultFilterInput;
           return (
-            <StyledDropdownItem key={op.operation} onClick={() => handleOperationSelect(index)}>
+            <DropdownItem key={op.operation} selected={index === selected} onClick={() => handleOperationSelect(index)}>
               <Form.Check
                 type='radio'
                 tabIndex={-1}
@@ -135,7 +172,7 @@ export const OperationDropdownMenu: FC<{
                 onClick={() => handleOperationSelect(index)}
               />
               {index === selected && <FilterInput value={value} onChange={setValue} />}
-            </StyledDropdownItem>
+            </DropdownItem>
           );
         })}
         <StyledButtonWrapper>
