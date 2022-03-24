@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC, useEffect, useRef, useState } from 'react';
 import Badge from 'react-bootstrap/Badge';
 import styled from 'styled-components';
+import { wasMouseEventOutsideContainer } from 'utils/events';
 import { AppliedFilterInfo } from './DataTableFilters';
 import { OperationDropdownMenu } from './FilterDropdown';
 
@@ -77,17 +78,10 @@ const FilterBadge: FC<{
     };
 
     const handleClickOutside = (e: MouseEvent) => {
-      const boundingRect = dropdownContainerRef.current?.getBoundingClientRect();
+      if (!dropdownContainerRef.current) return;
 
-      if (boundingRect) {
-        if (
-          e.clientX < boundingRect.x ||
-          e.clientX > boundingRect.x + boundingRect.width ||
-          e.clientY < boundingRect.y ||
-          e.clientY > boundingRect.y + boundingRect.height
-        ) {
-          handleCancel();
-        }
+      if (wasMouseEventOutsideContainer(dropdownContainerRef.current, e)) {
+        handleCancel();
       }
     };
 

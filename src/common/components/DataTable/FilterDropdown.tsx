@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import styled, { css } from 'styled-components';
 import { FilterInfo } from './DataTableFilters';
+import { wasMouseEventOutsideContainer } from 'utils/events';
 
 // ----------------------------------------------------------------------------
 // Styled components
@@ -184,17 +185,10 @@ export const FilterDropdown: FC<FilterDropdownProps> = ({ show = false, filters,
     };
 
     const handleClickOutside = (e: MouseEvent) => {
-      const boundingRect = dropdownContainerRef.current?.getBoundingClientRect();
+      if (!dropdownContainerRef.current) return;
 
-      if (boundingRect) {
-        if (
-          e.clientX < boundingRect.x ||
-          e.clientX > boundingRect.x + boundingRect.width ||
-          e.clientY < boundingRect.y ||
-          e.clientY > boundingRect.y + boundingRect.height
-        ) {
-          handleFilterCancel();
-        }
+      if (wasMouseEventOutsideContainer(dropdownContainerRef.current, e)) {
+        handleFilterCancel();
       }
     };
 
