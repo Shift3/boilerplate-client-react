@@ -1,7 +1,6 @@
 import { CancelButton } from 'common/styles/button';
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import Card from 'react-bootstrap/Card';
-import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import styled, { css } from 'styled-components';
