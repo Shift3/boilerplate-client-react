@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetAgentsQuery } from 'common/api/agentApi';
 import { NoContent, PageHeader, TableCard } from 'common/components/Common';
 import { DataTable } from 'common/components/DataTable';
+import { DataTableFilters, FilterInfo } from 'common/components/DataTable/DataTableFilters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { Agent, PaginatedResult } from 'common/models';
@@ -15,11 +16,50 @@ import { AgentTableItem, useAgentTableData } from '../hooks/useAgentTableData';
 
 export const AgentListView: FC = () => {
   const navigate = useNavigate();
-  const { data, isLoading, page, pageSize, getPage, changePageSize, changeSortBy, isFetching } =
-    usePSFQuery<PaginatedResult<Agent>>(useGetAgentsQuery);
+  const {
+    data,
+    isLoading,
+    isFetching,
+    page,
+    pageSize,
+    getPage,
+    changePageSize,
+    changeSortBy,
+    addFilter,
+    removeFilter,
+    resetFilters,
+  } = usePSFQuery<PaginatedResult<Agent>>(useGetAgentsQuery);
   const agents = useMemo(() => data?.results ?? [], [data]);
   const { columns, data: tableData } = useAgentTableData(agents);
   const isPageLoading = isLoading;
+
+  const filters: FilterInfo[] = useMemo(
+    () => [
+      {
+        attribute: 'name',
+        attributeLabel: 'Name',
+        operationOptions: [
+          {
+            operation: 'eq',
+            operationLabel: 'is',
+          },
+          {
+            operation: 'icontains',
+            operationLabel: 'contains',
+          },
+          {
+            operation: 'startswith',
+            operationLabel: 'starts with',
+          },
+          {
+            operation: 'endswith',
+            operationLabel: 'ends with',
+          },
+        ],
+      },
+    ],
+    [],
+  );
 
   const renderDataTableOrNoAgentsView = (count: number) => {
     if (count !== 0) {
@@ -76,6 +116,14 @@ export const AgentListView: FC = () => {
           </div>
         </HasPermission>
       </PageHeader>
+      <DataTableFilters
+        filters={filters}
+        defaultFilterAttribute='name'
+        defaultFilterOperation='icontains'
+        onSetFilter={addFilter}
+        onRemoveFilter={removeFilter}
+        onClearFilters={resetFilters}
+      />
       <TableCard>
         <Card.Body>
           <WithLoadingOverlay isLoading={isPageLoading} containerHasRoundedCorners containerBorderRadius='6px'>

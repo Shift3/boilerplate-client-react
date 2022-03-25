@@ -1,6 +1,6 @@
 import { SortOrder } from 'common/models/sorting';
 import { ReactElement, useEffect } from 'react';
-import { Column, useFilters, useFlexLayout, usePagination, useSortBy, useTable } from 'react-table';
+import { Column, useFlexLayout, usePagination, useSortBy, useTable } from 'react-table';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { Paginator } from './Paginator';
 import { SortIndicator } from './SortIndicator';
@@ -23,9 +23,6 @@ export type DataTableProps<D extends Record<string, unknown>> = {
   sorting?: {
     onSortByChange: (sortBy: SortOrder | undefined) => void;
   };
-  filters?: {
-    // TODO
-  };
 };
 
 export const DataTable = <D extends Record<string, unknown>>({
@@ -35,10 +32,8 @@ export const DataTable = <D extends Record<string, unknown>>({
   onRowClick,
   pagination,
   sorting,
-  filters,
 }: DataTableProps<D>): ReactElement => {
   // Evaluate these conditions once instead of re-computing in multiple places.
-  const filtersEnabled = filters !== undefined;
   const sortByEnabled = sorting !== undefined;
   const paginationEnabled = pagination !== undefined;
 
@@ -46,21 +41,18 @@ export const DataTable = <D extends Record<string, unknown>>({
   const plugins = [
     // The order in which plugins are specified matters to react-table.
     // Order needs to be useFilter -> useSortBy -> usePagination.
-    ...(filtersEnabled ? [useFilters] : []),
     ...(sortByEnabled ? [useSortBy] : []),
     ...(paginationEnabled ? [usePagination] : []),
   ];
 
   // Generate the required initial state for the enabled plugins.
   const initialState = {
-    ...(filtersEnabled ? {} : {}), // TODO: add initial state for filtering
     ...(sortByEnabled ? {} : {}), // TODO: add initial state for sorting
     ...(paginationEnabled ? { pageIndex: 0, pageSize: pagination.pageSize } : {}),
   };
 
   // Generate the required table options for the enabled plugins.
   const extraTableOptions = {
-    ...(filtersEnabled ? {} : {}), // TODO: add table options for filtering
     ...(sortByEnabled
       ? {
           manualSortBy: true,

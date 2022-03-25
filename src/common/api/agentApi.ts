@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { PaginatedResult, PaginationQueryParams } from 'common/models';
+import { FilterQueryParams, PaginatedResult, PaginationQueryParams } from 'common/models';
 import { Agent } from 'common/models/agent';
 import { SortingQueryParams } from 'common/models/sorting';
 import { customBaseQuery } from './customBaseQuery';
@@ -28,9 +28,13 @@ export const agentApi = createApi({
   tagTypes: ['Agent'],
 
   endpoints: builder => ({
-    getAgents: builder.query<PaginatedResult<Agent>, PaginationQueryParams & SortingQueryParams>({
-      query: ({ page = 1, pageSize = 10, sortBy }) => {
-        const queryParams = new QueryParamsBuilder().setPaginationParams(page, pageSize).setSortParam(sortBy).build();
+    getAgents: builder.query<PaginatedResult<Agent>, PaginationQueryParams & SortingQueryParams & FilterQueryParams>({
+      query: ({ page = 1, pageSize = 10, sortBy, filters }) => {
+        const queryParams = new QueryParamsBuilder()
+          .setPaginationParams(page, pageSize)
+          .setSortParam(sortBy)
+          .setFilterParam(filters)
+          .build();
         return { url: `/agents?${queryParams}` };
       },
       providesTags: ['Agent'],
