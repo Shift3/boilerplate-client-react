@@ -1,12 +1,10 @@
 import { SortOrder } from 'common/models/sorting';
 import { ReactElement, useEffect } from 'react';
 import { Column, useFlexLayout, usePagination, useSortBy, useTable } from 'react-table';
-import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { Paginator } from './Paginator';
 import { SortIndicator } from './SortIndicator';
 
 export type DataTableProps<D extends Record<string, unknown>> = {
-  isLoading: boolean;
   columns: Column<D>[];
   data: D[];
   onRowClick?: (item: D) => void;
@@ -28,7 +26,6 @@ export type DataTableProps<D extends Record<string, unknown>> = {
 export const DataTable = <D extends Record<string, unknown>>({
   columns,
   data,
-  isLoading,
   onRowClick,
   pagination,
   sorting,
@@ -127,70 +124,68 @@ export const DataTable = <D extends Record<string, unknown>>({
   );
 
   return (
-    <WithLoadingOverlay isLoading={isLoading} containerHasRoundedCorners containerBorderRadius='6px'>
-      <div className='d-flex flex-column'>
-        <div className='table' {...getTableProps()}>
-          <div className='thead'>
-            {headerGroups.map(headerGroup => (
-              <div className='tr' {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map(column => (
-                  <>
-                    {sortByEnabled && column.canSort ? (
-                      // Add the sorting props to control sorting and sort direction indicator.
-                      <div className='th' {...column.getHeaderProps(column.getSortByToggleProps())}>
-                        {column.render('Header')}{' '}
-                        <SortIndicator isSorted={column.isSorted} isDesc={column.isSortedDesc} />
-                      </div>
-                    ) : (
-                      <div className='th' {...column.getHeaderProps()}>
-                        {column.render('Header')}
-                      </div>
-                    )}
-                  </>
-                ))}
-              </div>
-            ))}
-          </div>
-          <div className='tbody' {...getTableBodyProps()}>
-            {tableRows.map(row => {
-              prepareRow(row);
-              return (
-                <div
-                  className='tr'
-                  aria-hidden='true'
-                  onClick={() => {
-                    if ( onRowClick) onRowClick(row.original);
-                  }}
-                  {...row.getRowProps()}
-                >
-                  {row.cells.map(cell => {
-                    return (
-                      <div className='td' { ...cell.getCellProps() }>
-                        {cell.render('Cell')}
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            })}
-          </div>
+    <div className='d-flex flex-column'>
+      <div className='table' {...getTableProps()}>
+        <div className='thead'>
+          {headerGroups.map(headerGroup => (
+            <div className='tr' {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map(column => (
+                <>
+                  {sortByEnabled && column.canSort ? (
+                    // Add the sorting props to control sorting and sort direction indicator.
+                    <div className='th' {...column.getHeaderProps(column.getSortByToggleProps())}>
+                      {column.render('Header')}{' '}
+                      <SortIndicator isSorted={column.isSorted} isDesc={column.isSortedDesc} />
+                    </div>
+                  ) : (
+                    <div className='th' {...column.getHeaderProps()}>
+                      {column.render('Header')}
+                    </div>
+                  )}
+                </>
+              ))}
+            </div>
+          ))}
         </div>
-        {/* If the usePagination plugin is enabled, render a paginator to allow users to page through the data. */}
-        {paginationEnabled && (
-          <Paginator
-            page={pageIndex + pagination.basePage}
-            pageSize={pageSize}
-            count={pagination.count}
-            pageCount={pageCount}
-            pageSizeOptions={pagination.pageSizeOptions}
-            hasPreviousPage={canPreviousPage}
-            hasNextPage={canNextPage}
-            onPreviousPageClick={previousPage}
-            onNextPageClick={nextPage}
-            onPageSizeChange={setPageSize}
-          />
-        )}
+        <div className='tbody' {...getTableBodyProps()}>
+          {tableRows.map(row => {
+            prepareRow(row);
+            return (
+              <div
+                className='tr'
+                aria-hidden='true'
+                onClick={() => {
+                  if (onRowClick) onRowClick(row.original);
+                }}
+                {...row.getRowProps()}
+              >
+                {row.cells.map(cell => {
+                  return (
+                    <div className='td' {...cell.getCellProps()}>
+                      {cell.render('Cell')}
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
       </div>
-    </WithLoadingOverlay>
+      {/* If the usePagination plugin is enabled, render a paginator to allow users to page through the data. */}
+      {paginationEnabled && (
+        <Paginator
+          page={pageIndex + pagination.basePage}
+          pageSize={pageSize}
+          count={pagination.count}
+          pageCount={pageCount}
+          pageSizeOptions={pagination.pageSizeOptions}
+          hasPreviousPage={canPreviousPage}
+          hasNextPage={canNextPage}
+          onPreviousPageClick={previousPage}
+          onNextPageClick={nextPage}
+          onPageSizeChange={setPageSize}
+        />
+      )}
+    </div>
   );
 };

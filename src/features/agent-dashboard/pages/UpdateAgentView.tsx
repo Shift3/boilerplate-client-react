@@ -19,7 +19,7 @@ export const UpdateAgentView: FC = () => {
   const { id } = useParams<RouteParams>();
   const navigate = useNavigate();
   const [updateAgent] = useUpdateAgentMutation();
-  const { data: agent, isLoading: isLoadingAgent, error } = useGetAgentByIdQuery(id!);
+  const { data: agent, isLoading: isLoadingAgent, isFetching, error } = useGetAgentByIdQuery(id!);
   const [submissionError, setSubmissionError] = useState<ServerValidationErrors<FormData> | null>(null);
 
   useEffect(() => {
@@ -66,7 +66,12 @@ export const UpdateAgentView: FC = () => {
 
       <FormCard>
         <Card.Body>
-          <WithLoadingOverlay isLoading={isLoadingAgent} containerHasRoundedCorners containerBorderRadius='6px'>
+          <WithLoadingOverlay
+            isLoading={isLoadingAgent || isFetching}
+            isInitialLoad={isLoadingAgent && isFetching}
+            containerHasRoundedCorners
+            containerBorderRadius='6px'
+          >
             <StyledFormWrapper>
               <AgentDetailForm
                 defaultValues={agent}
