@@ -1,9 +1,9 @@
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC } from 'react';
-import { NavItem, NavLinkProps } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
-import styled, { css } from 'styled-components';
+import { NavItem } from 'react-bootstrap';
+import { NavLink, NavLinkProps } from 'react-router-dom';
+import styled from 'styled-components';
 import { NavLinkConfig } from '../hooks/useNavLinks';
 
 type Props = {
@@ -35,16 +35,14 @@ const NavLinkStyles = styled(NavLink)<NavLinkProps>`
     color: ${props => props.theme.buttons.backgroundColor};
   }
 
-  ${props =>
-    props.active &&
-    css`
-      background: ${props => props.theme.buttons.backgroundColor};
-      color: white;
-    `}
+  &.active {
+    background-color: ${props => props.theme.buttons.backgroundColor};
+    color: white;
+  }
 `;
 
 export const CustomNavLink: FC<Props> = ({ link }) => (
-  <NavLinkStyles to={link.path}>
+  <NavLinkStyles to={link.path} className={({ isActive }) => (isActive ? 'active' : '')}>
     <div>
       <FontAwesomeIcon icon={link.icon} />
       <span>{link.label}</span>
