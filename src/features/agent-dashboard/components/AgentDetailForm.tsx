@@ -52,7 +52,7 @@ export const AgentDetailForm: FC<Props> = ({
   defaultValues = {},
   onSubmit,
   submitButtonLabel = 'Submit',
-  submissionError
+  submissionError,
 }) => {
   const {
     register,
@@ -192,12 +192,6 @@ export const AgentDetailForm: FC<Props> = ({
             </Form.Group>
           </Col>
         </Row>
-
-        <div className='mt-3'>
-          <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
-            {submitButtonLabel}
-          </LoadingButton>
-        </div>
 
         <div className='mt-3'>
           <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
