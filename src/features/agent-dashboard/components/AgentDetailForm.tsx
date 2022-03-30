@@ -99,10 +99,10 @@ export const AgentDetailForm: FC<Props> = ({
   useEffect(() => {
     if (submissionError) {
       if (!isErrorAString(submissionError)) {
-        addServerErrors(submissionError, setError);
+        addServerErrors<FormData>(submissionError, setError);
       }
     }
-  }, [submissionError]);
+  }, [submissionError, setError]);
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>

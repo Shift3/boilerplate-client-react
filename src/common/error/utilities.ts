@@ -14,7 +14,10 @@ export const isErrorAString = (error: ErrorIndexType | string): error is string 
   return typeof error === 'string';
 };
 
-export const addServerErrors = <T>(errors: { [P in keyof T]?: string[] } | string, setError: any): void => {
+export const addServerErrors = <T>(
+  errors: { [P in keyof T]?: string[] } | string,
+  setError: (...args: any[]) => void,
+): void => {
   if (typeof errors !== 'string') {
     Object.keys(errors).forEach(key => {
       setError(key, {
