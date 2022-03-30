@@ -98,9 +98,7 @@ export const AgentDetailForm: FC<Props> = ({
 
   useEffect(() => {
     if (submissionError) {
-      if (!isErrorAString(submissionError)) {
-        addServerErrors<FormData>(submissionError, setError);
-      }
+      addServerErrors<FormData>(submissionError, setError);
     }
   }, [submissionError, setError]);
 

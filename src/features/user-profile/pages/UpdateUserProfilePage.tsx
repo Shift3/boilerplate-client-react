@@ -9,11 +9,16 @@ import {
   useResendChangeEmailVerificationEmailMutation,
 } from 'common/api/userApi';
 import { PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
-import { ErrorResponse } from 'common/models';
+import { ErrorIndexType, ErrorResponse } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
 import { ProfilePictureFormData, UpdateProfilePictureForm } from '../components/UpdateProfilePictureForm';
-import { useUpdateProfilePicture, useDeleteProfilePicture, useUpdateUserProfile, useChangeEmailRequest } from 'features/user-profile/hooks';
+import {
+  useUpdateProfilePicture,
+  useDeleteProfilePicture,
+  useUpdateUserProfile,
+  useChangeEmailRequest,
+} from 'features/user-profile/hooks';
 import { authSlice } from 'features/auth/authSlice';
 import {
   ChangePasswordForm,
@@ -26,7 +31,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { UpdateUserEmailForm, UserEmailFormData } from '../components/UpdateUserEmailForm';
 import { UserProfilePicture } from 'features/navbar/components/UserProfilePicture';
-import { isFetchBaseQueryError } from 'common/error/utilities';
+import { identifyAndRetrieveServerError, isFetchBaseQueryError } from 'common/error/utilities';
 
 type RouteParams = {
   id: string;
@@ -56,8 +61,7 @@ export const UpdateUserProfilePage: FC = () => {
   const [changePassword] = useChangePasswordMutation();
   const dispatch = useAppDispatch();
   const [tab, setTab] = useState('profile');
-  const [submissionError, setSubmissionError] = useState<FetchBaseQueryError | null>(null);
-
+  const [submissionError, setSubmissionError] = useState<ErrorIndexType | string | null>(null);
 
   const onSubmit = async (formData: ProfileFormData) => {
     const data = { id: Number(id), ...formData };
@@ -65,7 +69,7 @@ export const UpdateUserProfilePage: FC = () => {
       await updateUserProfile(data);
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
-        setSubmissionError(error);
+        setSubmissionError(identifyAndRetrieveServerError(error));
       }
     }
   };
@@ -76,10 +80,10 @@ export const UpdateUserProfilePage: FC = () => {
       await changeEmailRequest(data);
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
-        setSubmissionError(error);
+        setSubmissionError(identifyAndRetrieveServerError(error));
       }
     }
-  }
+  };
 
   const handleResendChangeEmailVerificationEmail = () => {
     try {
@@ -87,7 +91,7 @@ export const UpdateUserProfilePage: FC = () => {
       notificationService.showSuccessMessage('Change Email verification email has been sent.');
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
-        setSubmissionError(error);
+        setSubmissionError(identifyAndRetrieveServerError(error));
       }
       handleApiError(error as FetchBaseQueryError);
     }
@@ -108,7 +112,7 @@ export const UpdateUserProfilePage: FC = () => {
         await updateUserProfilePicture(data);
       } catch (error) {
         if (isFetchBaseQueryError(error)) {
-          setSubmissionError(error);
+          setSubmissionError(identifyAndRetrieveServerError(error));
         }
       }
     }
@@ -121,10 +125,10 @@ export const UpdateUserProfilePage: FC = () => {
       await deleteUserProfilePicture(data);
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
-        setSubmissionError(error);
+        setSubmissionError(identifyAndRetrieveServerError(error));
       }
     }
-  }
+  };
 
   const profilePictureIsDefined = () => {
     if (user) {
@@ -141,7 +145,7 @@ export const UpdateUserProfilePage: FC = () => {
       notificationService.showSuccessMessage('Password updated.');
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
-        setSubmissionError(error);
+        setSubmissionError(identifyAndRetrieveServerError(error));
       }
       notificationService.showErrorMessage(((error as FetchBaseQueryError).data as ErrorResponse).message);
     }
@@ -227,13 +231,13 @@ export const UpdateUserProfilePage: FC = () => {
                 </Alert>
               )}
 
-                <UpdateUserEmailForm
-                  onSubmit={onSubmitRequestEmailChange}
-                  defaultValues={{
-                    email: user?.email ?? '',
-                  }}
-                  submissionError={submissionError}
-                />
+              <UpdateUserEmailForm
+                onSubmit={onSubmitRequestEmailChange}
+                defaultValues={{
+                  email: user?.email ?? '',
+                }}
+                submissionError={submissionError}
+              />
             </Col>
           </Row>
 
@@ -245,14 +249,15 @@ export const UpdateUserProfilePage: FC = () => {
               <p className='text-muted'>This is the photo of you that other users in the system will be able to see.</p>
             </Col>
             <Col>
-              <UpdateProfilePictureForm
-                onSubmit={onSubmitNewProfilePicture}
-                submissionError={submissionError}
-              />
-              <Button className="mt-3" variant='danger' disabled={!profilePictureIsDefined()} onClick={handleDeleteProfilePicture}>
+              <UpdateProfilePictureForm onSubmit={onSubmitNewProfilePicture} submissionError={submissionError} />
+              <Button
+                className='mt-3'
+                variant='danger'
+                disabled={!profilePictureIsDefined()}
+                onClick={handleDeleteProfilePicture}
+              >
                 Delete
               </Button>
-              
             </Col>
           </Row>
         </>

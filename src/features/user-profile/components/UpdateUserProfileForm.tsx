@@ -1,8 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { FormServerError } from 'common/components/FormServerError/FormServerError';
 import { LoadingButton } from 'common/components/LoadingButton';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
+import { addServerErrors, isErrorAString } from 'common/error/utilities';
+import { ErrorIndexType } from 'common/models';
 import { FC, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -17,7 +17,7 @@ export type ProfileFormData = {
 type Props = {
   onSubmit: (data: ProfileFormData) => void;
   defaultValues?: Partial<ProfileFormData>;
-  submissionError: FetchBaseQueryError | null;
+  submissionError: ErrorIndexType | string | null;
 };
 
 const schema: yup.SchemaOf<ProfileFormData> = yup.object().shape({
@@ -31,7 +31,8 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues, subm
     handleSubmit,
     register,
     reset,
-    getValues
+    getValues,
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
@@ -42,7 +43,10 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues, subm
     if (isSubmitSuccessful) {
       reset(getValues());
     }
-  }, [reset, isSubmitSuccessful, getValues]);
+    if (submissionError) {
+      addServerErrors<FormData>(submissionError, setError);
+    }
+  }, [reset, isSubmitSuccessful, getValues, submissionError, setError]);
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
@@ -53,7 +57,6 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues, subm
           <Form.Control.Feedback type='invalid' role='alert'>
             {errors.firstName?.message}
           </Form.Control.Feedback>
-          <FormServerError fieldName='firstName' serverError={submissionError} />
         </Form.Group>
         <Form.Group>
           <Form.Label htmlFor='lastName'>Last Name</Form.Label>
@@ -61,7 +64,6 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues, subm
           <Form.Control.Feedback type='invalid' role='alert'>
             {errors.lastName?.message}
           </Form.Control.Feedback>
-          <FormServerError fieldName='lastName' serverError={submissionError} />
         </Form.Group>
         <div className='mt-3'>
           <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>

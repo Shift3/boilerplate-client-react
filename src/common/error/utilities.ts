@@ -17,6 +17,7 @@ export const isErrorAString = (error: ErrorIndexType | string): error is string 
 export const addServerErrors = <T>(
   errors: { [P in keyof T]?: string[] } | string,
   setError: (...args: any[]) => void,
+  possibleFields?: string[],
 ): void => {
   if (typeof errors !== 'string') {
     Object.keys(errors).forEach(key => {
@@ -27,15 +28,15 @@ export const addServerErrors = <T>(
     });
   }
 
-  if (typeof errors === 'string') {
-    for (let i = 0; i < errors.length; i + 1) {
-      if (errors[i] as keyof T) {
-        setError(errors[i], {
+  if (typeof errors === 'string' && possibleFields) {
+    errors.split(' ').forEach(word => {
+      if (possibleFields.includes(word)) {
+        setError(word, {
           type: 'server',
-          message: errors[i],
+          message: errors,
         });
       }
-    }
+    });
   }
 };
 

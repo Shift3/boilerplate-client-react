@@ -3,7 +3,9 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { FormServerError } from 'common/components/FormServerError/FormServerError';
 import { LoadingButton } from 'common/components/LoadingButton';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
-import { FC } from 'react';
+import { addServerErrors, isErrorAString } from 'common/error/utilities';
+import { ErrorIndexType } from 'common/models';
+import { FC, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Constants } from 'utils/constants';
@@ -17,7 +19,7 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
-  submissionError: FetchBaseQueryError | null;
+  submissionError: ErrorIndexType | string | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
@@ -44,10 +46,17 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, submissionError }) => 
     formState: { errors, isDirty, isSubmitting, isSubmitted, isValid },
     handleSubmit,
     register,
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
   });
+
+  useEffect(() => {
+    if (submissionError) {
+      addServerErrors<FormData>(submissionError, setError);
+    }
+  }, [submissionError, setError]);
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
@@ -66,7 +75,6 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, submissionError }) => 
               <Form.Control.Feedback type='invalid' role='alert'>
                 {errors.oldPassword?.message}
               </Form.Control.Feedback>
-              <FormServerError fieldName='oldPassword' serverError={submissionError} />
             </>
           )}
         </Form.Group>
@@ -84,7 +92,6 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, submissionError }) => 
               <Form.Control.Feedback type='invalid' role='alert'>
                 {errors.newPassword?.message}
               </Form.Control.Feedback>
-              <FormServerError fieldName='newPassword' serverError={submissionError} />
             </>
           )}
         </Form.Group>
@@ -102,7 +109,6 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, submissionError }) => 
               <Form.Control.Feedback type='invalid' role='alert'>
                 {errors.confirmPassword?.message}
               </Form.Control.Feedback>
-              <FormServerError fieldName='confirmPassword' serverError={submissionError} />
             </>
           )}
         </Form.Group>

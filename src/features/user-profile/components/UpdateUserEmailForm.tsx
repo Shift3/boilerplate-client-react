@@ -5,8 +5,8 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { FormServerError } from 'common/components/FormServerError/FormServerError';
+import { addServerErrors, isErrorAString } from 'common/error/utilities';
+import { ErrorIndexType } from 'common/models';
 
 export type UserEmailFormData = {
   email: string;
@@ -15,7 +15,7 @@ export type UserEmailFormData = {
 type Props = {
   onSubmit: (data: UserEmailFormData) => void;
   defaultValues?: Partial<UserEmailFormData>;
-  submissionError: FetchBaseQueryError | null;
+  submissionError: ErrorIndexType | string | null;
 };
 
 export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues, submissionError }) => {
@@ -32,7 +32,8 @@ export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues, submis
     handleSubmit,
     register,
     reset,
-    getValues
+    getValues,
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
@@ -43,7 +44,10 @@ export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues, submis
     if (isSubmitSuccessful) {
       reset(getValues());
     }
-  }, [reset, isSubmitSuccessful, getValues]);
+    if (submissionError) {
+      addServerErrors<FormData>(submissionError, setError, ['email']);
+    }
+  }, [reset, isSubmitSuccessful, getValues, submissionError, setError]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -52,7 +56,6 @@ export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues, submis
         <Form.Control.Feedback type='invalid' role='alert'>
           {errors.email?.message}
         </Form.Control.Feedback>
-        <FormServerError fieldName='email' serverError={submissionError} />
       </Form.Group>
       <div className='mt-3'>
         <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
