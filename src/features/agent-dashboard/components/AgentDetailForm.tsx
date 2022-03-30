@@ -4,7 +4,8 @@ import { FormServerError } from 'common/components/FormServerError/FormServerErr
 import { LoadingButton } from 'common/components/LoadingButton';
 import { PhoneInput } from 'common/components/PhoneInput';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
-import { Agent } from 'common/models';
+import { addServerErrors, isErrorAString } from 'common/error/utilities';
+import { Agent, ErrorIndexType } from 'common/models';
 import { FC, useEffect } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
@@ -21,7 +22,7 @@ export type Props = {
   cancelButtonLabel?: string;
   onSubmit: (data: FormData) => void;
   onCancel: () => void;
-  submissionError: FetchBaseQueryError | null;
+  submissionError: ErrorIndexType | string | null;
 };
 
 const isBlank = (val: string) => !val || !val.trim();
@@ -61,6 +62,7 @@ export const AgentDetailForm: FC<Props> = ({
     trigger,
     control,
     watch,
+    setError,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
@@ -94,6 +96,14 @@ export const AgentDetailForm: FC<Props> = ({
     trigger('address.zipCode');
   }, [trigger, firstAddressLine]);
 
+  useEffect(() => {
+    if (submissionError) {
+      if (!isErrorAString(submissionError)) {
+        addServerErrors(submissionError, setError);
+      }
+    }
+  }, [submissionError]);
+
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
       <Form onSubmit={handleSubmit(withOptionalAddress)}>
@@ -104,7 +114,6 @@ export const AgentDetailForm: FC<Props> = ({
               <Form.Label>Name</Form.Label>
               <Form.Control type='text' {...register('name')} isInvalid={!!errors.name} />
               <Form.Control.Feedback type='invalid'>{errors.name?.message}</Form.Control.Feedback>
-              <FormServerError fieldName='name' serverError={submissionError} />
             </Form.Group>
           </Col>
           <Col>
@@ -112,7 +121,6 @@ export const AgentDetailForm: FC<Props> = ({
               <Form.Label>Email</Form.Label>
               <Form.Control type='email' {...register('email')} isInvalid={!!errors.email} />
               <Form.Control.Feedback type='invalid'>{errors.email?.message}</Form.Control.Feedback>
-              <FormServerError fieldName='email' serverError={submissionError} />
             </Form.Group>
           </Col>
         </Row>
@@ -127,14 +135,12 @@ export const AgentDetailForm: FC<Props> = ({
             )}
           />
           <Form.Control.Feedback type='invalid'>{errors.phoneNumber?.message}</Form.Control.Feedback>
-          <FormServerError fieldName='phoneNumber' serverError={submissionError} />
         </Form.Group>
 
         <Form.Group>
           <Form.Label>Description</Form.Label>
           <Form.Control as='textarea' {...register('description')} isInvalid={!!errors.description} />
           <Form.Control.Feedback type='invalid'>{errors.description?.message}</Form.Control.Feedback>
-          <FormServerError fieldName='description' serverError={submissionError} />
         </Form.Group>
 
         <h5 className='mt-3'>Address</h5>
@@ -143,7 +149,6 @@ export const AgentDetailForm: FC<Props> = ({
           <Form.Label>Address</Form.Label>
           <Form.Control type='text' {...register('address.address1')} isInvalid={!!errors.address?.address1} />
           <Form.Control.Feedback type='invalid'>{errors.address?.address1?.message}</Form.Control.Feedback>
-          <FormServerError fieldName='address.address1' serverError={submissionError} />
         </Form.Group>
 
         <Form.Group className='mb-2'>
@@ -155,7 +160,6 @@ export const AgentDetailForm: FC<Props> = ({
             disabled={isBlank(firstAddressLine)}
           />
           <Form.Control.Feedback type='invalid'>{errors.address?.address2?.message}</Form.Control.Feedback>
-          <FormServerError fieldName='address.address2' serverError={submissionError} />
         </Form.Group>
 
         <Row>
@@ -164,7 +168,6 @@ export const AgentDetailForm: FC<Props> = ({
               <Form.Label>City</Form.Label>
               <Form.Control type='text' {...register('address.city')} isInvalid={!!errors.address?.city} />
               <Form.Control.Feedback type='invalid'>{errors.address?.city?.message}</Form.Control.Feedback>
-              <FormServerError fieldName='address.city' serverError={submissionError} />
             </Form.Group>
           </Col>
 
@@ -179,7 +182,6 @@ export const AgentDetailForm: FC<Props> = ({
                 ))}
               </Form.Select>
               <Form.Control.Feedback type='invalid'>{errors.address?.state?.message}</Form.Control.Feedback>
-              <FormServerError fieldName='address.state' serverError={submissionError} />
             </Form.Group>
           </Col>
 
@@ -188,7 +190,6 @@ export const AgentDetailForm: FC<Props> = ({
               <Form.Label>Zip Code</Form.Label>
               <Form.Control type='text' {...register('address.zipCode')} isInvalid={!!errors.address?.zipCode} />
               <Form.Control.Feedback type='invalid'>{errors.address?.zipCode?.message}</Form.Control.Feedback>
-              <FormServerError fieldName='address.zipCode' serverError={submissionError} />
             </Form.Group>
           </Col>
         </Row>
