@@ -1,10 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { FormServerError } from 'common/components/FormServerError/FormServerError';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { PhoneInput } from 'common/components/PhoneInput';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
-import { addServerErrors, isErrorAString } from 'common/error/utilities';
+import { addServerErrors } from 'common/error/utilities';
 import { Agent, ErrorIndexType } from 'common/models';
 import { FC, useEffect } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
@@ -22,7 +20,7 @@ export type Props = {
   cancelButtonLabel?: string;
   onSubmit: (data: FormData) => void;
   onCancel: () => void;
-  submissionError: ErrorIndexType | string | null;
+  submissionError: ErrorIndexType | null;
 };
 
 const isBlank = (val: string) => !val || !val.trim();
@@ -98,7 +96,7 @@ export const AgentDetailForm: FC<Props> = ({
 
   useEffect(() => {
     if (submissionError) {
-      addServerErrors<FormData>(submissionError, setError);
+      addServerErrors(submissionError, setError);
     }
   }, [submissionError, setError]);
 

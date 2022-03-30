@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useCreateAgentMutation } from 'common/api/agentApi';
 import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
-import { identifyAndRetrieveServerError, isFetchBaseQueryError } from 'common/error/utilities';
+import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
 import { ErrorIndexType } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { StyledFormWrapper } from 'common/styles/form';
@@ -12,7 +12,7 @@ import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
 export const CreateAgentView: FC = () => {
   const navigate = useNavigate();
   const [createAgent] = useCreateAgentMutation();
-  const [submissionError, setSubmissionError] = useState<ErrorIndexType | string | null>(null);
+  const [submissionError, setSubmissionError] = useState<ErrorIndexType | null>(null);
 
   const handleFormCancel = () => {
     navigate(-1);
@@ -25,7 +25,9 @@ export const CreateAgentView: FC = () => {
       navigate('/agents');
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
-        setSubmissionError(identifyAndRetrieveServerError(error));
+        if (isErrorResponse(error?.data)) {
+          setSubmissionError((error?.data).error);
+        }
       }
       notificationService.showErrorMessage('Unable to add agent.');
     }

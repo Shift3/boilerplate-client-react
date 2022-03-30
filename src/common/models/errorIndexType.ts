@@ -1,3 +1,3 @@
 export interface ErrorIndexType {
-    [key: string]: string[]
+  [key: string]: string[];
 }

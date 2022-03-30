@@ -19,7 +19,7 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
-  submissionError: ErrorIndexType | string | null;
+  submissionError: ErrorIndexType | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
@@ -54,7 +54,7 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, submissionError }) => 
 
   useEffect(() => {
     if (submissionError) {
-      addServerErrors<FormData>(submissionError, setError);
+      addServerErrors(submissionError, setError);
     }
   }, [submissionError, setError]);
 

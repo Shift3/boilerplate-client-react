@@ -16,7 +16,7 @@ export type ProfilePictureFormData = {
 type Props = {
   onSubmit: (data: ProfilePictureFormData) => void;
   defaultValues?: Partial<ProfilePictureFormData>;
-  submissionError: ErrorIndexType | string | null;
+  submissionError: ErrorIndexType | null;
 };
 
 const checkProfilePictureFormat = (value: FileList) => {
@@ -62,7 +62,7 @@ export const UpdateProfilePictureForm: FC<Props> = ({ onSubmit, defaultValues, s
       setImagePreview({ src: '', alt: '' });
     }
     if (submissionError) {
-      addServerErrors<FormData>(submissionError, setError);
+      addServerErrors(submissionError, setError);
     }
   }, [trigger, reset, isSubmitSuccessful, submissionError, setError]);
 

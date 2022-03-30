@@ -1,7 +1,7 @@
-import { ErrorIndexType } from ".";
+import { ServerValidationErrors } from '.';
 
-export interface ErrorResponse {
-  error: ErrorIndexType | string;
+export interface ErrorResponse<T> {
+  error: ServerValidationErrors<T>;
   message: string;
   statusCode: number;
 }

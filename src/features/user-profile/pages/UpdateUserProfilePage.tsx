@@ -31,7 +31,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { UpdateUserEmailForm, UserEmailFormData } from '../components/UpdateUserEmailForm';
 import { UserProfilePicture } from 'features/navbar/components/UserProfilePicture';
-import { identifyAndRetrieveServerError, isFetchBaseQueryError } from 'common/error/utilities';
+import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
 
 type RouteParams = {
   id: string;
@@ -61,7 +61,7 @@ export const UpdateUserProfilePage: FC = () => {
   const [changePassword] = useChangePasswordMutation();
   const dispatch = useAppDispatch();
   const [tab, setTab] = useState('profile');
-  const [submissionError, setSubmissionError] = useState<ErrorIndexType | string | null>(null);
+  const [submissionError, setSubmissionError] = useState<ErrorIndexType | null>(null);
 
   const onSubmit = async (formData: ProfileFormData) => {
     const data = { id: Number(id), ...formData };
@@ -69,7 +69,9 @@ export const UpdateUserProfilePage: FC = () => {
       await updateUserProfile(data);
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
-        setSubmissionError(identifyAndRetrieveServerError(error));
+        if (isErrorResponse(error?.data)) {
+          setSubmissionError((error?.data).error);
+        }
       }
     }
   };
@@ -79,8 +81,11 @@ export const UpdateUserProfilePage: FC = () => {
     try {
       await changeEmailRequest(data);
     } catch (error) {
+      console.log('onSubmitRequestEmailChange - error -', error);
       if (isFetchBaseQueryError(error)) {
-        setSubmissionError(identifyAndRetrieveServerError(error));
+        if (isErrorResponse<UserEmailFormData>(error?.data)) {
+          setSubmissionError((error?.data).error);
+        }
       }
     }
   };
@@ -91,7 +96,9 @@ export const UpdateUserProfilePage: FC = () => {
       notificationService.showSuccessMessage('Change Email verification email has been sent.');
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
-        setSubmissionError(identifyAndRetrieveServerError(error));
+        if (isErrorResponse(error?.data)) {
+          setSubmissionError((error?.data).error);
+        }
       }
       handleApiError(error as FetchBaseQueryError);
     }
@@ -112,7 +119,9 @@ export const UpdateUserProfilePage: FC = () => {
         await updateUserProfilePicture(data);
       } catch (error) {
         if (isFetchBaseQueryError(error)) {
-          setSubmissionError(identifyAndRetrieveServerError(error));
+          if (isErrorResponse(error?.data)) {
+            setSubmissionError((error?.data).error);
+          }
         }
       }
     }
@@ -125,7 +134,9 @@ export const UpdateUserProfilePage: FC = () => {
       await deleteUserProfilePicture(data);
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
-        setSubmissionError(identifyAndRetrieveServerError(error));
+        if (isErrorResponse(error?.data)) {
+          setSubmissionError((error?.data).error);
+        }
       }
     }
   };
@@ -145,9 +156,13 @@ export const UpdateUserProfilePage: FC = () => {
       notificationService.showSuccessMessage('Password updated.');
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
-        setSubmissionError(identifyAndRetrieveServerError(error));
+        if (isErrorResponse(error?.data)) {
+          setSubmissionError((error?.data).error);
+        }
       }
-      notificationService.showErrorMessage(((error as FetchBaseQueryError).data as ErrorResponse).message);
+      notificationService.showErrorMessage(
+        ((error as FetchBaseQueryError).data as ErrorResponse<ForgotPasswordFormData>).message,
+      );
     }
 
     navigate('/agents');

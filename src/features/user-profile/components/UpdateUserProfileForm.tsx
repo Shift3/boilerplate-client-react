@@ -17,7 +17,7 @@ export type ProfileFormData = {
 type Props = {
   onSubmit: (data: ProfileFormData) => void;
   defaultValues?: Partial<ProfileFormData>;
-  submissionError: ErrorIndexType | string | null;
+  submissionError: ErrorIndexType | null;
 };
 
 const schema: yup.SchemaOf<ProfileFormData> = yup.object().shape({
@@ -44,7 +44,7 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues, subm
       reset(getValues());
     }
     if (submissionError) {
-      addServerErrors<FormData>(submissionError, setError);
+      addServerErrors(submissionError, setError);
     }
   }, [reset, isSubmitSuccessful, getValues, submissionError, setError]);
 

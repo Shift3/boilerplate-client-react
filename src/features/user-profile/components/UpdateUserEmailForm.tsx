@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Form } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
+import { useForm, UseFormSetError } from 'react-hook-form';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
@@ -15,7 +15,7 @@ export type UserEmailFormData = {
 type Props = {
   onSubmit: (data: UserEmailFormData) => void;
   defaultValues?: Partial<UserEmailFormData>;
-  submissionError: ErrorIndexType | string | null;
+  submissionError: ErrorIndexType | null;
 };
 
 export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues, submissionError }) => {
@@ -45,7 +45,7 @@ export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues, submis
       reset(getValues());
     }
     if (submissionError) {
-      addServerErrors<FormData>(submissionError, setError, ['email']);
+      addServerErrors(submissionError, setError);
     }
   }, [reset, isSubmitSuccessful, getValues, submissionError, setError]);
 
