@@ -39,20 +39,18 @@ export const addServerErrors = <T>(
   }
 };
 
-export const getServerError = (error: unknown): ErrorIndexType | string => {
+export const identifyAndRetrieveServerError = (error: FetchBaseQueryError): ErrorIndexType | string | null => {
   let errorData: ErrorResponse;
 
-  if (isFetchBaseQueryError(error)) {
-    if (isErrorResponse(error?.data)) {
-      errorData = error?.data;
+  if (isErrorResponse(error?.data)) {
+    errorData = error?.data;
 
-      if (!isErrorAString(errorData.error)) {
-        return errorData.error;
-      }
-
-      return errorData.message;
+    if (!isErrorAString(errorData.error)) {
+      return errorData.error;
     }
+
+    return errorData.message;
   }
 
-  return 'error is not a FetchBaseQueryError';
+  return null;
 };

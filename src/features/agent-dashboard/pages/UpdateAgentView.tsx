@@ -1,9 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useGetAgentByIdQuery, useUpdateAgentMutation } from 'common/api/agentApi';
 import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
-import { getServerError, isFetchBaseQueryError } from 'common/error/utilities';
+import { identifyAndRetrieveServerError, isFetchBaseQueryError } from 'common/error/utilities';
 import { ErrorIndexType } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { StyledFormWrapper } from 'common/styles/form';
@@ -42,10 +41,9 @@ export const UpdateAgentView: FC = () => {
       navigate('/agents');
     } catch (error) {
       console.log('UpdateAgentView - error -', error);
-      // if (isFetchBaseQueryError(error)) {
-      //   setSubmissionError(error);
-      // }
-      setSubmissionError(getServerError(error));
+      if (isFetchBaseQueryError(error)) {
+        setSubmissionError(identifyAndRetrieveServerError(error));
+      }
       notificationService.showErrorMessage('Unable to update agent.');
     }
   };
