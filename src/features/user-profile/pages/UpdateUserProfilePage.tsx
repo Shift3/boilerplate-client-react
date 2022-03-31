@@ -71,7 +71,6 @@ export const UpdateUserProfilePage: FC = () => {
     useState<ServerValidationErrors<ProfilePictureFormData> | null>(null);
   const [passwordSubmissionError, setPasswordSubmissionError] =
     useState<ServerValidationErrors<ForgotPasswordFormData> | null>(null);
-  const [submissionError, setSubmissionError] = useState<ServerValidationErrors<unknown> | null>(null);
 
   const onSubmit = async (formData: ProfileFormData) => {
     const data = { id: Number(id), ...formData };
@@ -91,7 +90,6 @@ export const UpdateUserProfilePage: FC = () => {
     try {
       await changeEmailRequest(data);
     } catch (error) {
-      console.log('onSubmitRequestEmailChange - error -', error);
       if (isFetchBaseQueryError(error)) {
         if (isErrorResponse<UserEmailFormData>(error?.data)) {
           setEmailSubmissionError((error?.data).error);
@@ -144,9 +142,7 @@ export const UpdateUserProfilePage: FC = () => {
       await deleteUserProfilePicture(data);
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
-        if (isErrorResponse(error?.data)) {
-          setSubmissionError((error?.data).error);
-        }
+        handleApiError(error);
       }
     }
   };

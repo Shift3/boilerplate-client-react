@@ -40,7 +40,6 @@ export const UpdateAgentView: FC = () => {
       notificationService.showSuccessMessage('Agent updated.');
       navigate('/agents');
     } catch (error) {
-      console.log('UpdateAgentView - error -', error);
       if (isFetchBaseQueryError(error)) {
         if (isErrorResponse(error?.data)) {
           setSubmissionError((error?.data).error);

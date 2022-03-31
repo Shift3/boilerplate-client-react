@@ -6,7 +6,6 @@ import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { ServerValidationErrors } from 'common/models';
 import { addServerErrors } from 'common/error/utilities';
 
