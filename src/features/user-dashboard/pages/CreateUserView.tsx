@@ -1,9 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useCreateUserMutation } from 'common/api/userApi';
 import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
-import { isFetchBaseQueryError } from 'common/error/utilities';
-import {Role} from 'common/models';
+import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
+import { Role, ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { StyledFormWrapper } from 'common/styles/form';
 import { useRbac } from 'features/rbac';
@@ -18,7 +17,7 @@ export const CreateUserView: FC = () => {
   const roles = Object.values(Role);
   const availableRoles = roles.filter(role => userHasPermission({ permission: 'role:read', data: role }));
   const defaultValues: Partial<FormData> = {};
-  const [submissionError, setSubmissionError] = useState<FetchBaseQueryError | null>(null);
+  const [submissionError, setSubmissionError] = useState<ServerValidationErrors<FormData> | null>(null);
 
   const handleFormSubmit = async (data: FormData) => {
     try {
@@ -29,9 +28,11 @@ export const CreateUserView: FC = () => {
       navigate('/users');
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
-        setSubmissionError(error);
+        if (isErrorResponse<FormData>(error?.data)) {
+          setSubmissionError((error?.data).error);
+        }
       }
-      notificationService.showErrorMessage('Unable to add user.');      
+      notificationService.showErrorMessage('Unable to add user.');
     }
   };
 
@@ -52,15 +53,15 @@ export const CreateUserView: FC = () => {
 
       <FormCard>
         <FormCard.Body>
-            <StyledFormWrapper>
-              <UserDetailForm
-                availableRoles={availableRoles}
-                defaultValues={defaultValues}
-                submitButtonLabel='Create'
-                onSubmit={handleFormSubmit}
-                submissionError={submissionError}
-              />
-            </StyledFormWrapper>
+          <StyledFormWrapper>
+            <UserDetailForm
+              availableRoles={availableRoles}
+              defaultValues={defaultValues}
+              submitButtonLabel='Create'
+              onSubmit={handleFormSubmit}
+              submissionError={submissionError}
+            />
+          </StyledFormWrapper>
         </FormCard.Body>
       </FormCard>
     </SmallContainer>

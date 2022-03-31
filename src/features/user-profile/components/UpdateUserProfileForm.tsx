@@ -1,8 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from 'common/components/LoadingButton';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
-import { addServerErrors, isErrorAString } from 'common/error/utilities';
-import { ErrorIndexType } from 'common/models';
+import { addServerErrors } from 'common/error/utilities';
+import { ServerValidationErrors } from 'common/models';
 import { FC, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -17,7 +17,7 @@ export type ProfileFormData = {
 type Props = {
   onSubmit: (data: ProfileFormData) => void;
   defaultValues?: Partial<ProfileFormData>;
-  submissionError: ErrorIndexType | null;
+  submissionError: ServerValidationErrors<ProfileFormData> | null;
 };
 
 const schema: yup.SchemaOf<ProfileFormData> = yup.object().shape({

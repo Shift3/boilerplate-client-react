@@ -9,7 +9,7 @@ import {
   useResendChangeEmailVerificationEmailMutation,
 } from 'common/api/userApi';
 import { PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
-import { ErrorIndexType, ErrorResponse } from 'common/models';
+import { ErrorResponse, ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
 import { ProfilePictureFormData, UpdateProfilePictureForm } from '../components/UpdateProfilePictureForm';
@@ -61,7 +61,17 @@ export const UpdateUserProfilePage: FC = () => {
   const [changePassword] = useChangePasswordMutation();
   const dispatch = useAppDispatch();
   const [tab, setTab] = useState('profile');
-  const [submissionError, setSubmissionError] = useState<ErrorIndexType | null>(null);
+  const [profileSubmissionError, setProfileSubmissionError] = useState<ServerValidationErrors<ProfileFormData> | null>(
+    null,
+  );
+  const [emailSubmissionError, setEmailSubmissionError] = useState<ServerValidationErrors<UserEmailFormData> | null>(
+    null,
+  );
+  const [profilePictureSubmissionError, setProfilePictureSubmissionError] =
+    useState<ServerValidationErrors<ProfilePictureFormData> | null>(null);
+  const [passwordSubmissionError, setPasswordSubmissionError] =
+    useState<ServerValidationErrors<ForgotPasswordFormData> | null>(null);
+  const [submissionError, setSubmissionError] = useState<ServerValidationErrors<unknown> | null>(null);
 
   const onSubmit = async (formData: ProfileFormData) => {
     const data = { id: Number(id), ...formData };
@@ -70,7 +80,7 @@ export const UpdateUserProfilePage: FC = () => {
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
         if (isErrorResponse(error?.data)) {
-          setSubmissionError((error?.data).error);
+          setProfileSubmissionError((error?.data).error);
         }
       }
     }
@@ -84,7 +94,7 @@ export const UpdateUserProfilePage: FC = () => {
       console.log('onSubmitRequestEmailChange - error -', error);
       if (isFetchBaseQueryError(error)) {
         if (isErrorResponse<UserEmailFormData>(error?.data)) {
-          setSubmissionError((error?.data).error);
+          setEmailSubmissionError((error?.data).error);
         }
       }
     }
@@ -97,7 +107,7 @@ export const UpdateUserProfilePage: FC = () => {
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
         if (isErrorResponse(error?.data)) {
-          setSubmissionError((error?.data).error);
+          setProfilePictureSubmissionError((error?.data).error);
         }
       }
       handleApiError(error as FetchBaseQueryError);
@@ -120,7 +130,7 @@ export const UpdateUserProfilePage: FC = () => {
       } catch (error) {
         if (isFetchBaseQueryError(error)) {
           if (isErrorResponse(error?.data)) {
-            setSubmissionError((error?.data).error);
+            setPasswordSubmissionError((error?.data).error);
           }
         }
       }
@@ -157,7 +167,7 @@ export const UpdateUserProfilePage: FC = () => {
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
         if (isErrorResponse(error?.data)) {
-          setSubmissionError((error?.data).error);
+          setPasswordSubmissionError((error?.data).error);
         }
       }
       notificationService.showErrorMessage(
@@ -212,7 +222,7 @@ export const UpdateUserProfilePage: FC = () => {
                   firstName: user?.firstName ?? '',
                   lastName: user?.lastName ?? '',
                 }}
-                submissionError={submissionError}
+                submissionError={profileSubmissionError}
               />
             </Col>
           </Row>
@@ -251,7 +261,7 @@ export const UpdateUserProfilePage: FC = () => {
                 defaultValues={{
                   email: user?.email ?? '',
                 }}
-                submissionError={submissionError}
+                submissionError={emailSubmissionError}
               />
             </Col>
           </Row>
@@ -264,7 +274,10 @@ export const UpdateUserProfilePage: FC = () => {
               <p className='text-muted'>This is the photo of you that other users in the system will be able to see.</p>
             </Col>
             <Col>
-              <UpdateProfilePictureForm onSubmit={onSubmitNewProfilePicture} submissionError={submissionError} />
+              <UpdateProfilePictureForm
+                onSubmit={onSubmitNewProfilePicture}
+                submissionError={profilePictureSubmissionError}
+              />
               <Button
                 className='mt-3'
                 variant='danger'
@@ -291,7 +304,7 @@ export const UpdateUserProfilePage: FC = () => {
               </p>
             </Col>
             <Col>
-              <ChangePasswordForm onSubmit={onChangePasswordFormSubmit} submissionError={submissionError} />
+              <ChangePasswordForm onSubmit={onChangePasswordFormSubmit} submissionError={passwordSubmissionError} />
             </Col>
           </Row>
         </>

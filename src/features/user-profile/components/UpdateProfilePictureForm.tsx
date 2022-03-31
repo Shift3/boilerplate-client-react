@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
-import { ErrorIndexType } from 'common/models';
+import { ServerValidationErrors } from 'common/models';
 import { addServerErrors } from 'common/error/utilities';
 
 export type ProfilePictureFormData = {
@@ -16,7 +16,7 @@ export type ProfilePictureFormData = {
 type Props = {
   onSubmit: (data: ProfilePictureFormData) => void;
   defaultValues?: Partial<ProfilePictureFormData>;
-  submissionError: ErrorIndexType | null;
+  submissionError: ServerValidationErrors<ProfilePictureFormData> | null;
 };
 
 const checkProfilePictureFormat = (value: FileList) => {

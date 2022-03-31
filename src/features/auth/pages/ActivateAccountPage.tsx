@@ -2,7 +2,8 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { handleApiError } from 'common/api/handleApiError';
 import { useActivateAccountMutation } from 'common/api/userApi';
 import { FrontPageLayout, Title } from 'common/components/FrontPageLayout';
-import { isFetchBaseQueryError } from 'common/error/utilities';
+import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
+import { ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { StyledFormWrapper } from 'common/styles/form';
 import { FC, useState } from 'react';
@@ -13,7 +14,7 @@ export const ActivateAccountPage: FC = () => {
   const navigate = useNavigate();
   const { token = '' } = useParams<{ token: string }>();
   const [activateAccount] = useActivateAccountMutation();
-  const [submissionError, setSubmissionError] = useState<FetchBaseQueryError | null>(null);
+  const [submissionError, setSubmissionError] = useState<ServerValidationErrors<FormData> | null>(null);
 
   const onSubmit = async (formData: FormData) => {
     const data = { ...formData, token };
@@ -24,7 +25,9 @@ export const ActivateAccountPage: FC = () => {
       navigate('/auth/login');
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
-        setSubmissionError(error);
+        if (isErrorResponse<FormData>(error?.data)) {
+          setSubmissionError((error?.data).error);
+        }
       }
       handleApiError(error as FetchBaseQueryError);
     }

@@ -7,7 +7,8 @@ import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { FormServerError } from 'common/components/FormServerError/FormServerError';
+import { ServerValidationErrors } from 'common/models';
+import { addServerErrors } from 'common/error/utilities';
 
 export type FormData = {
   newPassword: string;
@@ -16,7 +17,7 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
-  submissionError: FetchBaseQueryError | null;
+  submissionError: ServerValidationErrors<FormData> | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
@@ -41,6 +42,7 @@ export const ResetPasswordForm: FC<Props> = ({ onSubmit, submissionError }) => {
     handleSubmit,
     register,
     trigger,
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
@@ -48,7 +50,10 @@ export const ResetPasswordForm: FC<Props> = ({ onSubmit, submissionError }) => {
 
   useEffect(() => {
     trigger();
-  }, [trigger]);
+    if (submissionError) {
+      addServerErrors(submissionError, setError);
+    }
+  }, [trigger, submissionError, setError]);
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
@@ -65,7 +70,6 @@ export const ResetPasswordForm: FC<Props> = ({ onSubmit, submissionError }) => {
           <Form.Control.Feedback type='invalid' role='alert'>
             {errors.newPassword?.message}
           </Form.Control.Feedback>
-          <FormServerError fieldName='newPassword' serverError={submissionError} />
         </Form.Group>
         <Form.Group>
           <Form.Label htmlFor='confirmPassword'>Confirm Password</Form.Label>
@@ -79,7 +83,6 @@ export const ResetPasswordForm: FC<Props> = ({ onSubmit, submissionError }) => {
           <Form.Control.Feedback type='invalid' role='alert'>
             {errors.confirmPassword?.message}
           </Form.Control.Feedback>
-          <FormServerError fieldName='confirmPassword' serverError={submissionError} />
         </Form.Group>
         <div className='mt-3'>
           <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>

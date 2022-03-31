@@ -1,8 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { FormServerError } from 'common/components/FormServerError/FormServerError';
 import { LoadingButton } from 'common/components/LoadingButton';
-import { FC } from 'react';
+import { addServerErrors } from 'common/error/utilities';
+import { ServerValidationErrors } from 'common/models';
+import { FC, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Constants } from 'utils/constants';
@@ -15,7 +15,7 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
-  submissionError: FetchBaseQueryError | null;
+  submissionError: ServerValidationErrors<FormData> | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
@@ -39,10 +39,17 @@ export const ActivateAccountForm: FC<Props> = ({ onSubmit, submissionError }) =>
     formState: { errors, isValid, isSubmitting },
     handleSubmit,
     register,
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
   });
+
+  useEffect(() => {
+    if (submissionError) {
+      addServerErrors(submissionError, setError);
+    }
+  }, [submissionError, setError]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -58,7 +65,6 @@ export const ActivateAccountForm: FC<Props> = ({ onSubmit, submissionError }) =>
         <Form.Control.Feedback type='invalid' role='alert'>
           {errors.newPassword?.message}
         </Form.Control.Feedback>
-        <FormServerError fieldName='newPassword' serverError={submissionError} />
       </Form.Group>
       <Form.Group>
         <Form.Label htmlFor='confirmPassword'>Confirm Password</Form.Label>
@@ -72,9 +78,9 @@ export const ActivateAccountForm: FC<Props> = ({ onSubmit, submissionError }) =>
         <Form.Control.Feedback type='invalid' role='alert'>
           {errors.confirmPassword?.message}
         </Form.Control.Feedback>
-        <FormServerError fieldName='confirmPassword' serverError={submissionError} />
         <Form.Text>
-          Password must be 8 characters or more. Password must contain a lowercase, uppercase, special character, and a number.
+          Password must be 8 characters or more. Password must contain a lowercase, uppercase, special character, and a
+          number.
         </Form.Text>
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>

@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { LoginButton } from 'common/styles/button';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Button, InputGroup } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
@@ -11,8 +11,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Constants } from 'utils/constants';
 import * as yup from 'yup';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { FormServerError } from 'common/components/FormServerError/FormServerError';
+import { ServerValidationErrors } from 'common/models';
+import { addServerErrors } from 'common/error/utilities';
 
 export type FormData = {
   email: string;
@@ -21,7 +21,7 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
-  submissionError: FetchBaseQueryError | null;
+  submissionError: ServerValidationErrors<FormData> | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
@@ -48,6 +48,7 @@ export const LogInForm: FC<Props> = ({ onSubmit, submissionError }) => {
     formState: { errors, isValid, isSubmitting },
     handleSubmit,
     register,
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
@@ -55,21 +56,20 @@ export const LogInForm: FC<Props> = ({ onSubmit, submissionError }) => {
 
   const [showingPassword, setShowingPassword] = useState(false);
 
+  useEffect(() => {
+    if (submissionError) {
+      addServerErrors(submissionError, setError);
+    }
+  }, [submissionError, setError]);
+
   return (
     <Form data-testid='loginForm' onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
         <Form.Label htmlFor='email'>Email</Form.Label>
-        <Form.Control
-          id='email'
-          type='email'
-          {...register('email')}
-          placeholder='Email'
-          isInvalid={!!errors.email}
-        />
+        <Form.Control id='email' type='email' {...register('email')} placeholder='Email' isInvalid={!!errors.email} />
         <Form.Control.Feedback type='invalid' role='alert'>
           {errors.email?.message}
         </Form.Control.Feedback>
-        <FormServerError fieldName='email' serverError={submissionError} />
       </Form.Group>
       <Form.Group>
         <Form.Label htmlFor='password'>Password</Form.Label>
@@ -82,12 +82,11 @@ export const LogInForm: FC<Props> = ({ onSubmit, submissionError }) => {
             isInvalid={!!errors.password}
           />
           <TogglePasswordButton variant='outline-secondary' onClick={() => setShowingPassword(!showingPassword)}>
-            <FontAwesomeIcon icon={showingPassword ? faEyeSlash : faEye } />
+            <FontAwesomeIcon icon={showingPassword ? faEyeSlash : faEye} />
           </TogglePasswordButton>
           <Form.Control.Feedback type='invalid' role='alert'>
             {errors.password?.message}
           </Form.Control.Feedback>
-          <FormServerError fieldName='password' serverError={submissionError} />
         </InputGroup>
       </Form.Group>
       <ForgotPassword>

@@ -3,7 +3,7 @@ import { useGetAgentByIdQuery, useUpdateAgentMutation } from 'common/api/agentAp
 import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
-import { ErrorIndexType } from 'common/models';
+import { ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { StyledFormWrapper } from 'common/styles/form';
 import { FC, useEffect, useState } from 'react';
@@ -20,7 +20,7 @@ export const UpdateAgentView: FC = () => {
   const navigate = useNavigate();
   const [updateAgent] = useUpdateAgentMutation();
   const { data: agent, isLoading: isLoadingAgent, error } = useGetAgentByIdQuery(id!);
-  const [submissionError, setSubmissionError] = useState<ErrorIndexType | null>(null);
+  const [submissionError, setSubmissionError] = useState<ServerValidationErrors<FormData> | null>(null);
 
   useEffect(() => {
     if (error) {

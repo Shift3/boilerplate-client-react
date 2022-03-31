@@ -1,10 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { FormServerError } from 'common/components/FormServerError/FormServerError';
 import { LoadingButton } from 'common/components/LoadingButton';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
-import { addServerErrors, isErrorAString } from 'common/error/utilities';
-import { ErrorIndexType } from 'common/models';
+import { addServerErrors } from 'common/error/utilities';
+import { ServerValidationErrors } from 'common/models';
 import { FC, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -19,7 +17,7 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
-  submissionError: ErrorIndexType | null;
+  submissionError: ServerValidationErrors<FormData> | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({

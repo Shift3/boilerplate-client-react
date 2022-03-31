@@ -1,11 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { CustomSelect } from 'common/components';
-import { FormServerError } from 'common/components/FormServerError/FormServerError';
 import { LoadingButton } from 'common/components/LoadingButton';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
-import { Role, User, RoleOption } from 'common/models';
-import { FC } from 'react';
+import { addServerErrors } from 'common/error/utilities';
+import { Role, User, RoleOption, ServerValidationErrors } from 'common/models';
+import { FC, useEffect } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
@@ -18,7 +17,7 @@ export interface Props {
   defaultValues?: Partial<FormData>;
   submitButtonLabel?: string;
   onSubmit: (data: FormData) => void;
-  submissionError: FetchBaseQueryError | null;
+  submissionError: ServerValidationErrors<FormData> | null;
 }
 
 const schema = yup.object({
@@ -45,11 +44,18 @@ export const UserDetailForm: FC<Props> = ({
     formState: { errors, isValid, isDirty, isSubmitting, isSubmitted },
     handleSubmit,
     register,
+    setError,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
     defaultValues,
   });
+
+  useEffect(() => {
+    if (submissionError) {
+      addServerErrors(submissionError, setError);
+    }
+  }, [submissionError, setError]);
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
@@ -61,7 +67,6 @@ export const UserDetailForm: FC<Props> = ({
               <Form.Label>First Name</Form.Label>
               <Form.Control type='text' {...register('firstName')} isInvalid={!!errors.firstName} />
               <Form.Control.Feedback type='invalid'>{errors.firstName?.message}</Form.Control.Feedback>
-              <FormServerError fieldName='firstName' serverError={submissionError} />
             </Form.Group>
           </Col>
 
@@ -70,7 +75,6 @@ export const UserDetailForm: FC<Props> = ({
               <Form.Label>Last Name</Form.Label>
               <Form.Control type='text' {...register('lastName')} isInvalid={!!errors.lastName} />
               <Form.Control.Feedback type='invalid'>{errors.lastName?.message}</Form.Control.Feedback>
-              <FormServerError fieldName='lastName' serverError={submissionError} />
             </Form.Group>
           </Col>
         </Row>
@@ -79,7 +83,6 @@ export const UserDetailForm: FC<Props> = ({
           <Form.Label>Email</Form.Label>
           <Form.Control type='email' {...register('email')} isInvalid={!!errors.email} />
           <Form.Control.Feedback type='invalid'>{errors.email?.message}</Form.Control.Feedback>
-          <FormServerError fieldName='email' serverError={submissionError} />
         </Form.Group>
 
         <h5 className='mt-3'>Access Information</h5>
@@ -100,7 +103,6 @@ export const UserDetailForm: FC<Props> = ({
             )}
           />
           <Form.Control.Feedback type='invalid'>{errors.role?.message}</Form.Control.Feedback>
-          <FormServerError fieldName='role' serverError={submissionError} />
         </Form.Group>
 
         <div className='mt-3'>

@@ -1,12 +1,12 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { FormServerError } from 'common/components/FormServerError/FormServerError';
+import { ServerValidationErrors } from 'common/models';
+import { addServerErrors } from 'common/error/utilities';
 
 export type FormData = {
   verificationCode: number;
@@ -14,7 +14,7 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
-  submissionError: FetchBaseQueryError | null;
+  submissionError: ServerValidationErrors<FormData> | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
@@ -31,13 +31,20 @@ export const ConfirmChangeEmailForm: FC<Props> = ({ onSubmit, submissionError })
     formState: { errors, isValid, isSubmitting },
     handleSubmit,
     register,
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
     defaultValues: {
-      verificationCode: ''
+      verificationCode: '',
     },
   });
+
+  useEffect(() => {
+    if (submissionError) {
+      addServerErrors(submissionError, setError);
+    }
+  }, [submissionError, setError]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -52,7 +59,6 @@ export const ConfirmChangeEmailForm: FC<Props> = ({ onSubmit, submissionError })
         <Form.Control.Feedback type='invalid' role='alert'>
           {errors.verificationCode?.message}
         </Form.Control.Feedback>
-        <FormServerError fieldName='verificationCode' serverError={submissionError} />
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
         <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>

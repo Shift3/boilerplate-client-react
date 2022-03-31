@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useCreateAgentMutation } from 'common/api/agentApi';
 import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
 import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
-import { ErrorIndexType } from 'common/models';
+import { ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { StyledFormWrapper } from 'common/styles/form';
 import { FC, useState } from 'react';
@@ -12,7 +12,7 @@ import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
 export const CreateAgentView: FC = () => {
   const navigate = useNavigate();
   const [createAgent] = useCreateAgentMutation();
-  const [submissionError, setSubmissionError] = useState<ErrorIndexType | null>(null);
+  const [submissionError, setSubmissionError] = useState<ServerValidationErrors<FormData> | null>(null);
 
   const handleFormCancel = () => {
     navigate(-1);

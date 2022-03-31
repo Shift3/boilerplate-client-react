@@ -5,8 +5,8 @@ import { useForm, UseFormSetError } from 'react-hook-form';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
-import { addServerErrors, isErrorAString } from 'common/error/utilities';
-import { ErrorIndexType } from 'common/models';
+import { addServerErrors } from 'common/error/utilities';
+import { ServerValidationErrors } from 'common/models';
 
 export type UserEmailFormData = {
   email: string;
@@ -15,7 +15,7 @@ export type UserEmailFormData = {
 type Props = {
   onSubmit: (data: UserEmailFormData) => void;
   defaultValues?: Partial<UserEmailFormData>;
-  submissionError: ErrorIndexType | null;
+  submissionError: ServerValidationErrors<UserEmailFormData> | null;
 };
 
 export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues, submissionError }) => {

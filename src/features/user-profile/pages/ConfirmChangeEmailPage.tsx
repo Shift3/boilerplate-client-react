@@ -2,7 +2,8 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { handleApiError } from 'common/api/handleApiError';
 import { useConfirmChangeEmailMutation } from 'common/api/userApi';
 import { FrontPageLayout, Title } from 'common/components/FrontPageLayout';
-import { isFetchBaseQueryError } from 'common/error/utilities';
+import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
+import { ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { FC, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -12,7 +13,7 @@ export const ConfirmChangeEmailPage: FC = () => {
   const navigate = useNavigate();
   const { token = '' } = useParams<{ token: string }>();
   const [confirmChangeEmail] = useConfirmChangeEmailMutation();
-  const [submissionError, setSubmissionError] = useState<FetchBaseQueryError | null>(null);
+  const [submissionError, setSubmissionError] = useState<ServerValidationErrors<FormData> | null>(null);
 
   const onSubmit = async (formData: FormData) => {
     try {
@@ -22,7 +23,9 @@ export const ConfirmChangeEmailPage: FC = () => {
       navigate('/auth/login');
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
-        setSubmissionError(error);
+        if (isErrorResponse<FormData>(error?.data)) {
+          setSubmissionError((error?.data).error);
+        }
       }
       handleApiError(error as FetchBaseQueryError);
     }

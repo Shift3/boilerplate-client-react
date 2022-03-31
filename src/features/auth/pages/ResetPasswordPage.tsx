@@ -7,13 +7,14 @@ import { useResetPasswordMutation } from 'common/api/userApi';
 import { FormData, ResetPasswordForm } from '../components/ResetPasswordForm';
 import { PageWrapper } from 'common/styles/page';
 import { StyledFormWrapper, Title } from 'common/styles/form';
-import { isFetchBaseQueryError } from 'common/error/utilities';
+import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
+import { ServerValidationErrors } from 'common/models';
 
 export const ResetPasswordPage: FC = () => {
   const navigate = useNavigate();
   const { token = '' } = useParams<{ token: string }>();
   const [resetPassword] = useResetPasswordMutation();
-  const [submissionError, setSubmissionError] = useState<FetchBaseQueryError | null>(null);
+  const [submissionError, setSubmissionError] = useState<ServerValidationErrors<FormData> | null>(null);
 
   const onSubmit = async (formData: FormData) => {
     const data = { ...formData, token };
@@ -24,7 +25,9 @@ export const ResetPasswordPage: FC = () => {
       navigate('/auth/login');
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
-        setSubmissionError(error);
+        if (isErrorResponse<FormData>(error?.data)) {
+          setSubmissionError((error?.data).error);
+        }
       }
       handleApiError(error as FetchBaseQueryError);
     }

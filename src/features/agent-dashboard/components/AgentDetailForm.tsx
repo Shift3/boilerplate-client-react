@@ -3,7 +3,7 @@ import { LoadingButton } from 'common/components/LoadingButton';
 import { PhoneInput } from 'common/components/PhoneInput';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
 import { addServerErrors } from 'common/error/utilities';
-import { Agent, ErrorIndexType } from 'common/models';
+import { Agent, ServerValidationErrors } from 'common/models';
 import { FC, useEffect } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
@@ -20,7 +20,7 @@ export type Props = {
   cancelButtonLabel?: string;
   onSubmit: (data: FormData) => void;
   onCancel: () => void;
-  submissionError: ErrorIndexType | null;
+  submissionError: ServerValidationErrors<FormData> | null;
 };
 
 const isBlank = (val: string) => !val || !val.trim();
