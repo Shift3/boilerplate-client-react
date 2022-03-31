@@ -59,7 +59,7 @@ export default {
     black: colors.black,
     errorBorderColor: colors.lightAccent,
     errorTextColor: colors.accent,
-    errorImageColor: colors.lightAccent
+    errorImageColor: colors.lightAccent,
   },
 
   modals: {
@@ -82,7 +82,7 @@ export default {
   },
 
   pages: {
-    backgroundColor: colors.white
+    backgroundColor: colors.white,
   },
 
   tables: {
@@ -90,6 +90,10 @@ export default {
     headerBackgroundColor: colors.primaryBlue,
     headerTextColor: colors.white,
     backgroundColor: colors.primaryBlue,
-    textColor: colors.primaryBlue
-  }
+    textColor: colors.primaryBlue,
+  },
+
+  changelogs: {
+    accentTextColor: colors.primaryBlue,
+  },
 };

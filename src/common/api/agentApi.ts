@@ -15,6 +15,12 @@ export type UpdateAgentRequest = Pick<
   'id' | 'description' | 'email' | 'name' | 'phoneNumber' | 'thumbnail' | 'address'
 >;
 
+export type GetAgentHistory = {
+  id: string | undefined;
+  page: number;
+  pageSize: number;
+};
+
 export const agentApi = createApi({
   reducerPath: 'agentApi',
 
@@ -43,6 +49,13 @@ export const agentApi = createApi({
     getAgentById: builder.query<Agent, number | string>({
       query: id => ({ url: `/agents/${id}` }),
       providesTags: ['Agent'],
+    }),
+
+    getAgentHistory: builder.query<PaginatedResult<unknown>, GetAgentHistory>({
+      query: arg => {
+        const queryParams = new QueryParamsBuilder().setPaginationParams(arg.page, arg.pageSize).build();
+        return { url: `/agents/${arg.id}/change-history?${queryParams}` };
+      },
     }),
 
     createAgent: builder.mutation<Agent, CreateAgentRequest>({
@@ -76,6 +89,7 @@ export const agentApi = createApi({
 export const {
   useGetAgentsQuery,
   useGetAgentByIdQuery,
+  useGetAgentHistoryQuery,
   useCreateAgentMutation,
   useUpdateAgentMutation,
   useDeleteAgentMutation,
