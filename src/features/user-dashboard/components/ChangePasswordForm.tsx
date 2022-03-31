@@ -69,11 +69,9 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, submissionError }) => 
             {...register('oldPassword')}
           />
           {!!errors.oldPassword && (
-            <>
-              <Form.Control.Feedback type='invalid' role='alert'>
-                {errors.oldPassword?.message}
-              </Form.Control.Feedback>
-            </>
+            <Form.Control.Feedback type='invalid' role='alert'>
+              {errors.oldPassword?.message}
+            </Form.Control.Feedback>
           )}
         </Form.Group>
         <Form.Group>
@@ -86,11 +84,9 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, submissionError }) => 
             {...register('newPassword')}
           />
           {!!errors.newPassword && (
-            <>
-              <Form.Control.Feedback type='invalid' role='alert'>
-                {errors.newPassword?.message}
-              </Form.Control.Feedback>
-            </>
+            <Form.Control.Feedback type='invalid' role='alert'>
+              {errors.newPassword?.message}
+            </Form.Control.Feedback>
           )}
         </Form.Group>
         <Form.Group>
@@ -103,11 +99,9 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, submissionError }) => 
             {...register('confirmPassword')}
           />
           {!!errors.confirmPassword && (
-            <>
-              <Form.Control.Feedback type='invalid' role='alert'>
-                {errors.confirmPassword?.message}
-              </Form.Control.Feedback>
-            </>
+            <Form.Control.Feedback type='invalid' role='alert'>
+              {errors.confirmPassword?.message}
+            </Form.Control.Feedback>
           )}
         </Form.Group>
         <div className='mt-3'>
