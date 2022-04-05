@@ -41,7 +41,7 @@ export const UpdateAgentView: FC = () => {
       navigate('/agents');
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
-        if (isErrorResponse(error?.data)) {
+        if (isErrorResponse<FormData>(error?.data)) {
           setSubmissionError((error?.data).error);
         }
       }

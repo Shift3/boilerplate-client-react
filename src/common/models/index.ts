@@ -1,5 +1,5 @@
 export * from './agent';
-export * from './errorResponse';
+export * from './serverErrors';
 export * from './pagination';
 export * from './role';
 export * from './session';
@@ -9,4 +9,3 @@ export * from './thumbnail';
 export * from './fileMetaData';
 export * from './image';
 export * from './filtering';
-export * from './serverValidationErrors';

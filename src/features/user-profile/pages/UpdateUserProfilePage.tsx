@@ -78,7 +78,7 @@ export const UpdateUserProfilePage: FC = () => {
       await updateUserProfile(data);
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
-        if (isErrorResponse(error?.data)) {
+        if (isErrorResponse<ProfileFormData>(error?.data)) {
           setProfileSubmissionError((error?.data).error);
         }
       }
@@ -122,7 +122,7 @@ export const UpdateUserProfilePage: FC = () => {
         await updateUserProfilePicture(data);
       } catch (error) {
         if (isFetchBaseQueryError(error)) {
-          if (isErrorResponse(error?.data)) {
+          if (isErrorResponse<ProfilePictureFormData>(error?.data)) {
             setProfilePictureSubmissionError((error?.data).error);
           }
         }
@@ -133,13 +133,7 @@ export const UpdateUserProfilePage: FC = () => {
   const handleDeleteProfilePicture = async () => {
     const data = { id: Number(id) };
 
-    try {
-      await deleteUserProfilePicture(data);
-    } catch (error) {
-      if (isFetchBaseQueryError(error)) {
-        handleApiError(error);
-      }
-    }
+    await deleteUserProfilePicture(data);
   };
 
   const profilePictureIsDefined = () => {
@@ -157,7 +151,7 @@ export const UpdateUserProfilePage: FC = () => {
       notificationService.showSuccessMessage('Password updated.');
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
-        if (isErrorResponse(error?.data)) {
+        if (isErrorResponse<ForgotPasswordFormData>(error?.data)) {
           setPasswordSubmissionError((error?.data).error);
         }
       }
