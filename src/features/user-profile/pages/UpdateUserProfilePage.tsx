@@ -103,11 +103,6 @@ export const UpdateUserProfilePage: FC = () => {
       resendChangeEmailVerificationEmail({ id: Number(id) });
       notificationService.showSuccessMessage('Change Email verification email has been sent.');
     } catch (error) {
-      if (isFetchBaseQueryError(error)) {
-        if (isErrorResponse(error?.data)) {
-          setProfilePictureSubmissionError((error?.data).error);
-        }
-      }
       handleApiError(error as FetchBaseQueryError);
     }
   };
@@ -128,7 +123,7 @@ export const UpdateUserProfilePage: FC = () => {
       } catch (error) {
         if (isFetchBaseQueryError(error)) {
           if (isErrorResponse(error?.data)) {
-            setPasswordSubmissionError((error?.data).error);
+            setProfilePictureSubmissionError((error?.data).error);
           }
         }
       }
