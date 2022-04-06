@@ -25,7 +25,7 @@ describe('ChangePasswordForm', () => {
         <MemoryRouter>
           <Provider store={createAppStore()}>
             <ThemeProvider theme={theme}>
-              <ChangePasswordForm onSubmit={mockOnSubmit} />
+              <ChangePasswordForm onSubmit={mockOnSubmit} serverValidationErrors={null} />
             </ThemeProvider>
           </Provider>
         </MemoryRouter>,

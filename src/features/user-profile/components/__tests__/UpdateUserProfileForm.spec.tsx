@@ -20,7 +20,11 @@ describe('UpdateUserProfileForm', () => {
         <MemoryRouter>
           <Provider store={createAppStore()}>
             <ThemeProvider theme={AppTheme}>
-              <UpdateUserProfileForm onSubmit={mockOnSubmit} defaultValues={defaultValues} />
+              <UpdateUserProfileForm
+                onSubmit={mockOnSubmit}
+                defaultValues={defaultValues}
+                serverValidationErrors={null}
+              />
             </ThemeProvider>
           </Provider>
         </MemoryRouter>,

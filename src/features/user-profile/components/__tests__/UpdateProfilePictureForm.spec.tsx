@@ -19,7 +19,7 @@ describe('UpdateProfilePictureForm', () => {
         <MemoryRouter>
           <Provider store={createAppStore()}>
             <ThemeProvider theme={AppTheme}>
-              <UpdateProfilePictureForm onSubmit={mockOnSubmit} />
+              <UpdateProfilePictureForm onSubmit={mockOnSubmit} serverValidationErrors={null} />
             </ThemeProvider>
           </Provider>
         </MemoryRouter>,
