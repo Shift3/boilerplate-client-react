@@ -12,7 +12,6 @@ const HolyGrail = styled.div`
 const HolyGrailMain = styled.div`
   display: flex;
   flex: auto;
-
   @media (max-width: 920px) {
     flex-direction: column;
   }
@@ -22,7 +21,7 @@ const HolyGrailLeft = styled.aside`
   flex-grow: 0;
 `;
 
-export const HolyGrailContent = styled.main`
+const HolyGrailContent = styled.main`
   flex-grow: 1;
   margin-top: 2rem;
   margin-left: 280px;
@@ -35,8 +34,7 @@ const HolyGrailRight = styled.aside`
   flex-grow: 0;
 `;
 
-const HolyGrailFooter = styled.footer`
-`;
+const HolyGrailFooter = styled.footer``;
 
 type Props = {
   leftAside?: ReactNode;
