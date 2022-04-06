@@ -72,7 +72,7 @@ export const UpdateUserView: FC = () => {
                 defaultValues={user}
                 submitButtonLabel='Save'
                 onSubmit={handleFormSubmit}
-                submissionError={submissionError}
+                serverValidationErrors={submissionError}
               />
             </StyledFormWrapper>
           </WithLoadingOverlay>

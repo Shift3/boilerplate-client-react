@@ -14,7 +14,7 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
-  submissionError: ServerValidationErrors<FormData> | null;
+  serverValidationErrors: ServerValidationErrors<FormData> | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
@@ -26,7 +26,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
     .moreThan(99999, Constants.errorMessages.VERIFICATION_CODE_LENGTH_MISMATCH),
 });
 
-export const ConfirmChangeEmailForm: FC<Props> = ({ onSubmit, submissionError }) => {
+export const ConfirmChangeEmailForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
   const {
     formState: { errors, isValid, isSubmitting },
     handleSubmit,
@@ -41,10 +41,10 @@ export const ConfirmChangeEmailForm: FC<Props> = ({ onSubmit, submissionError })
   });
 
   useEffect(() => {
-    if (submissionError) {
-      addServerErrors(submissionError, setError);
+    if (serverValidationErrors) {
+      addServerErrors(serverValidationErrors, setError);
     }
-  }, [submissionError, setError]);
+  }, [serverValidationErrors, setError]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>

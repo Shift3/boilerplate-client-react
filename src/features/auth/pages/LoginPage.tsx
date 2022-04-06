@@ -26,7 +26,7 @@ export const LogInPage: FC = () => {
     <FrontPageLayout>
       <Title>Member Log In</Title>
       <p className='text-muted'>Welcome back to Bitwise Admin, the best admin panel on the internet.</p>
-      <LogInForm onSubmit={onSubmit} submissionError={submissionError} />
+      <LogInForm onSubmit={onSubmit} serverValidationErrors={submissionError} />
       <div className='mt-2'>
         <small>
           Don't have an account? <Link to='/auth/signup'>Register for one!</Link>

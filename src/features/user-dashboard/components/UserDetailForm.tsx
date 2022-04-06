@@ -17,7 +17,7 @@ export interface Props {
   defaultValues?: Partial<FormData>;
   submitButtonLabel?: string;
   onSubmit: (data: FormData) => void;
-  submissionError: ServerValidationErrors<FormData> | null;
+  serverValidationErrors: ServerValidationErrors<FormData> | null;
 }
 
 const schema = yup.object({
@@ -32,7 +32,7 @@ export const UserDetailForm: FC<Props> = ({
   defaultValues = {},
   onSubmit,
   submitButtonLabel = 'Submit',
-  submissionError,
+  serverValidationErrors,
 }) => {
   const options: RoleOption[] = [];
   availableRoles.forEach(role => {
@@ -52,10 +52,10 @@ export const UserDetailForm: FC<Props> = ({
   });
 
   useEffect(() => {
-    if (submissionError) {
-      addServerErrors(submissionError, setError);
+    if (serverValidationErrors) {
+      addServerErrors(serverValidationErrors, setError);
     }
-  }, [submissionError, setError]);
+  }, [serverValidationErrors, setError]);
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>

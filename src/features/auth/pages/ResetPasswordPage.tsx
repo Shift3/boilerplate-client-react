@@ -37,7 +37,7 @@ export const ResetPasswordPage: FC = () => {
     <PageWrapper>
       <StyledFormWrapper>
         <Title>Reset Password</Title>
-        <ResetPasswordForm onSubmit={onSubmit} submissionError={submissionError} />
+        <ResetPasswordForm onSubmit={onSubmit} serverValidationErrors={submissionError} />
       </StyledFormWrapper>
     </PageWrapper>
   );

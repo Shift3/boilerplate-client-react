@@ -15,10 +15,10 @@ export type UserEmailFormData = {
 type Props = {
   onSubmit: (data: UserEmailFormData) => void;
   defaultValues?: Partial<UserEmailFormData>;
-  submissionError: ServerValidationErrors<UserEmailFormData> | null;
+  serverValidationErrors: ServerValidationErrors<UserEmailFormData> | null;
 };
 
-export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues, submissionError }) => {
+export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues, serverValidationErrors }) => {
   const schema: yup.SchemaOf<UserEmailFormData> = yup.object().shape({
     email: yup
       .string()
@@ -44,10 +44,10 @@ export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues, submis
     if (isSubmitSuccessful) {
       reset(getValues());
     }
-    if (submissionError) {
-      addServerErrors(submissionError, setError);
+    if (serverValidationErrors) {
+      addServerErrors(serverValidationErrors, setError);
     }
-  }, [reset, isSubmitSuccessful, getValues, submissionError, setError]);
+  }, [reset, isSubmitSuccessful, getValues, serverValidationErrors, setError]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>

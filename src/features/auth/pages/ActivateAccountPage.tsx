@@ -38,7 +38,7 @@ export const ActivateAccountPage: FC = () => {
       <Title>Activate Account</Title>
       <p className='text-muted'>Just one more step! Choose a password to active your account.</p>
       <StyledFormWrapper data-testid='wrapper'>
-        <ActivateAccountForm onSubmit={onSubmit} submissionError={submissionError} />
+        <ActivateAccountForm onSubmit={onSubmit} serverValidationErrors={submissionError} />
         <div className='mt-2 mb-2'>
           <small>
             Ended up here by mistake? <Link to='/auth/login'>Log In</Link>

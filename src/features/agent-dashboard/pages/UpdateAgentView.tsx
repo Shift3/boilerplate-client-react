@@ -73,7 +73,7 @@ export const UpdateAgentView: FC = () => {
                 submitButtonLabel='Save'
                 onSubmit={handleFormSubmit}
                 onCancel={handleFormCancel}
-                submissionError={submissionError}
+                serverValidationErrors={submissionError}
               />
             </StyledFormWrapper>
           </WithLoadingOverlay>

@@ -20,7 +20,7 @@ export type Props = {
   cancelButtonLabel?: string;
   onSubmit: (data: FormData) => void;
   onCancel: () => void;
-  submissionError: ServerValidationErrors<FormData> | null;
+  serverValidationErrors: ServerValidationErrors<FormData> | null;
 };
 
 const isBlank = (val: string) => !val || !val.trim();
@@ -51,7 +51,7 @@ export const AgentDetailForm: FC<Props> = ({
   defaultValues = {},
   onSubmit,
   submitButtonLabel = 'Submit',
-  submissionError,
+  serverValidationErrors,
 }) => {
   const {
     register,
@@ -95,10 +95,10 @@ export const AgentDetailForm: FC<Props> = ({
   }, [trigger, firstAddressLine]);
 
   useEffect(() => {
-    if (submissionError) {
-      addServerErrors(submissionError, setError);
+    if (serverValidationErrors) {
+      addServerErrors(serverValidationErrors, setError);
     }
-  }, [submissionError, setError]);
+  }, [serverValidationErrors, setError]);
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>

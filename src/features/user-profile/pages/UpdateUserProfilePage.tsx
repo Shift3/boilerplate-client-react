@@ -207,7 +207,7 @@ export const UpdateUserProfilePage: FC = () => {
                   firstName: user?.firstName ?? '',
                   lastName: user?.lastName ?? '',
                 }}
-                submissionError={profileSubmissionError}
+                serverValidationErrors={profileSubmissionError}
               />
             </Col>
           </Row>
@@ -246,7 +246,7 @@ export const UpdateUserProfilePage: FC = () => {
                 defaultValues={{
                   email: user?.email ?? '',
                 }}
-                submissionError={emailSubmissionError}
+                serverValidationErrors={emailSubmissionError}
               />
             </Col>
           </Row>
@@ -261,7 +261,7 @@ export const UpdateUserProfilePage: FC = () => {
             <Col>
               <UpdateProfilePictureForm
                 onSubmit={onSubmitNewProfilePicture}
-                submissionError={profilePictureSubmissionError}
+                serverValidationErrors={profilePictureSubmissionError}
               />
               <Button
                 className='mt-3'
@@ -289,7 +289,10 @@ export const UpdateUserProfilePage: FC = () => {
               </p>
             </Col>
             <Col>
-              <ChangePasswordForm onSubmit={onChangePasswordFormSubmit} submissionError={passwordSubmissionError} />
+              <ChangePasswordForm
+                onSubmit={onChangePasswordFormSubmit}
+                serverValidationErrors={passwordSubmissionError}
+              />
             </Col>
           </Row>
         </>

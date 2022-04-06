@@ -16,7 +16,7 @@ export type ProfilePictureFormData = {
 type Props = {
   onSubmit: (data: ProfilePictureFormData) => void;
   defaultValues?: Partial<ProfilePictureFormData>;
-  submissionError: ServerValidationErrors<ProfilePictureFormData> | null;
+  serverValidationErrors: ServerValidationErrors<ProfilePictureFormData> | null;
 };
 
 const checkProfilePictureFormat = (value: FileList) => {
@@ -36,7 +36,7 @@ const schema: yup.SchemaOf<ProfilePictureFormData> = yup.object().shape({
     ),
 });
 
-export const UpdateProfilePictureForm: FC<Props> = ({ onSubmit, defaultValues, submissionError }) => {
+export const UpdateProfilePictureForm: FC<Props> = ({ onSubmit, defaultValues, serverValidationErrors }) => {
   const {
     formState: { errors, isValid, isDirty, isSubmitting, isSubmitted, isSubmitSuccessful },
     handleSubmit,
@@ -61,10 +61,10 @@ export const UpdateProfilePictureForm: FC<Props> = ({ onSubmit, defaultValues, s
       reset({ profilePicture: null });
       setImagePreview({ src: '', alt: '' });
     }
-    if (submissionError) {
-      addServerErrors(submissionError, setError);
+    if (serverValidationErrors) {
+      addServerErrors(serverValidationErrors, setError);
     }
-  }, [trigger, reset, isSubmitSuccessful, submissionError, setError]);
+  }, [trigger, reset, isSubmitSuccessful, serverValidationErrors, setError]);
 
   const handleImage = (e: React.BaseSyntheticEvent) => {
     if (e.target.files[0]) {

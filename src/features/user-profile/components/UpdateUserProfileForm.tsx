@@ -17,7 +17,7 @@ export type ProfileFormData = {
 type Props = {
   onSubmit: (data: ProfileFormData) => void;
   defaultValues?: Partial<ProfileFormData>;
-  submissionError: ServerValidationErrors<ProfileFormData> | null;
+  serverValidationErrors: ServerValidationErrors<ProfileFormData> | null;
 };
 
 const schema: yup.SchemaOf<ProfileFormData> = yup.object().shape({
@@ -25,7 +25,7 @@ const schema: yup.SchemaOf<ProfileFormData> = yup.object().shape({
   lastName: yup.string().trim().required(Constants.errorMessages.LAST_NAME_REQUIRED),
 });
 
-export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues, submissionError }) => {
+export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues, serverValidationErrors }) => {
   const {
     formState: { errors, isDirty, isValid, isSubmitting, isSubmitted, isSubmitSuccessful },
     handleSubmit,
@@ -43,10 +43,10 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues, subm
     if (isSubmitSuccessful) {
       reset(getValues());
     }
-    if (submissionError) {
-      addServerErrors(submissionError, setError);
+    if (serverValidationErrors) {
+      addServerErrors(serverValidationErrors, setError);
     }
-  }, [reset, isSubmitSuccessful, getValues, submissionError, setError]);
+  }, [reset, isSubmitSuccessful, getValues, serverValidationErrors, setError]);
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>

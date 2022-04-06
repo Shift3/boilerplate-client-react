@@ -54,7 +54,7 @@ export const CreateAgentView: FC = () => {
               submitButtonLabel='Create'
               onCancel={handleFormCancel}
               onSubmit={handleFormSubmit}
-              submissionError={submissionError}
+              serverValidationErrors={submissionError}
             />
           </StyledFormWrapper>
         </FormCard.Body>

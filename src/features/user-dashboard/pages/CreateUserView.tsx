@@ -59,7 +59,7 @@ export const CreateUserView: FC = () => {
               defaultValues={defaultValues}
               submitButtonLabel='Create'
               onSubmit={handleFormSubmit}
-              submissionError={submissionError}
+              serverValidationErrors={submissionError}
             />
           </StyledFormWrapper>
         </FormCard.Body>

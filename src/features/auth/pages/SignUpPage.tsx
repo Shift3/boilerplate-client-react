@@ -37,7 +37,7 @@ export const SignUpPage: FC = () => {
     <FrontPageLayout>
       <Title>Member Registration</Title>
       <p className='text-muted'>Register for the Bitwise Admin Panel to join the best admin panel on the internet.</p>
-      <SignUpForm onSubmit={onSubmit} onCancel={onCancel} submissionError={submissionError} />
+      <SignUpForm onSubmit={onSubmit} onCancel={onCancel} serverValidationErrors={submissionError} />
       <div className='mt-2 mb-2'>
         <small>
           Already have an account? <Link to='/auth/login'>Log In</Link>

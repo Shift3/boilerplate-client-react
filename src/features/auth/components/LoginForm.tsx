@@ -21,7 +21,7 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
-  submissionError: ServerValidationErrors<FormData> | null;
+  serverValidationErrors: ServerValidationErrors<FormData> | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
@@ -43,7 +43,7 @@ const TogglePasswordButton = styled(Button)`
   border-color: #ced4da;
 `;
 
-export const LogInForm: FC<Props> = ({ onSubmit, submissionError }) => {
+export const LogInForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
   const {
     formState: { errors, isValid, isSubmitting },
     handleSubmit,
@@ -57,10 +57,10 @@ export const LogInForm: FC<Props> = ({ onSubmit, submissionError }) => {
   const [showingPassword, setShowingPassword] = useState(false);
 
   useEffect(() => {
-    if (submissionError) {
-      addServerErrors(submissionError, setError);
+    if (serverValidationErrors) {
+      addServerErrors(serverValidationErrors, setError);
     }
-  }, [submissionError, setError]);
+  }, [serverValidationErrors, setError]);
 
   return (
     <Form data-testid='loginForm' onSubmit={handleSubmit(onSubmit)}>

@@ -18,7 +18,7 @@ export type FormData = {
 type Props = {
   onSubmit: (data: FormData) => void;
   onCancel: () => void;
-  submissionError: ServerValidationErrors<FormData> | null;
+  serverValidationErrors: ServerValidationErrors<FormData> | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
@@ -32,7 +32,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
   lastName: yup.string().trim().required(Constants.errorMessages.LAST_NAME_REQUIRED),
 });
 
-export const SignUpForm: FC<Props> = ({ onSubmit, submissionError }) => {
+export const SignUpForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
   const {
     formState: { errors, isDirty, isSubmitting, isSubmitted, isValid },
     handleSubmit,
@@ -44,10 +44,10 @@ export const SignUpForm: FC<Props> = ({ onSubmit, submissionError }) => {
   });
 
   useEffect(() => {
-    if (submissionError) {
-      addServerErrors(submissionError, setError);
+    if (serverValidationErrors) {
+      addServerErrors(serverValidationErrors, setError);
     }
-  }, [submissionError, setError]);
+  }, [serverValidationErrors, setError]);
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>

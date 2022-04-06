@@ -37,7 +37,7 @@ export const ConfirmChangeEmailPage: FC = () => {
       <p className='text-muted'>
         You have requested an email change. Enter the verification code you received in your email.
       </p>
-      <ConfirmChangeEmailForm onSubmit={onSubmit} submissionError={submissionError} />
+      <ConfirmChangeEmailForm onSubmit={onSubmit} serverValidationErrors={submissionError} />
     </FrontPageLayout>
   );
 };

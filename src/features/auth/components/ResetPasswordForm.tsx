@@ -16,7 +16,7 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
-  submissionError: ServerValidationErrors<FormData> | null;
+  serverValidationErrors: ServerValidationErrors<FormData> | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
@@ -35,7 +35,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
     .oneOf([yup.ref('newPassword')], Constants.errorMessages.PASSWORD_MUST_MATCH),
 });
 
-export const ResetPasswordForm: FC<Props> = ({ onSubmit, submissionError }) => {
+export const ResetPasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
   const {
     formState: { errors, isDirty, isSubmitting, isSubmitted, isValid },
     handleSubmit,
@@ -49,10 +49,10 @@ export const ResetPasswordForm: FC<Props> = ({ onSubmit, submissionError }) => {
 
   useEffect(() => {
     trigger();
-    if (submissionError) {
-      addServerErrors(submissionError, setError);
+    if (serverValidationErrors) {
+      addServerErrors(serverValidationErrors, setError);
     }
-  }, [trigger, submissionError, setError]);
+  }, [trigger, serverValidationErrors, setError]);
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
