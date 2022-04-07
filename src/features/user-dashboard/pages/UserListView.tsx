@@ -82,57 +82,62 @@ export const UserListView: FC = () => {
   );
 
   return (
-    <Container>
-      <PageHeader>
-        <div>
-          <h1>User List</h1>
-          <p className='text-muted'>Active and invited users in the system.</p>
-        </div>
-        <HasPermission perform='user:create'>
+    <Container className='d-flex flex-row'>
+      <div className='flex-column' style={{ flex: 4 }}>
+        <PageHeader>
           <div>
-            <Link to='/users/create-user'>
-              <CreateButton>Add User</CreateButton>
-            </Link>
+            <h1>User List</h1>
+            <p className='text-muted'>Active and invited users in the system.</p>
           </div>
-        </HasPermission>
-      </PageHeader>
-      <DataTableFilters
-        filters={filters}
-        defaultFilterAttribute='firstName'
-        defaultFilterOperation='icontains'
-        onSetFilter={addFilter}
-        onRemoveFilter={removeFilter}
-        onClearFilters={resetFilters}
-      />
-      <TableCard>
-        <TableCard.Body>
-          <WithLoadingOverlay isLoading={isPageLoading} containerHasRoundedCorners containerBorderRadius='6px'>
-            {data?.meta ? (
-              <DataTable<UserTableItem>
-                columns={columns}
-                data={tableData}
-                onRowClick={item => navigate(`/users/update-user/${item.id}`)}
-                pagination={{
-                  basePage: 1,
-                  page,
-                  pageSize,
-                  count: data?.meta.count || 0,
-                  pageCount: data?.meta.pageCount || 0,
-                  pageSizeOptions: [5, 10, 25, 50, 100],
-                  onPageChange: getPage,
-                  onPageSizeChange: changePageSize,
-                }}
-                sorting={{
-                  onSortByChange: changeSortBy,
-                }}
-                isLoading={isFetching}
-              />
-            ) : (
-              <NoContent />
-            )}
-          </WithLoadingOverlay>
-        </TableCard.Body>
-      </TableCard>
+          <HasPermission perform='user:create'>
+            <div>
+              <Link to='/users/create-user'>
+                <CreateButton>Add User</CreateButton>
+              </Link>
+            </div>
+          </HasPermission>
+        </PageHeader>
+        <DataTableFilters
+          filters={filters}
+          defaultFilterAttribute='firstName'
+          defaultFilterOperation='icontains'
+          onSetFilter={addFilter}
+          onRemoveFilter={removeFilter}
+          onClearFilters={resetFilters}
+        />
+        <TableCard>
+          <TableCard.Body>
+            <WithLoadingOverlay isLoading={isPageLoading} containerHasRoundedCorners containerBorderRadius='6px'>
+              {data?.meta ? (
+                <DataTable<UserTableItem>
+                  columns={columns}
+                  data={tableData}
+                  onRowClick={item => navigate(`/users/update-user/${item.id}`)}
+                  pagination={{
+                    basePage: 1,
+                    page,
+                    pageSize,
+                    count: data?.meta.count || 0,
+                    pageCount: data?.meta.pageCount || 0,
+                    pageSizeOptions: [5, 10, 25, 50, 100],
+                    onPageChange: getPage,
+                    onPageSizeChange: changePageSize,
+                  }}
+                  sorting={{
+                    onSortByChange: changeSortBy,
+                  }}
+                  isLoading={isFetching}
+                />
+              ) : (
+                <NoContent />
+              )}
+            </WithLoadingOverlay>
+          </TableCard.Body>
+        </TableCard>
+      </div>
+      <div className='d-flex' style={{ flex: 1 }}>
+        Right Side
+      </div>
     </Container>
   );
 };
