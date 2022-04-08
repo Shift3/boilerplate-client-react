@@ -1,8 +1,9 @@
 import { useGetUsersQuery } from 'common/api/userApi';
 import { NoContent, PageHeader, TableCard } from 'common/components/Common';
 import { DataTable } from 'common/components/DataTable';
-import { DataTableFilters, FilterInfo } from 'common/components/DataTable/DataTableFilters';
+import { DataTableFilters, FilterInfo, PredeterminedFilters } from 'common/components/DataTable/DataTableFilters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
+import { VisibleOptionsSelector } from 'common/components/VisibleOptionsSelector';
 import { usePSFQuery } from 'common/hooks';
 import { PaginatedResult, User } from 'common/models';
 import { CreateButton } from 'common/styles/button';
@@ -81,6 +82,23 @@ export const UserListView: FC = () => {
     [],
   );
 
+  const visibleFilters: FilterInfo[] = useMemo(
+    () => [
+      {
+        attribute: 'role',
+        attributeLabel: 'Role',
+        operationOptions: [
+          {
+            operation: 'eq',
+            operationLabel: 'is',
+            InputUI: VisibleOptionsSelector,
+          },
+        ],
+      },
+    ],
+    [],
+  );
+
   return (
     <Container className='d-flex flex-row'>
       <div className='flex-column' style={{ flex: 4 }}>
@@ -136,7 +154,14 @@ export const UserListView: FC = () => {
         </TableCard>
       </div>
       <div className='d-flex' style={{ flex: 1 }}>
-        Right Side
+        <PredeterminedFilters
+          filters={visibleFilters}
+          defaultFilterAttribute='role'
+          defaultFilterOperation='eq'
+          onSetFilter={addFilter}
+          onRemoveFilter={removeFilter}
+          onClearFilters={resetFilters}
+        />
       </div>
     </Container>
   );

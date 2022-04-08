@@ -140,3 +140,74 @@ export const DataTableFilters: FC<DataTableFilterProps> = ({
     </div>
   );
 };
+
+export const PredeterminedFilters: FC<DataTableFilterProps> = ({
+  filters = [],
+  defaultFilterAttribute,
+  defaultFilterOperation,
+  onSetFilter,
+  onRemoveFilter,
+  onClearFilters,
+}) => {
+  const [appliedFilters, setAppliedFilters] = useState<AppliedFilterInfo[]>([]);
+  const availableFilters = filters.filter(
+    filter => !appliedFilters.find(appliedFilter => appliedFilter.filter.attribute === filter.attribute),
+  );
+  const defaultAttributeLabel = useMemo(
+    () => filters.find(filter => filter.attribute === defaultFilterAttribute)?.attributeLabel,
+    [filters, defaultFilterAttribute],
+  );
+
+  const firstOperationInFirstFilter = filters[0].operationOptions[0];
+
+  const getInput = firstOperationInFirstFilter.InputUI ?? null;
+
+  console.log('getInput:', getInput);
+
+  const handleFilterApply = (selectedAttribute: number, selectedOperation: number, value: string) => {
+    onSetFilter(
+      availableFilters[selectedAttribute].attribute,
+      availableFilters[selectedAttribute].operationOptions[selectedOperation].operation,
+      value,
+    );
+    setAppliedFilters(appliedFilters => [
+      ...appliedFilters,
+      {
+        filter: availableFilters[selectedAttribute],
+        selectedOperation,
+        value,
+      },
+    ]);
+  };
+
+  const handleFilterRemove = (index: number) => {
+    const appliedFilter = appliedFilters[index];
+    onRemoveFilter(
+      appliedFilter.filter.attribute,
+      appliedFilter.filter.operationOptions[appliedFilter.selectedOperation].operation,
+    );
+    setAppliedFilters(appliedFilters => appliedFilters.filter((_, idx) => idx !== index));
+  };
+
+  const handleUpdate = (appliedFilterIndex: number, newSelectedOperation: number, newValue: string) => {
+    const { filter, selectedOperation } = appliedFilters[appliedFilterIndex];
+    onRemoveFilter(filter.attribute, filter.operationOptions[selectedOperation].operation);
+    onSetFilter(filter.attribute, filter.operationOptions[newSelectedOperation].operation, newValue);
+    setAppliedFilters(appliedFilters => {
+      appliedFilters[appliedFilterIndex].selectedOperation = newSelectedOperation;
+      appliedFilters[appliedFilterIndex].value = newValue;
+      return appliedFilters;
+    });
+  };
+
+  const handleRoleChange = (value: string): void => {
+    console.log('handleRoleChange');
+  };
+
+  const handleFiltersClear = () => {
+    setAppliedFilters([]);
+    onClearFilters();
+  };
+
+  return <div>{getInput ? getInput({ value: '', onChange: handleRoleChange }) : null}</div>;
+};
