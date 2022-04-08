@@ -48,8 +48,6 @@ const BannerWrapper = styled.div<{
 
           ${BitwiseNavbar} {
             padding-top: 56px !important;
-          }import { Layout, Content } from '../common/components/Layout/index';
-
 
           ${Content} {
             padding-top: 56px;
@@ -63,41 +61,40 @@ export const App: FC = () => (
     <ThemeProvider theme={AppTheme}>
       <ConfirmationModal />
       <NotificationContainer />
-
       <BannerWrapper bannerShowing={environment.environment === 'staging'}>
         <StagingBanner>
           You are currently on the <b>staging</b> server.
         </StagingBanner>
         <Routes>
-          <Route path='/auth/*' element={<AuthRoutes />} />
-          <Route
-            path='/user/profile/:id'
-            element={
-              <RequireAuth>
-                <Layout>
+          <Route element={<Layout />}>
+            <Route path='/auth/*' element={<AuthRoutes />} />
+            <Route
+              path='/user/profile/:id'
+              element={
+                <RequireAuth>
                   <UpdateUserProfilePage />
-                </Layout>
-              </RequireAuth>
-            }
-          />
-          <Route
-            path='/agents/*'
-            element={
-              <RequireAuth>
-                <AgentRoutes />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path='/users/*'
-            element={
-              <RequireAuth allowedRoles={['Admin', 'Super Administrator']}>
-                <UserRoutes />
-              </RequireAuth>
-            }
-          />
-          <Route path='/' element={<Navigate to='/agents' />} />
-          <Route path='*' element={<NotFoundView />} />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path='/agents/*'
+              element={
+                <RequireAuth>
+                  <AgentRoutes />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path='/users/*'
+              element={
+                <RequireAuth allowedRoles={['Admin', 'Super Administrator']}>
+                  <UserRoutes />
+                </RequireAuth>
+              }
+            />
+            <Route path='/' element={<Navigate to='/agents' />} />
+            <Route path='*' element={<NotFoundView />} />
+          </Route>
         </Routes>
       </BannerWrapper>
     </ThemeProvider>
