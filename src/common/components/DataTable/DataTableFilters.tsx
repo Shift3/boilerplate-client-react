@@ -7,13 +7,13 @@ import { FilterSearchBar } from './FilterSearchBar';
 export type OperationOption = {
   operation: FilterOp;
   operationLabel: string;
-  InputUI?: FC<{ value: string; onChange: (value: string) => void }>;
 };
 
 export type FilterInfo = {
   attribute: string;
   attributeLabel: string;
   operationOptions: OperationOption[];
+  InputUI?: FC<{ value: string; onChange: (value: string) => void; options?: OperationOption[] }>;
 };
 
 export type AppliedFilterInfo = {
@@ -158,11 +158,7 @@ export const PredeterminedFilters: FC<DataTableFilterProps> = ({
     [filters, defaultFilterAttribute],
   );
 
-  const firstOperationInFirstFilter = filters[0].operationOptions[0];
-
-  const getInput = firstOperationInFirstFilter.InputUI ?? null;
-
-  console.log('getInput:', getInput);
+  const firstFilter = filters[0];
 
   const handleFilterApply = (selectedAttribute: number, selectedOperation: number, value: string) => {
     onSetFilter(
@@ -209,5 +205,11 @@ export const PredeterminedFilters: FC<DataTableFilterProps> = ({
     onClearFilters();
   };
 
-  return <div>{getInput ? getInput({ value: '', onChange: handleRoleChange }) : null}</div>;
+  return (
+    <div>
+      {firstFilter.InputUI
+        ? firstFilter.InputUI({ value: '', onChange: handleRoleChange, options: firstFilter.operationOptions })
+        : null}
+    </div>
+  );
 };

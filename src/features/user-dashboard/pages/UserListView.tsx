@@ -90,10 +90,22 @@ export const UserListView: FC = () => {
         operationOptions: [
           {
             operation: 'eq',
-            operationLabel: 'is',
-            InputUI: VisibleOptionsSelector,
+            operationLabel: 'Users',
+          },
+          {
+            operation: 'eq',
+            operationLabel: 'Editors',
+          },
+          {
+            operation: 'eq',
+            operationLabel: 'Admins',
+          },
+          {
+            operation: 'eq',
+            operationLabel: 'Super Admins',
           },
         ],
+        InputUI: VisibleOptionsSelector,
       },
     ],
     [],
