@@ -16,7 +16,7 @@ export const Body = styled.div`
 `;
 export const Content = styled.main`
   flex: 1;
-  border: solid 5px solid black;
+  margin: 2em;
 `;
 export const Nav = styled.nav`
   order: -1;

@@ -1,5 +1,5 @@
 import { ErrorBoundary } from '@sentry/react';
-import { Content, Layout } from 'common/components/Layout';
+import { Content } from 'common/components/Layout';
 import { NotFoundView } from 'common/components/NotFound';
 import { NotificationContainer } from 'common/components/Notification';
 import { environment } from 'environment';
@@ -67,34 +67,32 @@ export const App: FC = () => (
         </StagingBanner>
         <Routes>
           <Route path='/auth/*' element={<AuthRoutes />} />
-          <Route element={<Layout />}>
-            <Route
-              path='/user/profile/:id'
-              element={
-                <RequireAuth>
-                  <UpdateUserProfilePage />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path='/agents/*'
-              element={
-                <RequireAuth>
-                  <AgentRoutes />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path='/users/*'
-              element={
-                <RequireAuth allowedRoles={['Admin', 'Super Administrator']}>
-                  <UserRoutes />
-                </RequireAuth>
-              }
-            />
-            <Route path='/' element={<Navigate to='/agents' />} />
-            <Route path='*' element={<NotFoundView />} />
-          </Route>
+          <Route
+            path='/user/profile/:id'
+            element={
+              <RequireAuth>
+                <UpdateUserProfilePage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path='/agents/*'
+            element={
+              <RequireAuth>
+                <AgentRoutes />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path='/users/*'
+            element={
+              <RequireAuth allowedRoles={['Admin', 'Super Administrator']}>
+                <UserRoutes />
+              </RequireAuth>
+            }
+          />
+          <Route path='/' element={<Navigate to='/agents' />} />
+          <Route path='*' element={<NotFoundView />} />
         </Routes>
       </BannerWrapper>
     </ThemeProvider>
