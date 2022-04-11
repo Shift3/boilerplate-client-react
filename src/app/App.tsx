@@ -1,5 +1,5 @@
 import { ErrorBoundary } from '@sentry/react';
-import { Content } from 'common/components/Layout';
+import { Content, Layout } from 'common/components/Layout';
 import { NotFoundView } from 'common/components/NotFound';
 import { NotificationContainer } from 'common/components/Notification';
 import { environment } from 'environment';
@@ -71,7 +71,9 @@ export const App: FC = () => (
             path='/user/profile/:id'
             element={
               <RequireAuth>
-                <UpdateUserProfilePage />
+                <Layout>
+                  <UpdateUserProfilePage />
+                </Layout>
               </RequireAuth>
             }
           />
