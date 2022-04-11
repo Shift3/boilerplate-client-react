@@ -158,7 +158,7 @@ export const OperationDropdownMenu: FC<{
     <StyledDropdownMenu hidden={!show}>
       <Form onSubmit={handleApply}>
         {filter.operationOptions.map((op, index) => {
-          const FilterInput = DefaultFilterInput;
+          const FilterInput = filter.InputUI ?? DefaultFilterInput;
           return (
             <DropdownItem key={op.operation} selected={index === selected} onClick={() => handleOperationSelect(index)}>
               <Form.Check
