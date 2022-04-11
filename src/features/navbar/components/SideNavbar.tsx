@@ -13,7 +13,7 @@ export const BitwiseNavbar = styled(Navbar)`
   background: ${props => props.theme.nav.backgroundColor};
   align-items: flex-start;
   padding: 2rem;
-  position: fixed;
+  // position: fixed;
   overflow-y: auto;
   width: 280px;
   height: 100vh;
@@ -22,11 +22,11 @@ export const BitwiseNavbar = styled(Navbar)`
 
   .navbar-brand > img {
     width: 64px;
-    margin-left: 1rem;
+    margin-left: 4rem;
     margin-bottom: 2rem;
     margin-top: 2rem;
     opacity: 0.9;
-    border-radius: 12px;
+    border-radius: 10px;
   }
 
   .nav-wrap {

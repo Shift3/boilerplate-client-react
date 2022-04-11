@@ -19,7 +19,6 @@ export const Content = styled.main`
   border: solid 5px solid black;
 `;
 export const Nav = styled.nav`
-  flex: auto;
   order: -1;
   border: solid 3px blue;
 `;
@@ -38,11 +37,11 @@ export const Layout: FC<Props> = ({ leftAside, children, rightAside, footer }) =
   return (
     <Container>
       <Body>
+        <Content>{children}</Content>
         <Nav>
           <SideNavbar />
           {leftAside}
         </Nav>
-        <Content>{children}</Content>
         {rightAside && <Aside>{rightAside}</Aside>}
       </Body>
       <Footer>{footer ?? <Footer />}</Footer>
