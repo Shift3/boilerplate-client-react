@@ -13,10 +13,6 @@ export const Body = styled.div`
   display: flex;
   flex: 1;
   border: 3px solid green;
-
-  @media (max-width: 600px) {
-    flex-direction: column;
-  }
 `;
 export const Content = styled.main`
   flex: 1;
