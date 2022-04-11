@@ -2,8 +2,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { CustomSelect } from 'common/components';
 import { LoadingButton } from 'common/components/LoadingButton';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
-import { Role, User, RoleOption } from 'common/models';
-import { FC } from 'react';
+import { addServerErrors } from 'common/error/utilities';
+import { Role, User, RoleOption, ServerValidationErrors } from 'common/models';
+import { FC, useEffect } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
@@ -16,6 +17,7 @@ export interface Props {
   defaultValues?: Partial<FormData>;
   submitButtonLabel?: string;
   onSubmit: (data: FormData) => void;
+  serverValidationErrors: ServerValidationErrors<FormData> | null;
 }
 
 const schema = yup.object({
@@ -30,6 +32,7 @@ export const UserDetailForm: FC<Props> = ({
   defaultValues = {},
   onSubmit,
   submitButtonLabel = 'Submit',
+  serverValidationErrors,
 }) => {
   const options: RoleOption[] = [];
   availableRoles.forEach(role => {
@@ -41,11 +44,18 @@ export const UserDetailForm: FC<Props> = ({
     formState: { errors, isValid, isDirty, isSubmitting, isSubmitted },
     handleSubmit,
     register,
+    setError,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
     defaultValues,
   });
+
+  useEffect(() => {
+    if (serverValidationErrors) {
+      addServerErrors(serverValidationErrors, setError);
+    }
+  }, [serverValidationErrors, setError]);
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>

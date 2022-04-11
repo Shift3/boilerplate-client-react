@@ -6,6 +6,8 @@ import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
+import { ServerValidationErrors } from 'common/models';
+import { addServerErrors } from 'common/error/utilities';
 
 export type FormData = {
   newPassword: string;
@@ -14,6 +16,7 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
+  serverValidationErrors: ServerValidationErrors<FormData> | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
@@ -32,12 +35,13 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
     .oneOf([yup.ref('newPassword')], Constants.errorMessages.PASSWORD_MUST_MATCH),
 });
 
-export const ResetPasswordForm: FC<Props> = ({ onSubmit }) => {
+export const ResetPasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
   const {
     formState: { errors, isDirty, isSubmitting, isSubmitted, isValid },
     handleSubmit,
     register,
     trigger,
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
@@ -45,7 +49,10 @@ export const ResetPasswordForm: FC<Props> = ({ onSubmit }) => {
 
   useEffect(() => {
     trigger();
-  }, [trigger]);
+    if (serverValidationErrors) {
+      addServerErrors(serverValidationErrors, setError);
+    }
+  }, [trigger, serverValidationErrors, setError]);
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>

@@ -2,22 +2,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetAgentByIdQuery, useUpdateAgentMutation } from 'common/api/agentApi';
 import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
+import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
+import { ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { StyledFormWrapper } from 'common/styles/form';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
 
-export type RouteParams  = {
+export type RouteParams = {
   id: string;
-}
+};
 
 export const UpdateAgentView: FC = () => {
   const { id } = useParams<RouteParams>();
   const navigate = useNavigate();
   const [updateAgent] = useUpdateAgentMutation();
   const { data: agent, isLoading: isLoadingAgent, error } = useGetAgentByIdQuery(id!);
+  const [submissionError, setSubmissionError] = useState<ServerValidationErrors<FormData> | null>(null);
 
   useEffect(() => {
     if (error) {
@@ -37,6 +40,11 @@ export const UpdateAgentView: FC = () => {
       notificationService.showSuccessMessage('Agent updated.');
       navigate('/agents');
     } catch (error) {
+      if (isFetchBaseQueryError(error)) {
+        if (isErrorResponse<FormData>(error?.data)) {
+          setSubmissionError((error?.data).error);
+        }
+      }
       notificationService.showErrorMessage('Unable to update agent.');
     }
   };
@@ -65,6 +73,7 @@ export const UpdateAgentView: FC = () => {
                 submitButtonLabel='Save'
                 onSubmit={handleFormSubmit}
                 onCancel={handleFormCancel}
+                serverValidationErrors={submissionError}
               />
             </StyledFormWrapper>
           </WithLoadingOverlay>

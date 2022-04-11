@@ -28,6 +28,7 @@ export const useUpdateUserProfile: UseUpdateUserProfileHook = () => {
                 } 
             } catch (error) {
                 handleApiError(error as FetchBaseQueryError);
+                throw error;
             }
         },
         [updateProfile, dispatch],

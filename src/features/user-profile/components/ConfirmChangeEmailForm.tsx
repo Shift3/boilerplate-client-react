@@ -1,10 +1,12 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
+import { ServerValidationErrors } from 'common/models';
+import { addServerErrors } from 'common/error/utilities';
 
 export type FormData = {
   verificationCode: number;
@@ -12,6 +14,7 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
+  serverValidationErrors: ServerValidationErrors<FormData> | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
@@ -23,18 +26,25 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
     .moreThan(99999, Constants.errorMessages.VERIFICATION_CODE_LENGTH_MISMATCH),
 });
 
-export const ConfirmChangeEmailForm: FC<Props> = ({ onSubmit }) => {
+export const ConfirmChangeEmailForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
   const {
     formState: { errors, isValid, isSubmitting },
     handleSubmit,
     register,
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
     defaultValues: {
-      verificationCode: ''
+      verificationCode: '',
     },
   });
+
+  useEffect(() => {
+    if (serverValidationErrors) {
+      addServerErrors(serverValidationErrors, setError);
+    }
+  }, [serverValidationErrors, setError]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>

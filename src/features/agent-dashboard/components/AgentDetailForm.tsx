@@ -2,7 +2,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { PhoneInput } from 'common/components/PhoneInput';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
-import { Agent } from 'common/models';
+import { addServerErrors } from 'common/error/utilities';
+import { Agent, ServerValidationErrors } from 'common/models';
 import { FC, useEffect } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
@@ -19,6 +20,7 @@ export type Props = {
   cancelButtonLabel?: string;
   onSubmit: (data: FormData) => void;
   onCancel: () => void;
+  serverValidationErrors: ServerValidationErrors<FormData> | null;
 };
 
 const isBlank = (val: string) => !val || !val.trim();
@@ -45,14 +47,20 @@ const schema = yup.object().shape({
   }),
 });
 
-export const AgentDetailForm: FC<Props> = ({ defaultValues = {}, onSubmit, submitButtonLabel = 'Submit' }) => {
+export const AgentDetailForm: FC<Props> = ({
+  defaultValues = {},
+  onSubmit,
+  submitButtonLabel = 'Submit',
+  serverValidationErrors,
+}) => {
   const {
     register,
-    formState: { errors, isValid, isDirty, isSubmitting, isSubmitted},
+    formState: { errors, isValid, isDirty, isSubmitting, isSubmitted },
     handleSubmit,
     trigger,
     control,
     watch,
+    setError,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
@@ -85,6 +93,12 @@ export const AgentDetailForm: FC<Props> = ({ defaultValues = {}, onSubmit, submi
     trigger('address.state');
     trigger('address.zipCode');
   }, [trigger, firstAddressLine]);
+
+  useEffect(() => {
+    if (serverValidationErrors) {
+      addServerErrors(serverValidationErrors, setError);
+    }
+  }, [serverValidationErrors, setError]);
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>

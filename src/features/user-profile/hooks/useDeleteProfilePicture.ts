@@ -8,38 +8,37 @@ import { useDeleteProfilePictureMutation, DeleteProfilePictureRequest } from 'co
 import * as authLocalStorage from '../../auth/authLocalStorage';
 
 export type UseDeleteProfilePictureHook = () => {
-    deleteUserProfilePicture: (data: DeleteProfilePictureRequest) => Promise<void>;
+  deleteUserProfilePicture: (data: DeleteProfilePictureRequest) => Promise<void>;
 };
 
 export const useDeleteProfilePicture: UseDeleteProfilePictureHook = () => {
-    const dispatch = useAppDispatch();
-    const [deleteProfilePicture] = useDeleteProfilePictureMutation();
+  const dispatch = useAppDispatch();
+  const [deleteProfilePicture] = useDeleteProfilePictureMutation();
 
-    const getUserWithNullProfilePicture = () => {
-        const user = authLocalStorage.getAuthState()?.user ?? null;
-        if (user)
-            user.profilePicture = null;
+  const getUserWithNullProfilePicture = () => {
+    const user = authLocalStorage.getAuthState()?.user ?? null;
+    if (user) user.profilePicture = null;
 
-        return user;
-    }
+    return user;
+  };
 
-    const deleteUserProfilePicture = useCallback(
-        async (data: DeleteProfilePictureRequest) => {
-            try {
-                await deleteProfilePicture(data).unwrap();
-                const auth: AuthState | null = authLocalStorage.getAuthState();
+  const deleteUserProfilePicture = useCallback(
+    async (data: DeleteProfilePictureRequest) => {
+      try {
+        await deleteProfilePicture(data).unwrap();
+        const auth: AuthState | null = authLocalStorage.getAuthState();
 
-                if (auth) {
-                    dispatch(authSlice.actions.userUpdatedProfilePicture(null));
-                    authLocalStorage.saveAuthState({ ...auth, user: getUserWithNullProfilePicture() });
-                    notificationService.showSuccessMessage('Profile Photo Deleted');
-                }            
-            } catch (error) {
-                handleApiError(error as FetchBaseQueryError);
-            }
-        },
-        [deleteProfilePicture, dispatch],
-    );
+        if (auth) {
+          dispatch(authSlice.actions.userUpdatedProfilePicture(null));
+          authLocalStorage.saveAuthState({ ...auth, user: getUserWithNullProfilePicture() });
+          notificationService.showSuccessMessage('Profile Photo Deleted');
+        }
+      } catch (error) {
+        handleApiError(error as FetchBaseQueryError);
+      }
+    },
+    [deleteProfilePicture, dispatch],
+  );
 
-    return { deleteUserProfilePicture };
+  return { deleteUserProfilePicture };
 };

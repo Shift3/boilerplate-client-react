@@ -1,6 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from 'common/components/LoadingButton';
-import { FC } from 'react';
+import { addServerErrors } from 'common/error/utilities';
+import { ServerValidationErrors } from 'common/models';
+import { FC, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Constants } from 'utils/constants';
@@ -13,6 +15,7 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
+  serverValidationErrors: ServerValidationErrors<FormData> | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
@@ -31,15 +34,22 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
     .oneOf([yup.ref('newPassword')], Constants.errorMessages.PASSWORD_MUST_MATCH),
 });
 
-export const ActivateAccountForm: FC<Props> = ({ onSubmit }) => {
+export const ActivateAccountForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
   const {
     formState: { errors, isValid, isSubmitting },
     handleSubmit,
     register,
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
   });
+
+  useEffect(() => {
+    if (serverValidationErrors) {
+      addServerErrors(serverValidationErrors, setError);
+    }
+  }, [serverValidationErrors, setError]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -69,7 +79,8 @@ export const ActivateAccountForm: FC<Props> = ({ onSubmit }) => {
           {errors.confirmPassword?.message}
         </Form.Control.Feedback>
         <Form.Text>
-          Password must be 8 characters or more. Password must contain a lowercase, uppercase, special character, and a number.
+          Password must be 8 characters or more. Password must contain a lowercase, uppercase, special character, and a
+          number.
         </Form.Text>
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>

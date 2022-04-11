@@ -2,17 +2,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetUserByIdQuery, useUpdateUserMutation } from 'common/api/userApi';
 import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
-import { Role } from 'common/models';
+import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
+import { Role, ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { StyledFormWrapper } from 'common/styles/form';
 import { useRbac } from 'features/rbac';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
 
 type RouteParams = {
   id: string;
-}
+};
 
 export const UpdateUserView: FC = () => {
   const { id } = useParams<RouteParams>();
@@ -23,6 +24,7 @@ export const UpdateUserView: FC = () => {
   const roles = Object.values(Role);
 
   const availableRoles = roles.filter(role => userHasPermission({ permission: 'role:read', data: role }));
+  const [submissionError, setSubmissionError] = useState<ServerValidationErrors<FormData> | null>(null);
 
   useEffect(() => {
     if (getUserError) {
@@ -37,6 +39,11 @@ export const UpdateUserView: FC = () => {
       navigate('/users');
       notificationService.showSuccessMessage('User updated.');
     } catch (error) {
+      if (isFetchBaseQueryError(error)) {
+        if (isErrorResponse<FormData>(error?.data)) {
+          setSubmissionError((error?.data).error);
+        }
+      }
       notificationService.showErrorMessage('Unable to update user');
     }
   };
@@ -65,6 +72,7 @@ export const UpdateUserView: FC = () => {
                 defaultValues={user}
                 submitButtonLabel='Save'
                 onSubmit={handleFormSubmit}
+                serverValidationErrors={submissionError}
               />
             </StyledFormWrapper>
           </WithLoadingOverlay>

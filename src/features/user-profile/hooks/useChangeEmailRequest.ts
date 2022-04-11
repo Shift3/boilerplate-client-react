@@ -28,6 +28,7 @@ export const useChangeEmailRequest: UseChangeEmailRequestHook = () => {
                 } 
             } catch (error) {
                 handleApiError(error as FetchBaseQueryError);
+                throw error;
             }
         },
         [requestChangeEmail, dispatch],

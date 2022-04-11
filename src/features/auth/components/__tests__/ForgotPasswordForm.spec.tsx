@@ -11,7 +11,7 @@ describe('ForgotPasswordForm', () => {
     await act(async () => {
       render(
         <ThemeProvider theme={AppTheme}>
-          <ForgotPasswordForm onSubmit={mockOnSubmit} />
+          <ForgotPasswordForm onSubmit={mockOnSubmit} serverValidationErrors={null} />
         </ThemeProvider>,
       );
     });

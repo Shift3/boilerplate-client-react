@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
+import { addServerErrors } from 'common/error/utilities';
+import { ServerValidationErrors } from 'common/models';
 
 export type UserEmailFormData = {
   email: string;
@@ -13,9 +15,10 @@ export type UserEmailFormData = {
 type Props = {
   onSubmit: (data: UserEmailFormData) => void;
   defaultValues?: Partial<UserEmailFormData>;
+  serverValidationErrors: ServerValidationErrors<UserEmailFormData> | null;
 };
 
-export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues }) => {
+export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues, serverValidationErrors }) => {
   const schema: yup.SchemaOf<UserEmailFormData> = yup.object().shape({
     email: yup
       .string()
@@ -29,7 +32,8 @@ export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues }) => {
     handleSubmit,
     register,
     reset,
-    getValues
+    getValues,
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
@@ -40,7 +44,10 @@ export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues }) => {
     if (isSubmitSuccessful) {
       reset(getValues());
     }
-  }, [reset, isSubmitSuccessful, getValues]);
+    if (serverValidationErrors) {
+      addServerErrors(serverValidationErrors, setError);
+    }
+  }, [reset, isSubmitSuccessful, getValues, serverValidationErrors, setError]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
