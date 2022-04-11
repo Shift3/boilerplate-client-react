@@ -66,8 +66,8 @@ export const App: FC = () => (
           You are currently on the <b>staging</b> server.
         </StagingBanner>
         <Routes>
+          <Route path='/auth/*' element={<AuthRoutes />} />
           <Route element={<Layout />}>
-            <Route path='/auth/*' element={<AuthRoutes />} />
             <Route
               path='/user/profile/:id'
               element={

@@ -42,7 +42,6 @@ export const BitwiseNavbar = styled(Navbar)`
       margin-bottom: 1rem;
     }
   }
-
 `;
 
 export const SideNavbar: FC = () => {
@@ -61,7 +60,7 @@ export const SideNavbar: FC = () => {
             ))}
           </Nav>
           <Nav className='flex-column'>
-            <NavUserDetails user={user} />  
+            <NavUserDetails user={user} />
             <CustomNavAction onClick={openLogoutModal} label='Sign Out' icon='sign-out-alt' />
           </Nav>
         </div>

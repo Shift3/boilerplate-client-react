@@ -38,11 +38,11 @@ export const Layout: FC<Props> = ({ leftAside, children, rightAside, footer }) =
   return (
     <Container>
       <Body>
-        <Content>{children}</Content>
         <Nav>
           <SideNavbar />
           {leftAside}
         </Nav>
+        <Content>{children}</Content>
         {rightAside && <Aside>{rightAside}</Aside>}
       </Body>
       <Footer>{footer ?? <Footer />}</Footer>
