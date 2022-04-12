@@ -13,7 +13,6 @@ export const BitwiseNavbar = styled(Navbar)`
   background: ${props => props.theme.nav.backgroundColor};
   align-items: flex-start;
   padding: 2rem;
-  position: fixed;
   overflow-y: auto;
   width: 280px;
   height: 100vh;
@@ -22,11 +21,11 @@ export const BitwiseNavbar = styled(Navbar)`
 
   .navbar-brand > img {
     width: 64px;
-    margin-left: 1rem;
+    margin-left: 4rem;
     margin-bottom: 2rem;
     margin-top: 2rem;
     opacity: 0.9;
-    border-radius: 12px;
+    border-radius: 10px;
   }
 
   .nav-wrap {
@@ -42,7 +41,6 @@ export const BitwiseNavbar = styled(Navbar)`
       margin-bottom: 1rem;
     }
   }
-
 `;
 
 export const SideNavbar: FC = () => {
@@ -61,7 +59,7 @@ export const SideNavbar: FC = () => {
             ))}
           </Nav>
           <Nav className='flex-column'>
-            <NavUserDetails user={user} />  
+            <NavUserDetails user={user} />
             <CustomNavAction onClick={openLogoutModal} label='Sign Out' icon='sign-out-alt' />
           </Nav>
         </div>

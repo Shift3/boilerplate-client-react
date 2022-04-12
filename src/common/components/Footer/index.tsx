@@ -6,10 +6,7 @@ const Wrapper = styled.footer`
   padding-top: 5px;
   text-align: center;
   color: #999;
-  bottom: 0;
-  padding-left: 280px;
-  max-width: 100vw;
-  height: ${(props) => props.theme.footer.height};
+  height: ${props => props.theme.footer.height};
 `;
 
 const { version, creationYear } = Constants;

@@ -1,20 +1,20 @@
 import { ErrorBoundary } from '@sentry/react';
-import { FC } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
-import styled, { css, ThemeProvider } from 'styled-components';
-import { GlobalStyle } from '../GlobalStyle';
-import AppTheme from 'utils/styleValues';
-import { HolyGrailContent, HolyGrailLayout } from 'common/components/HolyGrailLayout';
-import { NotificationContainer } from 'common/components/Notification';
+import { Content, Layout } from 'common/components/Layout';
 import { NotFoundView } from 'common/components/NotFound';
-import { UpdateUserProfilePage } from 'features/user-profile/pages/UpdateUserProfilePage';
-import { ConfirmationModal } from 'features/confirmation-modal';
-import { Alert } from 'react-bootstrap';
-import { BitwiseNavbar } from 'features/navbar';
+import { NotificationContainer } from 'common/components/Notification';
 import { environment } from 'environment';
 import { AgentRoutes } from 'features/agent-dashboard';
-import { UserRoutes } from 'features/user-dashboard';
 import { AuthRoutes, RequireAuth } from 'features/auth';
+import { ConfirmationModal } from 'features/confirmation-modal';
+import { BitwiseNavbar } from 'features/navbar';
+import { UserRoutes } from 'features/user-dashboard';
+import { UpdateUserProfilePage } from 'features/user-profile/pages/UpdateUserProfilePage';
+import { FC } from 'react';
+import { Alert } from 'react-bootstrap';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import styled, { css, ThemeProvider } from 'styled-components';
+import AppTheme from 'utils/styleValues';
+import { GlobalStyle } from '../GlobalStyle';
 
 const StagingBanner = styled(Alert).attrs({
   variant: 'warning',
@@ -48,9 +48,8 @@ const BannerWrapper = styled.div<{
 
           ${BitwiseNavbar} {
             padding-top: 56px !important;
-          }
 
-          ${HolyGrailContent} {
+          ${Content} {
             padding-top: 56px;
           }
         `
@@ -62,7 +61,6 @@ export const App: FC = () => (
     <ThemeProvider theme={AppTheme}>
       <ConfirmationModal />
       <NotificationContainer />
-
       <BannerWrapper bannerShowing={environment.environment === 'staging'}>
         <StagingBanner>
           You are currently on the <b>staging</b> server.
@@ -73,9 +71,9 @@ export const App: FC = () => (
             path='/user/profile/:id'
             element={
               <RequireAuth>
-                <HolyGrailLayout>
+                <Layout>
                   <UpdateUserProfilePage />
-                </HolyGrailLayout>
+                </Layout>
               </RequireAuth>
             }
           />
