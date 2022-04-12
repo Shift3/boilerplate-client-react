@@ -1,4 +1,5 @@
 import { FilterOp } from 'common/models';
+import { CancelButton } from 'common/styles/button';
 import { FC, useMemo, useState } from 'react';
 import { FilterBadges } from './FilterBadges';
 import { FilterDropdown } from './FilterDropdown';
@@ -150,31 +151,17 @@ export const PredeterminedFilters: FC<DataTableFilterProps> = ({
   onClearFilters,
 }) => {
   const [appliedFilters, setAppliedFilters] = useState<AppliedFilterInfo[]>([]);
-  const availableFilters = filters.filter(
-    filter => !appliedFilters.find(appliedFilter => appliedFilter.filter.attribute === filter.attribute),
-  );
+  console.log('appliedFilters:', appliedFilters);
+  const availableOperations =
+    appliedFilters.length > 0
+      ? filters[0].operationOptions.filter((op, index) => index !== appliedFilters[0].selectedOperation)
+      : filters[0].operationOptions;
   const defaultAttributeLabel = useMemo(
     () => filters.find(filter => filter.attribute === defaultFilterAttribute)?.attributeLabel,
     [filters, defaultFilterAttribute],
   );
 
   const firstFilter = filters[0];
-
-  const handleFilterApply = (selectedAttribute: number, selectedOperation: number, value: string) => {
-    onSetFilter(
-      availableFilters[selectedAttribute].attribute,
-      availableFilters[selectedAttribute].operationOptions[selectedOperation].operation,
-      value,
-    );
-    setAppliedFilters(appliedFilters => [
-      ...appliedFilters,
-      {
-        filter: availableFilters[selectedAttribute],
-        selectedOperation,
-        value,
-      },
-    ]);
-  };
 
   const handleFilterRemove = (index: number) => {
     const appliedFilter = appliedFilters[index];
@@ -185,31 +172,24 @@ export const PredeterminedFilters: FC<DataTableFilterProps> = ({
     setAppliedFilters(appliedFilters => appliedFilters.filter((_, idx) => idx !== index));
   };
 
-  const handleUpdate = (appliedFilterIndex: number, newSelectedOperation: number, newValue: string) => {
-    const { filter, selectedOperation } = appliedFilters[appliedFilterIndex];
-    onRemoveFilter(filter.attribute, filter.operationOptions[selectedOperation].operation);
-    onSetFilter(filter.attribute, filter.operationOptions[newSelectedOperation].operation, newValue);
-    setAppliedFilters(appliedFilters => {
-      appliedFilters[appliedFilterIndex].selectedOperation = newSelectedOperation;
-      appliedFilters[appliedFilterIndex].value = newValue;
-      return appliedFilters;
-    });
+  const handleFiltersClear = () => {
+    setAppliedFilters([]);
+    onClearFilters();
   };
 
   const handleRoleChange = (value: string): void => {
     console.log('handleRoleChange');
 
     console.log('Value:', value);
-    console.log('Available Filters:', availableFilters);
+    console.log('Available Operations:', availableOperations);
 
-    const filter = availableFilters.find(filter => filter.attribute === defaultFilterAttribute);
-    const selectedOperation = filter?.operationOptions.findIndex(op => op.operationLabel === value) ?? -1;
+    const filter = filters.find(filter => filter.attribute === 'role');
+    const operation = availableOperations.find(op => op.operationLabel === value);
+    const selectedOperation = availableOperations.findIndex(op => op.operationLabel === value);
 
-    console.log('filter:', filter);
-    console.log('selectedOperation:', selectedOperation);
+    if (filter && operation && selectedOperation >= 0) {
+      handleFiltersClear();
 
-    if (filter && selectedOperation >= 0) {
-      console.log('inside if');
       onSetFilter('role', 'eq', value);
 
       setAppliedFilters(appliedFilters => [
@@ -223,11 +203,6 @@ export const PredeterminedFilters: FC<DataTableFilterProps> = ({
     }
   };
 
-  const handleFiltersClear = () => {
-    setAppliedFilters([]);
-    onClearFilters();
-  };
-
   return (
     <div>
       {firstFilter.InputUI
@@ -237,7 +212,9 @@ export const PredeterminedFilters: FC<DataTableFilterProps> = ({
             options: firstFilter.operationOptions,
           })
         : null}
-      <FilterBadges appliedFilters={appliedFilters} onUpdate={handleUpdate} onRemove={handleFilterRemove} />
+      {appliedFilters.find(filter => filter.filter.attribute === 'role') ? (
+        <CancelButton onClick={() => handleFilterRemove(0)}>Cancel</CancelButton>
+      ) : null}
     </div>
   );
 };
