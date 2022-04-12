@@ -9,7 +9,7 @@ import { PaginatedResult, User } from 'common/models';
 import { CreateButton } from 'common/styles/button';
 import { HasPermission } from 'features/rbac';
 import { FC, useMemo } from 'react';
-import Container from 'react-bootstrap/Container';
+import { Container, Row, Col } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserTableItem, useUserTableData } from '../hooks/useUserTableData';
 
@@ -112,69 +112,71 @@ export const UserListView: FC = () => {
   );
 
   return (
-    <Container className='d-flex flex-row'>
-      <div className='flex-column' style={{ flex: 4 }}>
-        <PageHeader>
+    <Container>
+      <PageHeader>
+        <div>
+          <h1>User List</h1>
+          <p className='text-muted'>Active and invited users in the system.</p>
+        </div>
+        <HasPermission perform='user:create'>
           <div>
-            <h1>User List</h1>
-            <p className='text-muted'>Active and invited users in the system.</p>
+            <Link to='/users/create-user'>
+              <CreateButton>Add User</CreateButton>
+            </Link>
           </div>
-          <HasPermission perform='user:create'>
-            <div>
-              <Link to='/users/create-user'>
-                <CreateButton>Add User</CreateButton>
-              </Link>
-            </div>
-          </HasPermission>
-        </PageHeader>
-        <DataTableFilters
-          filters={filters}
-          defaultFilterAttribute='firstName'
-          defaultFilterOperation='icontains'
-          onSetFilter={addFilter}
-          onRemoveFilter={removeFilter}
-          onClearFilters={resetFilters}
-        />
-        <TableCard>
-          <TableCard.Body>
-            <WithLoadingOverlay isLoading={isPageLoading} containerHasRoundedCorners containerBorderRadius='6px'>
-              {data?.meta ? (
-                <DataTable<UserTableItem>
-                  columns={columns}
-                  data={tableData}
-                  onRowClick={item => navigate(`/users/update-user/${item.id}`)}
-                  pagination={{
-                    basePage: 1,
-                    page,
-                    pageSize,
-                    count: data?.meta.count || 0,
-                    pageCount: data?.meta.pageCount || 0,
-                    pageSizeOptions: [5, 10, 25, 50, 100],
-                    onPageChange: getPage,
-                    onPageSizeChange: changePageSize,
-                  }}
-                  sorting={{
-                    onSortByChange: changeSortBy,
-                  }}
-                  isLoading={isFetching}
-                />
-              ) : (
-                <NoContent />
-              )}
-            </WithLoadingOverlay>
-          </TableCard.Body>
-        </TableCard>
-      </div>
-      <div className='d-flex' style={{ flex: 1 }}>
-        <PredeterminedFilters
-          filters={visibleFilters}
-          defaultFilterAttribute='role'
-          defaultFilterOperation='eq'
-          onSetFilter={addFilter}
-          onRemoveFilter={removeFilter}
-          onClearFilters={resetFilters}
-        />
-      </div>
+        </HasPermission>
+      </PageHeader>
+      <Row>
+        <Col style={{ flex: 4 }}>
+          <DataTableFilters
+            filters={filters}
+            defaultFilterAttribute='firstName'
+            defaultFilterOperation='icontains'
+            onSetFilter={addFilter}
+            onRemoveFilter={removeFilter}
+            onClearFilters={resetFilters}
+          />
+          <TableCard>
+            <TableCard.Body>
+              <WithLoadingOverlay isLoading={isPageLoading} containerHasRoundedCorners containerBorderRadius='6px'>
+                {data?.meta ? (
+                  <DataTable<UserTableItem>
+                    columns={columns}
+                    data={tableData}
+                    onRowClick={item => navigate(`/users/update-user/${item.id}`)}
+                    pagination={{
+                      basePage: 1,
+                      page,
+                      pageSize,
+                      count: data?.meta.count || 0,
+                      pageCount: data?.meta.pageCount || 0,
+                      pageSizeOptions: [5, 10, 25, 50, 100],
+                      onPageChange: getPage,
+                      onPageSizeChange: changePageSize,
+                    }}
+                    sorting={{
+                      onSortByChange: changeSortBy,
+                    }}
+                    isLoading={isFetching}
+                  />
+                ) : (
+                  <NoContent />
+                )}
+              </WithLoadingOverlay>
+            </TableCard.Body>
+          </TableCard>
+        </Col>
+        <Col style={{ flex: 1 }}>
+          <PredeterminedFilters
+            filters={visibleFilters}
+            defaultFilterAttribute='role'
+            defaultFilterOperation='eq'
+            onSetFilter={addFilter}
+            onRemoveFilter={removeFilter}
+            onClearFilters={resetFilters}
+          />
+        </Col>
+      </Row>
     </Container>
   );
 };
