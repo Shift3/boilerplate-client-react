@@ -90,19 +90,19 @@ export const UserListView: FC = () => {
         operationOptions: [
           {
             operation: 'eq',
-            operationLabel: 'Users',
+            operationLabel: 'USER',
           },
           {
             operation: 'eq',
-            operationLabel: 'Editors',
+            operationLabel: 'EDITOR',
           },
           {
             operation: 'eq',
-            operationLabel: 'Admins',
+            operationLabel: 'ADMIN',
           },
           {
             operation: 'eq',
-            operationLabel: 'Super Admins',
+            operationLabel: 'SUPER_ADMIN',
           },
         ],
         InputUI: VisibleOptionsSelector,
@@ -110,6 +110,8 @@ export const UserListView: FC = () => {
     ],
     [],
   );
+
+  console.log('isFetching:', isFetching);
 
   return (
     <Container>

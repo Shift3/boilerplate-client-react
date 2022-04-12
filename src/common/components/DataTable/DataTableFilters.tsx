@@ -198,6 +198,29 @@ export const PredeterminedFilters: FC<DataTableFilterProps> = ({
 
   const handleRoleChange = (value: string): void => {
     console.log('handleRoleChange');
+
+    console.log('Value:', value);
+    console.log('Available Filters:', availableFilters);
+
+    const filter = availableFilters.find(filter => filter.attribute === defaultFilterAttribute);
+    const selectedOperation = filter?.operationOptions.findIndex(op => op.operationLabel === value) ?? -1;
+
+    console.log('filter:', filter);
+    console.log('selectedOperation:', selectedOperation);
+
+    if (filter && selectedOperation >= 0) {
+      console.log('inside if');
+      onSetFilter('role', 'eq', value);
+
+      setAppliedFilters(appliedFilters => [
+        ...appliedFilters,
+        {
+          filter,
+          selectedOperation,
+          value,
+        },
+      ]);
+    }
   };
 
   const handleFiltersClear = () => {
@@ -208,8 +231,13 @@ export const PredeterminedFilters: FC<DataTableFilterProps> = ({
   return (
     <div>
       {firstFilter.InputUI
-        ? firstFilter.InputUI({ value: '', onChange: handleRoleChange, options: firstFilter.operationOptions })
+        ? firstFilter.InputUI({
+            value: appliedFilters.find(filter => filter.filter.attribute === 'role')?.value ?? '',
+            onChange: handleRoleChange,
+            options: firstFilter.operationOptions,
+          })
         : null}
+      <FilterBadges appliedFilters={appliedFilters} onUpdate={handleUpdate} onRemove={handleFilterRemove} />
     </div>
   );
 };
