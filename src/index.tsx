@@ -25,19 +25,18 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import * as Sentry from '@sentry/react';
 import { store } from 'app/redux';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
+import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.min.css';
 import { App } from './app/App';
+import './i18n/config';
+import i18n from './i18n/config';
 import reportWebVitals from './reportWebVitals';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'react-toastify/dist/ReactToastify.min.css';
-
-// Font Awesome recommends importing icons via a “library” in the initializing module of the app
-// so you add them once in your React app and reference them in any component
-// https://fontawesome.com/v5.15/how-to-use/on-the-web/using-with/react
 library.add(
   faBan,
   faBuilding,
@@ -84,7 +83,9 @@ ReactDOM.render(
   <StrictMode>
     <Router>
       <Provider store={store}>
-        <App />
+        <I18nextProvider i18n={i18n}>
+          <App />
+        </I18nextProvider>
       </Provider>
     </Router>
   </StrictMode>,
