@@ -7,12 +7,10 @@ export const Container = styled.div`
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  border: 4px solid red;
 `;
 export const Body = styled.div`
   display: flex;
   flex: 1;
-  border: 3px solid green;
 `;
 export const Content = styled.main`
   flex: 1;
@@ -20,7 +18,6 @@ export const Content = styled.main`
 `;
 export const Nav = styled.nav`
   order: -1;
-  border: solid 3px blue;
 `;
 export const Aside = styled.aside`
   flex: 0 0 12em;
