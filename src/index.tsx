@@ -33,7 +33,6 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { App } from './app/App';
-import './i18n/config';
 import i18n from './i18n/config';
 import reportWebVitals from './reportWebVitals';
 

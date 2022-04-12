@@ -8,6 +8,7 @@
     "@fortawesome/react-fontawesome": "^0.1.17",
     "@reduxjs/toolkit": "^1.6.0",
     "@sentry/react": "^6.15.0",
+    "@types/i18next": "^13.0.0",
     "@types/react-table": "^7.7.9",
     "bootstrap": "5.1.1",
     "cross-env": "^7.0.3",
