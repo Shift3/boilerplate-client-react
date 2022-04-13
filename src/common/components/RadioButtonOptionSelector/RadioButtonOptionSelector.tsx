@@ -1,9 +1,8 @@
-import { FC, useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
+import { FC } from 'react';
+import { Form } from 'react-bootstrap';
 import { OperationOption } from '../DataTable/DataTableFilters';
 
-export const VisibleOptionsSelector: FC<{
+export const RadioButtonOptionSelector: FC<{
   value: string;
   onChange: (value: string) => void;
   options?: OperationOption[];

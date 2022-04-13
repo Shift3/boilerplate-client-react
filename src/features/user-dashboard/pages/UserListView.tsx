@@ -3,7 +3,7 @@ import { NoContent, PageHeader, TableCard } from 'common/components/Common';
 import { DataTable } from 'common/components/DataTable';
 import { DataTableFilters, FilterInfo, PredeterminedFilters } from 'common/components/DataTable/DataTableFilters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
-import { VisibleOptionsSelector } from 'common/components/VisibleOptionsSelector';
+import { RadioButtonOptionSelector } from 'common/components/RadioButtonOptionSelector';
 import { usePSFQuery } from 'common/hooks';
 import { PaginatedResult, User } from 'common/models';
 import { CreateButton } from 'common/styles/button';
@@ -105,7 +105,7 @@ export const UserListView: FC = () => {
             operationLabel: 'Super Administrator',
           },
         ],
-        InputUI: VisibleOptionsSelector,
+        InputUI: RadioButtonOptionSelector,
       },
     ],
     [],
