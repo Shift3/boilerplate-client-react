@@ -126,7 +126,7 @@ export const UserListView: FC = () => {
           </div>
         </HasPermission>
       </PageHeader>
-      <Row>
+      <Row className='d-flex flex-nowrap'>
         <Col style={{ flex: 4 }}>
           <DataTableFilters
             filters={filters}

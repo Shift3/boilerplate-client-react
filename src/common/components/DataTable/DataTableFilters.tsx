@@ -4,6 +4,7 @@ import { FC, useMemo, useState } from 'react';
 import { FilterBadges } from './FilterBadges';
 import { FilterDropdown } from './FilterDropdown';
 import { FilterSearchBar } from './FilterSearchBar';
+import styled from 'styled-components';
 
 export type OperationOption = {
   operation: FilterOp;
@@ -197,6 +198,14 @@ export const PredeterminedFilters: FC<DataTableFilterProps> = ({
     }
   };
 
+  const ContainerWithBorder = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border: 2px solid gray;
+    margin-bottom: 0.5rem;
+  `;
+
   const renderFilterAndCancelButton = (attribute: string, onChange: (value: string) => void) => {
     const filter = filters.find(filter => filter.attribute === attribute);
     const filterIndex = filters.findIndex(filter => filter.attribute === attribute);
@@ -204,8 +213,10 @@ export const PredeterminedFilters: FC<DataTableFilterProps> = ({
     const appliedFilter = appliedFilters.find(appliedFilter => appliedFilter.filter.attribute === attribute);
 
     return (
-      <>
-        <h6 className='text-muted'>{attribute.charAt(0).toUpperCase() + attribute.substring(1)}</h6>
+      <div className='w-100 d-flex flex-column'>
+        <ContainerWithBorder>
+          <span className='text-muted'>{attribute.charAt(0).toUpperCase() + attribute.substring(1)}</span>
+        </ContainerWithBorder>
         {inputUI
           ? inputUI({
               value: appliedFilter?.value ?? '',
@@ -213,10 +224,18 @@ export const PredeterminedFilters: FC<DataTableFilterProps> = ({
               options: filter.operationOptions,
             })
           : null}
-        {appliedFilter ? <CancelButton onClick={() => handleFilterRemove(filterIndex)}>Cancel</CancelButton> : null}
-      </>
+        {appliedFilter ? (
+          <CancelButton className='w-100' onClick={() => handleFilterRemove(filterIndex)}>
+            Cancel
+          </CancelButton>
+        ) : null}
+      </div>
     );
   };
 
-  return <div>{renderFilterAndCancelButton('role', handleRoleChange)}</div>;
+  return (
+    <div className='w-100 d-flex flex-column align-items-center'>
+      {renderFilterAndCancelButton('role', handleRoleChange)}
+    </div>
+  );
 };
