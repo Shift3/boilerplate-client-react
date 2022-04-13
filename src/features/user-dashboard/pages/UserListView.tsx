@@ -111,8 +111,6 @@ export const UserListView: FC = () => {
     [],
   );
 
-  console.log('isFetching:', isFetching);
-
   return (
     <Container>
       <PageHeader>

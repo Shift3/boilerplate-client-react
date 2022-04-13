@@ -151,15 +151,6 @@ export const PredeterminedFilters: FC<DataTableFilterProps> = ({
   onClearFilters,
 }) => {
   const [appliedFilters, setAppliedFilters] = useState<AppliedFilterInfo[]>([]);
-  console.log('appliedFilters:', appliedFilters);
-  const availableOperations =
-    appliedFilters.length > 0
-      ? filters[0].operationOptions.filter(op => op.operationLabel !== appliedFilters[0].value)
-      : filters[0].operationOptions;
-  const defaultAttributeLabel = useMemo(
-    () => filters.find(filter => filter.attribute === defaultFilterAttribute)?.attributeLabel,
-    [filters, defaultFilterAttribute],
-  );
 
   const handleFilterRemove = (index: number) => {
     const appliedFilter = appliedFilters[index];
@@ -170,18 +161,21 @@ export const PredeterminedFilters: FC<DataTableFilterProps> = ({
     setAppliedFilters(appliedFilters => appliedFilters.filter((_, idx) => idx !== index));
   };
 
-  const handleFiltersClear = () => {
-    setAppliedFilters([]);
-    onClearFilters();
+  const getAvailableOperationsForAttribute = (attribute: string) => {
+    const allOperations = filters.find(filter => filter.attribute === attribute)?.operationOptions;
+    const appliedFilter = appliedFilters.find(f => f.filter.attribute === attribute);
+
+    if (allOperations && appliedFilter) {
+      return allOperations.filter(op => op.operationLabel !== appliedFilter.value);
+    }
+
+    return allOperations;
   };
 
   const handleRoleChange = (value: string): void => {
-    console.log('handleRoleChange');
+    const availableOperations = getAvailableOperationsForAttribute('role');
 
-    console.log('Value:', value);
-    console.log('Available Operations:', availableOperations);
-
-    if (availableOperations.find(op => op.operationLabel === value)) {
+    if (availableOperations && availableOperations.find(op => op.operationLabel === value)) {
       const filter = filters.find(filter => filter.attribute === 'role');
       const selectedOperation = filter?.operationOptions.findIndex(op => op.operationLabel === value) ?? -1;
 
@@ -191,7 +185,6 @@ export const PredeterminedFilters: FC<DataTableFilterProps> = ({
         }
 
         onSetFilter('role', 'eq', value);
-
         setAppliedFilters(appliedFilters => [
           ...appliedFilters,
           {
