@@ -161,8 +161,6 @@ export const PredeterminedFilters: FC<DataTableFilterProps> = ({
     [filters, defaultFilterAttribute],
   );
 
-  const firstFilter = filters[0];
-
   const handleFilterRemove = (index: number) => {
     const appliedFilter = appliedFilters[index];
     onRemoveFilter(
@@ -204,18 +202,26 @@ export const PredeterminedFilters: FC<DataTableFilterProps> = ({
     }
   };
 
-  return (
-    <div>
-      {firstFilter.InputUI
-        ? firstFilter.InputUI({
-            value: appliedFilters.find(filter => filter.filter.attribute === 'role')?.value ?? '',
-            onChange: handleRoleChange,
-            options: firstFilter.operationOptions,
-          })
-        : null}
-      {appliedFilters.find(filter => filter.filter.attribute === 'role') ? (
-        <CancelButton onClick={() => handleFilterRemove(0)}>Cancel</CancelButton>
-      ) : null}
-    </div>
-  );
+  const renderFilterAndCancelButton = (attribute: string, onChange: (value: string) => void) => {
+    const filter = filters.find(filter => filter.attribute === attribute);
+    const filterIndex = filters.findIndex(filter => filter.attribute === attribute);
+    const inputUI = filter?.InputUI;
+    const appliedFilter = appliedFilters.find(appliedFilter => appliedFilter.filter.attribute === attribute);
+
+    return (
+      <>
+        <h6 className='text-muted'>{attribute.charAt(0).toUpperCase() + attribute.substring(1)}</h6>
+        {inputUI
+          ? inputUI({
+              value: appliedFilter?.value ?? '',
+              onChange,
+              options: filter.operationOptions,
+            })
+          : null}
+        {appliedFilter ? <CancelButton onClick={() => handleFilterRemove(filterIndex)}>Cancel</CancelButton> : null}
+      </>
+    );
+  };
+
+  return <div>{renderFilterAndCancelButton('role', handleRoleChange)}</div>;
 };
