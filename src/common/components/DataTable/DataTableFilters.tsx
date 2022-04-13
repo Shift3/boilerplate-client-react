@@ -154,7 +154,7 @@ export const PredeterminedFilters: FC<DataTableFilterProps> = ({
   console.log('appliedFilters:', appliedFilters);
   const availableOperations =
     appliedFilters.length > 0
-      ? filters[0].operationOptions.filter((op, index) => index !== appliedFilters[0].selectedOperation)
+      ? filters[0].operationOptions.filter(op => op.operationLabel !== appliedFilters[0].value)
       : filters[0].operationOptions;
   const defaultAttributeLabel = useMemo(
     () => filters.find(filter => filter.attribute === defaultFilterAttribute)?.attributeLabel,
@@ -183,23 +183,24 @@ export const PredeterminedFilters: FC<DataTableFilterProps> = ({
     console.log('Value:', value);
     console.log('Available Operations:', availableOperations);
 
-    const filter = filters.find(filter => filter.attribute === 'role');
-    const operation = availableOperations.find(op => op.operationLabel === value);
-    const selectedOperation = availableOperations.findIndex(op => op.operationLabel === value);
+    if (availableOperations.find(op => op.operationLabel === value)) {
+      const filter = filters.find(filter => filter.attribute === 'role');
+      const selectedOperation = filter?.operationOptions.findIndex(op => op.operationLabel === value) ?? -1;
 
-    if (filter && operation && selectedOperation >= 0) {
-      handleFiltersClear();
+      if (filter && selectedOperation >= 0) {
+        handleFiltersClear();
 
-      onSetFilter('role', 'eq', value);
+        onSetFilter('role', 'eq', value);
 
-      setAppliedFilters(appliedFilters => [
-        ...appliedFilters,
-        {
-          filter,
-          selectedOperation,
-          value,
-        },
-      ]);
+        setAppliedFilters(appliedFilters => [
+          ...appliedFilters,
+          {
+            filter,
+            selectedOperation,
+            value,
+          },
+        ]);
+      }
     }
   };
 
