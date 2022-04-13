@@ -186,7 +186,9 @@ export const PredeterminedFilters: FC<DataTableFilterProps> = ({
       const selectedOperation = filter?.operationOptions.findIndex(op => op.operationLabel === value) ?? -1;
 
       if (filter && selectedOperation >= 0) {
-        handleFiltersClear();
+        if (appliedFilters.findIndex(f => f.filter.attribute === 'role') !== -1) {
+          handleFilterRemove(appliedFilters.findIndex(f => f.filter.attribute === 'role'));
+        }
 
         onSetFilter('role', 'eq', value);
 
