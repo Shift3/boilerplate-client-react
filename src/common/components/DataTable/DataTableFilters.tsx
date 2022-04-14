@@ -143,14 +143,11 @@ export const DataTableFilters: FC<DataTableFilterProps> = ({
   );
 };
 
-export const PredeterminedFilters: FC<DataTableFilterProps> = ({
-  filters = [],
-  defaultFilterAttribute,
-  defaultFilterOperation,
-  onSetFilter,
-  onRemoveFilter,
-  onClearFilters,
-}) => {
+export const PredeterminedFilters: FC<{
+  filters: DataTableFilterProps['filters'];
+  onSetFilter: DataTableFilterProps['onSetFilter'];
+  onRemoveFilter: DataTableFilterProps['onRemoveFilter'];
+}> = ({ filters = [], onSetFilter, onRemoveFilter }) => {
   const [appliedFilters, setAppliedFilters] = useState<AppliedFilterInfo[]>([]);
 
   const handleFilterRemove = (index: number) => {
@@ -202,7 +199,7 @@ export const PredeterminedFilters: FC<DataTableFilterProps> = ({
     display: flex;
     flex-direction: row;
     justify-content: center;
-    border: 2px solid gray;
+    border: 2px solid #a7acb0;
     margin-bottom: 0.5rem;
   `;
 
@@ -213,7 +210,7 @@ export const PredeterminedFilters: FC<DataTableFilterProps> = ({
     const appliedFilter = appliedFilters.find(appliedFilter => appliedFilter.filter.attribute === attribute);
 
     return (
-      <div className='w-100 d-flex flex-column'>
+      <div className='w-75 d-flex flex-column'>
         <ContainerWithBorder>
           <span className='text-muted'>{attribute.charAt(0).toUpperCase() + attribute.substring(1)}</span>
         </ContainerWithBorder>

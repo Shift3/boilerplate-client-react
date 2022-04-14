@@ -113,21 +113,21 @@ export const UserListView: FC = () => {
 
   return (
     <Container>
-      <PageHeader>
-        <div>
-          <h1>User List</h1>
-          <p className='text-muted'>Active and invited users in the system.</p>
-        </div>
-        <HasPermission perform='user:create'>
-          <div>
-            <Link to='/users/create-user'>
-              <CreateButton>Add User</CreateButton>
-            </Link>
-          </div>
-        </HasPermission>
-      </PageHeader>
-      <Row className='d-flex flex-nowrap'>
+      <Row className='d-flex'>
         <Col style={{ flex: 4 }}>
+          <PageHeader>
+            <div>
+              <h1>User List</h1>
+              <p className='text-muted'>Active and invited users in the system.</p>
+            </div>
+            <HasPermission perform='user:create'>
+              <div>
+                <Link to='/users/create-user'>
+                  <CreateButton>Add User</CreateButton>
+                </Link>
+              </div>
+            </HasPermission>
+          </PageHeader>
           <DataTableFilters
             filters={filters}
             defaultFilterAttribute='firstName'
@@ -166,15 +166,8 @@ export const UserListView: FC = () => {
             </TableCard.Body>
           </TableCard>
         </Col>
-        <Col style={{ flex: 1 }}>
-          <PredeterminedFilters
-            filters={visibleFilters}
-            defaultFilterAttribute='role'
-            defaultFilterOperation='eq'
-            onSetFilter={addFilter}
-            onRemoveFilter={removeFilter}
-            onClearFilters={resetFilters}
-          />
+        <Col style={{ flex: 1, marginTop: '.9rem' }}>
+          <PredeterminedFilters filters={visibleFilters} onSetFilter={addFilter} onRemoveFilter={removeFilter} />
         </Col>
       </Row>
     </Container>
