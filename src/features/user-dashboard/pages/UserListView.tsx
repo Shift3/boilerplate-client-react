@@ -1,19 +1,14 @@
 import { useGetUsersQuery } from 'common/api/userApi';
 import { NoContent, PageHeader, TableCard } from 'common/components/Common';
 import { DataTable } from 'common/components/DataTable';
-import {
-  AppliedFilterInfo,
-  DataTableFilters,
-  FilterInfo,
-  PredeterminedFilters,
-} from 'common/components/DataTable/DataTableFilters';
+import { DataTableFilters, FilterInfo, PredeterminedFilters } from 'common/components/DataTable/DataTableFilters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { RadioButtonOptionSelector } from 'common/components/RadioButtonOptionSelector';
 import { usePSFQuery } from 'common/hooks';
 import { PaginatedResult, User } from 'common/models';
 import { CreateButton } from 'common/styles/button';
 import { HasPermission } from 'features/rbac';
-import { FC, useMemo, useState } from 'react';
+import { FC, useMemo } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserTableItem, useUserTableData } from '../hooks/useUserTableData';
@@ -36,10 +31,6 @@ export const UserListView: FC = () => {
   const users = useMemo(() => data?.results ?? [], [data]);
   const { columns, data: tableData } = useUserTableData(users);
   const isPageLoading = isLoading;
-
-  const [appliedFilters, setAppliedFilters] = useState<AppliedFilterInfo[]>([]);
-
-  console.log('appliedFilters:', appliedFilters);
 
   const filters: FilterInfo[] = useMemo(
     () => [
@@ -139,8 +130,6 @@ export const UserListView: FC = () => {
           </PageHeader>
           <DataTableFilters
             filters={filters}
-            appliedFilters={appliedFilters}
-            setAppliedFilters={setAppliedFilters}
             defaultFilterAttribute='firstName'
             defaultFilterOperation='icontains'
             onSetFilter={addFilter}
@@ -178,13 +167,7 @@ export const UserListView: FC = () => {
           </TableCard>
         </Col>
         <Col style={{ flex: 1, marginTop: '.9rem' }}>
-          <PredeterminedFilters
-            filters={visibleFilters}
-            appliedFilters={appliedFilters}
-            setAppliedFilters={setAppliedFilters}
-            onSetFilter={addFilter}
-            onRemoveFilter={removeFilter}
-          />
+          <PredeterminedFilters filters={visibleFilters} onSetFilter={addFilter} onRemoveFilter={removeFilter} />
         </Col>
       </Row>
     </Container>

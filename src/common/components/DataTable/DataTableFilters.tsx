@@ -26,8 +26,6 @@ export type AppliedFilterInfo = {
 
 export type DataTableFilterProps = {
   filters: FilterInfo[];
-  appliedFilters: AppliedFilterInfo[];
-  setAppliedFilters: React.Dispatch<React.SetStateAction<AppliedFilterInfo[]>>;
   defaultFilterAttribute: string;
   defaultFilterOperation: FilterOp;
   onSetFilter: (attribute: string, operation: FilterOp, value: string) => void;
@@ -37,8 +35,6 @@ export type DataTableFilterProps = {
 
 export const DataTableFilters: FC<DataTableFilterProps> = ({
   filters = [],
-  appliedFilters,
-  setAppliedFilters,
   defaultFilterAttribute,
   defaultFilterOperation,
   onSetFilter,
@@ -46,7 +42,7 @@ export const DataTableFilters: FC<DataTableFilterProps> = ({
   onClearFilters,
 }) => {
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
-  // const [appliedFilters, setAppliedFilters] = useState<AppliedFilterInfo[]>([]);
+  const [appliedFilters, setAppliedFilters] = useState<AppliedFilterInfo[]>([]);
   const availableFilters = filters.filter(
     filter => !appliedFilters.find(appliedFilter => appliedFilter.filter.attribute === filter.attribute),
   );
@@ -149,12 +145,10 @@ export const DataTableFilters: FC<DataTableFilterProps> = ({
 
 export const PredeterminedFilters: FC<{
   filters: DataTableFilterProps['filters'];
-  appliedFilters: DataTableFilterProps['appliedFilters'];
-  setAppliedFilters: DataTableFilterProps['setAppliedFilters'];
   onSetFilter: DataTableFilterProps['onSetFilter'];
   onRemoveFilter: DataTableFilterProps['onRemoveFilter'];
-}> = ({ filters = [], appliedFilters, setAppliedFilters, onSetFilter, onRemoveFilter }) => {
-  // const [appliedFilters, setAppliedFilters] = useState<AppliedFilterInfo[]>([]);
+}> = ({ filters = [], onSetFilter, onRemoveFilter }) => {
+  const [appliedFilters, setAppliedFilters] = useState<AppliedFilterInfo[]>([]);
 
   const handleFilterRemove = (index: number) => {
     const appliedFilter = appliedFilters[index];
@@ -209,12 +203,9 @@ export const PredeterminedFilters: FC<{
     margin-bottom: 0.5rem;
   `;
 
-  const getAppliedFilterIndex = (attribute: string) => {
-    return appliedFilters.findIndex(filter => filter.filter.attribute === attribute);
-  };
-
   const renderFilterAndCancelButton = (attribute: string, onChange: (value: string) => void) => {
     const filter = filters.find(filter => filter.attribute === attribute);
+    const filterIndex = filters.findIndex(filter => filter.attribute === attribute);
     const inputUI = filter?.InputUI;
     const appliedFilter = appliedFilters.find(appliedFilter => appliedFilter.filter.attribute === attribute);
 
@@ -231,7 +222,7 @@ export const PredeterminedFilters: FC<{
             })
           : null}
         {appliedFilter ? (
-          <CancelButton className='w-100' onClick={() => handleFilterRemove(getAppliedFilterIndex(attribute))}>
+          <CancelButton className='w-100' onClick={() => handleFilterRemove(filterIndex)}>
             Cancel
           </CancelButton>
         ) : null}
