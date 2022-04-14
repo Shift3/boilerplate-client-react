@@ -1,5 +1,6 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAuth } from 'features/auth/hooks';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import styled from 'styled-components';
@@ -41,17 +42,42 @@ export const BitwiseNavbar = styled(Navbar)`
       margin-bottom: 1rem;
     }
   }
+
+  .sidebar-toggle {
+    font-size: 2rem;
+    color: red;
+  }
 `;
 
 export const SideNavbar: FC = () => {
   const { user } = useAuth();
   const navLinks = useNavLinks();
   const { openLogoutModal } = useLogoutModal();
+  const [mobile, setMobile] = useState(false);
+  const [sidebar, setSidebar] = useState(false);
+
+  useEffect(() => {
+    // const handleResize = () => {
+    //   window.innerWidth < 1065 ? setMobile(true) : setMobile(false);
+    // };
+    const handleResize = () => {
+      if (window.innerWidth < 1065) {
+        setMobile(true);
+      } else {
+        setMobile(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
     <BitwiseNavbar className='flex-column h-100 py-0'>
       <Logo />
-      {user ? (
+      {user && !mobile ? (
         <div className='nav-wrap w-100'>
           <Nav className='flex-column'>
             {navLinks.map(link => (
@@ -65,6 +91,23 @@ export const SideNavbar: FC = () => {
         </div>
       ) : (
         <></>
+      )}
+      {mobile && (
+        <div className='sidebar-toggle'>
+          {sidebar ? (
+            <span>
+              <FontAwesomeIcon
+                className='sidebar-toggle'
+                icon={['far', 'xmark']}
+                onClick={() => setSidebar(!sidebar)}
+              />
+            </span>
+          ) : (
+            <span>
+              <FontAwesomeIcon className='sidebar-toggle' icon={['far', 'bars']} onClick={() => setSidebar(!sidebar)} />
+            </span>
+          )}
+        </div>
       )}
     </BitwiseNavbar>
   );
