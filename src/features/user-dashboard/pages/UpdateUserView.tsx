@@ -20,7 +20,7 @@ export const UpdateUserView: FC = () => {
   const navigate = useNavigate();
   const { userHasPermission } = useRbac();
   const [updateUser] = useUpdateUserMutation();
-  const { data: user, isLoading: isLoadingUser, error: getUserError } = useGetUserByIdQuery(Number(id));
+  const { data: user, isLoading: isLoadingUser, isFetching, error: getUserError } = useGetUserByIdQuery(Number(id));
   const roles = Object.values(Role);
 
   const availableRoles = roles.filter(role => userHasPermission({ permission: 'role:read', data: role }));
@@ -65,7 +65,12 @@ export const UpdateUserView: FC = () => {
 
       <FormCard>
         <FormCard.Body>
-          <WithLoadingOverlay isLoading={isLoadingUser} containerHasRoundedCorners containerBorderRadius='6px'>
+          <WithLoadingOverlay
+            isLoading={isLoadingUser || isFetching}
+            isInitialLoad={isLoadingUser && isFetching}
+            containerHasRoundedCorners
+            containerBorderRadius='6px'
+          >
             <StyledFormWrapper>
               <UserDetailForm
                 availableRoles={availableRoles}
