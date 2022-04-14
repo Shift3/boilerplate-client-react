@@ -2,13 +2,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetAgentsQuery } from 'common/api/agentApi';
 import { NoContent, PageHeader, TableCard } from 'common/components/Common';
 import { DataTable } from 'common/components/DataTable';
-import { DataTableFilters, FilterInfo } from 'common/components/DataTable/DataTableFilters';
+import { AppliedFilterInfo, DataTableFilters, FilterInfo } from 'common/components/DataTable/DataTableFilters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { Agent, PaginatedResult } from 'common/models';
 import { SecondaryButton, CreateButton } from 'common/styles/button';
 import { HasPermission } from 'features/rbac';
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import { Link, useNavigate } from 'react-router-dom';
@@ -32,6 +32,8 @@ export const AgentListView: FC = () => {
   const agents = useMemo(() => data?.results ?? [], [data]);
   const { columns, data: tableData } = useAgentTableData(agents);
   const isPageLoading = isLoading;
+
+  const [appliedFilters, setAppliedFilters] = useState<AppliedFilterInfo[]>([]);
 
   const filters: FilterInfo[] = useMemo(
     () => [
@@ -118,6 +120,8 @@ export const AgentListView: FC = () => {
       </PageHeader>
       <DataTableFilters
         filters={filters}
+        appliedFilters={appliedFilters}
+        setAppliedFilters={setAppliedFilters}
         defaultFilterAttribute='name'
         defaultFilterOperation='icontains'
         onSetFilter={addFilter}
