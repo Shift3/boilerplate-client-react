@@ -164,7 +164,7 @@ export const usePSFQuery = <ResultType>(
         const { basePage } = config;
         const { payload } = action;
         const { filters } = state;
-        const newFilters = filters.filter(filter => filter.attr !== payload.attr && filter.op !== payload.op);
+        const newFilters = filters.filter(filter => filter.attr !== payload.attr);
         return { ...state, page: basePage, filters: newFilters };
       }
 
