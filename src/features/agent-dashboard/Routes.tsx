@@ -1,17 +1,16 @@
+import { Layout } from 'common/components/Layout';
 import { NotFoundView } from 'common/components/NotFound';
 import { AgentListView, CreateAgentView, UpdateAgentView } from 'features/agent-dashboard/pages';
 import { FC } from 'react';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
-export const Routes: FC = () => {
-  const { path } = useRouteMatch();
-
-  return (
-    <Switch>
-      <Route exact path={path} component={AgentListView} />
-      <Route exact path={`${path}/create-agent`} component={CreateAgentView} />
-      <Route exact path={`${path}/update-agent/:id`} component={UpdateAgentView} />
-      <Route path={path} component={NotFoundView} />
-    </Switch>
-  );
-};
+export const AgentRoutes: FC = () => (
+  <Layout>
+    <Routes>
+      <Route path='/' element={<AgentListView />} />
+      <Route path='/create-agent' element={<CreateAgentView />} />
+      <Route path='/update-agent/:id' element={<UpdateAgentView />} />
+      <Route path='/*' element={<NotFoundView />} />
+    </Routes>
+  </Layout>
+);

@@ -5,7 +5,7 @@ describe('WithLoadingOverlay', () => {
   describe('when isLoading prop is true', () => {
     beforeEach(() => {
       render(
-        <WithLoadingOverlay isLoading>
+        <WithLoadingOverlay isLoading containerHasRoundedCorners={false} containerBorderRadius='0px'>
           <div data-testid='children'></div>
         </WithLoadingOverlay>,
       );
@@ -15,30 +15,22 @@ describe('WithLoadingOverlay', () => {
       const spinner = screen.queryByRole('status');
       expect(spinner).toBeInTheDocument();
     });
-
-    it('should not render nested children', () => {
-      const children = screen.queryByTestId('children');
-      expect(children).not.toBeInTheDocument();
-    });
   });
 
   describe('when isLoading prop is false', () => {
     beforeEach(() => {
       render(
-        <WithLoadingOverlay isLoading={false}>
+        <WithLoadingOverlay isLoading={false} containerHasRoundedCorners={false} containerBorderRadius='0px'>
           <div data-testid='children'></div>
         </WithLoadingOverlay>,
       );
     });
 
-    it('should not render a loading spinner', () => {
-      const spinner = screen.queryByRole('status');
-      expect(spinner).not.toBeInTheDocument();
-    });
-
-    it('should render nested children', () => {
-      const children = screen.queryByTestId('children');
-      expect(children).toBeInTheDocument();
+    it('should not render a loading spinner after a quarter of a second', () => {
+      setTimeout(() => {
+        const spinner = screen.queryByRole('status');
+        expect(spinner).not.toBeInTheDocument();
+      }, 250); 
     });
   });
 });

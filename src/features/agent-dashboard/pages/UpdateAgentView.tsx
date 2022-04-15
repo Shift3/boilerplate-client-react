@@ -2,32 +2,35 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetAgentByIdQuery, useUpdateAgentMutation } from 'common/api/agentApi';
 import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
+import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
+import { ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { StyledFormWrapper } from 'common/styles/form';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
 
-export interface RouteParams {
+export type RouteParams = {
   id: string;
-}
+};
 
 export const UpdateAgentView: FC = () => {
   const { id } = useParams<RouteParams>();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [updateAgent] = useUpdateAgentMutation();
-  const { data: agent, isLoading: isLoadingAgent, error } = useGetAgentByIdQuery(id);
+  const { data: agent, isLoading: isLoadingAgent, isFetching, error } = useGetAgentByIdQuery(id!);
+  const [submissionError, setSubmissionError] = useState<ServerValidationErrors<FormData> | null>(null);
 
   useEffect(() => {
     if (error) {
       notificationService.showErrorMessage('Unable to load agent. Returning to agent list.');
-      history.replace('/agents');
+      navigate('/agents', { replace: true });
     }
-  }, [error, history]);
+  }, [error, navigate]);
 
   const handleFormCancel = () => {
-    history.goBack();
+    navigate(-1);
   };
 
   const handleFormSubmit = async (data: FormData) => {
@@ -35,8 +38,13 @@ export const UpdateAgentView: FC = () => {
     try {
       await updateAgent(updateRequest).unwrap();
       notificationService.showSuccessMessage('Agent updated.');
-      history.push('/agents');
+      navigate('/agents');
     } catch (error) {
+      if (isFetchBaseQueryError(error)) {
+        if (isErrorResponse<FormData>(error?.data)) {
+          setSubmissionError((error?.data).error);
+        }
+      }
       notificationService.showErrorMessage('Unable to update agent.');
     }
   };
@@ -45,7 +53,7 @@ export const UpdateAgentView: FC = () => {
     <SmallContainer>
       <PageCrumb>
         <Link to='/agents'>
-          <FontAwesomeIcon icon={["fas", "chevron-left"]} />  Back to Agent List
+          <FontAwesomeIcon icon={['fas', 'chevron-left']} /> Back to Agent List
         </Link>
       </PageCrumb>
 
@@ -58,13 +66,19 @@ export const UpdateAgentView: FC = () => {
 
       <FormCard>
         <Card.Body>
-          <WithLoadingOverlay isLoading={isLoadingAgent}>
+          <WithLoadingOverlay
+            isLoading={isLoadingAgent || isFetching}
+            isInitialLoad={isLoadingAgent && isFetching}
+            containerHasRoundedCorners
+            containerBorderRadius='6px'
+          >
             <StyledFormWrapper>
               <AgentDetailForm
                 defaultValues={agent}
                 submitButtonLabel='Save'
                 onSubmit={handleFormSubmit}
                 onCancel={handleFormCancel}
+                serverValidationErrors={submissionError}
               />
             </StyledFormWrapper>
           </WithLoadingOverlay>

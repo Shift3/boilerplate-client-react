@@ -1,16 +1,16 @@
+import { Layout } from 'common/components/Layout';
 import { NotFoundView } from 'common/components/NotFound';
 import { FC } from 'react';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { CreateUserView, UpdateUserView, UserListView } from './pages';
 
-export const Routes: FC = () => {
-  const { path } = useRouteMatch();
-  return (
-    <Switch>
-      <Route exact path={path} component={UserListView} />
-      <Route exact path={`${path}/create-user`} component={CreateUserView} />
-      <Route exact path={`${path}/update-user/:id`} component={UpdateUserView} />
-      <Route path={path} component={NotFoundView} />
-    </Switch>
-  );
-};
+export const UserRoutes: FC = () => (
+  <Layout>
+    <Routes>
+      <Route path='/' element={<UserListView />} />
+      <Route path='/create-user' element={<CreateUserView />} />
+      <Route path='/update-user/:id' element={<UpdateUserView />} />
+      <Route path='*' element={<NotFoundView />} />
+    </Routes>
+  </Layout>
+);

@@ -1,10 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import portraitPlaceholder from 'assets/img/portrait_placeholder.png';
-import { CircularImg } from 'common/components/Common';
 import { User } from 'common/models';
 import { FC } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { UserProfilePicture } from './UserProfilePicture';
 
 const ProfileInfoWrapper = styled.div`
   background: #efefef;
@@ -32,10 +31,10 @@ const ProfileInfoWrapper = styled.div`
     transform: translateY(-50%);
     right: -1rem;
   }
-  
+
   &:hover {
     background: #dadada;
-    
+
     span {
       right: 1rem;
       opacity: 1;
@@ -48,16 +47,17 @@ type Props = {
 };
 
 export const NavUserDetails: FC<Props> = ({ user }) => {
-  const history = useHistory();
-  const fullName = `${user.firstName} ${user.lastName}`;
+  const navigate = useNavigate();
 
   return (
-    <ProfileInfoWrapper onClick={() => history.push(`/user/profile/${user.id}`) }>
-      <CircularImg radius={32} src={user.profilePicture || portraitPlaceholder} alt={fullName} />
+    <ProfileInfoWrapper onClick={() => navigate(`/user/profile/${user.id}`)}>
+      <UserProfilePicture user={user} size='xs' radius={32} />
 
       <div>
-        <div>{user.firstName} {user.lastName.charAt(0)}.</div>
-        <small>{user.role.roleName}</small>
+        <div>
+          {user.firstName} {user.lastName.charAt(0)}.
+        </div>
+        <small>{user.role.toString()}</small>
         <span>
           <FontAwesomeIcon icon={['fas', 'cog']} size='2x' />
         </span>

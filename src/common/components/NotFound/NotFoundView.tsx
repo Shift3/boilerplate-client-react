@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -25,29 +25,29 @@ const NotFoundLabel = styled.p`
 `;
 
 const GoBackButton = styled(Button)`
-  color: ${(props) => props.theme.buttons.submitTextColor};
-  background-color: ${(props) => props.theme.buttons.submitBackgroundColor};
-  border-color: ${(props) => props.theme.buttons.submitBorderColor};
+  color: ${props => props.theme.buttons.submitTextColor};
+  background-color: ${props => props.theme.buttons.submitBackgroundColor};
+  border-color: ${props => props.theme.buttons.submitBorderColor};
   min-width: 146px;
   min-height: 24px;
   padding: 10px;
   margin: 0;
 
   &:hover {
-    background-color: ${(props) => props.theme.buttons.createHoverBackgroundColor};
-    border-color: ${(props) => props.theme.buttons.createHoverBorderColor};
+    background-color: ${props => props.theme.buttons.createHoverBackgroundColor};
+    border-color: ${props => props.theme.buttons.createHoverBorderColor};
   }
 `;
 
 export const NotFoundView: FC = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <Container>
       <Wrapper>
         <NotFoundStatusCode>404</NotFoundStatusCode>
         <NotFoundLabel>Something went wrong or this page doesn&apos;t exist anymore.</NotFoundLabel>
-        <GoBackButton type='button' onClick={() => history.goBack()}>
+        <GoBackButton type='button' onClick={() => navigate(-1)}>
           Go Back
         </GoBackButton>
       </Wrapper>

@@ -1,6 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from 'common/components/LoadingButton';
-import { FC } from 'react';
+import { addServerErrors } from 'common/error/utilities';
+import { ServerValidationErrors } from 'common/models';
+import { FC, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Constants } from 'utils/constants';
@@ -12,21 +14,29 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
+  serverValidationErrors: ServerValidationErrors<FormData> | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
   email: yup.string().required(Constants.errorMessages.EMAIL_REQUIRED).email(Constants.errorMessages.INVALID_EMAIL),
 });
 
-export const ForgotPasswordForm: FC<Props> = ({ onSubmit }) => {
+export const ForgotPasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
   const {
     formState: { errors, isValid, isSubmitting },
     handleSubmit,
     register,
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
   });
+
+  useEffect(() => {
+    if (serverValidationErrors) {
+      addServerErrors(serverValidationErrors, setError);
+    }
+  }, [serverValidationErrors, setError]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>

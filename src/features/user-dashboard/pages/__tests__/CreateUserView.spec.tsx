@@ -1,6 +1,6 @@
 import { act, render, screen, waitFor, within } from '@testing-library/react';
 import { createAppStore } from 'app/redux';
-import { RoleFactory, UserFactory } from 'common/models/testing-factories';
+import { UserFactory } from 'common/models/testing-factories';
 import { AuthState } from 'features/auth/authSlice';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
@@ -15,11 +15,11 @@ import { baseUrl, server } from 'test/server';
 import { rest } from 'msw';
 import { StatusCodes } from 'http-status-codes';
 import * as notificationService from 'common/services/notification';
+import {Role} from 'common/models';
 
 describe('CreateUserView', () => {
   describe('when user has Admin role', () => {
-    const role = RoleFactory.build({ roleName: 'Admin' });
-    const user = UserFactory.build({}, { associations: { role } });
+    const user = UserFactory.build({role: Role.ADMIN});
     const auth: AuthState = { token: 'fake token', user };
 
     beforeEach(() => {
@@ -62,8 +62,7 @@ describe('CreateUserView', () => {
   });
 
   describe('when user has Super Administrator role', () => {
-    const role = RoleFactory.build({ roleName: 'Super Administrator' });
-    const user = UserFactory.build({}, { associations: { role } });
+    const user = UserFactory.build({role: Role.SUPER_ADMIN});
     const auth: AuthState = { token: 'fake token', user };
 
     beforeEach(() => {
@@ -106,8 +105,7 @@ describe('CreateUserView', () => {
   });
 
   describe('when form is submitted', () => {
-    const role = RoleFactory.build({ roleName: 'Admin' });
-    const user = UserFactory.build({}, { associations: { role } });
+    const user = UserFactory.build({role: Role.ADMIN});
     const auth: AuthState = { token: 'fake token', user };
     const newUser = UserFactory.build();
     let store: EnhancedStore;
@@ -135,7 +133,7 @@ describe('CreateUserView', () => {
         userEvent.type(within(form).getByRole('textbox', { name: /first name/i }), newUser.firstName);
         userEvent.type(within(form).getByRole('textbox', { name: /last name/i }), newUser.lastName);
         userEvent.type(within(form).getByRole('textbox', { name: /email/i }), newUser.email);
-        userEvent.selectOptions(within(form).getByRole('combobox', { name: /role/i }), newUser.role.roleName);
+        userEvent.selectOptions(within(form).getByRole('combobox', { name: /role/i }), newUser.role);
       });
 
       await act(async () => {
@@ -164,7 +162,7 @@ describe('CreateUserView', () => {
         userEvent.type(within(form).getByRole('textbox', { name: /first name/i }), newUser.firstName);
         userEvent.type(within(form).getByRole('textbox', { name: /last name/i }), newUser.lastName);
         userEvent.type(within(form).getByRole('textbox', { name: /email/i }), newUser.email);
-        userEvent.selectOptions(within(form).getByRole('combobox', { name: /role/i }), newUser.role.roleName);
+        userEvent.selectOptions(within(form).getByRole('combobox', { name: /role/i }), newUser.role);
       });
 
       await act(async () => {

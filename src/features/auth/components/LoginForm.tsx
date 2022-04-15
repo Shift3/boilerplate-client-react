@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { LoginButton } from 'common/styles/button';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Button, InputGroup } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
@@ -10,6 +11,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Constants } from 'utils/constants';
 import * as yup from 'yup';
+import { ServerValidationErrors } from 'common/models';
+import { addServerErrors } from 'common/error/utilities';
 
 export type FormData = {
   email: string;
@@ -18,6 +21,7 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
+  serverValidationErrors: ServerValidationErrors<FormData> | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
@@ -39,11 +43,12 @@ const TogglePasswordButton = styled(Button)`
   border-color: #ced4da;
 `;
 
-export const LogInForm: FC<Props> = ({ onSubmit }) => {
+export const LogInForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
   const {
     formState: { errors, isValid, isSubmitting },
     handleSubmit,
     register,
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
@@ -51,17 +56,17 @@ export const LogInForm: FC<Props> = ({ onSubmit }) => {
 
   const [showingPassword, setShowingPassword] = useState(false);
 
+  useEffect(() => {
+    if (serverValidationErrors) {
+      addServerErrors(serverValidationErrors, setError);
+    }
+  }, [serverValidationErrors, setError]);
+
   return (
     <Form data-testid='loginForm' onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
         <Form.Label htmlFor='email'>Email</Form.Label>
-        <Form.Control
-          id='email'
-          type='email'
-          {...register('email')}
-          placeholder='Email'
-          isInvalid={!!errors.email}
-        />
+        <Form.Control id='email' type='email' {...register('email')} placeholder='Email' isInvalid={!!errors.email} />
         <Form.Control.Feedback type='invalid' role='alert'>
           {errors.email?.message}
         </Form.Control.Feedback>
@@ -77,7 +82,7 @@ export const LogInForm: FC<Props> = ({ onSubmit }) => {
             isInvalid={!!errors.password}
           />
           <TogglePasswordButton variant='outline-secondary' onClick={() => setShowingPassword(!showingPassword)}>
-            <FontAwesomeIcon icon={['fas', showingPassword ? 'eye-slash' : 'eye']} />
+            <FontAwesomeIcon icon={showingPassword ? faEyeSlash : faEye} />
           </TogglePasswordButton>
           <Form.Control.Feedback type='invalid' role='alert'>
             {errors.password?.message}

@@ -3,7 +3,7 @@ import { ErrorResponse } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { StatusCodes } from 'http-status-codes';
 
-export const handleApiError = (error: FetchBaseQueryError): void => {
+export const handleApiError = <T>(error: FetchBaseQueryError): void => {
   let message: string;
 
   switch (error.status) {
@@ -13,7 +13,7 @@ export const handleApiError = (error: FetchBaseQueryError): void => {
     case StatusCodes.UNAUTHORIZED:
     case StatusCodes.FORBIDDEN:
     case StatusCodes.INTERNAL_SERVER_ERROR:
-      message = (error.data as ErrorResponse).message;
+      message = (error.data as ErrorResponse<T>).message;
       break;
 
     // An error occured during the execution of the fetch function.

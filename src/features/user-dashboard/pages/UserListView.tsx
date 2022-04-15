@@ -1,6 +1,7 @@
 import { useGetUsersQuery } from 'common/api/userApi';
 import { PageHeader, TableCard } from 'common/components/Common';
 import { DataTable } from 'common/components/DataTable';
+import { DataTableFilters, FilterInfo } from 'common/components/DataTable/DataTableFilters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { PaginatedResult, User } from 'common/models';
@@ -8,16 +9,77 @@ import { CreateButton } from 'common/styles/button';
 import { HasPermission } from 'features/rbac';
 import { FC, useMemo } from 'react';
 import Container from 'react-bootstrap/Container';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserTableItem, useUserTableData } from '../hooks/useUserTableData';
 
 export const UserListView: FC = () => {
-  const history = useHistory();
-  const { data, isLoading, page, pageSize, getPage, changePageSize, changeSortBy } =
-    usePSFQuery<PaginatedResult<User>>(useGetUsersQuery);
+  const navigate = useNavigate();
+  const {
+    data,
+    isLoading,
+    isFetching,
+    page,
+    pageSize,
+    getPage,
+    changePageSize,
+    changeSortBy,
+    addFilter,
+    removeFilter,
+    resetFilters,
+  } = usePSFQuery<PaginatedResult<User>>(useGetUsersQuery);
   const users = useMemo(() => data?.results ?? [], [data]);
   const { columns, data: tableData } = useUserTableData(users);
   const isPageLoading = isLoading;
+
+  const filters: FilterInfo[] = useMemo(
+    () => [
+      {
+        attribute: 'firstName',
+        attributeLabel: 'First Name',
+        operationOptions: [
+          {
+            operation: 'eq',
+            operationLabel: 'is',
+          },
+          {
+            operation: 'icontains',
+            operationLabel: 'contains',
+          },
+          {
+            operation: 'startswith',
+            operationLabel: 'starts with',
+          },
+          {
+            operation: 'endswith',
+            operationLabel: 'ends with',
+          },
+        ],
+      },
+      {
+        attribute: 'lastName',
+        attributeLabel: 'Last Name',
+        operationOptions: [
+          {
+            operation: 'eq',
+            operationLabel: 'is',
+          },
+          {
+            operation: 'icontains',
+            operationLabel: 'contains',
+          },
+          {
+            operation: 'startswith',
+            operationLabel: 'starts with',
+          },
+          {
+            operation: 'endswith',
+            operationLabel: 'ends with',
+          },
+        ],
+      },
+    ],
+    [],
+  );
 
   return (
     <Container>
@@ -34,13 +96,26 @@ export const UserListView: FC = () => {
           </div>
         </HasPermission>
       </PageHeader>
+      <DataTableFilters
+        filters={filters}
+        defaultFilterAttribute='firstName'
+        defaultFilterOperation='icontains'
+        onSetFilter={addFilter}
+        onRemoveFilter={removeFilter}
+        onClearFilters={resetFilters}
+      />
       <TableCard>
         <TableCard.Body>
-          <WithLoadingOverlay isLoading={isPageLoading}>
+          <WithLoadingOverlay
+            isLoading={isPageLoading || isFetching}
+            isInitialLoad={isPageLoading && isFetching}
+            containerHasRoundedCorners
+            containerBorderRadius='6px'
+          >
             <DataTable<UserTableItem>
               columns={columns}
               data={tableData}
-              onRowClick={item => history.push(`users/update-user/${item.id}`)}
+              onRowClick={item => navigate(`/users/update-user/${item.id}`)}
               pagination={{
                 basePage: 1,
                 page,

@@ -10,5 +10,4 @@ export interface Agent {
   categoryList: unknown[];
   documentList: unknown[];
   address?: Address;
-  agency: unknown;
 }

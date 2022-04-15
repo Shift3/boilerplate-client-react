@@ -1,10 +1,6 @@
 import { Role, RoleHierarchy, RoleType, User } from 'common/models';
 
 export type Permission =
-  | 'agency:create'
-  | 'agency:read'
-  | 'agency:update'
-  | 'agency:delete'
   | 'agent:create'
   | 'agent:read'
   | 'agent:update'
@@ -32,10 +28,6 @@ export type RbacRules = {
 
 const rules: RbacRules = {
   'Super Administrator': {
-    'agency:create': true,
-    'agency:read': true,
-    'agency:update': true,
-    'agency:delete': true,
     'agent:create': true,
     'agent:read': true,
     'agent:update': true,
@@ -53,8 +45,7 @@ const rules: RbacRules = {
     'agent:read': true,
     'agent:update': true,
     'agent:delete': true,
-    'role:read': (user: User, role: unknown) =>
-      RoleHierarchy[user.role.roleName] >= RoleHierarchy[(role as Role).roleName],
+    'role:read': (user: User, role: unknown) => RoleHierarchy[user.role] >= RoleHierarchy[(role as Role)],
     'user:create': true,
     'user:read': true,
     'user:update': true,

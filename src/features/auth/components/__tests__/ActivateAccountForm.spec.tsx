@@ -11,7 +11,7 @@ describe('ActivateAccountForm', () => {
     await act(async () => {
       render(
         <ThemeProvider theme={AppTheme}>
-          <ActivateAccountForm onSubmit={mockOnSubmit} />
+          <ActivateAccountForm onSubmit={mockOnSubmit} serverValidationErrors={null} />
         </ThemeProvider>,
       );
     });

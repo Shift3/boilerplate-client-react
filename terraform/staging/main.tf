@@ -1,5 +1,5 @@
 provider "aws" {
-  version = "2.58"
+  version = "4.8.0"
   profile = "${var.profile}"
   region  = "${var.region}"
 
@@ -19,6 +19,6 @@ terraform {
 
 module "cloudfront" {
   source          = "../cloudfront"
-  assume_role_arn = var.assume_role_arn
   web_domain_name = var.web_domain_name
+  assume_role_arn = var.assume_role_arn
 }

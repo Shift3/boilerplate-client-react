@@ -3,7 +3,7 @@ import { useAppDispatch } from 'app/redux';
 import { useLoginMutation } from 'common/api/authApi';
 import { handleApiError } from 'common/api/handleApiError';
 import { useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as authLocalStorage from '../authLocalStorage';
 import { authSlice } from '../authSlice';
 
@@ -18,7 +18,7 @@ export type UseLoginHook = () => {
 };
 
 export const useLogin: UseLoginHook = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [login, { isLoading }] = useLoginMutation();
 
@@ -29,12 +29,13 @@ export const useLogin: UseLoginHook = () => {
         const auth = { token: session.token, user: session.user };
         dispatch(authSlice.actions.userLoggedIn(auth));
         authLocalStorage.saveAuthState(auth);
-        history.replace('/agents');
+        navigate('/agents', { replace: true });
       } catch (error) {
         handleApiError(error as FetchBaseQueryError);
+        throw error;
       }
     },
-    [login, dispatch, history],
+    [login, dispatch, navigate],
   );
 
   return { login: loginUser, isLoading };

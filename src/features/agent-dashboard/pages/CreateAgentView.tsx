@@ -1,26 +1,34 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useCreateAgentMutation } from 'common/api/agentApi';
 import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
+import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
+import { ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { StyledFormWrapper } from 'common/styles/form';
-import { FC } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { FC, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
 
 export const CreateAgentView: FC = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [createAgent] = useCreateAgentMutation();
+  const [submissionError, setSubmissionError] = useState<ServerValidationErrors<FormData> | null>(null);
 
   const handleFormCancel = () => {
-    history.goBack();
+    navigate(-1);
   };
 
   const handleFormSubmit = async (data: FormData) => {
     try {
       await createAgent({ ...data, thumbnail: 'https://shift3tech.com/images/s3-logo-white.svg' }).unwrap();
       notificationService.showSuccessMessage('Agent created.');
-      history.push('/agents');
+      navigate('/agents');
     } catch (error) {
+      if (isFetchBaseQueryError(error)) {
+        if (isErrorResponse<FormData>(error?.data)) {
+          setSubmissionError((error?.data).error);
+        }
+      }
       notificationService.showErrorMessage('Unable to add agent.');
     }
   };
@@ -29,7 +37,7 @@ export const CreateAgentView: FC = () => {
     <SmallContainer>
       <PageCrumb>
         <Link to='/agents'>
-          <FontAwesomeIcon icon={["fas", "chevron-left"]} />  Back to Agent List
+          <FontAwesomeIcon icon={['fas', 'chevron-left']} /> Back to Agent List
         </Link>
       </PageCrumb>
       <PageHeader>
@@ -42,7 +50,12 @@ export const CreateAgentView: FC = () => {
       <FormCard>
         <FormCard.Body>
           <StyledFormWrapper>
-            <AgentDetailForm submitButtonLabel='Create' onCancel={handleFormCancel} onSubmit={handleFormSubmit} />
+            <AgentDetailForm
+              submitButtonLabel='Create'
+              onCancel={handleFormCancel}
+              onSubmit={handleFormSubmit}
+              serverValidationErrors={submissionError}
+            />
           </StyledFormWrapper>
         </FormCard.Body>
       </FormCard>

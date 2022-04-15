@@ -4,8 +4,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
-import FormPrompt from 'common/components/FormPrompt';
 import { LoadingButton } from 'common/components/LoadingButton';
+import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
+import { ServerValidationErrors } from 'common/models';
+import { addServerErrors } from 'common/error/utilities';
 
 export type FormData = {
   newPassword: string;
@@ -14,6 +16,7 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
+  serverValidationErrors: ServerValidationErrors<FormData> | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
@@ -32,12 +35,13 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
     .oneOf([yup.ref('newPassword')], Constants.errorMessages.PASSWORD_MUST_MATCH),
 });
 
-export const ResetPasswordForm: FC<Props> = ({ onSubmit }) => {
+export const ResetPasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
   const {
-    formState: { errors, isDirty, isSubmitting, isValid },
+    formState: { errors, isDirty, isSubmitting, isSubmitted, isValid },
     handleSubmit,
     register,
     trigger,
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
@@ -45,42 +49,46 @@ export const ResetPasswordForm: FC<Props> = ({ onSubmit }) => {
 
   useEffect(() => {
     trigger();
-  }, [trigger]);
+    if (serverValidationErrors) {
+      addServerErrors(serverValidationErrors, setError);
+    }
+  }, [trigger, serverValidationErrors, setError]);
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
-      <Form.Group>
-        <Form.Label htmlFor='newPassword'>New Password</Form.Label>
-        <Form.Control
-          id='newPassword'
-          type='password'
-          {...register('newPassword')}
-          placeholder='Enter new password'
-          isInvalid={!!errors.newPassword}
-        />
-        <Form.Control.Feedback type='invalid' role='alert'>
-          {errors.newPassword?.message}
-        </Form.Control.Feedback>
-      </Form.Group>
-      <Form.Group>
-        <Form.Label htmlFor='confirmPassword'>Confirm Password</Form.Label>
-        <Form.Control
-          id='confirmPassword'
-          type='password'
-          {...register('confirmPassword')}
-          placeholder='Confirm password'
-          isInvalid={!!errors.confirmPassword}
-        />
-        <Form.Control.Feedback type='invalid' role='alert'>
-          {errors.confirmPassword?.message}
-        </Form.Control.Feedback>
-      </Form.Group>
-      <div className='mt-3'>
-        <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
-          Submit
-        </LoadingButton>
-      </div>
-      <FormPrompt isDirty={isDirty} isSubmitting={isSubmitting} />
-    </Form>
+    <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form.Group>
+          <Form.Label htmlFor='newPassword'>New Password</Form.Label>
+          <Form.Control
+            id='newPassword'
+            type='password'
+            {...register('newPassword')}
+            placeholder='Enter new password'
+            isInvalid={!!errors.newPassword}
+          />
+          <Form.Control.Feedback type='invalid' role='alert'>
+            {errors.newPassword?.message}
+          </Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label htmlFor='confirmPassword'>Confirm Password</Form.Label>
+          <Form.Control
+            id='confirmPassword'
+            type='password'
+            {...register('confirmPassword')}
+            placeholder='Confirm password'
+            isInvalid={!!errors.confirmPassword}
+          />
+          <Form.Control.Feedback type='invalid' role='alert'>
+            {errors.confirmPassword?.message}
+          </Form.Control.Feedback>
+        </Form.Group>
+        <div className='mt-3'>
+          <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
+            Submit
+          </LoadingButton>
+        </div>
+      </Form>
+    </WithUnsavedChangesPrompt>
   );
 };

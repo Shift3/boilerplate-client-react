@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from 'app/redux';
-import { User } from 'common/models';
+import { Image, User } from 'common/models';
 import * as authLocalStorage from './authLocalStorage';
 
 export interface AuthState {
@@ -29,6 +29,18 @@ export const authSlice = createSlice({
       state.token = null;
       state.user = null;
     },
+
+    userUpdatedProfile: (state: AuthState, action: PayloadAction<User>) => {
+      const updatedUser: User = action.payload;
+      state.user = updatedUser;
+    },
+
+    userUpdatedProfilePicture: (state: AuthState, action: PayloadAction<Image | null>) => {
+      const updatedProfilePicture: Image | null = action.payload;
+      if (state.user) {
+        state.user = { ...state.user, profilePicture: updatedProfilePicture };
+      }
+    }
   },
 });
 
