@@ -42,10 +42,15 @@ export const BitwiseNavbar = styled(Navbar)`
       margin-bottom: 1rem;
     }
   }
+`;
 
-  .sidebar-toggle {
-    font-size: 2rem;
-    color: red;
+const SidebarToggle = styled.div`
+  display: flex;
+  flex-direction: column;
+  border: 2px solid green;
+  size: 4rem;
+
+  .icon {
   }
 `;
 
@@ -93,21 +98,22 @@ export const SideNavbar: FC = () => {
         <></>
       )}
       {mobile && (
-        <div className='sidebar-toggle'>
+        <SidebarToggle>
           {sidebar ? (
             <span>
               <FontAwesomeIcon
-                className='sidebar-toggle'
+                className='icon'
                 icon={['far', 'xmark']}
+                size='lg'
                 onClick={() => setSidebar(!sidebar)}
               />
             </span>
           ) : (
             <span>
-              <FontAwesomeIcon className='sidebar-toggle' icon={['far', 'bars']} onClick={() => setSidebar(!sidebar)} />
+              <FontAwesomeIcon className='icon' icon={['far', 'bars']} onClick={() => setSidebar(!sidebar)} />
             </span>
           )}
-        </div>
+        </SidebarToggle>
       )}
     </BitwiseNavbar>
   );
