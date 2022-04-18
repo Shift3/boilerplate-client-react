@@ -26,15 +26,12 @@ const NavLinkStyles = styled(NavLink)<NavLinkProps>`
   span {
     padding-left: 1.5rem;
   }
-
   color: #666;
   font-weight: 400;
-
   &:hover {
     cursor: pointer;
     color: ${props => props.theme.buttons.backgroundColor};
   }
-
   &.active {
     background-color: ${props => props.theme.buttons.backgroundColor};
     color: white;

@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAuth } from 'features/auth/hooks';
 import { FC, useEffect, useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 import styled from 'styled-components';
 import { useLogoutModal } from '../hooks/useLogoutModal';
 import { useNavLinks } from '../hooks/useNavLinks';
@@ -9,7 +10,7 @@ import { CustomNavAction, CustomNavLink } from './CustomNavLink';
 import { Logo } from './Logo';
 import { NavUserDetails } from './NavUserDetails';
 
-export const BitwiseNavbar = styled.nav`
+export const BitwiseNavbar = styled(Navbar)`
   background: ${props => props.theme.nav.backgroundColor};
   align-items: flex-start;
   padding: 2rem;
@@ -45,12 +46,13 @@ export const BitwiseNavbar = styled.nav`
 
 const SidebarToggle = styled.div`
   height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   border: 2px solid green;
-  size: 4rem;
 
-  .icon {
+  .sidebar-icon {
+    color: black;
   }
 `;
 
@@ -74,8 +76,8 @@ export const SideNavbar: FC = () => {
     <BitwiseNavbar className='flex-column h-100 py-0'>
       <Logo />
       {user && !mobile ? (
-        <div className='nav-links'>
-          <Nav className='nav-link-item'>
+        <div className='nav-wrap w-100'>
+          <Nav className='flex-column'>
             {navLinks.map(link => (
               <CustomNavLink key={link.id} link={link} />
             ))}
@@ -88,20 +90,15 @@ export const SideNavbar: FC = () => {
       ) : (
         <></>
       )}
-      {mobile && (
+      {user && mobile && (
         <SidebarToggle>
           {sidebar ? (
-            <span>
-              <FontAwesomeIcon
-                className='icon'
-                icon={['far', 'xmark']}
-                size='lg'
-                onClick={() => setSidebar(!sidebar)}
-              />
+            <span className='sidebar-icon'>
+              <FontAwesomeIcon icon={['far', 'xmark']} onClick={() => setSidebar(!sidebar)} />
             </span>
           ) : (
-            <span>
-              <FontAwesomeIcon className='icon' icon={['far', 'bars']} onClick={() => setSidebar(!sidebar)} />
+            <span className='sidebar-icon'>
+              <FontAwesomeIcon icon={['far', 'bars']} onClick={() => setSidebar(!sidebar)} />
             </span>
           )}
         </SidebarToggle>
