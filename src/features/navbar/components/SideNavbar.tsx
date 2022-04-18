@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAuth } from 'features/auth/hooks';
 import { FC, useEffect, useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
 import styled from 'styled-components';
 import { useLogoutModal } from '../hooks/useLogoutModal';
 import { useNavLinks } from '../hooks/useNavLinks';
@@ -10,7 +9,7 @@ import { CustomNavAction, CustomNavLink } from './CustomNavLink';
 import { Logo } from './Logo';
 import { NavUserDetails } from './NavUserDetails';
 
-export const BitwiseNavbar = styled(Navbar)`
+export const BitwiseNavbar = styled.nav`
   background: ${props => props.theme.nav.backgroundColor};
   align-items: flex-start;
   padding: 2rem;
@@ -45,6 +44,7 @@ export const BitwiseNavbar = styled(Navbar)`
 `;
 
 const SidebarToggle = styled.div`
+  height: 100vh;
   display: flex;
   flex-direction: column;
   border: 2px solid green;
@@ -63,13 +63,6 @@ export const SideNavbar: FC = () => {
 
   useEffect(() => {
     const handleResize = () => (window.innerWidth < 1065 ? setMobile(true) : setMobile(false));
-    // const handleResize = () => {
-    //   if (window.innerWidth < 1065) {
-    //     setMobile(true);
-    //   } else {
-    //     setMobile(false);
-    //   }
-    // };
 
     window.addEventListener('resize', handleResize);
     return () => {
@@ -81,8 +74,8 @@ export const SideNavbar: FC = () => {
     <BitwiseNavbar className='flex-column h-100 py-0'>
       <Logo />
       {user && !mobile ? (
-        <div className='nav-wrap w-100'>
-          <Nav className='flex-column'>
+        <div className='nav-links'>
+          <Nav className='nav-link-item'>
             {navLinks.map(link => (
               <CustomNavLink key={link.id} link={link} />
             ))}
