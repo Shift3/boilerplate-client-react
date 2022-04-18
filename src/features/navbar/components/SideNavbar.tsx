@@ -62,16 +62,14 @@ export const SideNavbar: FC = () => {
   const [sidebar, setSidebar] = useState(false);
 
   useEffect(() => {
+    const handleResize = () => (window.innerWidth < 1065 ? setMobile(true) : setMobile(false));
     // const handleResize = () => {
-    //   window.innerWidth < 1065 ? setMobile(true) : setMobile(false);
+    //   if (window.innerWidth < 1065) {
+    //     setMobile(true);
+    //   } else {
+    //     setMobile(false);
+    //   }
     // };
-    const handleResize = () => {
-      if (window.innerWidth < 1065) {
-        setMobile(true);
-      } else {
-        setMobile(false);
-      }
-    };
 
     window.addEventListener('resize', handleResize);
     return () => {
