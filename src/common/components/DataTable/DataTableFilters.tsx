@@ -201,6 +201,10 @@ export const PredeterminedFilters: FC<{
     justify-content: center;
     border: 2px solid #a7acb0;
     margin-bottom: 0.5rem;
+
+    @media only screen and (max-width: 450px) {
+      width: 11.5rem;
+    }
   `;
 
   const renderFilterAndCancelButton = (attribute: string, onChange: (value: string) => void) => {
@@ -221,11 +225,7 @@ export const PredeterminedFilters: FC<{
               options: filter.operationOptions,
             })
           : null}
-        {appliedFilter ? (
-          <CancelButton className='w-100' onClick={() => handleFilterRemove(filterIndex)}>
-            Cancel
-          </CancelButton>
-        ) : null}
+        {appliedFilter ? <CancelButton onClick={() => handleFilterRemove(filterIndex)}>Cancel</CancelButton> : null}
       </div>
     );
   };
