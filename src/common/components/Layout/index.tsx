@@ -1,8 +1,10 @@
 import { Footer } from 'common/components/Footer';
-import { BitwiseNavbar } from 'features/navbar';
+import { BitwiseNavbar, useNavLinks } from 'features/navbar';
 import { FC, ReactNode, useState } from 'react';
 import { Container, Nav, Navbar, Offcanvas } from 'react-bootstrap';
 import styled from 'styled-components';
+import { CustomNavLink } from '../../../features/navbar/components/CustomNavLink';
+import { Logo } from '../../../features/navbar/components/Logo';
 
 export const Body = styled.div`
   display: flex;
@@ -28,12 +30,14 @@ export const Layout: FC<Props> = ({ leftAside, children, rightAside, footer }) =
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const navLinks = useNavLinks();
 
   return (
     <Container>
       <Body>
         <Nav>
           <BitwiseNavbar className='d-none d-md-flex'>
+            <Logo />
             <Nav className='flex-column'>
               <Nav.Link href='#features'>Features</Nav.Link>
               <Nav.Link href='#pricing'>Pricing</Nav.Link>
@@ -44,13 +48,15 @@ export const Layout: FC<Props> = ({ leftAside, children, rightAside, footer }) =
             <Navbar.Toggle aria-controls='offcanvasNavbar' className='ms-auto' onClick={handleShow} />
             <Navbar.Offcanvas id='offcanvasNavbar' aria-labelledby='offcanvasNavbarLabel' placement='start'>
               <Offcanvas.Header closeButton>
-                <Offcanvas.Title id='offcanvasNavbarLabel'>Offcanvas</Offcanvas.Title>
+                <Offcanvas.Title id='offcanvasNavbarLabel'>
+                  <Logo />
+                </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className='justify-content-end flex-grow-1 pe-3'>
-                  <Nav.Link href='#features'>Features</Nav.Link>
-                  <Nav.Link href='#pricing'>Pricing</Nav.Link>
-                  <Nav.Link href='#action'>Action</Nav.Link>
+                  {navLinks.map(link => (
+                    <CustomNavLink key={link.id} link={link} />
+                  ))}
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
