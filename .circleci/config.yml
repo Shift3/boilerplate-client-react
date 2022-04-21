@@ -1,6 +1,6 @@
 version: 2.1
 
-orbs: 
+orbs:
   aws-s3: circleci/aws-s3@3.0.0
 
 commands:
@@ -37,7 +37,6 @@ commands:
           aws-secret-access-key: <<parameters.aws_secret_key_env>>
           to: 's3://$<<parameters.aws_s3_bucket_env>>'
 
-
 jobs:
   test:
     working_directory: ~/repo
@@ -64,7 +63,7 @@ jobs:
       - run:
           name: Build and Lint
           command: |
-            yarn build         
+            yarn build
       - run:
           name: Test Frontend
           command: |
@@ -95,18 +94,6 @@ jobs:
       - store_artifacts:
           path: coverage
 
-  deploy-wiki:
-    working_directory: ~/repo
-    docker:
-      - image: 'circleci/node:14'
-    steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "57:05:87:cd:7b:4c:40:65:aa:bd:f4:97:c5:1a:c9:24"
-      - checkout
-      - run:
-          name: Deploy wiki
-          command: bash .circleci/deploy_wiki.sh
   deploy-staging:
     docker:
       - image: 'circleci/node:14'
@@ -117,7 +104,7 @@ jobs:
           aws_default_region_env: STAGING_AWS_DEFAULT_REGION
           aws_s3_bucket_env: STAGING_S3_BUCKET_NAME
           environment: staging
-          
+
   deploy-production:
     docker:
       - image: 'circleci/node:14'
@@ -169,13 +156,6 @@ workflows:
       - deploy-production:
           requires:
             - test
-          filters:
-            branches:
-              only:
-                - main
-  deploy_wiki:
-    jobs:
-      - deploy-wiki:
           filters:
             branches:
               only:
