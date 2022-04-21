@@ -1,6 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAuth } from 'features/auth/hooks';
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import styled from 'styled-components';
@@ -44,38 +43,15 @@ export const BitwiseNavbar = styled(Navbar)`
   }
 `;
 
-const SidebarToggle = styled.div`
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  border: 2px solid green;
-
-  .sidebar-icon {
-    color: black;
-  }
-`;
-
 export const SideNavbar: FC = () => {
   const { user } = useAuth();
   const navLinks = useNavLinks();
   const { openLogoutModal } = useLogoutModal();
-  const [mobile, setMobile] = useState(false);
-  const [sidebar, setSidebar] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => (window.innerWidth < 1065 ? setMobile(true) : setMobile(false));
-
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
 
   return (
     <BitwiseNavbar className='flex-column h-100 py-0'>
       <Logo />
-      {user && !mobile ? (
+      {user ? (
         <div className='nav-wrap w-100'>
           <Nav className='flex-column'>
             {navLinks.map(link => (
@@ -89,19 +65,6 @@ export const SideNavbar: FC = () => {
         </div>
       ) : (
         <></>
-      )}
-      {user && mobile && (
-        <SidebarToggle>
-          {sidebar ? (
-            <span className='sidebar-icon'>
-              <FontAwesomeIcon icon={['far', 'xmark']} onClick={() => setSidebar(!sidebar)} />
-            </span>
-          ) : (
-            <span className='sidebar-icon'>
-              <FontAwesomeIcon icon={['far', 'bars']} onClick={() => setSidebar(!sidebar)} />
-            </span>
-          )}
-        </SidebarToggle>
       )}
     </BitwiseNavbar>
   );
