@@ -1,10 +1,45 @@
 import { Footer } from 'common/components/Footer';
-import { BitwiseNavbar, useNavLinks } from 'features/navbar';
+import { useNavLinks } from 'features/navbar';
 import { FC, ReactNode, useState } from 'react';
 import { Container, Nav, Navbar, Offcanvas } from 'react-bootstrap';
 import styled from 'styled-components';
-import { CustomNavLink } from '../../../features/navbar/components/CustomNavLink';
+import { CustomNavAction, CustomNavLink } from '../../../features/navbar/components/CustomNavLink';
 import { Logo } from '../../../features/navbar/components/Logo';
+import { useLogoutModal } from '../../../features/navbar/hooks/useLogoutModal';
+
+const SideNav = styled(Navbar)`
+  background: ${props => props.theme.nav.backgroundColor};
+  align-items: flex-start;
+  padding: 2rem;
+  overflow-y: auto;
+  width: 280px;
+  height: 100vh;
+  z-index: 1;
+  box-shadow: 1px 0 0 0 #dadada;
+
+  .navbar-brand > img {
+    width: 64px;
+    margin-left: 4rem;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+    opacity: 0.9;
+    border-radius: 10px;
+  }
+
+  .nav-wrap {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .navbar-nav:first-of-type {
+      flex: 1;
+    }
+
+    .navbar-nav:nth-of-type(2) {
+      margin-bottom: 1rem;
+    }
+  }
+`;
 
 export const Body = styled.div`
   display: flex;
@@ -31,19 +66,26 @@ export const Layout: FC<Props> = ({ leftAside, children, rightAside, footer }) =
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const navLinks = useNavLinks();
+  const { openLogoutModal } = useLogoutModal();
 
   return (
     <Container>
       <Body>
         <Nav>
-          <BitwiseNavbar className='d-none d-md-flex'>
+          <SideNav className='d-none d-md-flex flex-column'>
             <Logo />
-            <Nav className='flex-column'>
-              <Nav.Link href='#features'>Features</Nav.Link>
-              <Nav.Link href='#pricing'>Pricing</Nav.Link>
-              <Nav.Link href='#action'>Action</Nav.Link>
-            </Nav>
-          </BitwiseNavbar>
+            <div className='nav-wrap w-100'>
+              <Nav className='flex-column'>
+                {navLinks.map(link => (
+                  <CustomNavLink key={link.id} link={link} />
+                ))}
+              </Nav>
+              <Nav className='flex-column'>
+                {/* <NavUserDetails user={user} /> */}
+                <CustomNavAction onClick={openLogoutModal} label='Sign Out' icon='sign-out-alt' />
+              </Nav>
+            </div>
+          </SideNav>
           <Navbar bg='light' expand={false} className='d-flex d-md-none'>
             <Navbar.Toggle aria-controls='offcanvasNavbar' className='ms-auto' onClick={handleShow} />
             <Navbar.Offcanvas id='offcanvasNavbar' aria-labelledby='offcanvasNavbarLabel' placement='start'>
