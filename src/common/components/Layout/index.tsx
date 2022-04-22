@@ -62,14 +62,16 @@ type Props = {
 };
 
 export const Layout: FC<Props> = ({ leftAside, children, rightAside, footer }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [show, setShow] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const navLinks = useNavLinks();
   const { openLogoutModal } = useLogoutModal();
 
   return (
-    <Container>
+    <>
       <Body>
         <Nav>
           <SideNav className='d-none d-md-flex flex-column'>
@@ -87,21 +89,24 @@ export const Layout: FC<Props> = ({ leftAside, children, rightAside, footer }) =
             </div>
           </SideNav>
           <Navbar bg='light' expand={false} className='d-flex d-md-none'>
-            <Navbar.Toggle aria-controls='offcanvasNavbar' className='ms-auto' onClick={handleShow} />
-            <Navbar.Offcanvas id='offcanvasNavbar' aria-labelledby='offcanvasNavbarLabel' placement='start'>
-              <Offcanvas.Header closeButton>
-                <Offcanvas.Title id='offcanvasNavbarLabel'>
-                  <Logo />
-                </Offcanvas.Title>
-              </Offcanvas.Header>
-              <Offcanvas.Body>
-                <Nav className='justify-content-end flex-grow-1 pe-3'>
-                  {navLinks.map(link => (
-                    <CustomNavLink key={link.id} link={link} />
-                  ))}
-                </Nav>
-              </Offcanvas.Body>
-            </Navbar.Offcanvas>
+            <Container fluid className='flex-column'>
+              <Logo />
+              <Navbar.Toggle aria-controls='offcanvasNavbar' className='ms-auto' onClick={handleShow} />
+              <Navbar.Offcanvas id='offcanvasNavbar' aria-labelledby='offcanvasNavbarLabel' placement='start'>
+                <Offcanvas.Header closeButton>
+                  <Offcanvas.Title id='offcanvasNavbarLabel'>
+                    <Logo />
+                  </Offcanvas.Title>
+                </Offcanvas.Header>
+                <Offcanvas.Body>
+                  <Nav className='justify-content-end flex-grow-1 pe-3'>
+                    {navLinks.map(link => (
+                      <CustomNavLink key={link.id} link={link} />
+                    ))}
+                  </Nav>
+                </Offcanvas.Body>
+              </Navbar.Offcanvas>
+            </Container>
           </Navbar>
           {leftAside}
         </Nav>
@@ -109,6 +114,6 @@ export const Layout: FC<Props> = ({ leftAside, children, rightAside, footer }) =
         {rightAside && <Aside>{rightAside}</Aside>}
       </Body>
       <Footer>{footer ?? <Footer />}</Footer>
-    </Container>
+    </>
   );
 };
