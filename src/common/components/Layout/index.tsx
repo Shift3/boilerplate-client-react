@@ -41,6 +41,12 @@ const SideNav = styled(Navbar)`
   }
 `;
 
+export const LayoutContainer = styled.div`
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+`;
+
 export const Body = styled.div`
   display: flex;
   flex: 1;
@@ -71,7 +77,7 @@ export const Layout: FC<Props> = ({ leftAside, children, rightAside, footer }) =
   const { openLogoutModal } = useLogoutModal();
 
   return (
-    <>
+    <LayoutContainer>
       <Body>
         <Nav>
           <SideNav className='d-none d-md-flex flex-column'>
@@ -114,6 +120,6 @@ export const Layout: FC<Props> = ({ leftAside, children, rightAside, footer }) =
         {rightAside && <Aside>{rightAside}</Aside>}
       </Body>
       <Footer>{footer ?? <Footer />}</Footer>
-    </>
+    </LayoutContainer>
   );
 };
