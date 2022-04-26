@@ -1,19 +1,26 @@
 import { Footer } from 'common/components/Footer';
 import { SideNavbar } from 'features/navbar';
 import { FC, ReactNode } from 'react';
-import { Container } from 'react-bootstrap';
 import styled from 'styled-components';
+
+export const Container = styled.div`
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+`;
 
 export const Body = styled.div`
   display: flex;
   flex: 1;
 `;
+
+export const Nav = styled.nav`
+  order: -1;
+`;
+
 export const Content = styled.main`
   flex: 1;
   margin: 2em;
-`;
-export const Nav = styled.nav`
-  order: -1;
 `;
 
 export const Aside = styled.aside`
