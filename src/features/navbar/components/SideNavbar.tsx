@@ -48,7 +48,9 @@ export const SideNavbar: FC = () => {
   const { user } = useAuth();
   const navLinks = useNavLinks();
   const { openLogoutModal } = useLogoutModal();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [show, setShow] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -58,7 +60,7 @@ export const SideNavbar: FC = () => {
         <div>
           <Logo />
           <BitwiseNavbar className='d-none d-md-flex'>
-            <Container fluid>
+            <Container fluid className='nav-wrap w-100'>
               <Nav className='flex-column'>
                 {navLinks.map(link => (
                   <CustomNavLink key={link.id} link={link} />
