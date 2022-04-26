@@ -1,5 +1,6 @@
 import { useAuth } from 'features/auth/hooks';
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { Container, Offcanvas } from 'react-bootstrap';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import styled from 'styled-components';
@@ -47,25 +48,51 @@ export const SideNavbar: FC = () => {
   const { user } = useAuth();
   const navLinks = useNavLinks();
   const { openLogoutModal } = useLogoutModal();
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
-    <BitwiseNavbar className='flex-column h-100 py-0'>
-      <Logo />
+    <>
       {user ? (
-        <div className='nav-wrap w-100'>
-          <Nav className='flex-column'>
-            {navLinks.map(link => (
-              <CustomNavLink key={link.id} link={link} />
-            ))}
-          </Nav>
-          <Nav className='flex-column'>
-            <NavUserDetails user={user} />
-            <CustomNavAction onClick={openLogoutModal} label='Sign Out' icon='sign-out-alt' />
-          </Nav>
+        <div>
+          <Logo />
+          <BitwiseNavbar className='d-none d-md-flex'>
+            <Container fluid>
+              <Nav className='flex-column'>
+                {navLinks.map(link => (
+                  <CustomNavLink key={link.id} link={link} />
+                ))}
+              </Nav>
+              <Nav className='flex-column'>
+                <NavUserDetails user={user} />
+                <CustomNavAction onClick={openLogoutModal} label='Sign Out' icon='sign-out-alt' />
+              </Nav>
+            </Container>
+          </BitwiseNavbar>
+          <Navbar bg='light' expand={false} className='d-flex d-md-none'>
+            <Container fluid className='flex-column'>
+              <Navbar.Toggle aria-controls='offcanvasNavbar' className='ms-auto' onClick={handleShow} />
+              <Navbar.Offcanvas id='offcanvasNavbar' aria-labelledby='offcanvasNavbarLabel' placement='start'>
+                <Offcanvas.Header closeButton>
+                  <Offcanvas.Title id='offcanvasNavbarLabel'>
+                    <Logo />
+                  </Offcanvas.Title>
+                </Offcanvas.Header>
+                <Offcanvas.Body>
+                  <Nav className='justify-content-end flex-grow-1 pe-3'>
+                    {navLinks.map(link => (
+                      <CustomNavLink key={link.id} link={link} />
+                    ))}
+                  </Nav>
+                </Offcanvas.Body>
+              </Navbar.Offcanvas>
+            </Container>
+          </Navbar>
         </div>
       ) : (
         <></>
       )}
-    </BitwiseNavbar>
+    </>
   );
 };
