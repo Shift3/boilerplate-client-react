@@ -17,7 +17,7 @@ export const OffCanvasSideNav: FC = () => {
           Open SideNav
         </Button>
       </div>
-      <Offcanvas id='offcanvas-navbar' show={show} onHide={handleClose}>
+      <Offcanvas id='offcanvas-navbar' className='w-auto' show={show} onHide={handleClose}>
         <VerticalSideNav />
       </Offcanvas>
     </div>
