@@ -44,7 +44,11 @@ export const BitwiseNavbar = styled(Navbar)`
   }
 `;
 
-export const SideNavbar: FC = () => {
+// Separate OffCanvasSideNav
+//  - horizontal nav at the top with logo on the left and toggle on the right
+//  - offcanvas sidnav opens from the left
+
+export const OffCanvasSideNav: FC = () => {
   const { user } = useAuth();
   const navLinks = useNavLinks();
   const { openLogoutModal } = useLogoutModal();
