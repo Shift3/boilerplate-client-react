@@ -6,7 +6,7 @@ import { environment } from 'environment';
 import { AgentRoutes } from 'features/agent-dashboard';
 import { AuthRoutes, RequireAuth } from 'features/auth';
 import { ConfirmationModal } from 'features/confirmation-modal';
-import { BitwiseNavbar } from 'features/navbar';
+import { BitwiseNavbar } from 'features/navbar/components/VerticalNav';
 import { UserRoutes } from 'features/user-dashboard';
 import { UpdateUserProfilePage } from 'features/user-profile/pages/UpdateUserProfilePage';
 import { FC } from 'react';
