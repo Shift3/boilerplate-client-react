@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import Offcanvas from 'react-bootstrap/OffCanvas';
+import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Logo } from './Logo';
 import { VerticalNav } from './VerticalNav';
 
