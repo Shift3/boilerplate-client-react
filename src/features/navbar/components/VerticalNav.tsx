@@ -43,7 +43,7 @@ export const BitwiseNavbar = styled(Navbar)`
   }
 `;
 
-export const VerticalSideNav: FC = () => {
+export const VerticalNav: FC = () => {
   const { user } = useAuth();
   const navLinks = useNavLinks();
   const { openLogoutModal } = useLogoutModal();

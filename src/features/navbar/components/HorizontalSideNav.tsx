@@ -1,10 +1,10 @@
-import { VerticalSideNav } from 'features/navbar/components/VerticalSideNav';
 import { FC, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/OffCanvas';
 import { Logo } from './Logo';
+import { VerticalNav } from './VerticalNav';
 
-export const OffCanvasSideNav: FC = () => {
+export const HorizontalNav: FC = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -18,7 +18,7 @@ export const OffCanvasSideNav: FC = () => {
         </Button>
       </div>
       <Offcanvas id='offcanvas-navbar' className='w-auto' show={show} onHide={handleClose}>
-        <VerticalSideNav />
+        <VerticalNav />
       </Offcanvas>
     </div>
   );

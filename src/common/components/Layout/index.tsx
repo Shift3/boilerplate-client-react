@@ -1,8 +1,8 @@
 import { FooterContent } from 'common/components/FooterContent';
-import { OffCanvasSideNav } from 'features/navbar/components/OffCanvasSideNav';
-import { VerticalSideNav } from 'features/navbar/components/VerticalSideNav';
+import { VerticalNav } from 'features/navbar/components/VerticalNav';
 import { FC, ReactNode } from 'react';
 import styled from 'styled-components';
+import { HorizontalNav } from '../../../features/navbar/components/HorizontalSideNav';
 
 export const Container = styled.div`
   display: flex;
@@ -12,22 +12,15 @@ export const Container = styled.div`
 
 const Header = styled.header``;
 
-export const Main = styled.div`
+export const Content = styled.div`
   display: flex;
   flex: row;
+  flex-grow: 1;
 `;
 
-export const Nav = styled.nav`
-  order: -1;
-`;
-
-export const Content = styled.main`
+export const Main = styled.main`
   flex: 1;
   margin: 2em;
-`;
-
-export const Aside = styled.aside`
-  flex: 0 0 12em;
 `;
 
 const Footer = styled.footer`
@@ -45,17 +38,19 @@ export const Layout: FC<Props> = ({ children }) => {
   return (
     <Container>
       <Header className='d-block d-md-none'>
-        <OffCanvasSideNav />
+        <HorizontalNav />
       </Header>
-      <Main>
-        <Aside className='d-none d-md-flex'>
-          <VerticalSideNav />
-        </Aside>
-        <Content>{children}</Content>
-      </Main>
-      <Footer className='mt-auto'>
-        <FooterContent />
-      </Footer>
+      <Content>
+        <aside className='d-none d-md-flex'>
+          <VerticalNav />
+        </aside>
+        <div className='d-flex flex-column w-100'>
+          <Main>{children}</Main>
+          <Footer className='mt-auto'>
+            <FooterContent />
+          </Footer>
+        </div>
+      </Content>
     </Container>
   );
 };
