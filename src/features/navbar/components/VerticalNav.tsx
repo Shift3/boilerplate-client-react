@@ -25,7 +25,6 @@ export const BitwiseNavbar = styled(Navbar)`
     margin-bottom: 2rem;
     margin-top: 2rem;
     opacity: 0.9;
-    border-radius: 10px;
   }
 
   .nav-wrap {
