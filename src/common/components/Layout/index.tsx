@@ -10,7 +10,9 @@ export const Container = styled.div`
   flex-direction: column;
 `;
 
-const Header = styled.header``;
+const Header = styled.header`
+  background: red;
+`;
 
 export const Content = styled.div`
   display: flex;
@@ -37,7 +39,7 @@ type Props = {
 export const Layout: FC<Props> = ({ children }) => {
   return (
     <Container>
-      <Header className='d-block d-md-none'>
+      <Header className='d-block d-md-none px-2'>
         <HorizontalNav />
       </Header>
       <Content>

@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC, useState } from 'react';
+import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Logo } from './Logo';
 import { VerticalNav } from './VerticalNav';
@@ -11,11 +12,13 @@ export const HorizontalNav: FC = () => {
 
   return (
     <div>
-      <div className='d-flex justify-content-between p-3'>
+      <div className='d-flex justify-content-between'>
         <Logo />
-        <span role='button' tabIndex={0} aria-controls='offcanvas-navbar' onKeyDown={handleShow}>
-          <FontAwesomeIcon icon='bars' />
-        </span>
+        <Button aria-controls='offcanvas-navbar' onKeyDown={handleShow}>
+          <span>
+            <FontAwesomeIcon icon='bars' />
+          </span>
+        </Button>
       </div>
       <Offcanvas id='offcanvas-navbar' className='w-auto' show={show} onHide={handleClose}>
         <VerticalNav />

@@ -1,6 +1,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faBan,
+  faBars,
   faBuilding,
   faCheck,
   faChevronLeft,
@@ -25,21 +26,21 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import * as Sentry from '@sentry/react';
 import { store } from 'app/redux';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.min.css';
 import { App } from './app/App';
 import reportWebVitals from './reportWebVitals';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'react-toastify/dist/ReactToastify.min.css';
 
 // Font Awesome recommends importing icons via a “library” in the initializing module of the app
 // so you add them once in your React app and reference them in any component
 // https://fontawesome.com/v5.15/how-to-use/on-the-web/using-with/react
 library.add(
   faBan,
+  faBars,
   faBuilding,
   faCheck,
   faChevronLeft,

@@ -5,6 +5,6 @@ import { Link } from 'react-router-dom';
 
 export const Logo: FC = () => (
   <Navbar.Brand as={Link} to='/agents'>
-    <img src={logo} alt='Bitwise Technology Consulting' className='shadow-p-0 mb-5 bg-gray rounded' />
+    <img src={logo} alt='Bitwise Technology Consulting' className='shadow-p-0 bg-gray rounded' />
   </Navbar.Brand>
 );
