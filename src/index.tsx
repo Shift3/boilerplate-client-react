@@ -1,3 +1,4 @@
+import { createRoot } from 'react-dom/client';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faBan,
@@ -80,7 +81,9 @@ Sentry.init({
   autoSessionTracking: false,
 });
 
-ReactDOM.render(
+const container = document.getElementById('root');
+const root = createRoot(container!);
+root.render(
   <StrictMode>
     <Router>
       <Provider store={store}>
@@ -88,7 +91,6 @@ ReactDOM.render(
       </Provider>
     </Router>
   </StrictMode>,
-  document.getElementById('root'),
 );
 
 reportWebVitals();

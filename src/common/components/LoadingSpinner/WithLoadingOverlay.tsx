@@ -5,17 +5,17 @@ import { LoadingSpinner } from './LoadingSpinner';
 
 export type Props = {
   isLoading: boolean;
-  isInitialLoad: boolean;
+  isInitialLoad?: boolean;
   containerHasRoundedCorners: boolean;
   containerBorderRadius: string;
 };
 
 export const WithLoadingOverlay: FC<Props> = ({
   isLoading,
-  isInitialLoad,
   containerHasRoundedCorners,
   containerBorderRadius,
   children,
+  isInitialLoad = false,
 }) => {
   const [isDelayComplete, setIsDelayComplete] = useState(false);
 

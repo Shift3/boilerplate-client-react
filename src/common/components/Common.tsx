@@ -1,12 +1,12 @@
-import { Card, Container } from "react-bootstrap";
-import styled from "styled-components";
+import { Card, Container } from 'react-bootstrap';
+import styled from 'styled-components';
 
 export const SmallContainer = styled(Container)`
   max-width: 960px;
 `;
 
 export const CircularImg = styled.img<{
-  radius: number
+  radius: number;
 }>`
   border-radius: 50%;
   height: ${props => `${props.radius}px`};
@@ -14,7 +14,7 @@ export const CircularImg = styled.img<{
   margin: 0;
   margin-right: 0.75rem;
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-`
+`;
 
 export const FormCard = styled(Card)`
   background: white;
@@ -30,7 +30,7 @@ export const PageCrumb = styled.div`
     font-size: 0.8rem;
     font-weight: bold;
   }
-`
+`;
 
 export const PageHeader = styled.div`
   display: flex;
@@ -59,7 +59,7 @@ export const PageHeader = styled.div`
 
     h1 {
       font-weight: 500;
-      font-size: 2.0rem;
+      font-size: 2rem;
       margin: 0;
       margin-bottom: 0.25rem;
     }
@@ -84,6 +84,10 @@ export const TableCard = styled(Card)`
     border: none;
     margin: 0;
 
+    .tbody {
+      border: none;
+    }
+
     .thead {
       border-top-left-radius: 6px;
       border-top-right-radius: 6px;
@@ -96,7 +100,8 @@ export const TableCard = styled(Card)`
         font-size: 0.825rem;
         padding: 0.75rem 0.5rem;
 
-        i, svg {
+        i,
+        svg {
           color: #999;
           margin-left: 0.6rem;
         }
@@ -134,7 +139,8 @@ export const NoContent = styled.div`
   justify-content: center;
   flex-direction: column;
 
-  i, svg {
+  i,
+  svg {
     color: #333;
     margin-bottom: 0.5rem;
   }
