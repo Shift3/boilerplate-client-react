@@ -124,10 +124,14 @@ export const DataTableFilters: FC<DataTableFilterProps> = ({
         onToggle={handleDropdownToggle}
         placeholder={`Search by ${defaultAttributeLabel}...`}
         hasExtraFilters={availableFilters.length > 0}
-        clearFilters={handleFiltersClear}
       />
 
-      <FilterBadges appliedFilters={appliedFilters} onUpdate={handleUpdate} onRemove={handleFilterRemove} />
+      <FilterBadges
+        onClearFilters={handleFiltersClear}
+        appliedFilters={appliedFilters}
+        onUpdate={handleUpdate}
+        onRemove={handleFilterRemove}
+      />
 
       {availableFilters.length > 0 && (
         <FilterDropdown

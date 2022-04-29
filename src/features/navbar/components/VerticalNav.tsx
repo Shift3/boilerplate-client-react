@@ -17,6 +17,7 @@ export const BitwiseNavbar = styled(Navbar)`
   width: 280px;
   height: 100vh;
   z-index: 1;
+  position: fixed;
   box-shadow: 1px 0 0 0 #dadada;
 
   .navbar-brand {
@@ -56,7 +57,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
   const { openLogoutModal } = useLogoutModal();
 
   return (
-    <BitwiseNavbar className='flex-column h-100 py-0'>
+    <BitwiseNavbar className='flex-column py-0'>
       <Logo />
       {user ? (
         <div className='nav-wrap w-100'>

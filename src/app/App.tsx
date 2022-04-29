@@ -1,5 +1,5 @@
 import { ErrorBoundary } from '@sentry/react';
-import { Content, Layout } from 'common/components/Layout';
+import { Layout } from 'common/components/Layout';
 import { NotFoundView } from 'common/components/NotFound';
 import { NotificationContainer } from 'common/components/Notification';
 import { environment } from 'environment';
@@ -41,6 +41,10 @@ const BannerWrapper = styled.div<{
   ${props =>
     props.bannerShowing
       ? css`
+          .content-wrapper {
+            padding-top: 56px !important;
+          }
+
           ${StagingBanner} {
             display: block;
             visibility: visible;
@@ -49,9 +53,6 @@ const BannerWrapper = styled.div<{
           ${BitwiseNavbar} {
             padding-top: 56px !important;
 
-          ${Content} {
-            padding-top: 56px;
-          }
         `
       : null}
 `;
