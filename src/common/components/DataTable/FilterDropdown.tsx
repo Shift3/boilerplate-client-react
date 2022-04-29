@@ -1,5 +1,5 @@
 import { CancelButton } from 'common/styles/button';
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import React, { FC, PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -79,11 +79,17 @@ const StyledButtonWrapper = styled.div`
 // ----------------------------------------------------------------------------
 // Container and Menus
 // ----------------------------------------------------------------------------
-const DefaultFilterInput: FC<{ value: string; onChange: (value: string) => void }> = ({ value, onChange }) => (
-  <Form.Control type='text' value={value} onChange={e => onChange(e.target.value)} />
-);
+const DefaultFilterInput: FC<{
+  value: string;
+  onChange: (value: string) => void;
+}> = ({ value, onChange }) => <Form.Control type='text' value={value} onChange={e => onChange(e.target.value)} />;
 
-const DropdownItem: FC<{ selected: boolean; onClick: React.MouseEventHandler }> = ({ children, selected, onClick }) => {
+const DropdownItem: FC<
+  PropsWithChildren<{
+    selected: boolean;
+    onClick: React.MouseEventHandler;
+  }>
+> = ({ children, selected, onClick }) => {
   const targetRef = useRef<HTMLElement | null>(null);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {

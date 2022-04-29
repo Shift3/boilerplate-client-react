@@ -45,7 +45,7 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors
     handleSubmit,
     register,
     setError,
-  } = useForm({
+  } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
   });

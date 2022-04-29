@@ -40,7 +40,7 @@ export const ActivateAccountForm: FC<Props> = ({ onSubmit, serverValidationError
     handleSubmit,
     register,
     setError,
-  } = useForm({
+  } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
   });

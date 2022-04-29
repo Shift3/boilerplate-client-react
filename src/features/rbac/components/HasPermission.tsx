@@ -1,5 +1,5 @@
 import { useAuth } from 'features/auth/hooks';
-import { ComponentType, FC } from 'react';
+import { FC, PropsWithChildren, ReactNode } from 'react';
 import { getRbacRules, Permission } from '../rules';
 import { ensureArray } from '../utils/ensureArray';
 import { userRoleHasPermission } from '../utils/userRoleHasPermission';
@@ -10,16 +10,16 @@ type Props = {
   // A single action or list of actions the user must be allowed to perform.
   perform?: Action | Action[];
   // Content to render if the user is allowed to perform the actions.
-  yes?: ComponentType;
+  yes?: ReactNode;
   // Content to render if the user is not allowed to perform the actions.
-  no?: ComponentType;
+  no?: ReactNode;
 };
 
-export const HasPermission: FC<Props> = ({
+export const HasPermission: FC<PropsWithChildren<Props>> = ({
   perform = [],
   children,
-  yes: Yes = () => <>{children}</>,
-  no: No = () => null,
+  yes: Yes = children,
+  no: No = null,
 }) => {
   const { user } = useAuth();
   const rules = getRbacRules();
@@ -31,5 +31,5 @@ export const HasPermission: FC<Props> = ({
       return result && userRoleHasPermission(rules, permission, user, data);
     }, true);
 
-  return allowed ? <Yes /> : <No />;
+  return allowed ? <>{Yes}</> : <>{No}</>;
 };

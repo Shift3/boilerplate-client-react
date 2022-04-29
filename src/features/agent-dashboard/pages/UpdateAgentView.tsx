@@ -42,7 +42,7 @@ export const UpdateAgentView: FC = () => {
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
         if (isErrorResponse<FormData>(error?.data)) {
-          setSubmissionError((error?.data).error);
+          setSubmissionError(error?.data?.error);
         }
       }
       notificationService.showErrorMessage('Unable to update agent.');
