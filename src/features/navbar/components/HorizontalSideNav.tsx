@@ -11,12 +11,12 @@ export const HorizontalNav: FC = () => {
   const handleShow = () => setShow(true);
 
   return (
-    <div>
+    <div className='pt-4'>
       <div className='d-flex justify-content-between'>
         <Logo />
-        <Button aria-controls='offcanvas-navbar' onKeyDown={handleShow}>
+        <Button variant='light' aria-controls='offcanvas-navbar' onClick={handleShow} className=''>
           <span>
-            <FontAwesomeIcon icon='bars' />
+            <FontAwesomeIcon icon='bars' size='2x' />
           </span>
         </Button>
       </div>
