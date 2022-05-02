@@ -111,7 +111,7 @@ export const TableCard = styled(Card)`
 
         i,
         svg {
-          color: #999;
+          color: ${props => props.theme.colors.faded};
           margin-left: 0.6rem;
         }
       }
@@ -150,7 +150,7 @@ export const NoContent = styled.div`
 
   i,
   svg {
-    color: #333;
+    color: ${props => props.theme.colors.black};
     margin-bottom: 0.5rem;
   }
 `;
