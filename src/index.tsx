@@ -22,6 +22,9 @@ import {
   faUser,
   faUsers,
   faX,
+  faCirclePlus,
+  faPen,
+  faQuestion,
 } from '@fortawesome/free-solid-svg-icons';
 import * as Sentry from '@sentry/react';
 import { store } from 'app/redux';
@@ -61,6 +64,9 @@ library.add(
   faUser,
   faUsers,
   faX,
+  faCirclePlus,
+  faPen,
+  faQuestion,
 );
 
 /* TODO: - CMS 3/23/21

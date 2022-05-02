@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlus, faPen, faQuestion, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FC } from 'react';
 import { Button, ListGroup } from 'react-bootstrap';
 import { CircularContainer } from 'common/components/Common';
@@ -37,16 +36,16 @@ const getTimeStr = (date: Date): string => {
   return date.toLocaleString(undefined, { hour: 'numeric', minute: 'numeric' });
 };
 
-const getIconForAction = (action: string): IconDefinition => {
+const getIconForAction = (action: string): IconProp => {
   switch (action) {
     case 'create':
-      return faCirclePlus;
+      return 'circle-plus';
     case 'update':
-      return faPen;
+      return 'pen';
     case 'delete':
-      return faTrashCan;
+      return 'trash-can';
     default:
-      return faQuestion; // if the action isn't recognized
+      return 'question'; // if the action isn't recognized
   }
 };
 
