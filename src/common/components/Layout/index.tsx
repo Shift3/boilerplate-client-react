@@ -20,7 +20,6 @@ export const Content = styled.div`
 
 export const Main = styled.main`
   flex: 1;
-  margin: 2em;
 `;
 
 const Footer = styled.footer`
@@ -37,14 +36,14 @@ type Props = {
 export const Layout: FC<Props> = ({ children }) => {
   return (
     <Container>
-      <Header className='d-block d-md-none px-5'>
+      <Header className='d-block d-md-none px-4'>
         <HorizontalNav />
       </Header>
       <Content>
         <aside className='d-none d-md-flex'>
           <VerticalNav />
         </aside>
-        <div className='d-flex flex-column w-100'>
+        <div className='d-flex flex-column w-100 px-4 pt-4'>
           <Main>{children}</Main>
           <Footer className='mt-auto'>
             <FooterContent />

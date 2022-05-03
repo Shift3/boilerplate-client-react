@@ -1,16 +1,17 @@
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FC } from 'react';
+import { FC, PropsWithChildren } from 'react';
 import { NavItem } from 'react-bootstrap';
-import { NavLink, NavLinkProps } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { NavLinkConfig } from '../hooks/useNavLinks';
 
 type Props = {
   link: NavLinkConfig;
+  handleSamePathNavigate?: () => void;
 };
 
-const NavLinkStyles = styled(NavLink)<NavLinkProps>`
+const NavLinkStyles = styled.div`
   width: 100%;
   font-size: 1rem;
   position: relative;
@@ -38,14 +39,29 @@ const NavLinkStyles = styled(NavLink)<NavLinkProps>`
   }
 `;
 
-export const CustomNavLink: FC<Props> = ({ link }) => (
-  <NavLinkStyles to={link.path} className={({ isActive }) => (isActive ? 'active' : '')}>
-    <div>
-      <FontAwesomeIcon icon={link.icon} />
-      <span>{link.label}</span>
-    </div>
-  </NavLinkStyles>
-);
+export const CustomNavLink: FC<PropsWithChildren<Props>> = ({ link, handleSamePathNavigate = null }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleClick = () => {
+    if (location.pathname === link.path && handleSamePathNavigate) {
+      handleSamePathNavigate();
+    } else {
+      navigate(link.path);
+    }
+  };
+
+  const isActive = location.pathname === link.path;
+
+  return (
+    <NavLinkStyles onClick={handleClick} className={isActive ? 'active' : ''}>
+      <div>
+        <FontAwesomeIcon icon={link.icon} />
+        <span>{link.label}</span>
+      </div>
+    </NavLinkStyles>
+  );
+};
 
 export const CustomNavAction: FC<{
   icon: IconName;

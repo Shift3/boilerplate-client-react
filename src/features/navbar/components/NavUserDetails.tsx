@@ -32,6 +32,18 @@ const ProfileInfoWrapper = styled.div`
     right: -1rem;
   }
 
+  & > div > div,
+  & > div > small {
+    transition: all 0.15s ease;
+  }
+
+  &:hover {
+    & > div > div,
+    & > div > small {
+      opacity: 0;
+    }
+  }
+
   &:hover {
     background: #dadada;
 

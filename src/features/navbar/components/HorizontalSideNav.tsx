@@ -12,16 +12,16 @@ export const HorizontalNav: FC = () => {
 
   return (
     <div className='pt-4'>
-      <div className='d-flex justify-content-between'>
+      <div className='container d-flex justify-content-between'>
         <Logo />
-        <Button variant='light' aria-controls='offcanvas-navbar' onClick={handleShow} className=''>
+        <Button variant='link' aria-controls='offcanvas-navbar' onClick={handleShow} className='text-dark'>
           <span>
             <FontAwesomeIcon icon='bars' size='2x' />
           </span>
         </Button>
       </div>
       <Offcanvas id='offcanvas-navbar' className='w-auto' show={show} onHide={handleClose}>
-        <VerticalNav />
+        <VerticalNav closeVerticalNav={handleClose} />
       </Offcanvas>
     </div>
   );
