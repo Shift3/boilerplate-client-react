@@ -105,7 +105,6 @@ export const UpdateAgentView: FC = () => {
           <ChangeLog
             changeList={agentHistory.results}
             totalChanges={agentHistory.meta.count}
-            maxItemsToDisplay={5}
             editorTextColor={AppTheme.changelogs.accentTextColor}
             changePropertyAccessor={changePropertyAccessor}
             getChangeItemAction={getChangeItemAction}

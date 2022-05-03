@@ -7,15 +7,10 @@ import { CircularContainer } from 'common/components/Common';
 export type Props = {
   changeList: unknown[];
   totalChanges: number;
-  maxItemsToDisplay: number;
   editorTextColor: string;
   changePropertyAccessor: (change: unknown, propertyName: string) => string | number;
   getChangeItemAction: (action: string) => string;
   handleShowAllChanges: () => void;
-};
-
-const getDateValue = (dateStr: string): number => {
-  return new Date(dateStr).valueOf();
 };
 
 const getActionInPastTense = (action: string): string => {
@@ -52,31 +47,18 @@ const getIconForAction = (action: string): IconProp => {
 export const ChangeLog: FC<Props> = ({
   changeList,
   totalChanges,
-  maxItemsToDisplay,
   editorTextColor,
   changePropertyAccessor,
   getChangeItemAction,
   handleShowAllChanges,
 }) => {
-  let changeItems = [...changeList];
-
-  changeItems?.sort(
-    (changeA, changeB) =>
-      getDateValue(changePropertyAccessor(changeB, 'creationDate').toString()) -
-      getDateValue(changePropertyAccessor(changeA, 'creationDate').toString()),
-  );
-
-  if (changeItems.length > maxItemsToDisplay) {
-    changeItems = changeItems.slice(0, maxItemsToDisplay);
-  }
-
   return (
     <>
-      {changeItems.length > 0 ? (
+      {changeList.length > 0 ? (
         <div>
           <h5 className='mb-3'>Latest Changes</h5>
           <ListGroup as='ol'>
-            {changeItems.map(changeItem => {
+            {changeList.map(changeItem => {
               const itemType = changePropertyAccessor(changeItem, 'itemType').toString();
               const id = changePropertyAccessor(changeItem, 'id');
               const changeAction = getChangeItemAction(changePropertyAccessor(changeItem, 'changeAction').toString());
@@ -103,7 +85,7 @@ export const ChangeLog: FC<Props> = ({
               );
             })}
           </ListGroup>
-          {totalChanges > maxItemsToDisplay ? (
+          {totalChanges > changeList.length ? (
             <div className='d-flex w-100 justify-content-center mt-3'>
               <Button
                 variant='link'
