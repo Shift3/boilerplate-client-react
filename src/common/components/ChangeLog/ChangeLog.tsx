@@ -3,6 +3,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FC } from 'react';
 import { Button, ListGroup } from 'react-bootstrap';
 import { CircularContainer } from 'common/components/Common';
+import { isObject, isStringOrNumber } from 'utils/changelog';
 
 export type Props = {
   changeList: unknown[];
@@ -44,12 +45,39 @@ const getIconForAction = (action: string): IconProp => {
   }
 };
 
+const defaultPropertyAccessor = (change: unknown, propertyName: string): string | number => {
+  if (isObject(change)) {
+    const value = change[propertyName];
+
+    if (isStringOrNumber(value)) {
+      return value;
+    }
+
+    throw Error('The resulting value for change[propertyName] is not a string or a number');
+  }
+
+  throw Error('Given change parameter is not an object');
+};
+
+const defaultGetChangeItemAction = (action: string): string => {
+  switch (action) {
+    case 'create':
+      return action;
+    case 'update':
+      return action;
+    case 'delete':
+      return action;
+    default:
+      throw Error("Given action does not equal 'create', 'update', or 'delete'");
+  }
+};
+
 export const ChangeLog: FC<Props> = ({
   changeList,
   totalChanges,
   editorTextColor,
-  changePropertyAccessor,
-  getChangeItemAction,
+  changePropertyAccessor = defaultPropertyAccessor,
+  getChangeItemAction = defaultGetChangeItemAction,
   handleShowAllChanges,
 }) => {
   return (
