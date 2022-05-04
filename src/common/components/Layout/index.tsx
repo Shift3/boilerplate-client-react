@@ -1,8 +1,8 @@
 import { FooterContent } from 'common/components/FooterContent';
+import { HorizontalNav } from 'features/navbar/components/HorizontalSideNav';
 import { VerticalNav } from 'features/navbar/components/VerticalNav';
 import { FC, ReactNode } from 'react';
 import styled from 'styled-components';
-import { HorizontalNav } from '../../../features/navbar/components/HorizontalSideNav';
 
 export const Container = styled.div`
   display: flex;
