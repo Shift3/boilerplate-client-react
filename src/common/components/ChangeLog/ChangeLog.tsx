@@ -53,7 +53,7 @@ const defaultPropertyAccessor = (change: unknown, propertyName: string): string 
       return value;
     }
 
-    throw Error('The resulting value for change[propertyName] is not a string or a number');
+    throw Error(`The resulting value from change[${propertyName}] is not a string or a number`);
   }
 
   throw Error('Given change parameter is not an object');
