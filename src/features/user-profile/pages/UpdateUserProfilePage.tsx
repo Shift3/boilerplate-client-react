@@ -79,7 +79,7 @@ export const UpdateUserProfilePage: FC = () => {
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
         if (isErrorResponse<ProfileFormData>(error?.data)) {
-          setProfileSubmissionError((error?.data).error);
+          setProfileSubmissionError(error?.data?.error);
         }
       }
     }
@@ -92,7 +92,7 @@ export const UpdateUserProfilePage: FC = () => {
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
         if (isErrorResponse<UserEmailFormData>(error?.data)) {
-          setEmailSubmissionError((error?.data).error);
+          setEmailSubmissionError(error?.data?.error);
         }
       }
     }
@@ -123,7 +123,7 @@ export const UpdateUserProfilePage: FC = () => {
       } catch (error) {
         if (isFetchBaseQueryError(error)) {
           if (isErrorResponse<ProfilePictureFormData>(error?.data)) {
-            setProfilePictureSubmissionError((error?.data).error);
+            setProfilePictureSubmissionError(error?.data?.error);
           }
         }
       }
@@ -152,7 +152,7 @@ export const UpdateUserProfilePage: FC = () => {
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
         if (isErrorResponse<ForgotPasswordFormData>(error?.data)) {
-          setPasswordSubmissionError((error?.data).error);
+          setPasswordSubmissionError(error?.data?.error);
         }
       }
       notificationService.showErrorMessage(

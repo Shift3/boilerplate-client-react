@@ -33,7 +33,7 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues, serv
     reset,
     getValues,
     setError,
-  } = useForm({
+  } = useForm<ProfileFormData>({
     resolver: yupResolver(schema),
     mode: 'all',
     defaultValues,

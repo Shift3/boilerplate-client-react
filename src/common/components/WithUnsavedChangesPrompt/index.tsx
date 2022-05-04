@@ -1,6 +1,6 @@
 import { useConfirmationModal } from 'features/confirmation-modal';
 import { Blocker, History, Location, Transition } from 'history';
-import { FC, useCallback, useContext, useEffect, useState } from 'react';
+import { FC, PropsWithChildren, useCallback, useContext, useEffect, useState } from 'react';
 import { UNSAFE_NavigationContext, useLocation, useNavigate } from 'react-router-dom';
 
 const useBlocker = (blocker: Blocker, when = true) => {
@@ -73,7 +73,7 @@ type WithUnsavedChangesPromptProps = {
   when: boolean;
 };
 
-const WithUnsavedChangesPrompt: FC<WithUnsavedChangesPromptProps> = ({ when, children }) => {
+const WithUnsavedChangesPrompt: FC<PropsWithChildren<WithUnsavedChangesPromptProps>> = ({ when, children }) => {
   const { showPrompt, confirmNavigation, cancelNavigation } = usePrompt(when);
   const { openModal } = useConfirmationModal();
 

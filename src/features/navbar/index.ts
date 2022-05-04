@@ -1,2 +1,2 @@
-export * from './components/SideNavbar';
+export * from './components/VerticalNav';
 export * from './hooks/useNavLinks';

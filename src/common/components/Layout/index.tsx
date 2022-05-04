@@ -1,6 +1,7 @@
-import { Footer } from 'common/components/Footer';
-import { SideNavbar } from 'features/navbar';
-import { FC, ReactNode } from 'react';
+import { FooterContent } from 'common/components/FooterContent';
+import { HorizontalNav } from 'features/navbar/components/HorizontalSideNav';
+import { VerticalNav } from 'features/navbar/components/VerticalNav';
+import { FC, PropsWithChildren } from 'react';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -8,40 +9,50 @@ export const Container = styled.div`
   min-height: 100vh;
   flex-direction: column;
 `;
-export const Body = styled.div`
+
+const Header = styled.header``;
+
+export const Content = styled.div`
   display: flex;
-  flex: 1;
-`;
-export const Content = styled.main`
-  flex: 1;
-  margin: 2em;
-`;
-export const Nav = styled.nav`
-  order: -1;
-`;
-export const Aside = styled.aside`
-  flex: 0 0 12em;
+  flex: row;
+  flex-grow: 1;
 `;
 
-type Props = {
-  leftAside?: ReactNode;
-  children?: ReactNode;
-  rightAside?: ReactNode;
-  footer?: ReactNode;
-};
+export const Main = styled.main`
+  flex: 1;
 
-export const Layout: FC<Props> = ({ leftAside, children, rightAside, footer }) => {
+  @media (min-width: 768px) {
+    padding-left: 280px;
+  }
+`;
+
+const Footer = styled.footer`
+  padding-top: 5px;
+  text-align: center;
+  color: #999;
+  height: ${props => props.theme.footer.height};
+  @media (min-width: 768px) {
+    padding-left: 280px;
+  }
+`;
+
+export const Layout: FC<PropsWithChildren<unknown>> = ({ children }) => {
   return (
     <Container>
-      <Body>
-        <Content>{children}</Content>
-        <Nav>
-          <SideNavbar />
-          {leftAside}
-        </Nav>
-        {rightAside && <Aside>{rightAside}</Aside>}
-      </Body>
-      <Footer>{footer ?? <Footer />}</Footer>
+      <Header className='content-wrapper d-block d-md-none px-4'>
+        <HorizontalNav />
+      </Header>
+      <Content>
+        <aside className='d-none d-md-flex'>
+          <VerticalNav />
+        </aside>
+        <div className='d-flex flex-column w-100 px-4 pt-4'>
+          <Main className='content-wrapper'>{children}</Main>
+          <Footer className='mt-auto'>
+            <FooterContent />
+          </Footer>
+        </div>
+      </Content>
     </Container>
   );
 };

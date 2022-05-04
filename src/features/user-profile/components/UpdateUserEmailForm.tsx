@@ -34,7 +34,7 @@ export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues, server
     reset,
     getValues,
     setError,
-  } = useForm({
+  } = useForm<UserEmailFormData>({
     resolver: yupResolver(schema),
     mode: 'all',
     defaultValues,
