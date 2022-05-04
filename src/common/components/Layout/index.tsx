@@ -46,8 +46,8 @@ export const Layout: FC<PropsWithChildren<unknown>> = ({ children }) => {
         <aside className='d-none d-md-flex'>
           <VerticalNav />
         </aside>
-        <div className='content-wrapper d-flex flex-column w-100 px-4 pt-4'>
-          <Main>{children}</Main>
+        <div className='d-flex flex-column w-100 px-4 pt-4'>
+          <Main className='content-wrapper'>{children}</Main>
           <Footer className='mt-auto'>
             <FooterContent />
           </Footer>
