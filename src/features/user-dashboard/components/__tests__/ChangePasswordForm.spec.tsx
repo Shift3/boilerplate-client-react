@@ -45,16 +45,16 @@ describe('ChangePasswordForm', () => {
   it('should submit form if all form fields are valid', async () => {
     await act(async () => {
       const currentPasswordInput = screen.getByLabelText(/Current Password/i);
-      userEvent.type(currentPasswordInput, validFormData.oldPassword);
+      await userEvent.type(currentPasswordInput, validFormData.oldPassword);
 
       const newPasswordInput = screen.getByLabelText(/New Password/i);
-      userEvent.type(newPasswordInput, validFormData.newPassword);
+      await userEvent.type(newPasswordInput, validFormData.newPassword);
 
       const confirmNewPasswordInput = screen.getByLabelText(/Confirm Password/i);
-      userEvent.type(confirmNewPasswordInput, validFormData.confirmPassword);
+      await userEvent.type(confirmNewPasswordInput, validFormData.confirmPassword);
     });
 
-    await act(async () => userEvent.click(screen.getByRole('button', { name: 'Submit' })));
+    await act(async () => await userEvent.click(screen.getByRole('button', { name: 'Submit' })));
 
     expect(mockOnSubmit).toHaveBeenCalledWith(validFormData, expect.any(Object));
   });
@@ -67,13 +67,13 @@ describe('ChangePasswordForm', () => {
   it('should not disable the submit button if the form is valid', async () => {
     await act(async () => {
       const currentPasswordInput = screen.getByLabelText(/Current Password/i);
-      userEvent.type(currentPasswordInput, validFormData.oldPassword);
+      await userEvent.type(currentPasswordInput, validFormData.oldPassword);
 
       const newPasswordInput = screen.getByLabelText(/New Password/i);
-      userEvent.type(newPasswordInput, validFormData.newPassword);
+      await userEvent.type(newPasswordInput, validFormData.newPassword);
 
       const confirmNewPasswordInput = screen.getByLabelText(/Confirm Password/i);
-      userEvent.type(confirmNewPasswordInput, validFormData.confirmPassword);
+      await userEvent.type(confirmNewPasswordInput, validFormData.confirmPassword);
     });
 
     const submitButton = screen.getByRole('button', { name: /submit/i });

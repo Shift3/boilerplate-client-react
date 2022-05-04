@@ -31,10 +31,10 @@ describe('LoginForm', () => {
 
     await act(async () => {
       const emailInput = screen.getByLabelText(/email/i);
-      userEvent.type(emailInput, testFormData.email);
+      await userEvent.type(emailInput, testFormData.email);
 
       const passwordInput = screen.getByLabelText(/password/i);
-      userEvent.type(passwordInput, testFormData.password);
+      await userEvent.type(passwordInput, testFormData.password);
     });
 
     await act(async () => userEvent.click(screen.getByRole('button', { name: 'Log In' })));
@@ -44,13 +44,13 @@ describe('LoginForm', () => {
 
   it('should validate user inputs and provide error messages', async () => {
     const emailInput = screen.getByLabelText(/email/i);
-    userEvent.type(emailInput, 'abcd');
+    await userEvent.type(emailInput, 'abcd');
 
     const passwordInput = screen.getByLabelText(/password/i);
-    userEvent.type(passwordInput, '123');
+    await userEvent.type(passwordInput, '123');
 
     await act(async () => {
-      userEvent.click(screen.getByRole('button', { name: 'Log In' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Log In' }));
     });
 
     expect(await screen.findAllByRole('alert')).toHaveLength(2);

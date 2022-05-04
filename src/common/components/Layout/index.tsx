@@ -1,7 +1,7 @@
 import { FooterContent } from 'common/components/FooterContent';
 import { HorizontalNav } from 'features/navbar/components/HorizontalSideNav';
 import { VerticalNav } from 'features/navbar/components/VerticalNav';
-import { FC, ReactNode } from 'react';
+import { FC, PropsWithChildren } from 'react';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -36,11 +36,7 @@ const Footer = styled.footer`
   }
 `;
 
-type Props = {
-  children?: ReactNode;
-};
-
-export const Layout: FC<Props> = ({ children }) => {
+export const Layout: FC<PropsWithChildren<unknown>> = ({ children }) => {
   return (
     <Container>
       <Header className='content-wrapper d-block d-md-none px-4'>

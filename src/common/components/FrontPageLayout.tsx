@@ -2,7 +2,7 @@ import logo from 'assets/img/logo.jpg';
 import { Container, Col, Row } from 'react-bootstrap';
 import tile from 'assets/img/tile.jpg';
 import styled from 'styled-components';
-import { FC } from 'react';
+import { FC, PropsWithChildren } from 'react';
 
 export const Title = styled.h1`
   color: ${props => props.theme.forms.title};
@@ -60,7 +60,7 @@ export const LoginRightCol = styled(Col)`
   }
 `;
 
-export const FrontPageLayout: FC = ({ children }) => {
+export const FrontPageLayout: FC<PropsWithChildren<unknown>> = ({ children }) => {
   return (
     <Container fluid>
       <Row>

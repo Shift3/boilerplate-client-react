@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { HasPermission } from '../HasPermission';
 import * as rules from '../../rules';
 import { Permission } from '../../rules';
-import {Role} from 'common/models';
+import { Role } from 'common/models';
 
 describe('AllowedTo', () => {
   describe('user not authenticated', () => {
@@ -26,7 +26,7 @@ describe('AllowedTo', () => {
     it('should not render the yes prop', () => {
       render(
         <Provider store={store}>
-          <HasPermission perform='user:create' yes={() => <div>Yes</div>} no={() => <div>No</div>} />
+          <HasPermission perform='user:create' yes={<div>Yes</div>} no={<div>No</div>} />
         </Provider>,
       );
 
@@ -36,7 +36,7 @@ describe('AllowedTo', () => {
     it('should render the no prop', () => {
       render(
         <Provider store={store}>
-          <HasPermission perform='user:create' yes={() => <div>Yes</div>} no={() => <div>No</div>} />
+          <HasPermission perform='user:create' yes={<div>Yes</div>} no={<div>No</div>} />
         </Provider>,
       );
 
@@ -45,7 +45,7 @@ describe('AllowedTo', () => {
   });
 
   describe('user authenticated', () => {
-    const user = UserFactory.build({ role: Role.ADMIN});
+    const user = UserFactory.build({ role: Role.ADMIN });
     const store = createAppStore({ preloadedState: { auth: { token: '', user } } });
 
     describe('no permissions required', () => {
@@ -64,7 +64,7 @@ describe('AllowedTo', () => {
       it('should render the yes prop', () => {
         render(
           <Provider store={store}>
-            <HasPermission yes={() => <div>Yes</div>} no={() => <div>No</div>} />
+            <HasPermission yes={<div>Yes</div>} no={<div>No</div>} />
           </Provider>,
         );
 
@@ -74,7 +74,7 @@ describe('AllowedTo', () => {
       it('should not render the no prop', () => {
         render(
           <Provider store={store}>
-            <HasPermission yes={() => <div>Yes</div>} no={() => <div>No</div>} />
+            <HasPermission yes={<div>Yes</div>} no={<div>No</div>} />
           </Provider>,
         );
 
@@ -109,7 +109,7 @@ describe('AllowedTo', () => {
         it('should render the yes prop', () => {
           render(
             <Provider store={store}>
-              <HasPermission perform={action} yes={() => <div>Yes</div>} no={() => <div>No</div>} />
+              <HasPermission perform={action} yes={<div>Yes</div>} no={<div>No</div>} />
             </Provider>,
           );
 
@@ -119,7 +119,7 @@ describe('AllowedTo', () => {
         it('should not render the no prop', () => {
           render(
             <Provider store={store}>
-              <HasPermission perform={action} yes={() => <div>Yes</div>} no={() => <div>No</div>} />
+              <HasPermission perform={action} yes={<div>Yes</div>} no={<div>No</div>} />
             </Provider>,
           );
 
@@ -151,7 +151,7 @@ describe('AllowedTo', () => {
         it('should render the no prop', () => {
           render(
             <Provider store={store}>
-              <HasPermission perform={action} yes={() => <div>Yes</div>} no={() => <div>No</div>} />
+              <HasPermission perform={action} yes={<div>Yes</div>} no={<div>No</div>} />
             </Provider>,
           );
 
@@ -161,7 +161,7 @@ describe('AllowedTo', () => {
         it('should not render the yes prop', () => {
           render(
             <Provider store={store}>
-              <HasPermission perform={action} yes={() => <div>Yes</div>} no={() => <div>No</div>} />
+              <HasPermission perform={action} yes={<div>Yes</div>} no={<div>No</div>} />
             </Provider>,
           );
 
@@ -195,7 +195,7 @@ describe('AllowedTo', () => {
         it('should render the yes prop', () => {
           render(
             <Provider store={store}>
-              <HasPermission perform={actions} yes={() => <div>Yes</div>} no={() => <div>No</div>} />
+              <HasPermission perform={actions} yes={<div>Yes</div>} no={<div>No</div>} />
             </Provider>,
           );
 
@@ -205,7 +205,7 @@ describe('AllowedTo', () => {
         it('should not render the no prop', () => {
           render(
             <Provider store={store}>
-              <HasPermission perform={actions} yes={() => <div>Yes</div>} no={() => <div>No</div>} />
+              <HasPermission perform={actions} yes={<div>Yes</div>} no={<div>No</div>} />
             </Provider>,
           );
 
@@ -238,7 +238,7 @@ describe('AllowedTo', () => {
         it('should render the no prop', () => {
           render(
             <Provider store={store}>
-              <HasPermission perform={actions} yes={() => <div>Yes</div>} no={() => <div>No</div>} />
+              <HasPermission perform={actions} yes={<div>Yes</div>} no={<div>No</div>} />
             </Provider>,
           );
 
@@ -248,7 +248,7 @@ describe('AllowedTo', () => {
         it('should not render the yes prop', () => {
           render(
             <Provider store={store}>
-              <HasPermission perform={actions} yes={() => <div>Yes</div>} no={() => <div>No</div>} />
+              <HasPermission perform={actions} yes={<div>Yes</div>} no={<div>No</div>} />
             </Provider>,
           );
 
