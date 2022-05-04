@@ -76,6 +76,7 @@ export const AgentListView: FC = () => {
           </div>
         </HasPermission>
       </PageHeader>
+
       <DataTableFilters
         filters={filters}
         defaultFilterAttribute='name'
@@ -84,6 +85,7 @@ export const AgentListView: FC = () => {
         onRemoveFilter={removeFilter}
         onClearFilters={resetFilters}
       />
+
       <TableCard>
         <Card.Body>
           <WithLoadingOverlay

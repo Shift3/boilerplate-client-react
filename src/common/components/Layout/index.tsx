@@ -20,6 +20,10 @@ export const Content = styled.div`
 
 export const Main = styled.main`
   flex: 1;
+
+  @media (min-width: 768px) {
+    padding-left: 280px;
+  }
 `;
 
 const Footer = styled.footer`
@@ -27,6 +31,9 @@ const Footer = styled.footer`
   text-align: center;
   color: #999;
   height: ${props => props.theme.footer.height};
+  @media (min-width: 768px) {
+    padding-left: 280px;
+  }
 `;
 
 type Props = {
@@ -36,14 +43,14 @@ type Props = {
 export const Layout: FC<Props> = ({ children }) => {
   return (
     <Container>
-      <Header className='d-block d-md-none px-4'>
+      <Header className='content-wrapper d-block d-md-none px-4'>
         <HorizontalNav />
       </Header>
       <Content>
         <aside className='d-none d-md-flex'>
           <VerticalNav />
         </aside>
-        <div className='d-flex flex-column w-100 px-4 pt-4'>
+        <div className='content-wrapper d-flex flex-column w-100 px-4 pt-4'>
           <Main>{children}</Main>
           <Footer className='mt-auto'>
             <FooterContent />
