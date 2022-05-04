@@ -13,47 +13,43 @@ export const isStringOrNumber = (value: unknown): value is string | number => {
   return typeof value === 'string' || typeof value === 'number';
 };
 
-export const throwPropertyCannotBeFoundOrInvalidTypeError = (propertyName: string): Error => {
+export const propertyCannotBeFoundOrInvalidTypeError = (propertyName: string): Error => {
   return Error(`${propertyName} can't be found or change.${propertyName} is not a string or number`);
 };
 
 // For nestjs-changelog
 export const changePropertyAccessor = (change: unknown, propertyName: string): string | number => {
-  if (isObject(change) && !hasOwnProperty(change, 'createdAt')) {
-    throw Error('Invalid change object');
-  }
-
   if (isObject(change)) {
     if (propertyName === 'creationDate') {
       if (hasOwnProperty(change, 'createdAt') && isStringOrNumber(change.createdAt)) {
         return change.createdAt;
       }
 
-      throw throwPropertyCannotBeFoundOrInvalidTypeError('createdAt');
+      throw propertyCannotBeFoundOrInvalidTypeError('createdAt');
     } else if (propertyName === 'editorName') {
       if (hasOwnProperty(change, 'whoDisplay') && isStringOrNumber(change.whoDisplay)) {
         return change.whoDisplay;
       }
 
-      throw throwPropertyCannotBeFoundOrInvalidTypeError('whoDisplay');
+      throw propertyCannotBeFoundOrInvalidTypeError('whoDisplay');
     } else if (propertyName === 'id') {
       if (hasOwnProperty(change, 'id') && isStringOrNumber(change.id)) {
         return change.id;
       }
 
-      throw throwPropertyCannotBeFoundOrInvalidTypeError('id');
+      throw propertyCannotBeFoundOrInvalidTypeError('id');
     } else if (propertyName === 'itemType') {
       if (hasOwnProperty(change, 'itemType') && isStringOrNumber(change.itemType)) {
         return change.itemType;
       }
 
-      throw throwPropertyCannotBeFoundOrInvalidTypeError('itemType');
+      throw propertyCannotBeFoundOrInvalidTypeError('itemType');
     } else if (propertyName === 'changeAction') {
       if (hasOwnProperty(change, 'action') && isStringOrNumber(change.action)) {
         return change.action;
       }
 
-      throw throwPropertyCannotBeFoundOrInvalidTypeError('action');
+      throw propertyCannotBeFoundOrInvalidTypeError('action');
     } else {
       throw Error('Invalid property name given');
     }
