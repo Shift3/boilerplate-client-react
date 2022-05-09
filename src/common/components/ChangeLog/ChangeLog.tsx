@@ -3,14 +3,13 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FC } from 'react';
 import { Button, ListGroup } from 'react-bootstrap';
 import { CircularContainer } from 'common/components/Common';
-import { isObject, isStringOrNumber } from 'utils/changelog';
 
 export type Props = {
   changeList: unknown[];
   totalChanges: number;
   editorTextColor: string;
-  changePropertyAccessor: (change: unknown, propertyName: string) => string | number;
-  getChangeItemAction: (action: string) => string;
+  changePropertyAccessor?: (change: unknown, propertyName: string) => string | number;
+  getChangeItemAction?: (action: string) => string;
   handleShowAllChanges: () => void;
 };
 
@@ -30,6 +29,14 @@ const getDateStr = (date: Date): string => {
 
 const getTimeStr = (date: Date): string => {
   return date.toLocaleString(undefined, { hour: 'numeric', minute: 'numeric' });
+};
+
+const isObject = (obj: unknown): obj is Record<string, unknown> => {
+  return obj !== null && typeof obj === 'object';
+};
+
+const isStringOrNumber = (value: unknown): value is string | number => {
+  return typeof value === 'string' || typeof value === 'number';
 };
 
 const getIconForAction = (action: string): IconProp => {
@@ -65,10 +72,10 @@ const defaultGetChangeItemAction = (action: string): string => {
       return action;
     case 'update':
       return action;
-    case 'delete':
-      return action;
+    case 'destroy':
+      return 'delete';
     default:
-      throw Error("Given action does not equal 'create', 'update', or 'delete'");
+      throw Error("Given action does not equal 'create', 'update', or 'destroy'");
   }
 };
 
@@ -89,9 +96,9 @@ export const ChangeLog: FC<Props> = ({
             {changeList.map(changeItem => {
               const itemType = changePropertyAccessor(changeItem, 'itemType').toString();
               const id = changePropertyAccessor(changeItem, 'id');
-              const changeAction = getChangeItemAction(changePropertyAccessor(changeItem, 'changeAction').toString());
-              const creationDate = changePropertyAccessor(changeItem, 'creationDate').toString();
-              const editorName = changePropertyAccessor(changeItem, 'editorName').toString();
+              const changeAction = getChangeItemAction(changePropertyAccessor(changeItem, 'action').toString());
+              const creationDate = changePropertyAccessor(changeItem, 'createdAt').toString();
+              const editorName = changePropertyAccessor(changeItem, 'whoDisplay').toString();
 
               return (
                 <ListGroup.Item

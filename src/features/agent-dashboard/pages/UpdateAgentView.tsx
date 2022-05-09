@@ -13,7 +13,6 @@ import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
 import { ChangeLog } from 'common/components/ChangeLog';
 import AppTheme from 'utils/styleValues';
 import { useAuth } from 'features/auth/hooks';
-import { changePropertyAccessor, getChangeItemAction } from 'utils/changelog';
 
 export type RouteParams = {
   id: string;
@@ -106,8 +105,6 @@ export const UpdateAgentView: FC = () => {
             changeList={agentHistory.results}
             totalChanges={agentHistory.meta.count}
             editorTextColor={AppTheme.changelogs.accentTextColor}
-            changePropertyAccessor={changePropertyAccessor}
-            getChangeItemAction={getChangeItemAction}
             handleShowAllChanges={handleShowAllChanges}
           />
         ) : null}
