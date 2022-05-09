@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC, useEffect, useRef, useState } from 'react';
+import { Button } from 'react-bootstrap';
 import Badge from 'react-bootstrap/Badge';
 import styled from 'styled-components';
 import { wasMouseEventOutsideContainer } from 'utils/events';
@@ -10,6 +11,11 @@ const StyledContainer = styled.div`
   display: flex;
   gap: 10px;
   padding: 10px 0;
+
+  & > button {
+    font-size: 12px;
+    padding: 0.1rem 0.75rem;
+  }
 `;
 
 const StyledFilterBadge = styled(Badge).attrs({ pill: true })`
@@ -22,7 +28,6 @@ const StyledFilterBadge = styled(Badge).attrs({ pill: true })`
   cursor: pointer;
 
   div {
-    word-spacing: 5px;
     margin: 0;
 
     span {
@@ -129,9 +134,10 @@ export type FilterBadgesProps = {
   appliedFilters: AppliedFilterInfo[];
   onUpdate: (index: number, selectedOperation: number, value: string) => void;
   onRemove: (index: number) => void;
+  onClearFilters: () => void;
 };
 
-export const FilterBadges: FC<FilterBadgesProps> = ({ appliedFilters, onUpdate, onRemove }) => {
+export const FilterBadges: FC<FilterBadgesProps> = ({ appliedFilters, onClearFilters, onUpdate, onRemove }) => {
   const handleUpdate = (index: number) => (selectedOperation: number, value: string) =>
     onUpdate(index, selectedOperation, value);
   return (
@@ -144,6 +150,12 @@ export const FilterBadges: FC<FilterBadgesProps> = ({ appliedFilters, onUpdate, 
           onRemove={() => onRemove(index)}
         />
       ))}
+
+      {appliedFilters.length > 0 ? (
+        <Button onClick={onClearFilters} size='sm' variant='secondary'>
+          Clear Filters
+        </Button>
+      ) : null}
     </StyledContainer>
   );
 };

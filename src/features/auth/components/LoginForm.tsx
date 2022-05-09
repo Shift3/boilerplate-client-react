@@ -3,7 +3,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { LoginButton } from 'common/styles/button';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { Button, InputGroup } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
@@ -11,8 +11,6 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Constants } from 'utils/constants';
 import * as yup from 'yup';
-import { ServerValidationErrors } from 'common/models';
-import { addServerErrors } from 'common/error/utilities';
 
 export type FormData = {
   email: string;
@@ -21,7 +19,6 @@ export type FormData = {
 
 type Props = {
   onSubmit: (data: FormData) => void;
-  serverValidationErrors: ServerValidationErrors<FormData> | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
@@ -43,24 +40,17 @@ const TogglePasswordButton = styled(Button)`
   border-color: #ced4da;
 `;
 
-export const LogInForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
+export const LogInForm: FC<Props> = ({ onSubmit }) => {
   const {
     formState: { errors, isValid, isSubmitting },
     handleSubmit,
     register,
-    setError,
-  } = useForm({
+  } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
   });
 
   const [showingPassword, setShowingPassword] = useState(false);
-
-  useEffect(() => {
-    if (serverValidationErrors) {
-      addServerErrors(serverValidationErrors, setError);
-    }
-  }, [serverValidationErrors, setError]);
 
   return (
     <Form data-testid='loginForm' onSubmit={handleSubmit(onSubmit)}>

@@ -26,7 +26,7 @@ export const ActivateAccountPage: FC = () => {
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
         if (isErrorResponse<FormData>(error?.data)) {
-          setSubmissionError((error?.data).error);
+          setSubmissionError(error?.data?.error);
         }
       }
       handleApiError(error as FetchBaseQueryError);

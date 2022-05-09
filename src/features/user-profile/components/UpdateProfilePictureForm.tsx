@@ -44,7 +44,7 @@ export const UpdateProfilePictureForm: FC<Props> = ({ onSubmit, defaultValues, s
     trigger,
     reset,
     setError,
-  } = useForm({
+  } = useForm<ProfilePictureFormData>({
     resolver: yupResolver(schema),
     mode: 'all',
     defaultValues,

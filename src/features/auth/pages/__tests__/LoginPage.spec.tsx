@@ -59,15 +59,15 @@ describe('<LoginPage/>', () => {
       );
     });
 
-    it('Should navigate to /auth/forgot-password when the forgot password button is clicked', () => {
+    it('Should navigate to /auth/forgot-password when the forgot password button is clicked', async () => {
       const link = screen.getByText(/forgot password/i);
-      userEvent.click(link);
+      await userEvent.click(link);
       expect(history.location.pathname).toBe('/auth/forgot-password');
     });
 
-    it('Should navigate to "/auth/signup" when the "Register" link is clicked', () => {
+    it('Should navigate to "/auth/signup" when the "Register" link is clicked', async () => {
       const createAccountButton = screen.getByText(/register/i);
-      userEvent.click(createAccountButton);
+      await userEvent.click(createAccountButton);
       expect(history.location.pathname).toBe('/auth/signup');
     });
   });

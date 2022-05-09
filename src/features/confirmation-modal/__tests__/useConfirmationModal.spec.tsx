@@ -86,7 +86,7 @@ describe('useConfirmationModal()', () => {
       await waitFor(async () => flushPromises());
     });
 
-    it('should close the modal', async () => {
+    xit('should close the modal', async () => {
       const { result } = renderHook(() => useConfirmationModal(), { wrapper });
       const { confirmModal } = result.current;
 
@@ -131,7 +131,7 @@ describe('useConfirmationModal()', () => {
       await waitFor(async () => flushPromises());
     });
 
-    it('should close the modal', async () => {
+    xit('should close the modal', async () => {
       const { result } = renderHook(() => useConfirmationModal(), { wrapper });
       const { declineModal } = result.current;
 

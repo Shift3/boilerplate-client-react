@@ -26,13 +26,13 @@ describe('ActivateAccountForm', () => {
 
     await act(async () => {
       const newPasswordInput = screen.getByLabelText(/New Password/i);
-      userEvent.type(newPasswordInput, testFormData.newPassword);
+      await userEvent.type(newPasswordInput, testFormData.newPassword);
 
       const confirmPasswordInput = screen.getByLabelText(/Confirm Password/i);
-      userEvent.type(confirmPasswordInput, testFormData.confirmPassword);
+      await userEvent.type(confirmPasswordInput, testFormData.confirmPassword);
     });
 
-    await act(async () => userEvent.click(screen.getByRole('button', { name: 'Submit' })));
+    await act(async () => await userEvent.click(screen.getByRole('button', { name: 'Submit' })));
 
     expect(mockOnSubmit).toHaveBeenCalledWith(testFormData, expect.any(Object));
   });
@@ -50,10 +50,10 @@ describe('ActivateAccountForm', () => {
 
     await act(async () => {
       const newPasswordInput = screen.getByLabelText(/New Password/i);
-      userEvent.type(newPasswordInput, testFormData.newPassword);
+      await userEvent.type(newPasswordInput, testFormData.newPassword);
 
       const confirmPasswordInput = screen.getByLabelText(/Confirm Password/i);
-      userEvent.type(confirmPasswordInput, testFormData.confirmPassword);
+      await userEvent.type(confirmPasswordInput, testFormData.confirmPassword);
     });
 
     const button = screen.getByRole('button', { name: 'Submit' });
@@ -62,13 +62,13 @@ describe('ActivateAccountForm', () => {
 
   it('should validate user inputs and provide error messages', async () => {
     const newPasswordInput = screen.getByLabelText(/New Password/i);
-    userEvent.type(newPasswordInput, 'abc');
+    await userEvent.type(newPasswordInput, 'abc');
 
     const confirmPasswordInput = screen.getByLabelText(/Confirm Password/i);
-    userEvent.type(confirmPasswordInput, '123');
+    await userEvent.type(confirmPasswordInput, '123');
 
     await act(async () => {
-      userEvent.click(screen.getByRole('button', { name: 'Submit' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Submit' }));
     });
     expect(await screen.findAllByRole('alert')).toHaveLength(2);
   });

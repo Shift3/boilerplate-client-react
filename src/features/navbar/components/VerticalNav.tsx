@@ -17,15 +17,19 @@ export const BitwiseNavbar = styled(Navbar)`
   width: 280px;
   height: 100vh;
   z-index: 1;
+  position: fixed;
   box-shadow: 1px 0 0 0 #dadada;
+
+  .navbar-brand {
+    padding-top: 0;
+  }
 
   .navbar-brand > img {
     width: 64px;
-    margin-left: 4rem;
+    margin-left: 1rem;
     margin-bottom: 2rem;
-    margin-top: 2rem;
     opacity: 0.9;
-    border-radius: 10px;
+    margin-top: 1.5rem;
   }
 
   .nav-wrap {
@@ -43,19 +47,23 @@ export const BitwiseNavbar = styled(Navbar)`
   }
 `;
 
-export const SideNavbar: FC = () => {
+type Props = {
+  closeVerticalNav?: () => void;
+};
+
+export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
   const { user } = useAuth();
   const navLinks = useNavLinks();
   const { openLogoutModal } = useLogoutModal();
 
   return (
-    <BitwiseNavbar className='flex-column h-100 py-0'>
+    <BitwiseNavbar className='flex-column py-0'>
       <Logo />
       {user ? (
         <div className='nav-wrap w-100'>
           <Nav className='flex-column'>
             {navLinks.map(link => (
-              <CustomNavLink key={link.id} link={link} />
+              <CustomNavLink handleSamePathNavigate={closeVerticalNav} key={link.id} link={link} />
             ))}
           </Nav>
           <Nav className='flex-column'>

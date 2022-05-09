@@ -42,7 +42,7 @@ export const ResetPasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors 
     register,
     trigger,
     setError,
-  } = useForm({
+  } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
   });

@@ -32,11 +32,11 @@ export const ConfirmChangeEmailForm: FC<Props> = ({ onSubmit, serverValidationEr
     handleSubmit,
     register,
     setError,
-  } = useForm({
+  } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
     defaultValues: {
-      verificationCode: '',
+      verificationCode: undefined,
     },
   });
 

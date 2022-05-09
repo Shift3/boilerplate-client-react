@@ -25,7 +25,7 @@ describe('ForgotPasswordForm', () => {
 
     await act(async () => {
       const emailInput = screen.getByLabelText(/Email/i);
-      userEvent.type(emailInput, testFormData.email);
+      await userEvent.type(emailInput, testFormData.email);
     });
 
     await act(async () => userEvent.click(screen.getByRole('button', { name: 'Submit' })));
@@ -45,7 +45,7 @@ describe('ForgotPasswordForm', () => {
 
     await act(async () => {
       const emailInput = screen.getByLabelText(/Email/i);
-      userEvent.type(emailInput, testFormData.email);
+      await userEvent.type(emailInput, testFormData.email);
     });
 
     const button = screen.getByRole('button', { name: 'Submit' });
@@ -57,7 +57,7 @@ describe('ForgotPasswordForm', () => {
     userEvent.type(emailInput, 'abc');
 
     await act(async () => {
-      userEvent.click(screen.getByRole('button', { name: 'Submit' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Submit' }));
     });
 
     expect(await screen.findAllByRole('alert')).toHaveLength(1);

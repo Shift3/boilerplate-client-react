@@ -1,21 +1,21 @@
 import { CenteredSpinnerContainer, DimmableContent } from 'common/styles/utilities';
-import { FC, useEffect, useState } from 'react';
+import { FC, PropsWithChildren, useEffect, useState } from 'react';
 import { NoContent } from '../Common';
 import { LoadingSpinner } from './LoadingSpinner';
 
 export type Props = {
   isLoading: boolean;
-  isInitialLoad: boolean;
+  isInitialLoad?: boolean;
   containerHasRoundedCorners: boolean;
   containerBorderRadius: string;
 };
 
-export const WithLoadingOverlay: FC<Props> = ({
+export const WithLoadingOverlay: FC<PropsWithChildren<Props>> = ({
   isLoading,
-  isInitialLoad,
   containerHasRoundedCorners,
   containerBorderRadius,
   children,
+  isInitialLoad = false,
 }) => {
   const [isDelayComplete, setIsDelayComplete] = useState(false);
 
@@ -37,11 +37,9 @@ export const WithLoadingOverlay: FC<Props> = ({
       containerBorderRadius={containerBorderRadius}
     >
       {!isDelayComplete ? (
-        <>
-          <CenteredSpinnerContainer>
-            <LoadingSpinner />
-          </CenteredSpinnerContainer>
-        </>
+        <CenteredSpinnerContainer>
+          <LoadingSpinner />
+        </CenteredSpinnerContainer>
       ) : null}
       {isInitialLoad ? <NoContent /> : children}
     </DimmableContent>

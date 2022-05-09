@@ -97,6 +97,10 @@ export const TableCard = styled(Card)`
     border: none;
     margin: 0;
 
+    .tbody {
+      border: none;
+    }
+
     .thead {
       border-top-left-radius: 6px;
       border-top-right-radius: 6px;
