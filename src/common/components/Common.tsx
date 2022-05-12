@@ -5,6 +5,19 @@ export const SmallContainer = styled(Container)`
   max-width: 960px;
 `;
 
+export const CircularContainer = styled.div<{
+  radius: number;
+  backgroundColor: string;
+}>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  height: ${props => `${props.radius}px`};
+  width: ${props => `${props.radius}px`};
+  background-color: ${props => `${props.backgroundColor}`};
+`;
+
 export const CircularImg = styled.img<{
   radius: number;
 }>`
@@ -102,7 +115,7 @@ export const TableCard = styled(Card)`
 
         i,
         svg {
-          color: #999;
+          color: ${props => props.theme.colors.faded};
           margin-left: 0.6rem;
         }
       }
@@ -141,7 +154,7 @@ export const NoContent = styled.div`
 
   i,
   svg {
-    color: #333;
+    color: ${props => props.theme.colors.black};
     margin-bottom: 0.5rem;
   }
 `;
