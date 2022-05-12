@@ -66,8 +66,12 @@ export const AgentDetailForm: FC<Props> = ({
     mode: 'all',
     defaultValues: {
       ...defaultValues,
-      // Make state dropdown default to empty instead of first option.
-      address: { ...defaultValues.address, state: defaultValues?.address?.state ?? '' },
+      // Make state dropdown default to empty instead of first option + Ensure that the address2 confirms to the string type requirement
+      address: {
+        ...defaultValues.address,
+        state: defaultValues?.address?.state ?? '',
+        address2: defaultValues?.address?.address2 ?? '',
+      },
     },
   });
 
