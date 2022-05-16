@@ -1,5 +1,5 @@
 import { Layout } from 'common/components/Layout';
-import { NotFoundView } from 'common/components/NotFound';
+import { NotFoundView } from 'common/components/NotFoundView';
 import { FC } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { CreateUserView, UpdateUserView, UserListView } from './pages';
