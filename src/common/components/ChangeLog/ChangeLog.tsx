@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FC } from 'react';
 import { Button, ListGroup } from 'react-bootstrap';
-import { CircularContainer } from 'common/components/Common';
+import { CircularContainer } from 'common/styles/utilities';
 
 export type Props = {
   changeList: unknown[];
