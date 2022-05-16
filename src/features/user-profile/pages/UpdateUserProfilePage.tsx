@@ -8,7 +8,7 @@ import {
   useChangePasswordMutation,
   useResendChangeEmailVerificationEmailMutation,
 } from 'common/api/userApi';
-import { PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
+import { PageCrumb, PageHeader, SmallContainer } from 'common/styles/page';
 import { ErrorResponse, ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';

@@ -1,6 +1,6 @@
 import { ErrorBoundary } from '@sentry/react';
 import { Layout } from 'common/components/Layout';
-import { NotFoundView } from 'common/components/NotFound';
+import { NotFoundView } from 'common/components/NotFoundView';
 import { NotificationContainer } from 'common/components/Notification';
 import { environment } from 'environment';
 import { AgentRoutes } from 'features/agent-dashboard';

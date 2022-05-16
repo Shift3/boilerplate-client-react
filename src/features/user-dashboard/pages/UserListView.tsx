@@ -1,11 +1,12 @@
 import { useGetUsersQuery } from 'common/api/userApi';
-import { PageHeader, TableCard } from 'common/components/Common';
 import { DataTable } from 'common/components/DataTable';
 import { DataTableFilters, FilterInfo } from 'common/components/DataTable/DataTableFilters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { PaginatedResult, User } from 'common/models';
 import { CreateButton } from 'common/styles/button';
+import { TableCard } from 'common/styles/card';
+import { PageHeader } from 'common/styles/page';
 import { HasPermission } from 'features/rbac';
 import { FC, useMemo } from 'react';
 import Container from 'react-bootstrap/Container';

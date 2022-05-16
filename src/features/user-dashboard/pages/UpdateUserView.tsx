@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetUserByIdQuery, useUpdateUserMutation } from 'common/api/userApi';
-import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
 import { Role, ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
-import { StyledFormWrapper } from 'common/styles/form';
+import { FormCard, StyledFormWrapper } from 'common/styles/form';
+import { PageCrumb, PageHeader, SmallContainer } from 'common/styles/page';
 import { useRbac } from 'features/rbac';
 import { FC, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';

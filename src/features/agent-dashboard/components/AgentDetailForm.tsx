@@ -109,14 +109,14 @@ export const AgentDetailForm: FC<Props> = ({
       <Form onSubmit={handleSubmit(withOptionalAddress)}>
         <h5>Personal</h5>
         <Row className='mb-2'>
-          <Col>
+          <Col xs={12} md={6}>
             <Form.Group controlId='create-agent-form-agent-name'>
               <Form.Label>Name</Form.Label>
               <Form.Control type='text' {...register('name')} isInvalid={!!errors.name} />
               <Form.Control.Feedback type='invalid'>{errors.name?.message}</Form.Control.Feedback>
             </Form.Group>
           </Col>
-          <Col>
+          <Col xs={12} md={6}>
             <Form.Group>
               <Form.Label>Email</Form.Label>
               <Form.Control type='email' {...register('email')} isInvalid={!!errors.email} />
@@ -163,7 +163,7 @@ export const AgentDetailForm: FC<Props> = ({
         </Form.Group>
 
         <Row>
-          <Col>
+          <Col xs={12} md={6}>
             <Form.Group>
               <Form.Label>City</Form.Label>
               <Form.Control type='text' {...register('address.city')} isInvalid={!!errors.address?.city} />
@@ -171,7 +171,7 @@ export const AgentDetailForm: FC<Props> = ({
             </Form.Group>
           </Col>
 
-          <Col>
+          <Col xs={12} md={6}>
             <Form.Group>
               <Form.Label>State</Form.Label>
               <Form.Select {...register('address.state')} isInvalid={!!errors.address?.state}>
@@ -185,7 +185,7 @@ export const AgentDetailForm: FC<Props> = ({
             </Form.Group>
           </Col>
 
-          <Col>
+          <Col xs={12} md={6}>
             <Form.Group>
               <Form.Label>Zip Code</Form.Label>
               <Form.Control type='text' {...register('address.zipCode')} isInvalid={!!errors.address?.zipCode} />
