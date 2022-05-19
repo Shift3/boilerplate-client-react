@@ -1,6 +1,5 @@
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { useAppDispatch } from 'app/redux';
-import { handleApiError } from 'common/api/handleApiError';
+import { handleApiError, isFetchBaseQueryError } from 'common/api/handleApiError';
 import { useCallback } from 'react';
 import { authSlice, AuthState } from '../../auth/authSlice';
 import * as notificationService from 'common/services/notification';
@@ -26,10 +25,13 @@ export const useUpdateProfilePicture: UseUpdateProfilePictureHook = () => {
                     dispatch(authSlice.actions.userUpdatedProfilePicture(profilePicture));
                     authLocalStorage.saveAuthState({ ...auth, user: updatedUser });
                     notificationService.showSuccessMessage('Profile Photo Updated');
-                } 
+                }
             } catch (error) {
-                handleApiError(error as FetchBaseQueryError);
-                throw error;
+                if (isFetchBaseQueryError(error)) {
+                    handleApiError(error);
+                } else {
+                    throw error;
+                }
             }
         },
         [updateProfilePicture, dispatch],

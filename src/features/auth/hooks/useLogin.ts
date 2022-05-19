@@ -1,7 +1,6 @@
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { useAppDispatch } from 'app/redux';
 import { useLoginMutation } from 'common/api/authApi';
-import { handleApiError } from 'common/api/handleApiError';
+import { handleApiError, isFetchBaseQueryError } from 'common/api/handleApiError';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as authLocalStorage from '../authLocalStorage';
@@ -31,7 +30,11 @@ export const useLogin: UseLoginHook = () => {
         authLocalStorage.saveAuthState(auth);
         navigate('/agents', { replace: true });
       } catch (error) {
-        handleApiError(error as FetchBaseQueryError);
+        if (isFetchBaseQueryError(error)) {
+          handleApiError(error);
+        } else {
+          throw error;
+        }
       }
     },
     [login, dispatch, navigate],

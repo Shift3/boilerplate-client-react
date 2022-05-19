@@ -1,4 +1,4 @@
-import { Role, RoleHierarchy, RoleType, User } from 'common/models';
+import { Role, RoleType, User } from 'common/models';
 
 export type Permission =
   | 'agent:create'
@@ -27,7 +27,7 @@ export type RbacRules = {
 };
 
 const rules: RbacRules = {
-  'Super Administrator': {
+  [Role.ADMIN]: {
     'agent:create': true,
     'agent:read': true,
     'agent:update': true,
@@ -40,24 +40,11 @@ const rules: RbacRules = {
     'user:resend-activation-email': true,
     'user:send-reset-password-email': (self: User, other: unknown) => (other as User).id !== self.id,
   },
-  Admin: {
-    'agent:create': true,
-    'agent:read': true,
-    'agent:update': true,
-    'agent:delete': true,
-    'role:read': (user: User, role: unknown) => RoleHierarchy[user.role] >= RoleHierarchy[(role as Role)],
-    'user:create': true,
-    'user:read': true,
-    'user:update': true,
-    'user:delete': (self: User, other: unknown) => (other as User).id !== self.id,
-    'user:resend-activation-email': true,
-    'user:send-reset-password-email': (self: User, other: unknown) => (other as User).id !== self.id,
-  },
-  Editor: {
+  [Role.EDITOR]: {
     'agent:read': true,
     'agent:update': true,
   },
-  User: {
+  [Role.USER]: {
     'agent:read': true,
   },
 };

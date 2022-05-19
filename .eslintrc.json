@@ -31,6 +31,7 @@
       }
     ],
     "camelcase": "off",
+    "no-unsafe-optional-chaining": "off",
     "jsx-a11y/click-events-have-key-events": "off",
     "arrow-body-style": "off",
     "react/no-unescaped-entities": "off",

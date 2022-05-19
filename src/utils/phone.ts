@@ -1,6 +1,11 @@
 export const formatPhoneNumber = (value: string): string => {
   value = value.replace(/\D/g, '');
 
+  if (value.length === 11) {
+    // Format: +15552223333
+    return `(${value.substring(1, 4)}) ${value.substring(4, 7)}-${value.substring(7, value.length)}`;
+  }
+
   if (value.length < 4 && value.length >= 1) {
     return `${value.substring(0, 3)}`;
   }

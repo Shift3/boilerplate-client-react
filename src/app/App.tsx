@@ -15,6 +15,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import styled, { css, ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
 import { GlobalStyle } from '../GlobalStyle';
+import { Role } from 'common/models';
 
 const StagingBanner = styled(Alert).attrs({
   variant: 'warning',
@@ -89,7 +90,7 @@ export const App: FC = () => (
           <Route
             path='/users/*'
             element={
-              <RequireAuth allowedRoles={['Admin', 'Super Administrator']}>
+              <RequireAuth allowedRoles={[ Role.ADMIN ]}>
                 <UserRoutes />
               </RequireAuth>
             }

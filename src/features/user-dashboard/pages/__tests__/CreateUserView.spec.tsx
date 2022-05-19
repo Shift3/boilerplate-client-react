@@ -62,7 +62,7 @@ describe('CreateUserView', () => {
   });
 
   describe('when user has Super Administrator role', () => {
-    const user = UserFactory.build({role: Role.SUPER_ADMIN});
+    const user = UserFactory.build({role: Role.ADMIN});
     const auth: AuthState = { token: 'fake token', user };
 
     beforeEach(() => {

@@ -9,7 +9,7 @@ import { createAppStore } from 'app/redux';
 
 describe('ChangePasswordForm', () => {
   const validFormData: FormData = {
-    oldPassword: 'old password',
+    currentPassword: 'old password',
     newPassword: 'New Password 123$',
     confirmPassword: 'New Password 123$',
   };
@@ -45,7 +45,7 @@ describe('ChangePasswordForm', () => {
   it('should submit form if all form fields are valid', async () => {
     await act(async () => {
       const currentPasswordInput = screen.getByLabelText(/Current Password/i);
-      await userEvent.type(currentPasswordInput, validFormData.oldPassword);
+      await userEvent.type(currentPasswordInput, validFormData.currentPassword);
 
       const newPasswordInput = screen.getByLabelText(/New Password/i);
       await userEvent.type(newPasswordInput, validFormData.newPassword);
@@ -54,7 +54,7 @@ describe('ChangePasswordForm', () => {
       await userEvent.type(confirmNewPasswordInput, validFormData.confirmPassword);
     });
 
-    await act(async () => await userEvent.click(screen.getByRole('button', { name: 'Submit' })));
+    await act(async () => userEvent.click(screen.getByRole('button', { name: 'Submit' })));
 
     expect(mockOnSubmit).toHaveBeenCalledWith(validFormData, expect.any(Object));
   });
@@ -67,7 +67,7 @@ describe('ChangePasswordForm', () => {
   it('should not disable the submit button if the form is valid', async () => {
     await act(async () => {
       const currentPasswordInput = screen.getByLabelText(/Current Password/i);
-      await userEvent.type(currentPasswordInput, validFormData.oldPassword);
+      await userEvent.type(currentPasswordInput, validFormData.currentPassword);
 
       const newPasswordInput = screen.getByLabelText(/New Password/i);
       await userEvent.type(newPasswordInput, validFormData.newPassword);

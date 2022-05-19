@@ -41,13 +41,13 @@ export const agentApi = createApi({
           .setSortParam(sortBy)
           .setFilterParam(filters)
           .build();
-        return { url: `/agents?${queryParams}` };
+        return { url: `/agents/?${queryParams}` };
       },
       providesTags: ['Agent'],
     }),
 
     getAgentById: builder.query<Agent, number | string>({
-      query: id => ({ url: `/agents/${id}` }),
+      query: id => ({ url: `/agents/${id}/` }),
       providesTags: ['Agent'],
     }),
 
@@ -60,7 +60,7 @@ export const agentApi = createApi({
 
     createAgent: builder.mutation<Agent, CreateAgentRequest>({
       query: payload => ({
-        url: '/agents',
+        url: '/agents/',
         method: 'POST',
         body: payload,
       }),
@@ -69,7 +69,7 @@ export const agentApi = createApi({
 
     updateAgent: builder.mutation<Agent, UpdateAgentRequest>({
       query: ({ id, ...agentUpdate }) => ({
-        url: `/agents/${id}`,
+        url: `/agents/${id}/`,
         method: 'PUT',
         body: agentUpdate,
       }),
@@ -78,7 +78,7 @@ export const agentApi = createApi({
 
     deleteAgent: builder.mutation<void, number>({
       query: agentId => ({
-        url: `/agents/${agentId}`,
+        url: `/agents/${agentId}/`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Agent'],

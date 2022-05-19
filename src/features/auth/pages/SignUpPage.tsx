@@ -1,8 +1,7 @@
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { handleApiError } from 'common/api/handleApiError';
+import { handleApiError, isFetchBaseQueryError } from 'common/api/handleApiError';
 import { useSignUpMutation } from 'common/api/userApi';
 import { FrontPageLayout, Title } from 'common/components/FrontPageLayout';
-import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
+import { isErrorResponse } from 'common/error/utilities';
 import { ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { FC, useState } from 'react';
@@ -24,10 +23,11 @@ export const SignUpPage: FC = () => {
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
         if (isErrorResponse<FormData>(error?.data)) {
-          setSubmissionError(error?.data?.error);
-        }
+          setSubmissionError((error?.data).error);
+        } else handleApiError(error);
+      } else {
+        throw error;
       }
-      handleApiError(error as FetchBaseQueryError);
     }
   };
 

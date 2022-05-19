@@ -2,7 +2,7 @@ import { Role } from './role';
 import { Image } from './image';
 
 export interface User {
-  id: number;
+  id: string;
   email: string;
   activatedAt: string | null;
   firstName: string;

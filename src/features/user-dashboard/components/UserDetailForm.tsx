@@ -10,7 +10,7 @@ import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role'>;
+export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'role'>;
 
 export interface Props {
   availableRoles: Role[];

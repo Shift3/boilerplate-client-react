@@ -10,7 +10,7 @@ import { Constants } from 'utils/constants';
 import * as yup from 'yup';
 
 export type FormData = {
-  oldPassword: string;
+  currentPassword: string;
   newPassword: string;
   confirmPassword: string;
 };
@@ -21,7 +21,7 @@ type Props = {
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
-  oldPassword: yup.string().required(Constants.errorMessages.CURRENT_PASSWORD_REQUIRED),
+  currentPassword: yup.string().required(Constants.errorMessages.CURRENT_PASSWORD_REQUIRED),
 
   newPassword: yup
     .string()
@@ -65,12 +65,12 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors
             id='currentPassword'
             type='password'
             placeholder='Enter current password'
-            isInvalid={!!errors.oldPassword}
-            {...register('oldPassword')}
+            isInvalid={!!errors.currentPassword}
+            {...register('currentPassword')}
           />
-          {!!errors.oldPassword && (
+          {!!errors.currentPassword && (
             <Form.Control.Feedback type='invalid' role='alert'>
-              {errors.oldPassword?.message}
+              {errors.currentPassword?.message}
             </Form.Control.Feedback>
           )}
         </Form.Group>

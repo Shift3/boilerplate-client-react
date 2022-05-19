@@ -1,8 +1,7 @@
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { handleApiError } from 'common/api/handleApiError';
+import { handleApiError, isFetchBaseQueryError } from 'common/api/handleApiError';
 import { useForgotPasswordMutation } from 'common/api/userApi';
 import { FrontPageLayout, Title } from 'common/components/FrontPageLayout';
-import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
+import { isErrorResponse } from 'common/error/utilities';
 import { ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { FC, useState } from 'react';
@@ -16,16 +15,19 @@ export const ForgotPasswordPage: FC = () => {
 
   const onSubmit = async (formData: FormData) => {
     try {
-      const { message } = await forgotPassword(formData).unwrap();
-      notificationService.showSuccessMessage(message);
+      await forgotPassword(formData).unwrap();
+      notificationService.showSuccessMessage(
+        'If the email you entered is in our system, you will receive a password reset email.',
+      );
       navigate('/auth/login');
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
         if (isErrorResponse<FormData>(error?.data)) {
-          setSubmissionError(error?.data?.error);
-        }
+          setSubmissionError((error?.data).error);
+        } else handleApiError(error);
+      } else {
+        throw error;
       }
-      handleApiError(error as FetchBaseQueryError);
     }
   };
 
