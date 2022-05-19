@@ -7,6 +7,11 @@
 
 This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react/wiki) which explains the project and its implementation in much greater detail than the code comments.
 
+> Note that this repository used to be compatible with our NestJS
+> backend, however we have switched to using django as our primary
+> backend. If you are looking for the NestJS compatible version, we
+> still maintain it in the `nestjs-compatibility` branch
+
 - [Boilerplate Client React](#boilerplate-client-react)
   - [Staging URL](#staging-url)
   - [Quick Start](#quick-start)
@@ -51,7 +56,7 @@ To start the project, make sure yarn is installed on your local machine. If you 
 
 Open [http://localhost:4200](http://localhost:4200) to view the project in the browser.
 
-The page will reload if you make edits. 
+The page will reload if you make edits.
 You will also see any lint errors in the console.
 
 ### Running unit tests
@@ -71,7 +76,6 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
-
 
 ## Learn More
 
@@ -141,27 +145,27 @@ The boilerplate can either be deployed manually, or automatically via CircleCI. 
 
 After your CircleCI project is set up, the only thing you need to do to get deployments working for production and staging is to set 4 environment variables in the CircleCI project settings.
 
-* `STAGING_S3_BUCKET_NAME`
-	- This is the full S3 bucket name to deploy to.
-	- `my-app-bucket.shift3sandbox.com`
-* `STAGING_AWS_ACCESS_KEY_ID`
+- `STAGING_S3_BUCKET_NAME`
+  - This is the full S3 bucket name to deploy to.
+  - `my-app-bucket.shift3sandbox.com`
+- `STAGING_AWS_ACCESS_KEY_ID`
   - The AWS access key ID used to authenticate with AWS.
   - `AKIAIOSFODNN7EXAMPLE`
-* `STAGING_AWS_SECRET_ACCESS_KEY`
-	- The AWS secret key used to authenticate with AWS.
-	- `wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY`
-* `STAGING_AWS_DEFAULT_REGION`
-	- The default region your infrastructure is deployed to.
-	- `us-west-2`
+- `STAGING_AWS_SECRET_ACCESS_KEY`
+  - The AWS secret key used to authenticate with AWS.
+  - `wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY`
+- `STAGING_AWS_DEFAULT_REGION`
+  - The default region your infrastructure is deployed to.
+  - `us-west-2`
 
 Once these are set up, your project will be **automatically deployed** whenever new commits to the `development` branch are pushed to Github.
 
 Production deploys from the `main` branch use the same set of environment variables, just with `PRODUCTION` instead of `STAGING` int the names. The list of those variables follow:
 
-* `PRODUCTION_S3_BUCKET_NAME`
-* `PRODUCTION_AWS_ACCESS_KEY_ID`
-* `PRODUCTION_AWS_SECRET_ACCESS_KEY`
-* `PRODUCTION_AWS_DEFAULT_REGION`
+- `PRODUCTION_S3_BUCKET_NAME`
+- `PRODUCTION_AWS_ACCESS_KEY_ID`
+- `PRODUCTION_AWS_SECRET_ACCESS_KEY`
+- `PRODUCTION_AWS_DEFAULT_REGION`
 
 #### Manual Deployments
 
@@ -228,10 +232,9 @@ Currently the issue templates may have some things you don't want or need in you
 
 If this project is being cloned to start a new project, there are a few things that need to be updated to make it work. The project name will need to be updated in the `README.md`, `package.json`. The README also refers to the boilerplate, both in the text and in the CircleCI badges.
 
-The project `environment` files will need to be updated with the path to the APIs. The development `environment.dev.ts`  and `environment.prod.ts` files assumes a local development server of `http://localhost:3000`, which might need to be updated.
+The project `environment` files will need to be updated with the path to the APIs. The development `environment.dev.ts` and `environment.prod.ts` files assumes a local development server of `http://localhost:3000`, which might need to be updated.
 
 After provisioning and before deploying, the `deploy:staging` and `deploy:production` script in `package.json` needs to be updated.
-
 
 ### Prettier
 
@@ -268,7 +271,6 @@ The project includes [webpack-bundle-analyzer](https://github.com/webpack-contri
 
 We are using [React Hook Form](https://react-hook-form.com/) to extend our forms and make easy to work with validation.
 for more information see: https://react-hook-form.com/ts for typescript support.
-
 
 ### Yup
 
@@ -339,7 +341,7 @@ const PersonForm = () => {
   });
 
   return (
-    <form onSubmit={handleSubmit((d) => console.log(d))}>
+    <form onSubmit={handleSubmit(d => console.log(d))}>
       <input {...register('name')} />
       <input type='number' {...register('age')} />
       <input type='submit' />
