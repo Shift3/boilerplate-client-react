@@ -1,4 +1,4 @@
-import { Role, RoleHierarchy, RoleType, User } from 'common/models';
+import { Role, RoleType, User } from 'common/models';
 
 export type Permission =
   | 'agent:create'

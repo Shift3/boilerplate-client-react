@@ -1,35 +1,34 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useAuth } from 'features/auth/hooks';
 import { handleApiError, isFetchBaseQueryError } from 'common/api/handleApiError';
-import { useAppDispatch } from 'app/redux';
 import {
   ChangePasswordRequest,
   useChangePasswordMutation,
   useResendChangeEmailVerificationEmailMutation,
 } from 'common/api/userApi';
-import { PageCrumb, PageHeader, SmallContainer } from 'common/styles/page';
-import { ErrorResponse, ServerValidationErrors } from 'common/models';
+import { isErrorResponse } from 'common/error/utilities';
+import { ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
-import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
-import { ProfilePictureFormData, UpdateProfilePictureForm } from '../components/UpdateProfilePictureForm';
-import {
-  useUpdateProfilePicture,
-  useDeleteProfilePicture,
-  useUpdateUserProfile,
-  useChangeEmailRequest,
-} from 'features/user-profile/hooks';
+import { PageCrumb, PageHeader, SmallContainer } from 'common/styles/page';
+import { useAuth } from 'features/auth/hooks';
+import { UserProfilePicture } from 'features/navbar/components/UserProfilePicture';
 import {
   ChangePasswordForm,
   FormData as ForgotPasswordFormData,
 } from 'features/user-dashboard/components/ChangePasswordForm';
+import {
+  useChangeEmailRequest,
+  useDeleteProfilePicture,
+  useUpdateProfilePicture,
+  useUpdateUserProfile,
+} from 'features/user-profile/hooks';
 import { FC, useState } from 'react';
 import { Alert, Col, Nav, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { ProfilePictureFormData, UpdateProfilePictureForm } from '../components/UpdateProfilePictureForm';
 import { UpdateUserEmailForm, UserEmailFormData } from '../components/UpdateUserEmailForm';
-import { UserProfilePicture } from 'features/navbar/components/UserProfilePicture';
-import { isErrorResponse } from 'common/error/utilities';
+import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
 
 type RouteParams = {
   id: string;
@@ -57,7 +56,6 @@ export const UpdateUserProfilePage: FC = () => {
   const { updateUserProfilePicture } = useUpdateProfilePicture();
   const { deleteUserProfilePicture } = useDeleteProfilePicture();
   const [changePassword] = useChangePasswordMutation();
-  const dispatch = useAppDispatch();
   const [tab, setTab] = useState('profile');
   const [profileSubmissionError, setProfileSubmissionError] = useState<ServerValidationErrors<ProfileFormData> | null>(
     null,
@@ -67,8 +65,7 @@ export const UpdateUserProfilePage: FC = () => {
   );
   const [profilePictureSubmissionError, setProfilePictureSubmissionError] =
     useState<ServerValidationErrors<ProfilePictureFormData> | null>(null);
-  const [passwordSubmissionError, setPasswordSubmissionError] =
-    useState<ServerValidationErrors<ForgotPasswordFormData> | null>(null);
+  const [passwordSubmissionError] = useState<ServerValidationErrors<ForgotPasswordFormData> | null>(null);
 
   const onSubmit = async (formData: ProfileFormData) => {
     const data = { id, ...formData };

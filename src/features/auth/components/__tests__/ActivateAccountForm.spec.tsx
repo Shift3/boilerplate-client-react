@@ -20,19 +20,19 @@ describe('ActivateAccountForm', () => {
 
   it('should submit form if all form fields are valid', async () => {
     const testFormData = {
-      newPassword: 'Test1234!',
-      confirmPassword: 'Test1234!',
+      password: 'Test1234!',
+      passwordConfirmation: 'Test1234!',
     };
 
     await act(async () => {
       const newPasswordInput = screen.getByLabelText(/New Password/i);
-      await userEvent.type(newPasswordInput, testFormData.newPassword);
+      await userEvent.type(newPasswordInput, testFormData.password);
 
       const confirmPasswordInput = screen.getByLabelText(/Confirm Password/i);
-      await userEvent.type(confirmPasswordInput, testFormData.confirmPassword);
+      await userEvent.type(confirmPasswordInput, testFormData.passwordConfirmation);
     });
 
-    await act(async () => await userEvent.click(screen.getByRole('button', { name: 'Submit' })));
+    await act(async () => userEvent.click(screen.getByRole('button', { name: 'Submit' })));
 
     expect(mockOnSubmit).toHaveBeenCalledWith(testFormData, expect.any(Object));
   });
@@ -44,16 +44,16 @@ describe('ActivateAccountForm', () => {
 
   it('should enable the submit button when fields are valid', async () => {
     const testFormData = {
-      newPassword: 'Test1234!',
-      confirmPassword: 'Test1234!',
+      password: 'Test1234!',
+      passwordConfirmation: 'Test1234!',
     };
 
     await act(async () => {
       const newPasswordInput = screen.getByLabelText(/New Password/i);
-      await userEvent.type(newPasswordInput, testFormData.newPassword);
+      await userEvent.type(newPasswordInput, testFormData.password);
 
       const confirmPasswordInput = screen.getByLabelText(/Confirm Password/i);
-      await userEvent.type(confirmPasswordInput, testFormData.confirmPassword);
+      await userEvent.type(confirmPasswordInput, testFormData.passwordConfirmation);
     });
 
     const button = screen.getByRole('button', { name: 'Submit' });
