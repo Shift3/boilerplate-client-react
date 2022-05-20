@@ -22,9 +22,9 @@ export const ForgotPasswordPage: FC = () => {
       navigate('/auth/login');
     } catch (error) {
       notificationService.showErrorMessage('Unable to perform forgot password request.');
-      if (isFetchBaseQueryError(error)) {
-        if (isObject(error?.data)) {
-          setFormValidationErrors(error?.data);
+      if (error && isFetchBaseQueryError(error)) {
+        if (isObject(error.data)) {
+          setFormValidationErrors(error.data);
         } else handleApiError(error);
       } else {
         throw error;

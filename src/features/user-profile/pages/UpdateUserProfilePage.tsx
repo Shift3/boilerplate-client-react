@@ -70,9 +70,9 @@ export const UpdateUserProfilePage: FC = () => {
     try {
       await changeEmailRequest(data);
     } catch (error) {
-      if (isFetchBaseQueryError(error)) {
-        if (isObject(error?.data)) {
-          setEmailFormValidationErrors(error?.data);
+      if (error && isFetchBaseQueryError(error)) {
+        if (isObject(error.data)) {
+          setEmailFormValidationErrors(error.data);
         }
       } else {
         throw error;

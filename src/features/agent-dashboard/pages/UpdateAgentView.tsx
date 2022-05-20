@@ -42,9 +42,9 @@ export const UpdateAgentView: FC = () => {
       navigate('/agents');
     } catch (error) {
       notificationService.showErrorMessage('Unable to update agent.');
-      if (isFetchBaseQueryError(error)) {
-        if (isObject(error?.data)) {
-          setFormValidationErrors(error?.data);
+      if (error && isFetchBaseQueryError(error)) {
+        if (isObject(error.data)) {
+          setFormValidationErrors(error.data);
         }
       } else {
         throw error;
@@ -69,8 +69,13 @@ export const UpdateAgentView: FC = () => {
 
       <FormCard>
         <Card.Body>
-          <WithLoadingOverlay isInitialLoad={isLoadingAgent && isFetching} isLoading={isLoadingAgent} containerHasRoundedCorners containerBorderRadius='6px'>
-            { !isLoadingAgent ? (
+          <WithLoadingOverlay
+            isInitialLoad={isLoadingAgent && isFetching}
+            isLoading={isLoadingAgent}
+            containerHasRoundedCorners
+            containerBorderRadius='6px'
+          >
+            {!isLoadingAgent ? (
               <StyledFormWrapper>
                 <AgentDetailForm
                   defaultValues={agent}

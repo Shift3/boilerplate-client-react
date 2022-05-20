@@ -47,9 +47,9 @@ export const UpdateUserView: FC = () => {
       notificationService.showSuccessMessage('User updated.');
     } catch (error) {
       notificationService.showErrorMessage('Unable to update user.');
-      if (isFetchBaseQueryError(error)) {
-        if (isObject(error?.data)) {
-          setFormValidationErrors(error?.data);
+      if (error && isFetchBaseQueryError(error)) {
+        if (isObject(error.data)) {
+          setFormValidationErrors(error.data);
         }
       } else {
         throw error;
@@ -74,7 +74,12 @@ export const UpdateUserView: FC = () => {
 
       <FormCard>
         <FormCard.Body>
-          <WithLoadingOverlay isLoading={isLoadingUser} isInitialLoad={isLoadingUser && isFetching} containerHasRoundedCorners containerBorderRadius='6px'>
+          <WithLoadingOverlay
+            isLoading={isLoadingUser}
+            isInitialLoad={isLoadingUser && isFetching}
+            containerHasRoundedCorners
+            containerBorderRadius='6px'
+          >
             {!isLoadingUser ? (
               <StyledFormWrapper>
                 <UserDetailForm

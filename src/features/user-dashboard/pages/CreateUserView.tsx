@@ -29,9 +29,9 @@ export const CreateUserView: FC = () => {
       navigate('/users');
     } catch (error) {
       notificationService.showErrorMessage('Unable to add user.');
-      if (isFetchBaseQueryError(error)) {
-        if (isObject(error?.data)) {
-          setFormValidationErrors(error?.data);
+      if (error && isFetchBaseQueryError(error)) {
+        if (isObject(error.data)) {
+          setFormValidationErrors(error.data);
         }
       } else {
         throw error;

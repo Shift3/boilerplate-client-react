@@ -26,9 +26,9 @@ export const CreateAgentView: FC = () => {
       navigate('/agents');
     } catch (error) {
       notificationService.showErrorMessage('Unable to add agent.');
-      if (isFetchBaseQueryError(error)) {
-        if (isObject(error?.data)) {
-          setFormValidationErrors(error?.data);
+      if (error && isFetchBaseQueryError(error)) {
+        if (isObject(error.data)) {
+          setFormValidationErrors(error.data);
         } else {
           throw error;
         }
