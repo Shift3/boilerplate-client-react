@@ -85,10 +85,10 @@ export const UpdateUserProfilePage: FC = () => {
       resendChangeEmailVerificationEmail({ id });
       notificationService.showSuccessMessage('Change Email verification email has been sent.');
     } catch (error) {
-      notificationService.showErrorMessage('Unable to Send Change Email verification email');
       if (isFetchBaseQueryError(error)) {
         handleApiError(error);
       } else {
+        notificationService.showErrorMessage('Unable to Send Change Email verification email');
         throw error;
       }
     }
@@ -127,10 +127,10 @@ export const UpdateUserProfilePage: FC = () => {
       await changePassword(request);
       notificationService.showSuccessMessage('Password updated.');
     } catch (error) {
-      notificationService.showErrorMessage('Unable to update password.');
       if (isFetchBaseQueryError(error)) {
         handleApiError(error);
       } else {
+        notificationService.showErrorMessage('Unable to update password.');
         throw error;
       }
     }

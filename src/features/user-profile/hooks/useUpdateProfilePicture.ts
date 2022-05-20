@@ -27,10 +27,10 @@ export const useUpdateProfilePicture: UseUpdateProfilePictureHook = () => {
           notificationService.showSuccessMessage('Profile Photo Updated');
         }
       } catch (error) {
-        notificationService.showErrorMessage('Unable to upload profile picture.');
         if (isFetchBaseQueryError(error)) {
           handleApiError(error);
         } else {
+          notificationService.showErrorMessage('Unable to upload profile picture.');
           throw error;
         }
       }

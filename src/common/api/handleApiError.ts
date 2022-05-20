@@ -1,30 +1,32 @@
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+import { isObject, isStringArray } from 'common/error/utilities';
 import * as notificationService from 'common/services/notification';
 import { StatusCodes } from 'http-status-codes';
 
-export function isFetchBaseQueryError(
-  error: unknown
-): error is FetchBaseQueryError {
-  return typeof error === 'object' && error != null && 'status' in error
+export function isFetchBaseQueryError(error: unknown): error is FetchBaseQueryError {
+  return typeof error === 'object' && error != null && 'status' in error;
 }
 
 export const handleApiError = (error: FetchBaseQueryError): void => {
-  let message: string;
+  let message = '';
 
   switch (error.status) {
+    /* eslint-disable */
     // An HTTP error response was received from the server.
     // Each HTTP error can be handled separately if different logic is needed.
     case StatusCodes.BAD_REQUEST:
-      message = 'Bad Request';
-      break;
+
     case StatusCodes.UNAUTHORIZED:
-      message = 'Unauthorized';
-      break;
+
     case StatusCodes.FORBIDDEN:
-      message = 'Forbidden';
-      break;
+
     case StatusCodes.INTERNAL_SERVER_ERROR:
-      message = 'Internal Server Error';
+      /* eslint-enable */
+      if (isObject(error.data)) {
+        if (isStringArray(error.data.nonFieldErrors)) {
+          message = error.data.nonFieldErrors.join(' ');
+        }
+      }
       break;
 
     // An error occured during the execution of the fetch function.

@@ -20,10 +20,10 @@ export const ResetPasswordPage: FC = () => {
       notificationService.showSuccessMessage('The password was reset successfully. Please log in.');
       navigate('/auth/login');
     } catch (error) {
-      notificationService.showErrorMessage('Unable to reset password.');
       if (isFetchBaseQueryError(error)) {
         handleApiError(error);
       } else {
+        notificationService.showErrorMessage('Unable to reset password.');
         throw error;
       }
     }

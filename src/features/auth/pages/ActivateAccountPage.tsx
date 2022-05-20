@@ -20,10 +20,10 @@ export const ActivateAccountPage: FC = () => {
       notificationService.showSuccessMessage('This account has been activated. Please log in.');
       navigate('/auth/login');
     } catch (error) {
-      notificationService.showErrorMessage('Unable to activate account.');
       if (isFetchBaseQueryError(error)) {
         handleApiError(error);
       } else {
+        notificationService.showErrorMessage('Unable to activate account.');
         throw error;
       }
     }

@@ -31,10 +31,10 @@ export const useLogin: UseLoginHook = () => {
         authLocalStorage.saveAuthState(auth);
         navigate('/agents', { replace: true });
       } catch (error) {
-        notificationService.showErrorMessage('Unable to log in.');
         if (isFetchBaseQueryError(error)) {
           handleApiError(error);
         } else {
+          notificationService.showErrorMessage('Unable to log in.');
           throw error;
         }
       }
