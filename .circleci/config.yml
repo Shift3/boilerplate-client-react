@@ -124,13 +124,13 @@ workflows:
           filters:
             branches:
               ignore:
-                - development
+                - develop
                 - main
       - test-coverage:
           filters:
             branches:
               ignore:
-                - development
+                - develop
                 - main
   deploy-staging:
     jobs:
@@ -138,14 +138,14 @@ workflows:
           filters:
             branches:
               only:
-                - development
+                - develop
       - deploy-staging:
           requires:
             - test
           filters:
             branches:
               only:
-                - development
+                - develop
   deploy-production:
     jobs:
       - test:
