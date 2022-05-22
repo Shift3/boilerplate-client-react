@@ -58,6 +58,8 @@ export const UpdateUserProfilePage: FC = () => {
   const [tab, setTab] = useState('profile');
   const [emailFormValidationErrors, setEmailFormValidationErrors] =
     useState<ServerValidationErrors<UserEmailFormData> | null>(null);
+  const [passwordFormValidationErrors, setPasswordFormValidationErrors] =
+    useState<ServerValidationErrors<ForgotPasswordFormData> | null>(null);
 
   const onSubmit = async (formData: ProfileFormData) => {
     const data = { id, ...formData };
@@ -124,13 +126,14 @@ export const UpdateUserProfilePage: FC = () => {
     const request: ChangePasswordRequest = { id: user!.id, ...data };
 
     try {
-      await changePassword(request);
+      await changePassword(request).unwrap();
       notificationService.showSuccessMessage('Password updated.');
     } catch (error) {
-      if (isFetchBaseQueryError(error)) {
-        handleApiError(error);
+      if (error && isFetchBaseQueryError(error)) {
+        if (isObject(error.data)) {
+          setPasswordFormValidationErrors(error.data);
+        }
       } else {
-        notificationService.showErrorMessage('Unable to update password.');
         throw error;
       }
     }
@@ -258,7 +261,10 @@ export const UpdateUserProfilePage: FC = () => {
               </p>
             </Col>
             <Col>
-              <ChangePasswordForm onSubmit={onChangePasswordFormSubmit} />
+              <ChangePasswordForm
+                onSubmit={onChangePasswordFormSubmit}
+                serverValidationErrors={passwordFormValidationErrors}
+              />
             </Col>
           </Row>
         </>
