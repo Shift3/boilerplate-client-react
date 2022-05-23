@@ -15,6 +15,12 @@ export type UpdateAgentRequest = Pick<
   'id' | 'description' | 'email' | 'name' | 'phoneNumber' | 'thumbnail' | 'address'
 >;
 
+export type GetAgentHistory = {
+  id: string | undefined;
+  page: number;
+  pageSize: number;
+};
+
 export const agentApi = createApi({
   reducerPath: 'agentApi',
 
@@ -35,19 +41,26 @@ export const agentApi = createApi({
           .setSortParam(sortBy)
           .setFilterParam(filters)
           .build();
-        return { url: `/agents?${queryParams}` };
+        return { url: `/agents/?${queryParams}` };
       },
       providesTags: ['Agent'],
     }),
 
     getAgentById: builder.query<Agent, number | string>({
-      query: id => ({ url: `/agents/${id}` }),
+      query: id => ({ url: `/agents/${id}/` }),
       providesTags: ['Agent'],
+    }),
+
+    getAgentHistory: builder.query<PaginatedResult<unknown>, GetAgentHistory>({
+      query: arg => {
+        const queryParams = new QueryParamsBuilder().setPaginationParams(arg.page, arg.pageSize).build();
+        return { url: `/agents/${arg.id}/change-history?${queryParams}` };
+      },
     }),
 
     createAgent: builder.mutation<Agent, CreateAgentRequest>({
       query: payload => ({
-        url: '/agents',
+        url: '/agents/',
         method: 'POST',
         body: payload,
       }),
@@ -56,7 +69,7 @@ export const agentApi = createApi({
 
     updateAgent: builder.mutation<Agent, UpdateAgentRequest>({
       query: ({ id, ...agentUpdate }) => ({
-        url: `/agents/${id}`,
+        url: `/agents/${id}/`,
         method: 'PUT',
         body: agentUpdate,
       }),
@@ -65,7 +78,7 @@ export const agentApi = createApi({
 
     deleteAgent: builder.mutation<void, number>({
       query: agentId => ({
-        url: `/agents/${agentId}`,
+        url: `/agents/${agentId}/`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Agent'],
@@ -76,6 +89,7 @@ export const agentApi = createApi({
 export const {
   useGetAgentsQuery,
   useGetAgentByIdQuery,
+  useGetAgentHistoryQuery,
   useCreateAgentMutation,
   useUpdateAgentMutation,
   useDeleteAgentMutation,

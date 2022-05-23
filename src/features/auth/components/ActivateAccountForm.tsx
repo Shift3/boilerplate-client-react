@@ -1,25 +1,22 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from 'common/components/LoadingButton';
-import { addServerErrors } from 'common/error/utilities';
-import { ServerValidationErrors } from 'common/models';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Constants } from 'utils/constants';
 import * as yup from 'yup';
 
 export type FormData = {
-  newPassword: string;
-  confirmPassword: string;
+  password: string;
+  passwordConfirmation: string;
 };
 
 type Props = {
   onSubmit: (data: FormData) => void;
-  serverValidationErrors: ServerValidationErrors<FormData> | null;
 };
 
 const schema: yup.SchemaOf<FormData> = yup.object().shape({
-  newPassword: yup
+  password: yup
     .string()
     .required(Constants.errorMessages.NEW_PASSWORD_REQUIRED)
     .min(8, Constants.errorMessages.PASSWORD_LENGTH)
@@ -28,55 +25,48 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
     .matches(Constants.patterns.SYMBOL_REGEX, Constants.errorMessages.PASSWORD_SPECIAL_CHARACTER)
     .matches(Constants.patterns.DIGIT_REGEX, Constants.errorMessages.PASSWORD_NUMBER),
 
-  confirmPassword: yup
+  passwordConfirmation: yup
     .string()
     .required(Constants.errorMessages.CONFIRM_PASSWORD_REQUIRED)
-    .oneOf([yup.ref('newPassword')], Constants.errorMessages.PASSWORD_MUST_MATCH),
+    .oneOf([yup.ref('password')], Constants.errorMessages.PASSWORD_MUST_MATCH),
 });
 
-export const ActivateAccountForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
+export const ActivateAccountForm: FC<Props> = ({ onSubmit }) => {
   const {
     formState: { errors, isValid, isSubmitting },
     handleSubmit,
     register,
-    setError,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
   });
 
-  useEffect(() => {
-    if (serverValidationErrors) {
-      addServerErrors(serverValidationErrors, setError);
-    }
-  }, [serverValidationErrors, setError]);
-
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
-        <Form.Label htmlFor='newPassword'>New Password</Form.Label>
+        <Form.Label htmlFor='password'>New Password</Form.Label>
         <Form.Control
-          id='newPassword'
+          id='password'
           type='password'
-          {...register('newPassword')}
+          {...register('password')}
           placeholder='Enter new password'
-          isInvalid={!!errors.newPassword}
+          isInvalid={!!errors.password}
         />
         <Form.Control.Feedback type='invalid' role='alert'>
-          {errors.newPassword?.message}
+          {errors.password?.message}
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor='confirmPassword'>Confirm Password</Form.Label>
+        <Form.Label htmlFor='passwordConfirmation'>Confirm Password</Form.Label>
         <Form.Control
-          id='confirmPassword'
+          id='passwordConfirmation'
           type='password'
-          {...register('confirmPassword')}
+          {...register('passwordConfirmation')}
           placeholder='Confirm password'
-          isInvalid={!!errors.confirmPassword}
+          isInvalid={!!errors.passwordConfirmation}
         />
         <Form.Control.Feedback type='invalid' role='alert'>
-          {errors.confirmPassword?.message}
+          {errors.passwordConfirmation?.message}
         </Form.Control.Feedback>
         <Form.Text>
           Password must be 8 characters or more. Password must contain a lowercase, uppercase, special character, and a

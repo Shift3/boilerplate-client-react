@@ -1,6 +1,5 @@
-import { CenteredSpinnerContainer, DimmableContent } from 'common/styles/utilities';
+import { CenteredSpinnerContainer, DimmableContent, NoContent } from 'common/styles/utilities';
 import { FC, PropsWithChildren, useEffect, useState } from 'react';
-import { NoContent } from '../Common';
 import { LoadingSpinner } from './LoadingSpinner';
 
 export type Props = {

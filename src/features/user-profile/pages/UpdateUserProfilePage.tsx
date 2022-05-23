@@ -1,37 +1,34 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useAuth } from 'features/auth/hooks';
-import { handleApiError } from 'common/api/handleApiError';
-import { useAppDispatch } from 'app/redux';
+import { handleApiError, isFetchBaseQueryError } from 'common/api/handleApiError';
 import {
   ChangePasswordRequest,
   useChangePasswordMutation,
   useResendChangeEmailVerificationEmailMutation,
 } from 'common/api/userApi';
-import { PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
-import { ErrorResponse, ServerValidationErrors } from 'common/models';
+import { PageCrumb, PageHeader, SmallContainer } from 'common/styles/page';
+import { ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
-import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
-import { ProfilePictureFormData, UpdateProfilePictureForm } from '../components/UpdateProfilePictureForm';
-import {
-  useUpdateProfilePicture,
-  useDeleteProfilePicture,
-  useUpdateUserProfile,
-  useChangeEmailRequest,
-} from 'features/user-profile/hooks';
-import { authSlice } from 'features/auth/authSlice';
 import {
   ChangePasswordForm,
   FormData as ForgotPasswordFormData,
 } from 'features/user-dashboard/components/ChangePasswordForm';
+import {
+  useChangeEmailRequest,
+  useDeleteProfilePicture,
+  useUpdateProfilePicture,
+  useUpdateUserProfile,
+} from 'features/user-profile/hooks';
 import { FC, useState } from 'react';
 import { Alert, Col, Nav, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { ProfilePictureFormData, UpdateProfilePictureForm } from '../components/UpdateProfilePictureForm';
 import { UpdateUserEmailForm, UserEmailFormData } from '../components/UpdateUserEmailForm';
 import { UserProfilePicture } from 'features/navbar/components/UserProfilePicture';
-import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
+import { isObject } from 'common/error/utilities';
+import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
 
 type RouteParams = {
   id: string;
@@ -50,8 +47,7 @@ const ProfileNav = styled(Nav)`
 `;
 
 export const UpdateUserProfilePage: FC = () => {
-  const navigate = useNavigate();
-  const { id } = useParams<RouteParams>();
+  const { id = '' } = useParams<RouteParams>();
   const { user } = useAuth();
   const [resendChangeEmailVerificationEmail] = useResendChangeEmailVerificationEmailMutation();
   const { updateUserProfile } = useUpdateUserProfile();
@@ -59,51 +55,44 @@ export const UpdateUserProfilePage: FC = () => {
   const { updateUserProfilePicture } = useUpdateProfilePicture();
   const { deleteUserProfilePicture } = useDeleteProfilePicture();
   const [changePassword] = useChangePasswordMutation();
-  const dispatch = useAppDispatch();
   const [tab, setTab] = useState('profile');
-  const [profileSubmissionError, setProfileSubmissionError] = useState<ServerValidationErrors<ProfileFormData> | null>(
-    null,
-  );
-  const [emailSubmissionError, setEmailSubmissionError] = useState<ServerValidationErrors<UserEmailFormData> | null>(
-    null,
-  );
-  const [profilePictureSubmissionError, setProfilePictureSubmissionError] =
-    useState<ServerValidationErrors<ProfilePictureFormData> | null>(null);
-  const [passwordSubmissionError, setPasswordSubmissionError] =
+  const [emailFormValidationErrors, setEmailFormValidationErrors] =
+    useState<ServerValidationErrors<UserEmailFormData> | null>(null);
+  const [passwordFormValidationErrors, setPasswordFormValidationErrors] =
     useState<ServerValidationErrors<ForgotPasswordFormData> | null>(null);
 
   const onSubmit = async (formData: ProfileFormData) => {
-    const data = { id: Number(id), ...formData };
-    try {
-      await updateUserProfile(data);
-    } catch (error) {
-      if (isFetchBaseQueryError(error)) {
-        if (isErrorResponse<ProfileFormData>(error?.data)) {
-          setProfileSubmissionError(error?.data?.error);
-        }
-      }
-    }
+    const data = { id, ...formData };
+
+    await updateUserProfile(data);
   };
 
   const onSubmitRequestEmailChange = async (formData: UserEmailFormData) => {
-    const data = { id: Number(id), ...formData };
+    const data = { id, ...formData };
     try {
       await changeEmailRequest(data);
     } catch (error) {
-      if (isFetchBaseQueryError(error)) {
-        if (isErrorResponse<UserEmailFormData>(error?.data)) {
-          setEmailSubmissionError(error?.data?.error);
+      if (error && isFetchBaseQueryError(error)) {
+        if (isObject(error.data)) {
+          setEmailFormValidationErrors(error.data);
         }
+      } else {
+        throw error;
       }
     }
   };
 
   const handleResendChangeEmailVerificationEmail = () => {
     try {
-      resendChangeEmailVerificationEmail({ id: Number(id) });
+      resendChangeEmailVerificationEmail({ id });
       notificationService.showSuccessMessage('Change Email verification email has been sent.');
     } catch (error) {
-      handleApiError(error as FetchBaseQueryError);
+      if (isFetchBaseQueryError(error)) {
+        handleApiError(error);
+      } else {
+        notificationService.showErrorMessage('Unable to Send Change Email verification email');
+        throw error;
+      }
     }
   };
 
@@ -116,23 +105,14 @@ export const UpdateUserProfilePage: FC = () => {
         profilePictureFormData.append('file', file);
         profilePictureFormData.append('type', file.type);
       }
-      const data = { profilePicture: profilePictureFormData, id: Number(id) };
+      const data = { profilePicture: profilePictureFormData, id };
 
-      try {
-        await updateUserProfilePicture(data);
-      } catch (error) {
-        if (isFetchBaseQueryError(error)) {
-          if (isErrorResponse<ProfilePictureFormData>(error?.data)) {
-            setProfilePictureSubmissionError(error?.data?.error);
-          }
-        }
-      }
+      await updateUserProfilePicture(data);
     }
   };
 
   const handleDeleteProfilePicture = async () => {
-    const data = { id: Number(id) };
-
+    const data = { id };
     await deleteUserProfilePicture(data);
   };
 
@@ -146,21 +126,17 @@ export const UpdateUserProfilePage: FC = () => {
     const request: ChangePasswordRequest = { id: user!.id, ...data };
 
     try {
-      const session = await changePassword(request).unwrap();
-      dispatch(authSlice.actions.userLoggedIn({ token: session.token, user: session.user }));
+      await changePassword(request).unwrap();
       notificationService.showSuccessMessage('Password updated.');
     } catch (error) {
-      if (isFetchBaseQueryError(error)) {
-        if (isErrorResponse<ForgotPasswordFormData>(error?.data)) {
-          setPasswordSubmissionError(error?.data?.error);
+      if (error && isFetchBaseQueryError(error)) {
+        if (isObject(error.data)) {
+          setPasswordFormValidationErrors(error.data);
         }
+      } else {
+        throw error;
       }
-      notificationService.showErrorMessage(
-        ((error as FetchBaseQueryError).data as ErrorResponse<ForgotPasswordFormData>).message,
-      );
     }
-
-    navigate('/agents');
   };
 
   return (
@@ -173,7 +149,7 @@ export const UpdateUserProfilePage: FC = () => {
 
       <PageHeader className='mb-3'>
         <div className='d-flex'>
-          <UserProfilePicture user={user} size='xs' radius={64} />
+          <UserProfilePicture user={user} size='sm' radius={64} />
           <div>
             <h1>
               {user?.firstName} {user?.lastName[0]}.
@@ -207,7 +183,6 @@ export const UpdateUserProfilePage: FC = () => {
                   firstName: user?.firstName ?? '',
                   lastName: user?.lastName ?? '',
                 }}
-                serverValidationErrors={profileSubmissionError}
               />
             </Col>
           </Row>
@@ -246,7 +221,7 @@ export const UpdateUserProfilePage: FC = () => {
                 defaultValues={{
                   email: user?.email ?? '',
                 }}
-                serverValidationErrors={emailSubmissionError}
+                serverValidationErrors={emailFormValidationErrors}
               />
             </Col>
           </Row>
@@ -259,10 +234,7 @@ export const UpdateUserProfilePage: FC = () => {
               <p className='text-muted'>This is the photo of you that other users in the system will be able to see.</p>
             </Col>
             <Col>
-              <UpdateProfilePictureForm
-                onSubmit={onSubmitNewProfilePicture}
-                serverValidationErrors={profilePictureSubmissionError}
-              />
+              <UpdateProfilePictureForm onSubmit={onSubmitNewProfilePicture} />
               <Button
                 className='mt-3'
                 variant='danger'
@@ -291,7 +263,7 @@ export const UpdateUserProfilePage: FC = () => {
             <Col>
               <ChangePasswordForm
                 onSubmit={onChangePasswordFormSubmit}
-                serverValidationErrors={passwordSubmissionError}
+                serverValidationErrors={passwordFormValidationErrors}
               />
             </Col>
           </Row>

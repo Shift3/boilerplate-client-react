@@ -1,13 +1,21 @@
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { UseFormSetError } from 'react-hook-form';
-import { ErrorResponse } from '../models';
 
-export const isFetchBaseQueryError = (error: unknown): error is FetchBaseQueryError => {
-  return (error as FetchBaseQueryError).data !== undefined;
+export const isObject = (value: unknown): value is Record<string, unknown> => {
+  return value !== null && typeof value === 'object';
 };
 
-export const isErrorResponse = <T>(data: unknown): data is ErrorResponse<T> => {
-  return (data as ErrorResponse<T>).error !== undefined;
+export const isStringArray = (errorValues: unknown): errorValues is string[] => {
+  if (Array.isArray(errorValues)) {
+    let arrayOnlyContainsStrings = true;
+    errorValues.forEach(item => {
+      if (typeof item !== 'string') {
+        arrayOnlyContainsStrings = false;
+      }
+    });
+    return arrayOnlyContainsStrings;
+  }
+
+  return false;
 };
 
 export const addServerErrors = <T>(errors: { [P in keyof T]?: string[] }, setError: UseFormSetError<T>): void => {

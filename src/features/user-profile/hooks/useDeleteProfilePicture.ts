@@ -1,6 +1,5 @@
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { useAppDispatch } from 'app/redux';
-import { handleApiError } from 'common/api/handleApiError';
+import { handleApiError, isFetchBaseQueryError } from 'common/api/handleApiError';
 import { useCallback } from 'react';
 import { authSlice, AuthState } from '../../auth/authSlice';
 import * as notificationService from 'common/services/notification';
@@ -34,7 +33,12 @@ export const useDeleteProfilePicture: UseDeleteProfilePictureHook = () => {
           notificationService.showSuccessMessage('Profile Photo Deleted');
         }
       } catch (error) {
-        handleApiError(error as FetchBaseQueryError);
+        notificationService.showErrorMessage('Unable to delete profile picture.');
+        if (isFetchBaseQueryError(error)) {
+          handleApiError(error);
+        } else {
+          throw error;
+        }
       }
     },
     [deleteProfilePicture, dispatch],

@@ -1,11 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { isFetchBaseQueryError } from 'common/api/handleApiError';
 import { useGetUserByIdQuery, useUpdateUserMutation } from 'common/api/userApi';
-import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
-import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
+import { isObject } from 'common/error/utilities';
 import { Role, ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
-import { StyledFormWrapper } from 'common/styles/form';
+import { FormCard, StyledFormWrapper } from 'common/styles/form';
+import { PageCrumb, PageHeader, SmallContainer } from 'common/styles/page';
 import { useRbac } from 'features/rbac';
 import { FC, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -16,15 +17,15 @@ type RouteParams = {
 };
 
 export const UpdateUserView: FC = () => {
-  const { id } = useParams<RouteParams>();
+  const { id = '' } = useParams<RouteParams>();
   const navigate = useNavigate();
   const { userHasPermission } = useRbac();
   const [updateUser] = useUpdateUserMutation();
-  const { data: user, isLoading: isLoadingUser, isFetching, error: getUserError } = useGetUserByIdQuery(Number(id));
+  const { data: user, isLoading: isLoadingUser, isFetching, error: getUserError } = useGetUserByIdQuery(id);
   const roles = Object.values(Role);
 
   const availableRoles = roles.filter(role => userHasPermission({ permission: 'role:read', data: role }));
-  const [submissionError, setSubmissionError] = useState<ServerValidationErrors<FormData> | null>(null);
+  const [formValidationErrors, setFormValidationErrors] = useState<ServerValidationErrors<FormData> | null>(null);
 
   useEffect(() => {
     if (getUserError) {
@@ -35,16 +36,24 @@ export const UpdateUserView: FC = () => {
 
   const handleFormSubmit = async (data: FormData) => {
     try {
-      await updateUser({ id: Number(id), ...data }).unwrap();
+      await updateUser({
+        id,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        role: data.role,
+        email: data.email,
+      }).unwrap();
       navigate('/users');
       notificationService.showSuccessMessage('User updated.');
     } catch (error) {
-      if (isFetchBaseQueryError(error)) {
-        if (isErrorResponse<FormData>(error?.data)) {
-          setSubmissionError(error?.data?.error);
+      notificationService.showErrorMessage('Unable to update user.');
+      if (error && isFetchBaseQueryError(error)) {
+        if (isObject(error.data)) {
+          setFormValidationErrors(error.data);
         }
+      } else {
+        throw error;
       }
-      notificationService.showErrorMessage('Unable to update user');
     }
   };
 
@@ -66,20 +75,22 @@ export const UpdateUserView: FC = () => {
       <FormCard>
         <FormCard.Body>
           <WithLoadingOverlay
-            isLoading={isLoadingUser || isFetching}
+            isLoading={isLoadingUser}
             isInitialLoad={isLoadingUser && isFetching}
             containerHasRoundedCorners
             containerBorderRadius='6px'
           >
-            <StyledFormWrapper>
-              <UserDetailForm
-                availableRoles={availableRoles}
-                defaultValues={user}
-                submitButtonLabel='Save'
-                onSubmit={handleFormSubmit}
-                serverValidationErrors={submissionError}
-              />
-            </StyledFormWrapper>
+            {!isLoadingUser ? (
+              <StyledFormWrapper>
+                <UserDetailForm
+                  availableRoles={availableRoles}
+                  defaultValues={user}
+                  submitButtonLabel='Save'
+                  onSubmit={handleFormSubmit}
+                  serverValidationErrors={formValidationErrors}
+                />
+              </StyledFormWrapper>
+            ) : null}
           </WithLoadingOverlay>
         </FormCard.Body>
       </FormCard>

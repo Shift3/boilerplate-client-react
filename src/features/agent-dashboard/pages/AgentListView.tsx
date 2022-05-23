@@ -1,12 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetAgentsQuery } from 'common/api/agentApi';
-import { NoContent, PageHeader, TableCard } from 'common/components/Common';
 import { DataTable } from 'common/components/DataTable';
 import { DataTableFilters, FilterInfo } from 'common/components/DataTable/DataTableFilters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { Agent, PaginatedResult } from 'common/models';
 import { SecondaryButton, CreateButton } from 'common/styles/button';
+import { TableCard } from 'common/styles/card';
+import { PageHeader } from 'common/styles/page';
+import { NoContent } from 'common/styles/utilities';
 import { HasPermission } from 'features/rbac';
 import { FC, useMemo } from 'react';
 import { Card } from 'react-bootstrap';

@@ -1,23 +1,19 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { handleApiError } from 'common/api/handleApiError';
+import { handleApiError, isFetchBaseQueryError } from 'common/api/handleApiError';
 import * as notificationService from 'common/services/notification';
 import { useResetPasswordMutation } from 'common/api/userApi';
 import { FormData, ResetPasswordForm } from '../components/ResetPasswordForm';
 import { PageWrapper } from 'common/styles/page';
 import { StyledFormWrapper, Title } from 'common/styles/form';
-import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
-import { ServerValidationErrors } from 'common/models';
 
 export const ResetPasswordPage: FC = () => {
   const navigate = useNavigate();
-  const { token = '' } = useParams<{ token: string }>();
+  const { token = '', uid = '' } = useParams<{ token: string; uid: string }>();
   const [resetPassword] = useResetPasswordMutation();
-  const [submissionError, setSubmissionError] = useState<ServerValidationErrors<FormData> | null>(null);
 
   const onSubmit = async (formData: FormData) => {
-    const data = { ...formData, token };
+    const data = { newPassword: formData.newPassword, token, uid };
 
     try {
       await resetPassword(data).unwrap();
@@ -25,11 +21,11 @@ export const ResetPasswordPage: FC = () => {
       navigate('/auth/login');
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
-        if (isErrorResponse<FormData>(error?.data)) {
-          setSubmissionError(error?.data?.error);
-        }
+        handleApiError(error);
+      } else {
+        notificationService.showErrorMessage('Unable to reset password.');
+        throw error;
       }
-      handleApiError(error as FetchBaseQueryError);
     }
   };
 
@@ -37,7 +33,7 @@ export const ResetPasswordPage: FC = () => {
     <PageWrapper>
       <StyledFormWrapper>
         <Title>Reset Password</Title>
-        <ResetPasswordForm onSubmit={onSubmit} serverValidationErrors={submissionError} />
+        <ResetPasswordForm onSubmit={onSubmit} />
       </StyledFormWrapper>
     </PageWrapper>
   );

@@ -1,10 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useCreateAgentMutation } from 'common/api/agentApi';
-import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
-import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
+import { isFetchBaseQueryError } from 'common/api/handleApiError';
+import { isObject } from 'common/error/utilities';
 import { ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
-import { StyledFormWrapper } from 'common/styles/form';
+import { FormCard, StyledFormWrapper } from 'common/styles/form';
+import { PageCrumb, PageHeader, SmallContainer } from 'common/styles/page';
 import { FC, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
@@ -12,7 +13,7 @@ import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
 export const CreateAgentView: FC = () => {
   const navigate = useNavigate();
   const [createAgent] = useCreateAgentMutation();
-  const [submissionError, setSubmissionError] = useState<ServerValidationErrors<FormData> | null>(null);
+  const [formValidationErrors, setFormValidationErrors] = useState<ServerValidationErrors<FormData> | null>(null);
 
   const handleFormCancel = () => {
     navigate(-1);
@@ -24,12 +25,14 @@ export const CreateAgentView: FC = () => {
       notificationService.showSuccessMessage('Agent created.');
       navigate('/agents');
     } catch (error) {
-      if (isFetchBaseQueryError(error)) {
-        if (isErrorResponse<FormData>(error?.data)) {
-          setSubmissionError(error?.data?.error);
+      notificationService.showErrorMessage('Unable to add agent.');
+      if (error && isFetchBaseQueryError(error)) {
+        if (isObject(error.data)) {
+          setFormValidationErrors(error.data);
+        } else {
+          throw error;
         }
       }
-      notificationService.showErrorMessage('Unable to add agent.');
     }
   };
 
@@ -54,7 +57,7 @@ export const CreateAgentView: FC = () => {
               submitButtonLabel='Create'
               onCancel={handleFormCancel}
               onSubmit={handleFormSubmit}
-              serverValidationErrors={submissionError}
+              serverValidationErrors={formValidationErrors}
             />
           </StyledFormWrapper>
         </FormCard.Body>

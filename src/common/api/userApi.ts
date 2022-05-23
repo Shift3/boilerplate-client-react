@@ -6,35 +6,35 @@ import { User } from 'common/models/user';
 import { QueryParamsBuilder } from './queryParamsBuilder';
 
 export type ActivateAccountRequest = {
+  uid: string;
   token: string;
-  newPassword: string;
-  confirmPassword: string;
+  password: string;
+  passwordConfirmation: string;
 };
 export type ChangePasswordRequest = Pick<User, 'id'> & {
-  oldPassword: string;
+  currentPassword: string;
   newPassword: string;
-  confirmPassword: string;
 };
 export type ConfirmChangeEmailRequest = {
   token: string;
-  verificationCode: number;
+  uid: string;
 };
-export type CreateUserRequest = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role'>;
+export type CreateUserRequest = Pick<User, 'email' | 'firstName' | 'lastName' | 'role'>;
 export type ForgotPasswordRequest = Pick<User, 'email'>;
 export type ForgotPasswordResponse = { message: string };
-export type ResendActivationEmailRequest = Pick<User, 'id'>;
+export type ResendActivationEmailRequest = Pick<User, 'email'>;
 export type ResendChangeEmailVerificationEmailRequest = Pick<User, 'id'>;
 export type ResetPasswordRequest = {
+  uid: string;
   token: string;
   newPassword: string;
-  confirmPassword: string;
 };
 export type SignUpRequest = Pick<User, 'email' | 'firstName' | 'lastName'>;
-export type UpdateProfileRequest = Pick<User, 'id' | 'firstName' | 'lastName'>;
+export type UpdateProfileRequest = Pick<User, 'firstName' | 'lastName'>;
 export type UpdateUserRequest = Pick<User, 'id' | 'email' | 'firstName' | 'lastName' | 'role'>;
 export type UserChangeEmailRequest = Pick<User, 'id' | 'email'>;
 export type UpdateProfilePictureRequest = {
-  id: number;
+  id: string;
   // FormData is associated with HTMLFormElement and not with the form component schema.
   profilePicture: FormData;
 };
@@ -60,19 +60,19 @@ export const userApi = createApi({
           .setSortParam(sortBy)
           .setFilterParam(filters)
           .build();
-        return { url: `/users?${queryParams}` };
+        return { url: `/users/?${queryParams}` };
       },
       providesTags: ['User'],
     }),
 
-    getUserById: builder.query<User, number | string>({
-      query: id => `/users/${id}`,
+    getUserById: builder.query<User, string>({
+      query: id => `/users/${id}/`,
       providesTags: ['User'],
     }),
 
-    createUser: builder.mutation<User, CreateUserRequest>({
+    inviteUser: builder.mutation<User, CreateUserRequest>({
       query: payload => ({
-        url: '/users',
+        url: '/users/invitation/',
         method: 'POST',
         body: payload,
       }),
@@ -81,32 +81,32 @@ export const userApi = createApi({
 
     updateUser: builder.mutation<User, UpdateUserRequest>({
       query: ({ id, ...payload }) => ({
-        url: `/users/${id}`,
-        method: 'PUT',
+        url: `/users/${id}/`,
+        method: 'PATCH',
         body: payload,
       }),
       invalidatesTags: ['User'],
     }),
 
-    deleteUser: builder.mutation<void, number>({
+    deleteUser: builder.mutation<void, string>({
       query: userId => ({
-        url: `/users/${userId}`,
+        url: `/users/${userId}/`,
         method: 'DELETE',
       }),
       invalidatesTags: ['User'],
     }),
 
     changePassword: builder.mutation<Session, ChangePasswordRequest>({
-      query: ({ id, ...payload }) => ({
-        url: `/users/change-password/${id}`,
-        method: 'PUT',
+      query: ({ ...payload }) => ({
+        url: `/users/set_password/`,
+        method: 'POST',
         body: payload,
       }),
     }),
 
     forgotPassword: builder.mutation<ForgotPasswordResponse, ForgotPasswordRequest>({
       query: payload => ({
-        url: '/users/forgot-password',
+        url: `/users/reset_password/`,
         method: 'POST',
         body: payload,
       }),
@@ -114,64 +114,69 @@ export const userApi = createApi({
 
     signUp: builder.mutation<User, SignUpRequest>({
       query: payload => ({
-        url: '/users/signup',
+        url: '/users/',
         method: 'POST',
         body: payload,
       }),
     }),
 
+    getMe: builder.query<User, void>({
+      query: () => '/users/me/',
+    }),
+
     activateAccount: builder.mutation<User, ActivateAccountRequest>({
-      query: ({ token, ...payload }) => ({
-        url: `/users/activate-account/${token}`,
-        method: 'PUT',
+      query: payload => ({
+        url: `/users/activation/`,
+        method: 'POST',
         body: payload,
       }),
     }),
 
     resetPassword: builder.mutation<User, ResetPasswordRequest>({
-      query: ({ token, ...payload }) => ({
-        url: `/users/reset-password/${token}`,
-        method: 'PUT',
+      query: payload => ({
+        url: `/users/reset_password_confirm/`,
+        method: 'POST',
         body: payload,
       }),
     }),
 
     updateProfile: builder.mutation<User, UpdateProfileRequest>({
-      query: ({ id, ...payload }) => ({
-        url: `/users/profile/${id}`,
-        method: 'PUT',
+      query: ({ ...payload }) => ({
+        url: `/users/me/`,
+        method: 'PATCH',
         body: payload,
       }),
       invalidatesTags: ['User'],
     }),
 
     requestChangeEmail: builder.mutation<User, UserChangeEmailRequest>({
-      query: ({ id, ...payload }) => ({
-        url: `/users/request-change-email/${id}`,
-        method: `PUT`,
+      query: ({ ...payload }) => ({
+        url: `/users/change_email_request/`,
+        method: `POST`,
         body: payload,
       }),
       invalidatesTags: ['User'],
     }),
 
     resendActivationEmail: builder.mutation<void, ResendActivationEmailRequest>({
-      query: ({ id }) => ({
-        url: `/users/resend-activation-email/${id}`,
-        method: 'GET',
+      query: ({ email }) => ({
+        url: `/users/resend_activation/`,
+        method: 'POST',
+        body: { email },
       }),
     }),
 
     resendChangeEmailVerificationEmail: builder.mutation<void, ResendChangeEmailVerificationEmailRequest>({
       query: ({ id }) => ({
-        url: `/users/resend-change-email-verification-email/${id}`,
-        method: 'GET',
+        url: `/users/${id}/resend_change_email_request_email/`,
+        method: 'POST',
       }),
     }),
 
     confirmChangeEmail: builder.mutation<User, ConfirmChangeEmailRequest>({
-      query: ({ token, ...payload }) => ({
-        url: `/users/confirm-change-email/${token}`,
-        method: 'PUT',
+      query: payload => ({
+        url: `/users/confirm_change_email/`,
+        method: 'POST',
         body: payload,
       }),
       invalidatesTags: ['User'],
@@ -179,8 +184,8 @@ export const userApi = createApi({
 
     updateProfilePicture: builder.mutation<User, UpdateProfilePictureRequest>({
       query: ({ id, profilePicture }) => ({
-        url: `/users/${id}/profile-picture`,
-        method: 'PUT',
+        url: `/users/${id}/profile_picture/`,
+        method: 'POST',
         body: profilePicture,
       }),
       invalidatesTags: ['User'],
@@ -188,7 +193,7 @@ export const userApi = createApi({
 
     deleteProfilePicture: builder.mutation<User, DeleteProfilePictureRequest>({
       query: ({ id }) => ({
-        url: `/users/${id}/profile-picture`,
+        url: `/users/${id}/profile_picture/`,
         method: 'DELETE',
       }),
       invalidatesTags: ['User'],
@@ -197,10 +202,12 @@ export const userApi = createApi({
 });
 
 export const {
+  useGetMeQuery,
+  useLazyGetMeQuery,
   useActivateAccountMutation,
   useChangePasswordMutation,
   useConfirmChangeEmailMutation,
-  useCreateUserMutation,
+  useInviteUserMutation,
   useDeleteUserMutation,
   useForgotPasswordMutation,
   useGetUsersQuery,

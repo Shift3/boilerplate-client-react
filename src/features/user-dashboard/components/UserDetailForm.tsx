@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { CustomSelect } from 'common/components';
+import { CustomSelect } from 'common/components/CustomSelect';
 import { LoadingButton } from 'common/components/LoadingButton';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
 import { addServerErrors } from 'common/error/utilities';
@@ -10,7 +10,7 @@ import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'profilePicture' | 'role'>;
+export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'role'>;
 
 export interface Props {
   availableRoles: Role[];
@@ -62,7 +62,7 @@ export const UserDetailForm: FC<Props> = ({
       <Form name='create-user-form' onSubmit={handleSubmit(onSubmit)}>
         <h5>Profile</h5>
         <Row className='mb-2'>
-          <Col>
+          <Col xs={12} md={6}>
             <Form.Group controlId='create-user-form-first-name'>
               <Form.Label>First Name</Form.Label>
               <Form.Control type='text' {...register('firstName')} isInvalid={!!errors.firstName} />
@@ -70,7 +70,7 @@ export const UserDetailForm: FC<Props> = ({
             </Form.Group>
           </Col>
 
-          <Col>
+          <Col xs={12} md={6}>
             <Form.Group controlId='create-user-form-last-name'>
               <Form.Label>Last Name</Form.Label>
               <Form.Control type='text' {...register('lastName')} isInvalid={!!errors.lastName} />

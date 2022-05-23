@@ -11,9 +11,9 @@ export const AuthRoutes: FC = () => (
   <Routes>
     <Route path='/login' element={<LogInPage />} />
     <Route path='/signup' element={<SignUpPage />} />
-    <Route path='/activate-account/:token' element={<ActivateAccountPage />} />
-    <Route path='/confirm-change-email/:token' element={<ConfirmChangeEmailPage />} />
+    <Route path='/activate-account/:uid/:token' element={<ActivateAccountPage />} />
+    <Route path='/confirm-change-email/:uid/:token' element={<ConfirmChangeEmailPage />} />
     <Route path='/forgot-password' element={<ForgotPasswordPage />} />
-    <Route path='/reset-password/:token' element={<ResetPasswordPage />} />
+    <Route path='/reset-password/:uid/:token' element={<ResetPasswordPage />} />
   </Routes>
 );

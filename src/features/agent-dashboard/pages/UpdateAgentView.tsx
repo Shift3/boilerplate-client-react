@@ -1,11 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetAgentByIdQuery, useUpdateAgentMutation } from 'common/api/agentApi';
-import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
+import { isFetchBaseQueryError } from 'common/api/handleApiError';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
-import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
+import { isObject } from 'common/error/utilities';
 import { ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
-import { StyledFormWrapper } from 'common/styles/form';
+import { FormCard, StyledFormWrapper } from 'common/styles/form';
+import { PageCrumb, PageHeader, SmallContainer } from 'common/styles/page';
 import { FC, useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -20,7 +21,7 @@ export const UpdateAgentView: FC = () => {
   const navigate = useNavigate();
   const [updateAgent] = useUpdateAgentMutation();
   const { data: agent, isLoading: isLoadingAgent, isFetching, error } = useGetAgentByIdQuery(id!);
-  const [submissionError, setSubmissionError] = useState<ServerValidationErrors<FormData> | null>(null);
+  const [formValidationErrors, setFormValidationErrors] = useState<ServerValidationErrors<FormData> | null>(null);
 
   useEffect(() => {
     if (error) {
@@ -40,12 +41,14 @@ export const UpdateAgentView: FC = () => {
       notificationService.showSuccessMessage('Agent updated.');
       navigate('/agents');
     } catch (error) {
-      if (isFetchBaseQueryError(error)) {
-        if (isErrorResponse<FormData>(error?.data)) {
-          setSubmissionError(error?.data?.error);
-        }
-      }
       notificationService.showErrorMessage('Unable to update agent.');
+      if (error && isFetchBaseQueryError(error)) {
+        if (isObject(error.data)) {
+          setFormValidationErrors(error.data);
+        }
+      } else {
+        throw error;
+      }
     }
   };
 
@@ -67,20 +70,22 @@ export const UpdateAgentView: FC = () => {
       <FormCard>
         <Card.Body>
           <WithLoadingOverlay
-            isLoading={isLoadingAgent || isFetching}
             isInitialLoad={isLoadingAgent && isFetching}
+            isLoading={isLoadingAgent}
             containerHasRoundedCorners
             containerBorderRadius='6px'
           >
-            <StyledFormWrapper>
-              <AgentDetailForm
-                defaultValues={agent}
-                submitButtonLabel='Save'
-                onSubmit={handleFormSubmit}
-                onCancel={handleFormCancel}
-                serverValidationErrors={submissionError}
-              />
-            </StyledFormWrapper>
+            {!isLoadingAgent ? (
+              <StyledFormWrapper>
+                <AgentDetailForm
+                  defaultValues={agent}
+                  submitButtonLabel='Save'
+                  onSubmit={handleFormSubmit}
+                  onCancel={handleFormCancel}
+                  serverValidationErrors={formValidationErrors}
+                />
+              </StyledFormWrapper>
+            ) : null}
           </WithLoadingOverlay>
         </Card.Body>
       </FormCard>

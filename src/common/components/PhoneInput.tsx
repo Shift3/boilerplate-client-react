@@ -1,6 +1,6 @@
-import { FC } from "react";
+import { FC } from 'react';
 import Form from 'react-bootstrap/Form';
-import { formatPhoneNumber, normalizePhoneNumber } from "utils/phone";
+import { formatPhoneNumber, normalizePhoneNumber } from 'utils/phone';
 
 type Props = {
   placeholder?: string;

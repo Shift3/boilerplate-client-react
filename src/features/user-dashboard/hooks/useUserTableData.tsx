@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { handleApiError, isFetchBaseQueryError } from 'common/api/handleApiError';
 import { useDeleteUserMutation, useForgotPasswordMutation, useResendActivationEmailMutation } from 'common/api/userApi';
-import { Image, RoleType, User } from 'common/models';
+import { Image, RoleType, Role, User } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { ActionButton, ActionButtonProps, TableActions } from 'common/styles/button';
 import { SubtleBadge } from 'common/styles/utilities';
@@ -12,7 +13,7 @@ import { Button } from 'react-bootstrap';
 import { Column } from 'react-table';
 
 export type UserTableItem = {
-  id: number;
+  id: string;
   email: string;
   firstName: string;
   lastName: string;
@@ -41,7 +42,7 @@ export const useUserTableData: UseUserTableData = (users = []) => {
       const message = `Resend Activation Email to ${getUsersFullName(user)}?`;
 
       const onConfirm = async () => {
-        await resendActivationEmail({ id: user.id });
+        await resendActivationEmail({ email: user.email });
         notificationService.showSuccessMessage('Activation email has been sent.');
       };
 
@@ -69,7 +70,15 @@ export const useUserTableData: UseUserTableData = (users = []) => {
       const message = `Send Reset Password Email to ${getUsersFullName(user)}?`;
 
       const onConfirm = async () => {
-        await sendForgotPasswordEmail({ email: user.email });
+        try {
+          await sendForgotPasswordEmail({ email: user.email });
+        } catch (e) {
+          if (isFetchBaseQueryError(e)) {
+            handleApiError(e);
+          } else {
+            throw e;
+          }
+        }
         notificationService.showSuccessMessage(`Password reset email has been sent to ${user.email}`);
       };
 
@@ -82,10 +91,9 @@ export const useUserTableData: UseUserTableData = (users = []) => {
     if (!role) return '';
 
     return {
-      'Super Administrator': 'danger',
-      Admin: 'warning',
-      User: 'secondary',
-      Editor: 'info',
+      [Role.ADMIN]:  'danger',
+      [Role.USER]:   'secondary',
+      [Role.EDITOR]: 'info',
     }[role];
   };
 

@@ -14,13 +14,13 @@ export const UserFactory = Factory.define<User, UserTransientParams>(
     const { hasNewEmail, hasProfilePicture } = transientParams;
 
     return {
-      id: sequence,
+      id: sequence.toString(),
       email: Faker.internet.email(),
       activatedAt: Faker.date.recent().toISOString(),
       firstName: params.firstName ?? Faker.name.firstName(),
       lastName: params.lastName ?? Faker.name.lastName(),
       profilePicture: hasProfilePicture ? associations.profilePicture ?? ImageFactory.build() : null,
-      role: Role.SUPER_ADMIN,
+      role: Role.ADMIN,
       newEmail: hasNewEmail ? Faker.internet.email() : null,
     };
   },

@@ -1,10 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useCreateUserMutation } from 'common/api/userApi';
-import { FormCard, PageCrumb, PageHeader, SmallContainer } from 'common/components/Common';
-import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
+import { isFetchBaseQueryError } from 'common/api/handleApiError';
+import { useInviteUserMutation } from 'common/api/userApi';
+import { isObject } from 'common/error/utilities';
 import { Role, ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
-import { StyledFormWrapper } from 'common/styles/form';
+import { FormCard, StyledFormWrapper } from 'common/styles/form';
+import { PageCrumb, PageHeader, SmallContainer } from 'common/styles/page';
 import { useRbac } from 'features/rbac';
 import { FC, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -13,26 +14,28 @@ import { FormData, UserDetailForm } from '../components/UserDetailForm';
 export const CreateUserView: FC = () => {
   const navigate = useNavigate();
   const { userHasPermission } = useRbac();
-  const [createUser] = useCreateUserMutation();
+  const [inviteUser] = useInviteUserMutation();
   const roles = Object.values(Role);
   const availableRoles = roles.filter(role => userHasPermission({ permission: 'role:read', data: role }));
   const defaultValues: Partial<FormData> = {};
-  const [submissionError, setSubmissionError] = useState<ServerValidationErrors<FormData> | null>(null);
+  const [formValidationErrors, setFormValidationErrors] = useState<ServerValidationErrors<FormData> | null>(null);
 
   const handleFormSubmit = async (data: FormData) => {
     try {
-      await createUser({ ...data, profilePicture: null }).unwrap();
+      await inviteUser({ ...data }).unwrap();
       notificationService.showSuccessMessage(
         `An email has been sent to ${data.email} with instructions to finish activating the account.`,
       );
       navigate('/users');
     } catch (error) {
-      if (isFetchBaseQueryError(error)) {
-        if (isErrorResponse<FormData>(error?.data)) {
-          setSubmissionError(error?.data?.error);
-        }
-      }
       notificationService.showErrorMessage('Unable to add user.');
+      if (error && isFetchBaseQueryError(error)) {
+        if (isObject(error.data)) {
+          setFormValidationErrors(error.data);
+        }
+      } else {
+        throw error;
+      }
     }
   };
 
@@ -59,7 +62,7 @@ export const CreateUserView: FC = () => {
               defaultValues={defaultValues}
               submitButtonLabel='Create'
               onSubmit={handleFormSubmit}
-              serverValidationErrors={submissionError}
+              serverValidationErrors={formValidationErrors}
             />
           </StyledFormWrapper>
         </FormCard.Body>
