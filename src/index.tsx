@@ -37,7 +37,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { App } from './app/App';
 import reportWebVitals from './reportWebVitals';
-
+import './i18n/config';
 // Font Awesome recommends importing icons via a “library” in the initializing module of the app
 // so you add them once in your React app and reference them in any component
 // https://fontawesome.com/v5.15/how-to-use/on-the-web/using-with/react
