@@ -41,9 +41,11 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 
 export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
   const {
-    formState: { errors, isDirty, isSubmitting, isSubmitted, isValid },
+    formState: { errors, isDirty, isSubmitting, isSubmitted, isValid, isSubmitSuccessful },
     handleSubmit,
     register,
+    reset,
+    getValues,
     setError,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
@@ -51,10 +53,13 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors
   });
 
   useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+    }
     if (serverValidationErrors) {
       addServerErrors(serverValidationErrors, setError);
     }
-  }, [serverValidationErrors, setError]);
+  }, [reset, isSubmitSuccessful, getValues, serverValidationErrors, setError]);
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>

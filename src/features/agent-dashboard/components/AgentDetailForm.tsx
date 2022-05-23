@@ -72,6 +72,9 @@ export const AgentDetailForm: FC<Props> = ({
         state: defaultValues?.address?.state ?? '',
         address2: defaultValues?.address?.address2 ?? '',
       },
+      // This is necessary to conform to the US_PHONE_REGEX pattern.
+      phoneNumber:
+        defaultValues.phoneNumber && defaultValues.phoneNumber !== '' ? defaultValues.phoneNumber.substring(2) : '',
     },
   });
 

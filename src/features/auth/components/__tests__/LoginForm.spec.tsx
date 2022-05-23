@@ -15,7 +15,7 @@ describe('LoginForm', () => {
       <MemoryRouter>
         <Provider store={createAppStore()}>
           <ThemeProvider theme={AppTheme}>
-            <LogInForm onSubmit={mockOnSubmit} serverValidationErrors={null} />
+            <LogInForm onSubmit={mockOnSubmit} />
           </ThemeProvider>
         </Provider>
       </MemoryRouter>,

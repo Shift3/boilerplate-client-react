@@ -29,6 +29,7 @@ export const useUpdateUserProfile: UseUpdateUserProfileHook = () => {
         if (isFetchBaseQueryError(error)) {
           handleApiError(error);
         } else {
+          notificationService.showErrorMessage('Unable to update profile.');
           throw error;
         }
       }

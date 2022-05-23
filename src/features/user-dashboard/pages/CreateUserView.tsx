@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { isFetchBaseQueryError } from 'common/api/handleApiError';
 import { useInviteUserMutation } from 'common/api/userApi';
-import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
+import { isObject } from 'common/error/utilities';
 import { Role, ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { FormCard, StyledFormWrapper } from 'common/styles/form';
@@ -17,7 +18,7 @@ export const CreateUserView: FC = () => {
   const roles = Object.values(Role);
   const availableRoles = roles.filter(role => userHasPermission({ permission: 'role:read', data: role }));
   const defaultValues: Partial<FormData> = {};
-  const [submissionError, setSubmissionError] = useState<ServerValidationErrors<FormData> | null>(null);
+  const [formValidationErrors, setFormValidationErrors] = useState<ServerValidationErrors<FormData> | null>(null);
 
   const handleFormSubmit = async (data: FormData) => {
     try {
@@ -27,12 +28,14 @@ export const CreateUserView: FC = () => {
       );
       navigate('/users');
     } catch (error) {
-      if (isFetchBaseQueryError(error)) {
-        if (isErrorResponse<FormData>(error?.data)) {
-          setSubmissionError(error?.data?.error);
-        }
-      }
       notificationService.showErrorMessage('Unable to add user.');
+      if (error && isFetchBaseQueryError(error)) {
+        if (isObject(error.data)) {
+          setFormValidationErrors(error.data);
+        }
+      } else {
+        throw error;
+      }
     }
   };
 
@@ -59,7 +62,7 @@ export const CreateUserView: FC = () => {
               defaultValues={defaultValues}
               submitButtonLabel='Create'
               onSubmit={handleFormSubmit}
-              serverValidationErrors={submissionError}
+              serverValidationErrors={formValidationErrors}
             />
           </StyledFormWrapper>
         </FormCard.Body>

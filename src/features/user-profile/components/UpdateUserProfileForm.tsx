@@ -1,8 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from 'common/components/LoadingButton';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
-import { addServerErrors } from 'common/error/utilities';
-import { ServerValidationErrors } from 'common/models';
 import { FC, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -17,7 +15,6 @@ export type ProfileFormData = {
 type Props = {
   onSubmit: (data: ProfileFormData) => void;
   defaultValues?: Partial<ProfileFormData>;
-  serverValidationErrors: ServerValidationErrors<ProfileFormData> | null;
 };
 
 const schema: yup.SchemaOf<ProfileFormData> = yup.object().shape({
@@ -25,14 +22,13 @@ const schema: yup.SchemaOf<ProfileFormData> = yup.object().shape({
   lastName: yup.string().trim().required(Constants.errorMessages.LAST_NAME_REQUIRED),
 });
 
-export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues, serverValidationErrors }) => {
+export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) => {
   const {
     formState: { errors, isDirty, isValid, isSubmitting, isSubmitted, isSubmitSuccessful },
     handleSubmit,
     register,
     reset,
     getValues,
-    setError,
   } = useForm<ProfileFormData>({
     resolver: yupResolver(schema),
     mode: 'all',
@@ -43,10 +39,7 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues, serv
     if (isSubmitSuccessful) {
       reset(getValues());
     }
-    if (serverValidationErrors) {
-      addServerErrors(serverValidationErrors, setError);
-    }
-  }, [reset, isSubmitSuccessful, getValues, serverValidationErrors, setError]);
+  }, [reset, isSubmitSuccessful, getValues]);
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>

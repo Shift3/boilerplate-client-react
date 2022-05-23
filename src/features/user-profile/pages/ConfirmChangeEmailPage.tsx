@@ -19,6 +19,7 @@ export const ConfirmChangeEmailPage: FC = () => {
       notificationService.showSuccessMessage('Email change successful.');
       navigate('/auth/login');
     } catch (error) {
+      notificationService.showErrorMessage('Unable to change email.');
       if (isFetchBaseQueryError(error)) {
         handleApiError(error);
       } else {
