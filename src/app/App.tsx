@@ -90,7 +90,7 @@ export const App: FC = () => (
           <Route
             path='/users/*'
             element={
-              <RequireAuth allowedRoles={[ Role.ADMIN ]}>
+              <RequireAuth allowedRoles={[Role.ADMIN]}>
                 <UserRoutes />
               </RequireAuth>
             }
