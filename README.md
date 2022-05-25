@@ -1,9 +1,9 @@
 # Boilerplate Client React
 
-| Branch      | Status                                                                                                                                                                                                                   |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| development | [![Shift3](https://circleci.com/gh/Shift3/boilerplate-client-react.svg?style=shield&circle-token=7906113b0233ea67936098a26da5e8f598eec7ac)](https://circleci.com/gh/Shift3/boilerplate-client-react)                     |
-| main        | [![Shift3](https://circleci.com/gh/Shift3/boilerplate-client-react/tree/main.svg?style=shield&circle-token=7906113b0233ea67936098a26da5e8f598eec7ac)](https://circleci.com/gh/Shift3/boilerplate-client-react/tree/main) |
+| Branch  | Status                                                                                                                                                                                                                   |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| develop | [![Shift3](https://circleci.com/gh/Shift3/boilerplate-client-react.svg?style=shield&circle-token=7906113b0233ea67936098a26da5e8f598eec7ac)](https://circleci.com/gh/Shift3/boilerplate-client-react)                     |
+| main    | [![Shift3](https://circleci.com/gh/Shift3/boilerplate-client-react/tree/main.svg?style=shield&circle-token=7906113b0233ea67936098a26da5e8f598eec7ac)](https://circleci.com/gh/Shift3/boilerplate-client-react/tree/main) |
 
 This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react/wiki) which explains the project and its implementation in much greater detail than the code comments.
 
@@ -139,7 +139,7 @@ Update the `apiRoute` property in `environment.staging.ts` with the provisioned 
 
 ### Build and Deploy
 
-The boilerplate can either be deployed manually, or automatically via CircleCI. The preferred way to deploy is with automatic deployments. The default CircleCI configuration will deploy to the staging environment when there are new commits pushed to the `development` branch, and will deploy to production when new commits are pushed to the `main` branch.
+The boilerplate can either be deployed manually, or automatically via CircleCI. The preferred way to deploy is with automatic deployments. The default CircleCI configuration will deploy to the staging environment when there are new commits pushed to the `develop` branch, and will deploy to production when new commits are pushed to the `main` branch.
 
 #### CircleCI Deployments
 
@@ -158,7 +158,7 @@ After your CircleCI project is set up, the only thing you need to do to get depl
   - The default region your infrastructure is deployed to.
   - `us-west-2`
 
-Once these are set up, your project will be **automatically deployed** whenever new commits to the `development` branch are pushed to Github.
+Once these are set up, your project will be **automatically deployed** whenever new commits to the `develop` branch are pushed to Github.
 
 Production deploys from the `main` branch use the same set of environment variables, just with `PRODUCTION` instead of `STAGING` int the names. The list of those variables follow:
 
@@ -254,7 +254,7 @@ It is recommended to use the above configuration, however if you choose to alter
 
 #### Wiki Automation
 
-The CircleCI config includes a `deploy-wiki` job to automatically deploy Wiki pages that are placed in the `wiki/` folder. This workflow only runs when changes are commited directly to the `development` branch or when a feature branch is merged into the `development` branch.
+The CircleCI config includes a `deploy-wiki` job to automatically deploy Wiki pages that are placed in the `wiki/` folder. This workflow only runs when changes are commited directly to the `develop` branch or when a feature branch is merged into the `develop` branch.
 
 After forking the project, you will need to make the following changes to ensure the `deploy-wiki` job works properly:
 
