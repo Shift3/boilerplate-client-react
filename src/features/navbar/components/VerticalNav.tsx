@@ -8,6 +8,14 @@ import { useNavLinks } from '../hooks/useNavLinks';
 import { CustomNavAction, CustomNavLink } from './CustomNavLink';
 import { Logo } from './Logo';
 import { NavUserDetails } from './NavUserDetails';
+import Button from 'react-bootstrap/Button';
+import i18n from '../../../i18n/config';
+
+const changeLanguage = (ln: string) => {
+  return () => {
+    i18n.changeLanguage(ln);
+  };
+};
 
 export const BitwiseNavbar = styled(Navbar)`
   background: ${props => props.theme.nav.backgroundColor};
@@ -59,6 +67,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
   return (
     <BitwiseNavbar className='flex-column py-0'>
       <Logo />
+
       {user ? (
         <div className='nav-wrap w-100'>
           <Nav className='flex-column'>
@@ -67,6 +76,10 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
             ))}
           </Nav>
           <Nav className='flex-column'>
+            <div className=''>
+              <Button onClick={changeLanguage('en')}>En</Button>
+              <Button onClick={changeLanguage('es')}>Es</Button>
+            </div>
             <NavUserDetails user={user} />
             <CustomNavAction onClick={openLogoutModal} label='Sign Out' icon='sign-out-alt' />
           </Nav>

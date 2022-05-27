@@ -69,14 +69,16 @@ export const AgentListView: FC = () => {
       <PageHeader>
         <div>
           <h1>
-            <Trans i18nKey='title'>Agent List</Trans>
+            <Trans i18nKey='agents.title'>Agent List</Trans>
           </h1>
           <p className='text-muted'>All agents in the system.</p>
         </div>
         <HasPermission perform='agent:create'>
           <div>
             <Link to='/agents/create-agent'>
-              <CreateButton>Add Agent</CreateButton>
+              <CreateButton>
+                <Trans i18nKey='agents.addAgent'>Add Agent</Trans>
+              </CreateButton>
             </Link>
           </div>
         </HasPermission>
