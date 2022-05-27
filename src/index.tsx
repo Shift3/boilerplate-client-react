@@ -31,7 +31,7 @@ import {
 import * as Sentry from '@sentry/react';
 import { store } from 'app/redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { StrictMode } from 'react';
+import { StrictMode, Suspense } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -97,9 +97,11 @@ root.render(
   <StrictMode>
     <Router>
       <Provider store={store}>
-        <I18nextProvider i18n={i18n}>
-          <TranslatedApp />
-        </I18nextProvider>
+        <Suspense fallback='loading'>
+          <I18nextProvider i18n={i18n}>
+            <TranslatedApp />
+          </I18nextProvider>
+        </Suspense>
       </Provider>
     </Router>
   </StrictMode>,

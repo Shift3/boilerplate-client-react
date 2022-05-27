@@ -93,6 +93,7 @@
     "eslint-plugin-testing-library": "^5.3.1",
     "fishery": "^2.2.2",
     "husky": "^7.0.0",
+    "i18next-parser": "^6.4.0",
     "jest-styled-components": "^7.0.4",
     "msw": "^0.39.2",
     "prettier": "^2.6.2",

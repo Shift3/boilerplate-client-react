@@ -5,6 +5,12 @@ import { initReactI18next } from 'react-i18next';
 import translationEN from './en/translation.json';
 import translationES from './es/translation.json';
 
+// To load the translation files
+
+i18n.on('languageChanged', lng => {
+  localStorage.setItem('lng', lng);
+});
+
 const resources = {
   en: {
     translation: translationEN,
@@ -26,6 +32,10 @@ i18n
     fallbackLng: 'en',
     debug: true,
     resources,
+    backend: {
+      loadPath: `${process.env.PUBLIC_URL}/locales/{{lng}}/{{ns}}.json`, // Path to the translation files
+      addPath: `${process.env.PUBLIC_URL}/locales/add/{{lng}}/{{ns}}`,
+    },
   });
 
 export default i18n;

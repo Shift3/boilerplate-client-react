@@ -29,6 +29,7 @@ import { UpdateUserEmailForm, UserEmailFormData } from '../components/UpdateUser
 import { UserProfilePicture } from 'features/navbar/components/UserProfilePicture';
 import { isObject } from 'common/error/utilities';
 import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
+import { useTranslation, Trans } from 'react-i18next';
 
 type RouteParams = {
   id: string;
@@ -139,14 +140,19 @@ export const UpdateUserProfilePage: FC = () => {
     }
   };
 
+  const { t, i18n } = useTranslation([]);
+
+  const changeLanguage = (code: string | undefined) => {
+    i18n.changeLanguage(code);
+  };
+
   return (
     <SmallContainer>
       <PageCrumb>
         <Link to='/agents'>
-          <FontAwesomeIcon icon={['fas', 'chevron-left']} /> Back to Agent List
+          <FontAwesomeIcon icon={['fas', 'chevron-left']} /> <Trans i18nKey='translation:content.text' />
         </Link>
       </PageCrumb>
-
       <PageHeader className='mb-3'>
         <div className='d-flex'>
           <UserProfilePicture user={user} size='sm' radius={64} />
