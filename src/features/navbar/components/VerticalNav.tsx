@@ -75,9 +75,13 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
             ))}
           </Nav>
           <Nav className='flex-column'>
-            <div className=''>
-              <Button onClick={changeLanguage('en')}>En</Button>
-              <Button onClick={changeLanguage('es')}>Es</Button>
+            <div className='d-flex py-3 justify-content-md-start'>
+              <Button className='mx-2' onClick={changeLanguage('en')}>
+                En
+              </Button>
+              <Button className='mx-2' onClick={changeLanguage('es')}>
+                Es
+              </Button>
             </div>
             <NavUserDetails user={user} />
             <CustomNavAction onClick={openLogoutModal} label='Sign Out' icon='sign-out-alt' />

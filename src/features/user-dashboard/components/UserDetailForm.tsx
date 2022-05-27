@@ -9,6 +9,7 @@ import { Button, Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
+import { Trans } from 'react-i18next';
 
 export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'role'>;
 
@@ -60,7 +61,9 @@ export const UserDetailForm: FC<Props> = ({
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
       <Form name='create-user-form' onSubmit={handleSubmit(onSubmit)}>
-        <h5>Profile</h5>
+        <h5>
+          <Trans i18nKey='updateProfile.subTitle1'>Profile</Trans>
+        </h5>
         <Row className='mb-2'>
           <Col xs={12} md={6}>
             <Form.Group controlId='create-user-form-first-name'>

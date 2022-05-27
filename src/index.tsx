@@ -37,6 +37,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { App } from './app/App';
 import reportWebVitals from './reportWebVitals';
+import { I18nextProvider, withTranslation } from 'react-i18next';
+import i18n from './i18n/config';
 
 // Font Awesome recommends importing icons via a “library” in the initializing module of the app
 // so you add them once in your React app and reference them in any component
@@ -87,13 +89,17 @@ Sentry.init({
   autoSessionTracking: false,
 });
 
+const TranslatedApp = withTranslation()(App);
+
 const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(
   <StrictMode>
     <Router>
       <Provider store={store}>
-        <App />
+        <I18nextProvider i18n={i18n}>
+          <TranslatedApp />
+        </I18nextProvider>
       </Provider>
     </Router>
   </StrictMode>,

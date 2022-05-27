@@ -3,5 +3,10 @@
     "title": "Agente",
     "addAgent": "Agrega Agente",
     "search": "Buscar"
+  },
+  "updateProfile": {
+    "tileText": "Configuración de su cuenta",
+    "subTitle1": "Perfil",
+    "subTitle2": "Seguridad y Contraseña"
   }
 }
