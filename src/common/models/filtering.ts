@@ -8,7 +8,8 @@ export type FilterOp =
   | 'gte'
   | 'lte'
   | 'startswith'
-  | 'endswith';
+  | 'endswith'
+  | '$';
 
 export type Filter = {
   attr: string;

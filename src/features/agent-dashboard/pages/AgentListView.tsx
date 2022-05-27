@@ -30,6 +30,7 @@ export const AgentListView: FC = () => {
     addFilter,
     removeFilter,
     resetFilters,
+    addSearchText,
   } = usePSFQuery<PaginatedResult<Agent>>(useGetAgentsQuery);
   const agents = useMemo(() => data?.results ?? [], [data]);
   const { columns, data: tableData } = useAgentTableData(agents);
@@ -82,7 +83,7 @@ export const AgentListView: FC = () => {
       <DataTableFilters
         filters={filters}
         defaultFilterAttribute='name'
-        defaultFilterOperation='icontains'
+        defaultFilterOperation='$'
         onSetFilter={addFilter}
         onRemoveFilter={removeFilter}
         onClearFilters={resetFilters}

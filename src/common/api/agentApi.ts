@@ -39,9 +39,10 @@ export const agentApi = createApi({
         const queryParams = new QueryParamsBuilder()
           .setPaginationParams(page, pageSize)
           .setSortParam(sortBy)
-          .setFilterParam(filters)
+          .setFilterParam([])
           .build();
-        return { url: `/agents/?${queryParams}` };
+        console.log('queryParams:', queryParams);
+        return { url: `/agents/?search=On&search_fields=$name` };
       },
       providesTags: ['Agent'],
     }),
