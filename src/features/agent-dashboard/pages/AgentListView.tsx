@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetAgentsQuery } from 'common/api/agentApi';
 import { DataTable } from 'common/components/DataTable';
-import { DataTableFilters, FilterInfo } from 'common/components/DataTable/DataTableFilters';
+import { FilterInfo } from 'common/components/DataTable/DataTableActiveFilterList';
+import { DataTableSearchAndFilters } from 'common/components/DataTable/DataTableSearchAndFilters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { Agent, PaginatedResult } from 'common/models';
@@ -31,6 +32,7 @@ export const AgentListView: FC = () => {
     addFilter,
     removeFilter,
     resetFilters,
+    addSearchText,
   } = usePSFQuery<PaginatedResult<Agent>>(useGetAgentsQuery);
   const agents = useMemo(() => data?.results ?? [], [data]);
   const { columns, data: tableData } = useAgentTableData(agents);
@@ -84,13 +86,12 @@ export const AgentListView: FC = () => {
         </HasPermission>
       </PageHeader>
 
-      <DataTableFilters
+      <DataTableSearchAndFilters
         filters={filters}
-        defaultFilterAttribute='name'
-        defaultFilterOperation='icontains'
         onSetFilter={addFilter}
         onRemoveFilter={removeFilter}
         onClearFilters={resetFilters}
+        onSetSearchText={addSearchText}
       />
 
       <TableCard>
