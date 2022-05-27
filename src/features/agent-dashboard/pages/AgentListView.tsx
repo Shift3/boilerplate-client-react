@@ -15,6 +15,7 @@ import { Card } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import { Link, useNavigate } from 'react-router-dom';
 import { AgentTableItem, useAgentTableData } from '../hooks/useAgentTableData';
+import { Trans } from 'react-i18next';
 
 export const AgentListView: FC = () => {
   const navigate = useNavigate();
@@ -67,13 +68,17 @@ export const AgentListView: FC = () => {
     <Container>
       <PageHeader>
         <div>
-          <h1>Agent List</h1>
+          <h1>
+            <Trans i18nKey='agents.title'>Agent List</Trans>
+          </h1>
           <p className='text-muted'>All agents in the system.</p>
         </div>
         <HasPermission perform='agent:create'>
           <div>
             <Link to='/agents/create-agent'>
-              <CreateButton>Add Agent</CreateButton>
+              <CreateButton>
+                <Trans i18nKey='agents.addAgent'>Add Agent</Trans>
+              </CreateButton>
             </Link>
           </div>
         </HasPermission>
