@@ -47,7 +47,7 @@ export const AgentListView: FC = () => {
             operationLabel: 'is',
           },
           {
-            operation: 'icontains',
+            operation: '$',
             operationLabel: 'contains',
           },
           {
@@ -87,6 +87,7 @@ export const AgentListView: FC = () => {
         onSetFilter={addFilter}
         onRemoveFilter={removeFilter}
         onClearFilters={resetFilters}
+        onSetSearchText={addSearchText}
       />
 
       <TableCard>

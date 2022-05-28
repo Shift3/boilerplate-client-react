@@ -29,6 +29,7 @@ export type DataTableFilterProps = {
   onSetFilter: (attribute: string, operation: FilterOp, value: string) => void;
   onRemoveFilter: (attribute: string, operation: FilterOp) => void;
   onClearFilters: () => void;
+  onSetSearchText: (searchText: string) => void;
 };
 
 export const DataTableFilters: FC<DataTableFilterProps> = ({
@@ -38,6 +39,7 @@ export const DataTableFilters: FC<DataTableFilterProps> = ({
   onSetFilter,
   onRemoveFilter,
   onClearFilters,
+  onSetSearchText,
 }) => {
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState<AppliedFilterInfo[]>([]);
@@ -64,6 +66,8 @@ export const DataTableFilters: FC<DataTableFilterProps> = ({
     const selectedOperation = filter?.operationOptions.findIndex(op => op.operation === defaultFilterOperation) ?? -1;
 
     if (filter && selectedOperation >= 0) {
+      console.log('handleSearch - value -', value);
+      onSetSearchText(value);
       onSetFilter(defaultFilterAttribute, defaultFilterOperation, value);
       setAppliedFilters(appliedFilters => [
         ...appliedFilters,

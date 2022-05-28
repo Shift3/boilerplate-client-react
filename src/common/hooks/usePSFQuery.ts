@@ -64,7 +64,7 @@ type FilterManager = FilterState & FilterActions;
 // --------------------------------------------------------------------------------------------------------------------
 
 type SearchTextState = {
-  text: string;
+  searchText: string;
 };
 
 type SearchActions = {
@@ -116,7 +116,7 @@ export const usePSFQuery = <ResultType>(
   };
 
   const initialSearchTextState: SearchTextState = {
-    text: '',
+    searchText: '',
   };
 
   const initialState: PSFQueryState = {
@@ -190,8 +190,10 @@ export const usePSFQuery = <ResultType>(
       }
 
       case 'addSearchText': {
+        console.log('addSearchText');
+        console.log('action:', action);
         const { payload } = action;
-        return { ...state, text: payload.data };
+        return { ...state, searchText: payload.data };
       }
 
       case 'all/dataUpdated': {
@@ -222,8 +224,8 @@ export const usePSFQuery = <ResultType>(
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // Use the query hook.
-  const { page, pageSize, sortBy, filters } = state;
-  const queryArg = { page, pageSize, sortBy, filters };
+  const { page, pageSize, sortBy, filters, searchText } = state;
+  const queryArg = { page, pageSize, sortBy, filters, searchText };
   const queryResult = useQuery(queryArg, options);
 
   // Certain metadata is returned as part of the response from the server. For example, `count` and `pageCount`

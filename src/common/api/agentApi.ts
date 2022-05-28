@@ -15,6 +15,10 @@ export type UpdateAgentRequest = Pick<
   'id' | 'description' | 'email' | 'name' | 'phoneNumber' | 'thumbnail' | 'address'
 >;
 
+type SearchTextParams = {
+  searchText: string;
+};
+
 export type GetAgentHistory = {
   id: string | undefined;
   page: number;
@@ -34,15 +38,20 @@ export const agentApi = createApi({
   tagTypes: ['Agent'],
 
   endpoints: builder => ({
-    getAgents: builder.query<PaginatedResult<Agent>, PaginationQueryParams & SortingQueryParams & FilterQueryParams>({
-      query: ({ page = 1, pageSize = 10, sortBy, filters }) => {
-        const queryParams = new QueryParamsBuilder()
+    getAgents: builder.query<
+      PaginatedResult<Agent>,
+      PaginationQueryParams & SortingQueryParams & FilterQueryParams & SearchTextParams
+    >({
+      query: ({ page = 1, pageSize = 10, sortBy, filters, searchText }) => {
+        let queryParams = new QueryParamsBuilder()
           .setPaginationParams(page, pageSize)
           .setSortParam(sortBy)
-          .setFilterParam([])
+          .setFilterParam(filters)
           .build();
+        queryParams = queryParams.replace('%24', '$');
         console.log('queryParams:', queryParams);
-        return { url: `/agents/?search=On&search_fields=$name` };
+        console.log('searchText:', searchText);
+        return { url: searchText === '' ? `/agents/?${queryParams}` : `/agents/?search=${searchText}&${queryParams}` };
       },
       providesTags: ['Agent'],
     }),

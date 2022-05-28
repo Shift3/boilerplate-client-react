@@ -27,6 +27,7 @@ export const UserListView: FC = () => {
     addFilter,
     removeFilter,
     resetFilters,
+    addSearchText,
   } = usePSFQuery<PaginatedResult<User>>(useGetUsersQuery);
   const users = useMemo(() => data?.results ?? [], [data]);
   const { columns, data: tableData } = useUserTableData(users);
@@ -104,6 +105,7 @@ export const UserListView: FC = () => {
         onSetFilter={addFilter}
         onRemoveFilter={removeFilter}
         onClearFilters={resetFilters}
+        onSetSearchText={addSearchText}
       />
       <TableCard>
         <TableCard.Body>
