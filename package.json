@@ -48,7 +48,8 @@
     "test-cov": "react-scripts test --coverage .",
     "test-cov-ci": "react-scripts test -w 1 --watchAll=false --coverage",
     "eject": "react-scripts eject",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "i18n": "i18next **/*.tsx"
   },
   "browserslist": {
     "production": [

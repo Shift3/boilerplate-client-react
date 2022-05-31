@@ -4,8 +4,32 @@
     "title": "Agente",
     "addAgent": "Agrega Agente"
   },
-  "updateProfile": {
-    "subTitle1": "Profile"
+  "Profile": "Perfil",
+  "First Name": "Primer Nombre",
+  "Last Name": "Ultimo Nombre",
+  "Email": "Email",
+  "Access Information": "Informacion de Acceso",
+  "Role": "Role",
+  "Back to User List": "Volver a la lista de usuarios",
+  "Create User": "Crear usuario",
+  "Add a new user to the system": "Agregar un nuevo usuario al sistema.",
+  "Update User": "Actualizar usuario",
+  "Update this users details and roles here": "Actualice los detalles y roles de este usuario aquí.",
+  "User List": "Lista de usuarios",
+  "Active and invited users in the system": "Usuarios activos e invitados en el sistema.",
+  "Add User": "Agregar usuario",
+  "Back to Agent List": "Volver a la lista de agentes",
+  "Your account settings": "Your account settings.",
+  "General Information": "General Information",
+  "Email Address": "Dirección de correo electrónico",
+  "Your email address on file will be used to communicate with you": {
+    " Changing your email requires you to confirm your new email address": "Su dirección de correo electrónico registrada se utilizará para comunicarnos con usted. Cambiar su correo electrónico requiere que confirme su nueva dirección de correo electrónico."
   },
-  "Back to Agent List": "Back to Agent List"
+  "Resend Verification Email": "Reenviar correo electrónico de verificación",
+  "This is the photo of you that other users in the system will be able to see": "Esta es la foto tuya que otros usuarios del sistema podrán ver.",
+  "Delete": "Borrar",
+  "Change Password": "Cambia la contraseña",
+  "Password must be 8 characters or more": {
+    " Password must contain a lowercase, uppercase, special character, and a number": "La contraseña debe tener 8 caracteres o más. La contraseña debe contener un carácter especial en minúsculas, mayúsculas y un número."
+  }
 }

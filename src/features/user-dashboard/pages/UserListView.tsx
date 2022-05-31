@@ -12,6 +12,7 @@ import { FC, useMemo } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserTableItem, useUserTableData } from '../hooks/useUserTableData';
+import { Trans } from 'react-i18next';
 
 export const UserListView: FC = () => {
   const navigate = useNavigate();
@@ -86,13 +87,19 @@ export const UserListView: FC = () => {
     <Container>
       <PageHeader>
         <div>
-          <h1>User List</h1>
-          <p className='text-muted'>Active and invited users in the system.</p>
+          <h1>
+            <Trans>User List</Trans>
+          </h1>
+          <p className='text-muted'>
+            <Trans>Active and invited users in the system.</Trans>
+          </p>
         </div>
         <HasPermission perform='user:create'>
           <div>
             <Link to='/users/create-user'>
-              <CreateButton>Add User</CreateButton>
+              <CreateButton>
+                <Trans>Add User</Trans>
+              </CreateButton>
             </Link>
           </div>
         </HasPermission>

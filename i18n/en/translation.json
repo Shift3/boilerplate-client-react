@@ -4,8 +4,32 @@
     "title": "Agent List",
     "addAgent": "Add Agent"
   },
-  "updateProfile": {
-    "subTitle1": "Profile"
+  "Profile": "Profile",
+  "First Name": "First Name",
+  "Last Name": "Last Name",
+  "Email": "Email",
+  "Access Information": "Access Information",
+  "Role": "Role",
+  "Back to User List": "Back to User List",
+  "Create User": "Create User",
+  "Add a new user to the system": "Add a new user to the system.",
+  "Update User": "Update User",
+  "Update this users details and roles here": "Update this users details and roles here.",
+  "User List": "User List",
+  "Active and invited users in the system": "Active and invited users in the system.",
+  "Add User": "Add User",
+  "Back to Agent List": "Back to Agent List",
+  "Your account settings": "Your account settings.",
+  "General Information": "General Information",
+  "Email Address": "Email Address",
+  "Your email address on file will be used to communicate with you": {
+    " Changing your email requires you to confirm your new email address": "Your email address on file will be used to communicate with you. Changing your email requires you to confirm your new email address."
   },
-  "Back to Agent List": "Back to Agent List"
+  "Resend Verification Email": "Resend Verification Email",
+  "This is the photo of you that other users in the system will be able to see": "This is the photo of you that other users in the system will be able to see.",
+  "Delete": "Delete",
+  "Change Password": "Change Password",
+  "Password must be 8 characters or more": {
+    " Password must contain a lowercase, uppercase, special character, and a number": "Password must be 8 characters or more. Password must contain a lowercase, uppercase, special character, and a number."
+  }
 }
