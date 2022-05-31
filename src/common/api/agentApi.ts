@@ -51,7 +51,9 @@ export const agentApi = createApi({
         queryParams = queryParams.replace('%24', '$');
         console.log('queryParams:', queryParams);
         console.log('searchText:', searchText);
-        return { url: searchText === '' ? `/agents/?${queryParams}` : `/agents/?search=${searchText}&${queryParams}` };
+        const url = searchText === '' ? `/agents/?${queryParams}` : `/agents/?search=${searchText}&${queryParams}`;
+        console.log('url:', url);
+        return { url };
       },
       providesTags: ['Agent'],
     }),

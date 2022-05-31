@@ -98,6 +98,9 @@ export const DataTableFilters: FC<DataTableFilterProps> = ({
 
   const handleFilterRemove = (index: number) => {
     const appliedFilter = appliedFilters[index];
+    if (appliedFilters.length === 1) {
+      onSetSearchText('');
+    }
     onRemoveFilter(
       appliedFilter.filter.attribute,
       appliedFilter.filter.operationOptions[appliedFilter.selectedOperation].operation,
