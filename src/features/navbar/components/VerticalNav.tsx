@@ -9,7 +9,7 @@ import { CustomNavAction, CustomNavLink } from './CustomNavLink';
 import { Logo } from './Logo';
 import { NavUserDetails } from './NavUserDetails';
 import Button from 'react-bootstrap/Button';
-import i18n from 'i18n/config';
+import i18n from '../../../i18n/config';
 
 const changeLanguage = (ln: string) => {
   return () => {
