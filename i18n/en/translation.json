@@ -1,0 +1,11 @@
+{
+  "agents": {
+    "search": "Search",
+    "title": "Agent List",
+    "addAgent": "Add Agent"
+  },
+  "updateProfile": {
+    "subTitle1": "Profile"
+  },
+  "Back to Agent List": "Back to Agent List"
+}

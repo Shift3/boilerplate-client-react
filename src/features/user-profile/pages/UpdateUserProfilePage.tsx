@@ -140,17 +140,14 @@ export const UpdateUserProfilePage: FC = () => {
     }
   };
 
-  const { t, i18n } = useTranslation([]);
-
-  const changeLanguage = (code: string | undefined) => {
-    i18n.changeLanguage(code);
-  };
-
   return (
     <SmallContainer>
       <PageCrumb>
         <Link to='/agents'>
-          <FontAwesomeIcon icon={['fas', 'chevron-left']} /> <Trans i18nKey='translation:content.text' />
+          <>
+            <FontAwesomeIcon icon={['fas', 'chevron-left']} />
+            <Trans>Back to Agent List</Trans>
+          </>
         </Link>
       </PageCrumb>
       <PageHeader className='mb-3'>

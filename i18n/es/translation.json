@@ -1,0 +1,11 @@
+{
+  "agents": {
+    "search": "Buscar",
+    "title": "Agente",
+    "addAgent": "Agrega Agente"
+  },
+  "updateProfile": {
+    "subTitle1": "Profile"
+  },
+  "Back to Agent List": "Back to Agent List"
+}
