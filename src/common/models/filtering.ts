@@ -9,7 +9,10 @@ export type FilterOp =
   | 'lte'
   | 'startswith'
   | 'endswith'
-  | '$';
+  | '$'
+  | '='
+  | '^'
+  | '@';
 
 export type Filter = {
   attr: string;

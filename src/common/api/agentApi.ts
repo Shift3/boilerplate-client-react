@@ -48,10 +48,17 @@ export const agentApi = createApi({
           .setSortParam(sortBy)
           .setFilterParam(filters)
           .build();
-        queryParams = queryParams.replace('%24', '$');
+        queryParams = queryParams.replace('%40', '@').replace('%3D', '=').replace('%5E', '^').replace('%24', '$');
         console.log('queryParams:', queryParams);
         console.log('searchText:', searchText);
-        const url = searchText === '' ? `/agents/?${queryParams}` : `/agents/?search=${searchText}&${queryParams}`;
+        console.log('filters:', filters);
+        let url = `/agents/?${queryParams}`;
+        if (searchText.length > 0) {
+          url = `/agents/?search=${searchText}&${queryParams}`;
+        }
+        if (filters.length > 0) {
+          url = `/agents/?search=${filters[0].value.replace(' ', '+')}&${queryParams}`;
+        }
         console.log('url:', url);
         return { url };
       },

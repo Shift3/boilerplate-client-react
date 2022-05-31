@@ -43,19 +43,19 @@ export const AgentListView: FC = () => {
         attributeLabel: 'Name',
         operationOptions: [
           {
-            operation: 'eq',
+            operation: '=',
             operationLabel: 'is',
           },
           {
-            operation: '$',
+            operation: '@',
             operationLabel: 'contains',
           },
           {
-            operation: 'startswith',
+            operation: '^',
             operationLabel: 'starts with',
           },
           {
-            operation: 'endswith',
+            operation: '$',
             operationLabel: 'ends with',
           },
         ],
@@ -83,7 +83,7 @@ export const AgentListView: FC = () => {
       <DataTableFilters
         filters={filters}
         defaultFilterAttribute='name'
-        defaultFilterOperation='$'
+        defaultFilterOperation='@'
         onSetFilter={addFilter}
         onRemoveFilter={removeFilter}
         onClearFilters={resetFilters}
