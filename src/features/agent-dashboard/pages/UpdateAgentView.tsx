@@ -1,15 +1,18 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useGetAgentByIdQuery, useUpdateAgentMutation } from 'common/api/agentApi';
+import { useGetAgentByIdQuery, useGetAgentHistoryQuery, useUpdateAgentMutation } from 'common/api/agentApi';
+import { ChangeLog } from 'common/components/ChangeLog';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { isErrorResponse, isFetchBaseQueryError } from 'common/error/utilities';
 import { ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { FormCard, StyledFormWrapper } from 'common/styles/form';
 import { PageCrumb, PageHeader, SmallContainer } from 'common/styles/page';
+import { useAuth } from 'features/auth/hooks';
 import { FC, useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
+import AppTheme from 'utils/styleValues';
 
 export type RouteParams = {
   id: string;
@@ -17,9 +20,14 @@ export type RouteParams = {
 
 export const UpdateAgentView: FC = () => {
   const { id } = useParams<RouteParams>();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [updateAgent] = useUpdateAgentMutation();
   const { data: agent, isLoading: isLoadingAgent, isFetching, error } = useGetAgentByIdQuery(id!);
+  const { data: agentHistory, error: agentHistoryError } = useGetAgentHistoryQuery(
+    { id, page: 1, pageSize: 5 },
+    { skip: user?.role !== 'Super Administrator' },
+  );
   const [submissionError, setSubmissionError] = useState<ServerValidationErrors<FormData> | null>(null);
 
   useEffect(() => {
@@ -27,7 +35,14 @@ export const UpdateAgentView: FC = () => {
       notificationService.showErrorMessage('Unable to load agent. Returning to agent list.');
       navigate('/agents', { replace: true });
     }
-  }, [error, navigate]);
+    if (agentHistoryError) {
+      notificationService.showErrorMessage("Unable to load the agent's change history.");
+    }
+  }, [error, navigate, agentHistoryError]);
+
+  const handleShowAllChanges = () => {
+    // console.log('handleShowAllChanges');
+  };
 
   const handleFormCancel = () => {
     navigate(-1);
@@ -84,6 +99,16 @@ export const UpdateAgentView: FC = () => {
           </WithLoadingOverlay>
         </Card.Body>
       </FormCard>
+      <div className='mt-3'>
+        {agentHistory ? (
+          <ChangeLog
+            changeList={agentHistory.results}
+            totalChanges={agentHistory.meta.count}
+            editorTextColor={AppTheme.changelogs.accentTextColor}
+            handleShowAllChanges={handleShowAllChanges}
+          />
+        ) : null}
+      </div>
     </SmallContainer>
   );
 };
