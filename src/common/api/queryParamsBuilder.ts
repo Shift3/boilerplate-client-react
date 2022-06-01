@@ -33,7 +33,7 @@ export class QueryParamsBuilder {
     //   else this.setParam(f.attr, f.value);
     // });
     filters.forEach(f => {
-      this.setParam('search_fields', `${f.op}${f.attr}`);
+      this.setParam('search_fields', f.op === '$' ? `$${f.attr}$` : `${f.op}${f.attr}`);
     });
     return this;
   }

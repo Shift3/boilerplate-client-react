@@ -48,7 +48,11 @@ export const agentApi = createApi({
           .setSortParam(sortBy)
           .setFilterParam(filters)
           .build();
-        queryParams = queryParams.replace('%40', '@').replace('%3D', '=').replace('%5E', '^').replace('%24', '$');
+        queryParams = queryParams
+          .replaceAll('%40', '@')
+          .replaceAll('%3D', '=')
+          .replaceAll('%5E', '^')
+          .replaceAll('%24', '$');
         console.log('queryParams:', queryParams);
         console.log('searchText:', searchText);
         console.log('filters:', filters);
@@ -57,7 +61,7 @@ export const agentApi = createApi({
           url = `/agents/?search=${searchText}&${queryParams}`;
         }
         if (filters.length > 0) {
-          url = `/agents/?search=${filters[0].value.replace(' ', '+')}&${queryParams}`;
+          url = `/agents/?search=${filters[0].value}&${queryParams}`;
         }
         console.log('url:', url);
         return { url };
