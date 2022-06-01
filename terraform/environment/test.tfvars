@@ -1,0 +1,5 @@
+aws_profile                 = "devops-sandbox-admin"
+web_domain_name             = "ar-sandbox.bwtcdevops.com"
+aws_region                  = "us-west-2"
+route53_zone                = ""
+secure_response_headers_id  = ""
