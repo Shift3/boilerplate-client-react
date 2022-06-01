@@ -52,7 +52,9 @@ export const agentApi = createApi({
           .replaceAll('%40', '@')
           .replaceAll('%3D', '=')
           .replaceAll('%5E', '^')
-          .replaceAll('%24', '$');
+          .replaceAll('%24', '$')
+          .replaceAll('%28', '(')
+          .replaceAll('%29', ')');
         console.log('queryParams:', queryParams);
         console.log('searchText:', searchText);
         console.log('filters:', filters);
