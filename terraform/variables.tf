@@ -9,7 +9,6 @@ variable "aws_region" {
 }
 
 variable "web_domain_name" {
-  default = "ar-sandbox.bwtcdevops.com"
   description = "Domain name for the s3 bucket"
 }
 
