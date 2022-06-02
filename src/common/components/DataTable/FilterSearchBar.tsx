@@ -25,12 +25,9 @@ export const FilterSearchBar: FC<{
 }> = ({ onSearch, onToggle, placeholder = 'Search...', hasExtraFilters }) => {
   const [searchValue, setSearchValue] = useState('');
 
-  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const handleSearch = () => {
     if (searchValue) {
       onSearch(searchValue);
-      setSearchValue('');
     }
   };
 
@@ -43,7 +40,8 @@ export const FilterSearchBar: FC<{
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       console.log('send request');
-    }, 3000);
+      handleSearch();
+    }, 1000);
 
     return () => clearTimeout(delayDebounceFn);
   }, [searchValue]);
