@@ -28,13 +28,14 @@ export class QueryParamsBuilder {
   }
 
   public setFilterParam(filters: Filter[]): QueryParamsBuilder {
-    // filters.forEach(f => {
-    //   if (f.op !== 'eq') this.setParam(`${f.attr}__${f.op}`, f.value);
-    //   else this.setParam(f.attr, f.value);
-    // });
     filters.forEach(f => {
-      this.setParam('search_fields', f.op === '$' ? `$${f.attr}$` : `${f.op}${f.attr}`);
+      if (f.op !== 'eq') this.setParam(`${f.attr}__${f.op}`, f.value);
+      else this.setParam(f.attr, f.value);
     });
+    // Note: I don't see the point of doing this.
+    // filters.forEach(f => {
+    //   this.setParam('search_fields', f.op === '$' ? `$${f.attr}$` : `${f.op}${f.attr}`);
+    // });
     return this;
   }
 

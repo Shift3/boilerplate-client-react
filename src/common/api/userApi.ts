@@ -58,7 +58,7 @@ export const userApi = createApi({
         const queryParams = new QueryParamsBuilder()
           .setPaginationParams(page, pageSize)
           .setSortParam(sortBy)
-          .setFilterParam([])
+          .setFilterParam(filters)
           .build();
         console.log('queryParams:', queryParams);
         return { url: `/users/?${queryParams}` };

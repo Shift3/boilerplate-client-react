@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -40,8 +40,16 @@ export const FilterSearchBar: FC<{
     }
   };
 
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      console.log('send request');
+    }, 3000);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchValue]);
+
   return (
-    <Form onSubmit={handleSearchSubmit}>
+    <Form>
       <InputGroup>
         <StyledFilterMenuToggle onClick={handleToggle} disabled={!hasExtraFilters}>
           <FontAwesomeIcon icon='filter' /> Filters
@@ -52,9 +60,6 @@ export const FilterSearchBar: FC<{
           value={searchValue}
           onChange={e => setSearchValue(e.target.value)}
         />
-        <Button type='submit' disabled={!searchValue}>
-          Search
-        </Button>
       </InputGroup>
     </Form>
   );
