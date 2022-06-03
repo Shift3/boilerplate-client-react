@@ -63,23 +63,6 @@ export const DataTableFilters: FC<DataTableFilterProps> = ({
 
   const handleSearch = (value: string) => {
     onSetSearchText(value);
-
-    // const filter = availableFilters.find(filter => filter.attribute === defaultFilterAttribute);
-    // const selectedOperation = filter?.operationOptions.findIndex(op => op.operation === defaultFilterOperation) ?? -1;
-
-    // if (filter && selectedOperation >= 0) {
-    //   console.log('handleSearch - value -', value);
-    //   onSetSearchText(value);
-    //   onSetFilter(defaultFilterAttribute, defaultFilterOperation, value);
-    //   setAppliedFilters(appliedFilters => [
-    //     ...appliedFilters,
-    //     {
-    //       filter,
-    //       selectedOperation,
-    //       value,
-    //     },
-    //   ]);
-    // }
   };
 
   const handleFilterApply = (selectedAttribute: number, selectedOperation: number, value: string) => {
@@ -100,9 +83,6 @@ export const DataTableFilters: FC<DataTableFilterProps> = ({
 
   const handleFilterRemove = (index: number) => {
     const appliedFilter = appliedFilters[index];
-    if (appliedFilters.length === 1) {
-      onSetSearchText('');
-    }
     onRemoveFilter(
       appliedFilter.filter.attribute,
       appliedFilter.filter.operationOptions[appliedFilter.selectedOperation].operation,

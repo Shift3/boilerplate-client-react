@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { customBaseQuery } from 'common/api/customBaseQuery';
-import { FilterQueryParams, PaginatedResult, PaginationQueryParams, Session } from 'common/models';
+import { FilterQueryParams, PaginatedResult, PaginationQueryParams, SearchTextParams, Session } from 'common/models';
 import { SortingQueryParams } from 'common/models/sorting';
 import { User } from 'common/models/user';
 import { QueryParamsBuilder } from './queryParamsBuilder';
@@ -53,9 +53,13 @@ export const userApi = createApi({
   tagTypes: ['User'],
 
   endpoints: builder => ({
-    getUsers: builder.query<PaginatedResult<User>, PaginationQueryParams & SortingQueryParams & FilterQueryParams>({
-      query: ({ page, pageSize, sortBy, filters }) => {
+    getUsers: builder.query<
+      PaginatedResult<User>,
+      PaginationQueryParams & SortingQueryParams & FilterQueryParams & SearchTextParams
+    >({
+      query: ({ page, pageSize, sortBy, filters, searchText }) => {
         const queryParams = new QueryParamsBuilder()
+          .setSearchParam(searchText)
           .setPaginationParams(page, pageSize)
           .setSortParam(sortBy)
           .setFilterParam(filters)

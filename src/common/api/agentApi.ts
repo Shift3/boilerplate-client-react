@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { FilterQueryParams, PaginatedResult, PaginationQueryParams } from 'common/models';
+import { FilterQueryParams, PaginatedResult, PaginationQueryParams, SearchTextParams } from 'common/models';
 import { Agent } from 'common/models/agent';
 import { SortingQueryParams } from 'common/models/sorting';
 import { customBaseQuery } from './customBaseQuery';
@@ -14,10 +14,6 @@ export type UpdateAgentRequest = Pick<
   Agent,
   'id' | 'description' | 'email' | 'name' | 'phoneNumber' | 'thumbnail' | 'address'
 >;
-
-type SearchTextParams = {
-  searchText: string;
-};
 
 export type GetAgentHistory = {
   id: string | undefined;

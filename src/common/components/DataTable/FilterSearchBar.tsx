@@ -26,9 +26,7 @@ export const FilterSearchBar: FC<{
   const [searchValue, setSearchValue] = useState('');
 
   const handleSearch = () => {
-    if (searchValue) {
-      onSearch(searchValue);
-    }
+    onSearch(searchValue);
   };
 
   const handleToggle = () => {
