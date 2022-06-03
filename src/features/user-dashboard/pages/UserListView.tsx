@@ -1,6 +1,7 @@
 import { useGetUsersQuery } from 'common/api/userApi';
 import { DataTable } from 'common/components/DataTable';
-import { DataTableFilters, FilterInfo } from 'common/components/DataTable/DataTableFilters';
+import { FilterInfo } from 'common/components/DataTable/DataTableFilters';
+import { DataTableSearchAndFilters } from 'common/components/DataTable/DataTableSearchAndFilters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { PaginatedResult, User } from 'common/models';
@@ -98,10 +99,9 @@ export const UserListView: FC = () => {
           </div>
         </HasPermission>
       </PageHeader>
-      <DataTableFilters
+      <DataTableSearchAndFilters
+        availableSearchFields={['firstname', 'lastname']}
         filters={filters}
-        defaultFilterAttribute='firstName'
-        defaultFilterOperation='icontains'
         onSetFilter={addFilter}
         onRemoveFilter={removeFilter}
         onClearFilters={resetFilters}

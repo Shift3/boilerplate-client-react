@@ -17,12 +17,12 @@ const StyledFilterMenuToggle = styled(Button)`
   }
 `;
 
-export const FilterSearchBar: FC<{
+export const SearchBar: FC<{
   onSearch: (value: string) => void;
   onToggle: () => void;
-  hasExtraFilters?: boolean;
   placeholder?: string;
-}> = ({ onSearch, onToggle, placeholder = 'Search...', hasExtraFilters }) => {
+  shouldDisableFilterToggle: boolean;
+}> = ({ onSearch, onToggle, placeholder = 'Search...', shouldDisableFilterToggle }) => {
   const [searchValue, setSearchValue] = useState('');
 
   const handleSearch = () => {
@@ -30,9 +30,7 @@ export const FilterSearchBar: FC<{
   };
 
   const handleToggle = () => {
-    if (hasExtraFilters) {
-      onToggle();
-    }
+    onToggle();
   };
 
   useEffect(() => {
@@ -47,7 +45,7 @@ export const FilterSearchBar: FC<{
   return (
     <Form>
       <InputGroup>
-        <StyledFilterMenuToggle onClick={handleToggle} disabled={!hasExtraFilters}>
+        <StyledFilterMenuToggle onClick={handleToggle} disabled={shouldDisableFilterToggle}>
           <FontAwesomeIcon icon='filter' /> Filters
         </StyledFilterMenuToggle>
         <Form.Control

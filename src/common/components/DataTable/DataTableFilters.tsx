@@ -1,8 +1,7 @@
 import { FilterOp } from 'common/models';
-import { FC, useMemo, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { FilterBadges } from './FilterBadges';
 import { FilterDropdown } from './FilterDropdown';
-import { FilterSearchBar } from './FilterSearchBar';
 
 export type OperationOption = {
   operation: FilterOp;
@@ -24,46 +23,27 @@ export type AppliedFilterInfo = {
 
 export type DataTableFilterProps = {
   filters: FilterInfo[];
-  defaultFilterAttribute: string;
-  defaultFilterOperation: FilterOp;
+  showFilterDropdown: boolean;
   onSetFilter: (attribute: string, operation: FilterOp, value: string) => void;
   onRemoveFilter: (attribute: string, operation: FilterOp) => void;
   onClearFilters: () => void;
-  onSetSearchText: (searchText: string) => void;
+  onDropdownClose: () => void;
+  onAvailableFiltersUpdate: (numOfAvailableFilters: number) => void;
 };
 
 export const DataTableFilters: FC<DataTableFilterProps> = ({
   filters = [],
-  defaultFilterAttribute,
-  defaultFilterOperation,
+  showFilterDropdown,
   onSetFilter,
   onRemoveFilter,
   onClearFilters,
-  onSetSearchText,
+  onDropdownClose,
+  onAvailableFiltersUpdate,
 }) => {
-  const [showFilterDropdown, setShowFilterDropdown] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState<AppliedFilterInfo[]>([]);
   const availableFilters = filters.filter(
     filter => !appliedFilters.find(appliedFilter => appliedFilter.filter.attribute === filter.attribute),
   );
-  const defaultAttributeLabel = useMemo(
-    () => filters.find(filter => filter.attribute === defaultFilterAttribute)?.attributeLabel,
-    [filters, defaultFilterAttribute],
-  );
-
-  const handleDropdownToggle = () => {
-    if (filters.length) {
-      setShowFilterDropdown(show => !show);
-    }
-  };
-
-  const handleDropdownClose = () => {
-    setShowFilterDropdown(false);
-  };
-
-  const handleSearch = (value: string) => {
-    onSetSearchText(value);
-  };
 
   const handleFilterApply = (selectedAttribute: number, selectedOperation: number, value: string) => {
     onSetFilter(
@@ -106,15 +86,11 @@ export const DataTableFilters: FC<DataTableFilterProps> = ({
     onClearFilters();
   };
 
+  useEffect(() => {
+    onAvailableFiltersUpdate(availableFilters.length);
+  }, [availableFilters]);
   return (
     <div>
-      <FilterSearchBar
-        onSearch={handleSearch}
-        onToggle={handleDropdownToggle}
-        placeholder={`Search by ${defaultAttributeLabel}...`}
-        hasExtraFilters={availableFilters.length > 0}
-      />
-
       <FilterBadges
         onClearFilters={handleFiltersClear}
         appliedFilters={appliedFilters}
@@ -126,7 +102,7 @@ export const DataTableFilters: FC<DataTableFilterProps> = ({
         <FilterDropdown
           show={showFilterDropdown}
           filters={availableFilters}
-          onClose={handleDropdownClose}
+          onClose={onDropdownClose}
           onApply={handleFilterApply}
         />
       )}
