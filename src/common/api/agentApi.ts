@@ -43,28 +43,13 @@ export const agentApi = createApi({
       PaginationQueryParams & SortingQueryParams & FilterQueryParams & SearchTextParams
     >({
       query: ({ page = 1, pageSize = 10, sortBy, filters, searchText }) => {
-        let queryParams = new QueryParamsBuilder()
+        const queryParams = new QueryParamsBuilder()
+          .setSearchParam(searchText)
           .setPaginationParams(page, pageSize)
           .setSortParam(sortBy)
           .setFilterParam(filters)
           .build();
-        queryParams = queryParams
-          .replaceAll('%40', '@')
-          .replaceAll('%3D', '=')
-          .replaceAll('%5E', '^')
-          .replaceAll('%24', '$')
-          .replaceAll('%28', '(')
-          .replaceAll('%29', ')');
-        console.log('queryParams:', queryParams);
-        console.log('searchText:', searchText);
-        console.log('filters:', filters);
-        let url = `/agents/?${queryParams}`;
-        if (searchText.length > 0) {
-          url = `/agents/?search=${searchText}&${queryParams}`;
-        }
-        if (filters.length > 0) {
-          url = `/agents/?search=${filters[0].value}&${queryParams}`;
-        }
+        const url = `/agents/?${queryParams}`;
         console.log('url:', url);
         return { url };
       },

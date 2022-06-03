@@ -32,10 +32,11 @@ export class QueryParamsBuilder {
       if (f.op !== 'eq') this.setParam(`${f.attr}__${f.op}`, f.value);
       else this.setParam(f.attr, f.value);
     });
-    // Note: I don't see the point of doing this.
-    // filters.forEach(f => {
-    //   this.setParam('search_fields', f.op === '$' ? `$${f.attr}$` : `${f.op}${f.attr}`);
-    // });
+    return this;
+  }
+
+  public setSearchParam(searchText: string): QueryParamsBuilder {
+    this.setParam('search', searchText); // The ? is already provided by the query in the relevant Api file.
     return this;
   }
 
