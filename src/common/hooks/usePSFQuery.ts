@@ -190,8 +190,6 @@ export const usePSFQuery = <ResultType>(
       }
 
       case 'addSearchText': {
-        console.log('addSearchText');
-        console.log('action:', action);
         const { payload } = action;
         return { ...state, searchText: payload.data };
       }

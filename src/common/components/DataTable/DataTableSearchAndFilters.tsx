@@ -1,5 +1,5 @@
 import { FilterOp } from 'common/models';
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import { DataTableFilters, FilterInfo } from './DataTableFilters';
 import { DataTableSearch } from './DataTableSearch';
 
@@ -36,7 +36,6 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
   const handleAvailableFiltersUpdate = (numOfAvailableFilters: number) => {
     if (numOfAvailableFilters === 0) {
       setHasAvailableFilters(false);
-      console.log('no more filters');
     } else if (!hasAvailableFilters && numOfAvailableFilters > 0) {
       setHasAvailableFilters(true);
     }

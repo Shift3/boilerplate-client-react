@@ -88,7 +88,8 @@ export const DataTableFilters: FC<DataTableFilterProps> = ({
 
   useEffect(() => {
     onAvailableFiltersUpdate(availableFilters.length);
-  }, [availableFilters]);
+  }, [availableFilters, onAvailableFiltersUpdate]);
+
   return (
     <div>
       <FilterBadges

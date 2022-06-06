@@ -64,7 +64,6 @@ export const userApi = createApi({
           .setSortParam(sortBy)
           .setFilterParam(filters)
           .build();
-        console.log('queryParams:', queryParams);
         return { url: `/users/?${queryParams}` };
       },
       providesTags: ['User'],
