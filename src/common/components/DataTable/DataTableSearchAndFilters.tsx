@@ -1,11 +1,11 @@
 import { FilterOp } from 'common/models';
 import { FC, useState } from 'react';
 import { DataTableFilters, FilterInfo } from './DataTableFilters';
-import { DataTableSearch } from './DataTableSearch';
+import { DataTableSearchBar } from './DataTableSearchBar';
 
 export type DataTableSearchAndFilterProps = {
   filters: FilterInfo[];
-  availableSearchFields: string[];
+  placeholder?: string;
   onSetFilter: (attribute: string, operation: FilterOp, value: string) => void;
   onRemoveFilter: (attribute: string, operation: FilterOp) => void;
   onClearFilters: () => void;
@@ -14,7 +14,7 @@ export type DataTableSearchAndFilterProps = {
 
 export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
   filters = [],
-  availableSearchFields,
+  placeholder,
   onSetFilter,
   onRemoveFilter,
   onClearFilters,
@@ -43,8 +43,8 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
 
   return (
     <div>
-      <DataTableSearch
-        availableSearchFields={availableSearchFields}
+      <DataTableSearchBar
+        placeholder={placeholder}
         onSetSearchText={onSetSearchText}
         onDropdownToggle={handleDropdownToggle}
         shouldDisableFilterToggle={!hasAvailableFilters}

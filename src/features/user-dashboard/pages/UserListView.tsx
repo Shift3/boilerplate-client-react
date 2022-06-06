@@ -100,7 +100,7 @@ export const UserListView: FC = () => {
         </HasPermission>
       </PageHeader>
       <DataTableSearchAndFilters
-        availableSearchFields={['firstname', 'lastname']}
+        placeholder='Search by first name and last name'
         filters={filters}
         onSetFilter={addFilter}
         onRemoveFilter={removeFilter}

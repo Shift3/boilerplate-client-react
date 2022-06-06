@@ -17,30 +17,25 @@ const StyledFilterMenuToggle = styled(Button)`
   }
 `;
 
-export const SearchBar: FC<{
-  onSearch: (value: string) => void;
-  onToggle: () => void;
-  placeholder?: string;
+export const DataTableSearchBar: FC<{
+  onSetSearchText: (searchText: string) => void;
+  onDropdownToggle: () => void;
   shouldDisableFilterToggle: boolean;
-}> = ({ onSearch, onToggle, placeholder = 'Search...', shouldDisableFilterToggle }) => {
+  placeholder?: string;
+}> = ({ onSetSearchText, onDropdownToggle, placeholder = 'Search...', shouldDisableFilterToggle }) => {
   const [searchValue, setSearchValue] = useState('');
 
-  const handleSearch = () => {
-    onSearch(searchValue);
-  };
-
   const handleToggle = () => {
-    onToggle();
+    onDropdownToggle();
   };
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      handleSearch();
-    }, 1000);
+      onSetSearchText(searchValue);
+    }, 200);
 
     return () => clearTimeout(delayDebounceFn);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchValue]);
+  });
 
   return (
     <Form>
