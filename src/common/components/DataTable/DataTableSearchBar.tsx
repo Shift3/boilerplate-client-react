@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import styled from 'styled-components';
 
-const StyledFilterMenuToggle = styled(Button)`
+const StyledOptionButton = styled(Button)`
   background-color: #e9ecef;
   border: 1px solid #ced4da;
   color: #212529;
@@ -40,15 +40,18 @@ export const DataTableSearchBar: FC<{
   return (
     <Form>
       <InputGroup>
-        <StyledFilterMenuToggle onClick={handleToggle} disabled={shouldDisableFilterToggle}>
+        <StyledOptionButton onClick={handleToggle} disabled={shouldDisableFilterToggle}>
           <FontAwesomeIcon icon='filter' /> Filters
-        </StyledFilterMenuToggle>
+        </StyledOptionButton>
         <Form.Control
           type='text'
           placeholder={placeholder}
           value={searchValue}
           onChange={e => setSearchValue(e.target.value)}
         />
+        <StyledOptionButton onClick={() => setSearchValue('')} disabled={searchValue === ''}>
+          Clear
+        </StyledOptionButton>
       </InputGroup>
     </Form>
   );
