@@ -12,12 +12,6 @@ import { NavUserDetails } from './NavUserDetails';
 import i18n from '../../../i18n/config';
 import { CustomSelect } from 'common/components/CustomSelect';
 
-const changeLanguage = (ln: string) => {
-  return () => {
-    i18n.changeLanguage(ln);
-  };
-};
-
 export const BitwiseNavbar = styled(Navbar)`
   background: ${props => props.theme.nav.backgroundColor};
   align-items: flex-start;
@@ -67,6 +61,12 @@ type LanguageOption = {
   value: string;
 };
 
+const changeLanguage = (ln: string) => {
+  return () => {
+    i18n.changeLanguage(ln);
+  };
+};
+
 export const VerticalNav: FC<Props> = ({ languageOptions, closeVerticalNav, onLanguageChange }) => {
   const { user } = useAuth();
   const navLinks = useNavLinks();
@@ -86,7 +86,7 @@ export const VerticalNav: FC<Props> = ({ languageOptions, closeVerticalNav, onLa
           <Nav className='flex-column'>
             <div className='d-flex py-3 justify-content-md-start'>
               <CustomSelect<LanguageOption>
-                placeholder=''
+                placeholder='Choose Language'
                 options={__languageOptions}
                 onChange={option => onLanguageChange(option.value)}
               />

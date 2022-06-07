@@ -9,6 +9,7 @@ export const HorizontalNav: FC = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
   const toggleLanguage = () => {
     // switch language//
   };
