@@ -10,8 +10,8 @@ export const DataTableFilterToggle: FC<{
     <StyledOptionButton
       onClick={onDropdownToggle}
       disabled={!hasAvailableFilters}
-      topLeftBorderRadius={5}
-      bottomLeftBorderRadius={5}
+      topleftborderradius={5}
+      bottomleftborderradius={5}
     >
       <FontAwesomeIcon icon='filter' /> Filters
     </StyledOptionButton>
