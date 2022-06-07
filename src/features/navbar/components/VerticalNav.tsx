@@ -1,5 +1,6 @@
 import { useAuth } from 'features/auth/hooks';
 import { FC } from 'react';
+import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import styled from 'styled-components';
@@ -8,8 +9,8 @@ import { useNavLinks } from '../hooks/useNavLinks';
 import { CustomNavAction, CustomNavLink } from './CustomNavLink';
 import { Logo } from './Logo';
 import { NavUserDetails } from './NavUserDetails';
-import Button from 'react-bootstrap/Button';
 import i18n from '../../../i18n/config';
+import { CustomSelect } from 'common/components/CustomSelect';
 
 const changeLanguage = (ln: string) => {
   return () => {
@@ -56,13 +57,21 @@ export const BitwiseNavbar = styled(Navbar)`
 `;
 
 type Props = {
+  languageOptions: string[];
   closeVerticalNav?: () => void;
+  onLanguageChange: (lng: string) => void;
 };
 
-export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
+type LanguageOption = {
+  label: string;
+  value: string;
+};
+
+export const VerticalNav: FC<Props> = ({ languageOptions, closeVerticalNav, onLanguageChange }) => {
   const { user } = useAuth();
   const navLinks = useNavLinks();
   const { openLogoutModal } = useLogoutModal();
+  const __languageOptions = languageOptions?.map(option => ({ label: option.toString(), value: option.toString() }));
 
   return (
     <BitwiseNavbar className='flex-column py-0'>
@@ -76,12 +85,17 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
           </Nav>
           <Nav className='flex-column'>
             <div className='d-flex py-3 justify-content-md-start'>
-              <Button className='mx-2' onClick={changeLanguage('en')}>
+              <CustomSelect<LanguageOption>
+                placeholder=''
+                options={__languageOptions}
+                onChange={option => onLanguageChange(option.value)}
+              />
+              {/* <Button className='mx-2' onClick={changeLanguage('en')}>
                 En
               </Button>
               <Button className='mx-2' onClick={changeLanguage('es')}>
                 Es
-              </Button>
+              </Button> */}
             </div>
             <NavUserDetails user={user} />
             <CustomNavAction onClick={openLogoutModal} label='Sign Out' icon='sign-out-alt' />

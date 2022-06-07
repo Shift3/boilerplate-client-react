@@ -9,6 +9,9 @@ export const HorizontalNav: FC = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const toggleLanguage = () => {
+    // switch language//
+  };
 
   return (
     <div className='pt-4'>
@@ -21,7 +24,7 @@ export const HorizontalNav: FC = () => {
         </Button>
       </div>
       <Offcanvas id='offcanvas-navbar' className='w-auto' show={show} onHide={handleClose}>
-        <VerticalNav closeVerticalNav={handleClose} />
+        <VerticalNav closeVerticalNav={handleClose} languageOptions={['en', 'es']} onLanguageChange={toggleLanguage} />
       </Offcanvas>
     </div>
   );
