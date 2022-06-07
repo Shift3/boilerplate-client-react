@@ -7,12 +7,7 @@ export const DataTableFilterToggle: FC<{
   hasAvailableFilters: boolean;
 }> = ({ onDropdownToggle, hasAvailableFilters }) => {
   return (
-    <StyledOptionButton
-      onClick={onDropdownToggle}
-      disabled={!hasAvailableFilters}
-      topLeftBorderRadius={5}
-      bottomLeftBorderRadius={5}
-    >
+    <StyledOptionButton onClick={onDropdownToggle} disabled={!hasAvailableFilters} radii='5;0;0;5'>
       <FontAwesomeIcon icon='filter' /> Filters
     </StyledOptionButton>
   );
