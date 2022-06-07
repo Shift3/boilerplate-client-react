@@ -88,7 +88,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
             ))}
           </Nav>
           <Nav className='flex-column'>
-            <div className='d-flex py-3 justify-content-md-start'>
+            <div className='w-100 py-3 justify-content-md-start'>
               <CustomSelect<LanguageOption>
                 placeholder='Choose Language'
                 options={__languageOptions}
