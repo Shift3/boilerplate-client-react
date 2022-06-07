@@ -8,6 +8,12 @@ export const DataTableSearchBar: FC<{
 }> = ({ onSetSearchText, placeholder = 'Search...' }) => {
   const [searchValue, setSearchValue] = useState('');
 
+  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    onSetSearchText(searchValue);
+  };
+
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       onSetSearchText(searchValue);
@@ -17,22 +23,24 @@ export const DataTableSearchBar: FC<{
   });
 
   return (
-    <div style={{ display: 'flex', flex: 1 }}>
-      <Form.Control
-        style={{ borderRadius: 0 }}
-        type='text'
-        placeholder={placeholder}
-        value={searchValue}
-        onChange={e => setSearchValue(e.target.value)}
-      />
-      <StyledOptionButton
-        onClick={() => setSearchValue('')}
-        disabled={searchValue === ''}
-        topRightBorderRadius={5}
-        bottomRightBorderRadius={5}
-      >
-        Clear
-      </StyledOptionButton>
-    </div>
+    <Form onSubmit={handleSearchSubmit} className='d-flex flex-fill'>
+      <div className='d-flex flex-fill'>
+        <Form.Control
+          className='rounded-0'
+          type='text'
+          placeholder={placeholder}
+          value={searchValue}
+          onChange={e => setSearchValue(e.target.value)}
+        />
+        <StyledOptionButton
+          onClick={() => setSearchValue('')}
+          disabled={searchValue === ''}
+          topRightBorderRadius={5}
+          bottomRightBorderRadius={5}
+        >
+          Clear
+        </StyledOptionButton>
+      </div>
+    </Form>
   );
 };

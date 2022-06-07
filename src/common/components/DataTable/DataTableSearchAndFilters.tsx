@@ -45,7 +45,7 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
 
   return (
     <div>
-      <div style={{ display: 'flex' }}>
+      <div className='d-flex'>
         <StyledOptionButton
           onClick={handleDropdownToggle}
           disabled={!hasAvailableFilters}
