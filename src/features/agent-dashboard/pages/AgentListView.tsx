@@ -69,7 +69,7 @@ export const AgentListView: FC = () => {
       <PageHeader>
         <div>
           <h1>
-            <Trans i18nKey='agents.title'>Agent List</Trans>
+            <Trans>Agent List</Trans>
           </h1>
           <p className='text-muted'>All agents in the system.</p>
         </div>
@@ -77,7 +77,7 @@ export const AgentListView: FC = () => {
           <div>
             <Link to='/agents/create-agent'>
               <CreateButton>
-                <Trans i18nKey='agents.addAgent'>Add Agent</Trans>
+                <Trans>Add Agent</Trans>
               </CreateButton>
             </Link>
           </div>

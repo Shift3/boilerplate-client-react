@@ -36,10 +36,6 @@ const Footer = styled.footer`
   }
 `;
 
-const toggleLanguage = () => {
-  // switch language//
-};
-
 export const Layout: FC<PropsWithChildren<unknown>> = ({ children }) => {
   return (
     <Container>
@@ -48,7 +44,7 @@ export const Layout: FC<PropsWithChildren<unknown>> = ({ children }) => {
       </Header>
       <Content>
         <aside className='d-none d-md-flex'>
-          <VerticalNav languageOptions={['en', 'es']} onLanguageChange={toggleLanguage} />
+          <VerticalNav />
         </aside>
         <div className='d-flex flex-column w-100 px-4 pt-4'>
           <Main className='content-wrapper'>{children}</Main>

@@ -1,9 +1,7 @@
 {
-  "agents": {
-    "search": "Buscar",
-    "title": "Agente",
-    "addAgent": "Agrega Agente"
-  },
+  "Search": "Search",
+  "Agent List": "Agent List",
+  "Add Agent": "Add Agent",
   "Profile": "Perfil",
   "First Name": "Primer Nombre",
   "Last Name": "Ultimo Nombre",

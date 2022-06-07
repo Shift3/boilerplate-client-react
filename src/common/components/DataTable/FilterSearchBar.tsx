@@ -54,7 +54,7 @@ export const FilterSearchBar: FC<{
           onChange={e => setSearchValue(e.target.value)}
         />
         <Button type='submit' disabled={!searchValue}>
-          <Trans i18nKey='agents.search'>Search</Trans>
+          <Trans>Search</Trans>
         </Button>
       </InputGroup>
     </Form>

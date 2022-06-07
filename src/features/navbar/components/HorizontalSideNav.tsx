@@ -10,10 +10,6 @@ export const HorizontalNav: FC = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const toggleLanguage = () => {
-    // switch language//
-  };
-
   return (
     <div className='pt-4'>
       <div className='container d-flex justify-content-between'>
@@ -25,7 +21,7 @@ export const HorizontalNav: FC = () => {
         </Button>
       </div>
       <Offcanvas id='offcanvas-navbar' className='w-auto' show={show} onHide={handleClose}>
-        <VerticalNav closeVerticalNav={handleClose} languageOptions={['en', 'es']} onLanguageChange={toggleLanguage} />
+        <VerticalNav closeVerticalNav={handleClose} />
       </Offcanvas>
     </div>
   );
