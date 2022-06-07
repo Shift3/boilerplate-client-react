@@ -17,11 +17,20 @@
   "Active and invited users in the system": "Usuarios activos e invitados en el sistema.",
   "Add User": "Agregar usuario",
   "Back to Agent List": "Volver a la lista de agentes",
-  "Your account settings": "Your account settings.",
-  "General Information": "General Information",
+  "Your Account Settings": "Configuración de su cuenta",
+  "Security and Password": "Seguridad y Contraseña",
+  "General Information": "Información general",
+  "This information will be used to identify you in our system": "Esta información se utilizará para identificarlo en nuestro sistema.",
   "Email Address": "Dirección de correo electrónico",
   "Your email address on file will be used to communicate with you": {
     " Changing your email requires you to confirm your new email address": "Su dirección de correo electrónico registrada se utilizará para comunicarnos con usted. Cambiar su correo electrónico requiere que confirme su nueva dirección de correo electrónico."
+  },
+  "You requested an email change": {
+    " A verification email has been sent to <1>{user": {
+      "newEmail}</1>": {
+        " To confirm your new email, please follow the directions in the verification email": "Usted solicitó un cambio de correo electrónico. Se ha enviado un correo electrónico de verificación a <1>{user.newEmail}</1>. Para confirmar su nuevo correo electrónico, siga las instrucciones en el correo electrónico de verificación."
+      }
+    }
   },
   "Resend Verification Email": "Reenviar correo electrónico de verificación",
   "This is the photo of you that other users in the system will be able to see": "Esta es la foto tuya que otros usuarios del sistema podrán ver.",

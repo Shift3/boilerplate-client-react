@@ -158,7 +158,7 @@ export const UpdateUserProfilePage: FC = () => {
               {user?.firstName} {user?.lastName[0]}.
             </h1>
             <p className='text-muted'>
-              <Trans>Your account settings.</Trans>
+              <Trans>Your Account Settings</Trans>
             </p>
           </div>
         </div>
@@ -168,7 +168,7 @@ export const UpdateUserProfilePage: FC = () => {
           <Trans>Profile</Trans>
         </ProfileNav.Link>
         <ProfileNav.Link onClick={() => setTab('security')} className={tab === 'security' ? 'active' : ''}>
-          Security and Password
+          <Trans>Security and Password</Trans>
         </ProfileNav.Link>
       </ProfileNav>
       <hr className='mt-0' />
@@ -179,7 +179,9 @@ export const UpdateUserProfilePage: FC = () => {
               <h5>
                 <Trans>General Information</Trans>
               </h5>
-              <p className='text-muted'>This information will be used to identify you in our system</p>
+              <p className='text-muted'>
+                <Trans>This information will be used to identify you in our system</Trans>
+              </p>
             </Col>
             <Col>
               <UpdateUserProfileForm
@@ -211,8 +213,10 @@ export const UpdateUserProfilePage: FC = () => {
                 <Alert variant='warning'>
                   <div>
                     <p data-testid='updateUserExistingEmailChangeInfoContent'>
-                      You requested an email change. A verification email has been sent to <b>{user.newEmail}</b>. To
-                      confirm your new email, please follow the directions in the verification email.
+                      <Trans>
+                        You requested an email change. A verification email has been sent to <b>{user.newEmail}</b>. To
+                        confirm your new email, please follow the directions in the verification email.
+                      </Trans>
                     </p>
                     <Button
                       variant='warning'

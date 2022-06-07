@@ -1,7 +1,7 @@
 module.exports = {
   contextSeparator: '_',
 
-  createOldCatalogs: false,
+  createOldCatalogs: true,
 
   defaultNamespace: 'translation',
 

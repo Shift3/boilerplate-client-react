@@ -17,11 +17,20 @@
   "Active and invited users in the system": "Active and invited users in the system.",
   "Add User": "Add User",
   "Back to Agent List": "Back to Agent List",
-  "Your account settings": "Your account settings.",
+  "Your Account Settings": "Your Account Settings",
+  "Security and Password": "Security and Password",
   "General Information": "General Information",
+  "This information will be used to identify you in our system": "This information will be used to identify you in our system",
   "Email Address": "Email Address",
   "Your email address on file will be used to communicate with you": {
     " Changing your email requires you to confirm your new email address": "Your email address on file will be used to communicate with you. Changing your email requires you to confirm your new email address."
+  },
+  "You requested an email change": {
+    " A verification email has been sent to <1>{user": {
+      "newEmail}</1>": {
+        " To confirm your new email, please follow the directions in the verification email": "You requested an email change. A verification email has been sent to <1>{user.newEmail}</1>. To confirm your new email, please follow the directions in the verification email."
+      }
+    }
   },
   "Resend Verification Email": "Resend Verification Email",
   "This is the photo of you that other users in the system will be able to see": "This is the photo of you that other users in the system will be able to see.",
