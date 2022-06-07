@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import styled, { css } from 'styled-components';
-import { FilterInfo } from './DataTableFilters';
+import { FilterInfo } from './DataTableActiveFilterList';
 import { wasMouseEventOutsideContainer } from 'utils/events';
 
 // ----------------------------------------------------------------------------

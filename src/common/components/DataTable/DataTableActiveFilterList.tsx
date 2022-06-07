@@ -21,7 +21,7 @@ export type AppliedFilterInfo = {
   value: string;
 };
 
-export type DataTableFilterProps = {
+export type DataTableActiveFilterListProps = {
   filters: FilterInfo[];
   showFilterDropdown: boolean;
   onSetFilter: (attribute: string, operation: FilterOp, value: string) => void;
@@ -31,7 +31,7 @@ export type DataTableFilterProps = {
   onAvailableFiltersUpdate: (numOfAvailableFilters: number) => void;
 };
 
-export const DataTableFilters: FC<DataTableFilterProps> = ({
+export const DataTableActiveFilterList: FC<DataTableActiveFilterListProps> = ({
   filters = [],
   showFilterDropdown,
   onSetFilter,

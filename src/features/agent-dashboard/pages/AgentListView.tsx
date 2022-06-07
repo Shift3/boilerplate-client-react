@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetAgentsQuery } from 'common/api/agentApi';
 import { DataTable } from 'common/components/DataTable';
-import { FilterInfo } from 'common/components/DataTable/DataTableFilters';
+import { FilterInfo } from 'common/components/DataTable/DataTableActiveFilterList';
 import { DataTableSearchAndFilters } from 'common/components/DataTable/DataTableSearchAndFilters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';

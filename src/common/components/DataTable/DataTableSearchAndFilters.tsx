@@ -1,7 +1,9 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FilterOp } from 'common/models';
 import { FC, useState } from 'react';
-import { DataTableFilters, FilterInfo } from './DataTableFilters';
+import { DataTableActiveFilterList, FilterInfo } from './DataTableActiveFilterList';
 import { DataTableSearchBar } from './DataTableSearchBar';
+import { StyledOptionButton } from './utilities';
 
 export type DataTableSearchAndFilterProps = {
   filters: FilterInfo[];
@@ -43,13 +45,18 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
 
   return (
     <div>
-      <DataTableSearchBar
-        placeholder={placeholder}
-        onSetSearchText={onSetSearchText}
-        onDropdownToggle={handleDropdownToggle}
-        shouldDisableFilterToggle={!hasAvailableFilters}
-      />
-      <DataTableFilters
+      <div style={{ display: 'flex' }}>
+        <StyledOptionButton
+          onClick={handleDropdownToggle}
+          disabled={!hasAvailableFilters}
+          topLeftBorderRadius={5}
+          bottomLeftBorderRadius={5}
+        >
+          <FontAwesomeIcon icon='filter' /> Filters
+        </StyledOptionButton>
+        <DataTableSearchBar placeholder={placeholder} onSetSearchText={onSetSearchText} />
+      </div>
+      <DataTableActiveFilterList
         filters={filters}
         onSetFilter={onSetFilter}
         onRemoveFilter={onRemoveFilter}

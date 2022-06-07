@@ -1,33 +1,12 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC, useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import styled from 'styled-components';
-
-const StyledOptionButton = styled(Button)`
-  background-color: #e9ecef;
-  border: 1px solid #ced4da;
-  color: #212529;
-
-  &:disabled {
-    background-color: #e9ecef;
-    border: 1px solid #ced4da;
-    color: #212529;
-  }
-`;
+import { StyledOptionButton } from './utilities';
 
 export const DataTableSearchBar: FC<{
   onSetSearchText: (searchText: string) => void;
-  onDropdownToggle: () => void;
-  shouldDisableFilterToggle: boolean;
   placeholder?: string;
-}> = ({ onSetSearchText, onDropdownToggle, placeholder = 'Search...', shouldDisableFilterToggle }) => {
+}> = ({ onSetSearchText, placeholder = 'Search...' }) => {
   const [searchValue, setSearchValue] = useState('');
-
-  const handleToggle = () => {
-    onDropdownToggle();
-  };
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -38,21 +17,22 @@ export const DataTableSearchBar: FC<{
   });
 
   return (
-    <Form>
-      <InputGroup>
-        <StyledOptionButton onClick={handleToggle} disabled={shouldDisableFilterToggle}>
-          <FontAwesomeIcon icon='filter' /> Filters
-        </StyledOptionButton>
-        <Form.Control
-          type='text'
-          placeholder={placeholder}
-          value={searchValue}
-          onChange={e => setSearchValue(e.target.value)}
-        />
-        <StyledOptionButton onClick={() => setSearchValue('')} disabled={searchValue === ''}>
-          Clear
-        </StyledOptionButton>
-      </InputGroup>
-    </Form>
+    <div style={{ display: 'flex', flex: 1 }}>
+      <Form.Control
+        style={{ borderRadius: 0 }}
+        type='text'
+        placeholder={placeholder}
+        value={searchValue}
+        onChange={e => setSearchValue(e.target.value)}
+      />
+      <StyledOptionButton
+        onClick={() => setSearchValue('')}
+        disabled={searchValue === ''}
+        topRightBorderRadius={5}
+        bottomRightBorderRadius={5}
+      >
+        Clear
+      </StyledOptionButton>
+    </div>
   );
 };
