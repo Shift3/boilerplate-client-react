@@ -35,8 +35,8 @@ export const DataTableSearchBar: FC<{
         <StyledOptionButton
           onClick={() => setSearchValue('')}
           disabled={searchValue === ''}
-          toprightborderradius={5}
-          bottomrightborderradius={5}
+          topRightBorderRadius={5}
+          bottomRightBorderRadius={5}
         >
           Clear
         </StyledOptionButton>
