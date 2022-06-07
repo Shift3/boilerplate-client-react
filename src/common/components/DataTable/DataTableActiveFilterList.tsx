@@ -1,7 +1,6 @@
 import { FilterOp } from 'common/models';
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { FilterBadges } from './FilterBadges';
-import { FilterDropdown } from './FilterDropdown';
 
 export type OperationOption = {
   operation: FilterOp;
@@ -22,59 +21,35 @@ export type AppliedFilterInfo = {
 };
 
 export type DataTableActiveFilterListProps = {
-  filters: FilterInfo[];
+  appliedFilters: AppliedFilterInfo[];
   showFilterDropdown: boolean;
+  onSetAppliedFilters: React.Dispatch<React.SetStateAction<AppliedFilterInfo[]>>;
   onSetFilter: (attribute: string, operation: FilterOp, value: string) => void;
   onRemoveFilter: (attribute: string, operation: FilterOp) => void;
   onClearFilters: () => void;
-  onDropdownClose: () => void;
-  onAvailableFiltersUpdate: (numOfAvailableFilters: number) => void;
 };
 
 export const DataTableActiveFilterList: FC<DataTableActiveFilterListProps> = ({
-  filters = [],
-  showFilterDropdown,
+  appliedFilters,
+  onSetAppliedFilters,
   onSetFilter,
   onRemoveFilter,
   onClearFilters,
-  onDropdownClose,
-  onAvailableFiltersUpdate,
 }) => {
-  const [appliedFilters, setAppliedFilters] = useState<AppliedFilterInfo[]>([]);
-  const availableFilters = filters.filter(
-    filter => !appliedFilters.find(appliedFilter => appliedFilter.filter.attribute === filter.attribute),
-  );
-
-  const handleFilterApply = (selectedAttribute: number, selectedOperation: number, value: string) => {
-    onSetFilter(
-      availableFilters[selectedAttribute].attribute,
-      availableFilters[selectedAttribute].operationOptions[selectedOperation].operation,
-      value,
-    );
-    setAppliedFilters(appliedFilters => [
-      ...appliedFilters,
-      {
-        filter: availableFilters[selectedAttribute],
-        selectedOperation,
-        value,
-      },
-    ]);
-  };
-
   const handleFilterRemove = (index: number) => {
     const appliedFilter = appliedFilters[index];
     onRemoveFilter(
       appliedFilter.filter.attribute,
       appliedFilter.filter.operationOptions[appliedFilter.selectedOperation].operation,
     );
-    setAppliedFilters(appliedFilters => appliedFilters.filter((_, idx) => idx !== index));
+    onSetAppliedFilters(appliedFilters => appliedFilters.filter((_, idx) => idx !== index));
   };
 
   const handleUpdate = (appliedFilterIndex: number, newSelectedOperation: number, newValue: string) => {
     const { filter, selectedOperation } = appliedFilters[appliedFilterIndex];
     onRemoveFilter(filter.attribute, filter.operationOptions[selectedOperation].operation);
     onSetFilter(filter.attribute, filter.operationOptions[newSelectedOperation].operation, newValue);
-    setAppliedFilters(appliedFilters => {
+    onSetAppliedFilters(appliedFilters => {
       appliedFilters[appliedFilterIndex].selectedOperation = newSelectedOperation;
       appliedFilters[appliedFilterIndex].value = newValue;
       return appliedFilters;
@@ -82,13 +57,9 @@ export const DataTableActiveFilterList: FC<DataTableActiveFilterListProps> = ({
   };
 
   const handleFiltersClear = () => {
-    setAppliedFilters([]);
+    onSetAppliedFilters([]);
     onClearFilters();
   };
-
-  useEffect(() => {
-    onAvailableFiltersUpdate(availableFilters.length);
-  }, [availableFilters, onAvailableFiltersUpdate]);
 
   return (
     <div>
@@ -98,15 +69,6 @@ export const DataTableActiveFilterList: FC<DataTableActiveFilterListProps> = ({
         onUpdate={handleUpdate}
         onRemove={handleFilterRemove}
       />
-
-      {availableFilters.length > 0 && (
-        <FilterDropdown
-          show={showFilterDropdown}
-          filters={availableFilters}
-          onClose={onDropdownClose}
-          onApply={handleFilterApply}
-        />
-      )}
     </div>
   );
 };

@@ -1,9 +1,9 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FilterOp } from 'common/models';
 import { FC, useState } from 'react';
-import { DataTableActiveFilterList, FilterInfo } from './DataTableActiveFilterList';
+import { AppliedFilterInfo, DataTableActiveFilterList, FilterInfo } from './DataTableActiveFilterList';
+import { DataTableFilterToggle } from './DataTableFilterToggle';
 import { DataTableSearchBar } from './DataTableSearchBar';
-import { StyledOptionButton } from './utilities';
+import { FilterDropdown } from './FilterDropdown';
 
 export type DataTableSearchAndFilterProps = {
   filters: FilterInfo[];
@@ -23,7 +23,10 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
   onSetSearchText,
 }) => {
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
-  const [hasAvailableFilters, setHasAvailableFilters] = useState(true);
+  const [appliedFilters, setAppliedFilters] = useState<AppliedFilterInfo[]>([]);
+  const availableFilters = filters.filter(
+    filter => !appliedFilters.find(appliedFilter => appliedFilter.filter.attribute === filter.attribute),
+  );
 
   const handleDropdownToggle = () => {
     if (filters.length) {
@@ -35,36 +38,47 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
     setShowFilterDropdown(false);
   };
 
-  const handleAvailableFiltersUpdate = (numOfAvailableFilters: number) => {
-    if (numOfAvailableFilters === 0) {
-      setHasAvailableFilters(false);
-    } else if (!hasAvailableFilters && numOfAvailableFilters > 0) {
-      setHasAvailableFilters(true);
-    }
+  const handleFilterApply = (selectedAttribute: number, selectedOperation: number, value: string) => {
+    onSetFilter(
+      availableFilters[selectedAttribute].attribute,
+      availableFilters[selectedAttribute].operationOptions[selectedOperation].operation,
+      value,
+    );
+    setAppliedFilters(appliedFilters => [
+      ...appliedFilters,
+      {
+        filter: availableFilters[selectedAttribute],
+        selectedOperation,
+        value,
+      },
+    ]);
   };
 
   return (
     <div>
       <div className='d-flex'>
-        <StyledOptionButton
-          onClick={handleDropdownToggle}
-          disabled={!hasAvailableFilters}
-          topLeftBorderRadius={5}
-          bottomLeftBorderRadius={5}
-        >
-          <FontAwesomeIcon icon='filter' /> Filters
-        </StyledOptionButton>
+        <DataTableFilterToggle
+          onDropdownToggle={handleDropdownToggle}
+          hasAvailableFilters={availableFilters.length > 0}
+        />
         <DataTableSearchBar placeholder={placeholder} onSetSearchText={onSetSearchText} />
       </div>
       <DataTableActiveFilterList
-        filters={filters}
+        appliedFilters={appliedFilters}
+        onSetAppliedFilters={setAppliedFilters}
         onSetFilter={onSetFilter}
         onRemoveFilter={onRemoveFilter}
         onClearFilters={onClearFilters}
         showFilterDropdown={showFilterDropdown}
-        onDropdownClose={handleDropdownClose}
-        onAvailableFiltersUpdate={handleAvailableFiltersUpdate}
       />
+      {availableFilters.length > 0 && (
+        <FilterDropdown
+          show={showFilterDropdown}
+          filters={availableFilters}
+          onClose={handleDropdownClose}
+          onApply={handleFilterApply}
+        />
+      )}
     </div>
   );
 };
