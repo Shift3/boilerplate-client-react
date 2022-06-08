@@ -75,7 +75,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
     return { label: language.label, value: language.shortcode };
   });
 
-  const defaultLanguageOption = __languageOptions.find(language => language.value === i18n.languages[0]);
+  const defaultLanguageOption = __languageOptions.find(language => language.value === i18n.language);
 
   return (
     <BitwiseNavbar className='flex-column py-0'>

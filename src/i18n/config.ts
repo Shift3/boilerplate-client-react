@@ -42,7 +42,6 @@ i18n
   .init({
     fallbackLng: 'en',
     debug: true,
-    load: 'languageOnly',
     detection: {
       lookupLocalStorage: 'language',
     },
