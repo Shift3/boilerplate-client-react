@@ -30,15 +30,9 @@ languages.forEach(language => {
 });
 
 i18n
-  // load translation using http -> see /public/locales
   .use(Backend)
-  // // detect user language
   .use(LanguageDetector)
-  // TODO: IF there is a localStorage options set for language, lets set the language to THAT instead of what we get from LanguageDetector
-
-  // // pass the i18n instance to react-i18next.
   .use(initReactI18next)
-  // init i18next
   .init({
     fallbackLng: 'en',
     debug: true,
