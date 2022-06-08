@@ -1,5 +1,4 @@
 provider "aws" {
-  version = "4.8.0"
   profile = "${var.aws_profile}"
   region  = "${var.aws_region}"
 }
