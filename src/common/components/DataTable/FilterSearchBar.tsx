@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import styled from 'styled-components';
+import { Trans } from 'react-i18next';
 
 const StyledFilterMenuToggle = styled(Button)`
   background-color: #e9ecef;
@@ -53,7 +54,7 @@ export const FilterSearchBar: FC<{
           onChange={e => setSearchValue(e.target.value)}
         />
         <Button type='submit' disabled={!searchValue}>
-          Search
+          <Trans>Search</Trans>
         </Button>
       </InputGroup>
     </Form>

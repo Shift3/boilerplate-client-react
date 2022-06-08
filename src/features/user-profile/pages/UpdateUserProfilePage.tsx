@@ -29,6 +29,7 @@ import { UpdateUserEmailForm, UserEmailFormData } from '../components/UpdateUser
 import { UserProfilePicture } from 'features/navbar/components/UserProfilePicture';
 import { isObject } from 'common/error/utilities';
 import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
+import { Trans } from 'react-i18next';
 
 type RouteParams = {
   id: string;
@@ -143,10 +144,12 @@ export const UpdateUserProfilePage: FC = () => {
     <SmallContainer>
       <PageCrumb>
         <Link to='/agents'>
-          <FontAwesomeIcon icon={['fas', 'chevron-left']} /> Back to Agent List
+          <>
+            <FontAwesomeIcon icon={['fas', 'chevron-left']} />
+            <Trans>Back to Agent List</Trans>
+          </>
         </Link>
       </PageCrumb>
-
       <PageHeader className='mb-3'>
         <div className='d-flex'>
           <UserProfilePicture user={user} size='sm' radius={64} />
@@ -154,27 +157,31 @@ export const UpdateUserProfilePage: FC = () => {
             <h1>
               {user?.firstName} {user?.lastName[0]}.
             </h1>
-            <p className='text-muted'>Your account settings.</p>
+            <p className='text-muted'>
+              <Trans>Your Account Settings</Trans>
+            </p>
           </div>
         </div>
       </PageHeader>
-
       <ProfileNav defaultActiveKey='/home'>
         <ProfileNav.Link onClick={() => setTab('profile')} className={tab === 'profile' ? 'active' : ''}>
-          Profile
+          <Trans>Profile</Trans>
         </ProfileNav.Link>
         <ProfileNav.Link onClick={() => setTab('security')} className={tab === 'security' ? 'active' : ''}>
-          Security and Password
+          <Trans>Security and Password</Trans>
         </ProfileNav.Link>
       </ProfileNav>
       <hr className='mt-0' />
-
       {tab === 'profile' ? (
         <>
           <Row>
             <Col md='5'>
-              <h5>General Information</h5>
-              <p className='text-muted'>This information will be used to identify you in our system</p>
+              <h5>
+                <Trans>General Information</Trans>
+              </h5>
+              <p className='text-muted'>
+                <Trans>This information will be used to identify you in our system</Trans>
+              </p>
             </Col>
             <Col>
               <UpdateUserProfileForm
@@ -191,10 +198,14 @@ export const UpdateUserProfilePage: FC = () => {
 
           <Row>
             <Col md='5'>
-              <h5>Email Address</h5>
+              <h5>
+                <Trans>Email Address</Trans>
+              </h5>
               <p className='text-muted'>
-                Your email address on file will be used to communicate with you. Changing your email requires you to
-                confirm your new email address.
+                <Trans>
+                  Your email address on file will be used to communicate with you. Changing your email requires you to
+                  confirm your new email address.
+                </Trans>
               </p>
             </Col>
             <Col>
@@ -202,15 +213,17 @@ export const UpdateUserProfilePage: FC = () => {
                 <Alert variant='warning'>
                   <div>
                     <p data-testid='updateUserExistingEmailChangeInfoContent'>
-                      You requested an email change. A verification email has been sent to <b>{user.newEmail}</b>. To
-                      confirm your new email, please follow the directions in the verification email.
+                      <Trans>
+                        You requested an email change. A verification email has been sent to <b>{user.newEmail}</b>. To
+                        confirm your new email, please follow the directions in the verification email.
+                      </Trans>
                     </p>
                     <Button
                       variant='warning'
                       data-testid='resendVerificationEmailButton'
                       onClick={handleResendChangeEmailVerificationEmail}
                     >
-                      Resend Verification Email
+                      <Trans>Resend Verification Email</Trans>
                     </Button>
                   </div>
                 </Alert>
@@ -231,7 +244,9 @@ export const UpdateUserProfilePage: FC = () => {
           <Row>
             <Col md='5'>
               <h5>Photo</h5>
-              <p className='text-muted'>This is the photo of you that other users in the system will be able to see.</p>
+              <p className='text-muted'>
+                <Trans>This is the photo of you that other users in the system will be able to see.</Trans>
+              </p>
             </Col>
             <Col>
               <UpdateProfilePictureForm onSubmit={onSubmitNewProfilePicture} />
@@ -241,7 +256,7 @@ export const UpdateUserProfilePage: FC = () => {
                 disabled={!profilePictureIsDefined()}
                 onClick={handleDeleteProfilePicture}
               >
-                Delete
+                <Trans>Delete</Trans>
               </Button>
             </Col>
           </Row>
@@ -254,10 +269,14 @@ export const UpdateUserProfilePage: FC = () => {
         <>
           <Row>
             <Col md='5'>
-              <h5>Change Password</h5>
+              <h5>
+                <Trans>Change Password</Trans>
+              </h5>
               <p className='text-muted'>
-                Password must be 8 characters or more. Password must contain a lowercase, uppercase, special character,
-                and a number.
+                <Trans>
+                  Password must be 8 characters or more. Password must contain a lowercase, uppercase, special
+                  character, and a number.
+                </Trans>
               </p>
             </Col>
             <Col>
