@@ -1,9 +1,40 @@
 import { FilterOp } from 'common/models';
-import { FC, useState } from 'react';
+import { InputGroup } from 'react-bootstrap';
 import { AppliedFilterInfo, DataTableActiveFilterList, FilterInfo } from './DataTableActiveFilterList';
 import { DataTableFilterToggle } from './DataTableFilterToggle';
-import { DataTableSearchBar } from './DataTableSearchBar';
 import { FilterDropdown } from './FilterDropdown';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FC, useEffect, useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import styled from 'styled-components';
+
+const ClearSearchButton = styled.span`
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 36px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #999;
+  z-index: 10;
+  transition: all 0.15s ease;
+
+  &:hover {
+    color: #333;
+    cursor: pointer;
+  }
+`;
+
+const SearchFilterRow = styled.div`
+  position: relative;
+  input {
+    padding-right: 36px;
+  }
+`;
 
 export type DataTableSearchAndFilterProps = {
   filters: FilterInfo[];
@@ -16,7 +47,7 @@ export type DataTableSearchAndFilterProps = {
 
 export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
   filters = [],
-  placeholder,
+  placeholder = 'Search...',
   onSetFilter,
   onRemoveFilter,
   onClearFilters,
@@ -54,15 +85,37 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
     ]);
   };
 
+  const [searchValue, setSearchValue] = useState('');
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      onSetSearchText(searchValue);
+    }, 200);
+
+    return () => clearTimeout(delayDebounceFn);
+  });
+
   return (
-    <div>
-      <div className='d-flex'>
-        <DataTableFilterToggle
-          onDropdownToggle={handleDropdownToggle}
-          hasAvailableFilters={availableFilters.length > 0}
-        />
-        <DataTableSearchBar placeholder={placeholder} onSetSearchText={onSetSearchText} />
-      </div>
+    <>
+      <SearchFilterRow>
+        <InputGroup>
+          <DataTableFilterToggle
+            onDropdownToggle={handleDropdownToggle}
+            hasAvailableFilters={availableFilters.length > 0}
+          />
+          <Form.Control
+            type='text'
+            placeholder={placeholder}
+            value={searchValue}
+            onChange={e => setSearchValue(e.target.value)}
+          />
+        </InputGroup>
+        {searchValue.length > 0 ? (
+          <ClearSearchButton onClick={() => setSearchValue('')}>
+            <FontAwesomeIcon icon='close' />
+          </ClearSearchButton>
+        ) : null}
+      </SearchFilterRow>
+
       <DataTableActiveFilterList
         appliedFilters={appliedFilters}
         onSetAppliedFilters={setAppliedFilters}
@@ -79,6 +132,6 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
           onApply={handleFilterApply}
         />
       )}
-    </div>
+    </>
   );
 };

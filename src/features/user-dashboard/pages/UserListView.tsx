@@ -99,14 +99,15 @@ export const UserListView: FC = () => {
           </div>
         </HasPermission>
       </PageHeader>
+
       <DataTableSearchAndFilters
-        placeholder='Search by first name and last name'
         filters={filters}
         onSetFilter={addFilter}
         onRemoveFilter={removeFilter}
         onClearFilters={resetFilters}
         onSetSearchText={addSearchText}
       />
+
       <TableCard>
         <TableCard.Body>
           <WithLoadingOverlay

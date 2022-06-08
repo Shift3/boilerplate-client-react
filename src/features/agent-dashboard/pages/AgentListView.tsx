@@ -82,7 +82,6 @@ export const AgentListView: FC = () => {
       </PageHeader>
 
       <DataTableSearchAndFilters
-        placeholder='Search by name'
         filters={filters}
         onSetFilter={addFilter}
         onRemoveFilter={removeFilter}
