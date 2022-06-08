@@ -1,6 +1,7 @@
 import { useGetUsersQuery } from 'common/api/userApi';
 import { DataTable } from 'common/components/DataTable';
-import { DataTableFilters, FilterInfo } from 'common/components/DataTable/DataTableFilters';
+import { FilterInfo } from 'common/components/DataTable/DataTableActiveFilterList';
+import { DataTableSearchAndFilters } from 'common/components/DataTable/DataTableSearchAndFilters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { PaginatedResult, User } from 'common/models';
@@ -28,6 +29,7 @@ export const UserListView: FC = () => {
     addFilter,
     removeFilter,
     resetFilters,
+    addSearchText,
   } = usePSFQuery<PaginatedResult<User>>(useGetUsersQuery);
   const users = useMemo(() => data?.results ?? [], [data]);
   const { columns, data: tableData } = useUserTableData(users);
@@ -104,14 +106,15 @@ export const UserListView: FC = () => {
           </div>
         </HasPermission>
       </PageHeader>
-      <DataTableFilters
+
+      <DataTableSearchAndFilters
         filters={filters}
-        defaultFilterAttribute='firstName'
-        defaultFilterOperation='icontains'
         onSetFilter={addFilter}
         onRemoveFilter={removeFilter}
         onClearFilters={resetFilters}
+        onSetSearchText={addSearchText}
       />
+
       <TableCard>
         <TableCard.Body>
           <WithLoadingOverlay

@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import Badge from 'react-bootstrap/Badge';
 import styled from 'styled-components';
 import { wasMouseEventOutsideContainer } from 'utils/events';
-import { AppliedFilterInfo } from './DataTableFilters';
+import { AppliedFilterInfo } from './DataTableActiveFilterList';
 import { OperationDropdownMenu } from './FilterDropdown';
 
 const StyledContainer = styled.div`
