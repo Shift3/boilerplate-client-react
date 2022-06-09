@@ -6,7 +6,7 @@ provider "aws" {
 terraform {
   backend "s3" {
     bucket  = "shift3-terraform-state"
-    key     = "ar-boilerplate-client-react/terraform.tfstate"
+    key     = "<initials or project name>-boilerplate-client-react/terraform.tfstate"
     region  = "us-west-2"
     profile = "shift3"
   }
