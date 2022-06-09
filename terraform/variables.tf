@@ -1,6 +1,3 @@
-# Any values that do not have a default value must be defined within the environment folder
-# Ex. web_domain_name should defined in environment/<environmentName>.tfvars
-
 variable "aws_profile" {
   default = "shift3"
   description = "Name of your profile inside ~/.aws/credentials"
@@ -8,7 +5,7 @@ variable "aws_profile" {
 
 variable "aws_region" {
   default     = "us-west-2"
-  description = "Defines where your app should be deployed"
+  description = "Defines which region your app should be deployed"
 }
 
 variable "web_domain_name" {
