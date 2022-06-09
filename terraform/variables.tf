@@ -21,3 +21,8 @@ variable "route53_zone" {
   default = "shift3sandbox.com"
   description = "Zone for Route53"
 }
+
+variable "environment" {
+  default = "staging"
+  description = "This value will be used to tag the resources created with the environment (staging | production | dev)"
+}

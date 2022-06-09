@@ -22,4 +22,5 @@ module "cloudfront" {
   profile                       = var.aws_profile
   secure_response_headers_id    = var.secure_response_headers_id
   route53_zone                  = var.route53_zone
+  environment                   = var.environment
 }
