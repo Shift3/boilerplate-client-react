@@ -64,7 +64,7 @@ export const UpdateUserView: FC = () => {
         <Link to='/users'>
           <>
             <FontAwesomeIcon icon={['fas', 'chevron-left']} />
-            <Trans>Back to User List</Trans>
+            <Trans i18nKey='createUser.back'>Back to User List</Trans>
           </>
         </Link>
       </PageCrumb>
@@ -72,10 +72,10 @@ export const UpdateUserView: FC = () => {
       <PageHeader>
         <div>
           <h1>
-            <Trans>Update User</Trans>
+            <Trans i18nKey='updateUser.heading'>Update User</Trans>
           </h1>
           <p className='text-muted'>
-            <Trans>Update this users details and roles here.</Trans>
+            <Trans i18nKey='updateUser.subheading'>Update this users details and roles here.</Trans>
           </p>
         </div>
       </PageHeader>

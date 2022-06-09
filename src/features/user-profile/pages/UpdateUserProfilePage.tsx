@@ -146,7 +146,7 @@ export const UpdateUserProfilePage: FC = () => {
         <Link to='/agents'>
           <>
             <FontAwesomeIcon icon={['fas', 'chevron-left']} />
-            <Trans>Back to Agent List</Trans>
+            <Trans i18nKey='userProfile.back'>Back to Agent List</Trans>
           </>
         </Link>
       </PageCrumb>
@@ -158,17 +158,17 @@ export const UpdateUserProfilePage: FC = () => {
               {user?.firstName} {user?.lastName[0]}.
             </h1>
             <p className='text-muted'>
-              <Trans>Your Account Settings</Trans>
+              <Trans i18nKey='userProfile.subheading'>Your Account Settings</Trans>
             </p>
           </div>
         </div>
       </PageHeader>
       <ProfileNav defaultActiveKey='/home'>
         <ProfileNav.Link onClick={() => setTab('profile')} className={tab === 'profile' ? 'active' : ''}>
-          <Trans>Profile</Trans>
+          <Trans i18nKey='userProfile.profile'>Profile</Trans>
         </ProfileNav.Link>
         <ProfileNav.Link onClick={() => setTab('security')} className={tab === 'security' ? 'active' : ''}>
-          <Trans>Security and Password</Trans>
+          <Trans i18nKey='userProfile.security'>Security and Password</Trans>
         </ProfileNav.Link>
       </ProfileNav>
       <hr className='mt-0' />
@@ -177,10 +177,12 @@ export const UpdateUserProfilePage: FC = () => {
           <Row>
             <Col md='5'>
               <h5>
-                <Trans>General Information</Trans>
+                <Trans i18nKey='userProfile.generalHeading'>General Information</Trans>
               </h5>
               <p className='text-muted'>
-                <Trans>This information will be used to identify you in our system</Trans>
+                <Trans i18nKey='userProfile.generalSubheading'>
+                  This information will be used to identify you in our system
+                </Trans>
               </p>
             </Col>
             <Col>
@@ -199,10 +201,10 @@ export const UpdateUserProfilePage: FC = () => {
           <Row>
             <Col md='5'>
               <h5>
-                <Trans>Email Address</Trans>
+                <Trans i18nKey='userProfile.email'>Email Address</Trans>
               </h5>
               <p className='text-muted'>
-                <Trans>
+                <Trans i18nKey='userProfile.emailDescription'>
                   Your email address on file will be used to communicate with you. Changing your email requires you to
                   confirm your new email address.
                 </Trans>
@@ -213,7 +215,7 @@ export const UpdateUserProfilePage: FC = () => {
                 <Alert variant='warning'>
                   <div>
                     <p data-testid='updateUserExistingEmailChangeInfoContent'>
-                      <Trans>
+                      <Trans i18nKey='userProfile.changeEmailDescription'>
                         You requested an email change. A verification email has been sent to <b>{user.newEmail}</b>. To
                         confirm your new email, please follow the directions in the verification email.
                       </Trans>
@@ -223,7 +225,7 @@ export const UpdateUserProfilePage: FC = () => {
                       data-testid='resendVerificationEmailButton'
                       onClick={handleResendChangeEmailVerificationEmail}
                     >
-                      <Trans>Resend Verification Email</Trans>
+                      <Trans i18nKey='userProfile.resendEmail'>Resend Verification Email</Trans>
                     </Button>
                   </div>
                 </Alert>
@@ -243,9 +245,13 @@ export const UpdateUserProfilePage: FC = () => {
 
           <Row>
             <Col md='5'>
-              <h5>Photo</h5>
+              <h5>
+                <Trans i18nKey='userProfile.photo'>Photo</Trans>
+              </h5>
               <p className='text-muted'>
-                <Trans>This is the photo of you that other users in the system will be able to see.</Trans>
+                <Trans i18nKey='userProfile.photoDescription'>
+                  This is the photo of you that other users in the system will be able to see.
+                </Trans>
               </p>
             </Col>
             <Col>
@@ -256,7 +262,7 @@ export const UpdateUserProfilePage: FC = () => {
                 disabled={!profilePictureIsDefined()}
                 onClick={handleDeleteProfilePicture}
               >
-                <Trans>Delete</Trans>
+                <Trans i18nKey='delete'>Delete</Trans>
               </Button>
             </Col>
           </Row>
@@ -270,10 +276,10 @@ export const UpdateUserProfilePage: FC = () => {
           <Row>
             <Col md='5'>
               <h5>
-                <Trans>Change Password</Trans>
+                <Trans i18nKey='userProfile.changePassword'>Change Password</Trans>
               </h5>
               <p className='text-muted'>
-                <Trans>
+                <Trans i18nKey='userProfile.changePasswordDescription'>
                   Password must be 8 characters or more. Password must contain a lowercase, uppercase, special
                   character, and a number.
                 </Trans>

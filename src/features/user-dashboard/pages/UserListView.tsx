@@ -90,17 +90,17 @@ export const UserListView: FC = () => {
       <PageHeader>
         <div>
           <h1>
-            <Trans>User List</Trans>
+            <Trans i18nKey='userList.heading'>User List</Trans>
           </h1>
           <p className='text-muted'>
-            <Trans>Active and invited users in the system.</Trans>
+            <Trans i18nKey='userList.subheading'>Active and invited users in the system.</Trans>
           </p>
         </div>
         <HasPermission perform='user:create'>
           <div>
             <Link to='/users/create-user'>
               <CreateButton>
-                <Trans>Add User</Trans>
+                <Trans i18nKey='userList.createButton'>Add User</Trans>
               </CreateButton>
             </Link>
           </div>

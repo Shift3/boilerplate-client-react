@@ -62,13 +62,13 @@ export const UserDetailForm: FC<Props> = ({
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
       <Form name='create-user-form' onSubmit={handleSubmit(onSubmit)}>
         <h5>
-          <Trans>Profile</Trans>
+          <Trans i18nKey='userDetail.heading'>Profile</Trans>
         </h5>
         <Row className='mb-2'>
           <Col xs={12} md={6}>
             <Form.Group controlId='create-user-form-first-name'>
               <Form.Label>
-                <Trans>First Name</Trans>
+                <Trans i18nKey='userDetail.firstName'>First Name</Trans>
               </Form.Label>
               <Form.Control type='text' {...register('firstName')} isInvalid={!!errors.firstName} />
               <Form.Control.Feedback type='invalid'>{errors.firstName?.message}</Form.Control.Feedback>
@@ -78,7 +78,7 @@ export const UserDetailForm: FC<Props> = ({
           <Col xs={12} md={6}>
             <Form.Group controlId='create-user-form-last-name'>
               <Form.Label>
-                <Trans>Last Name</Trans>
+                <Trans i18nKey='userDetail.lastName'>Last Name</Trans>
               </Form.Label>
               <Form.Control type='text' {...register('lastName')} isInvalid={!!errors.lastName} />
               <Form.Control.Feedback type='invalid'>{errors.lastName?.message}</Form.Control.Feedback>
@@ -88,17 +88,17 @@ export const UserDetailForm: FC<Props> = ({
 
         <Form.Group controlId='create-user-form-email'>
           <Form.Label>
-            <Trans>Email</Trans>
+            <Trans i18nKey='userDetail.email'>Email</Trans>
           </Form.Label>
           <Form.Control type='email' {...register('email')} isInvalid={!!errors.email} />
           <Form.Control.Feedback type='invalid'>{errors.email?.message}</Form.Control.Feedback>
         </Form.Group>
         <h5 className='mt-3'>
-          <Trans>Access Information</Trans>
+          <Trans i18nKey='userDetail.accessHeading'>Access Information</Trans>
         </h5>
         <Form.Group className='mb-2' controlId='create-user-form-role'>
           <Form.Label>
-            <Trans>Role</Trans>
+            <Trans i18nKey='role'>Role</Trans>
           </Form.Label>
           <Controller
             control={control}
