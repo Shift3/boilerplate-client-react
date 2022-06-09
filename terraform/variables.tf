@@ -21,8 +21,3 @@ variable "route53_zone" {
   default = "shift3sandbox.com"
   description = "Zone for Route53"
 }
-
-variable "cloudfront_gh_module" {
-  default = "git@github.com:Shift3/terraform-modules.git//modules/aws/cloudfront"
-  description = "This value points to our cloudfront module stored within our BWTC github repo"
-}
