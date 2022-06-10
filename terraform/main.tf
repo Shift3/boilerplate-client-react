@@ -1,6 +1,6 @@
 provider "aws" {
-  profile = "${var.aws_profile}"
-  region  = "${var.aws_region}"
+  profile = var.aws_profile
+  region  = var.aws_region
 }
 
 terraform {
@@ -13,7 +13,7 @@ terraform {
 }
 
 locals {
-  workspace_name = "${terraform.workspace}"
+  workspace_name = terraform.workspace
 }
 
 module "cloudfront" {
