@@ -1,42 +1,46 @@
 {
-  "Search": "Búsqueda",
-  "Agent List": "Lista de agentes",
-  "Add Agent": "Agregar agente",
-  "Profile": "Perfil",
-  "First Name": "Primer Nombre",
-  "Last Name": "Ultimo Nombre",
-  "Email": "Email",
-  "Access Information": "Informacion de Acceso",
-  "Role": "Role",
-  "Back to User List": "Volver a la lista de usuarios",
-  "Create User": "Crear usuario",
-  "Add a new user to the system": "Agregar un nuevo usuario al sistema.",
-  "Update User": "Actualizar usuario",
-  "Update this users details and roles here": "Actualice los detalles y roles de este usuario aquí.",
-  "User List": "Lista de usuarios",
-  "Active and invited users in the system": "Usuarios activos e invitados en el sistema.",
-  "Add User": "Agregar usuario",
-  "Back to Agent List": "Volver a la lista de agentes",
-  "Your Account Settings": "Configuración de su cuenta",
-  "Security and Password": "Seguridad y Contraseña",
-  "General Information": "Información general",
-  "This information will be used to identify you in our system": "Esta información se utilizará para identificarlo en nuestro sistema.",
-  "Email Address": "Dirección de correo electrónico",
-  "Your email address on file will be used to communicate with you": {
-    " Changing your email requires you to confirm your new email address": "Su dirección de correo electrónico registrada se utilizará para comunicarnos con usted. Cambiar su correo electrónico requiere que confirme su nueva dirección de correo electrónico."
+  "agentList": {
+    "heading": "Lista de agentes",
+    "subheading": "Todos los agentes del sistema.",
+    "createButton": "Agregar agente"
   },
-  "You requested an email change": {
-    " A verification email has been sent to <1>{user": {
-      "newEmail}</1>": {
-        " To confirm your new email, please follow the directions in the verification email": "Usted solicitó un cambio de correo electrónico. Se ha enviado un correo electrónico de verificación a <1>{user.newEmail}</1>. Para confirmar su nuevo correo electrónico, siga las instrucciones en el correo electrónico de verificación."
-      }
-    }
+  "userDetail": {
+    "heading": "Perfil",
+    "firstName": "Primer Nombre",
+    "lastName": "Ultimo Nombre",
+    "email": "Correo electrónico",
+    "accessHeading": "Informacion de Acceso"
   },
-  "Resend Verification Email": "Reenviar correo electrónico de verificación",
-  "This is the photo of you that other users in the system will be able to see": "Esta es la foto tuya que otros usuarios del sistema podrán ver.",
-  "Delete": "Borrar",
-  "Change Password": "Cambia la contraseña",
-  "Password must be 8 characters or more": {
-    " Password must contain a lowercase, uppercase, special character, and a number": "La contraseña debe tener 8 caracteres o más. La contraseña debe contener un carácter especial en minúsculas, mayúsculas y un número."
-  }
+  "role": "Rol",
+  "createUser": {
+    "back": "Volver a la lista de usuarios",
+    "heading": "Crear usuario",
+    "subheading": "Agregar un nuevo usuario al sistema."
+  },
+  "updateUser": {
+    "heading": "Actualizar usuario",
+    "subheading": "Actualice los detalles y roles de este usuario aquí."
+  },
+  "userList": {
+    "heading": "Lista de usuarios",
+    "subheading": "Usuarios activos e invitados en el sistema.",
+    "createButton": "Agregar usuario"
+  },
+  "userProfile": {
+    "back": "Volver a la lista de agentes",
+    "subheading": "Configuración de su cuenta",
+    "profile": "Perfil",
+    "security": "Seguridad y Contraseña",
+    "generalHeading": "Información general",
+    "generalSubheading": "Esta información se utilizará para identificarlo en nuestro sistema.",
+    "email": "Dirección de correo electrónico",
+    "emailDescription": "Su dirección de correo electrónico registrada se utilizará para comunicarnos con usted. Cambiar su correo electrónico requiere que confirme su nueva dirección de correo electrónico.",
+    "changeEmailDescription": "Usted solicitó un cambio de correo electrónico. Se ha enviado un correo electrónico de verificación a <1>{user.newEmail}</1>. Para confirmar su nuevo correo electrónico, siga las instrucciones en el correo electrónico de verificación.",
+    "resendEmail": "Reenviar correo electrónico de verificación",
+    "photo": "Photo",
+    "photoDescription": "Esta es la foto tuya que otros usuarios del sistema podrán ver.",
+    "changePassword": "Cambia la contraseña",
+    "changePasswordDescription": "La contraseña debe tener 8 caracteres o más. La contraseña debe contener un carácter especial en minúsculas, mayúsculas y un número."
+  },
+  "delete": "Borrar"
 }

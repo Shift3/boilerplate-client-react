@@ -46,7 +46,7 @@ export const CreateUserView: FC = () => {
         <Link to='/users'>
           <>
             <FontAwesomeIcon icon={['fas', 'chevron-left']} />
-            <Trans>Back to User List</Trans>
+            <Trans i18nKey='createUser.back'>Back to User List</Trans>
           </>
         </Link>
       </PageCrumb>
@@ -54,10 +54,10 @@ export const CreateUserView: FC = () => {
       <PageHeader>
         <div>
           <h1>
-            <Trans>Create User</Trans>
+            <Trans i18nKey='createUser.heading'>Create User</Trans>
           </h1>
           <p className='text-muted'>
-            <Trans>Add a new user to the system.</Trans>
+            <Trans i18nKey='createUser.subheading'>Add a new user to the system.</Trans>
           </p>
         </div>
       </PageHeader>
