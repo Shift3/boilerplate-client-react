@@ -13,8 +13,8 @@ variable "web_domain_name" {
 }
 
 variable "secure_response_headers_id"{
-  default = "b52c8245-8965-4882-a446-8773a50b46ab"
-  description = "Default security header policy ID (shift3 account)"
+  default = "a8d5b0a7-fb10-48d5-a6e0-8c15df90c99d"
+  description = "Default security header policy ID for React Boilerplate (shift3 account)"
 }
 
 variable "route53_zone" {
