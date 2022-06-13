@@ -12,7 +12,6 @@ export const GlobalStyle = createGlobalStyle`
     html,
     body {
         min-height: 100%;
-        background: #fafafa;
     }
 
     a {

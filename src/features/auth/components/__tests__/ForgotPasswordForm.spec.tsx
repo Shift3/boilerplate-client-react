@@ -2,7 +2,7 @@ import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ForgotPasswordForm } from '../ForgotPasswordForm';
 import { ThemeProvider } from 'styled-components';
-import AppTheme from 'utils/styleValues';
+import AppTheme from 'utils/themes';
 
 const mockOnSubmit = jest.fn();
 

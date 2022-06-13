@@ -5,7 +5,7 @@ import { FC } from 'react';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { flushPromises } from 'test/utils/flushPromises';
-import AppTheme from 'utils/styleValues';
+import AppTheme from 'utils/themes';
 import { ConfirmationModal } from '../ConfirmationModal';
 import { useConfirmationModal } from '../useConfirmationModal';
 

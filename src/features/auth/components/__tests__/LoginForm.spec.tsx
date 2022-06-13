@@ -4,7 +4,7 @@ import { createAppStore } from 'app/redux';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import AppTheme from 'utils/styleValues';
+import AppTheme from 'utils/themes';
 import { LogInForm } from '../LoginForm';
 
 const mockOnSubmit = jest.fn();

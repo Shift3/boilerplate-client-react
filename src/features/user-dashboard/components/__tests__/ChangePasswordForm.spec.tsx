@@ -1,7 +1,7 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ThemeProvider } from 'styled-components';
-import theme from 'utils/styleValues';
+import theme from 'utils/themes';
 import { ChangePasswordForm, FormData } from '../ChangePasswordForm';
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';

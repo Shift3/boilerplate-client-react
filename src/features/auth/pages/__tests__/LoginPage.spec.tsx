@@ -6,7 +6,7 @@ import { createAppStore } from 'app/redux';
 import { createMemoryHistory, MemoryHistory } from 'history';
 import userEvent from '@testing-library/user-event';
 import { ThemeProvider } from 'styled-components';
-import AppTheme from 'utils/styleValues';
+import AppTheme from 'utils/themes';
 import { LogInPage } from '../LoginPage';
 
 describe('<LoginPage/>', () => {

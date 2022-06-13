@@ -1,7 +1,7 @@
 import { CustomSelect } from 'common/components/CustomSelect';
 import { BitwiseNavbar } from 'common/styles/page';
 import { useAuth } from 'features/auth/hooks';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import { useTranslation } from 'react-i18next';
 import { languages } from '../../../i18n/config';
@@ -36,6 +36,12 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
   });
 
   const defaultLanguageOption = __languageOptions.find(language => language.value === i18n.languages[0]);
+
+  const [theme, setTheme] = useState('light');
+
+  const themeToggler = () => {
+    return theme === 'light' ? setTheme('dark') : setTheme('light');
+  };
 
   return (
     <BitwiseNavbar className='flex-column py-0'>

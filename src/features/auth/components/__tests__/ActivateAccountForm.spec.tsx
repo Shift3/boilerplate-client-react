@@ -1,7 +1,7 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ThemeProvider } from 'styled-components';
-import AppTheme from 'utils/styleValues';
+import AppTheme from 'utils/themes';
 import { ActivateAccountForm } from '../ActivateAccountForm';
 
 const mockOnSubmit = jest.fn();

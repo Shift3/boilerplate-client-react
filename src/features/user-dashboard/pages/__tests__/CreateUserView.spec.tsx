@@ -5,7 +5,7 @@ import { AuthState } from 'features/auth/authSlice';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { CreateUserView } from '../CreateUserView';
-import theme from 'utils/styleValues';
+import theme from 'utils/themes';
 import userEvent from '@testing-library/user-event';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
@@ -15,11 +15,11 @@ import { baseUrl, server } from 'test/server';
 import { rest } from 'msw';
 import { StatusCodes } from 'http-status-codes';
 import * as notificationService from 'common/services/notification';
-import {Role} from 'common/models';
+import { Role } from 'common/models';
 
 describe('CreateUserView', () => {
   describe('when user has Admin role', () => {
-    const user = UserFactory.build({role: Role.ADMIN});
+    const user = UserFactory.build({ role: Role.ADMIN });
     const auth: AuthState = { token: 'fake token', user };
 
     beforeEach(() => {
@@ -62,7 +62,7 @@ describe('CreateUserView', () => {
   });
 
   describe('when user has Super Administrator role', () => {
-    const user = UserFactory.build({role: Role.ADMIN});
+    const user = UserFactory.build({ role: Role.ADMIN });
     const auth: AuthState = { token: 'fake token', user };
 
     beforeEach(() => {
@@ -105,7 +105,7 @@ describe('CreateUserView', () => {
   });
 
   describe('when form is submitted', () => {
-    const user = UserFactory.build({role: Role.ADMIN});
+    const user = UserFactory.build({ role: Role.ADMIN });
     const auth: AuthState = { token: 'fake token', user };
     const newUser = UserFactory.build();
     let store: EnhancedStore;

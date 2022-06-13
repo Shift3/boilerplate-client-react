@@ -2,10 +2,11 @@ import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { UpdateProfilePictureForm } from '../UpdateProfilePictureForm';
 import { ThemeProvider } from 'styled-components';
-import AppTheme from 'utils/styleValues';
+import AppTheme from 'utils/themes';
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createAppStore } from 'app/redux';
+import { ServerValidationErrors } from 'common/models';
 
 const mockOnSubmit = jest.fn();
 
@@ -19,7 +20,7 @@ describe('UpdateProfilePictureForm', () => {
         <MemoryRouter>
           <Provider store={createAppStore()}>
             <ThemeProvider theme={AppTheme}>
-              <UpdateProfilePictureForm onSubmit={mockOnSubmit} serverValidationErrors={null} />
+              <UpdateProfilePictureForm onSubmit={mockOnSubmit} ServerValidationErrors={null} />
             </ThemeProvider>
           </Provider>
         </MemoryRouter>,

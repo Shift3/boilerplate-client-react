@@ -3,7 +3,7 @@ import { createAppStore } from 'app/redux';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { ConfirmationModal } from '../ConfirmationModal';
-import AppTheme from 'utils/styleValues';
+import AppTheme from 'utils/themes';
 
 describe('ConfirmationModal', () => {
   it('should render without errors', () => {
