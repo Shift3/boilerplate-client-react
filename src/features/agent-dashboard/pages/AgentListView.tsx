@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetAgentsQuery } from 'common/api/agentApi';
 import { DataTable } from 'common/components/DataTable';
-import { DataTableFilters, FilterInfo } from 'common/components/DataTable/DataTableFilters';
+import { FilterInfo } from 'common/components/DataTable/DataTableActiveFilterList';
+import { DataTableSearchAndFilters } from 'common/components/DataTable/DataTableSearchAndFilters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { Agent, PaginatedResult } from 'common/models';
@@ -15,6 +16,7 @@ import { Card } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import { Link, useNavigate } from 'react-router-dom';
 import { AgentTableItem, useAgentTableData } from '../hooks/useAgentTableData';
+import { Trans } from 'react-i18next';
 
 export const AgentListView: FC = () => {
   const navigate = useNavigate();
@@ -30,6 +32,7 @@ export const AgentListView: FC = () => {
     addFilter,
     removeFilter,
     resetFilters,
+    addSearchText,
   } = usePSFQuery<PaginatedResult<Agent>>(useGetAgentsQuery);
   const agents = useMemo(() => data?.results ?? [], [data]);
   const { columns, data: tableData } = useAgentTableData(agents);
@@ -67,25 +70,30 @@ export const AgentListView: FC = () => {
     <Container>
       <PageHeader>
         <div>
-          <h1>Agent List</h1>
-          <p className='text-muted'>All agents in the system.</p>
+          <h1>
+            <Trans i18nKey='agentList.heading'>Agent List</Trans>
+          </h1>
+          <p className='text-muted'>
+            <Trans i18nKey='agentList.subheading'>All agents in the system.</Trans>
+          </p>
         </div>
         <HasPermission perform='agent:create'>
           <div>
             <Link to='/agents/create-agent'>
-              <CreateButton>Add Agent</CreateButton>
+              <CreateButton>
+                <Trans i18nKey='agentList.createButton'>Add Agent</Trans>
+              </CreateButton>
             </Link>
           </div>
         </HasPermission>
       </PageHeader>
 
-      <DataTableFilters
+      <DataTableSearchAndFilters
         filters={filters}
-        defaultFilterAttribute='name'
-        defaultFilterOperation='icontains'
         onSetFilter={addFilter}
         onRemoveFilter={removeFilter}
         onClearFilters={resetFilters}
+        onSetSearchText={addSearchText}
       />
 
       <TableCard>

@@ -19,3 +19,7 @@ export type Filter = {
 export type FilterQueryParams = {
   filters: Filter[];
 };
+
+export type SearchTextParams = {
+  searchText: string;
+};

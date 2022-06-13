@@ -1,0 +1,46 @@
+{
+  "agentList": {
+    "heading": "Lista de agentes",
+    "subheading": "Todos los agentes del sistema.",
+    "createButton": "Agregar agente"
+  },
+  "userDetail": {
+    "heading": "Perfil",
+    "firstName": "Primer Nombre",
+    "lastName": "Ultimo Nombre",
+    "email": "Correo electrónico",
+    "accessHeading": "Informacion de Acceso"
+  },
+  "role": "Rol",
+  "createUser": {
+    "back": "Volver a la lista de usuarios",
+    "heading": "Crear usuario",
+    "subheading": "Agregar un nuevo usuario al sistema."
+  },
+  "updateUser": {
+    "heading": "Actualizar usuario",
+    "subheading": "Actualice los detalles y roles de este usuario aquí."
+  },
+  "userList": {
+    "heading": "Lista de usuarios",
+    "subheading": "Usuarios activos e invitados en el sistema.",
+    "createButton": "Agregar usuario"
+  },
+  "userProfile": {
+    "back": "Volver a la lista de agentes",
+    "subheading": "Configuración de su cuenta",
+    "profile": "Perfil",
+    "security": "Seguridad y Contraseña",
+    "generalHeading": "Información general",
+    "generalSubheading": "Esta información se utilizará para identificarlo en nuestro sistema.",
+    "email": "Dirección de correo electrónico",
+    "emailDescription": "Su dirección de correo electrónico registrada se utilizará para comunicarnos con usted. Cambiar su correo electrónico requiere que confirme su nueva dirección de correo electrónico.",
+    "changeEmailDescription": "Usted solicitó un cambio de correo electrónico. Se ha enviado un correo electrónico de verificación a <1>{user.newEmail}</1>. Para confirmar su nuevo correo electrónico, siga las instrucciones en el correo electrónico de verificación.",
+    "resendEmail": "Reenviar correo electrónico de verificación",
+    "photo": "Photo",
+    "photoDescription": "Esta es la foto tuya que otros usuarios del sistema podrán ver.",
+    "changePassword": "Cambia la contraseña",
+    "changePasswordDescription": "La contraseña debe tener 8 caracteres o más. La contraseña debe contener un carácter especial en minúsculas, mayúsculas y un número."
+  },
+  "delete": "Borrar"
+}

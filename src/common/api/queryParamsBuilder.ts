@@ -35,6 +35,11 @@ export class QueryParamsBuilder {
     return this;
   }
 
+  public setSearchParam(searchText: string): QueryParamsBuilder {
+    this.setParam('search', searchText); // The ? is already provided by the query in the relevant Api file.
+    return this;
+  }
+
   public build(): string {
     return this.queryParams.toString();
   }

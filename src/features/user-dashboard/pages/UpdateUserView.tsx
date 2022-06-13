@@ -11,6 +11,7 @@ import { useRbac } from 'features/rbac';
 import { FC, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
+import { Trans } from 'react-i18next';
 
 type RouteParams = {
   id: string;
@@ -61,14 +62,21 @@ export const UpdateUserView: FC = () => {
     <SmallContainer>
       <PageCrumb>
         <Link to='/users'>
-          <FontAwesomeIcon icon={['fas', 'chevron-left']} /> Back to User List
+          <>
+            <FontAwesomeIcon icon={['fas', 'chevron-left']} />
+            <Trans i18nKey='createUser.back'>Back to User List</Trans>
+          </>
         </Link>
       </PageCrumb>
 
       <PageHeader>
         <div>
-          <h1>Update User</h1>
-          <p className='text-muted'>Update this users details and roles here.</p>
+          <h1>
+            <Trans i18nKey='updateUser.heading'>Update User</Trans>
+          </h1>
+          <p className='text-muted'>
+            <Trans i18nKey='updateUser.subheading'>Update this users details and roles here.</Trans>
+          </p>
         </div>
       </PageHeader>
 

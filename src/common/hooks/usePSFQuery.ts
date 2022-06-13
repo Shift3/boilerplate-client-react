@@ -62,7 +62,17 @@ type FilterActions = {
 type FilterManager = FilterState & FilterActions;
 
 // --------------------------------------------------------------------------------------------------------------------
-type PSFQueryState = PaginationState & SortState & FilterState;
+
+type SearchTextState = {
+  searchText: string;
+};
+
+type SearchActions = {
+  addSearchText: (searchText: string) => void;
+};
+
+// --------------------------------------------------------------------------------------------------------------------
+type PSFQueryState = PaginationState & SortState & FilterState & SearchTextState;
 
 type PSFQueryAction =
   | { type: 'pagination/setPage'; payload: { page: number } }
@@ -71,9 +81,10 @@ type PSFQueryAction =
   | { type: 'filter/add'; payload: { attr: string; op: FilterOp; value: string } }
   | { type: 'filter/remove'; payload: { attr: string; op: FilterOp } }
   | { type: 'filter/reset' }
-  | { type: 'all/dataUpdated'; payload: { data: PaginatedResult<unknown> | unknown } };
+  | { type: 'all/dataUpdated'; payload: { data: PaginatedResult<unknown> | unknown } }
+  | { type: 'addSearchText'; payload: { data: string } };
 
-export type PSFQueryManager = PaginationManager & SortManager & FilterManager;
+export type PSFQueryManager = PaginationManager & SortManager & FilterManager & SearchActions;
 
 export type PSFConfig = PaginationConfig;
 
@@ -104,10 +115,15 @@ export const usePSFQuery = <ResultType>(
     filters: [],
   };
 
+  const initialSearchTextState: SearchTextState = {
+    searchText: '',
+  };
+
   const initialState: PSFQueryState = {
     ...initialPaginationState,
     ...initialSortState,
     ...initialFilterState,
+    ...initialSearchTextState,
   };
 
   // Set up the reducer that will create and manage the pagination, sort, and filter states of the query.
@@ -173,6 +189,11 @@ export const usePSFQuery = <ResultType>(
         return { ...state, page: basePage, filters: [] };
       }
 
+      case 'addSearchText': {
+        const { payload } = action;
+        return { ...state, searchText: payload.data };
+      }
+
       case 'all/dataUpdated': {
         const { data } = action.payload;
         let newState = { ...state };
@@ -201,8 +222,8 @@ export const usePSFQuery = <ResultType>(
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // Use the query hook.
-  const { page, pageSize, sortBy, filters } = state;
-  const queryArg = { page, pageSize, sortBy, filters };
+  const { page, pageSize, sortBy, filters, searchText } = state;
+  const queryArg = { page, pageSize, sortBy, filters, searchText };
   const queryResult = useQuery(queryArg, options);
 
   // Certain metadata is returned as part of the response from the server. For example, `count` and `pageCount`
@@ -255,6 +276,11 @@ export const usePSFQuery = <ResultType>(
     [dispatch],
   );
 
+  const addSearchText = useCallback(
+    (searchText: string) => dispatch({ type: 'addSearchText', payload: { data: searchText } }),
+    [dispatch],
+  );
+
   const resetFilters = useCallback(() => dispatch({ type: 'filter/reset' }), [dispatch]);
 
   return {
@@ -268,5 +294,6 @@ export const usePSFQuery = <ResultType>(
     addFilter,
     removeFilter,
     resetFilters,
+    addSearchText,
   };
 };

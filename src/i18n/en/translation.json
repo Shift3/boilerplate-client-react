@@ -1,0 +1,46 @@
+{
+  "agentList": {
+    "heading": "Agent List",
+    "subheading": "All agents in the system.",
+    "createButton": "Add Agent"
+  },
+  "userDetail": {
+    "heading": "Profile",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "accessHeading": "Access Information"
+  },
+  "role": "Role",
+  "createUser": {
+    "back": "Back to User List",
+    "heading": "Create User",
+    "subheading": "Add a new user to the system."
+  },
+  "updateUser": {
+    "heading": "Update User",
+    "subheading": "Update this users details and roles here."
+  },
+  "userList": {
+    "heading": "User List",
+    "subheading": "Active and invited users in the system.",
+    "createButton": "Add User"
+  },
+  "userProfile": {
+    "back": "Back to Agent List",
+    "subheading": "Your Account Settings",
+    "profile": "Profile",
+    "security": "Security and Password",
+    "generalHeading": "General Information",
+    "generalSubheading": "This information will be used to identify you in our system",
+    "email": "Email Address",
+    "emailDescription": "Your email address on file will be used to communicate with you. Changing your email requires you to confirm your new email address.",
+    "changeEmailDescription": "You requested an email change. A verification email has been sent to <1>{user.newEmail}</1>. To confirm your new email, please follow the directions in the verification email.",
+    "resendEmail": "Resend Verification Email",
+    "photo": "Photo",
+    "photoDescription": "This is the photo of you that other users in the system will be able to see.",
+    "changePassword": "Change Password",
+    "changePasswordDescription": "Password must be 8 characters or more. Password must contain a lowercase, uppercase, special character, and a number."
+  },
+  "delete": "Delete"
+}

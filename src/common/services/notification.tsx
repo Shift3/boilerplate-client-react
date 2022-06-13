@@ -10,5 +10,6 @@ export const showSuccessMessage = (message: string): void => {
 export const showErrorMessage = (message: string): void => {
   toast.error(message, {
     icon: <ErrorNotificationIcon />,
+    toastId: message,
   });
 };

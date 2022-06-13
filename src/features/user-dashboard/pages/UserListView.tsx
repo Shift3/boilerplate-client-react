@@ -1,6 +1,7 @@
 import { useGetUsersQuery } from 'common/api/userApi';
 import { DataTable } from 'common/components/DataTable';
-import { DataTableFilters, FilterInfo } from 'common/components/DataTable/DataTableFilters';
+import { FilterInfo } from 'common/components/DataTable/DataTableActiveFilterList';
+import { DataTableSearchAndFilters } from 'common/components/DataTable/DataTableSearchAndFilters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { PaginatedResult, User } from 'common/models';
@@ -12,6 +13,7 @@ import { FC, useMemo } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserTableItem, useUserTableData } from '../hooks/useUserTableData';
+import { Trans } from 'react-i18next';
 
 export const UserListView: FC = () => {
   const navigate = useNavigate();
@@ -27,6 +29,7 @@ export const UserListView: FC = () => {
     addFilter,
     removeFilter,
     resetFilters,
+    addSearchText,
   } = usePSFQuery<PaginatedResult<User>>(useGetUsersQuery);
   const users = useMemo(() => data?.results ?? [], [data]);
   const { columns, data: tableData } = useUserTableData(users);
@@ -86,25 +89,32 @@ export const UserListView: FC = () => {
     <Container>
       <PageHeader>
         <div>
-          <h1>User List</h1>
-          <p className='text-muted'>Active and invited users in the system.</p>
+          <h1>
+            <Trans i18nKey='userList.heading'>User List</Trans>
+          </h1>
+          <p className='text-muted'>
+            <Trans i18nKey='userList.subheading'>Active and invited users in the system.</Trans>
+          </p>
         </div>
         <HasPermission perform='user:create'>
           <div>
             <Link to='/users/create-user'>
-              <CreateButton>Add User</CreateButton>
+              <CreateButton>
+                <Trans i18nKey='userList.createButton'>Add User</Trans>
+              </CreateButton>
             </Link>
           </div>
         </HasPermission>
       </PageHeader>
-      <DataTableFilters
+
+      <DataTableSearchAndFilters
         filters={filters}
-        defaultFilterAttribute='firstName'
-        defaultFilterOperation='icontains'
         onSetFilter={addFilter}
         onRemoveFilter={removeFilter}
         onClearFilters={resetFilters}
+        onSetSearchText={addSearchText}
       />
+
       <TableCard>
         <TableCard.Body>
           <WithLoadingOverlay

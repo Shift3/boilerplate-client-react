@@ -10,6 +10,7 @@ import { useRbac } from 'features/rbac';
 import { FC, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
+import { Trans } from 'react-i18next';
 
 export const CreateUserView: FC = () => {
   const navigate = useNavigate();
@@ -43,14 +44,21 @@ export const CreateUserView: FC = () => {
     <SmallContainer>
       <PageCrumb>
         <Link to='/users'>
-          <FontAwesomeIcon icon={['fas', 'chevron-left']} /> Back to User List
+          <>
+            <FontAwesomeIcon icon={['fas', 'chevron-left']} />
+            <Trans i18nKey='createUser.back'>Back to User List</Trans>
+          </>
         </Link>
       </PageCrumb>
 
       <PageHeader>
         <div>
-          <h1>Create User</h1>
-          <p className='text-muted'>Add a new user to the system.</p>
+          <h1>
+            <Trans i18nKey='createUser.heading'>Create User</Trans>
+          </h1>
+          <p className='text-muted'>
+            <Trans i18nKey='createUser.subheading'>Add a new user to the system.</Trans>
+          </p>
         </div>
       </PageHeader>
 
