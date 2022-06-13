@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Container } from 'react-bootstrap';
+import { Container, Navbar } from 'react-bootstrap';
 
 export const PageWrapper = styled.div`
   height: 100%;
@@ -57,6 +57,44 @@ export const PageHeader = styled.div`
       font-size: 2rem;
       margin: 0;
       margin-bottom: 0.25rem;
+    }
+  }
+`;
+
+export const BitwiseNavbar = styled(Navbar)`
+  background: ${props => props.theme.nav.backgroundColor};
+  align-items: flex-start;
+  padding: 2rem;
+  overflow-y: auto;
+  width: 280px;
+  height: 100vh;
+  z-index: 1;
+  position: fixed;
+  box-shadow: 1px 0 0 0 #dadada;
+
+  .navbar-brand {
+    padding-top: 0;
+  }
+
+  .navbar-brand > img {
+    width: 64px;
+    margin-left: 1rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    margin-top: 1.5rem;
+  }
+
+  .nav-wrap {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .navbar-nav:first-of-type {
+      flex: 1;
+    }
+
+    .navbar-nav:nth-of-type(2) {
+      margin-bottom: 1rem;
     }
   }
 `;

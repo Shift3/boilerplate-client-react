@@ -1,72 +1,40 @@
 import { ErrorBoundary } from '@sentry/react';
 import { Layout } from 'common/components/Layout';
 import { NotFoundView } from 'common/components/NotFoundView';
-import { NotificationContainer } from 'common/components/Notification';
+import { Role } from 'common/models';
+import { BannerContentWrapper } from 'common/styles/utilities';
 import { environment } from 'environment';
 import { AgentRoutes } from 'features/agent-dashboard';
 import { AuthRoutes, RequireAuth } from 'features/auth';
 import { ConfirmationModal } from 'features/confirmation-modal';
-import { BitwiseNavbar } from 'features/navbar';
 import { UserRoutes } from 'features/user-dashboard';
 import { UpdateUserProfilePage } from 'features/user-profile/pages/UpdateUserProfilePage';
 import { FC } from 'react';
-import { Alert } from 'react-bootstrap';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import styled, { css, ThemeProvider } from 'styled-components';
+import { Slide, toast, ToastContainer } from 'react-toastify';
+import { ThemeProvider } from 'styled-components';
 import AppTheme from 'utils/styleValues';
 import { GlobalStyle } from '../GlobalStyle';
-import { Role } from 'common/models';
-
-const StagingBanner = styled(Alert).attrs({
-  variant: 'warning',
-})`
-  text-align: center;
-  border-radius: 0;
-  border: none;
-  position: fixed;
-  z-index: 99;
-  left: 0;
-  right: 0;
-  background: repeating-linear-gradient(45deg, #fff3cd, #fff3cd 20px, #fdefc3 20px, #fdefc3 40px);
-  border-bottom: 1px #dadada solid;
-`;
-
-const BannerWrapper = styled.div<{
-  bannerShowing: boolean;
-}>`
-  ${StagingBanner} {
-    display: none;
-    visibility: hidden;
-  }
-
-  ${props =>
-    props.bannerShowing
-      ? css`
-          .content-wrapper {
-            padding-top: 56px !important;
-          }
-
-          ${StagingBanner} {
-            display: block;
-            visibility: visible;
-          }
-
-          ${BitwiseNavbar} {
-            padding-top: 56px !important;
-
-        `
-      : null}
-`;
 
 export const App: FC = () => (
   <ErrorBoundary>
     <ThemeProvider theme={AppTheme}>
       <ConfirmationModal />
-      <NotificationContainer />
-      <BannerWrapper bannerShowing={environment.environment === 'staging'}>
-        <StagingBanner>
-          You are currently on the <b>staging</b> server.
-        </StagingBanner>
+
+      <ToastContainer
+        autoClose={5000}
+        closeButton
+        closeOnClick
+        newestOnTop
+        hideProgressBar={false}
+        position={toast.POSITION.TOP_RIGHT}
+        role='alert'
+        theme='light'
+        limit={3}
+        transition={Slide}
+      />
+
+      <BannerContentWrapper bannerShowing={environment.environment === 'staging'}>
         <Routes>
           <Route path='/auth/*' element={<AuthRoutes />} />
           <Route
@@ -90,7 +58,7 @@ export const App: FC = () => (
           <Route
             path='/users/*'
             element={
-              <RequireAuth allowedRoles={[ Role.ADMIN ]}>
+              <RequireAuth allowedRoles={[Role.ADMIN]}>
                 <UserRoutes />
               </RequireAuth>
             }
@@ -98,7 +66,7 @@ export const App: FC = () => (
           <Route path='/' element={<Navigate to='/agents' />} />
           <Route path='*' element={<NotFoundView />} />
         </Routes>
-      </BannerWrapper>
+      </BannerContentWrapper>
     </ThemeProvider>
     <GlobalStyle />
   </ErrorBoundary>
