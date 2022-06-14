@@ -10,6 +10,8 @@ import { useNavLinks } from '../hooks/useNavLinks';
 import { CustomNavAction, CustomNavLink } from './CustomNavLink';
 import { Logo } from './Logo';
 import { NavUserDetails } from './NavUserDetails';
+import Button from 'react-bootstrap/Button';
+import styled from 'styled-components';
 
 type Props = {
   closeVerticalNav?: () => void;
@@ -39,9 +41,16 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
 
   const [theme, setTheme] = useState('light');
 
-  const themeToggler = () => {
+  const toggleTheme = () => {
     return theme === 'light' ? setTheme('dark') : setTheme('light');
   };
+
+  const ToggleButton = styled(Button)`
+    background-color: gray;
+    border: 1px solid black;
+    margin: 1em;
+    width: 4em;
+  `;
 
   return (
     <BitwiseNavbar className='flex-column py-0'>
@@ -64,6 +73,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
             </div>
             <NavUserDetails user={user} />
             <CustomNavAction onClick={openLogoutModal} label='Sign Out' icon='sign-out-alt' />
+            <ToggleButton onClick={() => toggleTheme()}>Dark Mode</ToggleButton>
           </Nav>
         </div>
       ) : (
