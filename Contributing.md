@@ -14,7 +14,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This will ask you a series of questions. You should use the defaults.
 
-4. Run `git flow release < new version number >`
+4. Run `git flow release <new_version_number>`
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You should define your new version number at the end, ex. 2.0.1.
 
@@ -22,9 +22,11 @@
 
 6. Commit and push the edit that you made to `package.json` in the previous step.
 
-7. Run `git flow release finish ...`
+7. Run `git flow release finish <release_name>`
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This will open nano. You will need to first write and submit a commit message. After submitting the message, you will also need to write and submit a message for a tag, ex. version 2.0.1 release.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The `release_name` is whatever you put for the version number in step 4. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This command will open nano. You will need to use it in order to write and submit a commit message. After submitting the message, you will then need to write and submit a message for the commit's tag, ex. version 2.0.1 release.
 
 8. You will see a summary of actions.
 
