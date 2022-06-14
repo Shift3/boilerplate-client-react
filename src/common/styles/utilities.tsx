@@ -1,5 +1,7 @@
-import { Badge } from 'react-bootstrap';
+import { Alert, Badge } from 'react-bootstrap';
 import styled, { css } from 'styled-components';
+import { BitwiseNavbar } from './page';
+import { FC, PropsWithChildren } from 'react';
 
 export const SubtleBadge = styled(Badge)<{
   variant?: 'warning' | 'danger' | 'secondary' | 'info';
@@ -90,3 +92,59 @@ export const NoContent = styled.div`
     margin-bottom: 0.5rem;
   }
 `;
+
+const StagingBanner = styled(Alert).attrs({
+  variant: 'warning',
+})`
+  text-align: center;
+  border-radius: 0;
+  border: none;
+  position: fixed;
+  z-index: 99;
+  left: 0;
+  right: 0;
+  background: repeating-linear-gradient(45deg, #fff3cd, #fff3cd 20px, #fdefc3 20px, #fdefc3 40px);
+  border-bottom: 1px #dadada solid;
+`;
+
+const BannerWrapper = styled.div<{
+  bannerShowing: boolean;
+}>`
+  ${StagingBanner} {
+    display: none;
+    visibility: hidden;
+  }
+
+  ${props =>
+    props.bannerShowing
+      ? css`
+          .content-wrapper {
+            padding-top: 56px !important;
+          }
+
+          ${StagingBanner} {
+            display: block;
+            visibility: visible;
+          }
+
+          ${BitwiseNavbar} {
+            padding-top: 56px !important;
+
+        `
+      : null}
+`;
+
+export const BannerContentWrapper: FC<
+  PropsWithChildren<{
+    bannerShowing: boolean;
+  }>
+> = ({ children, bannerShowing }) => {
+  return (
+    <BannerWrapper bannerShowing={bannerShowing}>
+      <StagingBanner>
+        You are currently on the <b>staging</b> server.
+      </StagingBanner>
+      {children}
+    </BannerWrapper>
+  );
+};
