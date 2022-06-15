@@ -26,7 +26,9 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The `release_name` is whatever you put for the version number in step 4. 
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This command will open nano. You will need to use it in order to write and submit a commit message. After submitting the message, you will then need to write and submit a message for the commit's tag, ex. version 2.0.1 release.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This command will open nano. You will need to use it in order to write and submit a commit message. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; After submitting the message, you will then need to write and submit a message for the commit's tag, ex. version 2.0.1 release.
 
 8. You will see a summary of actions.
 
@@ -38,10 +40,14 @@
 
 12. Go to the React Boilerplate's main branch on GitHub and click on the yellow dot that's to the left of the commit hash. You will see that the CircleCI tests have started to run. Click on the Details link for the `ci/circle:ci test` check.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This will open up CircleCI. You will need to authorize CircleCI if you have never used it before. Ensure that all of the steps finish successfully.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This will open up CircleCI. You will need to authorize CircleCI if you have never used it before.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ensure that all of the steps finish successfully.
 
 13. Click on the deploy-production workflow and make sure that all of its steps finish successfully as well.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; At the top of the page, you will see "Dashboard", "Project", Branch", "Workflow", and "Job". "deploy-production" should be under the Workflow column. Click on it.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; At the top of the page, you will see "Dashboard", "Project", Branch", "Workflow", and "Job".
 
-14. Check the production website (https://boilerplate-client-react-prod.shift3sandbox.com/) and ensure that your changes are working as you would expect.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "deploy-production" should be under the Workflow column. Click on it.
+
+14. Check the production website (https://boilerplate-client-react-prod.shift3sandbox.com/) and ensure that your changes are working as expected.
