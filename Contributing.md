@@ -2,52 +2,46 @@
 
 ### How to cut a release from the develop branch to the main branch
 
-1. Open the root directory of the react boilerplate via your terminal and ensure that you are on the develop branch.
+**(Step 1)** Open the root directory of the react boilerplate via your terminal and ensure that you are on the develop branch.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Recommendation:** Do this outside of your code editor.
+**Recommendation:** Do this outside of your code editor.
 
-2. Run `git flow` 
+**(Step 2)** Run `git flow` 
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If you don't have Git Flow installed, use `brew install git-flow` to install it via brew.
+If you don't have Git Flow installed, use `brew install git-flow` to install it via brew.
 
-3. Run `git flow init`
+**(Step 3)** Run `git flow init`
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This will ask you a series of questions. You should use the defaults.
+This will ask you a series of questions. You should use the defaults.
 
-4. Run `git flow release <new_version_number>`
+**(Step 4)** Run `git flow release <new_version_number>`
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You should define your new version number at the end, ex. 2.0.1.
+You should define your new version number at the end, ex. 2.0.1.
 
-5. Go to the `package.json` file and increase the version number so that it is consistent with the version number from the previous step.
+**(Step 5)** Go to the `package.json` file and increase the version number so that it is consistent with the version number from the previous step.
 
-6. Commit and push the edit that you made to `package.json` in the previous step.
+**(Step 6)** Commit and push the edit that you made to `package.json` in the previous step.
 
-7. Run `git flow release finish <release_name>`
+**(Step 7)** Run `git flow release finish <release_name>`
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The `release_name` is whatever you put for the version number in step 4. 
+The `release_name` is whatever you put for the version number in step 4. 
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This command will open nano. You will need to use it in order to write and submit a commit message. 
+This command will open nano. You will need to use it in order to write and submit a commit message. After submitting the message, you will then need to write and submit a message for the commit's tag, ex. version 2.0.1 release.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; After submitting the message, you will then need to write and submit a message for the commit's tag, ex. version 2.0.1 release.
+After you submit the message for the tag, you will see a summary of actions.
 
-8. You will see a summary of actions.
+**(Step 8)** Run `git push`
 
-9. Run `git push`
+**(Step 9)** Run `git checkout main`
 
-10. Run `git checkout main`
+**(Step 10)** Run `git push`
 
-11. Run `git push`
+**(Step 11)** Go to the React Boilerplate's main branch on GitHub and click on the yellow dot that's to the left of the commit hash. You will see that the CircleCI tests have started to run. Click on the Details link for the `ci/circle:ci test` check.
 
-12. Go to the React Boilerplate's main branch on GitHub and click on the yellow dot that's to the left of the commit hash. You will see that the CircleCI tests have started to run. Click on the Details link for the `ci/circle:ci test` check.
+This will open up CircleCI. You will need to authorize CircleCI if you have never used it before. Ensure that all of the steps finish successfully.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This will open up CircleCI. You will need to authorize CircleCI if you have never used it before.
+**(Step 12)** Click on the deploy-production workflow and make sure that all of its steps finish successfully as well.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ensure that all of the steps finish successfully.
+At the top of the page, you will see "Dashboard", "Project", Branch", "Workflow", and "Job". "deploy-production" should be under the Workflow column. Click on it.
 
-13. Click on the deploy-production workflow and make sure that all of its steps finish successfully as well.
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; At the top of the page, you will see "Dashboard", "Project", Branch", "Workflow", and "Job".
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "deploy-production" should be under the Workflow column. Click on it.
-
-14. Check the production website (https://boilerplate-client-react-prod.shift3sandbox.com/) and ensure that your changes are working as expected.
+**(Step 13)** Check the production website (https://boilerplate-client-react-prod.shift3sandbox.com/) and ensure that your changes are working as expected.
