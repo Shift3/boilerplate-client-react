@@ -1,6 +1,6 @@
-## Contributing
+# Contributing
 
-### How to cut a release from the develop branch to the main branch
+## How to cut a release from the develop branch to the main branch
 
 **(Step 1)** Open the root directory of the react boilerplate via your terminal and ensure that you are on the develop branch.
 
@@ -14,7 +14,7 @@ If you don't have Git Flow installed, use `brew install git-flow` to install it 
 
 This will ask you a series of questions. You should use the defaults.
 
-**(Step 4)** Run `git flow release <new_version_number>`
+**(Step 4)** Run `git flow release start <new_version_number>`
 
 You should define your new version number at the end, ex. 2.0.1.
 
