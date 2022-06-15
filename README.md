@@ -354,4 +354,4 @@ For more information, see the [useForm](https://react-hook-form.com/api/useform)
 
 ## Contributing
 
-For information on contributing to this repo, see the [CONTRIBUTING.md](https://github.com/Shift3/boilerplate-client-react/blob/main/CONTRIBUTING.md) file
+For information on contributing to this repo, see the [CONTRIBUTING.md](https://github.com/Shift3/boilerplate-client-react/blob/develop/CONTRIBUTING.md) file
