@@ -2,7 +2,7 @@ import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { UpdateUserProfileForm } from '../UpdateUserProfileForm';
 import { ThemeProvider } from 'styled-components';
-import AppTheme from 'utils/themes';
+import light from 'themes/light';
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createAppStore } from 'app/redux';
@@ -19,7 +19,7 @@ describe('UpdateUserProfileForm', () => {
       render(
         <MemoryRouter>
           <Provider store={createAppStore()}>
-            <ThemeProvider theme={AppTheme}>
+            <ThemeProvider theme={light}>
               <UpdateUserProfileForm
                 onSubmit={mockOnSubmit}
                 defaultValues={defaultValues}

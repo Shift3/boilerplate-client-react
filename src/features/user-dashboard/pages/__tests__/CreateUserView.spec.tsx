@@ -5,7 +5,7 @@ import { AuthState } from 'features/auth/authSlice';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { CreateUserView } from '../CreateUserView';
-import theme from 'utils/themes';
+import light from 'themes/light';
 import userEvent from '@testing-library/user-event';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
@@ -26,7 +26,7 @@ describe('CreateUserView', () => {
       render(
         <Router history={createMemoryHistory()}>
           <Provider store={createAppStore({ preloadedState: { auth } })}>
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={light}>
               <CreateUserView />
             </ThemeProvider>
           </Provider>
@@ -69,7 +69,7 @@ describe('CreateUserView', () => {
       render(
         <Router history={createMemoryHistory()}>
           <Provider store={createAppStore({ preloadedState: { auth } })}>
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={light}>
               <CreateUserView />
             </ThemeProvider>
           </Provider>
@@ -116,7 +116,7 @@ describe('CreateUserView', () => {
       render(
         <Router history={createMemoryHistory()}>
           <Provider store={store}>
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={light}>
               <CreateUserView />
             </ThemeProvider>
           </Provider>

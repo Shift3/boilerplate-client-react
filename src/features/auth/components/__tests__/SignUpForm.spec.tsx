@@ -2,7 +2,7 @@ import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { SignUpForm } from '../SignUpForm';
 import { ThemeProvider } from 'styled-components';
-import AppTheme from 'utils/themes';
+import light from 'themes/light';
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createAppStore } from 'app/redux';
@@ -16,7 +16,7 @@ describe('SignupForm', () => {
       render(
         <MemoryRouter>
           <Provider store={createAppStore()}>
-            <ThemeProvider theme={AppTheme}>
+            <ThemeProvider theme={light}>
               <SignUpForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} serverValidationErrors={null} />
             </ThemeProvider>
           </Provider>
