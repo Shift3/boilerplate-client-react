@@ -42,7 +42,7 @@ export const UserListView: FC = () => {
         attributeLabel: 'First Name',
         operationOptions: [
           {
-            operation: 'eq',
+            operation: 'iexact',
             operationLabel: 'is',
           },
           {
@@ -64,7 +64,7 @@ export const UserListView: FC = () => {
         attributeLabel: 'Last Name',
         operationOptions: [
           {
-            operation: 'eq',
+            operation: 'iexact',
             operationLabel: 'is',
           },
           {

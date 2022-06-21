@@ -1,5 +1,5 @@
 export type FilterOp =
-  | 'eq'
+  | 'iexact'
   | 'neq'
   | 'contains'
   | 'icontains'

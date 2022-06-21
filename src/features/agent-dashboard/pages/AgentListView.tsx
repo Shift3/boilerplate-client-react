@@ -45,7 +45,7 @@ export const AgentListView: FC = () => {
         attributeLabel: 'Name',
         operationOptions: [
           {
-            operation: 'eq',
+            operation: 'iexact',
             operationLabel: 'is',
           },
           {
