@@ -1,6 +1,7 @@
 import { configureStore, ConfigureStoreOptions } from '@reduxjs/toolkit';
 import { agentApi } from 'common/api/agentApi';
 import { authApi } from 'common/api/authApi';
+import { notificationApi } from 'common/api/notificationApi';
 import { userApi } from 'common/api/userApi';
 import { authSlice } from 'features/auth/authSlice';
 import { confirmationModalSlice } from 'features/confirmation-modal/slice';
@@ -14,10 +15,16 @@ export const createAppStore = (options?: ConfigureStoreOptions['preloadedState']
       [agentApi.reducerPath]: agentApi.reducer,
       [authApi.reducerPath]: authApi.reducer,
       [userApi.reducerPath]: userApi.reducer,
+      [notificationApi.reducerPath]: notificationApi.reducer,
     },
 
     middleware: getDefaultMiddleware =>
-      getDefaultMiddleware().concat(agentApi.middleware, authApi.middleware, userApi.middleware),
+      getDefaultMiddleware().concat(
+        agentApi.middleware,
+        authApi.middleware,
+        userApi.middleware,
+        notificationApi.middleware,
+      ),
 
     ...options,
   });

@@ -3,6 +3,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faBan,
   faBars,
+  faBell,
   faBuilding,
   faCheck,
   faChevronLeft,
@@ -49,6 +50,7 @@ import { environment } from 'environment';
 library.add(
   faBan,
   faBars,
+  faBell,
   faBuilding,
   faCheck,
   faChevronLeft,

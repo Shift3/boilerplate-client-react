@@ -7,6 +7,7 @@ import { environment } from 'environment';
 import { AgentRoutes } from 'features/agent-dashboard';
 import { AuthRoutes, RequireAuth } from 'features/auth';
 import { ConfirmationModal } from 'features/confirmation-modal';
+import { NotificationPage } from 'features/notification/pages/NotificationPage';
 import { UserRoutes } from 'features/user-dashboard';
 import { UpdateUserProfilePage } from 'features/user-profile/pages/UpdateUserProfilePage';
 import { createContext, FC, useState, useMemo } from 'react';

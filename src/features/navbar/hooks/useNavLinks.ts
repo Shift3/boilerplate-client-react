@@ -6,6 +6,7 @@ export type NavLinkConfig = {
   icon: IconName;
   label: string;
   path: string;
+  badge?: number;
 };
 
 export const useNavLinks = (): NavLinkConfig[] => {

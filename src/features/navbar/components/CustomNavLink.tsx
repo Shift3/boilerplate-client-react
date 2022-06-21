@@ -1,7 +1,7 @@
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC, PropsWithChildren } from 'react';
-import { NavItem } from 'react-bootstrap';
+import { Badge, NavItem } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { NavLinkConfig } from '../hooks/useNavLinks';
@@ -24,7 +24,7 @@ const NavLinkStyles = styled.div`
     left: 1rem;
     top: 0.9rem;
   }
-  span {
+  & > div {
     padding-left: 1.5rem;
   }
   color: ${props => props.theme.nav.textColor};
@@ -36,6 +36,13 @@ const NavLinkStyles = styled.div`
   &.active {
     background-color: ${props => props.theme.nav.activeBackground};
     color: white;
+  }
+
+  .badge {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
   }
 `;
 
@@ -57,7 +64,8 @@ export const CustomNavLink: FC<PropsWithChildren<Props>> = ({ link, handleSamePa
     <NavLinkStyles onClick={handleClick} className={isActive ? 'active' : ''}>
       <div>
         <FontAwesomeIcon icon={link.icon} />
-        <span>{link.label}</span>
+        <div>{link.label}</div>
+        {link.badge ? <Badge bg='danger'>{link.badge}</Badge> : null}
       </div>
     </NavLinkStyles>
   );
@@ -70,6 +78,6 @@ export const CustomNavAction: FC<{
 }> = ({ icon, label, onClick }) => (
   <NavLinkStyles as={NavItem} onClick={onClick}>
     <FontAwesomeIcon icon={icon} />
-    <span>{label}</span>
+    <div>{label}</div>
   </NavLinkStyles>
 );

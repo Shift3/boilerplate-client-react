@@ -1,7 +1,7 @@
 import { CustomSelect } from 'common/components/CustomSelect';
 import { BitwiseNavbar } from 'common/styles/page';
 import { useAuth } from 'features/auth/hooks';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import { useTranslation } from 'react-i18next';
 import { languages } from '../../../i18n/config';
@@ -11,6 +11,8 @@ import { CustomNavAction, CustomNavLink } from './CustomNavLink';
 import { Logo } from './Logo';
 import { NavUserDetails } from './NavUserDetails';
 import { ThemeToggle } from '../../themes/ToggleSwitch';
+import { useGetUnreadQuery } from 'common/api/notificationApi';
+import { getCount, getMeta } from 'features/notification/utility/utilities';
 
 type Props = {
   closeVerticalNav?: () => void;
@@ -26,6 +28,30 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
   const navLinks = useNavLinks();
   const { openLogoutModal } = useLogoutModal();
   const { i18n } = useTranslation();
+  const { data } = useGetUnreadQuery();
+  const [unreadCount, setUnreadCount] = useState(0);
+  const unreadMeta = getMeta(data);
+  const originalUnreadCount = getCount(data);
+
+  useEffect(() => {
+    if (!user) return () => null;
+
+    const src = new EventSource(`http://localhost:8000/events/${user.id}/`, { withCredentials: true });
+
+    src.onmessage = () => {
+      if (unreadMeta && originalUnreadCount) {
+        if (unreadCount !== 0) {
+          setUnreadCount(unreadCount + 1);
+        } else {
+          setUnreadCount(originalUnreadCount + 1);
+        }
+      }
+    };
+
+    return () => {
+      src.close();
+    };
+  }, [user, unreadCount, unreadMeta, originalUnreadCount]);
 
   const changeLanguage = (ln: string) => {
     localStorage.setItem('language', ln);
@@ -60,7 +86,20 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
                 onChange={option => changeLanguage(option.value)}
               />
             </div>
-            <NavUserDetails user={user} />
+
+            <div className='mb-3'>
+              <NavUserDetails user={user} />
+            </div>
+
+            <CustomNavLink
+              link={{
+                id: 99,
+                icon: 'bell',
+                label: 'Notifications',
+                path: '/notifications',
+                badge: unreadCount || (originalUnreadCount ?? undefined),
+              }}
+            />
             <CustomNavAction onClick={openLogoutModal} label='Sign Out' icon='sign-out-alt' />
           </Nav>
         </div>
