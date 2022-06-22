@@ -7,8 +7,8 @@ export type FilterOp =
   | 'lt'
   | 'gte'
   | 'lte'
-  | 'startswith'
-  | 'endswith';
+  | 'istartswith'
+  | 'iendswith';
 
 export type Filter = {
   attr: string;
