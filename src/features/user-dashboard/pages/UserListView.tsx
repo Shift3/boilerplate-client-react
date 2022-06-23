@@ -50,11 +50,11 @@ export const UserListView: FC = () => {
             operationLabel: 'contains',
           },
           {
-            operation: 'startswith',
+            operation: 'istartswith',
             operationLabel: 'starts with',
           },
           {
-            operation: 'endswith',
+            operation: 'iendswith',
             operationLabel: 'ends with',
           },
         ],
@@ -72,11 +72,11 @@ export const UserListView: FC = () => {
             operationLabel: 'contains',
           },
           {
-            operation: 'startswith',
+            operation: 'istartswith',
             operationLabel: 'starts with',
           },
           {
-            operation: 'endswith',
+            operation: 'iendswith',
             operationLabel: 'ends with',
           },
         ],

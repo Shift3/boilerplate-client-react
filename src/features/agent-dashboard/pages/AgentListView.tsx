@@ -53,11 +53,11 @@ export const AgentListView: FC = () => {
             operationLabel: 'contains',
           },
           {
-            operation: 'startswith',
+            operation: 'istartswith',
             operationLabel: 'starts with',
           },
           {
-            operation: 'endswith',
+            operation: 'iendswith',
             operationLabel: 'ends with',
           },
         ],
