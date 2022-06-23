@@ -1,1 +1,2 @@
-web_domain_name = "ar-test-production.shift3sandbox.com"
+# production site domain, livesite.com
+web_domain_name = ""

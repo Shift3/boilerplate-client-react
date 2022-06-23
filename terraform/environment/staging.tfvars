@@ -1,1 +1,2 @@
-web_domain_name = "ar-test-staging.shift3sandbox.com"
+# Example: ar-test-staging.shift3sandbox.com
+web_domain_name = ""
