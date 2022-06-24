@@ -138,13 +138,6 @@ export const usePSFQuery = <ResultType>(
         const { pageCount } = state;
         const lastPage = basePage + pageCount - 1;
 
-        console.log('setPage');
-        console.log('--------');
-        console.log('config:', config);
-        console.log('state:', state);
-        console.log('pageCount:', pageCount);
-        console.log('lastPage:', lastPage);
-
         if (basePage <= page && page <= lastPage) {
           const hasPreviousPage = basePage < page;
           const hasNextPage = page < lastPage;
@@ -157,13 +150,6 @@ export const usePSFQuery = <ResultType>(
       case 'pagination/setPageSize': {
         const { size } = action.payload;
         const { minPageSize, maxPageSize } = config;
-
-        console.log('setPageSize');
-        console.log('-----------');
-        console.log('config:', config);
-        console.log('size:', size);
-        console.log('minPageSize:', minPageSize);
-        console.log('maxPageSize:', maxPageSize);
 
         if (minPageSize <= size && size <= maxPageSize) {
           const pageSize = size;
@@ -213,14 +199,11 @@ export const usePSFQuery = <ResultType>(
         const { data } = action.payload;
         let newState = { ...state };
 
-        console.log('*** dataUpdated ***');
-
         // If the data is paginated, we need to update the count and pageCount in case the values
         // have changed (e.g. a filter was applied and the result set is smaller). This also
         // requires re-calculating if there are previous and next pages.
         if (isPaginatedResult(data)) {
           const { count, pageCount } = data.meta;
-          console.log('meta:', data.meta);
           const { basePage } = config;
           const { page } = state;
           const lastPage = basePage + pageCount - 1;
