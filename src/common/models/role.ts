@@ -11,10 +11,9 @@ export enum Role {
   USER = 'USER',
   EDITOR = 'EDITOR',
   ADMIN = 'ADMIN',
-};
+}
 
 export type RoleOption = {
-  label: string,
-  value: Role
+  label: string;
+  value: Role;
 };
-
