@@ -9,21 +9,17 @@ import { AuthRoutes, RequireAuth } from 'features/auth';
 import { ConfirmationModal } from 'features/confirmation-modal';
 import { UserRoutes } from 'features/user-dashboard';
 import { UpdateUserProfilePage } from 'features/user-profile/pages/UpdateUserProfilePage';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Slide, toast, ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
-import dark from 'themes/dark';
-import light from 'themes/light';
 import { GlobalStyle } from '../GlobalStyle';
+import light from 'themes/light';
 
 export const App: FC = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [theme, setTheme] = useState('light');
-
   return (
     <ErrorBoundary>
-      <ThemeProvider theme={theme === 'light' ? light : dark}>
+      <ThemeProvider theme={light}>
         <GlobalStyle />
         <ConfirmationModal />
         <ToastContainer

@@ -1,7 +1,7 @@
 import { CustomSelect } from 'common/components/CustomSelect';
 import { BitwiseNavbar } from 'common/styles/page';
 import { useAuth } from 'features/auth/hooks';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import { useTranslation } from 'react-i18next';
 import { languages } from '../../../i18n/config';
@@ -10,8 +10,7 @@ import { useNavLinks } from '../hooks/useNavLinks';
 import { CustomNavAction, CustomNavLink } from './CustomNavLink';
 import { Logo } from './Logo';
 import { NavUserDetails } from './NavUserDetails';
-import Button from 'react-bootstrap/Button';
-import styled from 'styled-components';
+import { ChangeThemeButton } from './ChangeThemeButton';
 
 type Props = {
   closeVerticalNav?: () => void;
@@ -39,19 +38,6 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
 
   const defaultLanguageOption = __languageOptions.find(language => language.value === i18n.languages[0]);
 
-  const [theme, setTheme] = useState('light');
-
-  const toggleTheme = () => {
-    return theme === 'light' ? setTheme('dark') : setTheme('light');
-  };
-
-  const ToggleButton = styled(Button)`
-    background-color: gray;
-    border: 1px solid black;
-    margin: 1em;
-    width: 4em;
-  `;
-
   return (
     <BitwiseNavbar className='flex-column py-0'>
       <Logo />
@@ -73,7 +59,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
             </div>
             <NavUserDetails user={user} />
             <CustomNavAction onClick={openLogoutModal} label='Sign Out' icon='sign-out-alt' />
-            <ToggleButton onClick={() => toggleTheme()}>Dark Mode</ToggleButton>
+            <ChangeThemeButton />
           </Nav>
         </div>
       ) : (
