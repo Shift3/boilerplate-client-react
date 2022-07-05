@@ -11,7 +11,7 @@ const ToggleButton = styled(Button)`
   width: 8em;
 `;
 
-export const ChangeThemeButton: FC = () => {
+export const ToggleTheme: FC = () => {
   const [theme, setTheme] = useState('light');
 
   const toggleTheme = () => {
@@ -20,7 +20,7 @@ export const ChangeThemeButton: FC = () => {
 
   return (
     <div>
-      <ToggleButton onClick={() => toggleTheme()}>Change Theme</ToggleButton>
+      <ToggleButton onClick={toggleTheme}>Change Theme</ToggleButton>
     </div>
   );
 };

@@ -10,7 +10,7 @@ import { useNavLinks } from '../hooks/useNavLinks';
 import { CustomNavAction, CustomNavLink } from './CustomNavLink';
 import { Logo } from './Logo';
 import { NavUserDetails } from './NavUserDetails';
-import { ChangeThemeButton } from './ChangeThemeButton';
+import { ToggleTheme } from './ToggleTheme';
 
 type Props = {
   closeVerticalNav?: () => void;
@@ -59,7 +59,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
             </div>
             <NavUserDetails user={user} />
             <CustomNavAction onClick={openLogoutModal} label='Sign Out' icon='sign-out-alt' />
-            <ChangeThemeButton />
+            <ToggleTheme />
           </Nav>
         </div>
       ) : (
