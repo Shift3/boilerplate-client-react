@@ -18,6 +18,7 @@ import light from 'themes/light';
 import { GlobalStyle } from '../GlobalStyle';
 
 export const App: FC = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [theme, setTheme] = useState('light');
 
   return (
