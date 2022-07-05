@@ -3,7 +3,7 @@ import { colors } from './colors';
 export default {
   colors,
   backgroundColor: colors.lightBackground,
-  textColor: colors.white,
+  textColor: colors.black,
 
   nav: {
     backgroundColor: colors.offWhite,

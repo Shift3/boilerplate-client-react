@@ -1,6 +1,7 @@
-import { FC, useState } from 'react';
+import { FC, useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import styled from 'styled-components';
+import { ThemeContext } from '../../../app/App';
 
 const ToggleButton = styled(Button)`
   justify-content: center;
@@ -12,15 +13,11 @@ const ToggleButton = styled(Button)`
 `;
 
 export const ToggleTheme: FC = () => {
-  const [theme, setTheme] = useState('light');
-
-  const toggleTheme = () => {
-    return theme === 'light' ? setTheme('dark') : setTheme('light');
-  };
+  const { toggle } = useContext(ThemeContext);
 
   return (
     <div>
-      <ToggleButton onClick={toggleTheme}>Change Theme</ToggleButton>
+      <ToggleButton onClick={() => toggle()}>Change Theme</ToggleButton>
     </div>
   );
 };
