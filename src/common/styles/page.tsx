@@ -29,6 +29,7 @@ export const PageCrumb = styled.div`
 
 export const PageHeader = styled.div`
   display: flex;
+  color: ${props => props.theme.pages.pageHeader};
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -49,10 +50,12 @@ export const PageHeader = styled.div`
 
   & > div:first-of-type {
     p {
+      color: ${props => props.theme.pages.p};
       margin: 0;
     }
 
     h1 {
+      color: ${props => props.theme.pages.h1};
       font-weight: 500;
       font-size: 2rem;
       margin: 0;

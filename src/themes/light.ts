@@ -7,6 +7,10 @@ export default {
 
   nav: {
     backgroundColor: colors.offWhite,
+    textColor: colors.darkGrey,
+    profileBackground: colors.offWhite,
+    profileText: colors.darkGrey,
+    smallText: colors.faded,
   },
 
   buttons: {
@@ -69,6 +73,9 @@ export default {
 
   pages: {
     backgroundColor: colors.white,
+    pageHeader: colors.darkGrey,
+    p: colors.darkGrey,
+    h1: colors.darkGrey,
   },
 
   tables: {
