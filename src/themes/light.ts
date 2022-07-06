@@ -13,20 +13,20 @@ export default {
     cancelBackgroundColor: colors.lightBackground,
     cancelBorderColor: colors.lightBackground,
     cancelTextColor: colors.black,
-    submitBackgroundColor: colors.primaryBlue,
-    submitBorderColor: colors.primaryBlue,
+    submitBackgroundColor: colors.primary,
+    submitBorderColor: colors.primary,
     submitTextColor: colors.white,
     disabledBackgroundColor: colors.lightBackground,
-    hoverBackgroundColor: colors.primaryBlue,
+    hoverBackgroundColor: colors.primary,
     textColor: colors.darkAccent,
     // hoverBorderColor:
     // disableBorderColor:
-    createBackgroundColor: colors.secondaryBlue,
-    createBorderColor: colors.secondaryBlue,
+    createBackgroundColor: colors.secondary,
+    createBorderColor: colors.secondary,
     createTextColor: colors.white,
     createHoverBackgroundColor: colors.accent,
     createHoverBorderColor: colors.accent,
-    backgroundColor: colors.primaryBlue,
+    backgroundColor: colors.primary,
   },
 
   footer: {
@@ -56,14 +56,14 @@ export default {
       bodyTextColor: colors.faded,
       cancelButtonBackgroundColor: colors.lightBackground,
       cancelButtonBorderColor: colors.lightBackground,
-      cancelButtonTextColor: colors.primaryBlue,
-      confirmButtonBackgroundColor: colors.primaryBlue,
-      confirmButtonBorderColor: colors.primaryBlue,
+      cancelButtonTextColor: colors.primary,
+      confirmButtonBackgroundColor: colors.primary,
+      confirmButtonBorderColor: colors.primary,
     },
     logout: {
       backgroundColor: colors.lightBackground,
-      titleTextColor: colors.primaryBlue,
-      textColor: colors.primaryBlue,
+      titleTextColor: colors.primary,
+      textColor: colors.primary,
     },
   },
 
@@ -73,13 +73,13 @@ export default {
 
   tables: {
     borderColor: colors.lightAccent,
-    headerBackgroundColor: colors.primaryBlue,
+    headerBackgroundColor: colors.primary,
     headerTextColor: colors.white,
-    backgroundColor: colors.primaryBlue,
-    textColor: colors.primaryBlue,
+    backgroundColor: colors.primary,
+    textColor: colors.primary,
   },
 
   changelogs: {
-    accentTextColor: colors.primaryBlue,
+    accentTextColor: colors.primary,
   },
 };

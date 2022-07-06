@@ -1,13 +1,14 @@
 export const colors = {
-  primaryBlue: '#2563EC',
-  secondaryBlue: '#60A5FA',
-  lightAccent: '#9DD6F3',
+  primary: '#2563EC',
+  secondary: '#60A5FA',
+  lightAccent: '#666',
   accent: '#1F4A78',
   darkAccent: '#060B57',
   lightBackground: '#F2F2F2',
   white: '#FFFFFF',
   offWhite: '#fafafa',
-  black: '#333333',
+  black: '#000000',
+  darkGrey: '#242526',
   dangerRed: '#DC2626',
   faded: '#999',
 };

@@ -2,36 +2,36 @@ import { colors } from './colors';
 
 export default {
   colors,
-  backgroundColor: colors.darkAccent,
-  textColor: colors.white,
+  backgroundColor: colors.accent,
+  textColor: colors.offWhite,
 
   nav: {
-    backgroundColor: colors.black,
+    backgroundColor: colors.accent,
   },
 
   buttons: {
     cancelBackgroundColor: colors.lightBackground,
     cancelBorderColor: colors.lightBackground,
     cancelTextColor: colors.black,
-    submitBackgroundColor: colors.primaryBlue,
-    submitBorderColor: colors.primaryBlue,
+    submitBackgroundColor: colors.secondary,
+    submitBorderColor: colors.secondary,
     submitTextColor: colors.white,
     disabledBackgroundColor: colors.lightBackground,
-    hoverBackgroundColor: colors.primaryBlue,
-    textColor: colors.darkAccent,
+    hoverBackgroundColor: colors.secondary,
+    textColor: colors.offWhite,
     // hoverBorderColor:
     // disableBorderColor:
-    createBackgroundColor: colors.secondaryBlue,
-    createBorderColor: colors.secondaryBlue,
-    createTextColor: colors.white,
+    createBackgroundColor: colors.accent,
+    createBorderColor: colors.accent,
+    createTextColor: colors.offWhite,
     createHoverBackgroundColor: colors.accent,
     createHoverBorderColor: colors.accent,
-    backgroundColor: colors.primaryBlue,
+    backgroundColor: colors.secondary,
   },
 
   footer: {
     backgroundColor: colors.accent,
-    textColor: colors.white,
+    textColor: colors.offWhite,
     height: '35px',
   },
 
@@ -40,7 +40,7 @@ export default {
     labelColor: colors.darkAccent,
     titleColor: colors.darkAccent,
     control: colors.black,
-    textColor: colors.black,
+    textColor: colors.offWhite,
     white: colors.white,
     black: colors.black,
     errorBorderColor: colors.lightAccent,
@@ -52,18 +52,18 @@ export default {
     confirmation: {
       contentBackgroundColor: colors.white,
       contentBorderColor: colors.white,
-      titleTextColor: colors.black,
-      bodyTextColor: colors.faded,
+      titleTextColor: colors.offWhite,
+      bodyTextColor: colors.offWhite,
       cancelButtonBackgroundColor: colors.lightBackground,
       cancelButtonBorderColor: colors.lightBackground,
-      cancelButtonTextColor: colors.primaryBlue,
-      confirmButtonBackgroundColor: colors.primaryBlue,
-      confirmButtonBorderColor: colors.primaryBlue,
+      cancelButtonTextColor: colors.secondary,
+      confirmButtonBackgroundColor: colors.secondary,
+      confirmButtonBorderColor: colors.secondary,
     },
     logout: {
       backgroundColor: colors.lightBackground,
-      titleTextColor: colors.primaryBlue,
-      textColor: colors.primaryBlue,
+      titleTextColor: colors.secondary,
+      textColor: colors.secondary,
     },
   },
 
@@ -73,13 +73,13 @@ export default {
 
   tables: {
     borderColor: colors.lightAccent,
-    headerBackgroundColor: colors.primaryBlue,
-    headerTextColor: colors.white,
-    backgroundColor: colors.primaryBlue,
-    textColor: colors.primaryBlue,
+    headerBackgroundColor: colors.secondary,
+    headerTextColor: colors.offWhite,
+    backgroundColor: colors.secondary,
+    textColor: colors.offWhite,
   },
 
   changelogs: {
-    accentTextColor: colors.primaryBlue,
+    accentTextColor: colors.offWhite,
   },
 };

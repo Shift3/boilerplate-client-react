@@ -27,7 +27,7 @@ export const TableCard = styled(Card)`
       border-top-left-radius: 6px;
       border-top-right-radius: 6px;
       padding: 0 1rem;
-      color: #666;
+      color: blackwhite;
 
       .th {
         border: none;
