@@ -19,7 +19,7 @@ export const ToggleTheme: FC = () => {
 
   return (
     <div>
-      <ToggleButton color='blue' onClick={() => toggle()}>
+      <ToggleButton type='checkbox' color='blue' onClick={() => toggle()}>
         <SunIcon />
         <MoonIcon />
       </ToggleButton>
