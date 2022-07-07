@@ -2,6 +2,8 @@ import { FC, useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import styled from 'styled-components';
 import { ThemeContext } from '../../../app/App';
+import { SunIcon } from './SunIcon';
+import { MoonIcon } from './MoonIcon';
 
 const ToggleButton = styled(Button)`
   justify-content: center;
@@ -17,7 +19,10 @@ export const ToggleTheme: FC = () => {
 
   return (
     <div>
-      <ToggleButton onClick={() => toggle()}>Change Theme</ToggleButton>
+      <ToggleButton color='blue' onClick={() => toggle()}>
+        <SunIcon />
+        <MoonIcon />
+      </ToggleButton>
     </div>
   );
 };
