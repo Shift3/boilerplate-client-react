@@ -40,6 +40,7 @@ import { App } from './app/App';
 import reportWebVitals from './reportWebVitals';
 import { I18nextProvider, withTranslation } from 'react-i18next';
 import i18n from './i18n/config';
+import { environment } from 'environment';
 
 // Font Awesome recommends importing icons via a “library” in the initializing module of the app
 // so you add them once in your React app and reference them in any component
@@ -75,7 +76,7 @@ library.add(
 );
 
 Sentry.init({
-  dsn: 'https://943bdfd77eed4be6b91a42aa0ce6a29c@o68356.ingest.sentry.io/5622322',
+  dsn: environment.sentryDSN ?? undefined,
   beforeSend(event) {
     if (process.env.NODE_ENV === 'production') {
       return event;

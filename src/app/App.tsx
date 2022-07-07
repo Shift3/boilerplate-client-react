@@ -1,4 +1,4 @@
-import { ErrorBoundary } from '@sentry/react';
+import { AppErrorBoundary } from 'features/error-boundary/components/AppErrorBoundary';
 import { Layout } from 'common/components/Layout';
 import { NotFoundView } from 'common/components/NotFoundView';
 import { Role } from 'common/models';
@@ -38,7 +38,7 @@ export const App: FC = () => {
   }, [theme]);
 
   return (
-    <ErrorBoundary>
+    <AppErrorBoundary environment={environment.environment}>
       <ThemeContext.Provider value={value}>
         <ThemeProvider theme={theme === 'light' ? light : dark}>
           <GlobalStyle />
@@ -91,6 +91,6 @@ export const App: FC = () => {
           </BannerContentWrapper>
         </ThemeProvider>
       </ThemeContext.Provider>
-    </ErrorBoundary>
+    </AppErrorBoundary>
   );
 };
