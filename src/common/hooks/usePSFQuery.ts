@@ -153,7 +153,8 @@ export const usePSFQuery = <ResultType>(
 
         if (minPageSize <= size && size <= maxPageSize) {
           const pageSize = size;
-          return { ...state, pageSize };
+          const pageCount = Math.ceil(state.count / pageSize);
+          return { ...state, pageSize, pageCount };
         }
 
         return state;
