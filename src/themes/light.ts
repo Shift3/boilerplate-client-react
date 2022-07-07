@@ -72,18 +72,10 @@ export default {
   },
 
   pages: {
-    backgroundColor: colors.white,
-    pageHeader: colors.darkGrey,
-    p: colors.darkGrey,
+    backgroundColor: colors.darkAccent,
+    pageHeader: colors.dangerRed,
     h1: colors.darkGrey,
-  },
-
-  tables: {
-    borderColor: colors.lightAccent,
-    headerBackgroundColor: colors.primary,
-    headerTextColor: colors.white,
-    backgroundColor: colors.primary,
-    textColor: colors.primary,
+    p: colors.lightAccent,
   },
 
   changelogs: {

@@ -92,7 +92,7 @@ export const UserListView: FC = () => {
           <h1>
             <Trans i18nKey='userList.heading'>User List</Trans>
           </h1>
-          <p className='text-muted'>
+          <p>
             <Trans i18nKey='userList.subheading'>Active and invited users in the system.</Trans>
           </p>
         </div>

@@ -73,7 +73,7 @@ export const AgentListView: FC = () => {
           <h1>
             <Trans i18nKey='agentList.heading'>Agent List</Trans>
           </h1>
-          <p className='text-muted'>
+          <p>
             <Trans i18nKey='agentList.subheading'>All agents in the system.</Trans>
           </p>
         </div>

@@ -74,16 +74,8 @@ export default {
   pages: {
     backgroundColor: colors.white,
     pageHeader: colors.offWhite,
-    p: colors.offWhite,
     h1: colors.offWhite,
-  },
-
-  tables: {
-    borderColor: colors.lightAccent,
-    headerBackgroundColor: colors.secondary,
-    headerTextColor: colors.offWhite,
-    backgroundColor: colors.secondary,
-    textColor: colors.offWhite,
+    p: colors.faded,
   },
 
   changelogs: {
