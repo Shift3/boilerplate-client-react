@@ -1,9 +1,9 @@
-import { FC, useContext, useState } from 'react';
+import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import styled from 'styled-components';
-import { ThemeContext } from '../../../app/App';
 import { SunIcon } from './SunIcon';
 import { MoonIcon } from './MoonIcon';
+import { useTheme } from '../hooks/useTheme';
 
 const Switch = styled(Button)`
   justify-content: center;
@@ -15,22 +15,11 @@ const Switch = styled(Button)`
 `;
 
 export const ToggleSwitch: FC = () => {
-  const { toggle } = useContext(ThemeContext);
-  const [checked, setChecked] = useState(false);
+  const { toggle, theme } = useTheme();
 
   return (
     <div>
-      <Switch
-        type='checkbox'
-        id='checkbox-toggle'
-        color='blue'
-        checked={checked}
-        onChange={setChecked}
-        onClick={() => toggle()}
-      >
-        <SunIcon />
-        <MoonIcon />
-      </Switch>
+      <Switch onClick={() => toggle()}>{theme === 'light' ? <MoonIcon /> : <SunIcon />}</Switch>
     </div>
   );
 };
