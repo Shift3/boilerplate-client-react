@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import styled from 'styled-components';
 import { SunIcon } from './SunIcon';
 import { MoonIcon } from './MoonIcon';
-import { useTheme } from '../hooks/useTheme';
+import { useTheme } from './useTheme';
 
 const Switch = styled(Button)`
   justify-content: center;

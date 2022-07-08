@@ -10,7 +10,7 @@ import { useNavLinks } from '../hooks/useNavLinks';
 import { CustomNavAction, CustomNavLink } from './CustomNavLink';
 import { Logo } from './Logo';
 import { NavUserDetails } from './NavUserDetails';
-import { ToggleSwitch } from './ToggleSwitch';
+import { ToggleSwitch } from '../../themes/ToggleSwitch';
 
 type Props = {
   closeVerticalNav?: () => void;
