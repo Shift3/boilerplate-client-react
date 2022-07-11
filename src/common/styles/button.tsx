@@ -75,32 +75,32 @@ export const TableActions = styled.div`
 `;
 
 export const ActionButtonStyles = styled(BootstrapButton)`
-    border-radius: 6px;
-    border: none;
-    color: #333;
-    font-size: 0.8rem;
+  border-radius: 6px;
+  border: none;
+  color: #333;
+  font-size: 0.8rem;
+  border: 1px solid #ccc;
+  background: white;
+  font-weight: 400;
+  transition: 0.15s ease all;
+  padding: 2px 8px;
+  white-space: nowrap;
+
+  &:hover {
+    background: #ddd;
     border: 1px solid #ccc;
+    color: #333;
+    box-shadow: none;
+  }
+
+  &:active,
+  &:focus {
     background: white;
-    font-weight: 400;
-    transition: 0.15s ease all;
-    padding: 2px 8px;
-    white-space: nowrap;
-
-    &:hover {
-      background: #ddd;
-      border: 1px solid #ccc;
-      color: #333;
-      box-shadow: none;
-    }
-
-    &:active, &:focus {
-      background: white;
-      color: #333;
-      border: 1px solid #ccc;
-      box-shadow: none;
-    }
+    color: #333;
+    border: 1px solid #ccc;
+    box-shadow: none;
+  }
 `;
-
 
 export type ActionButtonProps = {
   text: string;
@@ -110,22 +110,22 @@ export type ActionButtonProps = {
 
 export const ActionButton: FC<ActionButtonProps> = ({ text, onClick, show }) =>
   show ? (
-      <ActionButtonStyles role='button' tabIndex={0} onClick={onClick}>
-        {text}
-      </ActionButtonStyles>
+    <ActionButtonStyles role='button' tabIndex={0} onClick={onClick}>
+      {text}
+    </ActionButtonStyles>
   ) : null;
 
 export const SecondaryButton = styled(BootstrapButton)`
-  color: #60A5FA;
-  background: #DBEAFE;
-  border: 1px solid #DBEAFE;
+  color: #60a5fa;
+  background: #dbeafe;
+  border: 1px solid #dbeafe;
   padding: 0.4rem 1rem;
   border-radius: 6px;
 
   &:hover {
-    background: #BFDBFE;
-    color: #3B82F6;
-    border: 1px solid #DBEAFE;
+    background: #bfdbfe;
+    color: #3b82f6;
+    border: 1px solid #dbeafe;
   }
 `;
 
@@ -183,7 +183,7 @@ export const CustomButton = styled(BootstrapButton)`
   &:disabled {
     background-color: ${props => props.theme.buttons.disabledBackgroundColor};
     border-color: #999;
-    border: ${props => props.theme.buttons.disabledBackgroundColor};;
+    border: ${props => props.theme.buttons.disabledBackgroundColor};
     color: #999;
   }
 `;

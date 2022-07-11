@@ -41,6 +41,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
   return (
     <BitwiseNavbar className='flex-column py-0'>
       <Logo />
+      <ToggleSwitch />
       {user ? (
         <div className='nav-wrap w-100'>
           <Nav className='flex-column'>
@@ -59,7 +60,6 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
             </div>
             <NavUserDetails user={user} />
             <CustomNavAction onClick={openLogoutModal} label='Sign Out' icon='sign-out-alt' />
-            <ToggleSwitch />
           </Nav>
         </div>
       ) : (

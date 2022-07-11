@@ -1,55 +1,76 @@
 import { colors } from './colors';
 
 export default {
-  colors,
-  backgroundColor: colors.lightBackground,
+  backgroundColor: colors.neutral100,
   textColor: colors.black,
+  linkColor: colors.blue600,
+  linkHoverColor: colors.blue700,
+
+  borderRadius: '6px',
+
+  card: {
+    backgroundColor: colors.white,
+    textColor: colors.black,
+  },
 
   nav: {
-    backgroundColor: colors.offWhite,
-    textColor: colors.darkGrey,
-    profileBackground: colors.offWhite,
-    profileText: colors.darkGrey,
-    smallText: colors.faded,
+    backgroundColor: colors.neutral100,
+    borderColor: colors.neutral300,
+    textColor: colors.neutral800,
+
+    profileBackground: colors.neutral300,
+    profileHoverBackground: colors.neutral400,
+    profileText: colors.neutral900,
+    smallText: colors.neutral700,
+
+    activeBackground: colors.blue600,
+    hoverColor: colors.blue600,
   },
 
   buttons: {
-    cancelBackgroundColor: colors.lightBackground,
-    cancelBorderColor: colors.lightBackground,
-    cancelTextColor: colors.black,
-    submitBackgroundColor: colors.primary,
-    submitBorderColor: colors.primary,
-    submitTextColor: colors.white,
-    disabledBackgroundColor: colors.lightBackground,
-    hoverBackgroundColor: colors.primary,
-    textColor: colors.darkAccent,
-    // hoverBorderColor:
-    // disableBorderColor:
-    createBackgroundColor: colors.secondary,
-    createBorderColor: colors.secondary,
-    createTextColor: colors.white,
-    createHoverBackgroundColor: colors.accent,
-    createHoverBorderColor: colors.accent,
-    backgroundColor: colors.primary,
+    primaryBackgroundColor: colors.blue600,
+    primaryBorderColor: colors.blue600,
+    primaryTextColor: colors.white,
+    primaryHoverBackgroundColor: colors.blue500,
+    primaryHoverTextColor: colors.white,
+
+    defaultBackgroundColor: colors.neutral200,
+    defaultBorderColor: colors.neutral200,
+    defaultTextColor: colors.black,
+    defaultHoverBackgroundColor: colors.neutral400,
+    defaultHoverTextColor: colors.black,
+
+    textColor: colors.neutral50,
+
+    backgroundColor: colors.blue600,
+    disabledBackgroundColor: colors.neutral100,
+    hoverBackgroundColor: colors.blue500,
   },
 
   footer: {
-    backgroundColor: colors.accent,
-    textColor: colors.white,
+    textColor: colors.neutral500,
     height: '35px',
   },
 
   forms: {
-    backgroundColor: colors.lightBackground,
-    labelColor: colors.darkAccent,
-    titleColor: colors.darkAccent,
+    backgroundColor: colors.neutral100,
+    labelColor: colors.neutral800,
     control: colors.black,
     textColor: colors.black,
-    white: colors.white,
-    black: colors.black,
-    errorBorderColor: colors.lightAccent,
-    errorTextColor: colors.accent,
-    errorImageColor: colors.lightAccent,
+    errorBorderColor: colors.dangerRed,
+    errorTextColor: colors.dangerRed,
+  },
+
+  input: {
+    backgroundColor: colors.white,
+    placeholderColor: colors.neutral200,
+    textColor: colors.black,
+    borderColor: colors.neutral300,
+    disabledBackground: colors.neutral200,
+  },
+
+  table: {
+    rowHoverColor: colors.neutral300,
   },
 
   modals: {
@@ -57,28 +78,27 @@ export default {
       contentBackgroundColor: colors.white,
       contentBorderColor: colors.white,
       titleTextColor: colors.black,
-      bodyTextColor: colors.faded,
-      cancelButtonBackgroundColor: colors.lightBackground,
-      cancelButtonBorderColor: colors.lightBackground,
-      cancelButtonTextColor: colors.primary,
-      confirmButtonBackgroundColor: colors.primary,
-      confirmButtonBorderColor: colors.primary,
+      bodyTextColor: colors.neutral700,
+      cancelButtonBackgroundColor: colors.neutral100,
+      cancelButtonBorderColor: colors.neutral100,
+      cancelButtonTextColor: colors.blue600,
+      confirmButtonBackgroundColor: colors.blue600,
+      confirmButtonBorderColor: colors.blue600,
     },
     logout: {
-      backgroundColor: colors.lightBackground,
-      titleTextColor: colors.primary,
-      textColor: colors.primary,
+      backgroundColor: colors.neutral100,
+      titleTextColor: colors.blue600,
+      textColor: colors.blue600,
     },
   },
 
   pages: {
-    backgroundColor: colors.darkAccent,
     pageHeader: colors.dangerRed,
-    h1: colors.darkGrey,
-    p: colors.lightAccent,
+    h1: colors.black,
+    p: colors.neutral700,
   },
 
   changelogs: {
-    accentTextColor: colors.primary,
+    accentTextColor: colors.blue600,
   },
 };

@@ -72,7 +72,7 @@ export const BitwiseNavbar = styled(Navbar)`
   height: 100vh;
   z-index: 1;
   position: fixed;
-  box-shadow: 1px 0 0 0 #dadada;
+  box-shadow: 1px 0 0 0 ${props => props.theme.nav.borderColor};
 
   .navbar-brand {
     padding-top: 0;

@@ -32,7 +32,7 @@ export const StyledModal = styled(BootstrapModal)`
   }
 
   & .modal-content {
-    background: white;
+    background: ${props => props.theme.modals.confirmation.contentBackgroundColor};
     border-radius: 24px;
     border: none;
   }
@@ -83,7 +83,9 @@ export const ConfirmationModal: FC = () => {
       <Modal.Title>{message}</Modal.Title>
       <Modal.Body>Do you want to continue?</Modal.Body>
       <Modal.Footer>
-        <CancelButton onClick={declineModal}>{declineButtonLabel}</CancelButton>
+        <Button variant='default' onClick={declineModal}>
+          {declineButtonLabel}
+        </Button>
         <LoadingButton as={Button} loading={loading} onClick={confirmModal}>
           {confirmButtonLabel}
         </LoadingButton>

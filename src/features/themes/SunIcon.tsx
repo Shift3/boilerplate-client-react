@@ -1,6 +1,6 @@
 export const SunIcon = () => {
   return (
-    <svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <svg width='1.5em' height='1.5em' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
       <circle cx='11.9998' cy='11.9998' r='5.75375' fill='currentColor' />
       <g>
         <circle cx='3.08982' cy='6.85502' r='1.71143' transform='rotate(-60 3.08982 6.85502)' fill='currentColor' />

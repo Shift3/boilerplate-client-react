@@ -91,8 +91,8 @@ export const useUserTableData: UseUserTableData = (users = []) => {
     if (!role) return '';
 
     return {
-      [Role.ADMIN]:  'danger',
-      [Role.USER]:   'secondary',
+      [Role.ADMIN]: 'danger',
+      [Role.USER]: 'secondary',
       [Role.EDITOR]: 'info',
     }[role];
   };
@@ -105,7 +105,7 @@ export const useUserTableData: UseUserTableData = (users = []) => {
         Header: 'Name',
         Cell: ({ row }) => (
           <div className='d-flex d-row align-items-center mr-3'>
-            <UserProfilePicture user={{ profilePicture: row.original.profilePicture } as User} size="xs" radius={32} />
+            <UserProfilePicture user={{ profilePicture: row.original.profilePicture } as User} size='xs' radius={32} />
 
             <div className='d-flex flex-column'>
               <span>

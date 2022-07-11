@@ -3,6 +3,7 @@ import { Container, Col, Row } from 'react-bootstrap';
 import tile from 'assets/img/tile.jpg';
 import styled from 'styled-components';
 import { FC, PropsWithChildren } from 'react';
+import { ToggleSwitch } from 'features/themes/ToggleSwitch';
 
 export const Title = styled.h1`
   color: ${props => props.theme.forms.title};
@@ -65,9 +66,10 @@ export const FrontPageLayout: FC<PropsWithChildren<unknown>> = ({ children }) =>
     <Container fluid>
       <Row>
         <Col>
-          <LoginContainer className='content-wrapper'>
+          <LoginContainer style={{ position: 'relative' }} className='content-wrapper'>
             <div>
               <img src={logo} alt='Bitwise Logo' />
+              <ToggleSwitch />
               {children}
             </div>
           </LoginContainer>

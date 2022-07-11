@@ -5,13 +5,17 @@ import { SunIcon } from './SunIcon';
 import { MoonIcon } from './MoonIcon';
 import { useTheme } from './useTheme';
 
-const Switch = styled(Button)`
-  justify-content: center;
-  align-items: center;
-  background-color: gray;
-  border: 1px solid black;
-  margin: 1em;
-  width: 8em;
+const Switch = styled.div`
+  position: absolute;
+  top: 28px;
+  right: 32px;
+  cursor: pointer;
+  padding: 16px;
+  border-radius: ${props => props.theme.borderRadius};
+
+  &:hover {
+    background: ${props => props.theme.buttons.defaultBackgroundColor};
+  }
 `;
 
 export const ToggleSwitch: FC = () => {

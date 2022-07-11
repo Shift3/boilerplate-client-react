@@ -27,14 +27,14 @@ const NavLinkStyles = styled.div`
   span {
     padding-left: 1.5rem;
   }
-  color: ${props => props.theme.buttons.textColor};
+  color: ${props => props.theme.nav.textColor};
   font-weight: 400;
   &:hover {
     cursor: pointer;
-    color: ${props => props.theme.buttons.backgroundColor};
+    color: ${props => props.theme.nav.hoverColor};
   }
   &.active {
-    background-color: ${props => props.theme.buttons.backgroundColor};
+    background-color: ${props => props.theme.nav.activeBackground};
     color: white;
   }
 `;

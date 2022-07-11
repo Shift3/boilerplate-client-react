@@ -38,14 +38,7 @@ const ProfileInfoWrapper = styled.div`
   }
 
   &:hover {
-    & > div > div,
-    & > div > small {
-      opacity: 0;
-    }
-  }
-
-  &:hover {
-    background: #dadada;
+    background: ${props => props.theme.nav.profileHoverBackground};
 
     span {
       right: 1rem;

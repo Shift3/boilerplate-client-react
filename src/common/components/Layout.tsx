@@ -29,7 +29,7 @@ export const Main = styled.main`
 const Footer = styled.footer`
   padding-top: 5px;
   text-align: center;
-  color: #999;
+  color: ${props => props.theme.footer.textColor};
   height: ${props => props.theme.footer.height};
   @media (min-width: 768px) {
     padding-left: 280px;

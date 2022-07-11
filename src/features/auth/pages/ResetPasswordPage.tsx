@@ -5,7 +5,6 @@ import * as notificationService from 'common/services/notification';
 import { useResetPasswordMutation } from 'common/api/userApi';
 import { FormData, ResetPasswordForm } from '../components/ResetPasswordForm';
 import { PageWrapper } from 'common/styles/page';
-import { StyledFormWrapper, Title } from 'common/styles/form';
 
 export const ResetPasswordPage: FC = () => {
   const navigate = useNavigate();
@@ -31,10 +30,8 @@ export const ResetPasswordPage: FC = () => {
 
   return (
     <PageWrapper>
-      <StyledFormWrapper>
-        <Title>Reset Password</Title>
-        <ResetPasswordForm onSubmit={onSubmit} />
-      </StyledFormWrapper>
+      <h1>Reset Password</h1>
+      <ResetPasswordForm onSubmit={onSubmit} />
     </PageWrapper>
   );
 };

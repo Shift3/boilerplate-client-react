@@ -30,7 +30,7 @@ describe('WithLoadingOverlay', () => {
       setTimeout(() => {
         const spinner = screen.queryByRole('status');
         expect(spinner).not.toBeInTheDocument();
-      }, 250); 
+      }, 250);
     });
   });
 });

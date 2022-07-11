@@ -12,7 +12,7 @@ import { PageHeader } from 'common/styles/page';
 import { NoContent } from 'common/styles/utilities';
 import { HasPermission } from 'features/rbac';
 import { FC, useMemo } from 'react';
-import { Card } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import { Link, useNavigate } from 'react-router-dom';
 import { AgentTableItem, useAgentTableData } from '../hooks/useAgentTableData';
@@ -131,7 +131,7 @@ export const AgentListView: FC = () => {
                 <HasPermission perform='agent:create'>
                   <p className='text-muted'>Get started by creating a new agent.</p>
                   <Link to='/agents/create-agent'>
-                    <SecondaryButton>Add Agent</SecondaryButton>
+                    <Button variant='default'>Add Agent</Button>
                   </Link>
                 </HasPermission>
               </NoContent>
