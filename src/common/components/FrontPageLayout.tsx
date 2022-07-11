@@ -24,7 +24,7 @@ export const LoginContainer = styled(Container)`
   }
 
   img {
-    border-radius: 6px;
+    border-radius: ${props => props.theme.borderRadius};
     margin-bottom: 1rem;
     opacity: 0.9;
   }

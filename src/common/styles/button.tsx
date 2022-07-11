@@ -42,7 +42,7 @@ export const TableActions = styled.div`
     transform: translateY(-50%);
     white-space: nowrap;
     padding: 0;
-    border-radius: 6px;
+    border-radius: ${props => props.theme.borderRadius};
 
     button {
       display: inline-block;
@@ -75,7 +75,7 @@ export const TableActions = styled.div`
 `;
 
 export const ActionButtonStyles = styled(BootstrapButton)`
-  border-radius: 6px;
+  border-radius: ${props => props.theme.borderRadius};
   border: none;
   color: #333;
   font-size: 0.8rem;
@@ -120,7 +120,7 @@ export const SecondaryButton = styled(BootstrapButton)`
   background: #dbeafe;
   border: 1px solid #dbeafe;
   padding: 0.4rem 1rem;
-  border-radius: 6px;
+  border-radius: ${props => props.theme.borderRadius};
 
   &:hover {
     background: #bfdbfe;
@@ -134,7 +134,7 @@ export const CreateButton = styled(BootstrapButton)`
   background-color: ${props => props.theme.buttons.primaryBackgroundColor};
   border-color: ${props => props.theme.buttons.primaryBorderColor};
   padding: 0.4rem 1rem;
-  border-radius: 6px;
+  border-radius: ${props => props.theme.borderRadius};
 
   &:hover {
     background-color: ${props => props.theme.buttons.primaryHoverBackgroundColor};
@@ -147,7 +147,7 @@ export const CancelButton = styled(BootstrapButton)`
   background-color: ${props => props.theme.buttons.cancelBackgroundColor};
   border-color: ${props => props.theme.buttons.cancelBorderColor};
   padding: 0.4rem 1rem;
-  border-radius: 6px;
+  border-radius: ${props => props.theme.borderRadius};
 
   &:hover {
     background-color: ${props => props.theme.buttons.cancelBackgroundColor};
@@ -173,7 +173,7 @@ export const CustomButton = styled(BootstrapButton)`
   color: ${props => props.theme.buttons.text};
   width: ${props => props.theme.buttons.width};
   padding: 0.4rem 1rem;
-  border-radius: 6px;
+  border-radius: ${props => props.theme.borderRadius};
 
   &:hover {
     background-color: ${props => props.theme.buttons.hoverBackgroundColor};
@@ -195,7 +195,7 @@ export const ButtonWrapper = styled.div`
 
   & button {
     margin-right: 10px;
-    border-radius: 6px;
+    border-radius: ${props => props.theme.borderRadius};
   }
 
   & button:last-of-type {

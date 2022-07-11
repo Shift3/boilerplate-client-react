@@ -16,7 +16,7 @@ const NavLinkStyles = styled.div`
   font-size: 1rem;
   position: relative;
   padding: 0.65rem 1.5rem;
-  border-radius: 6px;
+  border-radius: ${props => props.theme.borderRadius};
   margin-bottom: 0.25rem;
   i,
   svg {

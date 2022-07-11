@@ -8,7 +8,7 @@ import { UserProfilePicture } from './UserProfilePicture';
 const ProfileInfoWrapper = styled.div`
   background: ${props => props.theme.nav.profileBackground};
   width: 100%;
-  border-radius: 6px;
+  border-radius: ${props => props.theme.borderRadius};
   display: flex;
   align-items: center;
   color: ${props => props.theme.nav.profileText};
