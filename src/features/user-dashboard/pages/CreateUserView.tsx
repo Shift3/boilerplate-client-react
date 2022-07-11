@@ -4,7 +4,7 @@ import { useInviteUserMutation } from 'common/api/userApi';
 import { isObject } from 'common/error/utilities';
 import { Role, ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
-import { FormCard, StyledFormWrapper } from 'common/styles/form';
+import { Card } from 'react-bootstrap';
 import { PageCrumb, PageHeader, SmallContainer } from 'common/styles/page';
 import { useRbac } from 'features/rbac';
 import { FC, useState } from 'react';
@@ -62,19 +62,17 @@ export const CreateUserView: FC = () => {
         </div>
       </PageHeader>
 
-      <FormCard>
-        <FormCard.Body>
-          <StyledFormWrapper>
-            <UserDetailForm
-              availableRoles={availableRoles}
-              defaultValues={defaultValues}
-              submitButtonLabel='Create'
-              onSubmit={handleFormSubmit}
-              serverValidationErrors={formValidationErrors}
-            />
-          </StyledFormWrapper>
-        </FormCard.Body>
-      </FormCard>
+      <Card>
+        <Card.Body>
+          <UserDetailForm
+            availableRoles={availableRoles}
+            defaultValues={defaultValues}
+            submitButtonLabel='Create'
+            onSubmit={handleFormSubmit}
+            serverValidationErrors={formValidationErrors}
+          />
+        </Card.Body>
+      </Card>
     </SmallContainer>
   );
 };

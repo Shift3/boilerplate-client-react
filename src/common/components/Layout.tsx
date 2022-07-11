@@ -5,6 +5,7 @@ import { FC, PropsWithChildren } from 'react';
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  background-color: ${props => props.theme.backgroundColor};
   display: flex;
   min-height: 100vh;
   flex-direction: column;
@@ -20,7 +21,6 @@ export const Content = styled.div`
 
 export const Main = styled.main`
   flex: 1;
-
   @media (min-width: 768px) {
     padding-left: 280px;
   }
@@ -29,7 +29,7 @@ export const Main = styled.main`
 const Footer = styled.footer`
   padding-top: 5px;
   text-align: center;
-  color: #999;
+  color: ${props => props.theme.footer.textColor};
   height: ${props => props.theme.footer.height};
   @media (min-width: 768px) {
     padding-left: 280px;

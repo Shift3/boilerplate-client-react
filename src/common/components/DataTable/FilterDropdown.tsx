@@ -1,4 +1,3 @@
-import { CancelButton } from 'common/styles/button';
 import React, { FC, PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
@@ -7,9 +6,6 @@ import styled, { css } from 'styled-components';
 import { FilterInfo } from './DataTableActiveFilterList';
 import { wasMouseEventOutsideContainer } from 'utils/events';
 
-// ----------------------------------------------------------------------------
-// Styled components
-// ----------------------------------------------------------------------------
 const StyledDropdown = styled.div`
   display: flex;
   gap: 10px;
@@ -18,7 +14,7 @@ const StyledDropdown = styled.div`
 `;
 
 const StyledDropdownMenu = styled(Card).attrs({ className: 'shadow' })`
-  background-color: white;
+  background-color: ${props => props.theme.backgroundColor};
 
   & ul {
     list-style: none;
@@ -28,40 +24,38 @@ const StyledDropdownMenu = styled(Card).attrs({ className: 'shadow' })`
 `;
 
 const StyledDropdownItem = styled.a<{ selected?: boolean }>`
-    display: block;
-    width: 100%;
-    padding 0.25rem 1rem;
-    clear: both;
-    font-weight: 400;
-    color: #212529;
-    text-align: inherit;
-    text-decoration: none;
-    white-space: nowrap;
-    background-color: transparent;
-    border: 0;
-    cursor: pointer;
+  display: block;
+  width: 100%;
+  padding 0.25rem 1rem;
+  clear: both;
+  font-weight: 400;
+  text-align: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+  color: ${props => props.theme.textColor};
+  background-color: ${props => props.theme.backgroundColor};
+  border: 0;
+  cursor: pointer;
 
-    &:focus,
-    &:hover {
-        color: #1e2125;
-        background-color: #e9ecef;
-    }
+  &:focus,
+  &:hover {
+    background-color: ${props => props.theme.buttons.defaultBackgroundColor};
+  }
 
   &:active {
-    background-color: #e9ecef;
+    background-color: ${props => props.theme.buttons.defaultBackgroundColor};
   }
 
   ${props =>
     props.selected &&
     css`
-      background-color: #e9ecef;
+      background-color: ${props => props.theme.buttons.primaryBackgroundColor};
     `}
 `;
 
 const StyledButtonWrapper = styled.div`
   button {
     display: inline-block;
-    height: 50px;
     margin: 0;
     width: 50%;
     white-space: nowrap;
@@ -76,9 +70,6 @@ const StyledButtonWrapper = styled.div`
   }
 `;
 
-// ----------------------------------------------------------------------------
-// Container and Menus
-// ----------------------------------------------------------------------------
 const DefaultFilterInput: FC<{
   value: string;
   onChange: (value: string) => void;
@@ -181,7 +172,9 @@ export const OperationDropdownMenu: FC<{
           );
         })}
         <StyledButtonWrapper>
-          <CancelButton onClick={handleCancel}>Cancel</CancelButton>
+          <Button variant='default' onClick={handleCancel}>
+            Cancel
+          </Button>
           <Button type='submit'>Apply</Button>
         </StyledButtonWrapper>
       </Form>

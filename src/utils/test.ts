@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { act, screen } from '@testing-library/react';
@@ -11,7 +12,7 @@ const { click, clear, type } = userEvent;
 
 type expectToMatchSnapshotType = (component: ReactElement<any, string | JSXElementConstructor<any>>) => void;
 
-export const expectToMatchSnapshot: expectToMatchSnapshotType = (component) =>
+export const expectToMatchSnapshot: expectToMatchSnapshotType = component =>
   expect(renderer.create(component).toJSON()).toMatchSnapshot();
 
 export const expectInDocByTestId = (id: string) => expect(getByTestId(id)).toBeInTheDocument();

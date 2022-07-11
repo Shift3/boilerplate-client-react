@@ -49,6 +49,7 @@ export const CustomSelect = <T,>({
     <>
       <Select
         tabIndex={0}
+        classNamePrefix='react-select'
         options={options}
         defaultValue={defaultValue}
         placeholder={placeholder}

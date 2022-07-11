@@ -6,12 +6,12 @@ import styled from 'styled-components';
 import { UserProfilePicture } from './UserProfilePicture';
 
 const ProfileInfoWrapper = styled.div`
-  background: #efefef;
+  background: ${props => props.theme.nav.profileBackground};
   width: 100%;
-  border-radius: 6px;
+  border-radius: ${props => props.theme.borderRadius};
   display: flex;
   align-items: center;
-  color: #666;
+  color: ${props => props.theme.nav.profileText};
   padding: 1rem;
   font-size: 0.9rem;
   cursor: pointer;
@@ -20,7 +20,7 @@ const ProfileInfoWrapper = styled.div`
   overflow: hidden;
 
   small {
-    color: #999;
+    color: ${props => props.theme.nav.smallText};
   }
 
   span {
@@ -38,14 +38,7 @@ const ProfileInfoWrapper = styled.div`
   }
 
   &:hover {
-    & > div > div,
-    & > div > small {
-      opacity: 0;
-    }
-  }
-
-  &:hover {
-    background: #dadada;
+    background: ${props => props.theme.nav.profileHoverBackground};
 
     span {
       right: 1rem;

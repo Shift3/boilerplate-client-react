@@ -39,7 +39,7 @@ const ProfileNav = styled(Nav)`
   padding-right: 4rem;
   a {
     padding-left: 0;
-    color: #333;
+    color: ${props => props.theme.textColor};
 
     &.active {
       font-weight: bold;

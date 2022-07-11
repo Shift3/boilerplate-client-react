@@ -3,7 +3,7 @@ import { createAppStore } from 'app/redux';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { ConfirmationModal } from '../ConfirmationModal';
-import AppTheme from 'utils/styleValues';
+import light from 'themes/light';
 
 describe('ConfirmationModal', () => {
   it('should render without errors', () => {
@@ -11,7 +11,7 @@ describe('ConfirmationModal', () => {
 
     const { container } = render(
       <Provider store={store}>
-        <ThemeProvider theme={AppTheme}>
+        <ThemeProvider theme={light}>
           <ConfirmationModal />
         </ThemeProvider>
       </Provider>,
@@ -25,7 +25,7 @@ describe('ConfirmationModal', () => {
 
     render(
       <Provider store={store}>
-        <ThemeProvider theme={AppTheme}>
+        <ThemeProvider theme={light}>
           <ConfirmationModal />
         </ThemeProvider>
       </Provider>,
@@ -46,7 +46,7 @@ describe('ConfirmationModal', () => {
 
     render(
       <Provider store={store}>
-        <ThemeProvider theme={AppTheme}>
+        <ThemeProvider theme={light}>
           <ConfirmationModal />
         </ThemeProvider>
       </Provider>,
@@ -71,7 +71,7 @@ describe('ConfirmationModal', () => {
 
     render(
       <Provider store={store}>
-        <ThemeProvider theme={AppTheme}>
+        <ThemeProvider theme={light}>
           <ConfirmationModal />
         </ThemeProvider>
       </Provider>,
@@ -96,7 +96,7 @@ describe('ConfirmationModal', () => {
 
     render(
       <Provider store={store}>
-        <ThemeProvider theme={AppTheme}>
+        <ThemeProvider theme={light}>
           <ConfirmationModal />
         </ThemeProvider>
       </Provider>,

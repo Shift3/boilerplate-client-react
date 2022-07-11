@@ -16,12 +16,8 @@ export const createAppStore = (options?: ConfigureStoreOptions['preloadedState']
       [userApi.reducerPath]: userApi.reducer,
     },
 
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(
-        agentApi.middleware,
-        authApi.middleware,
-        userApi.middleware,
-      ),
+    middleware: getDefaultMiddleware =>
+      getDefaultMiddleware().concat(agentApi.middleware, authApi.middleware, userApi.middleware),
 
     ...options,
   });

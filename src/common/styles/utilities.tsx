@@ -88,7 +88,7 @@ export const NoContent = styled.div`
 
   i,
   svg {
-    color: #333;
+    color: ${props => props.theme.textColor};
     margin-bottom: 0.5rem;
   }
 `;

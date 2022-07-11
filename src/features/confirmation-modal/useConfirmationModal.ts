@@ -4,7 +4,7 @@ import {
   ConfirmationModalCallback,
   confirmConfirmationModal,
   declineConfirmationModal,
-  openConfirmationModal
+  openConfirmationModal,
 } from './slice';
 
 export interface ConfirmationModalConfig {
@@ -28,22 +28,18 @@ export const useConfirmationModal: useConfirmationModal = () => {
 
   const openModal = useCallback(
     (config: Partial<ConfirmationModalConfig> = {}) => {
-    dispatch(openConfirmationModal(config));
+      dispatch(openConfirmationModal(config));
     },
-    [dispatch]
-  );
-  
-  const confirmModal = useCallback(
-    () => {
-    dispatch(confirmConfirmationModal());
-    }, [dispatch]
+    [dispatch],
   );
 
-  const declineModal = useCallback(
-    () => {
+  const confirmModal = useCallback(() => {
+    dispatch(confirmConfirmationModal());
+  }, [dispatch]);
+
+  const declineModal = useCallback(() => {
     dispatch(declineConfirmationModal());
-  }, [dispatch]
-  );
+  }, [dispatch]);
 
   return {
     openModal,

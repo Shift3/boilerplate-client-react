@@ -4,7 +4,7 @@ import { RbacRules } from 'features/rbac/rules';
 import { userRoleHasPermission } from '../userRoleHasPermission';
 
 describe('userRoleHasPermission()', () => {
-  const user: User = UserFactory.build({role: Role.EDITOR});
+  const user: User = UserFactory.build({ role: Role.EDITOR });
 
   it('should return false if user role is not in rbac rules', () => {
     const rules: RbacRules = {};

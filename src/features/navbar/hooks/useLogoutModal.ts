@@ -14,8 +14,8 @@ export const useLogoutModal: UseLogoutModal = () => {
   const openLogoutModal = () => {
     openModal({
       message: 'This will end your login session.',
-      confirmButtonLabel: 'LOGOUT',
-      declineButtonLabel: 'CANCEL',
+      confirmButtonLabel: 'Logout',
+      declineButtonLabel: 'Cancel',
       onConfirm: logout,
     });
   };

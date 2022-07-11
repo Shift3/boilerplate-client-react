@@ -2,11 +2,6 @@ import styled from 'styled-components';
 import Card from 'react-bootstrap/Card';
 
 export const TableCard = styled(Card)`
-  background: white;
-  border-radius: 6px;
-  border: none;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-
   .card-body {
     padding: 0;
   }
@@ -18,6 +13,7 @@ export const TableCard = styled(Card)`
   .table {
     border: none;
     margin: 0;
+    color: ${props => props.theme.textColor};
 
     .tbody {
       border: none;
@@ -27,7 +23,7 @@ export const TableCard = styled(Card)`
       border-top-left-radius: 6px;
       border-top-right-radius: 6px;
       padding: 0 1rem;
-      color: #666;
+      color: ${props => props.theme.card.textColor};
 
       .th {
         border: none;
@@ -49,7 +45,7 @@ export const TableCard = styled(Card)`
       padding: 0 1rem;
 
       &:hover {
-        background: #efefef;
+        background: ${props => props.theme.table.rowHoverColor};
       }
 
       .td {

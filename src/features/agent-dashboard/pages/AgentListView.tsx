@@ -6,13 +6,13 @@ import { DataTableSearchAndFilters } from 'common/components/DataTable/DataTable
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { Agent, PaginatedResult } from 'common/models';
-import { SecondaryButton, CreateButton } from 'common/styles/button';
+import { CreateButton } from 'common/styles/button';
 import { TableCard } from 'common/styles/card';
 import { PageHeader } from 'common/styles/page';
 import { NoContent } from 'common/styles/utilities';
 import { HasPermission } from 'features/rbac';
 import { FC, useMemo } from 'react';
-import { Card } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import { Link, useNavigate } from 'react-router-dom';
 import { AgentTableItem, useAgentTableData } from '../hooks/useAgentTableData';
@@ -73,7 +73,7 @@ export const AgentListView: FC = () => {
           <h1>
             <Trans i18nKey='agentList.heading'>Agent List</Trans>
           </h1>
-          <p className='text-muted'>
+          <p>
             <Trans i18nKey='agentList.subheading'>All agents in the system.</Trans>
           </p>
         </div>
@@ -131,7 +131,7 @@ export const AgentListView: FC = () => {
                 <HasPermission perform='agent:create'>
                   <p className='text-muted'>Get started by creating a new agent.</p>
                   <Link to='/agents/create-agent'>
-                    <SecondaryButton>Add Agent</SecondaryButton>
+                    <Button variant='default'>Add Agent</Button>
                   </Link>
                 </HasPermission>
               </NoContent>
