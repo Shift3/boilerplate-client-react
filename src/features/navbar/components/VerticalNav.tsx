@@ -10,7 +10,7 @@ import { useNavLinks } from '../hooks/useNavLinks';
 import { CustomNavAction, CustomNavLink } from './CustomNavLink';
 import { Logo } from './Logo';
 import { NavUserDetails } from './NavUserDetails';
-import { ToggleSwitch } from '../../themes/ToggleSwitch';
+import { ThemeToggle } from '../../themes/ToggleSwitch';
 
 type Props = {
   closeVerticalNav?: () => void;
@@ -41,7 +41,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
   return (
     <BitwiseNavbar className='flex-column py-0'>
       <Logo />
-      <ToggleSwitch />
+      <ThemeToggle />
       {user ? (
         <div className='nav-wrap w-100'>
           <Nav className='flex-column'>

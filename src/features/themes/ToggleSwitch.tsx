@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import Button from 'react-bootstrap/Button';
 import styled from 'styled-components';
 import { SunIcon } from './SunIcon';
 import { MoonIcon } from './MoonIcon';
@@ -18,7 +17,7 @@ const Switch = styled.div`
   }
 `;
 
-export const ToggleSwitch: FC = () => {
+export const ThemeToggle: FC = () => {
   const { toggle, theme } = useTheme();
 
   return (

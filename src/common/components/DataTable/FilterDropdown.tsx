@@ -1,4 +1,3 @@
-import { CancelButton } from 'common/styles/button';
 import React, { FC, PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
@@ -7,9 +6,6 @@ import styled, { css } from 'styled-components';
 import { FilterInfo } from './DataTableActiveFilterList';
 import { wasMouseEventOutsideContainer } from 'utils/events';
 
-// ----------------------------------------------------------------------------
-// Styled components
-// ----------------------------------------------------------------------------
 const StyledDropdown = styled.div`
   display: flex;
   gap: 10px;
@@ -74,9 +70,6 @@ const StyledButtonWrapper = styled.div`
   }
 `;
 
-// ----------------------------------------------------------------------------
-// Container and Menus
-// ----------------------------------------------------------------------------
 const DefaultFilterInput: FC<{
   value: string;
   onChange: (value: string) => void;

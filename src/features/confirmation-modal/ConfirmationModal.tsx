@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import Modal, { ModalProps } from 'react-bootstrap/Modal';
 import styled from 'styled-components';
-import { CancelButton } from 'common/styles/button';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { useAppSelector } from 'app/redux';
 import { selectConfirmationModalState } from './slice';
