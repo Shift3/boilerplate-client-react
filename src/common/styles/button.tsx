@@ -74,29 +74,31 @@ export const TableActions = styled.div`
   }
 `;
 
-export const ActionButtonStyles = styled(BootstrapButton)`
+export const ActionButtonStyles = styled(BootstrapButton).attrs({
+  variant: 'default',
+})`
   border-radius: ${props => props.theme.borderRadius};
   border: none;
-  color: #333;
+  color: ${props => props.theme.textColor};
   font-size: 0.8rem;
   border: 1px solid #ccc;
-  background: white;
+  background: ${props => props.theme.card.backgroundColor};
   font-weight: 400;
   transition: 0.15s ease all;
   padding: 2px 8px;
   white-space: nowrap;
 
   &:hover {
-    background: #ddd;
+    background: ${props => props.theme.backgroundColor};
     border: 1px solid #ccc;
-    color: #333;
+    color: ${props => props.theme.textColor};
     box-shadow: none;
   }
 
   &:active,
   &:focus {
-    background: white;
-    color: #333;
+    background: ${props => props.theme.card.backgroundColor};
+    color: ${props => props.theme.textColor};
     border: 1px solid #ccc;
     box-shadow: none;
   }
