@@ -4,6 +4,7 @@ import tile from 'assets/img/tile.jpg';
 import styled from 'styled-components';
 import { FC, PropsWithChildren } from 'react';
 import { ThemeToggle } from 'features/themes/ToggleSwitch';
+import { Logo } from 'features/navbar/components/Logo';
 
 export const Title = styled.h1`
   color: ${props => props.theme.forms.title};
@@ -24,6 +25,7 @@ export const LoginContainer = styled(Container)`
   }
 
   img {
+    margin-top: 1.5rem;
     border-radius: ${props => props.theme.borderRadius};
     margin-bottom: 1rem;
     opacity: 0.9;
@@ -66,10 +68,12 @@ export const FrontPageLayout: FC<PropsWithChildren<unknown>> = ({ children }) =>
     <Container fluid>
       <Row>
         <Col>
-          <LoginContainer style={{ position: 'relative' }} className='content-wrapper'>
+          <LoginContainer className='content-wrapper'>
             <div>
-              <img src={logo} alt='Bitwise Logo' />
-              <ThemeToggle />
+              <div className='position-relative'>
+                <Logo />
+                <ThemeToggle />
+              </div>
               {children}
             </div>
           </LoginContainer>

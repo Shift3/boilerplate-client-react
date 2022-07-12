@@ -40,8 +40,10 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
 
   return (
     <BitwiseNavbar className='flex-column py-0'>
-      <Logo />
-      <ThemeToggle />
+      <div className='position-relative w-100'>
+        <Logo />
+        <ThemeToggle />
+      </div>
       {user ? (
         <div className='nav-wrap w-100'>
           <Nav className='flex-column'>

@@ -7,7 +7,7 @@ import { useTheme } from './useTheme';
 const Switch = styled.div`
   position: absolute;
   top: 28px;
-  right: 32px;
+  right: 0;
   cursor: pointer;
   padding: 16px;
   border-radius: ${props => props.theme.borderRadius};
