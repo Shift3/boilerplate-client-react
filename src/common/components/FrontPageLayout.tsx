@@ -1,4 +1,3 @@
-import logo from 'assets/img/logo.jpg';
 import { Container, Col, Row } from 'react-bootstrap';
 import tile from 'assets/img/tile.jpg';
 import styled from 'styled-components';
