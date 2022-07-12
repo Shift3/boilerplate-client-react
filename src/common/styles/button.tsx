@@ -11,19 +11,19 @@ export const TableActions = styled.div`
   & > button {
     border: none;
     background: transparent;
-    color: #333;
+    color: ${props => props.theme.textColor};
 
     path {
-      fill: #333;
+      fill: ${props => props.theme.textColor};
     }
 
     &:hover,
     &:focus {
       background: transparent;
       border: none;
-      color: #333;
+      color: ${props => props.theme.textColor};
       path {
-        fill: #333;
+        color: ${props => props.theme.textColor};
       }
     }
   }
@@ -82,7 +82,8 @@ export const ActionButtonStyles = styled(BootstrapButton).attrs({
   color: ${props => props.theme.textColor};
   font-size: 0.8rem;
   border: 1px solid #ccc;
-  background: ${props => props.theme.card.backgroundColor};
+  background: ${props => props.theme.buttons.defaultBackgroundColor};
+  border-color: ${props => props.theme.buttons.defaultBorderColor};
   font-weight: 400;
   transition: 0.15s ease all;
   padding: 2px 8px;

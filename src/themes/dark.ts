@@ -34,8 +34,8 @@ export default {
     primaryHoverBackgroundColor: colors.blue500,
     primaryHoverTextColor: colors.white,
 
-    defaultBackgroundColor: colors.neutral800,
-    defaultBorderColor: colors.neutral800,
+    defaultBackgroundColor: colors.neutral700,
+    defaultBorderColor: colors.neutral700,
     defaultTextColor: colors.white,
     defaultHoverBackgroundColor: colors.neutral400,
     defaultHoverTextColor: colors.black,
