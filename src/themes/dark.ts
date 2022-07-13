@@ -61,10 +61,10 @@ export default {
   },
 
   input: {
-    backgroundColor: colors.neutral100,
+    backgroundColor: 'transparent',
     placeholderColor: colors.neutral200,
     textColor: colors.black,
-    borderColor: colors.neutral700,
+    borderColor: colors.black,
     disabledBackground: colors.neutral800,
   },
 
