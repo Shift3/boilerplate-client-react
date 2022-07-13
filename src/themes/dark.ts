@@ -42,7 +42,6 @@ export default {
 
     textColor: colors.neutral50,
 
-    backgroundColor: colors.blue500,
     disabledBackgroundColor: colors.neutral100,
     hoverBackgroundColor: colors.blue500,
   },
@@ -62,7 +61,7 @@ export default {
   },
 
   input: {
-    backgroundColor: 'transparent',
+    backgroundColor: colors.neutral100,
     placeholderColor: colors.neutral200,
     textColor: colors.white,
     borderColor: colors.neutral700,

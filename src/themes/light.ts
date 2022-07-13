@@ -42,7 +42,6 @@ export default {
 
     textColor: colors.neutral50,
 
-    backgroundColor: colors.blue600,
     disabledBackgroundColor: colors.neutral100,
     hoverBackgroundColor: colors.blue500,
   },
