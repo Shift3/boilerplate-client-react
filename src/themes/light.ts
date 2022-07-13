@@ -41,7 +41,6 @@ export default {
     defaultHoverTextColor: colors.black,
 
     textColor: colors.neutral50,
-
     disabledBackgroundColor: colors.neutral100,
     hoverBackgroundColor: colors.blue500,
   },

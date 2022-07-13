@@ -40,6 +40,7 @@ const StyledDropdownItem = styled.a<{ selected?: boolean }>`
   &:focus,
   &:hover {
     background-color: ${props => props.theme.buttons.defaultBackgroundColor};
+
   }
 
   &:active {
