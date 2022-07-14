@@ -38,7 +38,7 @@ export const App: FC = () => {
   }, [theme]);
 
   return (
-    <AppErrorBoundary environment={environment.environment}>
+    <AppErrorBoundary>
       <ThemeContext.Provider value={value}>
         <ThemeProvider theme={theme === 'light' ? light : dark}>
           <GlobalStyle />

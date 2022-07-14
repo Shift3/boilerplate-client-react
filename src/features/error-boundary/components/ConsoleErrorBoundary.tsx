@@ -1,12 +1,11 @@
-import React, { ReactNode } from 'react';
-
-interface Props {
-  children?: ReactNode;
-}
+import React, { PropsWithChildren } from 'react';
 
 /* eslint-disable react/destructuring-assignment */
-export class ConsoleErrorBoundary extends React.Component<Props, { hasError: boolean }> {
-  constructor(props: Props) {
+export class ConsoleErrorBoundary extends React.Component<
+  PropsWithChildren<Record<string, unknown>>,
+  { hasError: boolean }
+> {
+  constructor(props: Record<string, unknown>) {
     super(props);
     this.state = { hasError: false };
   }

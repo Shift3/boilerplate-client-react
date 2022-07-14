@@ -1,13 +1,10 @@
 import { ErrorBoundary as SentryErrorBoundary } from '@sentry/react';
+import { environment } from 'environment';
 import { FC, PropsWithChildren } from 'react';
 import { ConsoleErrorBoundary } from './ConsoleErrorBoundary';
 
-interface Environment {
-  environment: string;
-}
-
-export const AppErrorBoundary: FC<PropsWithChildren<Environment>> = ({ environment, children }) => {
-  return environment === 'production' ? (
+export const AppErrorBoundary: FC<PropsWithChildren<unknown>> = ({ children }) => {
+  return environment.isProduction ? (
     <SentryErrorBoundary>{children}</SentryErrorBoundary>
   ) : (
     <ConsoleErrorBoundary>{children}</ConsoleErrorBoundary>
