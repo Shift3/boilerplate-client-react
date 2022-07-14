@@ -6,16 +6,28 @@ import styled, { css } from 'styled-components';
 import { FilterInfo } from './DataTableActiveFilterList';
 import { wasMouseEventOutsideContainer } from 'utils/events';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CustomSelect } from '../CustomSelect';
 
 const StyledDropdown = styled.div`
+  transition: all 0.15s ease-in-out;
   position: absolute;
-  top: 42px;
+  top: 16px;
+  left: 0;
   z-index: 9999;
   min-width: 240px;
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0.75) translateX(-10%);
+
+  &.show {
+    visibility: visible;
+    opacity: 1;
+    top: 42px;
+    transform: scale(1);
+  }
 `;
 
 const FilterMenu = styled(Card)`
+  transition: all 0.15s ease-in-out;
   overflow: hidden;
   border-radius: ${props => props.theme.borderRadius};
   background-color: ${props => props.theme.card.backgroundColor};
@@ -30,7 +42,7 @@ const FilterMenu = styled(Card)`
 const StyledDropdownItem = styled.a<{ selected?: boolean }>`
   display: block;
   width: 100%;
-  padding 0.5rem 1.5rem;
+  padding: 0.5rem 1.5rem;
   clear: both;
   font-weight: 400;
   text-align: inherit;
@@ -102,7 +114,7 @@ const DropdownItem: FC<
 
 const DropdownContainer = React.forwardRef<HTMLDivElement, { show?: boolean; children: React.ReactNode }>(
   ({ show, children }, ref) => (
-    <StyledDropdown hidden={!show} ref={ref}>
+    <StyledDropdown className={show ? 'show' : ''} ref={ref}>
       {children}
     </StyledDropdown>
   ),
@@ -182,11 +194,10 @@ const FilterCategory = styled.div`
 `;
 
 const AttributeDropdownMenu: FC<{
-  show?: boolean;
   filters: FilterInfo[];
   selected?: number;
   onSelect: (index: number) => void;
-}> = ({ show, filters, selected, onSelect }) => {
+}> = ({ filters, selected, onSelect }) => {
   const [openFilter, setOpenFilter] = useState<FilterInfo | null>(null);
 
   const toggleCategory = (filter: FilterInfo) => {
@@ -195,7 +206,7 @@ const AttributeDropdownMenu: FC<{
   };
 
   return (
-    <FilterMenu hidden={!show}>
+    <FilterMenu>
       <FilterHeader>
         <h1>Filters</h1>
         <a href='/'>Clear All</a>
@@ -209,39 +220,57 @@ const AttributeDropdownMenu: FC<{
           </div>
 
           <div className='content'>
-            <Form.Check
-              className='mb-2'
-              type='radio'
-              tabIndex={-1}
-              readOnly
-              checked
-              name={filter.attribute}
-              label='Is Exactly'
-            />
-            <Form.Check className='mb-2' type='radio' tabIndex={-1} readOnly name={filter.attribute} label='Contains' />
-            <Form.Check
-              className='mb-2'
-              type='radio'
-              tabIndex={-1}
-              readOnly
-              name={filter.attribute}
-              label='Starts With'
-            />
-            <Form.Check
-              className='mb-2'
-              type='radio'
-              tabIndex={-1}
-              readOnly
-              name={filter.attribute}
-              label='Ends With'
-            />
+            {filter.OperationUI ? (
+              <filter.OperationUI
+                value={filter.attribute}
+                onApply={value => {
+                  console.log(value);
+                }}
+              />
+            ) : (
+              <>
+                <Form.Check
+                  className='mb-2'
+                  type='radio'
+                  tabIndex={-1}
+                  readOnly
+                  checked
+                  name={filter.attribute}
+                  label='Is Exactly'
+                />
+                <Form.Check
+                  className='mb-2'
+                  type='radio'
+                  tabIndex={-1}
+                  readOnly
+                  name={filter.attribute}
+                  label='Contains'
+                />
+                <Form.Check
+                  className='mb-2'
+                  type='radio'
+                  tabIndex={-1}
+                  readOnly
+                  name={filter.attribute}
+                  label='Starts With'
+                />
+                <Form.Check
+                  className='mb-2'
+                  type='radio'
+                  tabIndex={-1}
+                  readOnly
+                  name={filter.attribute}
+                  label='Ends With'
+                />
 
-            <input
-              type='input'
-              aria-label='Enter text to filter by'
-              placeholder='Enter filter text...'
-              className='form-control'
-            />
+                <input
+                  type='input'
+                  aria-label='Enter text to filter by'
+                  placeholder='Enter filter text...'
+                  className='form-control'
+                />
+              </>
+            )}
           </div>
         </FilterCategory>
       ))}
@@ -365,12 +394,7 @@ export const FilterDropdown: FC<FilterDropdownProps> = ({ show = false, filters,
 
   return (
     <DropdownContainer show={show} ref={dropdownContainerRef}>
-      <AttributeDropdownMenu
-        show={show}
-        filters={filters}
-        selected={selectedAttribute}
-        onSelect={setSelectedAttribute}
-      />
+      <AttributeDropdownMenu filters={filters} selected={selectedAttribute} onSelect={setSelectedAttribute} />
     </DropdownContainer>
   );
 };

@@ -4,16 +4,49 @@ import { FilterInfo } from 'common/components/DataTable/DataTableActiveFilterLis
 import { DataTableSearchAndFilters } from 'common/components/DataTable/DataTableSearchAndFilters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
-import { PaginatedResult, User } from 'common/models';
+import { PaginatedResult, Role, User } from 'common/models';
 import { CreateButton } from 'common/styles/button';
 import { TableCard } from 'common/styles/card';
 import { PageHeader } from 'common/styles/page';
 import { HasPermission } from 'features/rbac';
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserTableItem, useUserTableData } from '../hooks/useUserTableData';
 import { Trans } from 'react-i18next';
+import { Form } from 'react-bootstrap';
+
+const MultipleSelect = (options: { label: string; value: string }[]) => {
+  const initialState: { [key in string]: boolean } = {};
+  options.forEach(option => {
+    initialState[option.value] = true;
+  });
+  const Component: FC<{ value: string }> = ({ value }) => {
+    const [state, setState] = useState(initialState);
+
+    const toggleOption = (option: { label: string; value: string }) => {
+      state[option.value] = !state[option.value];
+      setState(state);
+
+      // TODO(justin): modify filters
+      // filterApi.setFilter(value, state.filter(s => s).keys().join(','))
+    };
+
+    return (
+      <div>
+        {options.map(option => (
+          <Form.Check
+            onChange={() => toggleOption(option)}
+            checked={state[option.value]}
+            type='checkbox'
+            label={option.label}
+          />
+        ))}
+      </div>
+    );
+  };
+  return Component;
+};
 
 export const UserListView: FC = () => {
   const navigate = useNavigate();
@@ -80,6 +113,16 @@ export const UserListView: FC = () => {
             operationLabel: 'ends with',
           },
         ],
+      },
+      {
+        attribute: 'role',
+        attributeLabel: 'Role',
+        operationOptions: [],
+        OperationUI: MultipleSelect([
+          { label: 'User', value: 'USER' },
+          { label: 'Editor', value: 'EDITOR' },
+          { label: 'Admin', value: 'ADMIN' },
+        ]),
       },
     ],
     [],

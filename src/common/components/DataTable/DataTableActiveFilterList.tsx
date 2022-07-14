@@ -12,6 +12,10 @@ export type FilterInfo = {
   attribute: string;
   attributeLabel: string;
   operationOptions: OperationOption[];
+  OperationUI?: FC<{
+    value: string;
+    onApply: (selectedAttribute: number, selectedOperation: number, value: string) => void;
+  }>;
 };
 
 export type AppliedFilterInfo = {

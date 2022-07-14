@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC } from 'react';
-import { Button } from 'react-bootstrap';
+import { Badge, Button } from 'react-bootstrap';
 
 export const DataTableFilterToggle: FC<{
   onDropdownToggle: () => void;
@@ -8,7 +8,10 @@ export const DataTableFilterToggle: FC<{
 }> = ({ onDropdownToggle, hasAvailableFilters }) => {
   return (
     <Button variant='default' onClick={onDropdownToggle} disabled={!hasAvailableFilters}>
-      <FontAwesomeIcon icon='filter' /> Filters
+      <FontAwesomeIcon icon='filter' /> Filters{' '}
+      <Badge pill bg='dark'>
+        1 active
+      </Badge>
     </Button>
   );
 };
