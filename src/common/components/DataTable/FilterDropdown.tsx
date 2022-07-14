@@ -152,7 +152,7 @@ const AttributeDropdownMenu: FC<{
       </FilterHeader>
 
       {filters.map((filter, index) => (
-        <FilterCategory className={openFilter === filter ? 'open' : ''}>
+        <FilterCategory key={filter.attribute} className={openFilter === filter ? 'open' : ''}>
           <div role='button' tabIndex={-1} className='category' onClick={() => toggleCategory(filter)}>
             <span className={activeFilters.filter(a => a.attr === filter.attribute).length ? 'active' : ''}>
               {filter.attributeLabel}
@@ -161,57 +161,12 @@ const AttributeDropdownMenu: FC<{
           </div>
 
           <div className='content'>
-            {filter.OperationUI ? (
-              <filter.OperationUI
-                activeFilters={activeFilters.filter(a => a.attr === filter.attribute)}
-                attribute={filter.attribute}
-                setFilter={setFilter}
-                removeFilter={removeFilter}
-              />
-            ) : (
-              <>
-                <Form.Check
-                  className='mb-2'
-                  type='radio'
-                  tabIndex={-1}
-                  readOnly
-                  checked
-                  name={filter.attribute}
-                  label='Is Exactly'
-                />
-                <Form.Check
-                  className='mb-2'
-                  type='radio'
-                  tabIndex={-1}
-                  readOnly
-                  name={filter.attribute}
-                  label='Contains'
-                />
-                <Form.Check
-                  className='mb-2'
-                  type='radio'
-                  tabIndex={-1}
-                  readOnly
-                  name={filter.attribute}
-                  label='Starts With'
-                />
-                <Form.Check
-                  className='mb-2'
-                  type='radio'
-                  tabIndex={-1}
-                  readOnly
-                  name={filter.attribute}
-                  label='Ends With'
-                />
-
-                <input
-                  type='input'
-                  aria-label='Enter text to filter by'
-                  placeholder='Enter filter text...'
-                  className='form-control'
-                />
-              </>
-            )}
+            <filter.OperationUI
+              activeFilters={activeFilters.filter(a => a.attr === filter.attribute)}
+              attribute={filter.attribute}
+              setFilter={setFilter}
+              removeFilter={removeFilter}
+            />
           </div>
         </FilterCategory>
       ))}

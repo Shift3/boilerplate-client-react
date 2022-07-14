@@ -2,71 +2,19 @@ import { useGetUsersQuery } from 'common/api/userApi';
 import { DataTable } from 'common/components/DataTable';
 import { FilterInfo } from 'common/components/DataTable/DataTableActiveFilterList';
 import { DataTableSearchAndFilters } from 'common/components/DataTable/DataTableSearchAndFilters';
+import { EnumFilter, StringFilter } from 'common/components/DataTable/Filters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
-import { Filter, FilterOp, PaginatedResult, Role, User } from 'common/models';
+import { PaginatedResult, User } from 'common/models';
 import { CreateButton } from 'common/styles/button';
 import { TableCard } from 'common/styles/card';
 import { PageHeader } from 'common/styles/page';
 import { HasPermission } from 'features/rbac';
-import { FC, useMemo, useState } from 'react';
+import { FC, useMemo } from 'react';
 import Container from 'react-bootstrap/Container';
+import { Trans } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserTableItem, useUserTableData } from '../hooks/useUserTableData';
-import { Trans } from 'react-i18next';
-import { Form } from 'react-bootstrap';
-
-const MultipleSelect = (options: { label: string; value: string }[]) => {
-  const initialState: { [key in string]: boolean } = {};
-  options.forEach(option => {
-    initialState[option.value] = true;
-  });
-  const Component: FC<{
-    attribute: string;
-    activeFilters: Filter[];
-    setFilter: (name: string, op: FilterOp, value: string) => void;
-    removeFilter: (attribute: string, operation: FilterOp) => void;
-  }> = ({ attribute, activeFilters, setFilter, removeFilter }) => {
-    const [state, setState] = useState(initialState);
-
-    const toggleOption = (option: { label: string; value: string }) => {
-      state[option.value] = !state[option.value];
-      setState(state);
-
-      const arr: string[] = [];
-      Object.entries(state).forEach(([k, v]) => {
-        if (v) arr.push(k);
-      });
-
-      if (arr.length === options.length) {
-        removeFilter(attribute, 'in');
-        removeFilter(attribute, 'isnull');
-      } else if (arr.length > 0) setFilter(attribute, 'in', arr.join(','));
-      else setFilter(attribute, 'isnull', 'true');
-    };
-
-    const optionChecked = (option: { label: string; value: string }) => {
-      if (activeFilters.length === 0) return true;
-      return !!activeFilters.find(f => f.value.indexOf(option.value) !== -1);
-    };
-
-    return (
-      <div>
-        {options.map(option => (
-          <Form.Group className='mb-1' controlId={option.value}>
-            <Form.Check
-              onChange={() => toggleOption(option)}
-              checked={optionChecked(option)}
-              type='checkbox'
-              label={option.label}
-            />
-          </Form.Group>
-        ))}
-      </div>
-    );
-  };
-  return Component;
-};
 
 export const UserListView: FC = () => {
   const navigate = useNavigate();
@@ -93,15 +41,17 @@ export const UserListView: FC = () => {
       {
         attribute: 'firstName',
         attributeLabel: 'First Name',
+        OperationUI: StringFilter(),
       },
       {
         attribute: 'lastName',
         attributeLabel: 'Last Name',
+        OperationUI: StringFilter(),
       },
       {
         attribute: 'role',
         attributeLabel: 'Role',
-        OperationUI: MultipleSelect([
+        OperationUI: EnumFilter([
           { label: 'User', value: 'USER' },
           { label: 'Editor', value: 'EDITOR' },
           { label: 'Admin', value: 'ADMIN' },

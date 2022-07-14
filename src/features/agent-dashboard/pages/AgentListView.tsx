@@ -17,6 +17,7 @@ import Container from 'react-bootstrap/Container';
 import { Link, useNavigate } from 'react-router-dom';
 import { AgentTableItem, useAgentTableData } from '../hooks/useAgentTableData';
 import { Trans } from 'react-i18next';
+import { StringFilter } from 'common/components/DataTable/Filters';
 
 export const AgentListView: FC = () => {
   const navigate = useNavigate();
@@ -43,24 +44,7 @@ export const AgentListView: FC = () => {
       {
         attribute: 'name',
         attributeLabel: 'Name',
-        operationOptions: [
-          {
-            operation: 'iexact',
-            operationLabel: 'is',
-          },
-          {
-            operation: 'icontains',
-            operationLabel: 'contains',
-          },
-          {
-            operation: 'istartswith',
-            operationLabel: 'starts with',
-          },
-          {
-            operation: 'iendswith',
-            operationLabel: 'ends with',
-          },
-        ],
+        OperationUI: StringFilter(),
       },
     ],
     [],
