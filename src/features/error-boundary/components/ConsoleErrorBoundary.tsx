@@ -1,5 +1,4 @@
-import { ConsoleLogger } from 'common/error/ConsoleLogger';
-import React, { ErrorInfo, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 interface Props {
   children?: ReactNode;
@@ -10,10 +9,6 @@ export class ConsoleErrorBoundary extends React.Component<Props, { hasError: boo
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false };
-  }
-
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    ConsoleLogger.logError(error, errorInfo);
   }
 
   /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
