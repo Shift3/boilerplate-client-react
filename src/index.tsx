@@ -76,6 +76,7 @@ library.add(
 );
 
 Sentry.init({
+  environment: environment.environment,
   dsn: environment.sentryDSN ?? undefined,
   beforeSend(event) {
     if (process.env.NODE_ENV === 'production') {
