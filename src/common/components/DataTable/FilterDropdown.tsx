@@ -6,6 +6,7 @@ import styled, { css } from 'styled-components';
 import { FilterInfo } from './DataTableActiveFilterList';
 import { wasMouseEventOutsideContainer } from 'utils/events';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FilterOp } from 'common/models';
 
 const StyledDropdown = styled.div`
   transition: all 0.15s ease-in-out;
@@ -195,9 +196,10 @@ const FilterCategory = styled.div`
 
 const AttributeDropdownMenu: FC<{
   filters: FilterInfo[];
-  selected?: number;
-  onSelect: (index: number) => void;
-}> = ({ filters, selected, onSelect }) => {
+  setFilter: (name: string, op: FilterOp, value: string) => void;
+  clearFilters: () => void;
+  removeFilter: (attribute: string, operation: FilterOp) => void;
+}> = ({ filters, setFilter, clearFilters, removeFilter }) => {
   const [openFilter, setOpenFilter] = useState<FilterInfo | null>(null);
 
   const toggleCategory = (filter: FilterInfo) => {
@@ -209,7 +211,9 @@ const AttributeDropdownMenu: FC<{
     <FilterMenu>
       <FilterHeader>
         <h1>Filters</h1>
-        <a href='/'>Clear All</a>
+        <Button variant='link' onClick={clearFilters}>
+          Clear All
+        </Button>
       </FilterHeader>
 
       {filters.map((filter, index) => (
@@ -221,12 +225,7 @@ const AttributeDropdownMenu: FC<{
 
           <div className='content'>
             {filter.OperationUI ? (
-              <filter.OperationUI
-                value={filter.attribute}
-                onApply={value => {
-                  console.log(value);
-                }}
-              />
+              <filter.OperationUI attribute={filter.attribute} setFilter={setFilter} removeFilter={removeFilter} />
             ) : (
               <>
                 <Form.Check
@@ -278,66 +277,6 @@ const AttributeDropdownMenu: FC<{
   );
 };
 
-export const OperationDropdownMenu: FC<{
-  show?: boolean;
-  filter: FilterInfo;
-  selected?: number;
-  defaultValue?: string;
-  onSelect: (index: number) => void;
-  onCancel: () => void;
-  onApply: (value: string) => void;
-}> = ({ show, filter, selected, defaultValue, onSelect, onCancel, onApply }) => {
-  const [value, setValue] = useState(defaultValue ?? '');
-
-  const handleOperationSelect = (index: number) => {
-    if (selected !== index) {
-      onSelect(index);
-      setValue('');
-    }
-  };
-
-  const handleCancel = () => onCancel();
-
-  const handleApply = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (value) {
-      onApply(value);
-      setValue('');
-    }
-  };
-
-  return (
-    <FilterMenu hidden={!show}>
-      <Form onSubmit={handleApply}>
-        {filter.operationOptions.map((op, index) => {
-          const FilterInput = op.InputUI ?? DefaultFilterInput;
-          return (
-            <DropdownItem key={op.operation} selected={index === selected} onClick={() => handleOperationSelect(index)}>
-              <Form.Check
-                type='radio'
-                tabIndex={-1}
-                readOnly
-                name={filter.attribute}
-                label={op.operationLabel}
-                checked={index === selected}
-                onClick={() => handleOperationSelect(index)}
-              />
-              {index === selected && <FilterInput value={value} onChange={setValue} />}
-            </DropdownItem>
-          );
-        })}
-        <StyledButtonWrapper>
-          <Button variant='default' onClick={handleCancel}>
-            Cancel
-          </Button>
-          <Button type='submit'>Apply</Button>
-        </StyledButtonWrapper>
-      </Form>
-    </FilterMenu>
-  );
-};
-
 // ----------------------------------------------------------------------------
 // Main Dropdown
 // ----------------------------------------------------------------------------
@@ -345,33 +284,25 @@ export type FilterDropdownProps = {
   show?: boolean;
   filters: FilterInfo[];
   onClose: () => void;
-  onApply: (selectedAttribute: number, selectedOperation: number, value: string) => void;
+  setFilter: (name: string, op: FilterOp, value: string) => void;
+  clearFilters: () => void;
+  removeFilter: (name: string, op: FilterOp) => void;
 };
 
-export const FilterDropdown: FC<FilterDropdownProps> = ({ show = false, filters, onClose, onApply }) => {
-  const [selectedAttribute, setSelectedAttribute] = useState<number>();
-  const [selectedOperation, setSelectedOperation] = useState<number>();
+export const FilterDropdown: FC<FilterDropdownProps> = ({
+  show = false,
+  filters,
+  onClose,
+  setFilter,
+  clearFilters,
+  removeFilter,
+}) => {
   const dropdownContainerRef = useRef<HTMLDivElement>(null);
-
-  const handleFilterCancel = useCallback(() => {
-    onClose();
-    setSelectedAttribute(undefined);
-    setSelectedOperation(undefined);
-  }, [onClose]);
-
-  const handleFilterApply = (value: string) => {
-    if (selectedAttribute !== undefined && selectedOperation !== undefined) {
-      onApply(selectedAttribute, selectedOperation, value);
-      onClose();
-      setSelectedAttribute(undefined);
-      setSelectedOperation(undefined);
-    }
-  };
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Esc' || e.key === 'Escape') {
-        handleFilterCancel();
+        onClose();
       }
     };
 
@@ -379,7 +310,7 @@ export const FilterDropdown: FC<FilterDropdownProps> = ({ show = false, filters,
       if (!dropdownContainerRef.current) return;
 
       if (wasMouseEventOutsideContainer(dropdownContainerRef.current, e)) {
-        handleFilterCancel();
+        onClose();
       }
     };
 
@@ -390,11 +321,16 @@ export const FilterDropdown: FC<FilterDropdownProps> = ({ show = false, filters,
       document.removeEventListener('keydown', handleEsc);
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [handleFilterCancel]);
+  }, [onClose]);
 
   return (
     <DropdownContainer show={show} ref={dropdownContainerRef}>
-      <AttributeDropdownMenu filters={filters} selected={selectedAttribute} onSelect={setSelectedAttribute} />
+      <AttributeDropdownMenu
+        filters={filters}
+        setFilter={setFilter}
+        clearFilters={clearFilters}
+        removeFilter={removeFilter}
+      />
     </DropdownContainer>
   );
 };

@@ -1,13 +1,13 @@
 import { FilterOp } from 'common/models';
 import { InputGroup } from 'react-bootstrap';
-import { AppliedFilterInfo, DataTableActiveFilterList, FilterInfo } from './DataTableActiveFilterList';
+import { AppliedFilterInfo, FilterInfo } from './DataTableActiveFilterList';
 import { DataTableFilterToggle } from './DataTableFilterToggle';
-import { FilterDropdown } from './FilterDropdown';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC, useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import styled from 'styled-components';
+import { FilterDropdown } from './FilterDropdown';
 
 const ClearSearchButton = styled.span`
   position: absolute;
@@ -52,9 +52,6 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
 }) => {
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState<AppliedFilterInfo[]>([]);
-  const availableFilters = filters.filter(
-    filter => !appliedFilters.find(appliedFilter => appliedFilter.filter.attribute === filter.attribute),
-  );
 
   const handleDropdownToggle = () => {
     if (filters.length) {
@@ -66,20 +63,8 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
     setShowFilterDropdown(false);
   };
 
-  const handleFilterApply = (selectedAttribute: number, selectedOperation: number, value: string) => {
-    onSetFilter(
-      availableFilters[selectedAttribute].attribute,
-      availableFilters[selectedAttribute].operationOptions[selectedOperation].operation,
-      value,
-    );
-    setAppliedFilters(appliedFilters => [
-      ...appliedFilters,
-      {
-        filter: availableFilters[selectedAttribute],
-        selectedOperation,
-        value,
-      },
-    ]);
+  const setFilter = (attribute: string, operation: FilterOp, value: string) => {
+    onSetFilter(attribute, operation, value);
   };
 
   const [searchValue, setSearchValue] = useState('');
@@ -93,20 +78,18 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
 
   return (
     <>
-      <SearchFilterRow>
+      <SearchFilterRow className='mb-3'>
         <InputGroup>
-          <DataTableFilterToggle
-            onDropdownToggle={handleDropdownToggle}
-            hasAvailableFilters={availableFilters.length > 0}
+          <DataTableFilterToggle onDropdownToggle={handleDropdownToggle} hasAvailableFilters={filters.length > 0} />
+
+          <FilterDropdown
+            show={showFilterDropdown}
+            filters={filters}
+            onClose={handleDropdownClose}
+            setFilter={setFilter}
+            clearFilters={onClearFilters}
+            removeFilter={onRemoveFilter}
           />
-          {availableFilters.length > 0 && (
-            <FilterDropdown
-              show={showFilterDropdown}
-              filters={availableFilters}
-              onClose={handleDropdownClose}
-              onApply={handleFilterApply}
-            />
-          )}
 
           <Form.Control
             type='text'
@@ -121,15 +104,6 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
           </ClearSearchButton>
         ) : null}
       </SearchFilterRow>
-
-      <DataTableActiveFilterList
-        appliedFilters={appliedFilters}
-        onSetAppliedFilters={setAppliedFilters}
-        onSetFilter={onSetFilter}
-        onRemoveFilter={onRemoveFilter}
-        onClearFilters={onClearFilters}
-        showFilterDropdown={showFilterDropdown}
-      />
     </>
   );
 };

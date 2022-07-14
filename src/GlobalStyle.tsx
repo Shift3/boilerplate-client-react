@@ -17,7 +17,7 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
         color: ${({ theme }) => theme.textColor};
     }
 
-    a {
+    a, .btn-link {
         text-decoration: none;
         color: ${({ theme }) => theme.linkColor};
         &:hover {

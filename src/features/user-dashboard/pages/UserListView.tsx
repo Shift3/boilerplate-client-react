@@ -4,7 +4,7 @@ import { FilterInfo } from 'common/components/DataTable/DataTableActiveFilterLis
 import { DataTableSearchAndFilters } from 'common/components/DataTable/DataTableSearchAndFilters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
-import { PaginatedResult, Role, User } from 'common/models';
+import { FilterOp, PaginatedResult, Role, User } from 'common/models';
 import { CreateButton } from 'common/styles/button';
 import { TableCard } from 'common/styles/card';
 import { PageHeader } from 'common/styles/page';
@@ -21,26 +21,40 @@ const MultipleSelect = (options: { label: string; value: string }[]) => {
   options.forEach(option => {
     initialState[option.value] = true;
   });
-  const Component: FC<{ value: string }> = ({ value }) => {
+  const Component: FC<{
+    attribute: string;
+    setFilter: (name: string, op: FilterOp, value: string) => void;
+    removeFilter: (attribute: string, operation: FilterOp) => void;
+  }> = ({ attribute: value, setFilter, removeFilter }) => {
     const [state, setState] = useState(initialState);
 
     const toggleOption = (option: { label: string; value: string }) => {
       state[option.value] = !state[option.value];
       setState(state);
 
-      // TODO(justin): modify filters
-      // filterApi.setFilter(value, state.filter(s => s).keys().join(','))
+      const arr: string[] = [];
+      Object.entries(state).forEach(([k, v]) => {
+        if (v) arr.push(k);
+      });
+
+      if (arr.length === options.length) {
+        removeFilter(value, 'in');
+        removeFilter(value, 'isnull');
+      } else if (arr.length > 0) setFilter(value, 'in', arr.join(','));
+      else setFilter(value, 'isnull', 'true');
     };
 
     return (
       <div>
         {options.map(option => (
-          <Form.Check
-            onChange={() => toggleOption(option)}
-            checked={state[option.value]}
-            type='checkbox'
-            label={option.label}
-          />
+          <Form.Group className='mb-1' controlId={option.value}>
+            <Form.Check
+              onChange={() => toggleOption(option)}
+              checked={state[option.value]}
+              type='checkbox'
+              label={option.label}
+            />
+          </Form.Group>
         ))}
       </div>
     );
@@ -73,46 +87,10 @@ export const UserListView: FC = () => {
       {
         attribute: 'firstName',
         attributeLabel: 'First Name',
-        operationOptions: [
-          {
-            operation: 'iexact',
-            operationLabel: 'is',
-          },
-          {
-            operation: 'icontains',
-            operationLabel: 'contains',
-          },
-          {
-            operation: 'istartswith',
-            operationLabel: 'starts with',
-          },
-          {
-            operation: 'iendswith',
-            operationLabel: 'ends with',
-          },
-        ],
       },
       {
         attribute: 'lastName',
         attributeLabel: 'Last Name',
-        operationOptions: [
-          {
-            operation: 'iexact',
-            operationLabel: 'is',
-          },
-          {
-            operation: 'icontains',
-            operationLabel: 'contains',
-          },
-          {
-            operation: 'istartswith',
-            operationLabel: 'starts with',
-          },
-          {
-            operation: 'iendswith',
-            operationLabel: 'ends with',
-          },
-        ],
       },
       {
         attribute: 'role',
