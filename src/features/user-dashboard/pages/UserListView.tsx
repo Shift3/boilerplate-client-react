@@ -4,7 +4,7 @@ import { FilterInfo } from 'common/components/DataTable/DataTableActiveFilterLis
 import { DataTableSearchAndFilters } from 'common/components/DataTable/DataTableSearchAndFilters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
-import { FilterOp, PaginatedResult, Role, User } from 'common/models';
+import { Filter, FilterOp, PaginatedResult, Role, User } from 'common/models';
 import { CreateButton } from 'common/styles/button';
 import { TableCard } from 'common/styles/card';
 import { PageHeader } from 'common/styles/page';
@@ -23,9 +23,10 @@ const MultipleSelect = (options: { label: string; value: string }[]) => {
   });
   const Component: FC<{
     attribute: string;
+    activeFilters: Filter[];
     setFilter: (name: string, op: FilterOp, value: string) => void;
     removeFilter: (attribute: string, operation: FilterOp) => void;
-  }> = ({ attribute, setFilter, removeFilter }) => {
+  }> = ({ attribute, activeFilters, setFilter, removeFilter }) => {
     const [state, setState] = useState(initialState);
 
     const toggleOption = (option: { label: string; value: string }) => {
@@ -44,13 +45,18 @@ const MultipleSelect = (options: { label: string; value: string }[]) => {
       else setFilter(attribute, 'isnull', 'true');
     };
 
+    const optionChecked = (option: { label: string; value: string }) => {
+      if (activeFilters.length === 0) return true;
+      return !!activeFilters.find(f => f.value.indexOf(option.value) !== -1);
+    };
+
     return (
       <div>
         {options.map(option => (
           <Form.Group className='mb-1' controlId={option.value}>
             <Form.Check
               onChange={() => toggleOption(option)}
-              checked={state[option.value]}
+              checked={optionChecked(option)}
               type='checkbox'
               label={option.label}
             />
@@ -95,7 +101,6 @@ export const UserListView: FC = () => {
       {
         attribute: 'role',
         attributeLabel: 'Role',
-        operationOptions: [],
         OperationUI: MultipleSelect([
           { label: 'User', value: 'USER' },
           { label: 'Editor', value: 'EDITOR' },

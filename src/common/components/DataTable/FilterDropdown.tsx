@@ -1,20 +1,22 @@
-import React, { FC, PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import styled, { css } from 'styled-components';
-import { FilterInfo } from './DataTableActiveFilterList';
-import { wasMouseEventOutsideContainer } from 'utils/events';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Filter, FilterOp } from 'common/models';
+import React, { FC, useEffect, useRef, useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+import styled from 'styled-components';
+import { wasMouseEventOutsideContainer } from 'utils/events';
+import { FilterInfo } from './DataTableActiveFilterList';
 
 const StyledDropdown = styled.div`
-  transition: all 0.15s ease-in-out;
   position: absolute;
-  top: 16px;
   left: 0;
   z-index: 9999;
   min-width: 240px;
+
+  transition: all 0.15s ease-in-out;
+
+  top: 16px;
   visibility: hidden;
   opacity: 0;
   transform: scale(0.75) translateX(-10%);
@@ -23,7 +25,7 @@ const StyledDropdown = styled.div`
     visibility: visible;
     opacity: 1;
     top: 42px;
-    transform: scale(1);
+    transform: scale(1) translateX(0);
   }
 `;
 
@@ -39,79 +41,6 @@ const FilterMenu = styled(Card)`
     padding: 0;
   }
 `;
-
-const StyledDropdownItem = styled.a<{ selected?: boolean }>`
-  display: block;
-  width: 100%;
-  padding: 0.5rem 1.5rem;
-  clear: both;
-  font-weight: 400;
-  text-align: inherit;
-  text-decoration: none;
-  white-space: nowrap;
-  color: ${props => props.theme.textColor};
-  border: 0;
-  cursor: pointer;
-
-  &:focus,
-  &:hover {
-    background-color: ${props => props.theme.buttons.defaultBackgroundColor};
-  }
-
-  &:active {
-    background-color: ${props => props.theme.buttons.defaultBackgroundColor};
-  }
-
-  ${props =>
-    props.selected &&
-    css`
-      background-color: ${props => props.theme.buttons.primaryBackgroundColor};
-    `}
-`;
-
-const StyledButtonWrapper = styled.div`
-  button {
-    display: inline-block;
-    margin: 0;
-    width: 50%;
-    white-space: nowrap;
-
-    &:first-of-type {
-      border-radius: 0 0 0 0.25rem;
-    }
-
-    &:last-of-type {
-      border-radius: 0 0 0.25rem 0;
-    }
-  }
-`;
-
-const DefaultFilterInput: FC<{
-  value: string;
-  onChange: (value: string) => void;
-}> = ({ value, onChange }) => <Form.Control type='text' value={value} onChange={e => onChange(e.target.value)} />;
-
-const DropdownItem: FC<
-  PropsWithChildren<{
-    selected: boolean;
-    onClick: React.MouseEventHandler;
-  }>
-> = ({ children, selected, onClick }) => {
-  const targetRef = useRef<HTMLElement | null>(null);
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
-    if (e.key === 'Enter') {
-      targetRef.current = e.target as HTMLElement;
-      targetRef.current.click();
-    }
-  };
-
-  return (
-    <StyledDropdownItem tabIndex={0} selected={selected} onClick={onClick} onKeyDown={handleKeyDown}>
-      {children}
-    </StyledDropdownItem>
-  );
-};
 
 const DropdownContainer = React.forwardRef<HTMLDivElement, { show?: boolean; children: React.ReactNode }>(
   ({ show, children }, ref) => (
@@ -155,6 +84,11 @@ const FilterCategory = styled.div`
 
     span {
       flex: 1;
+
+      &.active {
+        color: ${props => props.theme.textColor};
+        font-weight: 600;
+      }
     }
 
     svg {
@@ -220,7 +154,9 @@ const AttributeDropdownMenu: FC<{
       {filters.map((filter, index) => (
         <FilterCategory className={openFilter === filter ? 'open' : ''}>
           <div role='button' tabIndex={-1} className='category' onClick={() => toggleCategory(filter)}>
-            <span>{filter.attributeLabel}</span>
+            <span className={activeFilters.filter(a => a.attr === filter.attribute).length ? 'active' : ''}>
+              {filter.attributeLabel}
+            </span>
             <FontAwesomeIcon icon='chevron-down' />
           </div>
 

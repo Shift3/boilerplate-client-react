@@ -168,7 +168,6 @@ export const usePSFQuery = <ResultType>(
       }
 
       case 'filter/add': {
-        console.log('filter/add');
         const { basePage } = config;
         const { filters: oldFilters } = state;
         const { payload } = action;
