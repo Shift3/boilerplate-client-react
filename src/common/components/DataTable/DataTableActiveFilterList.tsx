@@ -1,4 +1,4 @@
-import { FilterOp } from 'common/models';
+import { Filter, FilterOp } from 'common/models';
 import { FC } from 'react';
 
 export type FilterInfo = {
@@ -6,13 +6,8 @@ export type FilterInfo = {
   attributeLabel: string;
   OperationUI?: FC<{
     attribute: string;
+    activeFilters: Filter[];
     setFilter: (name: string, op: FilterOp, value: string) => void;
     removeFilter: (attribute: string, operation: FilterOp) => void;
   }>;
-};
-
-export type AppliedFilterInfo = {
-  filter: FilterInfo;
-  selectedOperation: number;
-  value: string;
 };

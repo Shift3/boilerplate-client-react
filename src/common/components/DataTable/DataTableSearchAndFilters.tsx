@@ -1,6 +1,6 @@
-import { FilterOp } from 'common/models';
+import { Filter, FilterOp } from 'common/models';
 import { InputGroup } from 'react-bootstrap';
-import { AppliedFilterInfo, FilterInfo } from './DataTableActiveFilterList';
+import { FilterInfo } from './DataTableActiveFilterList';
 import { DataTableFilterToggle } from './DataTableFilterToggle';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -51,7 +51,7 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
   onSetSearchText,
 }) => {
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
-  const [appliedFilters, setAppliedFilters] = useState<AppliedFilterInfo[]>([]);
+  const [activeFilters, setActiveFilters] = useState<Filter[]>([]);
 
   const handleDropdownToggle = () => {
     if (filters.length) {
@@ -64,7 +64,39 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
   };
 
   const setFilter = (attribute: string, operation: FilterOp, value: string) => {
+    const existingFilter = activeFilters.find(filter => filter.attr === attribute);
+    let newFilters;
+    if (existingFilter) {
+      newFilters = [
+        ...activeFilters.filter(filter => filter.attr !== attribute),
+        {
+          attr: attribute,
+          op: operation,
+          value,
+        },
+      ];
+    } else {
+      newFilters = [
+        ...activeFilters,
+        {
+          attr: attribute,
+          op: operation,
+          value,
+        },
+      ];
+    }
+    setActiveFilters(newFilters);
     onSetFilter(attribute, operation, value);
+  };
+
+  const removeFilter = (attr: string, op: FilterOp) => {
+    setActiveFilters(activeFilters.filter(filter => filter.attr !== attr && filter.op !== op));
+    onRemoveFilter(attr, op);
+  };
+
+  const clearFilters = () => {
+    setActiveFilters([]);
+    onClearFilters();
   };
 
   const [searchValue, setSearchValue] = useState('');
@@ -80,15 +112,16 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
     <>
       <SearchFilterRow className='mb-3'>
         <InputGroup>
-          <DataTableFilterToggle onDropdownToggle={handleDropdownToggle} hasAvailableFilters={filters.length > 0} />
+          <DataTableFilterToggle onDropdownToggle={handleDropdownToggle} activeFilters={activeFilters} />
 
           <FilterDropdown
             show={showFilterDropdown}
             filters={filters}
+            activeFilters={activeFilters}
             onClose={handleDropdownClose}
             setFilter={setFilter}
-            clearFilters={onClearFilters}
-            removeFilter={onRemoveFilter}
+            clearFilters={clearFilters}
+            removeFilter={removeFilter}
           />
 
           <Form.Control

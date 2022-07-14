@@ -25,7 +25,7 @@ const MultipleSelect = (options: { label: string; value: string }[]) => {
     attribute: string;
     setFilter: (name: string, op: FilterOp, value: string) => void;
     removeFilter: (attribute: string, operation: FilterOp) => void;
-  }> = ({ attribute: value, setFilter, removeFilter }) => {
+  }> = ({ attribute, setFilter, removeFilter }) => {
     const [state, setState] = useState(initialState);
 
     const toggleOption = (option: { label: string; value: string }) => {
@@ -38,10 +38,10 @@ const MultipleSelect = (options: { label: string; value: string }[]) => {
       });
 
       if (arr.length === options.length) {
-        removeFilter(value, 'in');
-        removeFilter(value, 'isnull');
-      } else if (arr.length > 0) setFilter(value, 'in', arr.join(','));
-      else setFilter(value, 'isnull', 'true');
+        removeFilter(attribute, 'in');
+        removeFilter(attribute, 'isnull');
+      } else if (arr.length > 0) setFilter(attribute, 'in', arr.join(','));
+      else setFilter(attribute, 'isnull', 'true');
     };
 
     return (

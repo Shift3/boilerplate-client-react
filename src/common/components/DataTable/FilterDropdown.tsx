@@ -6,7 +6,7 @@ import styled, { css } from 'styled-components';
 import { FilterInfo } from './DataTableActiveFilterList';
 import { wasMouseEventOutsideContainer } from 'utils/events';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FilterOp } from 'common/models';
+import { Filter, FilterOp } from 'common/models';
 
 const StyledDropdown = styled.div`
   transition: all 0.15s ease-in-out;
@@ -196,10 +196,11 @@ const FilterCategory = styled.div`
 
 const AttributeDropdownMenu: FC<{
   filters: FilterInfo[];
+  activeFilters: Filter[];
   setFilter: (name: string, op: FilterOp, value: string) => void;
   clearFilters: () => void;
   removeFilter: (attribute: string, operation: FilterOp) => void;
-}> = ({ filters, setFilter, clearFilters, removeFilter }) => {
+}> = ({ filters, activeFilters, setFilter, clearFilters, removeFilter }) => {
   const [openFilter, setOpenFilter] = useState<FilterInfo | null>(null);
 
   const toggleCategory = (filter: FilterInfo) => {
@@ -225,7 +226,12 @@ const AttributeDropdownMenu: FC<{
 
           <div className='content'>
             {filter.OperationUI ? (
-              <filter.OperationUI attribute={filter.attribute} setFilter={setFilter} removeFilter={removeFilter} />
+              <filter.OperationUI
+                activeFilters={activeFilters.filter(a => a.attr === filter.attribute)}
+                attribute={filter.attribute}
+                setFilter={setFilter}
+                removeFilter={removeFilter}
+              />
             ) : (
               <>
                 <Form.Check
@@ -283,6 +289,7 @@ const AttributeDropdownMenu: FC<{
 export type FilterDropdownProps = {
   show?: boolean;
   filters: FilterInfo[];
+  activeFilters: Filter[];
   onClose: () => void;
   setFilter: (name: string, op: FilterOp, value: string) => void;
   clearFilters: () => void;
@@ -292,6 +299,7 @@ export type FilterDropdownProps = {
 export const FilterDropdown: FC<FilterDropdownProps> = ({
   show = false,
   filters,
+  activeFilters,
   onClose,
   setFilter,
   clearFilters,
@@ -327,6 +335,7 @@ export const FilterDropdown: FC<FilterDropdownProps> = ({
     <DropdownContainer show={show} ref={dropdownContainerRef}>
       <AttributeDropdownMenu
         filters={filters}
+        activeFilters={activeFilters}
         setFilter={setFilter}
         clearFilters={clearFilters}
         removeFilter={removeFilter}
