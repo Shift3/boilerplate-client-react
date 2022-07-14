@@ -31,9 +31,6 @@ const ClearSearchButton = styled.span`
 
 const SearchFilterRow = styled.div`
   position: relative;
-  input {
-    padding-right: 36px;
-  }
 `;
 
 export type DataTableSearchAndFilterProps = {
@@ -102,6 +99,15 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
             onDropdownToggle={handleDropdownToggle}
             hasAvailableFilters={availableFilters.length > 0}
           />
+          {availableFilters.length > 0 && (
+            <FilterDropdown
+              show={showFilterDropdown}
+              filters={availableFilters}
+              onClose={handleDropdownClose}
+              onApply={handleFilterApply}
+            />
+          )}
+
           <Form.Control
             type='text'
             placeholder={placeholder}
@@ -124,14 +130,6 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
         onClearFilters={onClearFilters}
         showFilterDropdown={showFilterDropdown}
       />
-      {availableFilters.length > 0 && (
-        <FilterDropdown
-          show={showFilterDropdown}
-          filters={availableFilters}
-          onClose={handleDropdownClose}
-          onApply={handleFilterApply}
-        />
-      )}
     </>
   );
 };

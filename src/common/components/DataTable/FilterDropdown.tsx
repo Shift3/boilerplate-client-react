@@ -5,17 +5,21 @@ import Form from 'react-bootstrap/Form';
 import styled, { css } from 'styled-components';
 import { FilterInfo } from './DataTableActiveFilterList';
 import { wasMouseEventOutsideContainer } from 'utils/events';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { CustomSelect } from '../CustomSelect';
 
 const StyledDropdown = styled.div`
-  display: flex;
-  gap: 10px;
   position: absolute;
+  top: 42px;
   z-index: 9999;
+  min-width: 240px;
 `;
 
-const StyledDropdownMenu = styled(Card).attrs({ className: 'shadow' })`
-  background-color: ${props => props.theme.backgroundColor};
-
+const FilterMenu = styled(Card)`
+  overflow: hidden;
+  border-radius: ${props => props.theme.borderRadius};
+  background-color: ${props => props.theme.card.backgroundColor};
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
   & ul {
     list-style: none;
     margin: 0;
@@ -26,14 +30,13 @@ const StyledDropdownMenu = styled(Card).attrs({ className: 'shadow' })`
 const StyledDropdownItem = styled.a<{ selected?: boolean }>`
   display: block;
   width: 100%;
-  padding 0.25rem 1rem;
+  padding 0.5rem 1.5rem;
   clear: both;
   font-weight: 400;
   text-align: inherit;
   text-decoration: none;
   white-space: nowrap;
   color: ${props => props.theme.textColor};
-  background-color: ${props => props.theme.backgroundColor};
   border: 0;
   cursor: pointer;
 
@@ -105,20 +108,144 @@ const DropdownContainer = React.forwardRef<HTMLDivElement, { show?: boolean; chi
   ),
 );
 
+const FilterHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+
+  h1 {
+    font-size: 1.2rem;
+    margin: 0;
+    flex: 1;
+  }
+`;
+
+const FilterCategory = styled.div`
+  display: block;
+  &:not(:last-of-type) {
+    border-bottom: 1px solid ${props => props.theme.buttons.defaultBackgroundColor};
+  }
+
+  & > .category {
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: ${props => props.theme.pages.p};
+    transition: all 0.15s ease;
+
+    &:hover {
+      color: ${props => props.theme.textColor};
+    }
+
+    span {
+      flex: 1;
+    }
+
+    svg {
+      transition: all 0.15s ease;
+    }
+  }
+
+  & > .content {
+    visibility: hidden;
+    max-height: 0;
+    padding: 0 1rem;
+    transition: all 0.15s ease;
+    overflow: hidden;
+    background: ${props => props.theme.backgroundColor};
+
+    label {
+      color: ${props => props.theme.textColor};
+      font-weight: normal;
+      font-size: 0.9rem;
+    }
+  }
+
+  &.open {
+    & > .category {
+      color: ${props => props.theme.textColor};
+
+      svg {
+        transform: rotateZ(180deg);
+      }
+    }
+
+    & > .content {
+      visibility: visible;
+      max-height: 250px;
+      padding: 1rem;
+    }
+  }
+`;
+
 const AttributeDropdownMenu: FC<{
   show?: boolean;
   filters: FilterInfo[];
   selected?: number;
   onSelect: (index: number) => void;
 }> = ({ show, filters, selected, onSelect }) => {
+  const [openFilter, setOpenFilter] = useState<FilterInfo | null>(null);
+
+  const toggleCategory = (filter: FilterInfo) => {
+    if (openFilter === filter) setOpenFilter(null);
+    else setOpenFilter(filter);
+  };
+
   return (
-    <StyledDropdownMenu hidden={!show}>
+    <FilterMenu hidden={!show}>
+      <FilterHeader>
+        <h1>Filters</h1>
+        <a href='/'>Clear All</a>
+      </FilterHeader>
+
       {filters.map((filter, index) => (
-        <DropdownItem key={filter.attribute} selected={index === selected} onClick={() => onSelect(index)}>
-          {filter.attributeLabel}
-        </DropdownItem>
+        <FilterCategory className={openFilter === filter ? 'open' : ''}>
+          <div role='button' tabIndex={-1} className='category' onClick={() => toggleCategory(filter)}>
+            <span>{filter.attributeLabel}</span>
+            <FontAwesomeIcon icon='chevron-down' />
+          </div>
+
+          <div className='content'>
+            <Form.Check
+              className='mb-2'
+              type='radio'
+              tabIndex={-1}
+              readOnly
+              checked
+              name={filter.attribute}
+              label='Is Exactly'
+            />
+            <Form.Check className='mb-2' type='radio' tabIndex={-1} readOnly name={filter.attribute} label='Contains' />
+            <Form.Check
+              className='mb-2'
+              type='radio'
+              tabIndex={-1}
+              readOnly
+              name={filter.attribute}
+              label='Starts With'
+            />
+            <Form.Check
+              className='mb-2'
+              type='radio'
+              tabIndex={-1}
+              readOnly
+              name={filter.attribute}
+              label='Ends With'
+            />
+
+            <input
+              type='input'
+              aria-label='Enter text to filter by'
+              placeholder='Enter filter text...'
+              className='form-control'
+            />
+          </div>
+        </FilterCategory>
       ))}
-    </StyledDropdownMenu>
+    </FilterMenu>
   );
 };
 
@@ -152,7 +279,7 @@ export const OperationDropdownMenu: FC<{
   };
 
   return (
-    <StyledDropdownMenu hidden={!show}>
+    <FilterMenu hidden={!show}>
       <Form onSubmit={handleApply}>
         {filter.operationOptions.map((op, index) => {
           const FilterInput = op.InputUI ?? DefaultFilterInput;
@@ -178,7 +305,7 @@ export const OperationDropdownMenu: FC<{
           <Button type='submit'>Apply</Button>
         </StyledButtonWrapper>
       </Form>
-    </StyledDropdownMenu>
+    </FilterMenu>
   );
 };
 
@@ -244,16 +371,6 @@ export const FilterDropdown: FC<FilterDropdownProps> = ({ show = false, filters,
         selected={selectedAttribute}
         onSelect={setSelectedAttribute}
       />
-      {selectedAttribute !== undefined && (
-        <OperationDropdownMenu
-          show={selectedAttribute !== undefined}
-          filter={filters[selectedAttribute]}
-          selected={selectedOperation}
-          onSelect={setSelectedOperation}
-          onCancel={handleFilterCancel}
-          onApply={handleFilterApply}
-        />
-      )}
     </DropdownContainer>
   );
 };
