@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetAgentsQuery } from 'common/api/agentApi';
 import { DataTable } from 'common/components/DataTable';
-import { FilterInfo } from 'common/components/DataTable/DataTableActiveFilterList';
 import { DataTableSearchAndFilters } from 'common/components/DataTable/DataTableSearchAndFilters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
@@ -18,6 +17,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AgentTableItem, useAgentTableData } from '../hooks/useAgentTableData';
 import { Trans } from 'react-i18next';
 import { StringFilter } from 'common/components/DataTable/Filters';
+import { FilterInfo } from 'common/components/DataTable/FilterDropdown';
 
 export const AgentListView: FC = () => {
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ export const AgentListView: FC = () => {
       {
         attribute: 'name',
         attributeLabel: 'Name',
-        OperationUI: StringFilter(),
+        FilterUI: StringFilter(),
       },
     ],
     [],

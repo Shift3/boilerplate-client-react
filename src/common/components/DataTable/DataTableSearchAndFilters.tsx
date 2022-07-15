@@ -1,13 +1,10 @@
 import { Filter, FilterOp } from 'common/models';
-import { InputGroup } from 'react-bootstrap';
-import { FilterInfo } from './DataTableActiveFilterList';
-import { DataTableFilterToggle } from './DataTableFilterToggle';
-
+import { Badge, Button, InputGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC, useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import styled from 'styled-components';
-import { FilterDropdown } from './FilterDropdown';
+import { FilterDropdown, FilterInfo } from './FilterDropdown';
 
 const ClearSearchButton = styled.span`
   position: absolute;
@@ -112,7 +109,16 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
     <>
       <SearchFilterRow className='mb-3'>
         <InputGroup>
-          <DataTableFilterToggle onDropdownToggle={handleDropdownToggle} activeFilters={activeFilters} />
+          <Button variant='default' onClick={handleDropdownToggle}>
+            <FontAwesomeIcon icon='filter' /> Filters{' '}
+            {activeFilters.length > 0 ? (
+              <Badge pill bg='dark'>
+                {activeFilters.length} active
+              </Badge>
+            ) : (
+              ''
+            )}
+          </Button>
 
           <FilterDropdown
             show={showFilterDropdown}

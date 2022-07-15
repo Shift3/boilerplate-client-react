@@ -25,6 +25,11 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
         }
     }
 
+    .bg-dark {
+        background-color: ${({ theme }) => theme.textColor} !important;
+        color: ${({ theme }) => theme.backgroundColor} !important;
+    }
+
     button.btn:disabled {
         cursor: not-allowed;
         pointer-events: unset;
@@ -62,7 +67,7 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
         background-color: ${({ theme }) => theme.card.backgroundColor};
         border-radius: 6px;
         border: none;
-        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+        box-shadow: ${({ theme }) => theme.boxShadow};
     }
 
     .text-muted {
@@ -109,11 +114,11 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
     }
 
     div.react-select__menu {
-        background-color: ${({ theme }) => theme.backgroundColor};
+        background-color: ${({ theme }) => theme.card.backgroundColor};
     }
     div.react-select__option--is-focused:not(.react-select__option--is-selected) {
-        background-color: ${({ theme }) => theme.nav.backgroundColor};
+        background-color: ${({ theme }) => theme.backgroundColor};
     }
 
-    `;
+`;
 export default GlobalStyle;

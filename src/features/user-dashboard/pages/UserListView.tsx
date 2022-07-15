@@ -1,8 +1,8 @@
 import { useGetUsersQuery } from 'common/api/userApi';
 import { DataTable } from 'common/components/DataTable';
-import { FilterInfo } from 'common/components/DataTable/DataTableActiveFilterList';
 import { DataTableSearchAndFilters } from 'common/components/DataTable/DataTableSearchAndFilters';
-import { EnumFilter, StringFilter } from 'common/components/DataTable/Filters';
+import { FilterInfo } from 'common/components/DataTable/FilterDropdown';
+import { RecentDateFilter, EnumFilter, StringFilter } from 'common/components/DataTable/Filters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { PaginatedResult, User } from 'common/models';
@@ -41,21 +41,26 @@ export const UserListView: FC = () => {
       {
         attribute: 'firstName',
         attributeLabel: 'First Name',
-        OperationUI: StringFilter(),
+        FilterUI: StringFilter(),
       },
       {
         attribute: 'lastName',
         attributeLabel: 'Last Name',
-        OperationUI: StringFilter(),
+        FilterUI: StringFilter(),
       },
       {
         attribute: 'role',
         attributeLabel: 'Role',
-        OperationUI: EnumFilter([
+        FilterUI: EnumFilter([
           { label: 'User', value: 'USER' },
           { label: 'Editor', value: 'EDITOR' },
           { label: 'Admin', value: 'ADMIN' },
         ]),
+      },
+      {
+        attribute: 'activatedAt',
+        attributeLabel: 'Activated Date',
+        FilterUI: RecentDateFilter([30, 90, 180]),
       },
     ],
     [],

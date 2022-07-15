@@ -1,12 +1,16 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Filter, FilterOp } from 'common/models';
-import React, { FC, useEffect, useRef, useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import { FC, useEffect, useRef, useState } from 'react';
 import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
 import styled from 'styled-components';
 import { wasMouseEventOutsideContainer } from 'utils/events';
-import { FilterInfo } from './DataTableActiveFilterList';
+import { FilterUI } from './Filters';
+
+export type FilterInfo = {
+  attribute: string;
+  attributeLabel: string;
+  FilterUI: FilterUI;
+};
 
 const StyledDropdown = styled.div`
   position: absolute;
@@ -24,7 +28,7 @@ const StyledDropdown = styled.div`
   &.show {
     visibility: visible;
     opacity: 1;
-    top: 42px;
+    top: 46px;
     transform: scale(1) translateX(0);
   }
 `;
@@ -34,21 +38,14 @@ const FilterMenu = styled(Card)`
   overflow: hidden;
   border-radius: ${props => props.theme.borderRadius};
   background-color: ${props => props.theme.card.backgroundColor};
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  box-shadow: ${props => props.theme.boxShadow} !important;
+
   & ul {
     list-style: none;
     margin: 0;
     padding: 0;
   }
 `;
-
-const DropdownContainer = React.forwardRef<HTMLDivElement, { show?: boolean; children: React.ReactNode }>(
-  ({ show, children }, ref) => (
-    <StyledDropdown className={show ? 'show' : ''} ref={ref}>
-      {children}
-    </StyledDropdown>
-  ),
-);
 
 const FilterHeader = styled.div`
   display: flex;
@@ -128,56 +125,7 @@ const FilterCategory = styled.div`
   }
 `;
 
-const AttributeDropdownMenu: FC<{
-  filters: FilterInfo[];
-  activeFilters: Filter[];
-  setFilter: (name: string, op: FilterOp, value: string) => void;
-  clearFilters: () => void;
-  removeFilter: (attribute: string, operation: FilterOp) => void;
-}> = ({ filters, activeFilters, setFilter, clearFilters, removeFilter }) => {
-  const [openFilter, setOpenFilter] = useState<FilterInfo | null>(null);
-
-  const toggleCategory = (filter: FilterInfo) => {
-    if (openFilter === filter) setOpenFilter(null);
-    else setOpenFilter(filter);
-  };
-
-  return (
-    <FilterMenu>
-      <FilterHeader>
-        <h1>Filters</h1>
-        <Button variant='link' onClick={clearFilters}>
-          Clear All
-        </Button>
-      </FilterHeader>
-
-      {filters.map((filter, index) => (
-        <FilterCategory key={filter.attribute} className={openFilter === filter ? 'open' : ''}>
-          <div role='button' tabIndex={-1} className='category' onClick={() => toggleCategory(filter)}>
-            <span className={activeFilters.filter(a => a.attr === filter.attribute).length ? 'active' : ''}>
-              {filter.attributeLabel}
-            </span>
-            <FontAwesomeIcon icon='chevron-down' />
-          </div>
-
-          <div className='content'>
-            <filter.OperationUI
-              activeFilters={activeFilters.filter(a => a.attr === filter.attribute)}
-              attribute={filter.attribute}
-              setFilter={setFilter}
-              removeFilter={removeFilter}
-            />
-          </div>
-        </FilterCategory>
-      ))}
-    </FilterMenu>
-  );
-};
-
-// ----------------------------------------------------------------------------
-// Main Dropdown
-// ----------------------------------------------------------------------------
-export type FilterDropdownProps = {
+export const FilterDropdown: FC<{
   show?: boolean;
   filters: FilterInfo[];
   activeFilters: Filter[];
@@ -185,17 +133,8 @@ export type FilterDropdownProps = {
   setFilter: (name: string, op: FilterOp, value: string) => void;
   clearFilters: () => void;
   removeFilter: (name: string, op: FilterOp) => void;
-};
-
-export const FilterDropdown: FC<FilterDropdownProps> = ({
-  show = false,
-  filters,
-  activeFilters,
-  onClose,
-  setFilter,
-  clearFilters,
-  removeFilter,
-}) => {
+}> = ({ show = false, filters, activeFilters, onClose, setFilter, clearFilters, removeFilter }) => {
+  const [openFilter, setOpenFilter] = useState<FilterInfo | null>(null);
   const dropdownContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -222,15 +161,41 @@ export const FilterDropdown: FC<FilterDropdownProps> = ({
     };
   }, [onClose]);
 
+  const toggleCategory = (filter: FilterInfo) => {
+    if (openFilter === filter) setOpenFilter(null);
+    else setOpenFilter(filter);
+  };
+
   return (
-    <DropdownContainer show={show} ref={dropdownContainerRef}>
-      <AttributeDropdownMenu
-        filters={filters}
-        activeFilters={activeFilters}
-        setFilter={setFilter}
-        clearFilters={clearFilters}
-        removeFilter={removeFilter}
-      />
-    </DropdownContainer>
+    <StyledDropdown className={show ? 'show' : ''} ref={dropdownContainerRef}>
+      <FilterMenu>
+        <FilterHeader>
+          <h1>Filters</h1>
+          <a href='#' role='button' tabIndex={-1} hidden={activeFilters.length === 0} onClick={clearFilters}>
+            Clear All
+          </a>
+        </FilterHeader>
+
+        {filters.map(filter => (
+          <FilterCategory key={filter.attribute} className={openFilter === filter ? 'open' : ''}>
+            <div role='button' tabIndex={-1} className='category' onClick={() => toggleCategory(filter)}>
+              <span className={activeFilters.filter(a => a.attr === filter.attribute).length ? 'active' : ''}>
+                {filter.attributeLabel}
+              </span>
+              <FontAwesomeIcon icon='chevron-down' />
+            </div>
+
+            <div className='content'>
+              <filter.FilterUI
+                activeFilters={activeFilters.filter(a => a.attr === filter.attribute)}
+                attribute={filter.attribute}
+                setFilter={setFilter}
+                removeFilter={removeFilter}
+              />
+            </div>
+          </FilterCategory>
+        ))}
+      </FilterMenu>
+    </StyledDropdown>
   );
 };
