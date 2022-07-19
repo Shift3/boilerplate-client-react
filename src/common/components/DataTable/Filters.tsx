@@ -12,11 +12,11 @@ export type FilterUI = FC<{
 
 export const StringFilter = () => {
   const StringFilterComponent: FilterUI = ({ attribute, activeFilters, setFilter, removeFilter }) => {
-    const [comparitor, setComparitor] = useState('icontains');
+    const [comparitor, setComparitor] = useState<FilterOp>('icontains');
 
     const onTextChange = (text: string) => {
-      if (text.length > 0) setFilter(attribute, 'icontains', text);
-      else removeFilter(attribute, 'icontains');
+      if (text.length > 0) setFilter(attribute, comparitor, text);
+      else removeFilter(attribute, comparitor);
     };
 
     const optionChecked = (op: FilterOp) => {
