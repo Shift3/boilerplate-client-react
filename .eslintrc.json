@@ -49,7 +49,8 @@
     "react/jsx-props-no-spreading": "off",
     "react/react-in-jsx-scope": "off",
     "react/require-default-props": "off",
-    "react/no-unused-prop-types": "off"
+    "react/no-unused-prop-types": "off",
+    "jsx-a11y/anchor-is-valid": "off"
   },
   "settings": {
     "import/resolver": {

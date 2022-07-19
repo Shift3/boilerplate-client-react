@@ -7,6 +7,7 @@ export default {
   linkHoverColor: colors.blue300,
 
   borderRadius: '6px',
+  boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.5)',
 
   card: {
     backgroundColor: colors.neutral900,
@@ -18,8 +19,8 @@ export default {
     borderColor: colors.neutral900,
     textColor: colors.neutral100,
 
-    profileBackground: colors.neutral700,
-    profileHoverBackground: colors.neutral800,
+    profileBackground: colors.neutral800,
+    profileHoverBackground: colors.neutral700,
     profileText: colors.white,
     smallText: colors.white,
 

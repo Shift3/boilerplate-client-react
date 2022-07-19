@@ -171,9 +171,15 @@ export const usePSFQuery = <ResultType>(
         const { basePage } = config;
         const { filters: oldFilters } = state;
         const { payload } = action;
-        const newFilters = !oldFilters.find(filter => filter.attr === payload.attr && filter.op === payload.op)
-          ? [...oldFilters, payload]
-          : oldFilters;
+
+        const existingFilter = oldFilters.find(filter => filter.attr === payload.attr);
+        let newFilters;
+        if (existingFilter) {
+          newFilters = [...oldFilters.filter(filter => filter.attr !== payload.attr), payload];
+        } else {
+          newFilters = [...oldFilters, payload];
+        }
+
         return { ...state, page: basePage, filters: newFilters };
       }
 

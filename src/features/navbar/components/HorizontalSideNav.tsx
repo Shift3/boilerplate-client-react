@@ -7,7 +7,11 @@ import { Logo } from './Logo';
 import { VerticalNav } from './VerticalNav';
 
 const Hamburger = styled(Button)`
-  color: ${props => props.theme.textColor};
+  color: ${props => props.theme.textColor} !important;
+
+  &:hover {
+    color: ${props => props.theme.textColor};
+  }
 `;
 
 export const HorizontalNav: FC = () => {
