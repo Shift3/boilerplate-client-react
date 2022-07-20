@@ -53,6 +53,7 @@ export const TableCard = styled(Card)`
         padding: 0.5rem;
         display: flex;
         align-items: center;
+        word-break: break-all;
 
         &:last-of-type {
           justify-content: flex-end;
