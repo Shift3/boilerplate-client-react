@@ -125,7 +125,6 @@ export const useUserTableData: UseUserTableData = (users = []) => {
             {role}
           </SubtleBadge>
         ),
-        disableSortBy: true,
       },
       {
         accessor: 'activatedAt',
@@ -143,7 +142,6 @@ export const useUserTableData: UseUserTableData = (users = []) => {
             )}
           </>
         ),
-        disableSortBy: true,
       },
       {
         accessor: 'actions',
