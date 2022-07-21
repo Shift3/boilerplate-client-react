@@ -8,6 +8,8 @@
     "@fortawesome/react-fontawesome": "^0.1.18",
     "@reduxjs/toolkit": "^1.8.1",
     "@sentry/react": "^6.19.7",
+    "@stripe/react-stripe-js": "^1.9.0",
+    "@stripe/stripe-js": "^1.32.0",
     "@types/react-i18next": "^8.1.0",
     "@types/react-table": "^7.7.11",
     "bootstrap": "5.1.3",
