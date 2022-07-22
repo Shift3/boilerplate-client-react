@@ -16,7 +16,7 @@ export const languages = [
     translation: translationEN,
   },
   {
-    label: 'Spanish',
+    label: 'Español',
     shortcode: 'es',
     translation: translationES,
   },
