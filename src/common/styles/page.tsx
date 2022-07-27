@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Container, Navbar } from 'react-bootstrap';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 
 export const PageWrapper = styled.div`
   height: 100%;
@@ -59,6 +59,19 @@ export const PageHeader = styled.div`
       font-size: 2rem;
       margin: 0;
       margin-bottom: 0.25rem;
+    }
+  }
+`;
+
+export const PageNav = styled(Nav)`
+  padding-right: 4rem;
+  a {
+    padding-left: 0;
+    color: ${props => props.theme.textColor};
+
+    &.active {
+      font-weight: bold;
+      color: ${({ theme }) => theme.linkHoverColor};
     }
   }
 `;
