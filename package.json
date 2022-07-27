@@ -35,6 +35,7 @@
     "react-toastify": "^8.0.3",
     "sentry": "^0.1.2",
     "source-map-explorer": "^2.5.2",
+    "stripe": "^9.16.0",
     "styled-components": "^5.3.5",
     "web-vitals": "^2.0.1",
     "yup": "^0.32.9"
