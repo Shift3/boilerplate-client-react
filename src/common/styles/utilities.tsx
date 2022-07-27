@@ -148,3 +148,9 @@ export const BannerContentWrapper: FC<
     </BannerWrapper>
   );
 };
+
+export const VisibilityPixel = styled.div`
+  backgroundcolor: ${props => props.theme.backgroundColor};
+  height: 1px;
+  width: 1px;
+`;

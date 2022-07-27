@@ -5,6 +5,7 @@ import { useIntersectionObserver } from 'react-intersection-observer-hook';
 import { useInfiniteLoading } from '../hooks/useInfiniteLoading';
 import AgentCreatedNotification from './AgentCreatedNotification';
 import { environment } from 'environment';
+import { VisibilityPixel } from 'common/styles/utilities';
 
 interface Props {
   readType: string;
@@ -79,9 +80,7 @@ export const NotificationScrollView: FC<Props> = ({ readType, totalCount }) => {
   return (
     <div>
       {renderNotifications(items)}
-      {hasMore && nextCursorLink ? (
-        <div ref={ref} style={{ height: '1px', width: '1px', backgroundColor: '#fafafa' }} />
-      ) : null}
+      {hasMore && nextCursorLink ? <VisibilityPixel ref={ref} /> : null}
     </div>
   );
 };
