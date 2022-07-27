@@ -72,7 +72,7 @@ export const NotificationScrollView: FC<Props> = ({ readType, totalCount }) => {
   };
 
   useEffect(() => {
-    if (isVisible && totalCount && items.length <= totalCount) {
+    if (isVisible && totalCount && items.length < totalCount) {
       loadItems(nextCursorLink ?? '');
     }
   }, [isVisible, totalCount, items.length, nextCursorLink, loadItems]);
