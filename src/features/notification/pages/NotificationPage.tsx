@@ -50,7 +50,9 @@ export const NotificationPage: FC = () => {
         </Link>
       </PageCrumb>
       <PageHeader className='mb-3'>
-        <h2>Notifications</h2>
+        <div>
+          <h1>Notifications</h1>
+        </div>
         <Button variant='primary' disabled={unreadCount === 0} onClick={() => handleMarkAllReadOperation()}>
           Mark All Read
         </Button>

@@ -96,7 +96,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
                 id: 99,
                 icon: 'bell',
                 label: 'Notifications',
-                path: '/notifications',
+                path: '/users/notifications',
                 badge: unreadCount || (originalUnreadCount ?? undefined),
               }}
             />
