@@ -7,11 +7,12 @@ import { useTranslation } from 'react-i18next';
 import { languages } from '../../../i18n/config';
 import { useLogoutModal } from '../hooks/useLogoutModal';
 import { useNavLinks } from '../hooks/useNavLinks';
-import { CustomNavAction, CustomNavLink } from './CustomNavLink';
+import { CustomNavAction } from './CustomNavLink';
 import { Logo } from './Logo';
 import { NavUserDetails } from './NavUserDetails';
 import { ThemeToggle } from '../../themes/ToggleSwitch';
 import { NavDropdown } from 'features/navbar/components/NavDropdown';
+import { useLocation } from 'react-router-dom';
 
 type Props = {
   closeVerticalNav?: () => void;
@@ -27,8 +28,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
   const navLinks = useNavLinks();
   const { openLogoutModal } = useLogoutModal();
   const { i18n } = useTranslation();
-
-  console.log('VerticalNav');
+  const location = useLocation();
 
   const changeLanguage = (ln: string) => {
     localStorage.setItem('language', ln);
@@ -41,11 +41,19 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
 
   const defaultLanguageOption = __languageOptions.find(language => language.value === i18n.languages[0]);
 
-  console.log('navLinks:', navLinks);
-
   const linkMap = {
     General: navLinks.filter(link => link.label === 'Directory'),
     Management: navLinks.filter(link => link.label === 'Users'),
+  };
+
+  const getDefaultCategoryBasedOnLocation = () => {
+    if (location.pathname === '/users') {
+      return 'Management';
+    }
+    if (location.pathname === '/agents') {
+      return 'General';
+    }
+    return null;
   };
 
   return (
@@ -57,7 +65,11 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
       {user ? (
         <div className='nav-wrap w-100'>
           <Nav className='flex-column'>
-            <NavDropdown linkMap={linkMap} initiallyOpenedKey='General' />
+            <NavDropdown
+              linkMap={linkMap}
+              initiallyOpenedKey={getDefaultCategoryBasedOnLocation()}
+              closeVerticalNav={closeVerticalNav}
+            />
           </Nav>
           <Nav className='flex-column'>
             <div className='w-100 py-3 justify-content-md-start'>

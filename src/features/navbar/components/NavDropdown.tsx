@@ -4,13 +4,6 @@ import { CustomNavLink } from 'features/navbar/components/CustomNavLink';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-type Props = {
-  title: string;
-  children: NavLinkConfig[];
-  isOpenByDefault: boolean;
-  closeVerticalNav?: () => void;
-};
-
 const FilterCategory = styled.div`
   display: block;
   &:not(:last-of-type) {
@@ -76,21 +69,20 @@ const FilterCategory = styled.div`
   }
 `;
 
-type NewProps = {
+type Props = {
   linkMap: { [key: string]: NavLinkConfig[] };
-  initiallyOpenedKey: string;
+  initiallyOpenedKey: string | null;
   closeVerticalNav?: () => void;
 };
 
-export const NavDropdown: FC<NewProps> = ({ linkMap, initiallyOpenedKey, closeVerticalNav }) => {
+export const NavDropdown: FC<Props> = ({ linkMap, initiallyOpenedKey, closeVerticalNav }) => {
   const [openFilter, setOpenFilter] = useState<string | null>(initiallyOpenedKey);
   const keys = Object.keys(linkMap);
 
-  console.log('NavDropdown');
-
   const toggleCategory = (keyName: string) => {
-    if (openFilter === keyName) setOpenFilter(null);
-    else setOpenFilter(keyName);
+    if (openFilter === keyName) {
+      setOpenFilter(null);
+    } else setOpenFilter(keyName);
   };
 
   return (
@@ -98,7 +90,7 @@ export const NavDropdown: FC<NewProps> = ({ linkMap, initiallyOpenedKey, closeVe
       {keys.map(key => (
         <FilterCategory key={key} className={openFilter === key ? 'open' : ''}>
           <div role='button' tabIndex={-1} className='category' onClick={() => toggleCategory(key)}>
-            <span>{key}</span>
+            <span className={key === openFilter ? 'active' : ''}>{key}</span>
             <FontAwesomeIcon icon='chevron-down' />
           </div>
 
@@ -112,14 +104,3 @@ export const NavDropdown: FC<NewProps> = ({ linkMap, initiallyOpenedKey, closeVe
     </>
   );
 };
-
-// export const NavDropdown: FC<Props> = ({ title, children, isOpenByDefault, closeVerticalNav }) => {
-//   return (
-//     <div>
-//       <div>{title}</div>
-//       {isOpenByDefault
-//         ? children.map(link => <CustomNavLink handleSamePathNavigate={closeVerticalNav} key={link.id} link={link} />)
-//         : null}
-//     </div>
-//   );
-// };
