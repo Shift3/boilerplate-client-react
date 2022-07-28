@@ -6,7 +6,6 @@ import { paymentApi } from 'common/api/paymentsApi';
 import { authSlice } from 'features/auth/authSlice';
 import { confirmationModalSlice } from 'features/confirmation-modal/slice';
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const createAppStore = (options?: ConfigureStoreOptions['preloadedState'] | undefined) =>
   configureStore({
     reducer: {
@@ -19,7 +18,7 @@ export const createAppStore = (options?: ConfigureStoreOptions['preloadedState']
     },
 
     middleware: getDefaultMiddleware =>
-      getDefaultMiddleware().concat(agentApi.middleware, authApi.middleware, userApi.middleware),
+      getDefaultMiddleware().concat(agentApi.middleware, authApi.middleware, userApi.middleware, paymentApi.middleware),
 
     ...options,
   });

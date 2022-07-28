@@ -1,10 +1,11 @@
 import { PaymentElement } from '@stripe/react-stripe-js';
+import { Button } from 'react-bootstrap';
 
-const CheckoutForm = () => {
+export const CheckoutForm = () => {
   return (
     <form>
       <PaymentElement />
-      <button>Submit</button>
+      <Button>Submit</Button>
     </form>
   );
 };
