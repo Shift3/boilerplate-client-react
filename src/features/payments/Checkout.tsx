@@ -35,7 +35,7 @@ export const Checkout = () => {
   // in the `PaymentElement` stripe elements component.
   // https://stripe.com/docs/stripe-js/react
 
-  const handleSubscribe: any = () => {
+  const handleSubscribe = () => {
     return <CheckoutForm />;
   };
 
