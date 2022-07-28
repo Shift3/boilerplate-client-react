@@ -11,7 +11,7 @@ import { CustomNavAction, CustomNavLink } from './CustomNavLink';
 import { Logo } from './Logo';
 import { NavUserDetails } from './NavUserDetails';
 import { ThemeToggle } from '../../themes/ToggleSwitch';
-import { Dropdown } from 'common/components/Dropdown';
+import { NavDropdown } from 'features/navbar/components/NavDropdown';
 
 type Props = {
   closeVerticalNav?: () => void;
@@ -51,9 +51,9 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
             {navLinks.map(link => (
               <CustomNavLink handleSamePathNavigate={closeVerticalNav} key={link.id} link={link} />
             ))}
-            <Dropdown title='Management' isOpenByDefault closeVerticalNav={closeVerticalNav}>
+            <NavDropdown title='Management' isOpenByDefault closeVerticalNav={closeVerticalNav}>
               {[navLinks[1]]}
-            </Dropdown>
+            </NavDropdown>
           </Nav>
           <Nav className='flex-column'>
             <div className='w-100 py-3 justify-content-md-start'>
