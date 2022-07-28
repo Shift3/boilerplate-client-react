@@ -1,10 +1,11 @@
-import { Elements } from '@stripe/react-stripe-js';
+import { CardElement, Elements, useElements, useStripe } from '@stripe/react-stripe-js';
 import { loadStripe, Stripe } from '@stripe/stripe-js';
-import { Plan, useGetPlansQuery } from 'common/api/paymentsApi';
+import { Plan, useGetPlanByIdQuery, useGetPlansQuery } from 'common/api/paymentsApi';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { Button, Card } from 'react-bootstrap';
 import styled from 'styled-components';
 import { CheckoutForm } from './CheckoutForm';
+import { useNavigate } from 'react-router-dom';
 
 const PlanContainer = styled.div`
   display: flex;
@@ -20,8 +21,10 @@ const stripePromise: Promise<Stripe | null> = loadStripe(
   'pk_test_51LKnI7LBoYuqAVlJCiBaRj3JGO7ud4yqqxSwwaG94okOq4jB3hUQkEwR9eFJYIEvSWewbK9eZhN95gxiuy7bujHA00c47wfziI',
 );
 
-export const Checkout = () => {
+export const Checkout = async () => {
   const { data: plans, isLoading } = useGetPlansQuery();
+  const getPlanById = useGetPlanByIdQuery(id);
+  const navigate = useNavigate();
 
   const options = {
     clientSecret: '{{CLIENT_SECRET}}',
@@ -35,8 +38,21 @@ export const Checkout = () => {
   // in the `PaymentElement` stripe elements component.
   // https://stripe.com/docs/stripe-js/react
 
-  const handleSubscribe = () => {
-    return <CheckoutForm />;
+  const handleSubscribe = async () => {
+    await getPlanById;
+    navigate('/memberships/${plan_id}');
+
+    // const result = await stripe.createPaymentMethod({
+    //   type: 'card',
+    //   card: elements.getElement(CardElement),
+    //   billing_details: {},
+    // });
+
+    return (
+      <>
+        <CheckoutForm />
+      </>
+    );
   };
 
   return (

@@ -39,7 +39,12 @@ export const paymentApi = createApi({
       query: () => '/plans/',
       providesTags: ['Payment'],
     }),
+
+    getPlanById: builder.query<Plan[], string>({
+      query: id => `/plans/${id}/`,
+      providesTags: ['Payment'],
+    }),
   }),
 });
 
-export const { useGetPlansQuery } = paymentApi;
+export const { useGetPlansQuery, useGetPlanByIdQuery } = paymentApi;
