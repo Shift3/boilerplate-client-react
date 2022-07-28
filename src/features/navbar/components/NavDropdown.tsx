@@ -78,11 +78,15 @@ const FilterCategory = styled.div`
 
 type NewProps = {
   linkMap: { [key: string]: NavLinkConfig[] };
+  initiallyOpenedKey: string;
+  closeVerticalNav?: () => void;
 };
 
-export const NavDropdown: FC<NewProps> = ({ linkMap }) => {
-  const [openFilter, setOpenFilter] = useState<string | null>(null);
+export const NavDropdown: FC<NewProps> = ({ linkMap, initiallyOpenedKey, closeVerticalNav }) => {
+  const [openFilter, setOpenFilter] = useState<string | null>(initiallyOpenedKey);
   const keys = Object.keys(linkMap);
+
+  console.log('NavDropdown');
 
   const toggleCategory = (keyName: string) => {
     if (openFilter === keyName) setOpenFilter(null);
@@ -94,10 +98,15 @@ export const NavDropdown: FC<NewProps> = ({ linkMap }) => {
       {keys.map(key => (
         <FilterCategory key={key} className={openFilter === key ? 'open' : ''}>
           <div role='button' tabIndex={-1} className='category' onClick={() => toggleCategory(key)}>
+            <span>{key}</span>
             <FontAwesomeIcon icon='chevron-down' />
           </div>
 
-          <div className='content'></div>
+          <div className='content'>
+            {linkMap[key].map(link => (
+              <CustomNavLink handleSamePathNavigate={closeVerticalNav} key={link.id} link={link} />
+            ))}
+          </div>
         </FilterCategory>
       ))}
     </>

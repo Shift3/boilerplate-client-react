@@ -28,6 +28,8 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
   const { openLogoutModal } = useLogoutModal();
   const { i18n } = useTranslation();
 
+  console.log('VerticalNav');
+
   const changeLanguage = (ln: string) => {
     localStorage.setItem('language', ln);
     i18n.changeLanguage(ln);
@@ -39,6 +41,13 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
 
   const defaultLanguageOption = __languageOptions.find(language => language.value === i18n.languages[0]);
 
+  console.log('navLinks:', navLinks);
+
+  const linkMap = {
+    General: navLinks.filter(link => link.label === 'Directory'),
+    Management: navLinks.filter(link => link.label === 'Users'),
+  };
+
   return (
     <BitwiseNavbar className='flex-column py-0'>
       <div className='position-relative w-100'>
@@ -48,12 +57,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
       {user ? (
         <div className='nav-wrap w-100'>
           <Nav className='flex-column'>
-            {navLinks.map(link => (
-              <CustomNavLink handleSamePathNavigate={closeVerticalNav} key={link.id} link={link} />
-            ))}
-            <NavDropdown title='Management' isOpenByDefault closeVerticalNav={closeVerticalNav}>
-              {[navLinks[1]]}
-            </NavDropdown>
+            <NavDropdown linkMap={linkMap} initiallyOpenedKey='General' />
           </Nav>
           <Nav className='flex-column'>
             <div className='w-100 py-3 justify-content-md-start'>
