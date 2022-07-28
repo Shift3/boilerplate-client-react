@@ -41,7 +41,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
 
   const defaultLanguageOption = __languageOptions.find(language => language.value === i18n.languages[0]);
 
-  const linkMap = {
+  const navCategoryMap = {
     General: navLinks.filter(link => link.label === 'Directory'),
     Management: navLinks.filter(link => link.label === 'Users'),
   };
@@ -66,8 +66,8 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
         <div className='nav-wrap w-100'>
           <Nav className='flex-column'>
             <NavDropdown
-              linkMap={linkMap}
-              initiallyOpenedKey={getDefaultCategoryBasedOnLocation()}
+              navCategoryMap={navCategoryMap}
+              initiallyOpenedCategory={getDefaultCategoryBasedOnLocation()}
               closeVerticalNav={closeVerticalNav}
             />
           </Nav>

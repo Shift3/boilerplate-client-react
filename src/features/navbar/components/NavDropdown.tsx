@@ -4,7 +4,7 @@ import { CustomNavLink } from 'features/navbar/components/CustomNavLink';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const FilterCategory = styled.div`
+const NavCategory = styled.div`
   display: block;
   &:not(:last-of-type) {
     border-bottom: 1px solid ${props => props.theme.buttons.defaultBackgroundColor};
@@ -64,42 +64,42 @@ const FilterCategory = styled.div`
     & > .content {
       visibility: visible;
       max-height: 250px;
-      padding: 1rem;
+      padding: 0 1rem 1rem;
     }
   }
 `;
 
 type Props = {
-  linkMap: { [key: string]: NavLinkConfig[] };
-  initiallyOpenedKey: string | null;
+  navCategoryMap: { [key: string]: NavLinkConfig[] };
+  initiallyOpenedCategory: string | null;
   closeVerticalNav?: () => void;
 };
 
-export const NavDropdown: FC<Props> = ({ linkMap, initiallyOpenedKey, closeVerticalNav }) => {
-  const [openFilter, setOpenFilter] = useState<string | null>(initiallyOpenedKey);
-  const keys = Object.keys(linkMap);
+export const NavDropdown: FC<Props> = ({ navCategoryMap, initiallyOpenedCategory, closeVerticalNav }) => {
+  const [openCategory, setOpenCategory] = useState<string | null>(initiallyOpenedCategory);
+  const categories = Object.keys(navCategoryMap);
 
-  const toggleCategory = (keyName: string) => {
-    if (openFilter === keyName) {
-      setOpenFilter(null);
-    } else setOpenFilter(keyName);
+  const toggleCategory = (categoryName: string) => {
+    if (openCategory === categoryName) {
+      setOpenCategory(null);
+    } else setOpenCategory(categoryName);
   };
 
   return (
     <>
-      {keys.map(key => (
-        <FilterCategory key={key} className={openFilter === key ? 'open' : ''}>
-          <div role='button' tabIndex={-1} className='category' onClick={() => toggleCategory(key)}>
-            <span className={key === openFilter ? 'active' : ''}>{key}</span>
+      {categories.map(category => (
+        <NavCategory key={category} className={openCategory === category ? 'open' : ''}>
+          <div role='button' tabIndex={-1} className='category' onClick={() => toggleCategory(category)}>
+            <span className={category === openCategory ? 'active' : ''}>{category}</span>
             <FontAwesomeIcon icon='chevron-down' />
           </div>
 
           <div className='content'>
-            {linkMap[key].map(link => (
+            {navCategoryMap[category].map(link => (
               <CustomNavLink handleSamePathNavigate={closeVerticalNav} key={link.id} link={link} />
             ))}
           </div>
-        </FilterCategory>
+        </NavCategory>
       ))}
     </>
   );
