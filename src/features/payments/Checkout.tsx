@@ -4,7 +4,6 @@ import { Plan, useGetPlansQuery } from 'common/api/paymentsApi';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { Button, Card, Form } from 'react-bootstrap';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 import { FC } from 'react';
 
 const PlanContainer = styled.div`
@@ -17,12 +16,9 @@ const PlanPrice = styled.div``;
 
 const PlanInterval = styled.div``;
 
-const stripePromise: Promise<Stripe | null> = loadStripe(
-  'pk_test_51LKnI7LBoYuqAVlJCiBaRj3JGO7ud4yqqxSwwaG94okOq4jB3hUQkEwR9eFJYIEvSWewbK9eZhN95gxiuy7bujHA00c47wfziI',
-);
+const stripePromise: Promise<Stripe | null> | undefined = loadStripe(`${process.env.STRIPE_SECRET_TEST_KEY}`);
 
 export const Checkout: FC = () => {
-  const navigate = useNavigate();
   const { data: plans, isLoading } = useGetPlansQuery();
 
   const options = {
