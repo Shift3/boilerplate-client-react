@@ -2,7 +2,7 @@ import { CardElement, Elements, useElements, useStripe } from '@stripe/react-str
 import { loadStripe, Stripe } from '@stripe/stripe-js';
 import { Plan, useGetPlanByIdQuery, useGetPlansQuery } from 'common/api/paymentsApi';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
-import { Button, Card } from 'react-bootstrap';
+import { Button, Card, Form } from 'react-bootstrap';
 import styled from 'styled-components';
 import { CheckoutForm } from './CheckoutForm';
 import { useNavigate } from 'react-router-dom';
@@ -38,24 +38,6 @@ export const Checkout: FC = () => {
   // in the `PaymentElement` stripe elements component.
   // https://stripe.com/docs/stripe-js/react
 
-  const handleSubscribe = async (data: any) => {
-    const priceId = useGetPlanByIdQuery(data.price_id);
-    await priceId;
-
-    navigate('/memberships');
-    // const result = await stripe.createPaymentMethod({
-    //   type: 'card',
-    //   card: elements.getElement(CardElement),
-    //   billing_details: {},
-    // });
-
-    return (
-      <>
-        <CheckoutForm />
-      </>
-    );
-  };
-
   return (
     <WithLoadingOverlay isLoading={isLoading} containerHasRoundedCorners containerBorderRadius='6px'>
       <Elements stripe={stripePromise} options={options}>
@@ -75,9 +57,12 @@ export const Checkout: FC = () => {
                       {plan.prices[0].recurring.intervalCount} {plan.prices[0].recurring.interval}
                     </PlanInterval>
                   </Card.Text>
-                  <Button variant='primary' onClick={handleSubscribe}>
-                    Subscribe to {plan.name}
-                  </Button>
+                  <Form action='/create-checkout-session' method='POST'>
+                    <input type='hidden' name='plan_id' value='{{plan_id}}' />
+                    <Button variant='primary' type='submit'>
+                      Subscribe to {plan.name}
+                    </Button>
+                  </Form>
                 </Card.Body>
               </Card>
             ))}
