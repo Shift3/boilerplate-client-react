@@ -21,14 +21,14 @@ const stripePromise: Promise<Stripe | null> = loadStripe(
   'pk_test_51LKnI7LBoYuqAVlJCiBaRj3JGO7ud4yqqxSwwaG94okOq4jB3hUQkEwR9eFJYIEvSWewbK9eZhN95gxiuy7bujHA00c47wfziI',
 );
 
-export const Checkout = async () => {
+export const Checkout = () => {
   const { data: plans, isLoading } = useGetPlansQuery();
-  const getPlanById = useGetPlanByIdQuery(id);
-  const navigate = useNavigate();
+  // const getPlanById = useGetPlanByIdQuery(id);
+  // const navigate = useNavigate();
 
-  const options = {
-    clientSecret: '{{CLIENT_SECRET}}',
-  };
+  // const options = {
+  //   clientSecret: '{{CLIENT_SECRET}}',
+  // };
 
   // TODO: When the button is clicked, make a call to
   // `POST /subscriptions/` with the price_id of the plan
@@ -39,8 +39,8 @@ export const Checkout = async () => {
   // https://stripe.com/docs/stripe-js/react
 
   const handleSubscribe = async () => {
-    await getPlanById;
-    navigate('/memberships/${plan_id}');
+    // await getPlanById;
+    // navigate('/memberships/${plan_id}');
 
     // const result = await stripe.createPaymentMethod({
     //   type: 'card',
@@ -57,15 +57,15 @@ export const Checkout = async () => {
 
   return (
     <WithLoadingOverlay isLoading={isLoading} containerHasRoundedCorners containerBorderRadius='6px'>
-      <Elements stripe={stripePromise} options={options}>
+      <Elements stripe={stripePromise}>
         <PlanContainer>
           {plans &&
             plans.map((plan: Plan) => (
-              <Card>
+              <Card key='id'>
                 <Card.Header>{plan.name}</Card.Header>
                 <Card.Body>
                   <Card.Text>{plan.description}</Card.Text>
-                  <Card.Text>
+                  <>
                     <PlanPrice>
                       {plan.prices[0].id}${(plan.prices[0].unitAmount / 100).toFixed(2)}
                     </PlanPrice>
@@ -73,7 +73,7 @@ export const Checkout = async () => {
                     <PlanInterval>
                       {plan.prices[0].recurring.intervalCount} {plan.prices[0].recurring.interval}
                     </PlanInterval>
-                  </Card.Text>
+                  </>
                   <Button variant='primary' onClick={handleSubscribe}>
                     Subscribe to {plan.name}
                   </Button>
