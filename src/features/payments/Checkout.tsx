@@ -6,6 +6,7 @@ import { Button, Card } from 'react-bootstrap';
 import styled from 'styled-components';
 import { CheckoutForm } from './CheckoutForm';
 import { useNavigate } from 'react-router-dom';
+import { FC } from 'react';
 
 const PlanContainer = styled.div`
   display: flex;
@@ -21,14 +22,13 @@ const stripePromise: Promise<Stripe | null> = loadStripe(
   'pk_test_51LKnI7LBoYuqAVlJCiBaRj3JGO7ud4yqqxSwwaG94okOq4jB3hUQkEwR9eFJYIEvSWewbK9eZhN95gxiuy7bujHA00c47wfziI',
 );
 
-export const Checkout = () => {
+export const Checkout: FC = () => {
+  const navigate = useNavigate();
   const { data: plans, isLoading } = useGetPlansQuery();
-  // const getPlanById = useGetPlanByIdQuery(id);
-  // const navigate = useNavigate();
 
-  // const options = {
-  //   clientSecret: '{{CLIENT_SECRET}}',
-  // };
+  const options = {
+    clientSecret: '{{CLIENT_SECRET}}',
+  };
 
   // TODO: When the button is clicked, make a call to
   // `POST /subscriptions/` with the price_id of the plan
@@ -38,10 +38,11 @@ export const Checkout = () => {
   // in the `PaymentElement` stripe elements component.
   // https://stripe.com/docs/stripe-js/react
 
-  const handleSubscribe = async () => {
-    // await getPlanById;
-    // navigate('/memberships/${plan_id}');
+  const handleSubscribe = async (data: any) => {
+    const priceId = useGetPlanByIdQuery(data.price_id);
+    await priceId;
 
+    navigate('/memberships');
     // const result = await stripe.createPaymentMethod({
     //   type: 'card',
     //   card: elements.getElement(CardElement),
@@ -57,15 +58,15 @@ export const Checkout = () => {
 
   return (
     <WithLoadingOverlay isLoading={isLoading} containerHasRoundedCorners containerBorderRadius='6px'>
-      <Elements stripe={stripePromise}>
+      <Elements stripe={stripePromise} options={options}>
         <PlanContainer>
           {plans &&
             plans.map((plan: Plan) => (
-              <Card key='id'>
+              <Card>
                 <Card.Header>{plan.name}</Card.Header>
                 <Card.Body>
                   <Card.Text>{plan.description}</Card.Text>
-                  <>
+                  <Card.Text>
                     <PlanPrice>
                       {plan.prices[0].id}${(plan.prices[0].unitAmount / 100).toFixed(2)}
                     </PlanPrice>
@@ -73,7 +74,7 @@ export const Checkout = () => {
                     <PlanInterval>
                       {plan.prices[0].recurring.intervalCount} {plan.prices[0].recurring.interval}
                     </PlanInterval>
-                  </>
+                  </Card.Text>
                   <Button variant='primary' onClick={handleSubscribe}>
                     Subscribe to {plan.name}
                   </Button>

@@ -40,7 +40,7 @@ export const paymentApi = createApi({
       providesTags: ['Payment'],
     }),
 
-    getPlanById: builder.query<Plan[], string>({
+    getPlanById: builder.query<Plan, string>({
       query: id => `/plans/${id}/`,
       providesTags: ['Payment'],
     }),
