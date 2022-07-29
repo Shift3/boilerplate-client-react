@@ -1,10 +1,9 @@
-import { CardElement, Elements, useElements, useStripe } from '@stripe/react-stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe, Stripe } from '@stripe/stripe-js';
-import { Plan, useGetPlanByIdQuery, useGetPlansQuery } from 'common/api/paymentsApi';
+import { Plan, useGetPlansQuery } from 'common/api/paymentsApi';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { Button, Card, Form } from 'react-bootstrap';
 import styled from 'styled-components';
-import { CheckoutForm } from './CheckoutForm';
 import { useNavigate } from 'react-router-dom';
 import { FC } from 'react';
 
