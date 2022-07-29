@@ -27,7 +27,7 @@ export const Checkout: FC = () => {
   const { data: plans, isLoading } = useGetPlansQuery();
 
   const options = {
-    clientSecret: '{{CLIENT_SECRET}}',
+    clientSecret: '{{client_secret}}',
   };
 
   // TODO: When the button is clicked, make a call to
@@ -57,7 +57,7 @@ export const Checkout: FC = () => {
                       {plan.prices[0].recurring.intervalCount} {plan.prices[0].recurring.interval}
                     </PlanInterval>
                   </Card.Text>
-                  <Form action='/create-checkout-session' method='POST'>
+                  <Form action='/create-checkout-session/' method='POST'>
                     <input type='hidden' name='plan_id' value='{{plan_id}}' />
                     <Button variant='primary' type='submit'>
                       Subscribe to {plan.name}
