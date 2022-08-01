@@ -25,11 +25,12 @@ const PlanPrice = styled.div``;
 
 const PlanInterval = styled.div``;
 
-const stripe: Promise<Stripe | null> = loadStripe(`${process.env.STRIPE_PUBLIC_KEY}`);
+const stripe: Promise<Stripe | null> = loadStripe(`${process.env.STRIPE_TEST_KEY}`);
 
 export const Checkout = () => {
   const { data: plans, isLoading } = useGetPlansQuery();
   const [clientSecret, setClientSecret] = useState('');
+  console.log(plans);
 
   const appearance = {
     theme: 'stripe',
@@ -40,7 +41,7 @@ export const Checkout = () => {
     appearance,
   };
 
-  const handleSubscribe = () => {
+  const handleSubscribe = async (e: any) => {
     return <CheckoutForm />;
   };
 
@@ -65,13 +66,13 @@ export const Checkout = () => {
                           {plan.prices[0].recurring.intervalCount} {plan.prices[0].recurring.interval}
                         </PlanInterval>
                       </Card.Text>
-                      <Form action='/subscriptions/' method='POST'>
-                        <input type='hidden' name='plan_id' value='{{subscription_id}}' />
-                        <Button variant='primary' onClick={handleSubscribe}>
-                          Subscribe to {plan.name}
-                        </Button>
-                      </Form>
                     </Card.Body>
+                    <Form action='/subscriptions/' method='POST'>
+                      <input type='hidden' name='plan_id' value='{{subscription_id}}' />
+                      <Button variant='primary' onClick={handleSubscribe}>
+                        Subscribe to {plan.name}
+                      </Button>
+                    </Form>
                   </Card>
                 ))}
             </PlanContainer>
