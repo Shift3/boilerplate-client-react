@@ -26,6 +26,7 @@ export const useLogin: UseLoginHook = () => {
     async (credentials: Credentials) => {
       try {
         const session = await login(credentials).unwrap();
+        document.cookie = `x-auth-token=${session.token}; path=/; SameSite=None; Secure`;
         const auth = { token: session.token, user: session.user };
         dispatch(authSlice.actions.userLoggedIn(auth));
         authLocalStorage.saveAuthState(auth);

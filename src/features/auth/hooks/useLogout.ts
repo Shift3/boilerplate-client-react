@@ -19,6 +19,7 @@ export const useLogout: UseLogoutHook = () => {
       // Nothing to do right now. Whether the api call succeeds or fails, we clear the auth state and
       // navigate to the login page the same way, which is handled in the finally block.
     } finally {
+      document.cookie = '';
       dispatch(authSlice.actions.userLoggedOut());
       authLocalStorage.clearAuthState();
       navigate('/auth/login', { replace: true });

@@ -4,7 +4,6 @@ const LOCAL_STORAGE_AUTH_KEY = 'auth';
 
 export const saveAuthState = (auth: AuthState): void => {
   localStorage.setItem(LOCAL_STORAGE_AUTH_KEY, JSON.stringify(auth));
-  document.cookie = `x-auth-token=${auth.token}; SameSite=None; Secure`;
 };
 
 export const getAuthState = (): AuthState | null => {
