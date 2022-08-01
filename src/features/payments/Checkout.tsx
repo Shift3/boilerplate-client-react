@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
+import { loadStripe, Stripe } from '@stripe/stripe-js';
 import { Plan, useGetPlansQuery } from 'common/api/paymentsApi';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { Button, Card, Form } from 'react-bootstrap';
