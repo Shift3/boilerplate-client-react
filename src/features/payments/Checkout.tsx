@@ -65,7 +65,7 @@ export const Checkout = () => {
                           {plan.prices[0].recurring.intervalCount} {plan.prices[0].recurring.interval}
                         </PlanInterval>
                       </Card.Text>
-                      <Form action='/create-checkout-session/' method='POST'>
+                      <Form action='/subscriptions/' method='POST'>
                         <input type='hidden' name='plan_id' value='{{subscription_id}}' />
                         <Button variant='primary' onClick={handleSubscribe}>
                           Subscribe to {plan.name}
