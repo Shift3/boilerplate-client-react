@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { Plan, useGetPlansQuery } from 'common/api/paymentsApi';
@@ -34,22 +34,22 @@ export const Checkout = () => {
   const { data: plans, isLoading } = useGetPlansQuery();
   const [clientSecret, setClientSecret] = useState('');
 
-  useEffect(() => {
-    fetch('/subscriptions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items: [{ id: 'subscription' }] }),
-    })
-      .then(res => res.json())
-      .then(data => setClientSecret(data.clientSecret));
-  }, []);
+  // useEffect(() => {
+  //   fetch('/subscriptions', {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify({ items: [{ id: 'subscription' }] }),
+  //   })
+  //     .then(res => res.json())
+  //     .then(data => setClientSecret(data.clientSecret));
+  // }, []);
 
   const appearance = {
     theme: 'stripe',
   };
 
   const options: any | undefined = {
-    clientSecret,
+    clientSecret: setClientSecret,
     appearance,
   };
 
