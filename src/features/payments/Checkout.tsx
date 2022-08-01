@@ -30,7 +30,6 @@ const stripe: Promise<Stripe | null> = loadStripe(`${process.env.STRIPE_TEST_KEY
 export const Checkout = () => {
   const { data: plans, isLoading } = useGetPlansQuery();
   const [clientSecret, setClientSecret] = useState('');
-  console.log(plans);
 
   const appearance = {
     theme: 'stripe',
@@ -41,7 +40,7 @@ export const Checkout = () => {
     appearance,
   };
 
-  const handleSubscribe = async (e: any) => {
+  const handleSubscribe = () => {
     return <CheckoutForm />;
   };
 
