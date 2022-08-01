@@ -25,10 +25,7 @@ const PlanPrice = styled.div``;
 
 const PlanInterval = styled.div``;
 
-const stripePromise = loadStripe(
-  'pk_test_51HPvUtB1fbBTGpJWq8NNpKmAmGgUD53rRHhHAdJFNEdg59lIZW4JUNRQX3kpi3ysZjnH4QVl94SR0TXcmA5o88Cc00nJulJm5v',
-);
-// const stripePromise: Promise<Stripe | null> = loadStripe(`${process.env.STRIPE_SECRET_TEST_KEY}`);
+const stripe: Promise<Stripe | null> = loadStripe(`${process.env.STRIPE_PUBLIC_KEY}`);
 
 export const Checkout = () => {
   const { data: plans, isLoading } = useGetPlansQuery();
@@ -51,7 +48,7 @@ export const Checkout = () => {
     <WithLoadingOverlay isLoading={isLoading} containerHasRoundedCorners containerBorderRadius='6px'>
       {clientSecret && (
         <Card>
-          <Elements options={options} stripe={stripePromise}>
+          <Elements options={options} stripe={stripe}>
             <PlanContainer>
               {plans &&
                 plans.map((plan: Plan) => (
