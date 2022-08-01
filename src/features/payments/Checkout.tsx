@@ -34,16 +34,6 @@ export const Checkout = () => {
   const { data: plans, isLoading } = useGetPlansQuery();
   const [clientSecret, setClientSecret] = useState('');
 
-  // useEffect(() => {
-  //   fetch('/subscriptions', {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify({ items: [{ id: 'subscription' }] }),
-  //   })
-  //     .then(res => res.json())
-  //     .then(data => setClientSecret(data.clientSecret));
-  // }, []);
-
   const appearance = {
     theme: 'stripe',
   };
