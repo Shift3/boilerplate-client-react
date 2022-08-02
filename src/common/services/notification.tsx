@@ -11,3 +11,10 @@ export const showErrorMessage = (message: string): void => {
     toastId: message,
   });
 };
+
+export const showEndlessErrorMessage = (message: string): void => {
+  toast.error(message, {
+    toastId: message,
+    autoClose: false,
+  });
+};
