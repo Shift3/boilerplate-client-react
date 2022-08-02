@@ -44,7 +44,15 @@ export const paymentApi = createApi({
       query: id => ({ url: `/plans/${id}/` }),
       providesTags: ['Payment'],
     }),
+
+    createSubscription: builder.mutation<{ clientSecret: string; subscription_id: string }, string>({
+      query: priceId => ({
+        url: '/subscriptions/',
+        method: 'POST',
+        body: { priceId },
+      }),
+    }),
   }),
 });
 
-export const { useGetPlansQuery, useGetPlanByIdQuery } = paymentApi;
+export const { useGetPlansQuery, useGetPlanByIdQuery, useCreateSubscriptionMutation } = paymentApi;
