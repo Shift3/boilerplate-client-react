@@ -1,8 +1,9 @@
-import { FC, PropsWithChildren, useEffect, useState } from 'react';
+import { FC, PropsWithChildren, useEffect, useRef, useState } from 'react';
 import * as notificationService from 'common/services/notification';
 
 export const NetworkDetector: FC<PropsWithChildren<unknown>> = ({ children }) => {
   const [isDisconnected, setDisconnectedStatus] = useState(false);
+  const prevDisconnectionStatus = useRef(false);
 
   const handleConnectionChange = () => {
     const condition = navigator.onLine ? 'online' : 'offline';
@@ -30,6 +31,12 @@ export const NetworkDetector: FC<PropsWithChildren<unknown>> = ({ children }) =>
     if (isDisconnected) {
       notificationService.showEndlessErrorMessage('Internet Connection Lost');
     }
+
+    if (prevDisconnectionStatus.current) {
+      notificationService.showEndlessSuccessMessage('Internet Connection Restored');
+    }
+
+    prevDisconnectionStatus.current = isDisconnected;
 
     return () => {
       window.removeEventListener('online', handleConnectionChange);
