@@ -19,9 +19,9 @@ const stripePromise: Promise<Stripe | null> = loadStripe(
 
 const PlanContainer = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
-  margin: 1em;
+  margin: 1em; ;
 `;
 
 export const Checkout = () => {
@@ -45,19 +45,19 @@ export const Checkout = () => {
         </Elements>
       ) : (
         <WithLoadingOverlay isLoading={isLoading} containerHasRoundedCorners containerBorderRadius='6px'>
-          <PlanContainer>
+          <PlanContainer className='border border-primary'>
             {plans &&
               plans.map((plan: Plan) => (
-                <Card key={plan.id} className='m-2'>
-                  <Card.Header>{plan.name}</Card.Header>
-                  <Card.Body>
-                    <Card.Text>{plan.description}</Card.Text>
-                    <Card.Text>
+                <Card key={plan.id} className='m-3 w-25 mx-5 w-100'>
+                  <Card.Header className='d-flex justify-content-center'>{plan.name}</Card.Header>
+                  <Card.Body className='d-flex-col justify-content-center'>
+                    <Card.Text className=''>{plan.description}</Card.Text>
+                    <Card.Text className=''>
                       {plan.prices[0].id}${(plan.prices[0].unitAmount / 100).toFixed(2)}
                       {plan.prices[0].recurring.intervalCount} per {plan.prices[0].recurring.interval}
                     </Card.Text>
                   </Card.Body>
-                  <Button variant='primary' onClick={() => onPlanSelect(plan.prices[0].id)}>
+                  <Button className='m-2 w-80' variant='primary' onClick={() => onPlanSelect(plan.prices[0].id)}>
                     Subscribe to {plan.name}
                   </Button>
                 </Card>

@@ -18,6 +18,7 @@ export const CheckoutForm = () => {
     });
 
     if (result.error) {
+      // eslint-disable-next-line no-console
       console.log(result.error.message);
     }
   };
