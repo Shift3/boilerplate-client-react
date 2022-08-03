@@ -124,7 +124,7 @@ export const userApi = createApi({
       }),
     }),
 
-    getMe: builder.query<User, void>({
+    getMe: builder.query<User, Record<string, unknown>>({
       query: () => '/users/me/',
     }),
 
