@@ -2,12 +2,11 @@
 import { useState } from 'react';
 import { Plan, useCreateSubscriptionMutation, useGetPlansQuery } from 'common/api/paymentsApi';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
-import { Button, Card, Form } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
 import styled from 'styled-components';
 import { loadStripe } from '@stripe/stripe-js';
 // import { Elements } from '@stripe/react-stripe-js';
-import { CheckoutForm } from './CheckoutForm';
-import { create } from 'domain';
+// import { CheckoutForm } from './CheckoutForm';
 
 // TODO: When the button is clicked, make a call to
 // `POST /subscriptions/` with the price_id of the plan
@@ -28,10 +27,6 @@ const PlanContainer = styled.div`
   align-items: center;
 `;
 
-const PlanPrice = styled.div``;
-
-const PlanInterval = styled.div``;
-
 export const Checkout = () => {
   const { data: plans, isLoading } = useGetPlansQuery();
   const [clientSecret, setClientSecret] = useState('');
@@ -39,7 +34,6 @@ export const Checkout = () => {
 
   const onPlanSelect = async (priceId: string) => {
     const data = await createSubscription(priceId).unwrap();
-    console.log(data);
   };
 
   const appearance = {
@@ -62,17 +56,13 @@ export const Checkout = () => {
         <PlanContainer>
           {plans &&
             plans.map((plan: Plan) => (
-              <Card>
+              <Card key={plan.id}>
                 <Card.Header>{plan.name}</Card.Header>
                 <Card.Body>
                   <Card.Text>{plan.description}</Card.Text>
                   <Card.Text>
-                    <PlanPrice>
-                      {plan.prices[0].id}${(plan.prices[0].unitAmount / 100).toFixed(2)}
-                    </PlanPrice>
-                    <PlanInterval>
-                      {plan.prices[0].recurring.intervalCount} per {plan.prices[0].recurring.interval}
-                    </PlanInterval>
+                    {plan.prices[0].id}${(plan.prices[0].unitAmount / 100).toFixed(2)}
+                    {plan.prices[0].recurring.intervalCount} per {plan.prices[0].recurring.interval}
                   </Card.Text>
                 </Card.Body>
                 <Button variant='primary' onClick={() => onPlanSelect(plan.prices[0].id)}>
