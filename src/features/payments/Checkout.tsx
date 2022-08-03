@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from 'react';
+// import { useState } from 'react';
 import { Plan, useCreateSubscriptionMutation, useGetPlansQuery } from 'common/api/paymentsApi';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { Button, Card } from 'react-bootstrap';
 import styled from 'styled-components';
-import { loadStripe } from '@stripe/stripe-js';
+// s
 // import { Elements } from '@stripe/react-stripe-js';
 // import { CheckoutForm } from './CheckoutForm';
 
@@ -16,9 +16,9 @@ import { loadStripe } from '@stripe/stripe-js';
 // in the `PaymentElement` stripe elements component.
 // https://stripe.com/docs/stripe-js/react
 
-const stripePromise = loadStripe(
-  'pk_test_51LKnI7LBoYuqAVlJCiBaRj3JGO7ud4yqqxSwwaG94okOq4jB3hUQkEwR9eFJYIEvSWewbK9eZhN95gxiuy7bujHA00c47wfziI',
-);
+// const stripePromise = loadStripe(
+//   'pk_test_51LKnI7LBoYuqAVlJCiBaRj3JGO7ud4yqqxSwwaG94okOq4jB3hUQkEwR9eFJYIEvSWewbK9eZhN95gxiuy7bujHA00c47wfziI',
+// );
 // const stripe: Promise<Stripe | null> = loadStripe(`${process.env.STRIPE_TEST_KEY}`);
 
 const PlanContainer = styled.div`
@@ -29,21 +29,22 @@ const PlanContainer = styled.div`
 
 export const Checkout = () => {
   const { data: plans, isLoading } = useGetPlansQuery();
-  const [clientSecret, setClientSecret] = useState('');
+  // const [clientSecret, setClientSecret] = useState('');
   const [createSubscription] = useCreateSubscriptionMutation();
 
   const onPlanSelect = async (priceId: string) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const data = await createSubscription(priceId).unwrap();
   };
 
-  const appearance = {
-    theme: 'stripe',
-  };
+  // const appearance = {
+  //   theme: 'stripe',
+  // };
 
-  const options: any | undefined = {
-    clientSecret: setClientSecret,
-    appearance,
-  };
+  // const options: any | undefined = {
+  //   clientSecret: setClientSecret,
+  //   appearance,
+  // };
 
   // const handleSubscribe = () => {
   //   return <CheckoutForm />;
