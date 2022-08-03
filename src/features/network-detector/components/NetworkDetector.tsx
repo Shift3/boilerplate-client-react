@@ -25,6 +25,7 @@ export const NetworkDetector: FC<PropsWithChildren<unknown>> = ({ children }) =>
   };
 
   useEffect(() => {
+    handleConnectionChange();
     window.addEventListener('online', handleConnectionChange);
     window.addEventListener('offline', handleConnectionChange);
 
