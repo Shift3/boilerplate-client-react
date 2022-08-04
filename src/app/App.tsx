@@ -42,25 +42,25 @@ export const App: FC = () => {
   return (
     <AppErrorBoundary>
       <NetworkDetector>
-        <AccountChecker>
-          <ThemeContext.Provider value={value}>
-            <ThemeProvider theme={theme === 'light' ? light : dark}>
-              <GlobalStyle />
-              <ConfirmationModal />
-              <ToastContainer
-                autoClose={5000}
-                closeButton
-                closeOnClick
-                newestOnTop
-                hideProgressBar={false}
-                position={toast.POSITION.TOP_RIGHT}
-                role='alert'
-                theme='light'
-                limit={3}
-                transition={Slide}
-              />
+        <ThemeContext.Provider value={value}>
+          <ThemeProvider theme={theme === 'light' ? light : dark}>
+            <GlobalStyle />
+            <ConfirmationModal />
+            <ToastContainer
+              autoClose={5000}
+              closeButton
+              closeOnClick
+              newestOnTop
+              hideProgressBar={false}
+              position={toast.POSITION.TOP_RIGHT}
+              role='alert'
+              theme='light'
+              limit={3}
+              transition={Slide}
+            />
 
-              <BannerContentWrapper bannerShowing={environment.environment === 'staging'}>
+            <BannerContentWrapper bannerShowing={environment.environment === 'staging'}>
+              <AccountChecker>
                 <Routes>
                   <Route path='/auth/*' element={<AuthRoutes />} />
                   <Route
@@ -92,10 +92,10 @@ export const App: FC = () => {
                   <Route path='/' element={<Navigate to='/agents' />} />
                   <Route path='*' element={<NotFoundView />} />
                 </Routes>
-              </BannerContentWrapper>
-            </ThemeProvider>
-          </ThemeContext.Provider>
-        </AccountChecker>
+              </AccountChecker>
+            </BannerContentWrapper>
+          </ThemeProvider>
+        </ThemeContext.Provider>
       </NetworkDetector>
     </AppErrorBoundary>
   );
