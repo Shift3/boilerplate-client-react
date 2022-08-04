@@ -17,7 +17,6 @@ import { GlobalStyle } from '../GlobalStyle';
 import light from 'themes/light';
 import dark from 'themes/dark';
 import { NetworkDetector } from 'features/network-detector/components/NetworkDetector';
-import { AccountChecker } from 'features/auth/components/AccountChecker';
 
 export const ThemeContext = createContext({
   theme: 'light',
@@ -60,39 +59,37 @@ export const App: FC = () => {
             />
 
             <BannerContentWrapper bannerShowing={environment.environment === 'staging'}>
-              <AccountChecker>
-                <Routes>
-                  <Route path='/auth/*' element={<AuthRoutes />} />
-                  <Route
-                    path='/user/profile/:id'
-                    element={
-                      <RequireAuth>
-                        <Layout>
-                          <UpdateUserProfilePage />
-                        </Layout>
-                      </RequireAuth>
-                    }
-                  />
-                  <Route
-                    path='/agents/*'
-                    element={
-                      <RequireAuth>
-                        <AgentRoutes />
-                      </RequireAuth>
-                    }
-                  />
-                  <Route
-                    path='/users/*'
-                    element={
-                      <RequireAuth allowedRoles={[Role.ADMIN]}>
-                        <UserRoutes />
-                      </RequireAuth>
-                    }
-                  />
-                  <Route path='/' element={<Navigate to='/agents' />} />
-                  <Route path='*' element={<NotFoundView />} />
-                </Routes>
-              </AccountChecker>
+              <Routes>
+                <Route path='/auth/*' element={<AuthRoutes />} />
+                <Route
+                  path='/user/profile/:id'
+                  element={
+                    <RequireAuth>
+                      <Layout>
+                        <UpdateUserProfilePage />
+                      </Layout>
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path='/agents/*'
+                  element={
+                    <RequireAuth>
+                      <AgentRoutes />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path='/users/*'
+                  element={
+                    <RequireAuth allowedRoles={[Role.ADMIN]}>
+                      <UserRoutes />
+                    </RequireAuth>
+                  }
+                />
+                <Route path='/' element={<Navigate to='/agents' />} />
+                <Route path='*' element={<NotFoundView />} />
+              </Routes>
             </BannerContentWrapper>
           </ThemeProvider>
         </ThemeContext.Provider>
