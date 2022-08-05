@@ -198,7 +198,8 @@ export const usePSFQuery = <ResultType>(
 
       case 'addSearchText': {
         const { payload } = action;
-        return { ...state, searchText: payload.data };
+        const page = state.searchText !== payload.data ? 1 : state.page;
+        return { ...state, searchText: payload.data, page };
       }
 
       case 'all/dataUpdated': {
