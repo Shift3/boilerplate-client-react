@@ -16,6 +16,7 @@ import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from '../GlobalStyle';
 import light from 'themes/light';
 import dark from 'themes/dark';
+import { Notification } from 'common/models/notification';
 
 export const ThemeContext = createContext({
   theme: 'light',
@@ -24,15 +25,18 @@ export const ThemeContext = createContext({
 });
 
 export const NotificationsContext = createContext({
-  notifications: [],
-  setUnread: () => [],
-  setRead: () => [],
+  unreadNotifications: [] as Notification[],
+  readNotifications: [] as Notification[],
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  setUnread: (unread: Notification[]) => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  setRead: (read: Notification[]) => {},
 });
 
 export const App: FC = () => {
   const [theme, setTheme] = useState('light');
-  const [unreadNotifications, setUnreadNotifications] = useState([]);
-  const [readNotifications, setReadNotifications] = useState([]);
+  const [unreadNotifications, setUnreadNotifications] = useState<Notification[]>([]);
+  const [readNotifications, setReadNotifications] = useState<Notification[]>([]);
 
   const value = useMemo(() => {
     const toggle = () => {
@@ -45,59 +49,78 @@ export const App: FC = () => {
     };
   }, [theme]);
 
+  const notifications = useMemo(() => {
+    const setUnread = (unread: Notification[]) => {
+      setUnreadNotifications(unread);
+    };
+
+    const setRead = (read: Notification[]) => {
+      setReadNotifications(read);
+    };
+
+    return {
+      unreadNotifications,
+      readNotifications,
+      setUnread,
+      setRead,
+    };
+  }, [unreadNotifications, readNotifications]);
+
   return (
     <AppErrorBoundary>
       <ThemeContext.Provider value={value}>
-        <ThemeProvider theme={theme === 'light' ? light : dark}>
-          <GlobalStyle />
-          <ConfirmationModal />
-          <ToastContainer
-            autoClose={5000}
-            closeButton
-            closeOnClick
-            newestOnTop
-            hideProgressBar={false}
-            position={toast.POSITION.TOP_RIGHT}
-            role='alert'
-            theme='light'
-            limit={3}
-            transition={Slide}
-          />
+        <NotificationsContext.Provider value={notifications}>
+          <ThemeProvider theme={theme === 'light' ? light : dark}>
+            <GlobalStyle />
+            <ConfirmationModal />
+            <ToastContainer
+              autoClose={5000}
+              closeButton
+              closeOnClick
+              newestOnTop
+              hideProgressBar={false}
+              position={toast.POSITION.TOP_RIGHT}
+              role='alert'
+              theme='light'
+              limit={3}
+              transition={Slide}
+            />
 
-          <BannerContentWrapper bannerShowing={environment.environment === 'staging'}>
-            <Routes>
-              <Route path='/auth/*' element={<AuthRoutes />} />
-              <Route
-                path='/user/profile/:id'
-                element={
-                  <RequireAuth>
-                    <Layout>
-                      <UpdateUserProfilePage />
-                    </Layout>
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path='/agents/*'
-                element={
-                  <RequireAuth>
-                    <AgentRoutes />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path='/users/*'
-                element={
-                  <RequireAuth allowedRoles={[Role.ADMIN]}>
-                    <UserRoutes />
-                  </RequireAuth>
-                }
-              />
-              <Route path='/' element={<Navigate to='/agents' />} />
-              <Route path='*' element={<NotFoundView />} />
-            </Routes>
-          </BannerContentWrapper>
-        </ThemeProvider>
+            <BannerContentWrapper bannerShowing={environment.environment === 'staging'}>
+              <Routes>
+                <Route path='/auth/*' element={<AuthRoutes />} />
+                <Route
+                  path='/user/profile/:id'
+                  element={
+                    <RequireAuth>
+                      <Layout>
+                        <UpdateUserProfilePage />
+                      </Layout>
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path='/agents/*'
+                  element={
+                    <RequireAuth>
+                      <AgentRoutes />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path='/users/*'
+                  element={
+                    <RequireAuth allowedRoles={[Role.ADMIN]}>
+                      <UserRoutes />
+                    </RequireAuth>
+                  }
+                />
+                <Route path='/' element={<Navigate to='/agents' />} />
+                <Route path='*' element={<NotFoundView />} />
+              </Routes>
+            </BannerContentWrapper>
+          </ThemeProvider>
+        </NotificationsContext.Provider>
       </ThemeContext.Provider>
     </AppErrorBoundary>
   );
