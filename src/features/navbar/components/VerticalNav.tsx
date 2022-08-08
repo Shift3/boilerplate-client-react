@@ -13,6 +13,7 @@ import { NavUserDetails } from './NavUserDetails';
 import { ThemeToggle } from '../../themes/ToggleSwitch';
 import { useGetUnreadQuery } from 'common/api/notificationApi';
 import { getCount, getMeta } from 'features/notification/utility/utilities';
+import { environment } from 'environment';
 
 type Props = {
   closeVerticalNav?: () => void;
@@ -36,7 +37,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
   useEffect(() => {
     if (!user) return () => null;
 
-    const src = new EventSource(`http://localhost:8000/events/${user.id}/`, { withCredentials: true });
+    const src = new EventSource(`${environment.apiRoute}/events/${user.id}/`, { withCredentials: true });
 
     src.onmessage = () => {
       if (unreadMeta && originalUnreadCount) {
