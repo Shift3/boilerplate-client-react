@@ -23,8 +23,16 @@ export const ThemeContext = createContext({
   toggle: () => {},
 });
 
+export const NotificationsContext = createContext({
+  notifications: [],
+  setUnread: () => [],
+  setRead: () => [],
+});
+
 export const App: FC = () => {
   const [theme, setTheme] = useState('light');
+  const [unreadNotifications, setUnreadNotifications] = useState([]);
+  const [readNotifications, setReadNotifications] = useState([]);
 
   const value = useMemo(() => {
     const toggle = () => {
