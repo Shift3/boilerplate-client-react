@@ -45,10 +45,10 @@ export const Checkout = () => {
         </Elements>
       ) : (
         <WithLoadingOverlay isLoading={isLoading} containerHasRoundedCorners containerBorderRadius='6px'>
-          <PlanContainer className='border border-primary'>
+          <PlanContainer>
             {plans &&
               plans.map((plan: Plan) => (
-                <Card key={plan.id} className='m-3 w-25 mx-5 w-100'>
+                <Card key={plan.id} className='m-3 w-25 mx-5 w-100 shadow mb-5 bg-white rounded'>
                   <Card.Header className='d-flex justify-content-center'>{plan.name}</Card.Header>
                   <Card.Body className='d-flex-col justify-content-center'>
                     <Card.Text className=''>{plan.description}</Card.Text>
