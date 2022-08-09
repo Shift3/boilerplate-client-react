@@ -1,6 +1,7 @@
 import { Notification } from 'common/models/notification';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { getNextCursor, getResults } from '../utility/utilities';
+import { useNotifications } from './useNotifications';
 
 interface Props {
   getItems: (cursorObject: { cursorLink: string }, readType: string, token: string | null) => Promise<Response>;
@@ -14,6 +15,7 @@ export const useInfiniteLoading = (props: Props) => {
   const [hasMore, setHasMore] = useState(true);
   const [nextCursorLink, setNextCursorLink] = useState<string | null>(null);
   const initialPageLoaded = useRef(false);
+  const { setUnread, setRead, unreadNotifications, readNotifications } = useNotifications();
 
   const loadItems = useCallback(
     async (cursorLink: string) => {
@@ -23,10 +25,16 @@ export const useInfiniteLoading = (props: Props) => {
       const results = getResults(data) ?? [];
 
       setHasMore(nextCursor !== null);
-      setItems(prevItems => [...prevItems, ...results]);
+
+      if (readType === 'unread') {
+        setUnread([...unreadNotifications, ...results]);
+      } else if (readType === 'read') {
+        setRead([...readNotifications, ...results]);
+      }
+
       setNextCursorLink(nextCursor ?? null);
     },
-    [getItems, readType, token],
+    [getItems, readType, token, unreadNotifications, readNotifications, setUnread, setRead],
   );
 
   useEffect(() => {
@@ -39,7 +47,7 @@ export const useInfiniteLoading = (props: Props) => {
   }, [loadItems, nextCursorLink]);
 
   return {
-    items,
+    items: readType === 'unread' ? unreadNotifications : readNotifications,
     hasMore,
     loadItems,
     nextCursorLink,

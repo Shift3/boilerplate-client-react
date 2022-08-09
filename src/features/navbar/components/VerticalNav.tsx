@@ -1,7 +1,7 @@
 import { CustomSelect } from 'common/components/CustomSelect';
 import { BitwiseNavbar } from 'common/styles/page';
 import { useAuth } from 'features/auth/hooks';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import { useTranslation } from 'react-i18next';
 import { languages } from '../../../i18n/config';
@@ -11,8 +11,7 @@ import { CustomNavAction, CustomNavLink } from './CustomNavLink';
 import { Logo } from './Logo';
 import { NavUserDetails } from './NavUserDetails';
 import { ThemeToggle } from '../../themes/ToggleSwitch';
-import { useGetUnreadQuery } from 'common/api/notificationApi';
-import { getCount, getMeta } from 'features/notification/utility/utilities';
+import { isNotification } from 'features/notification/utility/utilities';
 import { environment } from 'environment';
 import { useNotifications } from 'features/notification/hooks/useNotifications';
 
@@ -30,31 +29,28 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
   const navLinks = useNavLinks();
   const { openLogoutModal } = useLogoutModal();
   const { i18n } = useTranslation();
-  const { data } = useGetUnreadQuery();
-  const [unreadCount, setUnreadCount] = useState(0);
-  const unreadMeta = getMeta(data);
-  // const originalUnreadCount = getCount(data);
-  const { totalUnreadCount: originalUnreadCount } = useNotifications();
+  const { totalUnreadCount, setTotalUnread } = useNotifications();
 
   useEffect(() => {
     if (!user) return () => null;
 
     const src = new EventSource(`${environment.apiRoute}/events/${user.id}/`, { withCredentials: true });
 
-    src.onmessage = () => {
-      if (unreadMeta && originalUnreadCount) {
-        if (unreadCount !== 0) {
-          setUnreadCount(unreadCount + 1);
-        } else {
-          setUnreadCount(originalUnreadCount + 1);
-        }
+    src.onmessage = msg => {
+      const data = JSON.parse(msg.data);
+
+      console.log('src:', src);
+      console.log('data:', data);
+
+      if (isNotification(data)) {
+        setTotalUnread(totalUnreadCount + 1);
       }
     };
 
     return () => {
       src.close();
     };
-  }, [user, unreadCount, unreadMeta, originalUnreadCount]);
+  }, [user, totalUnreadCount, setTotalUnread]);
 
   const changeLanguage = (ln: string) => {
     localStorage.setItem('language', ln);
@@ -100,7 +96,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
                 icon: 'bell',
                 label: 'Notifications',
                 path: '/users/notifications',
-                badge: unreadCount || (originalUnreadCount ?? undefined),
+                badge: totalUnreadCount,
               }}
             />
             <CustomNavAction onClick={openLogoutModal} label='Sign Out' icon='sign-out-alt' />

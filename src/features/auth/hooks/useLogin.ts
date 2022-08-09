@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import * as authLocalStorage from '../authLocalStorage';
 import { authSlice } from '../authSlice';
 import * as notificationService from 'common/services/notification';
-import { getMeta, getNotifications, getResults } from 'features/notification/utility/utilities';
+import { getCount, getMeta, getNotifications, getResults } from 'features/notification/utility/utilities';
 import { useNotifications } from 'features/notification/hooks/useNotifications';
 
 export interface Credentials {
@@ -35,11 +35,13 @@ export const useLogin: UseLoginHook = () => {
         authLocalStorage.saveAuthState(auth);
         const unreadData = await getNotifications({ cursorLink: '' }, 'unread', auth.token);
         console.log('unreadData:', unreadData);
-        setUnread(getResults(unreadData) ?? []);
+        setTotalUnread(getCount(unreadData) ?? 0);
+        // setUnread(getResults(unreadData) ?? []);
         setUnreadMeta(getMeta(unreadData));
         const readData = await getNotifications({ cursorLink: '' }, 'read', auth.token);
         console.log('readData:', readData);
-        setUnread(getResults(readData) ?? []);
+        setTotalRead(getCount(readData) ?? 0);
+        // setRead(getResults(readData) ?? []);
         setReadMeta(getMeta(readData));
         navigate('/agents', { replace: true });
       } catch (error) {
@@ -51,7 +53,7 @@ export const useLogin: UseLoginHook = () => {
         }
       }
     },
-    [login, dispatch, navigate, setUnread, setUnreadMeta, setReadMeta],
+    [login, dispatch, navigate, setUnread, setUnreadMeta, setReadMeta, setTotalRead, setTotalUnread],
   );
 
   return { login: loginUser, isLoading };
