@@ -42,9 +42,16 @@ export const useInfiniteLoading = (props: Props) => {
       return;
     }
 
-    loadItems(nextCursorLink ?? '');
+    if (readType === 'unread' && unreadNotifications.length === 0) {
+      loadItems(nextCursorLink ?? '');
+    }
+
+    if (readType === 'read' && readNotifications.length === 0) {
+      loadItems(nextCursorLink ?? '');
+    }
+
     initialPageLoaded.current = true;
-  }, [loadItems, nextCursorLink]);
+  }, [loadItems, nextCursorLink, readType, unreadNotifications, readNotifications]);
 
   return {
     items: readType === 'unread' ? unreadNotifications : readNotifications,
