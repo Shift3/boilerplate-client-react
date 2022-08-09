@@ -7,9 +7,11 @@ import { Badge, Button } from 'react-bootstrap';
 import { useGetReadQuery, useGetUnreadQuery, useMarkAllReadMutation } from 'common/api/notificationApi';
 import { NotificationScrollView } from '../components/NotificationScrollView';
 import { getCount, getMeta } from '../utility/utilities';
+import { useNotifications } from '../hooks/useNotifications';
 
 export const NotificationPage: FC = () => {
   const [tab, setTab] = useState('unread');
+  const { totalUnreadCount, totalReadCount, unreadMetaObject, readMetaObject } = useNotifications();
   const { data: unread } = useGetUnreadQuery();
   const { data: read } = useGetReadQuery();
   const [markAllRead] = useMarkAllReadMutation();
@@ -18,10 +20,10 @@ export const NotificationPage: FC = () => {
     await markAllRead();
   };
 
-  const unreadCount = getCount(unread);
-  const unreadMeta = getMeta(unread);
-  const readCount = getCount(read);
-  const readMeta = getMeta(read);
+  // const unreadCount = getCount(unread);
+  // const unreadMeta = getMeta(unread);
+  // const readCount = getCount(read);
+  // const readMeta = getMeta(read);
 
   return (
     <SmallContainer>
@@ -37,7 +39,7 @@ export const NotificationPage: FC = () => {
         <div>
           <h1>Notifications</h1>
         </div>
-        <Button variant='primary' disabled={unreadCount === 0} onClick={() => handleMarkAllReadOperation()}>
+        <Button variant='primary' disabled={totalUnreadCount === 0} onClick={() => handleMarkAllReadOperation()}>
           Mark All Read
         </Button>
       </PageHeader>
@@ -45,19 +47,21 @@ export const NotificationPage: FC = () => {
         <PageNav.Link onClick={() => setTab('unread')} className={tab === 'unread' ? 'active' : ''}>
           Unread{' '}
           <Badge className='ms-1 me-2' pill bg='secondary'>
-            {unreadCount}
+            {totalUnreadCount}
           </Badge>
         </PageNav.Link>
         <PageNav.Link onClick={() => setTab('read')} className={tab === 'read' ? 'active' : ''}>
           Read{' '}
           <Badge className='ms-1' pill bg='secondary'>
-            {readCount}
+            {totalReadCount}
           </Badge>
         </PageNav.Link>
       </PageNav>
       <hr className='mt-0' />
-      {tab === 'unread' && unreadMeta ? <NotificationScrollView readType='unread' totalCount={unreadCount} /> : null}
-      {tab === 'read' && readMeta ? <NotificationScrollView readType='read' totalCount={readCount} /> : null}
+      {tab === 'unread' && unreadMetaObject ? (
+        <NotificationScrollView readType='unread' totalCount={totalUnreadCount} />
+      ) : null}
+      {tab === 'read' && readMetaObject ? <NotificationScrollView readType='read' totalCount={totalReadCount} /> : null}
     </SmallContainer>
   );
 };

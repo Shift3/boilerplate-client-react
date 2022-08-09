@@ -6,6 +6,7 @@ import { useInfiniteLoading } from '../hooks/useInfiniteLoading';
 import AgentCreatedNotification from './AgentCreatedNotification';
 import { environment } from 'environment';
 import { VisibilityPixel } from 'common/styles/utilities';
+import { getNotifications } from '../utility/utilities';
 
 interface Props {
   readType: string;
@@ -18,29 +19,9 @@ export const NotificationScrollView: FC<Props> = ({ readType, totalCount }) => {
   const isVisible = entry && entry.isIntersecting;
 
   const { items, hasMore, loadItems, nextCursorLink } = useInfiniteLoading({
-    getItems: async ({ cursorLink }) => {
-      let newURL = '';
-
-      const cursorIndex = cursorLink.indexOf('cursor');
-
-      if (cursorIndex !== -1) {
-        newURL = `${cursorLink.substring(cursorIndex)}`;
-      } else if (readType === 'unread') {
-        newURL = 'read__isnull=true';
-      } else if (readType === 'read') {
-        newURL = 'read__isnull=false';
-      }
-
-      return fetch(`${environment.apiRoute}/notifications/?${newURL}`, {
-        headers: { Authorization: `Token ${token}` },
-      }).then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-
-        throw response;
-      });
-    },
+    getItems: getNotifications,
+    readType,
+    token,
   });
 
   const getNotificationBasedOnType = (notificationType: string, item: Notification) => {

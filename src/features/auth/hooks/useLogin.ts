@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import * as authLocalStorage from '../authLocalStorage';
 import { authSlice } from '../authSlice';
 import * as notificationService from 'common/services/notification';
+import { getMeta, getNotifications, getResults } from 'features/notification/utility/utilities';
+import { useNotifications } from 'features/notification/hooks/useNotifications';
 
 export interface Credentials {
   email: string;
@@ -21,6 +23,7 @@ export const useLogin: UseLoginHook = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [login, { isLoading }] = useLoginMutation();
+  const { setUnread, setRead, setUnreadMeta, setReadMeta, setTotalUnread, setTotalRead } = useNotifications();
 
   const loginUser = useCallback(
     async (credentials: Credentials) => {
@@ -30,6 +33,14 @@ export const useLogin: UseLoginHook = () => {
         const auth = { token: session.token, user: session.user };
         dispatch(authSlice.actions.userLoggedIn(auth));
         authLocalStorage.saveAuthState(auth);
+        const unreadData = await getNotifications({ cursorLink: '' }, 'unread', auth.token);
+        console.log('unreadData:', unreadData);
+        setUnread(getResults(unreadData) ?? []);
+        setUnreadMeta(getMeta(unreadData));
+        const readData = await getNotifications({ cursorLink: '' }, 'read', auth.token);
+        console.log('readData:', readData);
+        setUnread(getResults(readData) ?? []);
+        setReadMeta(getMeta(readData));
         navigate('/agents', { replace: true });
       } catch (error) {
         if (isFetchBaseQueryError(error)) {
@@ -40,7 +51,7 @@ export const useLogin: UseLoginHook = () => {
         }
       }
     },
-    [login, dispatch, navigate],
+    [login, dispatch, navigate, setUnread, setUnreadMeta, setReadMeta],
   );
 
   return { login: loginUser, isLoading };

@@ -3,11 +3,13 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { getNextCursor, getResults } from '../utility/utilities';
 
 interface Props {
-  getItems: (cursorObj: { cursorLink: string }) => Promise<Response>;
+  getItems: (cursorObject: { cursorLink: string }, readType: string, token: string | null) => Promise<Response>;
+  readType: string;
+  token: string | null;
 }
 
 export const useInfiniteLoading = (props: Props) => {
-  const { getItems } = props;
+  const { getItems, readType, token } = props;
   const [items, setItems] = useState<Notification[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [nextCursorLink, setNextCursorLink] = useState<string | null>(null);
@@ -15,9 +17,7 @@ export const useInfiniteLoading = (props: Props) => {
 
   const loadItems = useCallback(
     async (cursorLink: string) => {
-      const data = await getItems({
-        cursorLink,
-      });
+      const data = await getItems({ cursorLink }, readType, token);
 
       const nextCursor = getNextCursor(data);
       const results = getResults(data) ?? [];
@@ -26,7 +26,7 @@ export const useInfiniteLoading = (props: Props) => {
       setItems(prevItems => [...prevItems, ...results]);
       setNextCursorLink(nextCursor ?? null);
     },
-    [getItems],
+    [getItems, readType, token],
   );
 
   useEffect(() => {

@@ -27,16 +27,29 @@ export const ThemeContext = createContext({
 export const NotificationsContext = createContext({
   unreadNotifications: [] as Notification[],
   readNotifications: [] as Notification[],
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  totalUnreadCount: Number(),
+  totalReadCount: Number(),
+  unreadMetaObject: {} || null,
+  readMetaObject: {} || null,
+  // no-empty-function
+  /* eslint-disable */
   setUnread: (unread: Notification[]) => {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   setRead: (read: Notification[]) => {},
+  setTotalUnread: (count: number) => {},
+  setTotalRead: (count: number) => {},
+  setUnreadMeta: (meta: Record<string, unknown> | null) => {},
+  setReadMeta: (meta: Record<string, unknown> | null) => {},
+  /* eslint-enable */
 });
 
 export const App: FC = () => {
   const [theme, setTheme] = useState('light');
   const [unreadNotifications, setUnreadNotifications] = useState<Notification[]>([]);
   const [readNotifications, setReadNotifications] = useState<Notification[]>([]);
+  const [totalUnreadCount, setTotalUnreadCount] = useState(0);
+  const [totalReadCount, setTotalReadCount] = useState(0);
+  const [unreadMetaObject, setUnreadMetaObject] = useState<Record<string, unknown> | null>({});
+  const [readMetaObject, setReadMetaObject] = useState<Record<string, unknown> | null>({});
 
   const value = useMemo(() => {
     const toggle = () => {
@@ -58,13 +71,37 @@ export const App: FC = () => {
       setReadNotifications(read);
     };
 
+    const setTotalUnread = (count: number) => {
+      setTotalUnreadCount(count);
+    };
+
+    const setTotalRead = (count: number) => {
+      setTotalReadCount(count);
+    };
+
+    const setUnreadMeta = (meta: Record<string, unknown> | null) => {
+      setUnreadMetaObject(meta);
+    };
+
+    const setReadMeta = (meta: Record<string, unknown> | null) => {
+      setReadMetaObject(meta);
+    };
+
     return {
       unreadNotifications,
       readNotifications,
+      totalUnreadCount,
+      totalReadCount,
+      unreadMetaObject,
+      readMetaObject,
       setUnread,
       setRead,
+      setTotalUnread,
+      setTotalRead,
+      setUnreadMeta,
+      setReadMeta,
     };
-  }, [unreadNotifications, readNotifications]);
+  }, [unreadNotifications, readNotifications, totalReadCount, totalUnreadCount, unreadMetaObject, readMetaObject]);
 
   return (
     <AppErrorBoundary>

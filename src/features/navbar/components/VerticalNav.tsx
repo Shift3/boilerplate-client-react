@@ -14,6 +14,7 @@ import { ThemeToggle } from '../../themes/ToggleSwitch';
 import { useGetUnreadQuery } from 'common/api/notificationApi';
 import { getCount, getMeta } from 'features/notification/utility/utilities';
 import { environment } from 'environment';
+import { useNotifications } from 'features/notification/hooks/useNotifications';
 
 type Props = {
   closeVerticalNav?: () => void;
@@ -32,7 +33,8 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
   const { data } = useGetUnreadQuery();
   const [unreadCount, setUnreadCount] = useState(0);
   const unreadMeta = getMeta(data);
-  const originalUnreadCount = getCount(data);
+  // const originalUnreadCount = getCount(data);
+  const { totalUnreadCount: originalUnreadCount } = useNotifications();
 
   useEffect(() => {
     if (!user) return () => null;
