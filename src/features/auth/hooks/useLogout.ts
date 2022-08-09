@@ -1,5 +1,6 @@
 import { useAppDispatch } from 'app/redux';
 import { useLogoutMutation } from 'common/api/authApi';
+import { useNotifications } from 'features/notification/hooks/useNotifications';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as authLocalStorage from '../authLocalStorage';
@@ -11,6 +12,7 @@ export const useLogout: UseLogoutHook = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [logout, { isLoading }] = useLogoutMutation();
+  const { setUnread, setRead, setUnreadMeta, setReadMeta, setTotalRead, setTotalUnread } = useNotifications();
 
   const logoutUser = useCallback(async () => {
     try {
@@ -22,9 +24,15 @@ export const useLogout: UseLogoutHook = () => {
       document.cookie = '';
       dispatch(authSlice.actions.userLoggedOut());
       authLocalStorage.clearAuthState();
+      setUnread([]);
+      setRead([]);
+      setUnreadMeta(null);
+      setReadMeta(null);
+      setTotalRead(0);
+      setTotalUnread(0);
       navigate('/auth/login', { replace: true });
     }
-  }, [logout, dispatch, navigate]);
+  }, [logout, dispatch, navigate, setUnread, setRead, setUnreadMeta, setReadMeta, setTotalRead, setTotalUnread]);
 
   return { logout: logoutUser, isLoading };
 };
