@@ -153,7 +153,8 @@ export const usePSFQuery = <ResultType>(
 
         if (minPageSize <= size && size <= maxPageSize) {
           const pageSize = size;
-          return { ...state, pageSize };
+          const pageCount = Math.ceil(state.count / pageSize);
+          return { ...state, pageSize, pageCount };
         }
 
         return state;
@@ -170,9 +171,15 @@ export const usePSFQuery = <ResultType>(
         const { basePage } = config;
         const { filters: oldFilters } = state;
         const { payload } = action;
-        const newFilters = !oldFilters.find(filter => filter.attr === payload.attr && filter.op === payload.op)
-          ? [...oldFilters, payload]
-          : oldFilters;
+
+        const existingFilter = oldFilters.find(filter => filter.attr === payload.attr);
+        let newFilters;
+        if (existingFilter) {
+          newFilters = [...oldFilters.filter(filter => filter.attr !== payload.attr), payload];
+        } else {
+          newFilters = [...oldFilters, payload];
+        }
+
         return { ...state, page: basePage, filters: newFilters };
       }
 
@@ -191,7 +198,8 @@ export const usePSFQuery = <ResultType>(
 
       case 'addSearchText': {
         const { payload } = action;
-        return { ...state, searchText: payload.data };
+        const page = state.searchText !== payload.data ? 1 : state.page;
+        return { ...state, searchText: payload.data, page };
       }
 
       case 'all/dataUpdated': {

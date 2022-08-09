@@ -10,10 +10,7 @@ export interface AuthState {
 
 const storedAuthState = authLocalStorage.getAuthState();
 
-const initialState: AuthState =
-  storedAuthState?.token
-    ? storedAuthState
-    : { token: null, user: null };
+const initialState: AuthState = storedAuthState?.token ? storedAuthState : { token: null, user: null };
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -40,7 +37,7 @@ export const authSlice = createSlice({
       if (state.user) {
         state.user = { ...state.user, profilePicture: updatedProfilePicture };
       }
-    }
+    },
   },
 });
 

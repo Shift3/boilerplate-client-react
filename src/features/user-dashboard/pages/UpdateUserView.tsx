@@ -5,7 +5,7 @@ import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { isObject } from 'common/error/utilities';
 import { Role, ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
-import { FormCard, StyledFormWrapper } from 'common/styles/form';
+import { Card } from 'react-bootstrap';
 import { PageCrumb, PageHeader, SmallContainer } from 'common/styles/page';
 import { useRbac } from 'features/rbac';
 import { FC, useEffect, useState } from 'react';
@@ -80,8 +80,8 @@ export const UpdateUserView: FC = () => {
         </div>
       </PageHeader>
 
-      <FormCard>
-        <FormCard.Body>
+      <Card>
+        <Card.Body>
           <WithLoadingOverlay
             isLoading={isLoadingUser}
             isInitialLoad={isLoadingUser && isFetching}
@@ -89,19 +89,17 @@ export const UpdateUserView: FC = () => {
             containerBorderRadius='6px'
           >
             {!isLoadingUser ? (
-              <StyledFormWrapper>
-                <UserDetailForm
-                  availableRoles={availableRoles}
-                  defaultValues={user}
-                  submitButtonLabel='Save'
-                  onSubmit={handleFormSubmit}
-                  serverValidationErrors={formValidationErrors}
-                />
-              </StyledFormWrapper>
+              <UserDetailForm
+                availableRoles={availableRoles}
+                defaultValues={user}
+                submitButtonLabel='Save'
+                onSubmit={handleFormSubmit}
+                serverValidationErrors={formValidationErrors}
+              />
             ) : null}
           </WithLoadingOverlay>
-        </FormCard.Body>
-      </FormCard>
+        </Card.Body>
+      </Card>
     </SmallContainer>
   );
 };

@@ -5,10 +5,9 @@ import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { isObject } from 'common/error/utilities';
 import { ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
-import { FormCard, StyledFormWrapper } from 'common/styles/form';
+import { Card } from 'react-bootstrap';
 import { PageCrumb, PageHeader, SmallContainer } from 'common/styles/page';
 import { FC, useEffect, useState } from 'react';
-import { Card } from 'react-bootstrap';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
 
@@ -67,7 +66,7 @@ export const UpdateAgentView: FC = () => {
         </div>
       </PageHeader>
 
-      <FormCard>
+      <Card>
         <Card.Body>
           <WithLoadingOverlay
             isInitialLoad={isLoadingAgent && isFetching}
@@ -76,19 +75,17 @@ export const UpdateAgentView: FC = () => {
             containerBorderRadius='6px'
           >
             {!isLoadingAgent ? (
-              <StyledFormWrapper>
-                <AgentDetailForm
-                  defaultValues={agent}
-                  submitButtonLabel='Save'
-                  onSubmit={handleFormSubmit}
-                  onCancel={handleFormCancel}
-                  serverValidationErrors={formValidationErrors}
-                />
-              </StyledFormWrapper>
+              <AgentDetailForm
+                defaultValues={agent}
+                submitButtonLabel='Save'
+                onSubmit={handleFormSubmit}
+                onCancel={handleFormCancel}
+                serverValidationErrors={formValidationErrors}
+              />
             ) : null}
           </WithLoadingOverlay>
         </Card.Body>
-      </FormCard>
+      </Card>
     </SmallContainer>
   );
 };

@@ -11,19 +11,19 @@ export const TableActions = styled.div`
   & > button {
     border: none;
     background: transparent;
-    color: #333;
+    color: ${props => props.theme.textColor};
 
     path {
-      fill: #333;
+      fill: ${props => props.theme.textColor};
     }
 
     &:hover,
     &:focus {
       background: transparent;
       border: none;
-      color: #333;
+      color: ${props => props.theme.textColor};
       path {
-        fill: #333;
+        color: ${props => props.theme.textColor};
       }
     }
   }
@@ -42,7 +42,7 @@ export const TableActions = styled.div`
     transform: translateY(-50%);
     white-space: nowrap;
     padding: 0;
-    border-radius: 6px;
+    border-radius: ${props => props.theme.borderRadius};
 
     button {
       display: inline-block;
@@ -74,33 +74,36 @@ export const TableActions = styled.div`
   }
 `;
 
-export const ActionButtonStyles = styled(BootstrapButton)`
-    border-radius: 6px;
-    border: none;
-    color: #333;
-    font-size: 0.8rem;
+export const ActionButtonStyles = styled(BootstrapButton).attrs({
+  variant: 'default',
+})`
+  border-radius: ${props => props.theme.borderRadius};
+  border: none;
+  color: ${props => props.theme.textColor};
+  font-size: 0.8rem;
+  border: 1px solid #ccc;
+  background: ${props => props.theme.buttons.defaultBackgroundColor};
+  border-color: ${props => props.theme.buttons.defaultBorderColor};
+  font-weight: 400;
+  transition: 0.15s ease all;
+  padding: 2px 8px;
+  white-space: nowrap;
+
+  &:hover {
+    background: ${props => props.theme.backgroundColor};
     border: 1px solid #ccc;
-    background: white;
-    font-weight: 400;
-    transition: 0.15s ease all;
-    padding: 2px 8px;
-    white-space: nowrap;
+    color: ${props => props.theme.textColor};
+    box-shadow: none;
+  }
 
-    &:hover {
-      background: #ddd;
-      border: 1px solid #ccc;
-      color: #333;
-      box-shadow: none;
-    }
-
-    &:active, &:focus {
-      background: white;
-      color: #333;
-      border: 1px solid #ccc;
-      box-shadow: none;
-    }
+  &:active,
+  &:focus {
+    background: ${props => props.theme.card.backgroundColor};
+    color: ${props => props.theme.textColor};
+    border: 1px solid #ccc;
+    box-shadow: none;
+  }
 `;
-
 
 export type ActionButtonProps = {
   text: string;
@@ -110,22 +113,22 @@ export type ActionButtonProps = {
 
 export const ActionButton: FC<ActionButtonProps> = ({ text, onClick, show }) =>
   show ? (
-      <ActionButtonStyles role='button' tabIndex={0} onClick={onClick}>
-        {text}
-      </ActionButtonStyles>
+    <ActionButtonStyles role='button' tabIndex={0} onClick={onClick}>
+      {text}
+    </ActionButtonStyles>
   ) : null;
 
 export const SecondaryButton = styled(BootstrapButton)`
-  color: #60A5FA;
-  background: #DBEAFE;
-  border: 1px solid #DBEAFE;
+  color: #60a5fa;
+  background: #dbeafe;
+  border: 1px solid #dbeafe;
   padding: 0.4rem 1rem;
-  border-radius: 6px;
+  border-radius: ${props => props.theme.borderRadius};
 
   &:hover {
-    background: #BFDBFE;
-    color: #3B82F6;
-    border: 1px solid #DBEAFE;
+    background: #bfdbfe;
+    color: #3b82f6;
+    border: 1px solid #dbeafe;
   }
 `;
 
@@ -134,7 +137,7 @@ export const CreateButton = styled(BootstrapButton)`
   background-color: ${props => props.theme.buttons.primaryBackgroundColor};
   border-color: ${props => props.theme.buttons.primaryBorderColor};
   padding: 0.4rem 1rem;
-  border-radius: 6px;
+  border-radius: ${props => props.theme.borderRadius};
 
   &:hover {
     background-color: ${props => props.theme.buttons.primaryHoverBackgroundColor};
@@ -147,7 +150,7 @@ export const CancelButton = styled(BootstrapButton)`
   background-color: ${props => props.theme.buttons.cancelBackgroundColor};
   border-color: ${props => props.theme.buttons.cancelBorderColor};
   padding: 0.4rem 1rem;
-  border-radius: 6px;
+  border-radius: ${props => props.theme.borderRadius};
 
   &:hover {
     background-color: ${props => props.theme.buttons.cancelBackgroundColor};
@@ -173,7 +176,7 @@ export const CustomButton = styled(BootstrapButton)`
   color: ${props => props.theme.buttons.text};
   width: ${props => props.theme.buttons.width};
   padding: 0.4rem 1rem;
-  border-radius: 6px;
+  border-radius: ${props => props.theme.borderRadius};
 
   &:hover {
     background-color: ${props => props.theme.buttons.hoverBackgroundColor};
@@ -183,7 +186,7 @@ export const CustomButton = styled(BootstrapButton)`
   &:disabled {
     background-color: ${props => props.theme.buttons.disabledBackgroundColor};
     border-color: #999;
-    border: ${props => props.theme.buttons.disabledBackgroundColor};;
+    border: ${props => props.theme.buttons.disabledBackgroundColor};
     color: #999;
   }
 `;
@@ -195,7 +198,7 @@ export const ButtonWrapper = styled.div`
 
   & button {
     margin-right: 10px;
-    border-radius: 6px;
+    border-radius: ${props => props.theme.borderRadius};
   }
 
   & button:last-of-type {

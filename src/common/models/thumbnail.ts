@@ -1,7 +1,7 @@
-import { FileMetaData } from "./fileMetaData";
+import { FileMetaData } from './fileMetaData';
 
 export interface Thumbnail {
-    id: number;
-    file: FileMetaData;
-    size: string;
-  }
+  id: number;
+  file: FileMetaData;
+  size: string;
+}

@@ -1,5 +1,5 @@
 export type FilterOp =
-  | 'eq'
+  | 'iexact'
   | 'neq'
   | 'contains'
   | 'icontains'
@@ -7,8 +7,10 @@ export type FilterOp =
   | 'lt'
   | 'gte'
   | 'lte'
-  | 'startswith'
-  | 'endswith';
+  | 'istartswith'
+  | 'iendswith'
+  | 'isnull'
+  | 'in';
 
 export type Filter = {
   attr: string;

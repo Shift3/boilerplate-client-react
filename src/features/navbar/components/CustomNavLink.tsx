@@ -16,7 +16,7 @@ const NavLinkStyles = styled.div`
   font-size: 1rem;
   position: relative;
   padding: 0.65rem 1.5rem;
-  border-radius: 6px;
+  border-radius: ${props => props.theme.borderRadius};
   margin-bottom: 0.25rem;
   i,
   svg {
@@ -27,14 +27,14 @@ const NavLinkStyles = styled.div`
   span {
     padding-left: 1.5rem;
   }
-  color: #666;
+  color: ${props => props.theme.nav.textColor};
   font-weight: 400;
   &:hover {
     cursor: pointer;
-    color: ${props => props.theme.buttons.backgroundColor};
+    color: ${props => props.theme.nav.hoverColor};
   }
   &.active {
-    background-color: ${props => props.theme.buttons.backgroundColor};
+    background-color: ${props => props.theme.nav.activeBackground};
     color: white;
   }
 `;

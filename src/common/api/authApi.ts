@@ -17,9 +17,9 @@ export const authApi = createApi({
   refetchOnMountOrArgChange: true,
   refetchOnReconnect: true,
 
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     login: builder.mutation<Session, LoginRequest>({
-      query: (credentials) => ({
+      query: credentials => ({
         url: '/token/login/',
         method: 'POST',
         body: credentials,

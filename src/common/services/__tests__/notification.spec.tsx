@@ -1,10 +1,10 @@
 import { render, screen, within } from '@testing-library/react';
-import { NotificationContainer } from 'common/components/Notification';
+import { ToastContainer } from 'react-toastify';
 import * as notificationService from '../notification';
 
 describe('Notification Service', () => {
   beforeEach(() => {
-    render(<NotificationContainer />);
+    render(<ToastContainer role='alert' />);
   });
 
   describe('showSuccessMessage', () => {

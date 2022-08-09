@@ -1,7 +1,7 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ThemeProvider } from 'styled-components';
-import theme from 'utils/styleValues';
+import light from 'themes/light';
 import { ChangePasswordForm, FormData } from '../ChangePasswordForm';
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -24,7 +24,7 @@ describe('ChangePasswordForm', () => {
       render(
         <MemoryRouter>
           <Provider store={createAppStore()}>
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={light}>
               <ChangePasswordForm onSubmit={mockOnSubmit} serverValidationErrors={null} />
             </ThemeProvider>
           </Provider>

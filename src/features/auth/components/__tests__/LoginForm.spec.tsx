@@ -4,7 +4,7 @@ import { createAppStore } from 'app/redux';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import AppTheme from 'utils/styleValues';
+import light from 'themes/light';
 import { LogInForm } from '../LoginForm';
 
 const mockOnSubmit = jest.fn();
@@ -14,7 +14,7 @@ describe('LoginForm', () => {
     render(
       <MemoryRouter>
         <Provider store={createAppStore()}>
-          <ThemeProvider theme={AppTheme}>
+          <ThemeProvider theme={light}>
             <LogInForm onSubmit={mockOnSubmit} />
           </ThemeProvider>
         </Provider>

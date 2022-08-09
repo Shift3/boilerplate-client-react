@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import Modal, { ModalProps } from 'react-bootstrap/Modal';
 import styled from 'styled-components';
-import { CancelButton } from 'common/styles/button';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { useAppSelector } from 'app/redux';
 import { selectConfirmationModalState } from './slice';
@@ -32,7 +31,7 @@ export const StyledModal = styled(BootstrapModal)`
   }
 
   & .modal-content {
-    background: white;
+    background: ${props => props.theme.modals.confirmation.contentBackgroundColor};
     border-radius: 24px;
     border: none;
   }
@@ -83,7 +82,9 @@ export const ConfirmationModal: FC = () => {
       <Modal.Title>{message}</Modal.Title>
       <Modal.Body>Do you want to continue?</Modal.Body>
       <Modal.Footer>
-        <CancelButton onClick={declineModal}>{declineButtonLabel}</CancelButton>
+        <Button variant='default' onClick={declineModal}>
+          {declineButtonLabel}
+        </Button>
         <LoadingButton as={Button} loading={loading} onClick={confirmModal}>
           {confirmButtonLabel}
         </LoadingButton>

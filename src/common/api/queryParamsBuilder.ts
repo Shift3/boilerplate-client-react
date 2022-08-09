@@ -29,8 +29,7 @@ export class QueryParamsBuilder {
 
   public setFilterParam(filters: Filter[]): QueryParamsBuilder {
     filters.forEach(f => {
-      if (f.op !== 'eq') this.setParam(`${f.attr}__${f.op}`, f.value);
-      else this.setParam(f.attr, f.value);
+      this.setParam(`${f.attr}__${f.op}`, f.value);
     });
     return this;
   }

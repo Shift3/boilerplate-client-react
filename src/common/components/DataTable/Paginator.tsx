@@ -1,7 +1,7 @@
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CustomSelect } from 'common/components/CustomSelect';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -39,7 +39,15 @@ export const Paginator: FC<Props> = ({
   const rangeStart = pageSize * (page - 1) + 1;
   const rangeEnd = page < pageCount ? pageSize * page : count;
   const defaultOption = { label: pageSize.toString(), value: pageSize.toString() };
-  const __pageSizeOptions = pageSizeOptions.map(option => ({ label: option.toString(), value: option.toString() }));
+
+  const __pageSizeOptions = useMemo(
+    () =>
+      pageSizeOptions.map(option => ({
+        label: option.toString(),
+        value: option.toString(),
+      })),
+    [pageSizeOptions],
+  );
 
   return (
     <div className='table-paginator'>

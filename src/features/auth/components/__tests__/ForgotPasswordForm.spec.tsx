@@ -2,7 +2,7 @@ import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ForgotPasswordForm } from '../ForgotPasswordForm';
 import { ThemeProvider } from 'styled-components';
-import AppTheme from 'utils/styleValues';
+import light from 'themes/light';
 
 const mockOnSubmit = jest.fn();
 
@@ -10,7 +10,7 @@ describe('ForgotPasswordForm', () => {
   beforeEach(async () => {
     await act(async () => {
       render(
-        <ThemeProvider theme={AppTheme}>
+        <ThemeProvider theme={light}>
           <ForgotPasswordForm onSubmit={mockOnSubmit} serverValidationErrors={null} />
         </ThemeProvider>,
       );

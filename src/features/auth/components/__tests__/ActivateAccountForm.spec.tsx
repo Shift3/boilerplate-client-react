@@ -1,7 +1,7 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ThemeProvider } from 'styled-components';
-import AppTheme from 'utils/styleValues';
+import light from 'themes/light';
 import { ActivateAccountForm } from '../ActivateAccountForm';
 
 const mockOnSubmit = jest.fn();
@@ -10,7 +10,7 @@ describe('ActivateAccountForm', () => {
   beforeEach(async () => {
     await act(async () => {
       render(
-        <ThemeProvider theme={AppTheme}>
+        <ThemeProvider theme={light}>
           <ActivateAccountForm onSubmit={mockOnSubmit} serverValidationErrors={null} />
         </ThemeProvider>,
       );

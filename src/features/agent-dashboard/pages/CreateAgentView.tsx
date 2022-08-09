@@ -4,7 +4,7 @@ import { isFetchBaseQueryError } from 'common/api/handleApiError';
 import { isObject } from 'common/error/utilities';
 import { ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
-import { FormCard, StyledFormWrapper } from 'common/styles/form';
+import { Card } from 'react-bootstrap';
 import { PageCrumb, PageHeader, SmallContainer } from 'common/styles/page';
 import { FC, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -50,18 +50,16 @@ export const CreateAgentView: FC = () => {
         </div>
       </PageHeader>
 
-      <FormCard>
-        <FormCard.Body>
-          <StyledFormWrapper>
-            <AgentDetailForm
-              submitButtonLabel='Create'
-              onCancel={handleFormCancel}
-              onSubmit={handleFormSubmit}
-              serverValidationErrors={formValidationErrors}
-            />
-          </StyledFormWrapper>
-        </FormCard.Body>
-      </FormCard>
+      <Card>
+        <Card.Body>
+          <AgentDetailForm
+            submitButtonLabel='Create'
+            onCancel={handleFormCancel}
+            onSubmit={handleFormSubmit}
+            serverValidationErrors={formValidationErrors}
+          />
+        </Card.Body>
+      </Card>
     </SmallContainer>
   );
 };

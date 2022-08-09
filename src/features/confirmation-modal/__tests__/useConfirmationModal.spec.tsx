@@ -5,7 +5,7 @@ import { FC } from 'react';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { flushPromises } from 'test/utils/flushPromises';
-import AppTheme from 'utils/styleValues';
+import light from 'themes/light';
 import { ConfirmationModal } from '../ConfirmationModal';
 import { useConfirmationModal } from '../useConfirmationModal';
 
@@ -19,7 +19,7 @@ describe('useConfirmationModal()', () => {
 
       render(
         <Provider store={store}>
-          <ThemeProvider theme={AppTheme}>
+          <ThemeProvider theme={light}>
             <ConfirmationModal />
           </ThemeProvider>
         </Provider>,
@@ -75,7 +75,7 @@ describe('useConfirmationModal()', () => {
 
       render(
         <Provider store={store}>
-          <ThemeProvider theme={AppTheme}>
+          <ThemeProvider theme={light}>
             <ConfirmationModal />
           </ThemeProvider>
         </Provider>,
@@ -120,7 +120,7 @@ describe('useConfirmationModal()', () => {
 
       render(
         <Provider store={store}>
-          <ThemeProvider theme={AppTheme}>
+          <ThemeProvider theme={light}>
             <ConfirmationModal />
           </ThemeProvider>
         </Provider>,

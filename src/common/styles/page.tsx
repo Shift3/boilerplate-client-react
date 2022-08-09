@@ -1,10 +1,9 @@
 import styled from 'styled-components';
-import { Container } from 'react-bootstrap';
+import { Container, Navbar } from 'react-bootstrap';
 
 export const PageWrapper = styled.div`
   height: 100%;
   width: 100%;
-  background-color: ${props => props.theme.pages.backgroundColor};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,6 +28,7 @@ export const PageCrumb = styled.div`
 
 export const PageHeader = styled.div`
   display: flex;
+  color: ${props => props.theme.pages.pageHeader};
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -49,14 +49,54 @@ export const PageHeader = styled.div`
 
   & > div:first-of-type {
     p {
+      color: ${props => props.theme.pages.p};
       margin: 0;
     }
 
     h1 {
+      color: ${props => props.theme.pages.h1};
       font-weight: 500;
       font-size: 2rem;
       margin: 0;
       margin-bottom: 0.25rem;
+    }
+  }
+`;
+
+export const BitwiseNavbar = styled(Navbar)`
+  background: ${props => props.theme.nav.backgroundColor};
+  align-items: flex-start;
+  padding: 2rem;
+  overflow-y: auto;
+  width: 280px;
+  height: 100vh;
+  z-index: 1;
+  position: fixed;
+  box-shadow: 1px 0 0 0 ${props => props.theme.nav.borderColor};
+
+  .navbar-brand {
+    padding-top: 0;
+  }
+
+  .navbar-brand > img {
+    width: 64px;
+    margin-left: 1rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    margin-top: 1.5rem;
+  }
+
+  .nav-wrap {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .navbar-nav:first-of-type {
+      flex: 1;
+    }
+
+    .navbar-nav:nth-of-type(2) {
+      margin-bottom: 1rem;
     }
   }
 `;

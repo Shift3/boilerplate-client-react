@@ -6,7 +6,7 @@ import { createAppStore } from 'app/redux';
 import { createMemoryHistory, MemoryHistory } from 'history';
 import userEvent from '@testing-library/user-event';
 import { ThemeProvider } from 'styled-components';
-import AppTheme from 'utils/styleValues';
+import light from 'themes/light';
 import { LogInPage } from '../LoginPage';
 
 describe('<LoginPage/>', () => {
@@ -19,7 +19,7 @@ describe('<LoginPage/>', () => {
       render(
         <HistoryRouter history={history}>
           <Provider store={createAppStore()}>
-            <ThemeProvider theme={AppTheme}>
+            <ThemeProvider theme={light}>
               <LogInPage />
             </ThemeProvider>
           </Provider>
@@ -51,7 +51,7 @@ describe('<LoginPage/>', () => {
       render(
         <HistoryRouter history={history}>
           <Provider store={createAppStore()}>
-            <ThemeProvider theme={AppTheme}>
+            <ThemeProvider theme={light}>
               <LogInPage />
             </ThemeProvider>
           </Provider>
