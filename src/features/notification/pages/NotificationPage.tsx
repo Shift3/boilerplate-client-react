@@ -1,29 +1,25 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PageCrumb, PageHeader, SmallContainer, PageNav } from 'common/styles/page';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Trans } from 'react-i18next';
 import { Badge, Button } from 'react-bootstrap';
-import { useGetReadQuery, useGetUnreadQuery, useMarkAllReadMutation } from 'common/api/notificationApi';
+import { useMarkAllReadMutation } from 'common/api/notificationApi';
 import { NotificationScrollView } from '../components/NotificationScrollView';
-import { getCount, getMeta } from '../utility/utilities';
 import { useNotifications } from '../hooks/useNotifications';
 
 export const NotificationPage: FC = () => {
   const [tab, setTab] = useState('unread');
   const { totalUnreadCount, totalReadCount, unreadMetaObject, readMetaObject } = useNotifications();
-  const { data: unread } = useGetUnreadQuery();
-  const { data: read } = useGetReadQuery();
   const [markAllRead] = useMarkAllReadMutation();
 
   const handleMarkAllReadOperation = async () => {
     await markAllRead();
   };
 
-  // const unreadCount = getCount(unread);
-  // const unreadMeta = getMeta(unread);
-  // const readCount = getCount(read);
-  // const readMeta = getMeta(read);
+  useEffect(() => {
+    console.log('Hello There');
+  }, [totalUnreadCount, totalReadCount]);
 
   return (
     <SmallContainer>

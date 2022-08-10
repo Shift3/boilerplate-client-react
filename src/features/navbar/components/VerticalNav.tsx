@@ -28,7 +28,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
   const navLinks = useNavLinks();
   const { openLogoutModal } = useLogoutModal();
   const { i18n } = useTranslation();
-  const { totalUnreadCount, setTotalUnread } = useNotifications();
+  const { totalUnreadCount, setTotalUnread, setUnread } = useNotifications();
   const [newUnreadCount, setNewUnreadCount] = useState(0);
 
   useEffect(() => {
@@ -47,12 +47,14 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
       } else {
         setNewUnreadCount(totalUnreadCount + 1);
       }
+      setUnread([]);
+      setTotalUnread(totalUnreadCount + 1);
     };
 
     return () => {
       src.close();
     };
-  }, [user, totalUnreadCount, setTotalUnread, newUnreadCount]);
+  }, [user, totalUnreadCount, setTotalUnread, newUnreadCount, setUnread]);
 
   const changeLanguage = (ln: string) => {
     localStorage.setItem('language', ln);
