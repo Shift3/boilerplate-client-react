@@ -1,7 +1,7 @@
 import { CustomSelect } from 'common/components/CustomSelect';
 import { BitwiseNavbar } from 'common/styles/page';
 import { useAuth } from 'features/auth/hooks';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import { useTranslation } from 'react-i18next';
 import { languages } from '../../../i18n/config';
@@ -11,7 +11,6 @@ import { CustomNavAction, CustomNavLink } from './CustomNavLink';
 import { Logo } from './Logo';
 import { NavUserDetails } from './NavUserDetails';
 import { ThemeToggle } from '../../themes/ToggleSwitch';
-import { isNotification } from 'features/notification/utility/utilities';
 import { environment } from 'environment';
 import { useNotifications } from 'features/notification/hooks/useNotifications';
 
@@ -30,6 +29,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
   const { openLogoutModal } = useLogoutModal();
   const { i18n } = useTranslation();
   const { totalUnreadCount, setTotalUnread } = useNotifications();
+  const [newUnreadCount, setNewUnreadCount] = useState(0);
 
   useEffect(() => {
     if (!user) return () => null;
@@ -42,15 +42,17 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
       console.log('src:', src);
       console.log('data:', data);
 
-      if (isNotification(data)) {
-        setTotalUnread(totalUnreadCount + 1);
+      if (newUnreadCount !== 0) {
+        setNewUnreadCount(newUnreadCount + 1);
+      } else {
+        setNewUnreadCount(totalUnreadCount + 1);
       }
     };
 
     return () => {
       src.close();
     };
-  }, [user, totalUnreadCount, setTotalUnread]);
+  }, [user, totalUnreadCount, setTotalUnread, newUnreadCount]);
 
   const changeLanguage = (ln: string) => {
     localStorage.setItem('language', ln);
@@ -96,7 +98,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
                 icon: 'bell',
                 label: 'Notifications',
                 path: '/users/notifications',
-                badge: totalUnreadCount,
+                badge: newUnreadCount || totalUnreadCount,
               }}
             />
             <CustomNavAction onClick={openLogoutModal} label='Sign Out' icon='sign-out-alt' />
