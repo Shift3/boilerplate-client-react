@@ -9,7 +9,7 @@ import { AuthRoutes, RequireAuth } from 'features/auth';
 import { ConfirmationModal } from 'features/confirmation-modal';
 import { UserRoutes } from 'features/user-dashboard';
 import { UpdateUserProfilePage } from 'features/user-profile/pages/UpdateUserProfilePage';
-import { createContext, FC, useState, useMemo } from 'react';
+import { createContext, FC, useState, useMemo, useReducer } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Slide, toast, ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
@@ -42,6 +42,50 @@ export const NotificationsContext = createContext({
   /* eslint-enable */
 });
 
+interface NotificationState {
+  unreadNotifications: Notification[];
+  readNotifications: Notification[];
+  totalUnreadCount: number;
+  totalReadCount: number;
+  unreadMetaObject: Record<string, unknown>;
+  readMetaObject: Record<string, unknown>;
+}
+
+interface NotificationAction {
+  type: string;
+  notifications?: Notification[];
+}
+
+const initialNotificationState = {
+  unreadNotifications: [],
+  readNotifications: [],
+  totalUnreadCount: 0,
+  totalReadCount: 0,
+  unreadMetaObject: {},
+  readMetaObject: {},
+};
+
+const notificationReducer = (state: NotificationState, action: NotificationAction) => {
+  let notifications: Notification[] = [];
+
+  if (action.notifications) {
+    notifications = action.notifications;
+  }
+
+  switch (action.type) {
+    case 'reset':
+      return initialNotificationState;
+    case 'update total unread count':
+      return { ...state, totalUnreadCount: state.totalUnreadCount + 1 };
+    case 'append to unread notifications':
+      return { ...state, unreadNotifications: [...state.unreadNotifications, ...notifications] };
+    case 'append to read notifications':
+      return { ...state, readNotifications: [...state.readNotifications, ...notifications] };
+    default:
+      throw new Error();
+  }
+};
+
 export const App: FC = () => {
   const [theme, setTheme] = useState('light');
   const [unreadNotifications, setUnreadNotifications] = useState<Notification[]>([]);
@@ -50,6 +94,7 @@ export const App: FC = () => {
   const [totalReadCount, setTotalReadCount] = useState(0);
   const [unreadMetaObject, setUnreadMetaObject] = useState<Record<string, unknown> | null>({});
   const [readMetaObject, setReadMetaObject] = useState<Record<string, unknown> | null>({});
+  const [notificationState, dispatch] = useReducer(notificationReducer, initialNotificationState);
 
   const value = useMemo(() => {
     const toggle = () => {
