@@ -23,7 +23,6 @@ export const useLogin: UseLoginHook = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [login, { isLoading }] = useLoginMutation();
-  const { setUnread, setRead, setUnreadMeta, setReadMeta, setTotalUnread, setTotalRead } = useNotifications();
 
   const loginUser = useCallback(
     async (credentials: Credentials) => {
@@ -33,16 +32,6 @@ export const useLogin: UseLoginHook = () => {
         const auth = { token: session.token, user: session.user };
         dispatch(authSlice.actions.userLoggedIn(auth));
         authLocalStorage.saveAuthState(auth);
-        const unreadData = await getNotifications({ cursorLink: '' }, 'unread', auth.token);
-        console.log('unreadData:', unreadData);
-        setTotalUnread(getCount(unreadData) ?? 0);
-        // setUnread(getResults(unreadData) ?? []);
-        setUnreadMeta(getMeta(unreadData));
-        const readData = await getNotifications({ cursorLink: '' }, 'read', auth.token);
-        console.log('readData:', readData);
-        setTotalRead(getCount(readData) ?? 0);
-        // setRead(getResults(readData) ?? []);
-        setReadMeta(getMeta(readData));
         navigate('/agents', { replace: true });
       } catch (error) {
         if (isFetchBaseQueryError(error)) {
@@ -53,7 +42,7 @@ export const useLogin: UseLoginHook = () => {
         }
       }
     },
-    [login, dispatch, navigate, setUnread, setUnreadMeta, setReadMeta, setTotalRead, setTotalUnread],
+    [login, dispatch, navigate],
   );
 
   return { login: loginUser, isLoading };

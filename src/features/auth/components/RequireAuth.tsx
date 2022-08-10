@@ -1,8 +1,11 @@
 import { RoleType } from 'common/models';
-import { FC, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren, useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks';
 import * as notificationService from 'common/services/notification';
+import { useGetReadQuery, useGetUnreadQuery } from 'common/api/notificationApi';
+import { getCount, getMeta } from 'features/notification/utility/utilities';
+import { useNotifications } from 'features/notification/hooks/useNotifications';
 
 type RequireAuthProps = {
   allowedRoles?: RoleType[];
@@ -11,6 +14,16 @@ type RequireAuthProps = {
 export const RequireAuth: FC<PropsWithChildren<RequireAuthProps>> = ({ children, allowedRoles = [] }) => {
   const auth = useAuth();
   const location = useLocation();
+  const { data: unreadData } = useGetUnreadQuery(undefined, { skip: !auth.user });
+  const { data: readData } = useGetReadQuery(undefined, { skip: !auth.user });
+  const { setTotalUnread, setTotalRead, setUnreadMeta, setReadMeta } = useNotifications();
+
+  useEffect(() => {
+    setTotalUnread(getCount(unreadData) ?? 0);
+    setUnreadMeta(getMeta(unreadData));
+    setTotalRead(getCount(readData) ?? 0);
+    setReadMeta(getMeta(readData));
+  }, [setTotalUnread, setTotalRead, setUnreadMeta, setReadMeta, readData, unreadData]);
 
   if (!auth.user) {
     // Redirect to login page, but save the current location they were
