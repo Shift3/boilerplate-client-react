@@ -31,7 +31,7 @@ export const RequireAuth: FC<PropsWithChildren<RequireAuthProps>> = ({ children,
       unreadMetaObject: getMeta(unreadData) ?? undefined,
       readMetaObject: getMeta(readData) ?? undefined,
     });
-  }, [readData, unreadData]);
+  }, [readData, unreadData, notificationDispatch]);
 
   if (!auth.user) {
     // Redirect to login page, but save the current location they were

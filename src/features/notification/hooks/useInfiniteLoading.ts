@@ -37,7 +37,7 @@ export const useInfiniteLoading = (props: Props) => {
 
       setNextCursorLink(nextCursor ?? null);
     },
-    [getItems, readType, token],
+    [getItems, readType, token, notificationDispatch],
   );
 
   useEffect(() => {
@@ -54,7 +54,13 @@ export const useInfiniteLoading = (props: Props) => {
     }
 
     initialPageLoaded.current = true;
-  }, [loadItems, nextCursorLink, readType]);
+  }, [
+    loadItems,
+    nextCursorLink,
+    readType,
+    notificationState.unreadNotifications.length,
+    notificationState.readNotifications.length,
+  ]);
 
   return {
     items: readType === 'unread' ? notificationState.unreadNotifications : notificationState.readNotifications,

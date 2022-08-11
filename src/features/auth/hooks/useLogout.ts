@@ -35,7 +35,7 @@ export const useLogout: UseLogoutHook = () => {
       notificationDispatch({ type: 'reset' });
       navigate('/auth/login', { replace: true });
     }
-  }, [logout, dispatch, navigate]);
+  }, [logout, dispatch, navigate, notificationDispatch]);
 
   return { logout: logoutUser, isLoading };
 };

@@ -56,7 +56,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
     return () => {
       src.close();
     };
-  }, [user, newUnreadCount]);
+  }, [user, newUnreadCount, notificationDispatch, notificationState.totalUnreadCount]);
 
   const changeLanguage = (ln: string) => {
     localStorage.setItem('language', ln);
