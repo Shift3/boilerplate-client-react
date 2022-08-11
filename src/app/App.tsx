@@ -24,25 +24,25 @@ export const ThemeContext = createContext({
   toggle: () => {},
 });
 
-export const NotificationsContext = createContext({
-  unreadNotifications: [] as Notification[],
-  readNotifications: [] as Notification[],
-  totalUnreadCount: Number(),
-  totalReadCount: Number(),
-  unreadMetaObject: {} || null,
-  readMetaObject: {} || null,
-  // no-empty-function
-  /* eslint-disable */
-  setUnread: (unread: Notification[]) => {},
-  setRead: (read: Notification[]) => {},
-  setTotalUnread: (count: number) => {},
-  setTotalRead: (count: number) => {},
-  setUnreadMeta: (meta: Record<string, unknown> | null) => {},
-  setReadMeta: (meta: Record<string, unknown> | null) => {},
-  /* eslint-enable */
-});
+// export const NotificationsContext = createContext({
+//   unreadNotifications: [] as Notification[],
+//   readNotifications: [] as Notification[],
+//   totalUnreadCount: Number(),
+//   totalReadCount: Number(),
+//   unreadMetaObject: {} || null,
+//   readMetaObject: {} || null,
+//   // no-empty-function
+//   /* eslint-disable */
+//   setUnread: (unread: Notification[]) => {},
+//   setRead: (read: Notification[]) => {},
+//   setTotalUnread: (count: number) => {},
+//   setTotalRead: (count: number) => {},
+//   setUnreadMeta: (meta: Record<string, unknown> | null) => {},
+//   setReadMeta: (meta: Record<string, unknown> | null) => {},
+//   /* eslint-enable */
+// });
 
-interface NotificationState {
+interface NotificationStateType {
   unreadNotifications: Notification[];
   readNotifications: Notification[];
   totalUnreadCount: number;
@@ -51,21 +51,29 @@ interface NotificationState {
   readMetaObject: Record<string, unknown>;
 }
 
-interface NotificationAction {
-  type: string;
-  notifications?: Notification[];
-}
-
 const initialNotificationState = {
-  unreadNotifications: [],
-  readNotifications: [],
+  unreadNotifications: [] as Notification[],
+  readNotifications: [] as Notification[],
   totalUnreadCount: 0,
   totalReadCount: 0,
   unreadMetaObject: {},
   readMetaObject: {},
 };
 
-const notificationReducer = (state: NotificationState, action: NotificationAction) => {
+export const NotificationsContext = createContext<{
+  notificationState: NotificationStateType;
+  dispatch: React.Dispatch<NotificationAction>;
+}>({
+  notificationState: initialNotificationState,
+  dispatch: () => null,
+});
+
+interface NotificationAction {
+  type: string;
+  notifications?: Notification[];
+}
+
+const notificationReducer = (state: NotificationStateType, action: NotificationAction) => {
   let notifications: Notification[] = [];
 
   if (action.notifications) {
@@ -75,6 +83,8 @@ const notificationReducer = (state: NotificationState, action: NotificationActio
   switch (action.type) {
     case 'reset':
       return initialNotificationState;
+    case 'new notification':
+      return { ...state, unreadNotifications: [], totalUnreadCount: state.totalUnreadCount + 1 };
     case 'update total unread count':
       return { ...state, totalUnreadCount: state.totalUnreadCount + 1 };
     case 'append to unread notifications':
@@ -88,12 +98,12 @@ const notificationReducer = (state: NotificationState, action: NotificationActio
 
 export const App: FC = () => {
   const [theme, setTheme] = useState('light');
-  const [unreadNotifications, setUnreadNotifications] = useState<Notification[]>([]);
-  const [readNotifications, setReadNotifications] = useState<Notification[]>([]);
-  const [totalUnreadCount, setTotalUnreadCount] = useState(0);
-  const [totalReadCount, setTotalReadCount] = useState(0);
-  const [unreadMetaObject, setUnreadMetaObject] = useState<Record<string, unknown> | null>({});
-  const [readMetaObject, setReadMetaObject] = useState<Record<string, unknown> | null>({});
+  // const [unreadNotifications, setUnreadNotifications] = useState<Notification[]>([]);
+  // const [readNotifications, setReadNotifications] = useState<Notification[]>([]);
+  // const [totalUnreadCount, setTotalUnreadCount] = useState(0);
+  // const [totalReadCount, setTotalReadCount] = useState(0);
+  // const [unreadMetaObject, setUnreadMetaObject] = useState<Record<string, unknown> | null>({});
+  // const [readMetaObject, setReadMetaObject] = useState<Record<string, unknown> | null>({});
   const [notificationState, dispatch] = useReducer(notificationReducer, initialNotificationState);
 
   const value = useMemo(() => {
@@ -107,46 +117,53 @@ export const App: FC = () => {
     };
   }, [theme]);
 
+  // const notifications = useMemo(() => {
+  //   const setUnread = (unread: Notification[]) => {
+  //     setUnreadNotifications(unread);
+  //   };
+
+  //   const setRead = (read: Notification[]) => {
+  //     setReadNotifications(read);
+  //   };
+
+  //   const setTotalUnread = (count: number) => {
+  //     setTotalUnreadCount(count);
+  //   };
+
+  //   const setTotalRead = (count: number) => {
+  //     setTotalReadCount(count);
+  //   };
+
+  //   const setUnreadMeta = (meta: Record<string, unknown> | null) => {
+  //     setUnreadMetaObject(meta);
+  //   };
+
+  //   const setReadMeta = (meta: Record<string, unknown> | null) => {
+  //     setReadMetaObject(meta);
+  //   };
+
+  //   return {
+  //     unreadNotifications,
+  //     readNotifications,
+  //     totalUnreadCount,
+  //     totalReadCount,
+  //     unreadMetaObject,
+  //     readMetaObject,
+  //     setUnread,
+  //     setRead,
+  //     setTotalUnread,
+  //     setTotalRead,
+  //     setUnreadMeta,
+  //     setReadMeta,
+  //   };
+  // }, [unreadNotifications, readNotifications, totalReadCount, totalUnreadCount, unreadMetaObject, readMetaObject]);
+
   const notifications = useMemo(() => {
-    const setUnread = (unread: Notification[]) => {
-      setUnreadNotifications(unread);
-    };
-
-    const setRead = (read: Notification[]) => {
-      setReadNotifications(read);
-    };
-
-    const setTotalUnread = (count: number) => {
-      setTotalUnreadCount(count);
-    };
-
-    const setTotalRead = (count: number) => {
-      setTotalReadCount(count);
-    };
-
-    const setUnreadMeta = (meta: Record<string, unknown> | null) => {
-      setUnreadMetaObject(meta);
-    };
-
-    const setReadMeta = (meta: Record<string, unknown> | null) => {
-      setReadMetaObject(meta);
-    };
-
     return {
-      unreadNotifications,
-      readNotifications,
-      totalUnreadCount,
-      totalReadCount,
-      unreadMetaObject,
-      readMetaObject,
-      setUnread,
-      setRead,
-      setTotalUnread,
-      setTotalRead,
-      setUnreadMeta,
-      setReadMeta,
+      notificationState,
+      dispatch,
     };
-  }, [unreadNotifications, readNotifications, totalReadCount, totalUnreadCount, unreadMetaObject, readMetaObject]);
+  }, [notificationState, dispatch]);
 
   return (
     <AppErrorBoundary>
