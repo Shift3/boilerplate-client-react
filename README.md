@@ -96,7 +96,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ### AWS
 
-Deploying to AWS requires having AWS credentials configured on the machine. The deployment script is set to look for an AWS profile named `shift3`. See the following links for documentation on configuring the AWS CLI, creating an AWS credential file, and creating a named profile:
+Deploying to AWS requires having AWS credentials configured on the machine. The deployment script is set to look for an AWS profile named `BWTC-Developer`. See the following links for documentation on configuring the AWS CLI, creating an AWS credential file, and creating a named profile:
 
 - [Configuration and credential file settings](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
 - [Named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
@@ -108,7 +108,7 @@ Configuring, building, and changing the AWS infrastructure **for the sandbox** i
 Terraform also needs the project secrets saved in `terraform/staging/terraform.tfvars`. This file is not committed to version control since it can contain sensitive information such as database credentials and should be added locally. Create the `terraform/staging/terraform.tfvars` file with the following structure:
 
 ```
-profile = "shift3"
+profile = "BWTC-Developer"
 
 region = "us-west-2"
 
@@ -179,8 +179,8 @@ In `package.json`, updated the `"deploy:staging"` and the `deploy:production` np
   ...,
   "scripts": {
     ...
-    "deploy:staging": "aws s3 sync ./build s3://example-staging.shift3sandbox.com --profile shift3 --delete"
-    "deploy:production": "aws s3 sync ./build s3://example-prod.shift3sandbox.com --profile shift3 --delete"
+    "deploy:staging": "aws s3 sync ./build s3://example-staging.shift3sandbox.com --profile BWTC-Developer --delete"
+    "deploy:production": "aws s3 sync ./build s3://example-prod.shift3sandbox.com --profile BWTC-Developer --delete"
     ...
   }
 }

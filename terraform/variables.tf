@@ -1,5 +1,5 @@
 variable "aws_profile" {
-  default = "shift3"
+  default = "BWTC-Developer"
   description = "Name of your profile inside ~/.aws/credentials"
 }
 
