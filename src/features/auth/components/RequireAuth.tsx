@@ -16,14 +16,22 @@ export const RequireAuth: FC<PropsWithChildren<RequireAuthProps>> = ({ children,
   const location = useLocation();
   const { data: unreadData } = useGetUnreadQuery(undefined, { skip: !auth.user });
   const { data: readData } = useGetReadQuery(undefined, { skip: !auth.user });
-  const { setTotalUnread, setTotalRead, setUnreadMeta, setReadMeta } = useNotifications();
+  // const { setTotalUnread, setTotalRead, setUnreadMeta, setReadMeta } = useNotifications();
+  const { notificationDispatch } = useNotifications();
 
   useEffect(() => {
-    setTotalUnread(getCount(unreadData) ?? 0);
-    setUnreadMeta(getMeta(unreadData));
-    setTotalRead(getCount(readData) ?? 0);
-    setReadMeta(getMeta(readData));
-  }, [setTotalUnread, setTotalRead, setUnreadMeta, setReadMeta, readData, unreadData]);
+    // setTotalUnread(getCount(unreadData) ?? 0);
+    // setUnreadMeta(getMeta(unreadData));
+    // setTotalRead(getCount(readData) ?? 0);
+    // setReadMeta(getMeta(readData));
+    notificationDispatch({
+      type: 'set all non-list data',
+      totalUnreadCount: getCount(unreadData) ?? undefined,
+      totalReadCount: getCount(readData) ?? undefined,
+      unreadMetaObject: getMeta(unreadData) ?? undefined,
+      readMetaObject: getMeta(readData) ?? undefined,
+    });
+  }, [readData, unreadData]);
 
   if (!auth.user) {
     // Redirect to login page, but save the current location they were

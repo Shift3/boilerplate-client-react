@@ -42,7 +42,7 @@ export const ThemeContext = createContext({
 //   /* eslint-enable */
 // });
 
-interface NotificationStateType {
+export interface NotificationStateType {
   unreadNotifications: Notification[];
   readNotifications: Notification[];
   totalUnreadCount: number;
@@ -60,18 +60,24 @@ const initialNotificationState = {
   readMetaObject: {},
 };
 
-export const NotificationsContext = createContext<{
-  notificationState: NotificationStateType;
-  dispatch: React.Dispatch<NotificationAction>;
-}>({
-  notificationState: initialNotificationState,
-  dispatch: () => null,
-});
-
-interface NotificationAction {
+export interface NotificationAction {
   type: string;
   notifications?: Notification[];
+  totalUnreadCount?: number;
+  totalReadCount?: number;
+  unreadMetaObject?: Record<string, unknown>;
+  readMetaObject?: Record<string, unknown>;
 }
+
+export interface NotificationsContextType {
+  notificationState: NotificationStateType;
+  notificationDispatch: React.Dispatch<NotificationAction>;
+}
+
+export const NotificationsContext = createContext<NotificationsContextType>({
+  notificationState: initialNotificationState,
+  notificationDispatch: () => null,
+});
 
 const notificationReducer = (state: NotificationStateType, action: NotificationAction) => {
   let notifications: Notification[] = [];
@@ -83,6 +89,14 @@ const notificationReducer = (state: NotificationStateType, action: NotificationA
   switch (action.type) {
     case 'reset':
       return initialNotificationState;
+    case 'set all non-list data':
+      return {
+        ...state,
+        totalUnreadCount: action.totalUnreadCount ?? 0,
+        totalReadCount: action.totalReadCount ?? 0,
+        unreadMetaObject: action.unreadMetaObject ?? {},
+        readMetaObject: action.readMetaObject ?? {},
+      };
     case 'new notification':
       return { ...state, unreadNotifications: [], totalUnreadCount: state.totalUnreadCount + 1 };
     case 'update total unread count':
@@ -104,7 +118,7 @@ export const App: FC = () => {
   // const [totalReadCount, setTotalReadCount] = useState(0);
   // const [unreadMetaObject, setUnreadMetaObject] = useState<Record<string, unknown> | null>({});
   // const [readMetaObject, setReadMetaObject] = useState<Record<string, unknown> | null>({});
-  const [notificationState, dispatch] = useReducer(notificationReducer, initialNotificationState);
+  const [notificationState, notificationDispatch] = useReducer(notificationReducer, initialNotificationState);
 
   const value = useMemo(() => {
     const toggle = () => {
@@ -161,9 +175,9 @@ export const App: FC = () => {
   const notifications = useMemo(() => {
     return {
       notificationState,
-      dispatch,
+      notificationDispatch,
     };
-  }, [notificationState, dispatch]);
+  }, [notificationState, notificationDispatch]);
 
   return (
     <AppErrorBoundary>

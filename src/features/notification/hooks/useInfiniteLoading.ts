@@ -15,7 +15,8 @@ export const useInfiniteLoading = (props: Props) => {
   const [hasMore, setHasMore] = useState(true);
   const [nextCursorLink, setNextCursorLink] = useState<string | null>(null);
   const initialPageLoaded = useRef(false);
-  const { setUnread, setRead, unreadNotifications, readNotifications } = useNotifications();
+  // const { setUnread, setRead, unreadNotifications, readNotifications } = useNotifications();
+  const { notificationState, notificationDispatch } = useNotifications();
 
   const loadItems = useCallback(
     async (cursorLink: string) => {
@@ -27,14 +28,16 @@ export const useInfiniteLoading = (props: Props) => {
       setHasMore(nextCursor !== null);
 
       if (readType === 'unread') {
-        setUnread([...unreadNotifications, ...results]);
+        // setUnread([...unreadNotifications, ...results]);
+        notificationDispatch({ type: 'append to unread notifications', notifications: results });
       } else if (readType === 'read') {
-        setRead([...readNotifications, ...results]);
+        // setRead([...readNotifications, ...results]);
+        notificationDispatch({ type: 'append to read notifications', notifications: results });
       }
 
       setNextCursorLink(nextCursor ?? null);
     },
-    [getItems, readType, token, unreadNotifications, readNotifications, setUnread, setRead],
+    [getItems, readType, token],
   );
 
   useEffect(() => {
@@ -42,19 +45,19 @@ export const useInfiniteLoading = (props: Props) => {
       return;
     }
 
-    if (readType === 'unread' && unreadNotifications.length === 0) {
+    if (readType === 'unread' && notificationState.unreadNotifications.length === 0) {
       loadItems(nextCursorLink ?? '');
     }
 
-    if (readType === 'read' && readNotifications.length === 0) {
+    if (readType === 'read' && notificationState.readNotifications.length === 0) {
       loadItems(nextCursorLink ?? '');
     }
 
     initialPageLoaded.current = true;
-  }, [loadItems, nextCursorLink, readType, unreadNotifications, readNotifications]);
+  }, [loadItems, nextCursorLink, readType]);
 
   return {
-    items: readType === 'unread' ? unreadNotifications : readNotifications,
+    items: readType === 'unread' ? notificationState.unreadNotifications : notificationState.readNotifications,
     hasMore,
     loadItems,
     nextCursorLink,

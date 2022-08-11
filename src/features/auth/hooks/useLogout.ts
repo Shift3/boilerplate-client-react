@@ -12,7 +12,9 @@ export const useLogout: UseLogoutHook = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [logout, { isLoading }] = useLogoutMutation();
-  const { setUnread, setRead, setUnreadMeta, setReadMeta, setTotalRead, setTotalUnread } = useNotifications();
+  // const { setUnread, setRead, setUnreadMeta, setReadMeta, setTotalRead, setTotalUnread } = useNotifications();
+  // const { notificationDispatch } = useContext(NotificationsContext);
+  const { notificationDispatch } = useNotifications();
 
   const logoutUser = useCallback(async () => {
     try {
@@ -24,15 +26,16 @@ export const useLogout: UseLogoutHook = () => {
       document.cookie = '';
       dispatch(authSlice.actions.userLoggedOut());
       authLocalStorage.clearAuthState();
-      setUnread([]);
-      setRead([]);
-      setUnreadMeta(null);
-      setReadMeta(null);
-      setTotalRead(0);
-      setTotalUnread(0);
+      // setUnread([]);
+      // setRead([]);
+      // setUnreadMeta(null);
+      // setReadMeta(null);
+      // setTotalRead(0);
+      // setTotalUnread(0);
+      notificationDispatch({ type: 'reset' });
       navigate('/auth/login', { replace: true });
     }
-  }, [logout, dispatch, navigate, setUnread, setRead, setUnreadMeta, setReadMeta, setTotalRead, setTotalUnread]);
+  }, [logout, dispatch, navigate]);
 
   return { logout: logoutUser, isLoading };
 };

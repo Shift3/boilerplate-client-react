@@ -10,7 +10,8 @@ import { useNotifications } from '../hooks/useNotifications';
 
 export const NotificationPage: FC = () => {
   const [tab, setTab] = useState('unread');
-  const { totalUnreadCount, totalReadCount, unreadMetaObject, readMetaObject } = useNotifications();
+  // const { totalUnreadCount, totalReadCount, unreadMetaObject, readMetaObject } = useNotifications();
+  const { notificationState, notificationDispatch } = useNotifications();
   const [markAllRead] = useMarkAllReadMutation();
 
   const handleMarkAllReadOperation = async () => {
@@ -19,7 +20,7 @@ export const NotificationPage: FC = () => {
 
   useEffect(() => {
     console.log('Hello There');
-  }, [totalUnreadCount, totalReadCount]);
+  }, [notificationState.totalUnreadCount, notificationState.totalReadCount]);
 
   return (
     <SmallContainer>
@@ -35,7 +36,11 @@ export const NotificationPage: FC = () => {
         <div>
           <h1>Notifications</h1>
         </div>
-        <Button variant='primary' disabled={totalUnreadCount === 0} onClick={() => handleMarkAllReadOperation()}>
+        <Button
+          variant='primary'
+          disabled={notificationState.totalUnreadCount === 0}
+          onClick={() => handleMarkAllReadOperation()}
+        >
           Mark All Read
         </Button>
       </PageHeader>
@@ -43,21 +48,23 @@ export const NotificationPage: FC = () => {
         <PageNav.Link onClick={() => setTab('unread')} className={tab === 'unread' ? 'active' : ''}>
           Unread{' '}
           <Badge className='ms-1 me-2' pill bg='secondary'>
-            {totalUnreadCount}
+            {notificationState.totalUnreadCount}
           </Badge>
         </PageNav.Link>
         <PageNav.Link onClick={() => setTab('read')} className={tab === 'read' ? 'active' : ''}>
           Read{' '}
           <Badge className='ms-1' pill bg='secondary'>
-            {totalReadCount}
+            {notificationState.totalReadCount}
           </Badge>
         </PageNav.Link>
       </PageNav>
       <hr className='mt-0' />
-      {tab === 'unread' && unreadMetaObject ? (
-        <NotificationScrollView readType='unread' totalCount={totalUnreadCount} />
+      {tab === 'unread' && notificationState.unreadMetaObject ? (
+        <NotificationScrollView readType='unread' totalCount={notificationState.totalUnreadCount} />
       ) : null}
-      {tab === 'read' && readMetaObject ? <NotificationScrollView readType='read' totalCount={totalReadCount} /> : null}
+      {tab === 'read' && notificationState.readMetaObject ? (
+        <NotificationScrollView readType='read' totalCount={notificationState.totalReadCount} />
+      ) : null}
     </SmallContainer>
   );
 };

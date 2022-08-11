@@ -28,7 +28,8 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
   const navLinks = useNavLinks();
   const { openLogoutModal } = useLogoutModal();
   const { i18n } = useTranslation();
-  const { totalUnreadCount, setTotalUnread, setUnread } = useNotifications();
+  // const { totalUnreadCount, setTotalUnread, setUnread } = useNotifications();
+  const { notificationState, notificationDispatch } = useNotifications();
   const [newUnreadCount, setNewUnreadCount] = useState(0);
 
   useEffect(() => {
@@ -45,16 +46,17 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
       if (newUnreadCount !== 0) {
         setNewUnreadCount(newUnreadCount + 1);
       } else {
-        setNewUnreadCount(totalUnreadCount + 1);
+        setNewUnreadCount(notificationState.totalUnreadCount + 1);
       }
-      setUnread([]);
-      setTotalUnread(totalUnreadCount + 1);
+      notificationDispatch({ type: 'new notification' });
+      // setUnread([]);
+      // setTotalUnread(totalUnreadCount + 1);
     };
 
     return () => {
       src.close();
     };
-  }, [user, totalUnreadCount, setTotalUnread, newUnreadCount, setUnread]);
+  }, [user, newUnreadCount]);
 
   const changeLanguage = (ln: string) => {
     localStorage.setItem('language', ln);
@@ -100,7 +102,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
                 icon: 'bell',
                 label: 'Notifications',
                 path: '/users/notifications',
-                badge: newUnreadCount || totalUnreadCount,
+                badge: newUnreadCount || notificationState.totalUnreadCount,
               }}
             />
             <CustomNavAction onClick={openLogoutModal} label='Sign Out' icon='sign-out-alt' />
