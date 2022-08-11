@@ -96,14 +96,17 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ### AWS
 
-Deploying to AWS requires having AWS credentials configured on the machine. The deployment script is set to look for an AWS profile named `BWTC-Developer`. See the following links for documentation on configuring the AWS CLI, creating an AWS credential file, and creating a named profile:
+Deploying to AWS requires having AWS credentials configured on the machine. Deployment will also require aws cli v2. The deployment script is set to look for an AWS profile named `BWTC-Developer`. See the following links for documentation on configuring the AWS SSO and creating a named profile:
 
-- [Configuration and credential file settings](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
-- [Named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
+- [AWS SSO Configuration](https://docs.google.com/document/d/1qUTh_z4lef0j-DT8cFxzlZZcfseR75aQjPNO018CYic)
 
 ### Terraform
 
 Configuring, building, and changing the AWS infrastructure **for the sandbox** is handled by Terraform. As a prerequisite, Terraform needs the AWS credentials configured as described in the [above section](#aws), which developers should already have or can access through Zoho Vault.
+
+Before deployments or initializing terraform you must have aws sso configured and then login with the following commmand:
+
+`aws sso login --profile BWTC-Developer`
 
 Terraform also needs the project secrets saved in `terraform/staging/terraform.tfvars`. This file is not committed to version control since it can contain sensitive information such as database credentials and should be added locally. Create the `terraform/staging/terraform.tfvars` file with the following structure:
 
