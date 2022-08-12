@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PageCrumb, PageHeader, SmallContainer, PageNav } from 'common/styles/page';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Trans } from 'react-i18next';
 import { Badge, Button } from 'react-bootstrap';
@@ -10,17 +10,12 @@ import { useNotifications } from '../hooks/useNotifications';
 
 export const NotificationPage: FC = () => {
   const [tab, setTab] = useState('unread');
-  // const { totalUnreadCount, totalReadCount, unreadMetaObject, readMetaObject } = useNotifications();
-  const { notificationState, notificationDispatch } = useNotifications();
+  const { notificationState } = useNotifications();
   const [markAllRead] = useMarkAllReadMutation();
 
   const handleMarkAllReadOperation = async () => {
     await markAllRead();
   };
-
-  useEffect(() => {
-    console.log('Hello There');
-  }, [notificationState.totalUnreadCount, notificationState.totalReadCount]);
 
   return (
     <SmallContainer>

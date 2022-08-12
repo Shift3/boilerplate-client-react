@@ -7,6 +7,7 @@ import AgentCreatedNotification from './AgentCreatedNotification';
 import { environment } from 'environment';
 import { VisibilityPixel } from 'common/styles/utilities';
 import { getNotifications } from '../utility/utilities';
+import { useNotifications } from '../hooks/useNotifications';
 
 interface Props {
   readType: string;
@@ -17,6 +18,7 @@ export const NotificationScrollView: FC<Props> = ({ readType, totalCount }) => {
   const { token } = useAuth();
   const [ref, { entry }] = useIntersectionObserver();
   const isVisible = entry && entry.isIntersecting;
+  const { notificationState } = useNotifications();
 
   const { items, hasMore, loadItems, nextCursorLink } = useInfiniteLoading({
     getItems: getNotifications,
@@ -53,10 +55,18 @@ export const NotificationScrollView: FC<Props> = ({ readType, totalCount }) => {
   };
 
   useEffect(() => {
+    if (notificationState.shouldLoadFirstPage) {
+      setTimeout(() => {
+        // When a notification is received, it doesn't mean that it will be retrievable as a part of the associated query.
+        // So, a delay is necessary.
+        loadItems('');
+      }, 1000);
+    }
+
     if (isVisible && totalCount && items.length < totalCount) {
       loadItems(nextCursorLink ?? '');
     }
-  }, [isVisible, totalCount, items.length, nextCursorLink, loadItems]);
+  }, [isVisible, totalCount, items.length, nextCursorLink, loadItems, notificationState.shouldLoadFirstPage]);
 
   return (
     <div>

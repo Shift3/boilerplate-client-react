@@ -49,6 +49,7 @@ export interface NotificationStateType {
   totalReadCount: number;
   unreadMetaObject: Record<string, unknown>;
   readMetaObject: Record<string, unknown>;
+  shouldLoadFirstPage: boolean;
 }
 
 const initialNotificationState = {
@@ -58,6 +59,7 @@ const initialNotificationState = {
   totalReadCount: 0,
   unreadMetaObject: {},
   readMetaObject: {},
+  shouldLoadFirstPage: true,
 };
 
 export interface NotificationAction {
@@ -96,13 +98,24 @@ const notificationReducer = (state: NotificationStateType, action: NotificationA
         totalReadCount: action.totalReadCount ?? 0,
         unreadMetaObject: action.unreadMetaObject ?? {},
         readMetaObject: action.readMetaObject ?? {},
+        shouldLoadFirstPage: false,
       };
     case 'new notification':
-      return { ...state, unreadNotifications: [], totalUnreadCount: state.totalUnreadCount + 1 };
+      return {
+        ...state,
+        unreadNotifications: [],
+        totalUnreadCount: state.totalUnreadCount + 1,
+        unreadMetaObject: {},
+        shouldLoadFirstPage: true,
+      };
     case 'update total unread count':
       return { ...state, totalUnreadCount: state.totalUnreadCount + 1 };
     case 'append to unread notifications':
-      return { ...state, unreadNotifications: [...state.unreadNotifications, ...notifications] };
+      return {
+        ...state,
+        unreadNotifications: [...state.unreadNotifications, ...notifications],
+        shouldLoadFirstPage: false,
+      };
     case 'append to read notifications':
       return { ...state, readNotifications: [...state.readNotifications, ...notifications] };
     default:

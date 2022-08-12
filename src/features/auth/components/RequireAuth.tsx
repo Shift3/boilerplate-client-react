@@ -12,14 +12,25 @@ type RequireAuthProps = {
 };
 
 export const RequireAuth: FC<PropsWithChildren<RequireAuthProps>> = ({ children, allowedRoles = [] }) => {
+  console.log('RequireAuth');
   const auth = useAuth();
   const location = useLocation();
-  const { data: unreadData } = useGetUnreadQuery(undefined, { skip: !auth.user });
+  const { notificationDispatch, notificationState } = useNotifications();
+  const {
+    data: unreadData,
+    isLoading,
+    isFetching,
+    refetch,
+  } = useGetUnreadQuery(undefined, { skip: !auth.user && !notificationState.shouldLoadFirstPage });
   const { data: readData } = useGetReadQuery(undefined, { skip: !auth.user });
   // const { setTotalUnread, setTotalRead, setUnreadMeta, setReadMeta } = useNotifications();
-  const { notificationDispatch } = useNotifications();
+  console.log('unreadData:', unreadData);
+  console.log('isLoading:', isLoading);
+  console.log('isFetching:', isFetching);
+  console.log('readData:', readData);
 
   useEffect(() => {
+    console.log('useEffect');
     // setTotalUnread(getCount(unreadData) ?? 0);
     // setUnreadMeta(getMeta(unreadData));
     // setTotalRead(getCount(readData) ?? 0);
