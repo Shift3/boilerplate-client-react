@@ -54,12 +54,10 @@ export const NotificationPage: FC = () => {
         </PageNav.Link>
       </PageNav>
       <hr className='mt-0' />
-      {tab === 'unread' && notificationState.unreadMetaObject ? (
+      {tab === 'unread' ? (
         <NotificationScrollView readType='unread' totalCount={notificationState.totalUnreadCount} />
       ) : null}
-      {tab === 'read' && notificationState.readMetaObject ? (
-        <NotificationScrollView readType='read' totalCount={notificationState.totalReadCount} />
-      ) : null}
+      {tab === 'read' ? <NotificationScrollView readType='read' totalCount={notificationState.totalReadCount} /> : null}
     </SmallContainer>
   );
 };

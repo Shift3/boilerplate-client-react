@@ -55,7 +55,9 @@ export const NotificationScrollView: FC<Props> = ({ readType, totalCount }) => {
   };
 
   useEffect(() => {
-    if (notificationState.shouldLoadFirstPage) {
+    console.log('NotificationScrollView');
+    console.log('state:', notificationState);
+    if (notificationState.shouldLoadFirstPage && !notificationState.unreadMetaObject) {
       setTimeout(() => {
         // When a notification is received, it doesn't mean that it will be retrievable as a part of the associated query.
         // So, a delay is necessary.
@@ -63,10 +65,20 @@ export const NotificationScrollView: FC<Props> = ({ readType, totalCount }) => {
       }, 1000);
     }
 
-    if (isVisible && totalCount && items.length < totalCount) {
+    if (!notificationState.shouldLoadFirstPage && isVisible && totalCount && items.length < totalCount) {
       loadItems(nextCursorLink ?? '');
     }
-  }, [isVisible, totalCount, items.length, nextCursorLink, loadItems, notificationState.shouldLoadFirstPage]);
+  }, [
+    isVisible,
+    totalCount,
+    items.length,
+    nextCursorLink,
+    loadItems,
+    notificationState.shouldLoadFirstPage,
+    notificationState.unreadMetaObject,
+    readType,
+    notificationState,
+  ]);
 
   return (
     <div>

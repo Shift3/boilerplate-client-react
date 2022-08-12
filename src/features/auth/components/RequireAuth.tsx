@@ -4,7 +4,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks';
 import * as notificationService from 'common/services/notification';
 import { useGetReadQuery, useGetUnreadQuery } from 'common/api/notificationApi';
-import { getCount, getMeta } from 'features/notification/utility/utilities';
+import { getCount, getMeta, getNextCursor, getResults } from 'features/notification/utility/utilities';
 import { useNotifications } from 'features/notification/hooks/useNotifications';
 
 type RequireAuthProps = {
@@ -20,10 +20,8 @@ export const RequireAuth: FC<PropsWithChildren<RequireAuthProps>> = ({ children,
     data: unreadData,
     isLoading,
     isFetching,
-    refetch,
   } = useGetUnreadQuery(undefined, { skip: !auth.user && !notificationState.shouldLoadFirstPage });
   const { data: readData } = useGetReadQuery(undefined, { skip: !auth.user });
-  // const { setTotalUnread, setTotalRead, setUnreadMeta, setReadMeta } = useNotifications();
   console.log('unreadData:', unreadData);
   console.log('isLoading:', isLoading);
   console.log('isFetching:', isFetching);
@@ -31,16 +29,17 @@ export const RequireAuth: FC<PropsWithChildren<RequireAuthProps>> = ({ children,
 
   useEffect(() => {
     console.log('useEffect');
-    // setTotalUnread(getCount(unreadData) ?? 0);
-    // setUnreadMeta(getMeta(unreadData));
-    // setTotalRead(getCount(readData) ?? 0);
-    // setReadMeta(getMeta(readData));
+
     notificationDispatch({
-      type: 'set all non-list data',
+      type: 'set all data',
+      unreadNotifications: getResults(unreadData) ?? [],
+      readNotifications: getResults(readData) ?? [],
       totalUnreadCount: getCount(unreadData) ?? undefined,
       totalReadCount: getCount(readData) ?? undefined,
       unreadMetaObject: getMeta(unreadData) ?? undefined,
       readMetaObject: getMeta(readData) ?? undefined,
+      unreadNextCursorLink: getNextCursor(unreadData) ?? undefined,
+      readNextCursorLink: getNextCursor(readData) ?? undefined,
     });
   }, [readData, unreadData, notificationDispatch]);
 

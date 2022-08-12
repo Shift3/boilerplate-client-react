@@ -47,9 +47,11 @@ export interface NotificationStateType {
   readNotifications: Notification[];
   totalUnreadCount: number;
   totalReadCount: number;
-  unreadMetaObject: Record<string, unknown>;
-  readMetaObject: Record<string, unknown>;
+  unreadMetaObject: Record<string, unknown> | null;
+  readMetaObject: Record<string, unknown> | null;
   shouldLoadFirstPage: boolean;
+  unreadNextCursorLink: string | null;
+  readNextCursorLink: string | null;
 }
 
 const initialNotificationState = {
@@ -57,18 +59,23 @@ const initialNotificationState = {
   readNotifications: [] as Notification[],
   totalUnreadCount: 0,
   totalReadCount: 0,
-  unreadMetaObject: {},
-  readMetaObject: {},
+  unreadMetaObject: null,
+  readMetaObject: null,
   shouldLoadFirstPage: true,
+  unreadNextCursorLink: null,
+  readNextCursorLink: null,
 };
 
 export interface NotificationAction {
   type: string;
-  notifications?: Notification[];
+  unreadNotifications?: Notification[];
+  readNotifications?: Notification[];
   totalUnreadCount?: number;
   totalReadCount?: number;
   unreadMetaObject?: Record<string, unknown>;
   readMetaObject?: Record<string, unknown>;
+  unreadNextCursorLink?: string;
+  readNextCursorLink?: string;
 }
 
 export interface NotificationsContextType {
@@ -82,22 +89,31 @@ export const NotificationsContext = createContext<NotificationsContextType>({
 });
 
 const notificationReducer = (state: NotificationStateType, action: NotificationAction) => {
-  let notifications: Notification[] = [];
+  let unreadNotifications: Notification[] = [];
+  let readNotifications: Notification[] = [];
 
-  if (action.notifications) {
-    notifications = action.notifications;
+  if (action.unreadNotifications) {
+    unreadNotifications = action.unreadNotifications;
+  }
+
+  if (action.readNotifications) {
+    readNotifications = action.readNotifications;
   }
 
   switch (action.type) {
     case 'reset':
       return initialNotificationState;
-    case 'set all non-list data':
+    case 'set all data':
       return {
         ...state,
+        unreadNotifications,
+        readNotifications,
         totalUnreadCount: action.totalUnreadCount ?? 0,
         totalReadCount: action.totalReadCount ?? 0,
         unreadMetaObject: action.unreadMetaObject ?? {},
         readMetaObject: action.readMetaObject ?? {},
+        unreadNextCursorLink: action.unreadNextCursorLink ?? null,
+        readNextCursorLink: action.readNextCursorLink ?? null,
         shouldLoadFirstPage: false,
       };
     case 'new notification':
@@ -105,7 +121,7 @@ const notificationReducer = (state: NotificationStateType, action: NotificationA
         ...state,
         unreadNotifications: [],
         totalUnreadCount: state.totalUnreadCount + 1,
-        unreadMetaObject: {},
+        unreadMetaObject: null,
         shouldLoadFirstPage: true,
       };
     case 'update total unread count':
@@ -113,11 +129,21 @@ const notificationReducer = (state: NotificationStateType, action: NotificationA
     case 'append to unread notifications':
       return {
         ...state,
-        unreadNotifications: [...state.unreadNotifications, ...notifications],
+        unreadNotifications: [...state.unreadNotifications, ...unreadNotifications],
+        unreadMetaObject: action.unreadMetaObject ?? null,
+        totalUnreadCount: action.totalUnreadCount ?? 0,
         shouldLoadFirstPage: false,
+        unreadNextCursorLink: action.unreadNextCursorLink ?? null,
       };
     case 'append to read notifications':
-      return { ...state, readNotifications: [...state.readNotifications, ...notifications] };
+      return {
+        ...state,
+        readNotifications: [...state.readNotifications, ...readNotifications],
+        readMetaObject: action.readMetaObject ?? null,
+        totalReadCount: action.totalReadCount ?? 0,
+        shouldLoadFirstPage: false,
+        readNextCursorLink: action.readNextCursorLink ?? null,
+      };
     default:
       throw new Error();
   }
