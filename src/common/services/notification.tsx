@@ -11,3 +11,9 @@ export const showErrorMessage = (message: string): void => {
     toastId: message,
   });
 };
+
+export const showInfoMessage = (message: string): void => {
+  toast.info(message, {
+    toastId: message,
+  });
+};

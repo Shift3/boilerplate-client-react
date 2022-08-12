@@ -13,6 +13,7 @@ import { NavUserDetails } from './NavUserDetails';
 import { ThemeToggle } from '../../themes/ToggleSwitch';
 import { environment } from 'environment';
 import { useNotifications } from 'features/notification/hooks/useNotifications';
+import * as notificationService from 'common/services/notification';
 
 type Props = {
   closeVerticalNav?: () => void;
@@ -42,6 +43,12 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
       console.log('data:', data);
 
       notificationDispatch({ type: 'new notification' });
+      notificationService.showInfoMessage(
+        data.type
+          .replace('Notification', '')
+          .split(/(?=[A-Z])/)
+          .join(' '),
+      );
     };
 
     return () => {
