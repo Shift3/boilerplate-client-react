@@ -1,5 +1,4 @@
-import { Notification } from 'common/models/notification';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { getCount, getMeta, getNextCursor, getResults } from '../utility/utilities';
 import { useNotifications } from './useNotifications';
 
@@ -11,11 +10,7 @@ interface Props {
 
 export const useInfiniteLoading = (props: Props) => {
   const { getItems, readType, token } = props;
-  const [items, setItems] = useState<Notification[]>([]);
   const [hasMore, setHasMore] = useState(true);
-  // const [nextCursorLink, setNextCursorLink] = useState<string | null>(null);
-  const initialPageLoaded = useRef(false);
-  // const { setUnread, setRead, unreadNotifications, readNotifications } = useNotifications();
   const { notificationState, notificationDispatch } = useNotifications();
 
   const loadItems = useCallback(
@@ -30,7 +25,6 @@ export const useInfiniteLoading = (props: Props) => {
       setHasMore(nextCursor !== null);
 
       if (readType === 'unread') {
-        // setUnread([...unreadNotifications, ...results]);
         notificationDispatch({
           type: 'append to unread notifications',
           unreadNotifications: results,
@@ -39,7 +33,6 @@ export const useInfiniteLoading = (props: Props) => {
           unreadNextCursorLink: nextCursor ?? undefined,
         });
       } else if (readType === 'read') {
-        // setRead([...readNotifications, ...results]);
         notificationDispatch({
           type: 'append to read notifications',
           readNotifications: results,
@@ -48,33 +41,9 @@ export const useInfiniteLoading = (props: Props) => {
           readNextCursorLink: nextCursor ?? undefined,
         });
       }
-
-      // setNextCursorLink(nextCursor ?? null);
     },
     [getItems, readType, token, notificationDispatch],
   );
-
-  // useEffect(() => {
-  //   if (initialPageLoaded.current) {
-  //     return;
-  //   }
-
-  //   // if (readType === 'unread' && notificationState.unreadNotifications.length === 0) {
-  //   //   loadItems(nextCursorLink ?? '');
-  //   // }
-
-  //   // if (readType === 'read' && notificationState.readNotifications.length === 0) {
-  //   //   loadItems(nextCursorLink ?? '');
-  //   // }
-
-  //   initialPageLoaded.current = true;
-  // }, [
-  //   loadItems,
-  //   nextCursorLink,
-  //   readType,
-  //   notificationState.unreadNotifications.length,
-  //   notificationState.readNotifications.length,
-  // ]);
 
   return {
     items: readType === 'unread' ? notificationState.unreadNotifications : notificationState.readNotifications,

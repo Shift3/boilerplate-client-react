@@ -1,7 +1,7 @@
 import { CustomSelect } from 'common/components/CustomSelect';
 import { BitwiseNavbar } from 'common/styles/page';
 import { useAuth } from 'features/auth/hooks';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import { useTranslation } from 'react-i18next';
 import { languages } from '../../../i18n/config';
@@ -38,9 +38,6 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
 
     src.onmessage = msg => {
       const data = JSON.parse(msg.data);
-
-      console.log('src:', src);
-      console.log('data:', data);
 
       notificationDispatch({ type: 'new notification' });
       notificationService.showInfoMessage(

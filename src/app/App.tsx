@@ -24,24 +24,6 @@ export const ThemeContext = createContext({
   toggle: () => {},
 });
 
-// export const NotificationsContext = createContext({
-//   unreadNotifications: [] as Notification[],
-//   readNotifications: [] as Notification[],
-//   totalUnreadCount: Number(),
-//   totalReadCount: Number(),
-//   unreadMetaObject: {} || null,
-//   readMetaObject: {} || null,
-//   // no-empty-function
-//   /* eslint-disable */
-//   setUnread: (unread: Notification[]) => {},
-//   setRead: (read: Notification[]) => {},
-//   setTotalUnread: (count: number) => {},
-//   setTotalRead: (count: number) => {},
-//   setUnreadMeta: (meta: Record<string, unknown> | null) => {},
-//   setReadMeta: (meta: Record<string, unknown> | null) => {},
-//   /* eslint-enable */
-// });
-
 export interface NotificationStateType {
   unreadNotifications: Notification[];
   readNotifications: Notification[];
@@ -151,12 +133,6 @@ const notificationReducer = (state: NotificationStateType, action: NotificationA
 
 export const App: FC = () => {
   const [theme, setTheme] = useState('light');
-  // const [unreadNotifications, setUnreadNotifications] = useState<Notification[]>([]);
-  // const [readNotifications, setReadNotifications] = useState<Notification[]>([]);
-  // const [totalUnreadCount, setTotalUnreadCount] = useState(0);
-  // const [totalReadCount, setTotalReadCount] = useState(0);
-  // const [unreadMetaObject, setUnreadMetaObject] = useState<Record<string, unknown> | null>({});
-  // const [readMetaObject, setReadMetaObject] = useState<Record<string, unknown> | null>({});
   const [notificationState, notificationDispatch] = useReducer(notificationReducer, initialNotificationState);
 
   const value = useMemo(() => {
@@ -169,47 +145,6 @@ export const App: FC = () => {
       toggle,
     };
   }, [theme]);
-
-  // const notifications = useMemo(() => {
-  //   const setUnread = (unread: Notification[]) => {
-  //     setUnreadNotifications(unread);
-  //   };
-
-  //   const setRead = (read: Notification[]) => {
-  //     setReadNotifications(read);
-  //   };
-
-  //   const setTotalUnread = (count: number) => {
-  //     setTotalUnreadCount(count);
-  //   };
-
-  //   const setTotalRead = (count: number) => {
-  //     setTotalReadCount(count);
-  //   };
-
-  //   const setUnreadMeta = (meta: Record<string, unknown> | null) => {
-  //     setUnreadMetaObject(meta);
-  //   };
-
-  //   const setReadMeta = (meta: Record<string, unknown> | null) => {
-  //     setReadMetaObject(meta);
-  //   };
-
-  //   return {
-  //     unreadNotifications,
-  //     readNotifications,
-  //     totalUnreadCount,
-  //     totalReadCount,
-  //     unreadMetaObject,
-  //     readMetaObject,
-  //     setUnread,
-  //     setRead,
-  //     setTotalUnread,
-  //     setTotalRead,
-  //     setUnreadMeta,
-  //     setReadMeta,
-  //   };
-  // }, [unreadNotifications, readNotifications, totalReadCount, totalUnreadCount, unreadMetaObject, readMetaObject]);
 
   const notifications = useMemo(() => {
     return {

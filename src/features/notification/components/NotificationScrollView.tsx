@@ -4,7 +4,6 @@ import { FC, useEffect } from 'react';
 import { useIntersectionObserver } from 'react-intersection-observer-hook';
 import { useInfiniteLoading } from '../hooks/useInfiniteLoading';
 import AgentCreatedNotification from './AgentCreatedNotification';
-import { environment } from 'environment';
 import { VisibilityPixel } from 'common/styles/utilities';
 import { getNotifications } from '../utility/utilities';
 import { useNotifications } from '../hooks/useNotifications';
@@ -36,17 +35,6 @@ export const NotificationScrollView: FC<Props> = ({ readType, totalCount }) => {
   };
 
   const renderNotifications = (notificationList: Notification[]) => {
-    // return notificationList.map(item => {
-    //   const Component = lazy(() => import(`../components/${item.type}`));
-    //   return (
-    //     <div className='mb-3' key={item.id}>
-    //       <Suspense fallback={<Card />}>
-    //         <Component notification={item} />
-    //       </Suspense>
-    //     </div>
-    //   );
-    // });
-
     return notificationList.map(item => (
       <div key={item.id} className='mb-3'>
         {getNotificationBasedOnType(item.type, item)}
@@ -55,8 +43,6 @@ export const NotificationScrollView: FC<Props> = ({ readType, totalCount }) => {
   };
 
   useEffect(() => {
-    console.log('NotificationScrollView');
-    console.log('state:', notificationState);
     if (notificationState.shouldLoadFirstPage && !notificationState.unreadMetaObject) {
       setTimeout(() => {
         // When a notification is received, it doesn't mean that it will be retrievable as a part of the associated query.
