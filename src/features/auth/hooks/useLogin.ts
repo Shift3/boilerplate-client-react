@@ -6,8 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import * as authLocalStorage from '../authLocalStorage';
 import { authSlice } from '../authSlice';
 import * as notificationService from 'common/services/notification';
-import { getCount, getMeta, getNotifications, getResults } from 'features/notification/utility/utilities';
-import { useNotifications } from 'features/notification/hooks/useNotifications';
 
 export interface Credentials {
   email: string;
