@@ -10,11 +10,12 @@ import { useNotifications } from '../hooks/useNotifications';
 
 export const NotificationPage: FC = () => {
   const [tab, setTab] = useState('unread');
-  const { notificationState } = useNotifications();
+  const { notificationState, notificationDispatch } = useNotifications();
   const [markAllRead] = useMarkAllReadMutation();
 
   const handleMarkAllReadOperation = async () => {
     await markAllRead();
+    notificationDispatch({ type: 'reset' });
   };
 
   return (

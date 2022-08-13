@@ -4,6 +4,7 @@ import { BaseNotification } from './BaseNotification';
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useMarkReadMutation } from 'common/api/notificationApi';
+import { useNotifications } from '../hooks/useNotifications';
 
 interface AgentCreation {
   userId: string;
@@ -17,9 +18,11 @@ const AgentCreatedNotification: FC<{
 }> = ({ notification }) => {
   const data = notification.data as AgentCreation;
   const [markRead] = useMarkReadMutation();
+  const { notificationDispatch } = useNotifications();
 
   const handleMarkReadOperation = async () => {
     await markRead(notification.id);
+    notificationDispatch({ type: 'reset' });
   };
 
   return (
