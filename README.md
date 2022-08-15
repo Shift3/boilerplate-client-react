@@ -8,7 +8,7 @@
 This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react/wiki) which explains the project and its implementation in much greater detail than the code comments.
 
 > Note that this repository used to be compatible with our NestJS
-> backend, however we have switched to using django as our primary
+> backend, however we have switched to using [django](https://github.com/Shift3/dj-starter) as our primary
 > backend. If you are looking for the NestJS compatible version, we
 > still maintain it in the `nestjs-compatibility` branch
 
