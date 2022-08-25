@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from 'app/redux';
 import { Image, User } from 'common/models';
+import { NotificationContext } from 'features/notifications/context';
+import { useContext } from 'react';
 import * as authLocalStorage from './authLocalStorage';
 
 export interface AuthState {

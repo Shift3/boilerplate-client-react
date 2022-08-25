@@ -176,5 +176,10 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
         }
     }
 
+    .in-app-notification {
+        color: black;
+        font-size: 1rem;
+    }
+
 `;
 export default GlobalStyle;
