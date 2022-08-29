@@ -28,7 +28,7 @@ export const Checkout = () => {
   const { data: plans, isLoading } = useGetPlansQuery();
   const [createSubscription] = useCreateSubscriptionMutation();
   const [clientSecret, setClientSecret] = useState<string | undefined>(undefined);
-  console.log(plans);
+
   const onPlanSelect = async (priceId: string) => {
     const data = await createSubscription(priceId).unwrap();
     const { clientSecret } = data;
@@ -50,9 +50,9 @@ export const Checkout = () => {
               plans.map((plan: Plan) => (
                 <Card key={plan.id} className='m-3 w-25 mx-5 w-100 shadow mb-5 bg-white rounded'>
                   <Card.Header className='d-flex justify-content-center'>{plan.name}</Card.Header>
-                  <Card.Body className='d-flex-col justify-content-center'>
-                    <Card.Text className=''>{plan.description}</Card.Text>
-                    <Card.Text className=''>
+                  <Card.Body className='d-flex-col'>
+                    <Card.Text className='d-flex justify-content-center'>{plan.description}</Card.Text>
+                    <Card.Text className='d-flex justify-content-center'>
                       {(plan.prices[0].unitAmount / 100).toFixed(2)} per {plan.prices[0].recurring.interval}
                     </Card.Text>
                   </Card.Body>
