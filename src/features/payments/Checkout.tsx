@@ -28,7 +28,7 @@ export const Checkout = () => {
   const { data: plans, isLoading } = useGetPlansQuery();
   const [createSubscription] = useCreateSubscriptionMutation();
   const [clientSecret, setClientSecret] = useState<string | undefined>(undefined);
-
+  console.log(plans);
   const onPlanSelect = async (priceId: string) => {
     const data = await createSubscription(priceId).unwrap();
     const { clientSecret } = data;
@@ -53,8 +53,7 @@ export const Checkout = () => {
                   <Card.Body className='d-flex-col justify-content-center'>
                     <Card.Text className=''>{plan.description}</Card.Text>
                     <Card.Text className=''>
-                      {plan.prices[0].id}${(plan.prices[0].unitAmount / 100).toFixed(2)}
-                      {plan.prices[0].recurring.intervalCount} per {plan.prices[0].recurring.interval}
+                      {(plan.prices[0].unitAmount / 100).toFixed(2)} per {plan.prices[0].recurring.interval}
                     </Card.Text>
                   </Card.Body>
                   <Button className='m-2 w-80' variant='primary' onClick={() => onPlanSelect(plan.prices[0].id)}>
