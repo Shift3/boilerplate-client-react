@@ -19,7 +19,7 @@ export const RequireAuth: FC<PropsWithChildren<RequireAuthProps>> = ({ children,
   const navigate = useNavigate();
   const location = useLocation();
   const [accountHasIssue, setAccountHasIssue] = useState(false);
-  const { error } = useGetMeQuery({}, { pollingInterval: 5000, skip: !auth.user || accountHasIssue });
+  const { error } = useGetMeQuery(undefined, { pollingInterval: 5000, skip: !auth.user || accountHasIssue });
   const dispatch = useDispatch();
 
   useEffect(() => {
