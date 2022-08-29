@@ -6,34 +6,16 @@ export const NetworkDetector: FC<PropsWithChildren<unknown>> = ({ children }) =>
   const prevDisconnectionStatus = useRef(false);
 
   const handleConnectionChange = () => {
-    const condition = navigator.onLine ? 'online' : 'offline';
-    if (condition === 'online') {
-      const webPing = setInterval(() => {
-        fetch('//google.com', {
-          mode: 'no-cors',
-        })
-          .then(() => {
-            setDisconnectedStatus(false);
-            return clearInterval(webPing);
-          })
-          .catch(() => setDisconnectedStatus(true));
-      }, 2000);
-      return;
-    }
-
-    setDisconnectedStatus(true);
+    setDisconnectedStatus(!navigator.onLine);
   };
 
   useEffect(() => {
-    handleConnectionChange();
     window.addEventListener('online', handleConnectionChange);
     window.addEventListener('offline', handleConnectionChange);
 
     if (isDisconnected) {
       notificationService.showEndlessErrorMessage('Internet Connection Lost');
-    }
-
-    if (prevDisconnectionStatus.current) {
+    } else if (prevDisconnectionStatus.current) {
       notificationService.showEndlessSuccessMessage('Internet Connection Restored');
     }
 
