@@ -1,3 +1,4 @@
+import { ActivateAccountRequest } from './userApi';
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { customBaseQuery } from './customBaseQuery';
 
@@ -22,6 +23,43 @@ export interface Plan {
   prices: Price[];
 }
 
+type SubscriptionInterval = 'month' | 'year';
+
+export interface Subscription {
+  activeSubscription: {
+    id: string;
+    currentPeriodEnd: string;
+    canceledAt: string;
+    plan: {
+      id: string;
+      interval: SubscriptionInterval;
+      amount: string;
+      product: string;
+    };
+  };
+
+  billingHistory: [
+    {
+      amount: string;
+      date: string;
+      description: string;
+    },
+  ];
+}
+
+// {
+//   "user": "75dbf026-1c0b-4c9a-9a59-576fbb93c581",
+//   "customer": "cus_MLFKXTdGxyU4lA",
+//   "paymentMethods": [],
+//   "billingHistory": [
+//       {
+//           "amount": "19.99",
+//           "date": "2022-08-30T18:06:23+0000",
+//           "description": "1 × Standard (at $19.99 / month)"
+//       }
+//   ],
+// }
+
 export const paymentApi = createApi({
   reducerPath: 'paymentApi',
 
@@ -45,6 +83,10 @@ export const paymentApi = createApi({
       providesTags: ['Payment'],
     }),
 
+    getMySubscription: builder.query<Subscription, void>({
+      query: () => '/subscriptions/active_subscription/',
+    }),
+
     createSubscription: builder.mutation<{ clientSecret: string; subscription_id: string }, string>({
       query: priceId => ({
         url: '/subscriptions/',
@@ -55,4 +97,5 @@ export const paymentApi = createApi({
   }),
 });
 
-export const { useGetPlansQuery, useGetPlanByIdQuery, useCreateSubscriptionMutation } = paymentApi;
+export const { useGetPlansQuery, useGetPlanByIdQuery, useCreateSubscriptionMutation, useGetMySubscriptionQuery } =
+  paymentApi;
