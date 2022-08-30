@@ -4,6 +4,7 @@ import { environment } from 'environment';
 import * as authLocalStorage from 'features/auth/authLocalStorage';
 import { authSlice } from 'features/auth/authSlice';
 import { StatusCodes } from 'http-status-codes';
+import * as notificationService from 'common/services/notification';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: environment.apiRoute,
@@ -29,6 +30,8 @@ export const customBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBase
   console.log('api:', api);
   console.log('extraOptions:', extraOptions);
 
+  console.log('result:', result);
+
   if (
     result.error &&
     (result.error.status === StatusCodes.UNAUTHORIZED || result.error.status === StatusCodes.FORBIDDEN)
@@ -39,12 +42,16 @@ export const customBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBase
       await fetch(`${environment.apiRoute}/users/me`, { headers: { Authorization: `Token ${token}` } }).then(
         response => {
           if (response.ok) {
+            console.log('response ok');
             return response.json();
           }
           throw response;
         },
       );
     } catch (e) {
+      notificationService.showEndlessErrorMessage(
+        'There is a problem with your account. Please contact the administrators of this site.',
+      );
       api.dispatch(authSlice.actions.userLoggedOut());
       authLocalStorage.clearAuthState();
     }
