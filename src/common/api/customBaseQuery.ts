@@ -26,12 +26,6 @@ export const customBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBase
 ) => {
   const result = await baseQuery(args, api, extraOptions);
 
-  console.log('args:', args);
-  console.log('api:', api);
-  console.log('extraOptions:', extraOptions);
-
-  console.log('result:', result);
-
   if (
     result.error &&
     (result.error.status === StatusCodes.UNAUTHORIZED || result.error.status === StatusCodes.FORBIDDEN)
@@ -42,8 +36,7 @@ export const customBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBase
       await fetch(`${environment.apiRoute}/users/me`, { headers: { Authorization: `Token ${token}` } }).then(
         response => {
           if (response.ok) {
-            console.log('response ok');
-            return response.json();
+            return;
           }
           throw response;
         },
