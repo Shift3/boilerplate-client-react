@@ -25,9 +25,29 @@ export const customBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBase
 ) => {
   const result = await baseQuery(args, api, extraOptions);
 
-  if (result.error && result.error.status === StatusCodes.UNAUTHORIZED) {
-    api.dispatch(authSlice.actions.userLoggedOut());
-    authLocalStorage.clearAuthState();
+  console.log('args:', args);
+  console.log('api:', api);
+  console.log('extraOptions:', extraOptions);
+
+  if (
+    result.error &&
+    (result.error.status === StatusCodes.UNAUTHORIZED || result.error.status === StatusCodes.FORBIDDEN)
+  ) {
+    try {
+      const { token } = (api.getState() as RootState).auth;
+
+      await fetch(`${environment.apiRoute}/users/me`, { headers: { Authorization: `Token ${token}` } }).then(
+        response => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw response;
+        },
+      );
+    } catch (e) {
+      api.dispatch(authSlice.actions.userLoggedOut());
+      authLocalStorage.clearAuthState();
+    }
   }
 
   return result;
