@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, useState } from 'react';
+import { FC, PropsWithChildren } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -69,20 +69,25 @@ const NavCategoryStyling = styled.div`
 
 type Props = {
   title: string;
-  isOpenByDefault: boolean;
+  handleCategorySelection: (category: string | null) => void;
 };
 
-export const NavCategory: FC<PropsWithChildren<Props>> = ({ title, isOpenByDefault, children }) => {
-  const [isOpen, setIsOpenState] = useState(isOpenByDefault);
-
-  const toggleCategory = () => {
-    setIsOpenState(!isOpen);
-  };
-
+export const NavCategory: FC<PropsWithChildren<Props> & React.HTMLAttributes<HTMLDivElement>> = ({
+  title,
+  className,
+  handleCategorySelection,
+  children,
+}) => {
   return (
-    <NavCategoryStyling className={isOpen ? 'open' : ''}>
-      <div role='button' tabIndex={-1} className='category' onClick={() => toggleCategory()}>
-        <span className={isOpen ? 'active' : ''}>{title}</span>
+    <NavCategoryStyling className={className}>
+      <div
+        role='button'
+        tabIndex={-1}
+        className='category'
+        onClick={() => handleCategorySelection(className && className === 'open' ? null : title)}
+      >
+        {/* <span className={isOpen ? 'active' : ''}>{title}</span> */}
+        <span>{title}</span>
         <FontAwesomeIcon icon='chevron-down' />
       </div>
 

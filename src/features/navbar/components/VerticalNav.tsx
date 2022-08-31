@@ -1,7 +1,7 @@
 import { CustomSelect } from 'common/components/CustomSelect';
 import { BitwiseNavbar } from 'common/styles/page';
 import { useAuth } from 'features/auth/hooks';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import { useTranslation } from 'react-i18next';
 import { languages } from '../../../i18n/config';
@@ -27,6 +27,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
   const { openLogoutModal } = useLogoutModal();
   const { i18n } = useTranslation();
   const location = useLocation();
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   const changeLanguage = (ln: string) => {
     localStorage.setItem('language', ln);
@@ -39,8 +40,12 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
 
   const defaultLanguageOption = __languageOptions.find(language => language.value === i18n.languages[0]);
 
-  const associatedPathsIncludesCurrentLocation = (paths: string[]) => {
-    return paths.includes(location.pathname);
+  const handleCategorySelection = (category: string | null) => {
+    setActiveCategory(category);
+  };
+
+  const isCategoryActive = (category: string) => {
+    return activeCategory === category ? 'open' : '';
   };
 
   return (
@@ -52,13 +57,21 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
       {user ? (
         <div className='nav-wrap w-100'>
           <Nav className='flex-column'>
-            <NavCategory title='General' isOpenByDefault={associatedPathsIncludesCurrentLocation(['/agents'])}>
+            <NavCategory
+              title='General'
+              className={isCategoryActive('General')}
+              handleCategorySelection={handleCategorySelection}
+            >
               <CustomNavLink
                 link={{ icon: 'stethoscope', label: 'Directory', path: '/agents' }}
                 handleSamePathNavigate={closeVerticalNav}
               />
             </NavCategory>
-            <NavCategory title='Administration' isOpenByDefault={associatedPathsIncludesCurrentLocation(['/users'])}>
+            <NavCategory
+              title='Administration'
+              className={isCategoryActive('Administration')}
+              handleCategorySelection={handleCategorySelection}
+            >
               <CustomNavLink
                 link={{ icon: 'user', label: 'Users', path: '/users' }}
                 handleSamePathNavigate={closeVerticalNav}
