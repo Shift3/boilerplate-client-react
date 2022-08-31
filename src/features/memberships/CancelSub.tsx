@@ -2,7 +2,8 @@ import { useGetMySubscriptionQuery } from 'common/api/paymentsApi';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import styled from 'styled-components';
-import { Col, Row } from 'react-bootstrap';
+import { Button, Col, Row } from 'react-bootstrap';
+import { useConfirmationModal } from 'features/confirmation-modal';
 
 const CreditCard = styled.div`
   padding: 1rem;
@@ -12,6 +13,7 @@ const CreditCard = styled.div`
   border-radius: ${props => props.theme.borderRadius};
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   position: relative;
+  width: 25rem;
 
   small {
     margin-top: 3rem;
@@ -59,37 +61,63 @@ const CreditCardHeader = styled.div`
   }
 `;
 
-// const subscriptionType = ????;
+// type SubscriptionProps = {
+//   active_subscription: bool;
+//   canceled_at: string;
+//   active_until: string;
+// };
+
+// active_subscription: bool;
+// canceled_at: string;
+// active_until: string;
 
 // TODO: move and rename this component.
 // Rename to: MySubscriptionPage or something like that.
 // Move to: a new tab on the user profile page, called "Subscription"
 export const CancelSub = () => {
   const { data } = useGetMySubscriptionQuery();
+  const { openModal } = useConfirmationModal();
 
-  return (
-    <>
-      {/*
+  const activeSubscription = data?.activeSubscription;
+  const currentPeriodEnd = data?.activeSubscription.currentPeriodEnd;
+  const cancelledAt = data?.activeSubscription.canceledAt;
+
+  /*
         TODO: figure out if the subscription is one of the following:
+    1. - Active
+     ** If `activeSubscription === true`
+          then ...
 
-          - Active
-          - Canceled but still active until a specific date.
-          - Canceled and no longer active.
+    2. - Canceled but still active until a specific date.
+    **  If `activeSubscription === true && currentPeriodEnd > today's date`
+          then ...
+
+    3. - Canceled and no longer active.
+    ** If `!activeSubscription
+          then ...
 
           Branch on these here, and display different things based on which
           of these statuses the subscription is in.
 
           Currently we are display the "Active" case.
-      */}
-      <h1>Current Plan</h1>
+  */
+  const handleCancelSub = () => {
+    openModal();
+  };
 
+  return (
+    <>
+      <h1>Current Plan</h1>
       <div>Your Plan: {data?.activeSubscription.plan.product}</div>
       <div>Amount: {data?.activeSubscription.plan.amount}</div>
       <p>Renews: {data?.activeSubscription.currentPeriodEnd.toString()}</p>
-      <div>
-        {/* TODO: Cancel will pop up a confirm modal, and then call the POST /subscriptions/cancel/ endpoint if the user chooses to continue. */}
+      <div className=''>
+        {/* TODO: Cancel will pop up a confirm modal,
+        and then call the POST /subscriptions/cancel/
+        endpoint if the user chooses to continue. */}
+        <Button onClick={handleCancelSub}>Cancel Plan</Button>
+        <Link to='/memberships/change-plan'>Change Plan</Link>
         {/* TODO: Change plan, we still need to figure out, so don't touch yet. */}
-        <Link to='/cancel-auto'>Cancel Auto Renew</Link> | <Link to='/change-plan'>Change Plan</Link>
       </div>
 
       <hr />
@@ -106,10 +134,11 @@ export const CancelSub = () => {
                 alt='Credit Card'
               />
             </CreditCardHeader>
-
             {/* Image tag that has the VISA logo or Mastercard or w/e */}
-            <small>Card Number</small>
-            <span>•••• •••• •••• 4242</span>
+            <div>
+              <small>Card Number</small>
+              <span>•••• •••• •••• 4242</span>
+            </div>
 
             {/* TODO: don't allow deletion if it's their only card and they have an active subscription. */}
             <div className='X'>X</div>

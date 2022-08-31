@@ -51,13 +51,6 @@ export interface Subscription {
 //   "user": "75dbf026-1c0b-4c9a-9a59-576fbb93c581",
 //   "customer": "cus_MLFKXTdGxyU4lA",
 //   "paymentMethods": [],
-//   "billingHistory": [
-//       {
-//           "amount": "19.99",
-//           "date": "2022-08-30T18:06:23+0000",
-//           "description": "1 × Standard (at $19.99 / month)"
-//       }
-//   ],
 // }
 
 export const paymentApi = createApi({
