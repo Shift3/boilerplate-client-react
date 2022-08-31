@@ -29,6 +29,7 @@ import {
   faCirclePlus,
   faPen,
   faQuestion,
+  faEllipsisVertical,
 } from '@fortawesome/free-solid-svg-icons';
 import * as Sentry from '@sentry/react';
 import { store } from 'app/redux';
@@ -54,6 +55,7 @@ library.add(
   faChevronLeft,
   faChevronRight,
   faChevronDown,
+  faEllipsisVertical,
   faClose,
   faCog,
   faEdit,

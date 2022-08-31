@@ -1,24 +1,25 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetMySubscriptionQuery } from 'common/api/paymentsApi';
-import { Link } from 'react-router-dom';
-import Moment from 'react-moment';
-import styled from 'styled-components';
-import { Button, Col, Row } from 'react-bootstrap';
 import { useConfirmationModal } from 'features/confirmation-modal';
+import { Button, Card, Col, Row } from 'react-bootstrap';
+import Moment from 'react-moment';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 const CreditCard = styled.div`
   padding: 1rem;
-  background: ${props => props.theme.card.backgroundColor};
-  font-size: 1.4rem;
+  background: ${props => props.theme.backgroundColor};
   color: ${props => props.theme.textColor};
   border-radius: ${props => props.theme.borderRadius};
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   position: relative;
-  width: 25rem;
 
   small {
-    margin-top: 3rem;
     display: block;
     color: #999;
+  }
+
+  & > div > div {
+    flex: 1;
   }
 
   span {
@@ -27,37 +28,12 @@ const CreditCard = styled.div`
   }
 
   img {
-    width: 96px;
+    width: auto;
+    height: 32px;
   }
 
-  .X {
-    width: 48px;
-    height: 48px;
-    background: red;
-    position: absolute;
-    top: -24px;
-    right: -24px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    transition: all 0.3s linear;
-
-    &:hover {
-      cursor: pointer;
-      box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
-        rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-    }
-  }
-`;
-
-const CreditCardHeader = styled.div`
-  display: flex;
-  align-items: center;
-  & > div {
-    flex: 1;
+  path {
+    fill: ${props => props.theme.textColor};
   }
 `;
 
@@ -85,84 +61,95 @@ export const CancelSub = () => {
   /*
         TODO: figure out if the subscription is one of the following:
     1. - Active
-     ** If `activeSubscription === true`
+   ** If `activeSubscription === true`
           then ...
 
     2. - Canceled but still active until a specific date.
-    **  If `activeSubscription === true && currentPeriodEnd > today's date`
+   **  If `activeSubscription === true && currentPeriodEnd > today's date`
           then ...
 
     3. - Canceled and no longer active.
-    ** If `!activeSubscription
+   ** If `!activeSubscription
           then ...
 
           Branch on these here, and display different things based on which
           of these statuses the subscription is in.
 
           Currently we are display the "Active" case.
-  */
+   */
   const handleCancelSub = () => {
     openModal();
   };
 
   return (
-    <>
-      <h1>Current Plan</h1>
-      <div>Your Plan: {data?.activeSubscription.plan.product}</div>
-      <div>Amount: {data?.activeSubscription.plan.amount}</div>
-      <p>Renews: {data?.activeSubscription.currentPeriodEnd.toString()}</p>
-      <div className=''>
-        {/* TODO: Cancel will pop up a confirm modal,
-        and then call the POST /subscriptions/cancel/
-        endpoint if the user chooses to continue. */}
-        <Button onClick={handleCancelSub}>Cancel Plan</Button>
-        <Link to='/memberships/change-plan'>Change Plan</Link>
-        {/* TODO: Change plan, we still need to figure out, so don't touch yet. */}
-      </div>
-
-      <hr />
-
-      <h1>Payment Methods</h1>
-
-      <Row>
-        <Col xs={12} sm={12} md={12} xl={6}>
-          <CreditCard>
-            <CreditCardHeader>
-              <div>Credit Card</div>
-              <img
-                src='https://brand.mastercard.com/content/dam/mccom/brandcenter/thumbnails/mastercard_circles_92px_2x.png'
-                alt='Credit Card'
-              />
-            </CreditCardHeader>
-            {/* Image tag that has the VISA logo or Mastercard or w/e */}
-            <div>
-              <small>Card Number</small>
-              <span>•••• •••• •••• 4242</span>
+    <Row>
+      <Col className='mb-3' md={12} xl={6}>
+        <Card>
+          <Card.Body>
+            <div className='mb-3 d-flex align-items-center'>
+              <h4 className='flex-fill m-0'>Current Plan</h4>
+              <a className='text-danger' href='#'>
+                Cancel
+              </a>
             </div>
+            <div className='mb-2'>
+              Your Plan: {data?.activeSubscription.plan.product}
+              <br />
+              <Link to='/memberships/change-plan'>Change...</Link>
+            </div>
+            <div>Amount: ${data?.activeSubscription.plan.amount}</div>
+            <p>
+              Renews: <Moment format='MMM D, YYYY'>{data?.activeSubscription.currentPeriodEnd}</Moment>
+            </p>
+            <div className=''></div>
+          </Card.Body>
+        </Card>
+      </Col>
 
-            {/* TODO: don't allow deletion if it's their only card and they have an active subscription. */}
-            <div className='X'>X</div>
-          </CreditCard>
-        </Col>
-      </Row>
+      <Col className='mb-3' md={12} xl={6}>
+        <Card>
+          <Card.Body>
+            <h4>Payment Methods</h4>
 
-      <hr />
+            <CreditCard>
+              <div className='d-flex align-items-center'>
+                <img
+                  className='me-3'
+                  src='https://brand.mastercard.com/content/dam/mccom/brandcenter/thumbnails/mastercard_circles_92px_2x.png'
+                  alt='Credit Card'
+                />
+                {/* Image tag that has the VISA logo or Mastercard or w/e */}
+                <div>
+                  <span>•••• •••• •••• 4242</span>
+                  <small>4/27</small>
+                </div>
 
-      <h1>Billing History</h1>
+                <Button className='ms-3' variant='link'>
+                  <FontAwesomeIcon size='1x' icon='ellipsis-vertical' />
+                </Button>
+              </div>
+            </CreditCard>
+          </Card.Body>
+        </Card>
+      </Col>
 
-      <table className='table'>
-        <tbody>
-          {data?.billingHistory.map(row => (
-            <tr>
-              <td>
-                <Moment format='MMM D, YYYY'>{row.date}</Moment>
-              </td>
-              <td>{row.description}</td>
-              <td>{row.amount}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
+      <Col className='mt-3'>
+        <h4>Billing History</h4>
+
+        <table className='table'>
+          <tbody>
+            {data?.billingHistory.map(row => (
+              <tr>
+                <td>
+                  <Moment format='MMM D, YYYY'>{row.date}</Moment>
+                </td>
+                <td>{row.description}</td>
+                <td>{row.amount}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Col>
+    </Row>
   );
 };
