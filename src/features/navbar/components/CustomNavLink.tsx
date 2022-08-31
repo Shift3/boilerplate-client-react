@@ -4,7 +4,12 @@ import { FC, PropsWithChildren } from 'react';
 import { NavItem } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { NavLinkConfig } from '../hooks/useNavLinks';
+
+export type NavLinkConfig = {
+  icon: IconName;
+  label: string;
+  path: string;
+};
 
 type Props = {
   link: NavLinkConfig;
