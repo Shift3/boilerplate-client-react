@@ -106,8 +106,6 @@ const notificationReducer = (state: NotificationStateType, action: NotificationA
         unreadMetaObject: null,
         shouldLoadFirstPage: true,
       };
-    case 'update total unread count':
-      return { ...state, totalUnreadCount: state.totalUnreadCount + 1 };
     case 'append to unread notifications':
       return {
         ...state,
