@@ -78,16 +78,19 @@ export const NavCategory: FC<PropsWithChildren<Props> & React.HTMLAttributes<HTM
   handleCategorySelection,
   children,
 }) => {
+  const isCategoryOpen = () => {
+    return className && className === 'open';
+  };
+
   return (
     <NavCategoryStyling className={className}>
       <div
         role='button'
         tabIndex={-1}
         className='category'
-        onClick={() => handleCategorySelection(className && className === 'open' ? null : title)}
+        onClick={() => handleCategorySelection(isCategoryOpen() ? null : title)}
       >
-        {/* <span className={isOpen ? 'active' : ''}>{title}</span> */}
-        <span>{title}</span>
+        <span className={isCategoryOpen() ? 'active' : ''}>{title}</span>
         <FontAwesomeIcon icon='chevron-down' />
       </div>
 
