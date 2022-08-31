@@ -12,6 +12,7 @@ import { NavUserDetails } from './NavUserDetails';
 import { ThemeToggle } from '../../themes/ToggleSwitch';
 import { useLocation } from 'react-router-dom';
 import { NavCategory } from './NavCategory';
+import { isObject } from 'common/error/utilities';
 
 type Props = {
   closeVerticalNav?: () => void;
@@ -22,12 +23,19 @@ type LanguageOption = {
   value: string;
 };
 
+const getCategoryFromState = (state: unknown): string | null => {
+  if (isObject(state) && state.category && typeof state.category === 'string') {
+    return state.category;
+  }
+  return null;
+};
+
 export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
   const { user } = useAuth();
   const { openLogoutModal } = useLogoutModal();
   const { i18n } = useTranslation();
-  const location = useLocation();
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const { state } = useLocation();
+  const [activeCategory, setActiveCategory] = useState<string | null>(getCategoryFromState(state));
 
   const changeLanguage = (ln: string) => {
     localStorage.setItem('language', ln);
@@ -64,6 +72,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
             >
               <CustomNavLink
                 link={{ icon: 'stethoscope', label: 'Directory', path: '/agents' }}
+                category='General'
                 handleSamePathNavigate={closeVerticalNav}
               />
             </NavCategory>
@@ -74,6 +83,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
             >
               <CustomNavLink
                 link={{ icon: 'user', label: 'Users', path: '/users' }}
+                category='Administration'
                 handleSamePathNavigate={closeVerticalNav}
               />
             </NavCategory>

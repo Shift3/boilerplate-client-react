@@ -13,6 +13,7 @@ export type NavLinkConfig = {
 
 type Props = {
   link: NavLinkConfig;
+  category: string;
   handleSamePathNavigate?: () => void;
 };
 
@@ -44,7 +45,7 @@ const NavLinkStyles = styled.div`
   }
 `;
 
-export const CustomNavLink: FC<PropsWithChildren<Props>> = ({ link, handleSamePathNavigate = null }) => {
+export const CustomNavLink: FC<PropsWithChildren<Props>> = ({ link, category, handleSamePathNavigate = null }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -52,7 +53,7 @@ export const CustomNavLink: FC<PropsWithChildren<Props>> = ({ link, handleSamePa
     if (location.pathname === link.path && handleSamePathNavigate) {
       handleSamePathNavigate();
     } else {
-      navigate(link.path);
+      navigate(link.path, { state: { category } });
     }
   };
 
