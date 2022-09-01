@@ -43,6 +43,7 @@ export interface Subscription {
       amount: string;
       date: string;
       description: string;
+      id: string;
     },
   ];
 }
