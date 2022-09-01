@@ -40,7 +40,7 @@ const CreditCard = styled.div`
 // TODO: move and rename this component.
 // Rename to: MySubscriptionPage or something like that.
 // Move to: a new tab on the user profile page, called "Subscription"
-export const CancelSub = () => {
+export const MySubscription = () => {
   const { data } = useGetMySubscriptionQuery();
   const { openModal } = useConfirmationModal();
 
