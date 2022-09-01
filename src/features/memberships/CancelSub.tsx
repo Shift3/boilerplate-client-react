@@ -101,8 +101,19 @@ export const CancelSub = () => {
 
           Currently we are display the "Active" case.
   */
+
+  /* TODO: Cancel will pop up a confirm modal,
+      and then call the POST /subscriptions/cancel/
+      endpoint if the user chooses to continue. */
+
   const handleCancelSub = () => {
-    openModal();
+    openModal({
+      message: 'Are you sure you want to cancel your current subscription?',
+      confirmButtonLabel: 'Yes',
+      declineButtonLabel: 'Go Back',
+      // onConfirm: async () => (),
+      // onDecline:  () => (),
+    });
   };
 
   return (
@@ -112,9 +123,6 @@ export const CancelSub = () => {
       <div>Amount: {data?.activeSubscription.plan.amount}</div>
       <p>Renews: {data?.activeSubscription.currentPeriodEnd.toString()}</p>
       <div className=''>
-        {/* TODO: Cancel will pop up a confirm modal,
-        and then call the POST /subscriptions/cancel/
-        endpoint if the user chooses to continue. */}
         <Button onClick={handleCancelSub}>Cancel Plan</Button>
         <Link to='/memberships/change-plan'>Change Plan</Link>
         {/* TODO: Change plan, we still need to figure out, so don't touch yet. */}
