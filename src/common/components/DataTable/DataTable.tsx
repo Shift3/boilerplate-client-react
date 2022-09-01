@@ -68,8 +68,6 @@ export const DataTable = <D extends Record<string, unknown>>({
       data,
       initialState,
       stateReducer: (newState, action) => {
-        console.log('stateReducer - newState -', newState);
-
         switch (action.type) {
           case 'filter or search was used':
             return {
@@ -128,8 +126,6 @@ export const DataTable = <D extends Record<string, unknown>>({
   // any time there is a change to page index or page size.
   useEffect(
     () => {
-      console.log('useEffect - pagination -', pagination);
-      console.log('useEffect - tableInstance -', tableInstance);
       if (paginationEnabled) {
         pagination.onPageChange(pageIndex + pagination.basePage);
         pagination.onPageSizeChange(pageSize);
@@ -139,19 +135,17 @@ export const DataTable = <D extends Record<string, unknown>>({
     [pageIndex, pageSize, paginationEnabled, pagination?.onPageChange, pagination?.onPageSizeChange],
   );
 
+  // When switching between pages via the Paginator, the table's pageIndex will always be 1 less than pagination.page.
+  // However, if the user uses search or a filter, then pagination.page will be less than or equal to the pageIndex.
+  // In this case, we need to reset the table's pageIndex to 0. This will cause the pagination numbering and next/previous
+  // buttons to be updated and the result will be consistent with the current data set.
   useEffect(() => {
-    console.log('page from PSF or table changed');
-
-    console.log('pagination - page -', pagination?.page);
-
-    console.log('tableInstance - pageIndex -', pageIndex);
-
     if (pagination) {
       if (pagination.page <= pageIndex) {
-        console.log('search or filter was used');
         dispatch({ type: 'filter or search was used' });
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagination?.page]);
 
   return (
