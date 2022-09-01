@@ -67,6 +67,19 @@ export const DataTable = <D extends Record<string, unknown>>({
       columns,
       data,
       initialState,
+      stateReducer: (newState, action) => {
+        console.log('stateReducer - newState -', newState);
+
+        switch (action.type) {
+          case 'filter or search was used':
+            return {
+              ...newState,
+              pageIndex: 0,
+            };
+          default:
+            return newState;
+        }
+      },
       ...extraTableOptions,
     },
     useFlexLayout,
@@ -89,6 +102,7 @@ export const DataTable = <D extends Record<string, unknown>>({
     nextPage,
     previousPage,
     setPageSize,
+    dispatch,
     // Instance state
     state: { pageIndex, pageSize, sortBy },
   } = tableInstance;
@@ -114,6 +128,8 @@ export const DataTable = <D extends Record<string, unknown>>({
   // any time there is a change to page index or page size.
   useEffect(
     () => {
+      console.log('useEffect - pagination -', pagination);
+      console.log('useEffect - tableInstance -', tableInstance);
       if (paginationEnabled) {
         pagination.onPageChange(pageIndex + pagination.basePage);
         pagination.onPageSizeChange(pageSize);
@@ -122,6 +138,21 @@ export const DataTable = <D extends Record<string, unknown>>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [pageIndex, pageSize, paginationEnabled, pagination?.onPageChange, pagination?.onPageSizeChange],
   );
+
+  useEffect(() => {
+    console.log('page from PSF or table changed');
+
+    console.log('pagination - page -', pagination?.page);
+
+    console.log('tableInstance - pageIndex -', pageIndex);
+
+    if (pagination) {
+      if (pagination.page <= pageIndex) {
+        console.log('search or filter was used');
+        dispatch({ type: 'filter or search was used' });
+      }
+    }
+  }, [pagination?.page]);
 
   return (
     <div className='d-flex flex-column'>
@@ -174,13 +205,13 @@ export const DataTable = <D extends Record<string, unknown>>({
       {/* If the usePagination plugin is enabled, render a paginator to allow users to page through the data. */}
       {paginationEnabled && (
         <Paginator
-          page={pagination.page} // pageIndex + pagination.basePage
+          page={pageIndex + pagination.basePage} // pageIndex + pagination.basePage // pagination.page
           pageSize={pageSize}
           count={pagination.count}
           pageCount={pageCount}
           pageSizeOptions={pagination.pageSizeOptions}
-          hasPreviousPage={pagination.page > 1} // canPreviousPage
-          hasNextPage={pagination.page < pagination.pageCount} // canNextPage
+          hasPreviousPage={canPreviousPage} // canPreviousPage // pagination.page > 1
+          hasNextPage={canNextPage} // canNextPage // pagination.page < pagination.pageCount
           onPreviousPageClick={previousPage}
           onNextPageClick={nextPage}
           onPageSizeChange={setPageSize}
