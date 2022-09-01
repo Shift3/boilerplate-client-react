@@ -1,4 +1,4 @@
-import { ActivateAccountRequest } from './userApi';
+// import { ActivateAccountRequest } from './userApi';
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { customBaseQuery } from './customBaseQuery';
 
@@ -43,7 +43,6 @@ export interface Subscription {
       amount: string;
       date: string;
       description: string;
-      id: string;
     },
   ];
 }

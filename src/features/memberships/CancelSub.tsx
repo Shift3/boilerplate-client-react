@@ -43,7 +43,7 @@ const CreditCard = styled.div`
 export const CancelSub = () => {
   const { data } = useGetMySubscriptionQuery();
   const { openModal } = useConfirmationModal();
-  console.log(data);
+
   // const activeSubscription = data?.activeSubscription;
   // const currentPeriodEnd = data?.activeSubscription.currentPeriodEnd;
   // const cancelledAt = data?.activeSubscription.canceledAt;
@@ -138,13 +138,14 @@ export const CancelSub = () => {
 
           <table className='table'>
             <tbody>
-              {data?.billingHistory.map(row => (
-                <tr key={row.id}>
-                  <td key={row.id}>
-                    <Moment format='MMM D, YYYY'>{row.date}</Moment>
+              {data?.billingHistory.map(({ amount, date, description }, i) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <tr key={i}>
+                  <td key={date}>
+                    <Moment format='MMM D, YYYY'>{date}</Moment>
                   </td>
-                  <td key={row.id}>{row.description}</td>
-                  <td key={row.id}>{row.amount}</td>
+                  <td key={description}>{description}</td>
+                  <td key={amount}>{amount}</td>
                 </tr>
               ))}
             </tbody>
