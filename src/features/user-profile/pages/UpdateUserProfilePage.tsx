@@ -30,6 +30,7 @@ import { UserProfilePicture } from 'features/navbar/components/UserProfilePictur
 import { isObject } from 'common/error/utilities';
 import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
 import { Trans } from 'react-i18next';
+import { MySubscription } from 'features/memberships/MySubscription';
 
 type RouteParams = {
   id: string;
@@ -170,6 +171,9 @@ export const UpdateUserProfilePage: FC = () => {
         <ProfileNav.Link onClick={() => setTab('security')} className={tab === 'security' ? 'active' : ''}>
           <Trans i18nKey='userProfile.security'>Security and Password</Trans>
         </ProfileNav.Link>
+        <ProfileNav.Link onClick={() => setTab('subscription')} className={tab === 'subscription' ? 'active' : ''}>
+          <Trans i18nKey='userProfile.subscription'>Subscription</Trans>
+        </ProfileNav.Link>
       </ProfileNav>
       <hr className='mt-0' />
       {tab === 'profile' ? (
@@ -296,6 +300,8 @@ export const UpdateUserProfilePage: FC = () => {
       ) : (
         ''
       )}
+
+      {tab === 'subscription' ? <MySubscription /> : ''}
     </SmallContainer>
   );
 };

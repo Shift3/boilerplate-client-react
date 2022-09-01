@@ -110,7 +110,6 @@ export const MySubscription = () => {
           <Card>
             <Card.Body>
               <h4>Payment Methods</h4>
-
               <CreditCard>
                 <div className='d-flex align-items-center'>
                   <img
@@ -123,7 +122,7 @@ export const MySubscription = () => {
                     <span>•••• •••• •••• 4242</span>
                     <small>4/27</small>
                   </div>
-
+                  {/* TODO: Add `edit credit card` functionality */}
                   <Button className='ms-3' variant='link'>
                     <FontAwesomeIcon size='1x' icon='ellipsis-vertical' />
                   </Button>
