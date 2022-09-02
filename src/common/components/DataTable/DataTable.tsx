@@ -199,13 +199,13 @@ export const DataTable = <D extends Record<string, unknown>>({
       {/* If the usePagination plugin is enabled, render a paginator to allow users to page through the data. */}
       {paginationEnabled && (
         <Paginator
-          page={pageIndex + pagination.basePage} // pageIndex + pagination.basePage // pagination.page
+          page={pageIndex + pagination.basePage}
           pageSize={pageSize}
           count={pagination.count}
           pageCount={pageCount}
           pageSizeOptions={pagination.pageSizeOptions}
-          hasPreviousPage={canPreviousPage} // canPreviousPage // pagination.page > 1
-          hasNextPage={canNextPage} // canNextPage // pagination.page < pagination.pageCount
+          hasPreviousPage={canPreviousPage}
+          hasNextPage={canNextPage}
           onPreviousPageClick={previousPage}
           onNextPageClick={nextPage}
           onPageSizeChange={setPageSize}
