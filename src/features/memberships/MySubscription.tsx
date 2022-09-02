@@ -60,14 +60,16 @@ export const MySubscription = () => {
   const { openModal } = useConfirmationModal();
   const [cancelActiveSubscription] = useCancelActiveSubscriptionMutation();
 
-  const handleCancelSub = useCallback(
+  const handleCancelSub: any = useCallback(
     (subscription: Subscription) => {
+      const message = 'Are you sure you want to cancel your current subscription?';
+
       const onConfirm = async () => {
         await cancelActiveSubscription(subscription.activeSubscription);
       };
 
       openModal({
-        message: 'Are you sure you want to cancel your current subscription?',
+        message,
         confirmButtonLabel: 'Continue',
         declineButtonLabel: 'Go Back',
         onConfirm,
@@ -85,7 +87,7 @@ export const MySubscription = () => {
             <Card.Body>
               <div className='mb-3 d-flex align-items-center'>
                 <h4 className='flex-fill m-0'>Current Plan</h4>
-                <a className='text-danger' href='#' onClick={e => e.handleCancelSub()}>
+                <a className='text-danger' href='#' onClick={handleCancelSub()}>
                   Cancel
                 </a>
               </div>
