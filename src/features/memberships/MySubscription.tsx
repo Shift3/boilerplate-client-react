@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useGetMySubscriptionQuery } from 'common/api/paymentsApi';
+import { useCancelActiveSubscriptionMutation, useGetMySubscriptionQuery, Subscription } from 'common/api/paymentsApi';
 import { useConfirmationModal } from 'features/confirmation-modal';
+import { useCallback } from 'react';
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
@@ -36,51 +37,45 @@ const CreditCard = styled.div`
     fill: ${props => props.theme.textColor};
   }
 `;
-
-// TODO: move and rename this component.
-// Rename to: MySubscriptionPage or something like that.
-// Move to: a new tab on the user profile page, called "Subscription"
-export const MySubscription = () => {
-  const { data } = useGetMySubscriptionQuery();
-  const { openModal } = useConfirmationModal();
-
-  // const activeSubscription = data?.activeSubscription;
-  // const currentPeriodEnd = data?.activeSubscription.currentPeriodEnd;
-  // const cancelledAt = data?.activeSubscription.canceledAt;
-
-  /*
+/*
         TODO: figure out if the subscription is one of the following:
     1. - Active
-   ** If `activeSubscription === true`
-          then ...
+   ** If `activeSubscription` then ...
 
     2. - Canceled but still active until a specific date.
-   **  If `activeSubscription === true && currentPeriodEnd > today's date`
-          then ...
+   **  If `activeSubscription && cancelledAt > today's date` then ...
 
     3. - Canceled and no longer active.
-   ** If `!activeSubscription
-          then ...
-
-          Branch on these here, and display different things based on which
-          of these statuses the subscription is in.
+   ** If `!activeSubscription` then ...
 
           Currently we are display the "Active" case.
   */
 
-  /* TODO: Cancel will pop up a confirm modal,
+/* TODO: Cancel will pop up a confirm modal,
       and then call the POST /subscriptions/cancel/
       endpoint if the user chooses to continue. */
 
-  const handleCancelSub = () => {
-    openModal({
-      message: 'Are you sure you want to cancel your current subscription?',
-      confirmButtonLabel: 'Yes',
-      declineButtonLabel: 'Go Back',
-      // onConfirm: async () => (),
-      // onDecline:  () => (),
-    });
-  };
+export const MySubscription = () => {
+  const { data } = useGetMySubscriptionQuery();
+  const { openModal } = useConfirmationModal();
+  const [cancelActiveSubscription] = useCancelActiveSubscriptionMutation();
+
+  const handleCancelSub = useCallback(
+    (subscription: Subscription) => {
+      const onConfirm = async () => {
+        await cancelActiveSubscription(subscription.activeSubscription);
+      };
+
+      openModal({
+        message: 'Are you sure you want to cancel your current subscription?',
+        confirmButtonLabel: 'Continue',
+        declineButtonLabel: 'Go Back',
+        onConfirm,
+        // onDecline:  () => (),
+      });
+    },
+    [openModal, cancelActiveSubscription],
+  );
 
   return (
     <Container>
@@ -90,7 +85,7 @@ export const MySubscription = () => {
             <Card.Body>
               <div className='mb-3 d-flex align-items-center'>
                 <h4 className='flex-fill m-0'>Current Plan</h4>
-                <a className='text-danger' href='#' onClick={handleCancelSub}>
+                <a className='text-danger' href='#' onClick={e => e.handleCancelSub()}>
                   Cancel
                 </a>
               </div>

@@ -47,11 +47,7 @@ export interface Subscription {
   ];
 }
 
-// {
-//   "user": "75dbf026-1c0b-4c9a-9a59-576fbb93c581",
-//   "customer": "cus_MLFKXTdGxyU4lA",
-//   "paymentMethods": [],
-// }
+export type CancelSubscriptionRequest = { id: string };
 
 export const paymentApi = createApi({
   reducerPath: 'paymentApi',
@@ -87,8 +83,21 @@ export const paymentApi = createApi({
         body: { priceId },
       }),
     }),
+    // and then call the POST /subscriptions/cancel/
+    // endpoint if the user chooses to continue. */
+    cancelActiveSubscription: builder.mutation<Subscription, CancelSubscriptionRequest>({
+      query: ({ id }) => ({
+        url: `/subscriptions/${id}/cancel`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
-export const { useGetPlansQuery, useGetPlanByIdQuery, useCreateSubscriptionMutation, useGetMySubscriptionQuery } =
-  paymentApi;
+export const {
+  useGetPlansQuery,
+  useGetPlanByIdQuery,
+  useCreateSubscriptionMutation,
+  useGetMySubscriptionQuery,
+  useCancelActiveSubscriptionMutation,
+} = paymentApi;
