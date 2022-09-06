@@ -220,8 +220,11 @@ export const UpdateUserProfilePage: FC = () => {
                   <div>
                     <p data-testid='updateUserExistingEmailChangeInfoContent'>
                       <Trans i18nKey='userProfile.changeEmailDescription'>
-                        You requested an email change. A verification email has been sent to <b>{user.newEmail}</b>. To
-                        confirm your new email, please follow the directions in the verification email.
+                        You requested an email change. A verification email has been sent to{' '}
+                        <strong>
+                          <>{{ email: user.newEmail }}</>
+                        </strong>
+                        . To confirm your new email, please follow the directions in the verification email.
                       </Trans>
                     </p>
                     <Button

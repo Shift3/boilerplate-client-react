@@ -36,7 +36,7 @@
     "generalSubheading": "This information will be used to identify you in our system",
     "email": "Email Address",
     "emailDescription": "Your email address on file will be used to communicate with you. Changing your email requires you to confirm your new email address.",
-    "changeEmailDescription": "You requested an email change. A verification email has been sent to <1>{user.newEmail}</1>. To confirm your new email, please follow the directions in the verification email.",
+    "changeEmailDescription": "You requested an email change. A verification email has been sent to <1>{{ email }}</1>. To confirm your new email, please follow the directions in the verification email.",
     "resendEmail": "Resend Verification Email",
     "photo": "Photo",
     "photoDescription": "This is the photo of you that other users in the system will be able to see.",
