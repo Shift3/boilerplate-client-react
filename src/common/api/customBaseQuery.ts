@@ -33,14 +33,13 @@ export const customBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBase
     try {
       const { token } = (api.getState() as RootState).auth;
 
-      await fetch(`${environment.apiRoute}/users/me`, { headers: { Authorization: `Token ${token}` } }).then(
-        response => {
-          if (response.ok) {
-            return;
-          }
-          throw response;
-        },
-      );
+      const response = await fetch(`${environment.apiRoute}/users/me`, {
+        headers: { Authorization: `Token ${token}` },
+      });
+
+      if (!response.ok) {
+        throw response;
+      }
     } catch (e) {
       notificationService.showEndlessErrorMessage(
         'There is a problem with your account. Please contact the administrators of this site.',
