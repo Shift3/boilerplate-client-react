@@ -38,22 +38,18 @@ const CreditCard = styled.div`
   }
 `;
 /*
-        TODO: figure out if the subscription is one of the following:
-    1. - Active
+  TODO: figure out if the subscription is one of the following:
+    1. - ACTIVE
    ** If `activeSubscription` then ...
 
-    2. - Canceled but still active until a specific date.
+    2. - ACTIVE && cancelled_on
    **  If `activeSubscription && cancelledAt > today's date` then ...
 
     3. - Canceled and no longer active.
    ** If `!activeSubscription` then ...
 
-          Currently we are display the "Active" case.
+    Currently we are display the "Active" case.
   */
-
-/* TODO: Cancel will pop up a confirm modal,
-      and then call the POST /subscriptions/cancel/
-      endpoint if the user chooses to continue. */
 
 export const MySubscription = () => {
   const { data } = useGetMySubscriptionQuery();
@@ -106,6 +102,8 @@ export const MySubscription = () => {
         </Col>
         <Col className='mb-3' md={12} xl={6}>
           <Card>
+            {/* TODO: Will need to fetch the credit cards on file, and then map through to display.
+              Also check that at least one card is on file before allowing user to delete card/s. */}
             <Card.Body>
               <h4>Payment Methods</h4>
               <CreditCard>
@@ -115,7 +113,6 @@ export const MySubscription = () => {
                     src='https://brand.mastercard.com/content/dam/mccom/brandcenter/thumbnails/mastercard_circles_92px_2x.png'
                     alt='Credit Card'
                   />
-                  {/* Image tag that has the VISA logo or Mastercard or w/e */}
                   <div>
                     <span>•••• •••• •••• 4242</span>
                     <small>4/27</small>
