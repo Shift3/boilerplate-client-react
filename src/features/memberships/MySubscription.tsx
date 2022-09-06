@@ -62,8 +62,7 @@ export const MySubscription = () => {
       const message = 'Would you like to cancel your current subscription?';
 
       const onConfirm = async () => {
-        const { id } = subscription.activeSubscription;
-        await cancelActiveSubscription({ id }).unwrap();
+        await cancelActiveSubscription({ id: subscription.activeSubscription.id }).unwrap();
       };
 
       openModal({
