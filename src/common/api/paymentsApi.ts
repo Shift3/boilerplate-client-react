@@ -86,10 +86,12 @@ export const paymentApi = createApi({
     // and then call the POST /subscriptions/cancel/
     // endpoint if the user chooses to continue. */
     cancelActiveSubscription: builder.mutation<Subscription, CancelSubscriptionRequest>({
-      query: ({ id }) => ({
-        url: `/subscriptions/${id}/cancel`,
-        method: 'POST',
-      }),
+      query: ({ id }) => {
+        return {
+          url: `/subscriptions/${id}/cancel`,
+          method: 'POST',
+        };
+      },
     }),
   }),
 });
