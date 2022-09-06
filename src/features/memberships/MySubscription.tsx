@@ -60,6 +60,7 @@ export const MySubscription = () => {
   const { openModal } = useConfirmationModal();
   const [cancelActiveSubscription] = useCancelActiveSubscriptionMutation();
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleCancelSub: any = useCallback(
     (subscription: Subscription) => {
       const message = 'Are you sure you want to cancel your current subscription?';
@@ -87,7 +88,7 @@ export const MySubscription = () => {
             <Card.Body>
               <div className='mb-3 d-flex align-items-center'>
                 <h4 className='flex-fill m-0'>Current Plan</h4>
-                <a className='text-danger' href='#' onClick={handleCancelSub()}>
+                <a className='text-danger' href='#' onClick={handleCancelSub}>
                   Cancel
                 </a>
               </div>
