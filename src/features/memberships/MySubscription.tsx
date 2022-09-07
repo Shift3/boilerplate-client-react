@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useCancelActiveSubscriptionMutation, useGetMySubscriptionQuery, Subscription } from 'common/api/paymentsApi';
+import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { useConfirmationModal } from 'features/confirmation-modal';
 import { useCallback } from 'react';
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
@@ -52,7 +53,8 @@ const CreditCard = styled.div`
   */
 
 export const MySubscription = () => {
-  const { data } = useGetMySubscriptionQuery();
+  const { data, isLoading } = useGetMySubscriptionQuery();
+
   const { openModal } = useConfirmationModal();
   const [cancelActiveSubscription] = useCancelActiveSubscriptionMutation();
 
@@ -61,7 +63,7 @@ export const MySubscription = () => {
       const message = 'Would you like to cancel your current subscription?';
 
       const onConfirm = async () => {
-        await cancelActiveSubscription({ id: subscription.activeSubscription.id }).unwrap();
+        await cancelActiveSubscription({ id: subscription.activeSubscription.id });
       };
 
       openModal({
@@ -76,80 +78,78 @@ export const MySubscription = () => {
 
   return (
     <Container>
-      <Row>
-        <Col className='mb-3' md={12} xl={6}>
-          <Card>
-            <Card.Body>
-              <div className='mb-3 d-flex align-items-center'>
-                <h4 className='flex-fill m-0'>Current Plan</h4>
-                <a
-                  className='text-danger'
-                  href='#'
-                  onClick={() => {
-                    handleCancelSub(data?.activeSubscription.id);
-                  }}
-                >
-                  Cancel
-                </a>
-              </div>
-              <div className='mb-2'>
-                Your Plan: {data?.activeSubscription.plan.product}
-                <br />
-                <Link to='/memberships/change-plan'>Change Plan</Link>
-              </div>
-              <div>Amount: ${data?.activeSubscription.plan.amount}</div>
-              <p>
-                Renews: <Moment format='MMM D, YYYY'>{data?.activeSubscription.currentPeriodEnd}</Moment>
-              </p>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col className='mb-3' md={12} xl={6}>
-          <Card>
-            {/* TODO: Will need to fetch the credit cards on file, and then map through to display.
-              Also check that at least one card is on file before allowing user to delete card/s. */}
-            <Card.Body>
-              <h4>Payment Methods</h4>
-              <CreditCard>
-                <div className='d-flex align-items-center'>
-                  <img
-                    className='me-3'
-                    src='https://brand.mastercard.com/content/dam/mccom/brandcenter/thumbnails/mastercard_circles_92px_2x.png'
-                    alt='Credit Card'
-                  />
-                  <div>
-                    <span>•••• •••• •••• 4242</span>
-                    <small>4/27</small>
+      <WithLoadingOverlay isLoading={isLoading} containerHasRoundedCorners containerBorderRadius='6px'>
+        {data && !isLoading ? (
+          <Row>
+            <Col className='mb-3' md={12} xl={6}>
+              <Card>
+                <Card.Body>
+                  <div className='mb-3 d-flex align-items-center'>
+                    <h4 className='flex-fill m-0'>Current Plan</h4>
+                    <a className='text-danger' href='#' onClick={() => handleCancelSub(data)}>
+                      Cancel
+                    </a>
                   </div>
-                  {/* TODO: Add `edit credit card` functionality */}
-                  <Button className='ms-3' variant='link'>
-                    <FontAwesomeIcon size='1x' icon='ellipsis-vertical' />
-                  </Button>
-                </div>
-              </CreditCard>
-            </Card.Body>
-          </Card>
-        </Col>
+                  <div className='mb-2'>
+                    Your Plan: {data.activeSubscription.plan.product}
+                    <br />
+                    <Link to='/memberships/change-plan'>Change Plan</Link>
+                  </div>
+                  <div>Amount: ${data.activeSubscription.plan.amount}</div>
+                  <p>
+                    Renews: <Moment format='MMM D, YYYY'>{data.activeSubscription.currentPeriodEnd}</Moment>
+                  </p>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col className='mb-3' md={12} xl={6}>
+              <Card>
+                {/* TODO: Will need to fetch the credit cards on file, and then map through to display.
+              Also check that at least one card is on file before allowing user to delete card/s. */}
+                <Card.Body>
+                  <h4>Payment Methods</h4>
+                  <CreditCard>
+                    <div className='d-flex align-items-center'>
+                      <img
+                        className='me-3'
+                        src='https://brand.mastercard.com/content/dam/mccom/brandcenter/thumbnails/mastercard_circles_92px_2x.png'
+                        alt='Credit Card'
+                      />
+                      <div>
+                        <span>•••• •••• •••• 4242</span>
+                        <small>4/27</small>
+                      </div>
+                      {/* TODO: Add `edit credit card` functionality */}
+                      <Button className='ms-3' variant='link'>
+                        <FontAwesomeIcon size='1x' icon='ellipsis-vertical' />
+                      </Button>
+                    </div>
+                  </CreditCard>
+                </Card.Body>
+              </Card>
+            </Col>
 
-        <Col className='mt-3'>
-          <h4>Billing History</h4>
+            <Col className='mt-3'>
+              <h4>Billing History</h4>
 
-          <table className='table'>
-            <tbody>
-              {data?.billingHistory.map(({ amount, date, description }, i) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <tr key={i}>
-                  <td key={date}>
-                    <Moment format='MMM D, YYYY'>{date}</Moment>
-                  </td>
-                  <td key={description}>{description}</td>
-                  <td key={amount}>{amount}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </Col>
-      </Row>
+              <table className='table'>
+                <tbody>
+                  {data.billingHistory.map(({ amount, date, description }, i) => (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <tr key={i}>
+                      <td key={date}>
+                        <Moment format='MMM D, YYYY'>{date}</Moment>
+                      </td>
+                      <td key={description}>{description}</td>
+                      <td key={amount}>{amount}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </Col>
+          </Row>
+        ) : null}
+      </WithLoadingOverlay>
     </Container>
   );
 };
