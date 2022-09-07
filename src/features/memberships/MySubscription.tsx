@@ -56,8 +56,7 @@ export const MySubscription = () => {
   const { openModal } = useConfirmationModal();
   const [cancelActiveSubscription] = useCancelActiveSubscriptionMutation();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleCancelSub: any = useCallback(
+  const handleCancelSub = useCallback(
     (subscription: Subscription) => {
       const message = 'Would you like to cancel your current subscription?';
 
@@ -70,7 +69,6 @@ export const MySubscription = () => {
         confirmButtonLabel: 'Continue',
         declineButtonLabel: 'Go Back',
         onConfirm,
-        // onDecline:  () => (),
       });
     },
     [openModal, cancelActiveSubscription],
@@ -88,7 +86,7 @@ export const MySubscription = () => {
                   className='text-danger'
                   href='#'
                   onClick={() => {
-                    handleCancelSub(data?.activeSubscription);
+                    handleCancelSub(data?.activeSubscription.id);
                   }}
                 >
                   Cancel
