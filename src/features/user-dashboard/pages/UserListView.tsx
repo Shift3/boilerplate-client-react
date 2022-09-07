@@ -3,6 +3,7 @@ import { DataTable } from 'common/components/DataTable';
 import { DataTableSearchAndFilters } from 'common/components/DataTable/DataTableSearchAndFilters';
 import { FilterInfo } from 'common/components/DataTable/FilterDropdown';
 import { RecentDateFilter, EnumFilter, StringFilter } from 'common/components/DataTable/Filters';
+import { FluidContainer } from 'common/components/FluidContainer';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { PaginatedResult, User } from 'common/models';
@@ -67,7 +68,7 @@ export const UserListView: FC = () => {
   );
 
   return (
-    <Container>
+    <FluidContainer>
       <PageHeader>
         <div>
           <h1>
@@ -125,6 +126,6 @@ export const UserListView: FC = () => {
           </WithLoadingOverlay>
         </TableCard.Body>
       </TableCard>
-    </Container>
+    </FluidContainer>
   );
 };

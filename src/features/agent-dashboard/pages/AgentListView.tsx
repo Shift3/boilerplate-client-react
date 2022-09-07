@@ -11,12 +11,12 @@ import { NoContent } from 'common/styles/utilities';
 import { HasPermission } from 'features/rbac';
 import { FC, useMemo } from 'react';
 import { Button, Card } from 'react-bootstrap';
-import Container from 'react-bootstrap/Container';
 import { Link, useNavigate } from 'react-router-dom';
 import { AgentTableItem, useAgentTableData } from '../hooks/useAgentTableData';
 import { Trans } from 'react-i18next';
 import { StringFilter } from 'common/components/DataTable/Filters';
 import { FilterInfo } from 'common/components/DataTable/FilterDropdown';
+import { FluidContainer } from 'common/components/FluidContainer';
 
 export const AgentListView: FC = () => {
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ export const AgentListView: FC = () => {
   );
 
   return (
-    <Container>
+    <FluidContainer>
       <PageHeader>
         <div>
           <h1>
@@ -122,6 +122,6 @@ export const AgentListView: FC = () => {
           </WithLoadingOverlay>
         </Card.Body>
       </TableCard>
-    </Container>
+    </FluidContainer>
   );
 };

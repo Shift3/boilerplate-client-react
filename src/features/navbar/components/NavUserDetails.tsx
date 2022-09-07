@@ -1,18 +1,24 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Dropdown } from 'common/components/Dropdown';
 import { User } from 'common/models';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useLogoutModal } from '../hooks/useLogoutModal';
 import { UserProfilePicture } from './UserProfilePicture';
 
-const ProfileInfoWrapper = styled.div`
-  background: ${props => props.theme.nav.profileBackground};
+const ProfileInfoWrapper = styled.div<{
+  mobile: boolean;
+}>`
+  background: ${props =>
+    `${props.mobile ? props.theme.nav.vertical.profileBackground : props.theme.nav.horizontal.profileBackground}`};
   width: 100%;
   border-radius: ${props => props.theme.borderRadius};
   display: flex;
   align-items: center;
   color: ${props => props.theme.nav.profileText};
   padding: 1rem;
+  margin: ${props => `${props.mobile ? '1rem 0rem 1rem 0rem' : '0rem 0rem 0rem 1rem'}`};
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.15s ease;
@@ -49,24 +55,52 @@ const ProfileInfoWrapper = styled.div`
 
 type Props = {
   user: User;
+  isMobilePerspective: boolean;
 };
 
-export const NavUserDetails: FC<Props> = ({ user }) => {
+export const NavUserDetails: FC<Props> = ({ user, isMobilePerspective }) => {
   const navigate = useNavigate();
+  const { openLogoutModal } = useLogoutModal();
+
+  const [showDropdown, setShowDropdown] = useState(false);
+  const handleDropdownToggle = () => {
+    setShowDropdown(show => !show);
+  };
+
+  const handleDropdownClose = () => {
+    setShowDropdown(false);
+  };
+
+  const handleOnClick = () => {
+    if (!isMobilePerspective) {
+      handleDropdownToggle();
+    } else {
+      navigate(`/user/profile/${user.id}`);
+    }
+  };
 
   return (
-    <ProfileInfoWrapper onClick={() => navigate(`/user/profile/${user.id}`)}>
-      <UserProfilePicture user={user} size='xs' radius={32} />
-
-      <div>
+    <div>
+      <ProfileInfoWrapper mobile={isMobilePerspective} onClick={handleOnClick}>
+        <UserProfilePicture user={user} size='xs' radius={32} />
         <div>
-          {user.firstName} {user.lastName.charAt(0)}.
+          <div>
+            {user.firstName} {user.lastName.charAt(0)}.
+          </div>
+          <small>{user.role.toString()}</small>
+          <span>
+            <FontAwesomeIcon icon={['fas', 'cog']} size='2x' />
+          </span>
         </div>
-        <small>{user.role.toString()}</small>
-        <span>
-          <FontAwesomeIcon icon={['fas', 'cog']} size='2x' />
-        </span>
-      </div>
-    </ProfileInfoWrapper>
+      </ProfileInfoWrapper>
+      <Dropdown
+        show={showDropdown}
+        onClose={handleDropdownClose}
+        navLinks={[
+          { id: 0, icon: 'user', label: 'Profile', path: `/user/profile/${user.id}` },
+          { id: 1, icon: 'sign-out-alt', label: 'Sign Out', method: openLogoutModal },
+        ]}
+      />
+    </div>
   );
 };

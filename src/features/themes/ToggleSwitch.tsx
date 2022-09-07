@@ -5,9 +5,12 @@ import { MoonIcon } from './MoonIcon';
 import { useTheme } from './useTheme';
 
 const Switch = styled.div`
-  position: absolute;
-  top: 28px;
-  right: 0;
+  @media (max-width: 767px) {
+    position: absolute;
+    top: 0;
+    right: 48px;
+  }
+
   cursor: pointer;
   padding: 16px;
   border-radius: ${props => props.theme.borderRadius};

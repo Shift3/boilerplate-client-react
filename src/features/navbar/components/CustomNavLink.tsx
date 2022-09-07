@@ -11,7 +11,7 @@ type Props = {
   handleSamePathNavigate?: () => void;
 };
 
-const NavLinkStyles = styled.div`
+export const NavLinkStyles = styled.div`
   width: 100%;
   font-size: 1rem;
   position: relative;
@@ -46,7 +46,7 @@ export const CustomNavLink: FC<PropsWithChildren<Props>> = ({ link, handleSamePa
   const handleClick = () => {
     if (location.pathname === link.path && handleSamePathNavigate) {
       handleSamePathNavigate();
-    } else {
+    } else if (link.path) {
       navigate(link.path);
     }
   };
