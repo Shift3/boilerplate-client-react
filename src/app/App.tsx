@@ -17,6 +17,7 @@ import { GlobalStyle } from '../GlobalStyle';
 import light from 'themes/light';
 import dark from 'themes/dark';
 import { NetworkDetector } from 'features/network-detector/components/NetworkDetector';
+import { MembershipRoutes } from 'features/memberships/Routes';
 
 export const ThemeContext = createContext({
   theme: 'light',
@@ -67,6 +68,14 @@ export const App: FC = () => {
                       <Layout>
                         <UpdateUserProfilePage />
                       </Layout>
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path='/memberships/*'
+                  element={
+                    <RequireAuth>
+                      <MembershipRoutes />
                     </RequireAuth>
                   }
                 />

@@ -8,7 +8,7 @@ import { ChangePlan } from './ChangePlan';
 export const MembershipRoutes: FC = () => (
   <Layout>
     <Routes>
-      <Route path='/' element={<Checkout />} />
+      {/* <Route path='/' element={<Checkout />} /> */}
       <Route path='/*' element={<NotFoundView />} />
       <Route path='/change-plan' element={<ChangePlan />} />
     </Routes>

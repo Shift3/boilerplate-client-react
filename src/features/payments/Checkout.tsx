@@ -1,11 +1,11 @@
 import { Plan, useCreateSubscriptionMutation, useGetPlansQuery } from 'common/api/paymentsApi';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
-import { Button, Card } from 'react-bootstrap';
+import { Button, Card, Container, Form } from 'react-bootstrap';
 import styled from 'styled-components';
 import { CheckoutForm } from './CheckoutForm';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe, Stripe, StripeElementsOptions } from '@stripe/stripe-js';
-import { useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 // 1. Fetch plans (planId) from backend.
 // 2. Display plans to user (pre-selection).
@@ -17,17 +17,38 @@ const stripePromise: Promise<Stripe | null> = loadStripe(
   'pk_test_51LKnI7LBoYuqAVlJCiBaRj3JGO7ud4yqqxSwwaG94okOq4jB3hUQkEwR9eFJYIEvSWewbK9eZhN95gxiuy7bujHA00c47wfziI',
 );
 
-const PlanContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 1em; ;
+const PlanChoice = styled.div`
+  background: #efefef;
+  border-radius: 24px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.active {
+    outline: 2px solid ${props => props.theme.buttons.primaryBackgroundColor};
+  }
+
+  span {
+    font-weight: 500;
+  }
 `;
 
-export const Checkout = () => {
+export const Checkout: FC<{
+  onComplete: () => void;
+}> = ({ onComplete }) => {
   const { data: plans, isLoading } = useGetPlansQuery();
+  const [selectedPlan, setSelectedPlan] = useState<Plan>();
   const [createSubscription] = useCreateSubscriptionMutation();
   const [clientSecret, setClientSecret] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (plans) {
+      setSelectedPlan(plans[0]);
+    }
+  }, [plans]);
 
   const onPlanSelect = async (priceId: string) => {
     const data = await createSubscription(priceId).unwrap();
@@ -41,27 +62,41 @@ export const Checkout = () => {
     <>
       {clientSecret ? (
         <Elements stripe={stripePromise} options={options}>
-          <CheckoutForm />
+          <CheckoutForm onComplete={onComplete} />
         </Elements>
       ) : (
         <WithLoadingOverlay isLoading={isLoading} containerHasRoundedCorners containerBorderRadius='6px'>
-          <PlanContainer>
-            {plans &&
-              plans.map((plan: Plan) => (
-                <Card key={plan.id} className='m-3 w-25 mx-5 w-100 shadow mb-5 bg-white rounded'>
-                  <Card.Header className='d-flex justify-content-center'>{plan.name}</Card.Header>
-                  <Card.Body className='d-flex-col'>
-                    <Card.Text className='d-flex justify-content-center'>{plan.description}</Card.Text>
-                    <Card.Text className='d-flex justify-content-center'>
-                      {(plan.prices[0].unitAmount / 100).toFixed(2)} per {plan.prices[0].recurring.interval}
-                    </Card.Text>
-                  </Card.Body>
-                  <Button className='m-2 w-80' variant='primary' onClick={() => onPlanSelect(plan.prices[0].id)}>
-                    Subscribe to {plan.name}
-                  </Button>
-                </Card>
+          {plans ? (
+            <>
+              {plans.map((plan: Plan) => (
+                <PlanChoice className={plan === selectedPlan ? 'active' : ''} onClick={() => setSelectedPlan(plan)}>
+                  <div className='d-flex align-items-center'>
+                    <Form.Check
+                      checked={plan === selectedPlan}
+                      className='me-3'
+                      type='radio'
+                      aria-label={`select ${plan.name}`}
+                    />
+                    <div className='flex-fill'>
+                      <h1 className='h4 m-0'>{plan.name}</h1>
+                      <p className='m-0 text-muted'>{plan.description}</p>
+                    </div>
+                    <span>
+                      {(plan.prices[0].unitAmount / 100).toFixed(2)} / {plan.prices[0].recurring.interval}
+                    </span>
+                  </div>
+                </PlanChoice>
               ))}
-          </PlanContainer>
+
+              {selectedPlan ? (
+                <div className='d-grid gap-2'>
+                  <Button size='lg' className='btn-block' onClick={() => onPlanSelect(selectedPlan.prices[0].id)}>
+                    Continue
+                  </Button>
+                </div>
+              ) : null}
+            </>
+          ) : null}
         </WithLoadingOverlay>
       )}
     </>
