@@ -103,7 +103,7 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
     }, 200);
 
     return () => clearTimeout(delayDebounceFn);
-  });
+  }, [searchValue, onSetSearchText]);
 
   return (
     <>
