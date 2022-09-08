@@ -41,9 +41,7 @@ export const customBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBase
         throw response;
       }
     } catch (e) {
-      notificationService.showEndlessErrorMessage(
-        'There is a problem with your account. Please contact the administrators of this site.',
-      );
+      notificationService.showErrorMessage('Your login has expired, please try logging in again.');
       api.dispatch(authSlice.actions.userLoggedOut());
       authLocalStorage.clearAuthState();
     }
