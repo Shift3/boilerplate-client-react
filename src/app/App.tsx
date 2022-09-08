@@ -16,7 +16,6 @@ import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from '../GlobalStyle';
 import light from 'themes/light';
 import dark from 'themes/dark';
-import { MembershipRoutes } from 'features/memberships/Routes';
 import { NetworkDetector } from 'features/network-detector/components/NetworkDetector';
 
 export const ThemeContext = createContext({
