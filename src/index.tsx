@@ -42,6 +42,7 @@ import reportWebVitals from './reportWebVitals';
 import { I18nextProvider, withTranslation } from 'react-i18next';
 import i18n from './i18n/config';
 import { environment } from 'environment';
+import { BrowserTracing } from '@sentry/tracing';
 
 // Font Awesome recommends importing icons via a “library” in the initializing module of the app
 // so you add them once in your React app and reference them in any component
@@ -77,18 +78,14 @@ library.add(
   faQuestion,
 );
 
-Sentry.init({
-  environment: environment.environment,
-  dsn: environment.sentryDSN ?? undefined,
-  beforeSend(event) {
-    if (process.env.NODE_ENV === 'production') {
-      return event;
-    }
-
-    return null;
-  },
-  autoSessionTracking: false,
-});
+if (environment.sentryDSN) {
+  Sentry.init({
+    environment: environment.environment,
+    dsn: environment.sentryDSN,
+    integrations: [new BrowserTracing()],
+    autoSessionTracking: false,
+  });
+}
 
 const TranslatedApp = withTranslation()(App);
 

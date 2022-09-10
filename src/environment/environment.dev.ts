@@ -7,5 +7,4 @@ export const environment: IEnvironment = {
   isProduction: process.env.NODE_ENV === 'production',
   name: packageJson.name,
   version: packageJson.version,
-  sentryDSN: null,
 };

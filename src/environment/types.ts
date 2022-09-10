@@ -10,5 +10,5 @@ export interface IEnvironment {
   isProduction: boolean;
   name: string;
   version: string;
-  sentryDSN: string | null;
+  sentryDSN?: string;
 }
