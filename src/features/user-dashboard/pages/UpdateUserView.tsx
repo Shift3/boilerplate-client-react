@@ -82,7 +82,16 @@ export const UpdateUserView: FC = () => {
 
       <Card>
         <Card.Body>
+<<<<<<< HEAD
           <WithLoadingOverlay isLoading={isLoadingUser} isInitialLoad={isLoadingUser && isFetching}>
+=======
+          <WithLoadingOverlay
+            isLoading={isLoadingUser}
+            isInitialLoad={isLoadingUser && isFetching}
+            // containerHasRoundedCorners
+            // containerBorderRadius='6px'
+          >
+>>>>>>> bf8eccf (feat(stripe):resolved merge conflicts)
             {!isLoadingUser ? (
               <UserDetailForm
                 availableRoles={availableRoles}
