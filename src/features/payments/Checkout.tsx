@@ -1,6 +1,6 @@
 import { Plan, useCreateSubscriptionMutation, useGetPlansQuery } from 'common/api/paymentsApi';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
-import { Button, Card, Container, Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import styled from 'styled-components';
 import { CheckoutForm } from './CheckoutForm';
 import { Elements } from '@stripe/react-stripe-js';

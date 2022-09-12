@@ -1,8 +1,7 @@
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useAuth } from 'features/auth/hooks';
 import { FC } from 'react';
-import { Button, Container } from 'react-bootstrap';
-import styled from 'styled-components';
+import { Button } from 'react-bootstrap';
 
 export const CheckoutForm: FC<{
   onComplete: () => void;
