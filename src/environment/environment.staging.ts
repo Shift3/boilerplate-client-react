@@ -6,6 +6,7 @@ const apiHost = 'dj-starter-demo-staging.shift3sandbox.com';
 export const environment: IEnvironment = {
   apiHost,
   apiRoute: `https://${apiHost}`,
+  clientUrl: 'https://boilerplate-client-react.shift3sandbox.com',
   environment: EnvironmentConfiguration.Staging,
   isProduction: true,
   name: packageJson.name,

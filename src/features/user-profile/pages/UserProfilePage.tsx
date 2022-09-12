@@ -1,4 +1,11 @@
-import { faCamera, faContactCard, faGear, faLanguage, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCamera,
+  faContactCard,
+  faCreditCard,
+  faGear,
+  faLanguage,
+  faUnlockKeyhole,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { handleApiError, isFetchBaseQueryError } from 'common/api/handleApiError';
 import {
@@ -10,10 +17,12 @@ import {
 import { LoadingButton } from 'common/components/LoadingButton';
 import { LoadingSpinner } from 'common/components/LoadingSpinner';
 import { isObject } from 'common/error/utilities';
+import useQuery from 'common/hooks/useQuery';
 import { ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { PageHeader } from 'common/styles/page';
 import { useAuth } from 'features/auth/hooks';
+import { MySubscription } from 'features/memberships/MySubscription';
 import { UserProfileImg } from 'features/navbar/components/UserProfilePicture';
 import { useTheme } from 'features/themes/useTheme';
 import {
@@ -28,7 +37,7 @@ import {
   useUpdateUserProfile,
 } from 'features/user-profile/hooks';
 import { languages } from 'i18n/config';
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import {
   Alert,
   Card,
@@ -46,15 +55,11 @@ import {
 import Button from 'react-bootstrap/Button';
 import { Trans, useTranslation } from 'react-i18next';
 import { useModal } from 'react-modal-hook';
-import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Constants } from 'utils/constants';
 import { UpdateUserEmailForm, UserEmailFormData } from '../components/UpdateUserEmailForm';
 import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
-
-type RouteParams = {
-  id: string;
-};
 
 const UserProfilePictureContainer = styled.div`
   position: relative;
@@ -128,8 +133,8 @@ export const ProfileNav = styled(Nav).attrs({ className: 'flex-column' })`
 `;
 
 export const UserProfilePage: FC = () => {
-  const { id = '' } = useParams<RouteParams>();
   const { user } = useAuth();
+  const { id } = user!;
   const inputFile = useRef<HTMLInputElement>(null!);
   const [resendChangeEmailVerificationEmail, { isLoading: isResendingChangeEmail }] =
     useResendChangeEmailVerificationEmailMutation();
@@ -145,6 +150,20 @@ export const UserProfilePage: FC = () => {
     useState<ServerValidationErrors<ForgotPasswordFormData> | null>(null);
   const { i18n } = useTranslation();
   const { toggleTheme, theme } = useTheme();
+  const navigate = useNavigate();
+  const query = useQuery();
+
+  useEffect(() => {
+    const newTab = query.get('tab');
+    if (newTab) setTab(newTab);
+  }, [query]);
+
+  const changeTab = (tab: string) => {
+    const search = new URLSearchParams(window.location.search);
+    search.set('tab', tab);
+    navigate({ search: search.toString() });
+    setTab(tab);
+  };
 
   const onSubmit = async (formData: ProfileFormData) => {
     const data = { id, ...formData };
@@ -292,9 +311,16 @@ export const UserProfilePage: FC = () => {
               <FontAwesomeIcon className='me-2' icon={faContactCard} />
               <Trans i18nKey='userProfile.profile'>Profile</Trans>
             </ProfileNav.Link>
-            <ProfileNav.Link onClick={() => setTab('security')} className={tab === 'security' ? 'active' : ''}>
+            <ProfileNav.Link onClick={() => changeTab('security')} className={tab === 'security' ? 'active' : ''}>
               <FontAwesomeIcon className='me-2' icon={faUnlockKeyhole} />
               <Trans i18nKey='userProfile.security'>Security and Password</Trans>
+            </ProfileNav.Link>
+            <ProfileNav.Link
+              onClick={() => changeTab('subscription')}
+              className={tab === 'subscription' ? 'active' : ''}
+            >
+              <FontAwesomeIcon className='me-2' icon={faCreditCard} />
+              <Trans i18nKey='userProfile.subscription'>Subscription</Trans>
             </ProfileNav.Link>
           </ProfileNav>
         </Col>
@@ -529,6 +555,7 @@ export const UserProfilePage: FC = () => {
           ) : (
             ''
           )}
+          {tab === 'subscription' ? <MySubscription /> : ''}
         </Col>
       </Row>
     </Container>

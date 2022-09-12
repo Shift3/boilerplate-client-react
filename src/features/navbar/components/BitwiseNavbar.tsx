@@ -391,7 +391,7 @@ export const BitwiseNavbar: FC = () => {
                       <Badge pill>{user.role}</Badge>
                     </div>
                   </NavDropdown.Header>
-                  <NavDropdown.Item onClick={() => navigate(`/user/profile/${user.id}`)}>
+                  <NavDropdown.Item onClick={() => navigate(`/user/profile`)}>
                     <FontAwesomeIcon icon={faCog} />
                     Account Settings
                   </NavDropdown.Item>
