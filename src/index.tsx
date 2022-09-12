@@ -29,6 +29,7 @@ import {
   faUser,
   faUsers,
   faX,
+  faEllipsisVertical,
 } from '@fortawesome/free-solid-svg-icons';
 import * as Sentry from '@sentry/react';
 import { BrowserTracing } from '@sentry/tracing';
@@ -57,6 +58,7 @@ library.add(
   faChevronLeft,
   faChevronRight,
   faChevronDown,
+  faEllipsisVertical,
   faClose,
   faCog,
   faEdit,
