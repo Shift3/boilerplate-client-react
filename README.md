@@ -160,6 +160,9 @@ After your CircleCI project is set up, the only thing you need to do to get depl
 - `STAGING_AWS_DEFAULT_REGION`
   - The default region your infrastructure is deployed to.
   - `us-west-2`
+- `SENTRY_DSN`
+  - Optional Sentry DSN, enables sentry tracing/logging
+  - `https://a1a1a1a1a1a1a1a1a1a1a1aa1a1a1a1a@oooooo.ingest.sentry.io/1234567`
 
 Once these are set up, your project will be **automatically deployed** whenever new commits to the `develop` branch are pushed to Github.
 
