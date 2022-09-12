@@ -329,7 +329,6 @@ export const BitwiseNavbar: FC = () => {
               <NavLink onClick={() => toggle()} className='theme-toggle me-3 d-flex align-items-center'>
                 <>{theme === 'light' ? <MoonIcon /> : <SunIcon />}</>
               </NavLink>
-
               <NavDropdown
                 align='end'
                 title={
@@ -341,7 +340,9 @@ export const BitwiseNavbar: FC = () => {
                 className='me-3'
               >
                 {__languageOptions.map(option => (
-                  <NavDropdown.Item onClick={() => changeLanguage(option.value)}>{option.label}</NavDropdown.Item>
+                  <NavDropdown.Item key={option.label} onClick={() => changeLanguage(option.value)}>
+                    {option.label}
+                  </NavDropdown.Item>
                 ))}
               </NavDropdown>
 

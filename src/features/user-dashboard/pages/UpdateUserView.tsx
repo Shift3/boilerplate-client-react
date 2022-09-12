@@ -85,8 +85,8 @@ export const UpdateUserView: FC = () => {
           <WithLoadingOverlay
             isLoading={isLoadingUser}
             isInitialLoad={isLoadingUser && isFetching}
-            containerHasRoundedCorners
-            containerBorderRadius='6px'
+            // containerHasRoundedCorners
+            // containerBorderRadius='6px'
           >
             {!isLoadingUser ? (
               <UserDetailForm

@@ -85,12 +85,7 @@ export const AgentListView: FC = () => {
 
       <TableCard>
         <Card.Body>
-          <WithLoadingOverlay
-            isLoading={isLoading || isFetching}
-            isInitialLoad={isLoading && isFetching}
-            containerHasRoundedCorners
-            containerBorderRadius='6px'
-          >
+          <WithLoadingOverlay isLoading={isLoading || isFetching} isInitialLoad={isLoading && isFetching}>
             {isSearchingOrFiltering || isLoading || isFetching || data?.meta.count !== 0 ? (
               <DataTable<AgentTableItem>
                 columns={columns}
