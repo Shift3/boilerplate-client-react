@@ -80,7 +80,7 @@ export const ConfirmationModal: FC = () => {
   return (
     <StyledModal show={show} onHide={declineModal}>
       <Modal.Title>{message}</Modal.Title>
-      <Modal.Body>Do you want to continue?</Modal.Body>
+      <Modal.Body />
       <Modal.Footer>
         <Button variant='default' onClick={declineModal}>
           {declineButtonLabel}
