@@ -3,7 +3,6 @@ import { useCancelActiveSubscriptionMutation, Subscription } from 'common/api/pa
 import { useConfirmationModal } from 'features/confirmation-modal';
 import { FC, useCallback } from 'react';
 import { Badge, Button, Card, Col, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Moment from 'react-moment';
 
@@ -83,7 +82,6 @@ export const IsActive: FC<{
               Your subscription is currently active. You will be billed ${subscription.activeSubscription.plan.amount}{' '}
               on <Moment format='MMM D, YYYY'>{subscription.activeSubscription.currentPeriodEnd}</Moment>
             </p>
-            <Link to='/memberships/change-plan'>Change Plan</Link>
           </Card.Body>
         </Card>
       </Col>

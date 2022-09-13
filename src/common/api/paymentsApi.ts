@@ -48,6 +48,7 @@ export interface Subscription {
 }
 
 export type CancelSubscriptionRequest = { id: string };
+
 export type ReactivateSubscriptionRequest = { id: string };
 
 export const paymentApi = createApi({
