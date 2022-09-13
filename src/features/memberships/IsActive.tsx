@@ -1,11 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useCancelActiveSubscriptionMutation, Subscription } from 'common/api/paymentsApi';
-import { useConfirmationModal } from 'features/confirmation-modal';
 import { FC, useCallback } from 'react';
-import { Badge, Button, Card, Col, Row } from 'react-bootstrap';
+import { Alert, Badge, Button, Card, Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import Moment from 'react-moment';
 import { showSuccessMessage } from 'common/services/notification';
+import { useModal } from 'react-modal-hook';
+import { SimpleConfirmModal } from 'common/components/SimpleConfirmModal';
+import { useModalWithData } from 'common/hooks/useModalWithData';
 
 const CreditCard = styled.div`
   padding: 1rem;
@@ -42,29 +44,42 @@ export const IsActive: FC<{
   subscription: Subscription;
   onCancel: () => void;
 }> = ({ subscription, onCancel }) => {
-  const { openModal } = useConfirmationModal();
   const [cancelActiveSubscription] = useCancelActiveSubscriptionMutation();
 
-  const handleCancelSub = useCallback(
-    (subscription: Subscription) => {
-      const message = 'Would you like to cancel your current subscription?';
+  const [showModal, hideModal] = useModal(({ in: open, onExited }) => {
+    const onConfirm = async () => {
+      await cancelActiveSubscription();
+      onCancel();
+      showSuccessMessage('Subscription has been cancelled. You will no longer be billed.');
+    };
 
-      const onConfirm = async () => {
-        await cancelActiveSubscription({ id: subscription.activeSubscription.id });
-        onCancel();
-        showSuccessMessage('Subscription has been cancelled. You will no longer be billed.');
-      };
+    return (
+      <SimpleConfirmModal
+        title='Delete Agent'
+        show={open}
+        onCancel={hideModal}
+        onConfirm={onConfirm}
+        cancelLabel='Keep My Subscription'
+        confirmLabel='Cancel Subscription'
+        confirmIcon='trash-alt'
+        confirmVariant='danger'
+        onExited={onExited}
+        body={
+          <>
+            <p>Are you sure you want to cancel your active subscription?</p>
 
-      openModal({
-        message,
-        confirmButtonLabel: 'Continue',
-        declineButtonLabel: 'Go Back',
-        onConfirm,
-      });
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [openModal, cancelActiveSubscription],
-  );
+            <Alert variant='info'>
+              Note that your subscription will remain active until{' '}
+              <b>
+                <Moment>{subscription.activeSubscription.currentPeriodEnd}</Moment>
+              </b>{' '}
+              after which you will no longer be billed, and your subscription benefits will end.
+            </Alert>
+          </>
+        }
+      />
+    );
+  });
 
   return (
     <Row>
@@ -73,7 +88,7 @@ export const IsActive: FC<{
           <Card.Body>
             <div className='mb-3 d-flex align-items-center'>
               <h4 className='flex-fill m-0'>Current Plan</h4>
-              <a className='text-danger' href='#' onClick={() => handleCancelSub(subscription)}>
+              <a className='text-danger' href='#' onClick={() => showModal()}>
                 <b>Cancel</b>
               </a>
             </div>

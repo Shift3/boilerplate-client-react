@@ -60,8 +60,6 @@ export interface Subscription {
   ];
 }
 
-export type CancelSubscriptionRequest = { id: string };
-
 export const paymentApi = createApi({
   reducerPath: 'paymentApi',
 
@@ -97,7 +95,7 @@ export const paymentApi = createApi({
       }),
     }),
 
-    cancelActiveSubscription: builder.mutation<Subscription, CancelSubscriptionRequest>({
+    cancelActiveSubscription: builder.mutation<Subscription, void>({
       query: () => {
         return {
           url: `/subscriptions/cancel/`,

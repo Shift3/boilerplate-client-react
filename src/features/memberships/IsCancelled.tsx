@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Subscription, useReactivateSubscriptionMutation } from 'common/api/paymentsApi';
 import { showSuccessMessage } from 'common/services/notification';
-import { useConfirmationModal } from 'features/confirmation-modal';
 import { FC, useCallback } from 'react';
 import { Badge, Button, Card, Col, Row } from 'react-bootstrap';
 import Moment from 'react-moment';
@@ -42,7 +41,7 @@ export const IsCancelled: FC<{
   subscription: Subscription;
   onCancel: () => void;
 }> = ({ subscription, onCancel }) => {
-  const { openModal } = useConfirmationModal();
+  // const { openModal } = useConfirmationModal();
   const [reactivateSubscription] = useReactivateSubscriptionMutation();
 
   const handleReactivate = useCallback(
@@ -55,15 +54,15 @@ export const IsCancelled: FC<{
         showSuccessMessage('Subscription has been reactivated!');
       };
 
-      openModal({
-        message,
-        confirmButtonLabel: 'Continue',
-        declineButtonLabel: 'Go Back',
-        onConfirm,
-      });
+      // openModal({
+      //   message,
+      //   confirmButtonLabel: 'Continue',
+      //   declineButtonLabel: 'Go Back',
+      //   onConfirm,
+      // });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [openModal, reactivateSubscription],
+    [reactivateSubscription],
   );
 
   return (
