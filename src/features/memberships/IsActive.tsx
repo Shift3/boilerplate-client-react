@@ -10,6 +10,7 @@ import { SimpleConfirmModal } from 'common/components/SimpleConfirmModal';
 
 const CreditCard = styled.div`
   padding: 1rem;
+  margin: 0.6rem;
   background: ${props => props.theme.backgroundColor};
   color: ${props => props.theme.textColor};
   border-radius: ${props => props.theme.borderRadius};
