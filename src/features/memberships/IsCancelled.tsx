@@ -45,11 +45,11 @@ export const IsCancelled: FC<{
   const [reactivateSubscription] = useReactivateSubscriptionMutation();
 
   const handleReactivate = useCallback(
-    (subscription: Subscription) => {
+    () => {
       const message = 'Would you like to reactivate your subscription?';
 
       const onConfirm = async () => {
-        await reactivateSubscription(subscription);
+        await reactivateSubscription();
         onCancel();
       };
 
@@ -71,7 +71,7 @@ export const IsCancelled: FC<{
           <Card.Body>
             <div className='mb-3 d-flex align-items-center'>
               <h4 className='flex-fill m-0'>Subscription</h4>
-              <a className='btn btn-sm btn-link' href='#' onClick={() => handleReactivate(subscription)}>
+              <a className='btn btn-sm btn-link' href='#' onClick={() => handleReactivate()}>
                 <b>Reactivate</b>
               </a>
             </div>

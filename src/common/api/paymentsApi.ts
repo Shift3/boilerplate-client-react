@@ -93,7 +93,7 @@ export const paymentApi = createApi({
       },
     }),
 
-    reactivateSubscription: builder.mutation<Subscription>({
+    reactivateSubscription: builder.mutation<Subscription, void>({
       query: () => {
         return {
           url: `/subscriptions/reactivate`,
