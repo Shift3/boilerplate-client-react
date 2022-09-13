@@ -18,6 +18,7 @@ export const CheckoutForm: FC<{
       return;
     }
 
+    // TODO: don't hardcode localhost:4200
     const result = await stripe.confirmPayment({
       elements,
       confirmParams: {

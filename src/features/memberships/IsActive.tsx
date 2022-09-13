@@ -5,6 +5,7 @@ import { FC, useCallback } from 'react';
 import { Badge, Button, Card, Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import Moment from 'react-moment';
+import { showSuccessMessage } from 'common/services/notification';
 
 const CreditCard = styled.div`
   padding: 1rem;
@@ -28,8 +29,8 @@ const CreditCard = styled.div`
   }
 
   img {
-    width: auto;
-    height: 32px;
+    width: 48px;
+    height: auto;
   }
 
   path {
@@ -51,6 +52,7 @@ export const IsActive: FC<{
       const onConfirm = async () => {
         await cancelActiveSubscription({ id: subscription.activeSubscription.id });
         onCancel();
+        showSuccessMessage('Subscription has been cancelled. You will no longer be billed.');
       };
 
       openModal({
@@ -87,27 +89,28 @@ export const IsActive: FC<{
       </Col>
       <Col className='mb-3' md={12} xl={6}>
         <Card>
-          {/* TODO: Will need to fetch the credit cards on file, and then map through to display.
-          Also check that at least one card is on file before allowing user to delete card/s. */}
+          {/* TODO: Check that at least one card is on file before allowing user to delete card/s. */}
           <Card.Body>
             <h4>Payment Methods</h4>
-            <CreditCard>
-              <div className='d-flex align-items-center'>
-                <img
-                  className='me-3'
-                  src='https://brand.mastercard.com/content/dam/mccom/brandcenter/thumbnails/mastercard_circles_92px_2x.png'
-                  alt='Credit Card'
-                />
-                <div>
-                  <span>•••• •••• •••• 4242</span>
-                  <small>4/27</small>
+
+            {subscription.paymentMethods.map(paymentMethod => (
+              <CreditCard>
+                <div className='d-flex align-items-center'>
+                  {/* TODO: get all the card images not just visa and mastercard */}
+                  <img className='me-3' width={64} src={`/cards/${paymentMethod.card.brand}.png`} alt='Credit Card' />
+                  <div>
+                    <span>•••• •••• •••• {paymentMethod.card.last4}</span>
+                    <small>
+                      {paymentMethod.card.expMonth}/{paymentMethod.card.expYear.toString().slice(2)}
+                    </small>
+                  </div>
+                  {/* TODO: Add `edit credit card` functionality */}
+                  <Button className='ms-3' variant='link'>
+                    <FontAwesomeIcon size='1x' icon='ellipsis-vertical' />
+                  </Button>
                 </div>
-                {/* TODO: Add `edit credit card` functionality */}
-                <Button className='ms-3' variant='link'>
-                  <FontAwesomeIcon size='1x' icon='ellipsis-vertical' />
-                </Button>
-              </div>
-            </CreditCard>
+              </CreditCard>
+            ))}
           </Card.Body>
         </Card>
       </Col>

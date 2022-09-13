@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Subscription, useReactivateSubscriptionMutation } from 'common/api/paymentsApi';
+import { showSuccessMessage } from 'common/services/notification';
 import { useConfirmationModal } from 'features/confirmation-modal';
 import { FC, useCallback } from 'react';
 import { Badge, Button, Card, Col, Row } from 'react-bootstrap';
@@ -51,6 +52,7 @@ export const IsCancelled: FC<{
       const onConfirm = async () => {
         await reactivateSubscription();
         onCancel();
+        showSuccessMessage('Subscription has been reactivated!');
       };
 
       openModal({

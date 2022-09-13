@@ -38,6 +38,19 @@ export interface Subscription {
     };
   };
 
+  paymentMethods: [
+    {
+      id: string;
+      type: string;
+      card: {
+        last4: string;
+        brand: string;
+        expMonth: number;
+        expYear: number;
+      };
+    },
+  ];
+
   billingHistory: [
     {
       amount: string;
@@ -96,7 +109,7 @@ export const paymentApi = createApi({
     reactivateSubscription: builder.mutation<Subscription, void>({
       query: () => {
         return {
-          url: `/subscriptions/reactivate`,
+          url: `/subscriptions/reactivate/`,
           method: 'POST',
         };
       },
