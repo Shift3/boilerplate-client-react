@@ -7,12 +7,6 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe, Stripe, StripeElementsOptions } from '@stripe/stripe-js';
 import { FC, useEffect, useState } from 'react';
 
-// 1. Fetch plans (planId) from backend.
-// 2. Display plans to user (pre-selection).
-// 3. User selects a plan --> send to backend --> create incomplete subscription plan.
-// 4. Backend sends back 'clientSecret', frontend uses clientSecret to collect payment info (stripe elements)
-// 5. If no error, send client to their profile subscription page.
-
 const stripePromise: Promise<Stripe | null> = loadStripe(
   'pk_test_51LKnI7LBoYuqAVlJCiBaRj3JGO7ud4yqqxSwwaG94okOq4jB3hUQkEwR9eFJYIEvSWewbK9eZhN95gxiuy7bujHA00c47wfziI',
 );

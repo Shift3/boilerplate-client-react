@@ -48,6 +48,7 @@ export interface Subscription {
 }
 
 export type CancelSubscriptionRequest = { id: string };
+export type ReactivateSubscriptionRequest = { id: string };
 
 export const paymentApi = createApi({
   reducerPath: 'paymentApi',
@@ -93,6 +94,15 @@ export const paymentApi = createApi({
         };
       },
     }),
+
+    reactivateSubscription: builder.mutation<Subscription, ReactivateSubscriptionRequest>({
+      query: () => {
+        return {
+          url: `/subscriptions/reactivate`,
+          method: 'POST',
+        };
+      },
+    }),
   }),
 });
 
@@ -102,4 +112,5 @@ export const {
   useCreateSubscriptionMutation,
   useGetMySubscriptionQuery,
   useCancelActiveSubscriptionMutation,
+  useReactivateSubscriptionMutation,
 } = paymentApi;

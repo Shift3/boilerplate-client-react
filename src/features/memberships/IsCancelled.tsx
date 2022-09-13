@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Subscription } from 'common/api/paymentsApi';
-import { FC } from 'react';
+import { Subscription, useReactivateSubscriptionMutation } from 'common/api/paymentsApi';
+import { useConfirmationModal } from 'features/confirmation-modal';
+import { FC, useCallback } from 'react';
 import { Badge, Button, Card, Col, Row } from 'react-bootstrap';
 import Moment from 'react-moment';
 import styled from 'styled-components';
@@ -38,7 +39,31 @@ const CreditCard = styled.div`
 
 export const IsCancelled: FC<{
   subscription: Subscription;
-}> = ({ subscription }) => {
+  onCancel: () => void;
+}> = ({ subscription, onCancel }) => {
+  const { openModal } = useConfirmationModal();
+  const [reactivateSubscription] = useReactivateSubscriptionMutation();
+
+  const handleReactivate = useCallback(
+    (subscription: Subscription) => {
+      const message = 'Would you like to reactivate your subscription?';
+
+      const onConfirm = async () => {
+        await reactivateSubscription({ id: subscription.activeSubscription.id });
+        onCancel();
+      };
+
+      openModal({
+        message,
+        confirmButtonLabel: 'Continue',
+        declineButtonLabel: 'Go Back',
+        onConfirm,
+      });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [openModal, reactivateSubscription],
+  );
+
   return (
     <Row>
       <Col className='mb-3' md={12} xl={6}>
@@ -46,7 +71,7 @@ export const IsCancelled: FC<{
           <Card.Body>
             <div className='mb-3 d-flex align-items-center'>
               <h4 className='flex-fill m-0'>Subscription</h4>
-              <a className='btn btn-sm btn-link' href='#'>
+              <a className='btn btn-sm btn-link' href='#' onClick={() => handleReactivate(subscription)}>
                 <b>Reactivate</b>
               </a>
             </div>

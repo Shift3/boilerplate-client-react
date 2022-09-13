@@ -12,7 +12,6 @@ type SubscriptionStatus = null | 'active' | 'cancelled' | 'cancelled_but_active'
 
 export const MySubscription = () => {
   const { data: subscription, isLoading, refetch } = useGetMySubscriptionQuery();
-
   const status: SubscriptionStatus = useMemo(() => {
     if (subscription?.activeSubscription?.canceledAt) {
       if (moment().isBefore(subscription.activeSubscription.currentPeriodEnd)) {
@@ -34,7 +33,9 @@ export const MySubscription = () => {
         <>
           {status === 'active' ? <IsActive subscription={subscription} onCancel={() => refetch()} /> : null}
 
-          {status === 'cancelled_but_active' ? <IsCancelled subscription={subscription} /> : null}
+          {status === 'cancelled_but_active' ? (
+            <IsCancelled subscription={subscription} onCancel={() => refetch()} />
+          ) : null}
 
           {status === 'cancelled' || status === null ? (
             <Row>
@@ -62,9 +63,8 @@ export const MySubscription = () => {
 
                 <table className='table'>
                   <tbody>
-                    {subscription.billingHistory.map(({ amount, date, description }, i) => (
-                      // eslint-disable-next-line react/no-array-index-key
-                      <tr key={i}>
+                    {subscription.billingHistory.map(({ amount, date, description }) => (
+                      <tr>
                         <td key={date}>
                           <Moment format='MMM D, YYYY'>{date}</Moment>
                         </td>
