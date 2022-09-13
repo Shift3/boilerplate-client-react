@@ -1,13 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useCancelActiveSubscriptionMutation, Subscription } from 'common/api/paymentsApi';
-import { FC, useCallback } from 'react';
+import { FC } from 'react';
 import { Alert, Badge, Button, Card, Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import Moment from 'react-moment';
 import { showSuccessMessage } from 'common/services/notification';
 import { useModal } from 'react-modal-hook';
 import { SimpleConfirmModal } from 'common/components/SimpleConfirmModal';
-import { useModalWithData } from 'common/hooks/useModalWithData';
 
 const CreditCard = styled.div`
   padding: 1rem;
@@ -55,7 +54,7 @@ export const IsActive: FC<{
 
     return (
       <SimpleConfirmModal
-        title='Delete Agent'
+        title='Cancel Subscription'
         show={open}
         onCancel={hideModal}
         onConfirm={onConfirm}

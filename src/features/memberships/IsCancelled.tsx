@@ -1,8 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Subscription, useReactivateSubscriptionMutation } from 'common/api/paymentsApi';
+import { SimpleConfirmModal } from 'common/components/SimpleConfirmModal';
 import { showSuccessMessage } from 'common/services/notification';
-import { FC, useCallback } from 'react';
-import { Badge, Button, Card, Col, Row } from 'react-bootstrap';
+import { FC } from 'react';
+import { Alert, Badge, Button, Card, Col, Row } from 'react-bootstrap';
+import { useModal } from 'react-modal-hook';
 import Moment from 'react-moment';
 import styled from 'styled-components';
 
@@ -41,29 +43,42 @@ export const IsCancelled: FC<{
   subscription: Subscription;
   onCancel: () => void;
 }> = ({ subscription, onCancel }) => {
-  // const { openModal } = useConfirmationModal();
   const [reactivateSubscription] = useReactivateSubscriptionMutation();
 
-  const handleReactivate = useCallback(
-    () => {
-      const message = 'Would you like to reactivate your subscription?';
+  const [showModal, hideModal] = useModal(({ in: open, onExited }) => {
+    const onConfirm = async () => {
+      await reactivateSubscription();
+      onCancel();
+      showSuccessMessage('Subscription has been reactivated!');
+    };
 
-      const onConfirm = async () => {
-        await reactivateSubscription();
-        onCancel();
-        showSuccessMessage('Subscription has been reactivated!');
-      };
+    return (
+      <SimpleConfirmModal
+        title='Reactivate Subscription'
+        show={open}
+        onCancel={hideModal}
+        onConfirm={onConfirm}
+        cancelLabel='Do Not Reactivate'
+        confirmLabel='Reactivevate Subscription'
+        confirmIcon='trash-alt'
+        confirmVariant='danger'
+        onExited={onExited}
+        body={
+          <>
+            <p>Are you sure you want to reactive your subscription?</p>
 
-      // openModal({
-      //   message,
-      //   confirmButtonLabel: 'Continue',
-      //   declineButtonLabel: 'Go Back',
-      //   onConfirm,
-      // });
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [reactivateSubscription],
-  );
+            <Alert variant='info'>
+              {/* Note that your subscription will remain active until{' '} */}
+              <b>
+                <Moment>{subscription.activeSubscription.currentPeriodEnd}</Moment>
+              </b>{' '}
+              {/* after which you will no longer be billed, and your subscription benefits will end. */}
+            </Alert>
+          </>
+        }
+      />
+    );
+  });
 
   return (
     <Row>
@@ -72,7 +87,7 @@ export const IsCancelled: FC<{
           <Card.Body>
             <div className='mb-3 d-flex align-items-center'>
               <h4 className='flex-fill m-0'>Subscription</h4>
-              <a className='btn btn-sm btn-link' href='#' onClick={() => handleReactivate()}>
+              <a className='btn btn-sm btn-link' href='#' onClick={() => showModal()}>
                 <b>Reactivate</b>
               </a>
             </div>
