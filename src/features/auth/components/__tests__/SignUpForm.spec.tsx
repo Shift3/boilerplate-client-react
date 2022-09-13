@@ -6,6 +6,7 @@ import light from 'themes/light';
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createAppStore } from 'app/redux';
+import { ModalProvider } from 'react-modal-hook';
 
 const mockOnSubmit = jest.fn();
 const mockOnCancel = jest.fn();
@@ -16,9 +17,11 @@ describe('SignupForm', () => {
       render(
         <MemoryRouter>
           <Provider store={createAppStore()}>
-            <ThemeProvider theme={light}>
-              <SignUpForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} serverValidationErrors={null} />
-            </ThemeProvider>
+            <ModalProvider>
+              <ThemeProvider theme={light}>
+                <SignUpForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} serverValidationErrors={null} />
+              </ThemeProvider>
+            </ModalProvider>
           </Provider>
         </MemoryRouter>,
       );

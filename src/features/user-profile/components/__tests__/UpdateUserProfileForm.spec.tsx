@@ -6,6 +6,7 @@ import light from 'themes/light';
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createAppStore } from 'app/redux';
+import { ModalProvider } from 'react-modal-hook';
 
 const mockOnSubmit = jest.fn();
 const defaultValues = {
@@ -19,13 +20,11 @@ describe('UpdateUserProfileForm', () => {
       render(
         <MemoryRouter>
           <Provider store={createAppStore()}>
-            <ThemeProvider theme={light}>
-              <UpdateUserProfileForm
-                onSubmit={mockOnSubmit}
-                defaultValues={defaultValues}
-                serverValidationErrors={null}
-              />
-            </ThemeProvider>
+            <ModalProvider>
+              <ThemeProvider theme={light}>
+                <UpdateUserProfileForm onSubmit={mockOnSubmit} defaultValues={defaultValues} />
+              </ThemeProvider>
+            </ModalProvider>
           </Provider>
         </MemoryRouter>,
       );

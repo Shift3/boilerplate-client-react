@@ -6,6 +6,7 @@ import { ChangePasswordForm, FormData } from '../ChangePasswordForm';
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createAppStore } from 'app/redux';
+import { ModalProvider } from 'react-modal-hook';
 
 describe('ChangePasswordForm', () => {
   const validFormData: FormData = {
@@ -24,9 +25,11 @@ describe('ChangePasswordForm', () => {
       render(
         <MemoryRouter>
           <Provider store={createAppStore()}>
-            <ThemeProvider theme={light}>
-              <ChangePasswordForm onSubmit={mockOnSubmit} serverValidationErrors={null} />
-            </ThemeProvider>
+            <ModalProvider>
+              <ThemeProvider theme={light}>
+                <ChangePasswordForm onSubmit={mockOnSubmit} serverValidationErrors={null} />
+              </ThemeProvider>
+            </ModalProvider>
           </Provider>
         </MemoryRouter>,
       );
