@@ -49,8 +49,6 @@ export interface Subscription {
 
 export type CancelSubscriptionRequest = { id: string };
 
-export type ReactivateSubscriptionRequest = { id: string };
-
 export const paymentApi = createApi({
   reducerPath: 'paymentApi',
 
@@ -85,8 +83,7 @@ export const paymentApi = createApi({
         body: { priceId },
       }),
     }),
-    // and then call the POST /subscriptions/cancel/
-    // endpoint if the user chooses to continue. */
+
     cancelActiveSubscription: builder.mutation<Subscription, CancelSubscriptionRequest>({
       query: () => {
         return {
@@ -96,7 +93,7 @@ export const paymentApi = createApi({
       },
     }),
 
-    reactivateSubscription: builder.mutation<Subscription, ReactivateSubscriptionRequest>({
+    reactivateSubscription: builder.mutation<Subscription>({
       query: () => {
         return {
           url: `/subscriptions/reactivate`,

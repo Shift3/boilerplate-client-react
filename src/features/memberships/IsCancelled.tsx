@@ -49,7 +49,7 @@ export const IsCancelled: FC<{
       const message = 'Would you like to reactivate your subscription?';
 
       const onConfirm = async () => {
-        await reactivateSubscription({ id: subscription.activeSubscription.id });
+        await reactivateSubscription(subscription);
         onCancel();
       };
 
