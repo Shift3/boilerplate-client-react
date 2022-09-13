@@ -1,16 +1,19 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CustomSelect } from 'common/components/CustomSelect';
+import { LoadingButton } from 'common/components/LoadingButton';
 import { BitwiseNavbar } from 'common/styles/page';
-import { useAuth } from 'features/auth/hooks';
+import { useAuth, useLogout } from 'features/auth/hooks';
 import { FC } from 'react';
+import { Button, Modal } from 'react-bootstrap';
 import Nav from 'react-bootstrap/Nav';
 import { useTranslation } from 'react-i18next';
+import { useModal } from 'react-modal-hook';
 import { languages } from '../../../i18n/config';
-import { useLogoutModal } from '../hooks/useLogoutModal';
+import { ThemeToggle } from '../../themes/ToggleSwitch';
 import { useNavLinks } from '../hooks/useNavLinks';
 import { CustomNavAction, CustomNavLink } from './CustomNavLink';
 import { Logo } from './Logo';
 import { NavUserDetails } from './NavUserDetails';
-import { ThemeToggle } from '../../themes/ToggleSwitch';
 
 type Props = {
   closeVerticalNav?: () => void;
@@ -24,8 +27,36 @@ type LanguageOption = {
 export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
   const { user } = useAuth();
   const navLinks = useNavLinks();
-  const { openLogoutModal } = useLogoutModal();
   const { i18n } = useTranslation();
+  const { logout, isLoading } = useLogout();
+
+  const [showModal, hideModal] = useModal(
+    ({ in: open, onExited }) => {
+      return (
+        <Modal show={open} onHide={hideModal} onExited={onExited}>
+          <Modal.Header closeButton>
+            <Modal.Title>Sign Out</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Are you sure you want to sign out?</Modal.Body>
+          <Modal.Footer>
+            <Button variant='link' onClick={hideModal}>
+              Cancel
+            </Button>
+            <LoadingButton
+              className='action-shadow'
+              as={Button}
+              loading={isLoading}
+              variant='primary'
+              onClick={() => logout()}
+            >
+              <FontAwesomeIcon icon='sign-out-alt' /> Sign Out
+            </LoadingButton>
+          </Modal.Footer>
+        </Modal>
+      );
+    },
+    [isLoading],
+  );
 
   const changeLanguage = (ln: string) => {
     localStorage.setItem('language', ln);
@@ -61,7 +92,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
               />
             </div>
             <NavUserDetails user={user} />
-            <CustomNavAction onClick={openLogoutModal} label='Sign Out' icon='sign-out-alt' />
+            <CustomNavAction onClick={() => showModal()} label='Sign Out' icon='sign-out-alt' />
           </Nav>
         </div>
       ) : (

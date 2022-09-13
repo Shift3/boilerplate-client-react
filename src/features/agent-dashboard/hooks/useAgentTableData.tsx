@@ -1,10 +1,11 @@
 import { useDeleteAgentMutation } from 'common/api/agentApi';
+import { SimpleConfirmModal } from 'common/components/SimpleConfirmModal';
+import { useModalWithData } from 'common/hooks/useModalWithData';
 import { Agent } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { ActionButton, ActionButtonProps } from 'common/styles/button';
-import { useConfirmationModal } from 'features/confirmation-modal';
 import { useRbac } from 'features/rbac';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import { Column } from 'react-table';
 import { formatPhoneNumber } from 'utils/phone';
 
@@ -22,22 +23,40 @@ export type UseAgentTableData = (agents?: Agent[]) => {
 };
 
 export const useAgentTableData: UseAgentTableData = (agents = []) => {
-  const [deleteAgent] = useDeleteAgentMutation();
-  const { openModal } = useConfirmationModal();
   const { userHasPermission } = useRbac();
 
-  const handleDelete = useCallback(
-    (agent: Agent) => {
-      const message = `Delete ${agent.name}?`;
+  const [deleteAgent] = useDeleteAgentMutation();
+  const [showDeleteModal, hideDeleteModal] = useModalWithData<Agent>(
+    agent =>
+      ({ in: open, onExited }) => {
+        const onConfirm = async () => {
+          await deleteAgent(agent.id);
+          notificationService.showSuccessMessage('Agent deleted.');
+          hideDeleteModal();
+        };
 
-      const onConfirm = async () => {
-        await deleteAgent(agent.id);
-        notificationService.showSuccessMessage('Agent deleted.');
-      };
-
-      openModal({ message, confirmButtonLabel: 'DELETE', onConfirm });
-    },
-    [openModal, deleteAgent],
+        return (
+          <SimpleConfirmModal
+            title='Delete Agent'
+            show={open}
+            onCancel={hideDeleteModal}
+            onConfirm={onConfirm}
+            confirmLabel='Delete'
+            confirmIcon='trash-alt'
+            confirmVariant='danger'
+            onExited={onExited}
+            body={
+              <p className='m-0'>
+                Are you sure you want to delete the agent named <b>{agent.name}</b>?{' '}
+                <span className='text-danger'>
+                  Note that this action <b>cannot</b> be undone.
+                </span>
+              </p>
+            }
+          />
+        );
+      },
+    [],
   );
 
   // Set up columns and headers
@@ -79,13 +98,13 @@ export const useAgentTableData: UseAgentTableData = (agents = []) => {
             text: 'Delete',
             onClick: e => {
               e.stopPropagation();
-              handleDelete(agent);
+              showDeleteModal(agent);
             },
             show: userHasPermission({ permission: 'agent:delete', data: agent }),
           },
         ],
       })),
-    [agents, userHasPermission, handleDelete],
+    [agents, userHasPermission, showDeleteModal],
   );
 
   return {

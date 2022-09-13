@@ -7,6 +7,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createAppStore } from 'app/redux';
 import { ServerValidationErrors } from 'common/models';
+import { ModalProvider } from 'react-modal-hook';
 
 const mockOnSubmit = jest.fn();
 
@@ -19,9 +20,11 @@ describe('UpdateProfilePictureForm', () => {
       render(
         <MemoryRouter>
           <Provider store={createAppStore()}>
-            <ThemeProvider theme={light}>
-              <UpdateProfilePictureForm onSubmit={mockOnSubmit} ServerValidationErrors={null} />
-            </ThemeProvider>
+            <ModalProvider>
+              <ThemeProvider theme={light}>
+                <UpdateProfilePictureForm onSubmit={mockOnSubmit} />
+              </ThemeProvider>
+            </ModalProvider>
           </Provider>
         </MemoryRouter>,
       );
