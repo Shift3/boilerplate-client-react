@@ -30,6 +30,10 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
         color: ${({ theme }) => theme.backgroundColor} !important;
     }
 
+    .btn {
+        border-radius: ${({ theme }) => theme.borderRadius};
+    }
+
     button.btn:disabled {
         cursor: not-allowed;
         pointer-events: unset;
@@ -118,6 +122,39 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
     }
     div.react-select__option--is-focused:not(.react-select__option--is-selected) {
         background-color: ${({ theme }) => theme.backgroundColor};
+    }
+
+    .modal-dialog {
+        display: flex;
+        align-items: center;
+        min-height: calc(100% - 1rem);
+    }
+
+    .modal-content {
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+        border-radius: calc(${({ theme }) => theme.borderRadius} * 3);
+        background-color: ${({ theme }) => theme.card.backgroundColor};
+        color: ${({ theme }) => theme.card.textColor};
+    }
+
+    .modal-body {
+        padding-top: 0;
+    }
+
+    .modal-header {
+        border: 0;
+    }
+
+    .modal-footer {
+        border: 0;
+        margin-top: 1rem;
+        border-bottom-left-radius: calc(${({ theme }) => theme.borderRadius} * 3);;
+        border-bottom-right-radius: calc(${({ theme }) => theme.borderRadius} * 3);;
+        background: ${({ theme }) => theme.backgroundColor}
+    }
+
+    .action-shadow {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
 
 `;
