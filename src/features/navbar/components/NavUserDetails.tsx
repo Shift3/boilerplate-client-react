@@ -4,7 +4,6 @@ import { User } from 'common/models';
 import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useLogoutModal } from '../hooks/useLogoutModal';
 import { UserProfilePicture } from './UserProfilePicture';
 
 const ProfileInfoWrapper = styled.div<{
@@ -56,11 +55,11 @@ const ProfileInfoWrapper = styled.div<{
 type Props = {
   user: User;
   isMobilePerspective: boolean;
+  handleSignOutViaDialog: () => void;
 };
 
-export const NavUserDetails: FC<Props> = ({ user, isMobilePerspective }) => {
+export const NavUserDetails: FC<Props> = ({ user, isMobilePerspective, handleSignOutViaDialog }) => {
   const navigate = useNavigate();
-  const { openLogoutModal } = useLogoutModal();
 
   const [showDropdown, setShowDropdown] = useState(false);
   const handleDropdownToggle = () => {
@@ -98,7 +97,7 @@ export const NavUserDetails: FC<Props> = ({ user, isMobilePerspective }) => {
         onClose={handleDropdownClose}
         navLinks={[
           { id: 0, icon: 'user', label: 'Profile', path: `/user/profile/${user.id}` },
-          { id: 1, icon: 'sign-out-alt', label: 'Sign Out', method: openLogoutModal },
+          { id: 1, icon: 'sign-out-alt', label: 'Sign Out', method: handleSignOutViaDialog },
         ]}
       />
     </div>

@@ -1,22 +1,24 @@
 import { CustomSelect } from 'common/components/CustomSelect';
-import { useAuth } from 'features/auth/hooks';
+import { useAuth, useLogout } from 'features/auth/hooks';
 import { FC, useEffect, useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import { useTranslation } from 'react-i18next';
 import { languages } from '../../../i18n/config';
-import { useLogoutModal } from '../hooks/useLogoutModal';
 import { useNavLinks } from '../hooks/useNavLinks';
 import { CustomNavAction, CustomNavLink } from './CustomNavLink';
 import { Logo } from './Logo';
 import { NavUserDetails } from './NavUserDetails';
 import { ThemeToggle } from '../../themes/ToggleSwitch';
-import { Container, Navbar, Offcanvas } from 'react-bootstrap';
+import { Button, Container, Modal, Navbar, Offcanvas } from 'react-bootstrap';
 import styled from 'styled-components';
 import { useTheme } from 'features/themes/useTheme';
 import light from 'themes/light';
 import dark from 'themes/dark';
 import { environment } from 'environment';
 import { EnvironmentConfiguration } from 'environment/types';
+import { useModal } from 'react-modal-hook';
+import { LoadingButton } from 'common/components/LoadingButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type Props = {
   closeVerticalNav?: () => void;
@@ -78,7 +80,7 @@ const getNavBackgroundColor = (isMobilePerspective: boolean, theme: string) => {
 export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
   const { user } = useAuth();
   const navLinks = useNavLinks();
-  const { openLogoutModal } = useLogoutModal();
+  const { logout, isLoading } = useLogout();
   const { i18n } = useTranslation();
   const { innerWidth: width } = window;
   const [isMobilePerspective, setIsMobilePerspective] = useState(width <= 767);
@@ -86,8 +88,29 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
   const navbarMarginTop = environment.environment === EnvironmentConfiguration.Staging ? '56px' : '0px';
   const offcanvasMarginTop =
     environment.environment === EnvironmentConfiguration.Staging && isMobilePerspective ? '56px' : '0px';
-
   const bgColor = getNavBackgroundColor(isMobilePerspective, theme);
+
+  const [showModal, hideModal] = useModal(
+    ({ in: open, onExited }) => {
+      return (
+        <Modal show={open} onHide={hideModal} onExited={onExited}>
+          <Modal.Header closeButton>
+            <Modal.Title>Sign Out</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Are you sure you want to sign out?</Modal.Body>
+          <Modal.Footer>
+            <Button variant='link' onClick={hideModal}>
+              Cancel
+            </Button>
+            <LoadingButton className='action-shadow' loading={isLoading} variant='primary' onClick={() => logout()}>
+              <FontAwesomeIcon icon='sign-out-alt' /> Sign Out
+            </LoadingButton>
+          </Modal.Footer>
+        </Modal>
+      );
+    },
+    [isLoading],
+  );
 
   const changeLanguage = (ln: string) => {
     localStorage.setItem('language', ln);
@@ -149,9 +172,15 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
                 defaultValue={defaultLanguageOption}
                 onChange={option => changeLanguage(option.value)}
               />
-              {user ? <NavUserDetails user={user} isMobilePerspective={isMobilePerspective} /> : null}
+              {user ? (
+                <NavUserDetails
+                  user={user}
+                  isMobilePerspective={isMobilePerspective}
+                  handleSignOutViaDialog={() => showModal()}
+                />
+              ) : null}
               {isMobilePerspective ? (
-                <CustomNavAction onClick={openLogoutModal} label='Sign Out' icon='sign-out-alt' />
+                <CustomNavAction onClick={() => showModal()} label='Sign Out' icon='sign-out-alt' />
               ) : null}
             </ResponsiveSection>
           </ResponsiveOffCanvasBody>
