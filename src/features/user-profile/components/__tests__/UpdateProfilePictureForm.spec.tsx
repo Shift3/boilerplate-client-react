@@ -1,13 +1,12 @@
-import { act, render, screen } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { UpdateProfilePictureForm } from '../UpdateProfilePictureForm';
+import { createAppStore } from 'app/redux';
+import { ModalProvider } from 'react-modal-hook';
+import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import light from 'themes/light';
-import { MemoryRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { createAppStore } from 'app/redux';
-import { ServerValidationErrors } from 'common/models';
-import { ModalProvider } from 'react-modal-hook';
+import { UpdateProfilePictureForm } from '../UpdateProfilePictureForm';
 
 const mockOnSubmit = jest.fn();
 
@@ -36,22 +35,18 @@ describe('UpdateProfilePictureForm', () => {
 
   it('should submit form if profilePicture field is valid', async () => {
     const profilePictureInput = getProfilePictureInput();
+    await userEvent.upload(profilePictureInput, file);
+    await userEvent.click(screen.getByRole('button', { name: 'Update' }));
 
-    await act(async () => {
-      await userEvent.upload(profilePictureInput, file);
+    waitFor(() => {
+      expect(mockOnSubmit).toHaveBeenCalled();
     });
-
-    await act(async () => userEvent.click(screen.getByRole('button', { name: 'Update' })));
-
-    expect(mockOnSubmit).toHaveBeenCalled();
   });
 
   it('should validate image upload', async () => {
     const profilePictureInput = getProfilePictureInput();
 
-    await act(async () => {
-      await userEvent.upload(profilePictureInput, file);
-    });
+    await userEvent.upload(profilePictureInput, file);
 
     expect(profilePictureInput.files ? profilePictureInput.files[0] : null).toStrictEqual(file);
     expect(profilePictureInput.files ? profilePictureInput.files.item(0) : null).toStrictEqual(file);
@@ -59,9 +54,7 @@ describe('UpdateProfilePictureForm', () => {
   });
 
   it('should show alert when no file has been uploaded', async () => {
-    await act(async () => {
-      await userEvent.click(screen.getByRole('button', { name: 'Update' }));
-    });
+    await userEvent.click(screen.getByRole('button', { name: 'Update' }));
 
     expect(await screen.findAllByRole('alert')).toHaveLength(1);
   });

@@ -42,13 +42,7 @@ export const VerticalNav: FC<Props> = ({ closeVerticalNav }) => {
             <Button variant='link' onClick={hideModal}>
               Cancel
             </Button>
-            <LoadingButton
-              className='action-shadow'
-              as={Button}
-              loading={isLoading}
-              variant='primary'
-              onClick={() => logout()}
-            >
+            <LoadingButton className='action-shadow' loading={isLoading} variant='primary' onClick={() => logout()}>
               <FontAwesomeIcon icon='sign-out-alt' /> Sign Out
             </LoadingButton>
           </Modal.Footer>

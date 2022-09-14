@@ -4,6 +4,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 import translationEN from './en/translation.json';
 import translationES from './es/translation.json';
+import { environment } from 'environment';
 
 i18n.on('languageChanged', lng => {
   localStorage.setItem('lng', lng);
@@ -35,7 +36,7 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: 'en',
-    debug: true,
+    debug: !environment.isProduction && !(process.env.NODE_ENV === 'test'),
     load: 'languageOnly',
     detection: {
       lookupLocalStorage: 'language',

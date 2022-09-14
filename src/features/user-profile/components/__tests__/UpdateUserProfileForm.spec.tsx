@@ -33,7 +33,7 @@ describe('UpdateUserProfileForm', () => {
   });
 
   it('should submit form if all form fields are valid', async () => {
-    await act(async () => userEvent.click(screen.getByRole('button', { name: 'Update' })));
+    await userEvent.click(screen.getByRole('button', { name: 'Update' }));
     expect(mockOnSubmit).toHaveBeenCalledWith(defaultValues, expect.any(Object));
   });
 
@@ -44,9 +44,7 @@ describe('UpdateUserProfileForm', () => {
     const lastNameInput = screen.getByLabelText(/Last Name/i);
     userEvent.type(lastNameInput, '567');
 
-    await act(async () => {
-      userEvent.click(screen.getByRole('button', { name: 'Update' }));
-    });
+    await userEvent.click(screen.getByRole('button', { name: 'Update' }));
 
     expect(await screen.findAllByRole('alert')).toHaveLength(2);
   });

@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
@@ -97,7 +97,6 @@ export const UpdateProfilePictureForm: FC<Props> = ({ onSubmit, defaultValues })
         <LoadingButton
           className='mt-3'
           type='submit'
-          as={Button}
           disabled={imgPreviewState.src === '' || !isValid}
           loading={isSubmitting}
         >

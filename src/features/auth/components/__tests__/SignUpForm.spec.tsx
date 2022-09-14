@@ -37,21 +37,19 @@ describe('SignupForm', () => {
       lastName: 'Smith',
     };
 
-    await act(async () => {
-      const emailInput = screen.getByLabelText(/^Email$/i);
-      await userEvent.type(emailInput, testFormData.email);
+    const emailInput = screen.getByLabelText(/^Email$/i);
+    await userEvent.type(emailInput, testFormData.email);
 
-      const confirmEmailInput = screen.getByLabelText(/^Confirm Email$/i);
-      await userEvent.type(confirmEmailInput, testFormData.confirmEmail);
+    const confirmEmailInput = screen.getByLabelText(/^Confirm Email$/i);
+    await userEvent.type(confirmEmailInput, testFormData.confirmEmail);
 
-      const firstNameInput = screen.getByLabelText(/^First Name$/i);
-      await userEvent.type(firstNameInput, testFormData.firstName);
+    const firstNameInput = screen.getByLabelText(/^First Name$/i);
+    await userEvent.type(firstNameInput, testFormData.firstName);
 
-      const lastNameInput = screen.getByLabelText(/^Last Name$/i);
-      await userEvent.type(lastNameInput, testFormData.lastName);
-    });
+    const lastNameInput = screen.getByLabelText(/^Last Name$/i);
+    await userEvent.type(lastNameInput, testFormData.lastName);
 
-    await act(async () => await userEvent.click(screen.getByRole('button', { name: 'Register' })));
+    await userEvent.click(screen.getByRole('button', { name: 'Register' }));
 
     expect(mockOnSubmit).toHaveBeenCalledWith(testFormData, expect.any(Object));
   });
@@ -69,19 +67,17 @@ describe('SignupForm', () => {
       lastName: 'Smith',
     };
 
-    await act(async () => {
-      const emailInput = screen.getByLabelText(/^Email$/i);
-      await userEvent.type(emailInput, testFormData.email);
+    const emailInput = screen.getByLabelText(/^Email$/i);
+    await userEvent.type(emailInput, testFormData.email);
 
-      const confirmEmailInput = screen.getByLabelText(/^Confirm Email$/i);
-      await userEvent.type(confirmEmailInput, testFormData.confirmEmail);
+    const confirmEmailInput = screen.getByLabelText(/^Confirm Email$/i);
+    await userEvent.type(confirmEmailInput, testFormData.confirmEmail);
 
-      const firstNameInput = screen.getByLabelText(/^First Name$/i);
-      await userEvent.type(firstNameInput, testFormData.firstName);
+    const firstNameInput = screen.getByLabelText(/^First Name$/i);
+    await userEvent.type(firstNameInput, testFormData.firstName);
 
-      const lastNameInput = screen.getByLabelText(/^Last Name$/i);
-      await userEvent.type(lastNameInput, testFormData.lastName);
-    });
+    const lastNameInput = screen.getByLabelText(/^Last Name$/i);
+    await userEvent.type(lastNameInput, testFormData.lastName);
 
     const button = screen.getByRole('button', { name: 'Register' });
     expect(button.hasAttribute('disabled')).toBeFalsy();
@@ -100,9 +96,7 @@ describe('SignupForm', () => {
     const lastNameInput = screen.getByLabelText(/^Last Name$/i);
     await userEvent.type(lastNameInput, '456!&');
 
-    await act(async () => {
-      await userEvent.click(screen.getByRole('button', { name: 'Register' }));
-    });
+    await userEvent.click(screen.getByRole('button', { name: 'Register' }));
     expect(await screen.findAllByRole('alert')).toHaveLength(4);
   });
 });

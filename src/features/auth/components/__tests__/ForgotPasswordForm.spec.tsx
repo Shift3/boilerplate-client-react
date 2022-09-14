@@ -1,8 +1,8 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ForgotPasswordForm } from '../ForgotPasswordForm';
 import { ThemeProvider } from 'styled-components';
 import light from 'themes/light';
+import { ForgotPasswordForm } from '../ForgotPasswordForm';
 
 const mockOnSubmit = jest.fn();
 
@@ -19,18 +19,13 @@ describe('ForgotPasswordForm', () => {
   });
 
   it('should submit form if all form fields are valid', async () => {
-    const testFormData = {
-      email: 'Testemail@gmail.com',
-    };
+    const emailInput = screen.getByLabelText(/email/i);
+    const submitButton = screen.getByRole('button', { name: 'Submit' });
 
-    await act(async () => {
-      const emailInput = screen.getByLabelText(/Email/i);
-      await userEvent.type(emailInput, testFormData.email);
-    });
+    await userEvent.type(emailInput, 'testemail@gmail.com');
+    await userEvent.click(submitButton);
 
-    await act(async () => userEvent.click(screen.getByRole('button', { name: 'Submit' })));
-
-    expect(mockOnSubmit).toHaveBeenCalledWith(testFormData, expect.any(Object));
+    expect(mockOnSubmit).toHaveBeenCalled();
   });
 
   it('should disable the submit button when fields are invalid', async () => {
@@ -43,10 +38,8 @@ describe('ForgotPasswordForm', () => {
       email: 'Testemail@gmail.com',
     };
 
-    await act(async () => {
-      const emailInput = screen.getByLabelText(/Email/i);
-      await userEvent.type(emailInput, testFormData.email);
-    });
+    const emailInput = screen.getByLabelText(/Email/i);
+    await userEvent.type(emailInput, testFormData.email);
 
     const button = screen.getByRole('button', { name: 'Submit' });
     expect(button.hasAttribute('disabled')).toBeFalsy();
@@ -56,9 +49,7 @@ describe('ForgotPasswordForm', () => {
     const emailInput = screen.getByLabelText(/Email/i);
     userEvent.type(emailInput, 'abc');
 
-    await act(async () => {
-      await userEvent.click(screen.getByRole('button', { name: 'Submit' }));
-    });
+    await userEvent.click(screen.getByRole('button', { name: 'Submit' }));
 
     expect(await screen.findAllByRole('alert')).toHaveLength(1);
   });

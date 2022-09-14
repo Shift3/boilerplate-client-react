@@ -21,7 +21,6 @@ import { TransitionGroup } from 'react-transition-group';
 
 export const ThemeContext = createContext({
   theme: 'light',
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   toggle: () => {},
 });
 

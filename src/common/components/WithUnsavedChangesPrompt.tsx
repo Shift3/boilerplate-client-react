@@ -14,6 +14,7 @@ const useBlocker = (blocker: Blocker, when = true) => {
     // Had to return undefined here because we have the "consistent-return" lint rule
     // on which requires that return statements either always or never specify values.
     if (!when) return undefined;
+    if (!navigator.block) return undefined;
 
     const unblock = navigator.block((transition: Transition) => {
       const autoUnblockingTx = {

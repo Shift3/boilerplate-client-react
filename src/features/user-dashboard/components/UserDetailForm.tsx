@@ -5,7 +5,7 @@ import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt
 import { addServerErrors } from 'common/error/utilities';
 import { Role, User, RoleOption, ServerValidationErrors } from 'common/models';
 import { FC, useEffect } from 'react';
-import { Button, Col, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -117,7 +117,7 @@ export const UserDetailForm: FC<Props> = ({
         </Form.Group>
 
         <div className='mt-3'>
-          <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
+          <LoadingButton type='submit' disabled={!isValid} loading={isSubmitting}>
             {submitButtonLabel}
           </LoadingButton>
         </div>

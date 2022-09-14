@@ -5,7 +5,6 @@ import { DataTableSearchAndFilters } from 'common/components/DataTable/DataTable
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { Agent, PaginatedResult } from 'common/models';
-import { CreateButton } from 'common/styles/button';
 import { TableCard } from 'common/styles/card';
 import { PageHeader } from 'common/styles/page';
 import { NoContent } from 'common/styles/utilities';
@@ -64,9 +63,9 @@ export const AgentListView: FC = () => {
         <HasPermission perform='agent:create'>
           <div>
             <Link to='/agents/create-agent'>
-              <CreateButton>
+              <Button>
                 <Trans i18nKey='agentList.createButton'>Add Agent</Trans>
-              </CreateButton>
+              </Button>
             </Link>
           </div>
         </HasPermission>

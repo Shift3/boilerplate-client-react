@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from 'common/components/LoadingButton';
-import { LoginButton } from 'common/styles/button';
 import { FC, useState } from 'react';
 import { Button, InputGroup } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
@@ -85,7 +84,7 @@ export const LogInForm: FC<Props> = ({ onSubmit }) => {
         </small>
       </ForgotPassword>
       <div className='d-grid gap-2 mt-3'>
-        <LoadingButton type='submit' as={LoginButton} disabled={!isValid} loading={isSubmitting}>
+        <LoadingButton type='submit' disabled={!isValid} loading={isSubmitting}>
           Log In
         </LoadingButton>
       </div>

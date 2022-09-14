@@ -6,11 +6,11 @@ import { RecentDateFilter, EnumFilter, StringFilter } from 'common/components/Da
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { PaginatedResult, User } from 'common/models';
-import { CreateButton } from 'common/styles/button';
 import { TableCard } from 'common/styles/card';
 import { PageHeader } from 'common/styles/page';
 import { HasPermission } from 'features/rbac';
 import { FC, useMemo } from 'react';
+import { Button } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import { Trans } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
@@ -80,9 +80,9 @@ export const UserListView: FC = () => {
         <HasPermission perform='user:create'>
           <div>
             <Link to='/users/create-user'>
-              <CreateButton>
+              <Button>
                 <Trans i18nKey='userList.createButton'>Add User</Trans>
-              </CreateButton>
+              </Button>
             </Link>
           </div>
         </HasPermission>
