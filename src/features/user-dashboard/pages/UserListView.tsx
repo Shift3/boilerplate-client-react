@@ -12,7 +12,6 @@ import { PageHeader } from 'common/styles/page';
 import { HasPermission } from 'features/rbac';
 import { FC, useMemo } from 'react';
 import { Button } from 'react-bootstrap';
-import Container from 'react-bootstrap/Container';
 import { Trans } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserTableItem, useUserTableData } from '../hooks/useUserTableData';
