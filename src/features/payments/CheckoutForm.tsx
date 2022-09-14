@@ -1,5 +1,5 @@
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { showErrorMessage } from 'common/services/notification';
+import { showErrorMessage, showSuccessMessage } from 'common/services/notification';
 import { useAuth } from 'features/auth/hooks';
 import { FC } from 'react';
 import { Button } from 'react-bootstrap';
@@ -28,12 +28,10 @@ export const CheckoutForm: FC<{
     });
 
     if (result.error) {
-      // eslint-disable-next-line no-console
-      console.log(result.error.message);
+      showErrorMessage('');
     } else {
       onComplete();
-      // TODO: fire off a toast.
-      showErrorMessage('');
+      showSuccessMessage('');
     }
   };
 
