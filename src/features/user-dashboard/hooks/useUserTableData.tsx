@@ -208,7 +208,7 @@ export const useUserTableData: UseUserTableData = (users = []) => {
           <>
             {actions.filter(action => action.show).length > 0 ? (
               <TableActions>
-                <Button onClick={e => e.stopPropagation()}>
+                <Button variant='link' onClick={e => e.stopPropagation()}>
                   <FontAwesomeIcon icon={['fas', 'ellipsis-h']} size='xs' />
                 </Button>
                 <div>

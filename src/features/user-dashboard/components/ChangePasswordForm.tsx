@@ -4,7 +4,7 @@ import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt
 import { addServerErrors } from 'common/error/utilities';
 import { ServerValidationErrors } from 'common/models';
 import { FC, useEffect } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Constants } from 'utils/constants';
 import * as yup from 'yup';
@@ -110,7 +110,7 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors
           )}
         </Form.Group>
         <div className='mt-3'>
-          <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
+          <LoadingButton type='submit' disabled={!isValid} loading={isSubmitting}>
             Submit
           </LoadingButton>
         </div>

@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
@@ -58,7 +58,7 @@ export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues, server
         </Form.Control.Feedback>
       </Form.Group>
       <div className='mt-3'>
-        <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
+        <LoadingButton type='submit' disabled={!isValid} loading={isSubmitting}>
           Change my Email
         </LoadingButton>
       </div>

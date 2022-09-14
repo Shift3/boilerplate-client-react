@@ -46,13 +46,7 @@ export const SimpleConfirmModal: FC<SimpleConfirmModalProps> = ({
         <Button variant='link' onClick={onCancel}>
           {cancelLabel}
         </Button>
-        <LoadingButton
-          className='action-shadow'
-          as={Button}
-          loading={loading}
-          variant={confirmVariant}
-          onClick={() => confirm()}
-        >
+        <LoadingButton className='action-shadow' loading={loading} variant={confirmVariant} onClick={() => confirm()}>
           {confirmIcon ? <FontAwesomeIcon icon={confirmIcon} /> : null} {confirmLabel}
         </LoadingButton>
       </Modal.Footer>

@@ -4,7 +4,7 @@ import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt
 import { addServerErrors } from 'common/error/utilities';
 import { ServerValidationErrors } from 'common/models';
 import { FC, useEffect } from 'react';
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import { Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Constants } from 'utils/constants';
 import * as yup from 'yup';
@@ -116,7 +116,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
         </Form.Group>
 
         <div className='d-grid gap-2 mt-4'>
-          <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
+          <LoadingButton type='submit' disabled={!isValid} loading={isSubmitting}>
             Register
           </LoadingButton>
         </div>

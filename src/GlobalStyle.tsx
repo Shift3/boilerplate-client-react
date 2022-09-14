@@ -32,6 +32,7 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
 
     .btn {
         border-radius: ${({ theme }) => theme.borderRadius};
+        transition: all 0.3 ease-in-out;
     }
 
     button.btn:disabled {

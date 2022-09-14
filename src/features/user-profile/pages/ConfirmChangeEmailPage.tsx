@@ -5,7 +5,6 @@ import { LoadingButton } from 'common/components/LoadingButton';
 import * as notificationService from 'common/services/notification';
 import { FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
 
 export const ConfirmChangeEmailPage: FC = () => {
   const navigate = useNavigate();
@@ -36,7 +35,7 @@ export const ConfirmChangeEmailPage: FC = () => {
       </p>
 
       <div className='d-grid gap-2 mt-3'>
-        <LoadingButton as={Button} onClick={onSubmit} loading={isLoading}>
+        <LoadingButton onClick={onSubmit} loading={isLoading}>
           Change my Email
         </LoadingButton>
       </div>

@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { FC } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Constants } from 'utils/constants';
 import * as yup from 'yup';
@@ -74,7 +74,7 @@ export const ActivateAccountForm: FC<Props> = ({ onSubmit }) => {
         </Form.Text>
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
-        <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
+        <LoadingButton type='submit' disabled={!isValid} loading={isSubmitting}>
           Submit
         </LoadingButton>
       </div>
