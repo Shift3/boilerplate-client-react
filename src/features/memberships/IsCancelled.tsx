@@ -59,21 +59,19 @@ export const IsCancelled: FC<{
         show={open}
         onCancel={hideModal}
         onConfirm={onConfirm}
-        cancelLabel='Do Not Reactivate'
+        cancelLabel='Stay Unsubscribed'
         confirmLabel='Reactivevate Subscription'
-        confirmIcon='trash-alt'
-        confirmVariant='danger'
+        // confirmIcon='continue'
+        confirmVariant='success'
         onExited={onExited}
         body={
           <>
-            <p>Are you sure you want to reactive your subscription?</p>
-
+            <p>Welcome back! Reactivating your subscription will resume monthly billing.</p>
             <Alert variant='info'>
-              {/* Note that your subscription will remain active until{' '} */}
+              After reactivating your subscription, your next charge will be on{' '}
               <b>
-                <Moment>{subscription.activeSubscription.currentPeriodEnd}</Moment>
-              </b>{' '}
-              {/* after which you will no longer be billed, and your subscription benefits will end. */}
+                <Moment format='MMM Do, YYYY'>{subscription.activeSubscription.currentPeriodEnd}</Moment>
+              </b>
             </Alert>
           </>
         }

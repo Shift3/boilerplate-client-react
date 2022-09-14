@@ -67,11 +67,10 @@ export const IsActive: FC<{
         body={
           <>
             <p>Are you sure you want to cancel your active subscription?</p>
-
             <Alert variant='info'>
               Note that your subscription will remain active until{' '}
               <b>
-                <Moment>{subscription.activeSubscription.currentPeriodEnd}</Moment>
+                <Moment format='MMM Do YYYY'>{subscription.activeSubscription.currentPeriodEnd}</Moment>
               </b>{' '}
               after which you will no longer be billed, and your subscription benefits will end.
             </Alert>
@@ -111,7 +110,6 @@ export const IsActive: FC<{
             {subscription.paymentMethods.map(paymentMethod => (
               <CreditCard>
                 <div className='d-flex align-items-center'>
-                  {/* TODO: get all the card images not just visa and mastercard */}
                   <img className='me-3' width={64} src={`/cards/${paymentMethod.card.brand}.png`} alt='Credit Card' />
                   <div>
                     <span>•••• •••• •••• {paymentMethod.card.last4}</span>
