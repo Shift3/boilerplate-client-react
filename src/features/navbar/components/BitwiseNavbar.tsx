@@ -26,7 +26,7 @@ type LanguageOption = {
   value: string;
 };
 
-export const ResponsiveOffCanvasBody = styled(Offcanvas.Body)`
+const ResponsiveOffCanvasBody = styled(Offcanvas.Body)`
   display: flex;
 
   @media (min-width: 768px) {
@@ -39,7 +39,7 @@ export const ResponsiveOffCanvasBody = styled(Offcanvas.Body)`
   }
 `;
 
-export const ResponsiveNavLinks = styled(Nav)`
+const ResponsiveNavLinks = styled(Nav)`
   @media (min-width: 768px) {
     flex-direction: row;
   }
@@ -50,7 +50,7 @@ export const ResponsiveNavLinks = styled(Nav)`
   }
 `;
 
-export const ResponsiveSection = styled(Nav)`
+const ResponsiveSection = styled(Nav)`
   @media (min-width: 768px) {
     justify-content: end;
     align-items: center;
