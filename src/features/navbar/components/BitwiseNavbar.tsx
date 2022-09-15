@@ -61,6 +61,15 @@ export const ResponsiveSection = styled(Nav)`
   }
 `;
 
+const StyledNavbar = styled(Navbar)`
+  position: fixed;
+  margin-bottom: 1rem;
+  width: 100%;
+  background-color: ${props => props.theme.nav.horizontal.backgroundColor};
+  z-index: 1030;
+  margin-top: ${environment.environment === EnvironmentConfiguration.Staging ? '56px' : '0px'};
+`;
+
 const getNavBackgroundColor = (isMobilePerspective: boolean, theme: string) => {
   if (theme === 'light') {
     if (isMobilePerspective) {
@@ -85,7 +94,6 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
   const { innerWidth: width } = window;
   const [isMobilePerspective, setIsMobilePerspective] = useState(width <= 767);
   const { theme } = useTheme();
-  const navbarMarginTop = environment.environment === EnvironmentConfiguration.Staging ? '56px' : '0px';
   const offcanvasMarginTop =
     environment.environment === EnvironmentConfiguration.Staging && isMobilePerspective ? '56px' : '0px';
   const bgColor = getNavBackgroundColor(isMobilePerspective, theme);
@@ -137,11 +145,7 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
   });
 
   return (
-    <Navbar
-      expand='md'
-      className='position-fixed mb-3 w-100'
-      style={{ backgroundColor: bgColor, zIndex: 1030, marginTop: navbarMarginTop }}
-    >
+    <StyledNavbar expand='md'>
       <Container fluid>
         <Navbar.Brand href='#'>
           <Logo />
@@ -186,6 +190,6 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
           </ResponsiveOffCanvasBody>
         </Navbar.Offcanvas>
       </Container>
-    </Navbar>
+    </StyledNavbar>
   );
 };
