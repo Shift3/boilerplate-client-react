@@ -11,9 +11,6 @@ import { NavUserDetails } from './NavUserDetails';
 import { ThemeToggle } from '../../themes/ToggleSwitch';
 import { Button, Container, Modal, Navbar, Offcanvas } from 'react-bootstrap';
 import styled from 'styled-components';
-import { useTheme } from 'features/themes/useTheme';
-import light from 'themes/light';
-import dark from 'themes/dark';
 import { environment } from 'environment';
 import { EnvironmentConfiguration } from 'environment/types';
 import { useModal } from 'react-modal-hook';
@@ -70,21 +67,13 @@ const StyledNavbar = styled(Navbar)`
   margin-top: ${environment.environment === EnvironmentConfiguration.Staging ? '56px' : '0px'};
 `;
 
-const getNavBackgroundColor = (isMobilePerspective: boolean, theme: string) => {
-  if (theme === 'light') {
-    if (isMobilePerspective) {
-      return light.nav.vertical.backgroundColor;
-    }
+const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
+  background-color: ${props => props.theme.nav.vertical.backgroundColor};
 
-    return light.nav.horizontal.backgroundColor;
+  @media (max-width: 767px) {
+    margin-top: ${environment.environment === EnvironmentConfiguration.Staging ? '56px' : '0px'};
   }
-
-  if (isMobilePerspective) {
-    return dark.nav.vertical.backgroundColor;
-  }
-
-  return dark.nav.horizontal.backgroundColor;
-};
+`;
 
 export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
   const { user } = useAuth();
@@ -93,10 +82,6 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
   const { i18n } = useTranslation();
   const { innerWidth: width } = window;
   const [isMobilePerspective, setIsMobilePerspective] = useState(width <= 767);
-  const { theme } = useTheme();
-  const offcanvasMarginTop =
-    environment.environment === EnvironmentConfiguration.Staging && isMobilePerspective ? '56px' : '0px';
-  const bgColor = getNavBackgroundColor(isMobilePerspective, theme);
 
   const [showModal, hideModal] = useModal(
     ({ in: open, onExited }) => {
@@ -151,11 +136,10 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
           <Logo />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='offcanvasNavbar-expand-md' />
-        <Navbar.Offcanvas
+        <StyledNavbarOffcanvas
           id='offcanvasNavbar-expand-md'
           aria-labelledby='offcanvasNavbarLabel-expand-md'
           placement='end'
-          style={{ backgroundColor: bgColor, marginTop: offcanvasMarginTop }}
         >
           <Offcanvas.Header closeButton>
             <Offcanvas.Title id='offcanvasNavbarLabel-expand-md'>React Boilerplate</Offcanvas.Title>
@@ -188,7 +172,7 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
               ) : null}
             </ResponsiveSection>
           </ResponsiveOffCanvasBody>
-        </Navbar.Offcanvas>
+        </StyledNavbarOffcanvas>
       </Container>
     </StyledNavbar>
   );
