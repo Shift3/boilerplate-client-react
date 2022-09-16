@@ -17,7 +17,6 @@ import { LoadingButton } from 'common/components/LoadingButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
 import { UserProfilePicture } from './UserProfilePicture';
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
   closeVerticalNav?: () => void;
@@ -56,7 +55,6 @@ const ResponsiveSection = styled(Nav)`
   @media (min-width: 768px) {
     justify-content: end;
     align-items: center;
-    margin-right: 1rem;
   }
 `;
 
@@ -78,11 +76,24 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
 `;
 
 const StyledDropdownToggle = styled(Dropdown.Toggle)`
+  color: ${props => props.theme.nav.textColor} !important;
+  border-style: none;
   display: flex;
   flex-direction: row;
   align-items: center;
   &:after {
     display: none;
+  }
+
+  @media (min-width: 768px) {
+    background-color: ${props => props.theme.nav.horizontal.profileBackground} !important;
+    margin-left: 1rem;
+  }
+
+  @media (max-width: 767px) {
+    background-color: ${props => props.theme.nav.vertical.profileBackground} !important;
+    width: 100%;
+    margin-top: 1rem;
   }
 `;
 
@@ -173,34 +184,33 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
                 defaultValue={defaultLanguageOption}
                 onChange={option => changeLanguage(option.value)}
               />
-              
-              { user ? 
-              <Dropdown as={NavItem}>
-                <StyledDropdownToggle>
-                  <div className='d-flex flex-row align-items-center'>
-                    <UserProfilePicture user={user} size='xs' radius={32} />
-                    <div>
-                      <div>
-                        {user.firstName} {user.lastName.charAt(0)}.
-                      </div>
-                      <small>{user.role.toString()}</small>
-                    </div>
-                  </div>
-                  <FontAwesomeIcon icon={faCaretDown} />
-                </StyledDropdownToggle>
 
-                <Dropdown.Menu>
-                  {dropdownLinks.map(link => (
-                    <Dropdown.Item>
-                      <NavLinkStyles key={link.id} onClick={() => handleLinkClick(link)}>
-                        <FontAwesomeIcon icon={link.icon} />
-                        <span>{link.label}</span>
-                      </NavLinkStyles>
-                    </Dropdown.Item>
-                  ))}
-                </Dropdown.Menu>
-              </Dropdown>
-              : null }
+              {user ? (
+                <Dropdown as={NavItem}>
+                  <StyledDropdownToggle>
+                    <div className='d-flex flex-row align-items-center'>
+                      <UserProfilePicture user={user} size='xs' radius={32} />
+                      <div className='d-flex flex-column align-items-start'>
+                        <div>
+                          {user.firstName} {user.lastName.charAt(0)}.
+                        </div>
+                        <small>{user.role.toString()}</small>
+                      </div>
+                    </div>
+                  </StyledDropdownToggle>
+
+                  <Dropdown.Menu>
+                    {dropdownLinks.map(link => (
+                      <Dropdown.Item>
+                        <NavLinkStyles key={link.id} onClick={() => handleLinkClick(link)}>
+                          <FontAwesomeIcon icon={link.icon} />
+                          <span>{link.label}</span>
+                        </NavLinkStyles>
+                      </Dropdown.Item>
+                    ))}
+                  </Dropdown.Menu>
+                </Dropdown>
+              ) : null}
             </ResponsiveSection>
           </ResponsiveOffCanvasBody>
         </StyledNavbarOffcanvas>
