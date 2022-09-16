@@ -45,7 +45,6 @@ export const IsActive: FC<{
   onCancel: () => void;
 }> = ({ subscription, onCancel }) => {
   const [cancelActiveSubscription] = useCancelActiveSubscriptionMutation();
-
   const [showModal, hideModal] = useModal(({ in: open, onExited }) => {
     const onConfirm = async () => {
       await cancelActiveSubscription();
@@ -103,12 +102,10 @@ export const IsActive: FC<{
       </Col>
       <Col className='mb-3' md={12} xl={6}>
         <Card>
-          {/* TODO: Check that at least one card is on file before allowing user to delete card/s. */}
           <Card.Body>
             <h4>Payment Methods</h4>
-
             {subscription.paymentMethods.map(paymentMethod => (
-              <CreditCard>
+              <CreditCard key={paymentMethod.id}>
                 <div className='d-flex align-items-center'>
                   <img className='me-3' width={64} src={`/cards/${paymentMethod.card.brand}.png`} alt='Credit Card' />
                   <div>
@@ -117,7 +114,6 @@ export const IsActive: FC<{
                       {paymentMethod.card.expMonth}/{paymentMethod.card.expYear.toString().slice(2)}
                     </small>
                   </div>
-                  {/* TODO: Add `edit credit card` functionality */}
                   <Button className='ms-3' variant='link'>
                     <FontAwesomeIcon size='1x' icon='ellipsis-vertical' />
                   </Button>
