@@ -1,11 +1,11 @@
 import { CustomSelect } from 'common/components/CustomSelect';
 import { useAuth, useLogout } from 'features/auth/hooks';
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import { useTranslation } from 'react-i18next';
 import { languages } from '../../../i18n/config';
 import { useNavLinks } from '../hooks/useNavLinks';
-import { CustomNavAction, CustomNavLink } from './CustomNavLink';
+import { CustomNavLink } from './CustomNavLink';
 import { Logo } from './Logo';
 import { NavUserDetails } from './NavUserDetails';
 import { ThemeToggle } from '../../themes/ToggleSwitch';
@@ -80,9 +80,6 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
   const navLinks = useNavLinks();
   const { logout, isLoading } = useLogout();
   const { i18n } = useTranslation();
-  const { innerWidth: width } = window;
-  const [isMobilePerspective, setIsMobilePerspective] = useState(width <= 767);
-
   const [showModal, hideModal] = useModal(
     ({ in: open, onExited }) => {
       return (
@@ -116,19 +113,6 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
 
   const defaultLanguageOption = __languageOptions.find(language => language.value === i18n.languages[0]);
 
-  const handleResize = () => {
-    const newWidth = window.innerWidth;
-    if (newWidth <= 767 && !isMobilePerspective) {
-      setIsMobilePerspective(true);
-    } else if (newWidth > 767 && isMobilePerspective) {
-      setIsMobilePerspective(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('resize', handleResize);
-  });
-
   return (
     <StyledNavbar expand='md'>
       <Container fluid>
@@ -160,16 +144,7 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
                 defaultValue={defaultLanguageOption}
                 onChange={option => changeLanguage(option.value)}
               />
-              {user ? (
-                <NavUserDetails
-                  user={user}
-                  isMobilePerspective={isMobilePerspective}
-                  handleSignOutViaDialog={() => showModal()}
-                />
-              ) : null}
-              {isMobilePerspective ? (
-                <CustomNavAction onClick={() => showModal()} label='Sign Out' icon='sign-out-alt' />
-              ) : null}
+              {user ? <NavUserDetails user={user} handleSignOutViaDialog={() => showModal()} /> : null}
             </ResponsiveSection>
           </ResponsiveOffCanvasBody>
         </StyledNavbarOffcanvas>
