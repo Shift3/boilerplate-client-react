@@ -2,14 +2,12 @@ import { Plan, useCreateSubscriptionMutation, useGetPlansQuery } from 'common/ap
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { Button, Form } from 'react-bootstrap';
 import styled from 'styled-components';
-import { CheckoutForm } from './CheckoutForm';
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe, Stripe, StripeElementsOptions } from '@stripe/stripe-js';
 import { FC, useEffect, useState } from 'react';
-
-const stripePromise: Promise<Stripe | null> = loadStripe(
-  'pk_test_51LKnI7LBoYuqAVlJCiBaRj3JGO7ud4yqqxSwwaG94okOq4jB3hUQkEwR9eFJYIEvSWewbK9eZhN95gxiuy7bujHA00c47wfziI',
-);
+import { loadStripe, Stripe, StripeElementsOptions } from '@stripe/stripe-js';
+import { Elements, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import { LoadingButton } from 'common/components/LoadingButton';
+import { useAuth } from 'features/auth/hooks';
+import { showErrorMessage, showSuccessMessage } from 'common/services/notification';
 
 const PlanChoice = styled.div`
   background: #efefef;
@@ -30,6 +28,10 @@ const PlanChoice = styled.div`
   }
 `;
 
+const stripePromise: Promise<Stripe | null> = loadStripe(
+  'pk_test_51LKnI7LBoYuqAVlJCiBaRj3JGO7ud4yqqxSwwaG94okOq4jB3hUQkEwR9eFJYIEvSWewbK9eZhN95gxiuy7bujHA00c47wfziI',
+);
+
 export const Checkout: FC<{
   onComplete: () => void;
 }> = ({ onComplete }) => {
@@ -37,6 +39,9 @@ export const Checkout: FC<{
   const [selectedPlan, setSelectedPlan] = useState<Plan>();
   const [createSubscription] = useCreateSubscriptionMutation();
   const [clientSecret, setClientSecret] = useState<string | undefined>(undefined);
+  const stripe = useStripe();
+  const elements = useElements();
+  const { user } = useAuth();
 
   useEffect(() => {
     if (plans) {
@@ -50,13 +55,42 @@ export const Checkout: FC<{
     setClientSecret(clientSecret);
   };
 
+  const handleSubmit = async () => {
+    if (!stripe || !elements) {
+      return;
+    }
+
+    // TODO: don't hardcode localhost:4200
+    const result = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: `http://localhost:4200/user/profile/${user?.id}`,
+      },
+      redirect: 'if_required',
+    });
+
+    if (result.error) {
+      showErrorMessage('');
+    } else {
+      onComplete();
+      showSuccessMessage('');
+    }
+  };
+
   const options: StripeElementsOptions = { clientSecret };
 
   return (
     <>
       {clientSecret ? (
         <Elements stripe={stripePromise} options={options}>
-          <CheckoutForm onComplete={onComplete} />
+          <form onSubmit={() => handleSubmit()}>
+            <PaymentElement id='payment-element' />
+            <div className='mt-3 d-grid gap-2'>
+              <LoadingButton loading size='lg' type='submit'>
+                Pay Now
+              </LoadingButton>
+            </div>
+          </form>
         </Elements>
       ) : (
         <WithLoadingOverlay isLoading={isLoading}>

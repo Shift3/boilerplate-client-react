@@ -61,7 +61,7 @@ export const IsCancelled: FC<{
         onConfirm={onConfirm}
         cancelLabel='Stay Unsubscribed'
         confirmLabel='Reactivevate Subscription'
-        confirmIcon='refresh'
+        // confirmIcon='refresh'
         confirmVariant='success'
         onExited={onExited}
         body={
