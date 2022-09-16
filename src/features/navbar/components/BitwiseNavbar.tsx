@@ -8,7 +8,7 @@ import { useNavLinks } from '../hooks/useNavLinks';
 import { CustomNavLink } from './CustomNavLink';
 import { Logo } from './Logo';
 import { ThemeToggle } from '../../themes/ToggleSwitch';
-import { Button, Container, Modal, Navbar, Offcanvas } from 'react-bootstrap';
+import { Button, Container, Dropdown, Modal, Navbar, NavItem, Offcanvas } from 'react-bootstrap';
 import styled from 'styled-components';
 import { environment } from 'environment';
 import { EnvironmentConfiguration } from 'environment/types';
@@ -143,16 +143,14 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
                 defaultValue={defaultLanguageOption}
                 onChange={option => changeLanguage(option.value)}
               />
-              <div className='dropdown'>
-                <button className='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>
-                  UserNavDetails
-                </button>
-                <div className='dropdown-menu'>
-                  <a className='dropdown-item' href='#'>
-                    Action
-                  </a>
-                </div>
-              </div>
+
+              <Dropdown as={NavItem}>
+                <Dropdown.Toggle>UserNavDetails</Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item>Action</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </ResponsiveSection>
           </ResponsiveOffCanvasBody>
         </StyledNavbarOffcanvas>
