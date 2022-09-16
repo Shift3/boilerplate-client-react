@@ -3,10 +3,15 @@ import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { Button, Form } from 'react-bootstrap';
 import styled from 'styled-components';
 import { FC, useEffect, useState } from 'react';
-import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { LoadingButton } from 'common/components/LoadingButton';
+import { Elements, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { useAuth } from 'features/auth/hooks';
 import { showErrorMessage, showSuccessMessage } from 'common/services/notification';
+import { LoadingButton } from 'common/components/LoadingButton';
+import { loadStripe, Stripe } from '@stripe/stripe-js';
+
+const stripePromise: Promise<Stripe | null> = loadStripe(
+  'pk_test_51LKnI7LBoYuqAVlJCiBaRj3JGO7ud4yqqxSwwaG94okOq4jB3hUQkEwR9eFJYIEvSWewbK9eZhN95gxiuy7bujHA00c47wfziI',
+);
 
 const PlanChoice = styled.div`
   background: #efefef;
@@ -27,30 +32,17 @@ const PlanChoice = styled.div`
   }
 `;
 
-export const Checkout: FC<{
+export const PayForPlan: FC<{
   onComplete: () => void;
 }> = ({ onComplete }) => {
-  const { data: plans, isLoading } = useGetPlansQuery();
-  const [selectedPlan, setSelectedPlan] = useState<Plan>();
-  const [createSubscription] = useCreateSubscriptionMutation();
-  const [clientSecret, setClientSecret] = useState<string | undefined>(undefined);
   const stripe = useStripe();
   const elements = useElements();
   const { user } = useAuth();
-
-  useEffect(() => {
-    if (plans) {
-      setSelectedPlan(plans[0]);
-    }
-  }, [plans]);
-
-  const onPlanSelect = async (priceId: string) => {
-    const data = await createSubscription(priceId).unwrap();
-    const { clientSecret } = data;
-    setClientSecret(clientSecret);
-  };
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async () => {
+    setIsLoading(true);
+
     if (!stripe || !elements) {
       return;
     }
@@ -64,6 +56,8 @@ export const Checkout: FC<{
       redirect: 'if_required',
     });
 
+    setIsLoading(false);
+
     if (result.error) {
       showErrorMessage('');
     } else {
@@ -73,16 +67,43 @@ export const Checkout: FC<{
   };
 
   return (
+    <form onSubmit={() => handleSubmit()}>
+      <PaymentElement id='payment-element' />
+      <div className='mt-3 d-grid gap-2'>
+        <LoadingButton loading={isLoading} size='lg' type='submit'>
+          Pay Now
+        </LoadingButton>
+      </div>
+    </form>
+  );
+};
+
+export const Checkout: FC<{
+  onComplete: () => void;
+}> = ({ onComplete }) => {
+  const { data: plans, isLoading } = useGetPlansQuery();
+  const [selectedPlan, setSelectedPlan] = useState<Plan>();
+  const [createSubscription] = useCreateSubscriptionMutation();
+  const [clientSecret, setClientSecret] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (plans) {
+      setSelectedPlan(plans[0]);
+    }
+  }, [plans]);
+
+  const onPlanSelect = async (priceId: string) => {
+    const data = await createSubscription(priceId).unwrap();
+    const { clientSecret } = data;
+    setClientSecret(clientSecret);
+  };
+
+  return (
     <>
       {clientSecret ? (
-        <form onSubmit={() => handleSubmit()}>
-          <PaymentElement id='payment-element' />
-          <div className='mt-3 d-grid gap-2'>
-            <LoadingButton loading size='lg' type='submit'>
-              Pay Now
-            </LoadingButton>
-          </div>
-        </form>
+        <Elements stripe={stripePromise} options={{ clientSecret }}>
+          <PayForPlan onComplete={onComplete} />
+        </Elements>
       ) : (
         <WithLoadingOverlay isLoading={isLoading}>
           {plans ? (
@@ -96,8 +117,8 @@ export const Checkout: FC<{
                   <div className='d-flex align-items-center'>
                     <Form.Check
                       checked={plan === selectedPlan}
-                      defaultChecked
                       className='me-3'
+                      readOnly
                       type='radio'
                       key={plan.id}
                       aria-label={`select ${plan.name}`}
