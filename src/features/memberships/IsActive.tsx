@@ -100,6 +100,7 @@ export const IsActive: FC<{
           </Card.Body>
         </Card>
       </Col>
+
       <Col className='mb-3' md={12} xl={6}>
         <Card>
           <Card.Body>

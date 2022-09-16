@@ -1,6 +1,6 @@
 import { useGetMySubscriptionQuery } from 'common/api/paymentsApi';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
-import { Checkout } from 'features/payments/Checkout';
+import { Checkout } from 'features/memberships/Checkout';
 import moment from 'moment';
 import { useMemo } from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
@@ -58,7 +58,7 @@ export const MySubscription = () => {
 
           {subscription.billingHistory.length > 0 ? (
             <Row>
-              <Col className='mt-3'>
+              <Col className='mt-3' md={12} xl={6}>
                 <h4>Billing History</h4>
 
                 <table className='table'>
