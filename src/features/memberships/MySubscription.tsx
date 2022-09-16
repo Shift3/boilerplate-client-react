@@ -1,8 +1,10 @@
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe, Stripe, StripeElementsOptions } from '@stripe/stripe-js';
 import { useGetMySubscriptionQuery } from 'common/api/paymentsApi';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { Checkout } from 'features/memberships/Checkout';
 import moment from 'moment';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
 import Moment from 'react-moment';
 import { IsActive } from './IsActive';
@@ -11,6 +13,8 @@ import { IsCancelled } from './IsCancelled';
 type SubscriptionStatus = null | 'active' | 'cancelled' | 'cancelled_but_active';
 
 export const MySubscription = () => {
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  const [clientSecret, setClientSecret] = useState<string | undefined>(undefined);
   const { data: subscription, isLoading, refetch } = useGetMySubscriptionQuery();
   const status: SubscriptionStatus = useMemo(() => {
     if (subscription?.activeSubscription?.canceledAt) {
@@ -26,6 +30,12 @@ export const MySubscription = () => {
 
     return null;
   }, [subscription]);
+
+  const options: StripeElementsOptions = { clientSecret };
+
+  const stripePromise: Promise<Stripe | null> = loadStripe(
+    'pk_test_51LKnI7LBoYuqAVlJCiBaRj3JGO7ud4yqqxSwwaG94okOq4jB3hUQkEwR9eFJYIEvSWewbK9eZhN95gxiuy7bujHA00c47wfziI',
+  );
 
   return (
     <WithLoadingOverlay isLoading={isLoading}>
@@ -49,7 +59,9 @@ export const MySubscription = () => {
               <Col>
                 <Card>
                   <Card.Body>
-                    <Checkout onComplete={() => refetch()} />
+                    <Elements stripe={stripePromise} options={options}>
+                      <Checkout onComplete={() => refetch()} />
+                    </Elements>
                   </Card.Body>
                 </Card>
               </Col>

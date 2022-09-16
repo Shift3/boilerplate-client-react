@@ -3,8 +3,7 @@ import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { Button, Form } from 'react-bootstrap';
 import styled from 'styled-components';
 import { FC, useEffect, useState } from 'react';
-import { loadStripe, Stripe, StripeElementsOptions } from '@stripe/stripe-js';
-import { Elements, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { useAuth } from 'features/auth/hooks';
 import { showErrorMessage, showSuccessMessage } from 'common/services/notification';
@@ -27,10 +26,6 @@ const PlanChoice = styled.div`
     font-weight: 500;
   }
 `;
-
-const stripePromise: Promise<Stripe | null> = loadStripe(
-  'pk_test_51LKnI7LBoYuqAVlJCiBaRj3JGO7ud4yqqxSwwaG94okOq4jB3hUQkEwR9eFJYIEvSWewbK9eZhN95gxiuy7bujHA00c47wfziI',
-);
 
 export const Checkout: FC<{
   onComplete: () => void;
@@ -77,21 +72,17 @@ export const Checkout: FC<{
     }
   };
 
-  const options: StripeElementsOptions = { clientSecret };
-
   return (
     <>
       {clientSecret ? (
-        <Elements stripe={stripePromise} options={options}>
-          <form onSubmit={() => handleSubmit()}>
-            <PaymentElement id='payment-element' />
-            <div className='mt-3 d-grid gap-2'>
-              <LoadingButton loading size='lg' type='submit'>
-                Pay Now
-              </LoadingButton>
-            </div>
-          </form>
-        </Elements>
+        <form onSubmit={() => handleSubmit()}>
+          <PaymentElement id='payment-element' />
+          <div className='mt-3 d-grid gap-2'>
+            <LoadingButton loading size='lg' type='submit'>
+              Pay Now
+            </LoadingButton>
+          </div>
+        </form>
       ) : (
         <WithLoadingOverlay isLoading={isLoading}>
           {plans ? (
