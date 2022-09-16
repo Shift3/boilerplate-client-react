@@ -7,7 +7,6 @@ import { languages } from '../../../i18n/config';
 import { useNavLinks } from '../hooks/useNavLinks';
 import { CustomNavLink } from './CustomNavLink';
 import { Logo } from './Logo';
-import { NavUserDetails } from './NavUserDetails';
 import { ThemeToggle } from '../../themes/ToggleSwitch';
 import { Button, Container, Modal, Navbar, Offcanvas } from 'react-bootstrap';
 import styled from 'styled-components';
@@ -144,7 +143,16 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
                 defaultValue={defaultLanguageOption}
                 onChange={option => changeLanguage(option.value)}
               />
-              {user ? <NavUserDetails user={user} handleSignOutViaDialog={() => showModal()} /> : null}
+              <div className='dropdown'>
+                <button className='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>
+                  UserNavDetails
+                </button>
+                <div className='dropdown-menu'>
+                  <a className='dropdown-item' href='#'>
+                    Action
+                  </a>
+                </div>
+              </div>
             </ResponsiveSection>
           </ResponsiveOffCanvasBody>
         </StyledNavbarOffcanvas>
