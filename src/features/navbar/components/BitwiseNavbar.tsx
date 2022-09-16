@@ -4,8 +4,8 @@ import { FC } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import { useTranslation } from 'react-i18next';
 import { languages } from '../../../i18n/config';
-import { useNavLinks } from '../hooks/useNavLinks';
-import { CustomNavLink } from './CustomNavLink';
+import { NavLinkConfig, useNavLinks } from '../hooks/useNavLinks';
+import { CustomNavLink, NavLinkStyles } from './CustomNavLink';
 import { Logo } from './Logo';
 import { ThemeToggle } from '../../themes/ToggleSwitch';
 import { Button, Container, Dropdown, Modal, Navbar, NavItem, Offcanvas } from 'react-bootstrap';
@@ -15,6 +15,9 @@ import { EnvironmentConfiguration } from 'environment/types';
 import { useModal } from 'react-modal-hook';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate } from 'react-router-dom';
+import { UserProfilePicture } from './UserProfilePicture';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
   closeVerticalNav?: () => void;
@@ -74,9 +77,21 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
   }
 `;
 
+const StyledDropdownToggle = styled(Dropdown.Toggle)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  &:after {
+    display: none;
+  }
+`;
+
 export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
+  let dropdownLinks: NavLinkConfig[] = [];
+
   const { user } = useAuth();
   const navLinks = useNavLinks();
+  const navigate = useNavigate();
   const { logout, isLoading } = useLogout();
   const { i18n } = useTranslation();
   const [showModal, hideModal] = useModal(
@@ -101,6 +116,13 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
     [isLoading],
   );
 
+  if (user) {
+    dropdownLinks = [
+      { id: 0, icon: 'user', label: 'Profile', path: `/user/profile/${user.id}` },
+      { id: 1, icon: 'sign-out-alt', label: 'Sign Out', method: showModal },
+    ];
+  }
+
   const changeLanguage = (ln: string) => {
     localStorage.setItem('language', ln);
     i18n.changeLanguage(ln);
@@ -111,6 +133,14 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
   });
 
   const defaultLanguageOption = __languageOptions.find(language => language.value === i18n.languages[0]);
+
+  const handleLinkClick = (link: NavLinkConfig) => {
+    if (link.path) {
+      navigate(link.path);
+    } else if (link.method !== undefined) {
+      link.method();
+    }
+  };
 
   return (
     <StyledNavbar expand='md'>
@@ -143,14 +173,34 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
                 defaultValue={defaultLanguageOption}
                 onChange={option => changeLanguage(option.value)}
               />
-
+              
+              { user ? 
               <Dropdown as={NavItem}>
-                <Dropdown.Toggle>UserNavDetails</Dropdown.Toggle>
+                <StyledDropdownToggle>
+                  <div className='d-flex flex-row align-items-center'>
+                    <UserProfilePicture user={user} size='xs' radius={32} />
+                    <div>
+                      <div>
+                        {user.firstName} {user.lastName.charAt(0)}.
+                      </div>
+                      <small>{user.role.toString()}</small>
+                    </div>
+                  </div>
+                  <FontAwesomeIcon icon={faCaretDown} />
+                </StyledDropdownToggle>
 
                 <Dropdown.Menu>
-                  <Dropdown.Item>Action</Dropdown.Item>
+                  {dropdownLinks.map(link => (
+                    <Dropdown.Item>
+                      <NavLinkStyles key={link.id} onClick={() => handleLinkClick(link)}>
+                        <FontAwesomeIcon icon={link.icon} />
+                        <span>{link.label}</span>
+                      </NavLinkStyles>
+                    </Dropdown.Item>
+                  ))}
                 </Dropdown.Menu>
               </Dropdown>
+              : null }
             </ResponsiveSection>
           </ResponsiveOffCanvasBody>
         </StyledNavbarOffcanvas>
