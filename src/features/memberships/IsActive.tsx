@@ -99,6 +99,29 @@ export const IsActive: FC<{
             </p>
           </Card.Body>
         </Card>
+        {subscription.billingHistory.length > 0 ? (
+          <Card>
+            <Card.Body>
+              <Col className='mt-2' md={12} xl={6}>
+                <h4>Billing History</h4>
+                <table className='table'>
+                  <tbody>
+                    {subscription.billingHistory.map(({ amount, date, description }, i) => (
+                      // eslint-disable-next-line react/no-array-index-key
+                      <tr key={i}>
+                        <td key={date}>
+                          <Moment format='MMM D, YYYY'>{date}</Moment>
+                        </td>
+                        <td key={description}>{description}</td>
+                        <td key={amount}>{amount}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </Col>
+            </Card.Body>
+          </Card>
+        ) : null}
       </Col>
 
       <Col className='mb-3' md={12} xl={6}>

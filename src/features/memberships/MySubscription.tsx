@@ -4,7 +4,6 @@ import { Checkout } from 'features/memberships/Checkout';
 import moment from 'moment';
 import { useMemo } from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
-import Moment from 'react-moment';
 import { IsActive } from './IsActive';
 import { IsCancelled } from './IsCancelled';
 
@@ -52,29 +51,6 @@ export const MySubscription = () => {
                     <Checkout onComplete={() => refetch()} />
                   </Card.Body>
                 </Card>
-              </Col>
-            </Row>
-          ) : null}
-
-          {subscription.billingHistory.length > 0 ? (
-            <Row>
-              <Col className='mt-3' md={12} xl={6}>
-                <h4>Billing History</h4>
-
-                <table className='table'>
-                  <tbody>
-                    {subscription.billingHistory.map(({ amount, date, description }, i) => (
-                      // eslint-disable-next-line react/no-array-index-key
-                      <tr key={i}>
-                        <td key={date}>
-                          <Moment format='MMM D, YYYY'>{date}</Moment>
-                        </td>
-                        <td key={description}>{description}</td>
-                        <td key={amount}>{amount}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
               </Col>
             </Row>
           ) : null}
