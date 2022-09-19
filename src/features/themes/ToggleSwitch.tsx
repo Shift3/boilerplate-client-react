@@ -14,6 +14,7 @@ const Switch = styled.div`
   cursor: pointer;
   border-radius: ${props => props.theme.borderRadius};
   padding: 8px;
+  display: inline-block;
 
   &:hover {
     background: ${props => props.theme.buttons.defaultBackgroundColor};
