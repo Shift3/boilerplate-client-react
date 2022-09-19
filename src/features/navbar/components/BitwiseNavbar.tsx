@@ -125,8 +125,14 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
       display: flex;
       flex-direction: column;
 
-      .nav-link {
-        padding: 1rem 0;
+      a.nav-link {
+        padding: 1rem 0rem 1rem 1rem;
+      }
+
+      .nav-link.active {
+        background: ${props => props.theme.nav.link.activeBackground};
+        color: ${props => props.theme.nav.link.activeText};
+        border-radius: ${props => props.theme.borderRadius};
       }
     }
 
@@ -141,6 +147,7 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
     }
 
     .theme-toggle {
+      padding: 1rem 0;
       position: absolute;
       right: 2rem;
       top: 3px;
