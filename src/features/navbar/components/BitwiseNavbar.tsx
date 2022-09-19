@@ -28,7 +28,7 @@ const StyledNavbar = styled(Navbar)`
   position: fixed;
   margin-bottom: 1rem;
   width: 100%;
-  background-color: ${props => props.theme.nav.backgroundColor};
+  background-color: ${props => props.theme.nav.horizontal.backgroundColor};
   backdrop-filter: blur(10px);
   z-index: 1030;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
@@ -107,7 +107,7 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
   background-color: ${props => props.theme.nav.vertical.backgroundColor};
 
   .offcanvas-header {
-    background: ${props => props.theme.nav.backgroundColor};
+    background: ${props => props.theme.nav.horizontal.backgroundColor};
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   }
 

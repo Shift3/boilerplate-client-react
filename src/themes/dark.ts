@@ -15,7 +15,6 @@ export default {
   },
 
   nav: {
-    backgroundColor: 'rgba(0, 0, 0, 0.15)',
     borderColor: colors.neutral900,
     textColor: colors.neutral100,
 
@@ -32,12 +31,10 @@ export default {
     },
 
     horizontal: {
-      backgroundColor: colors.neutral900,
-      profileBackground: colors.neutral800,
+      backgroundColor: 'rgba(0, 0, 0, 0.15)',
     },
     vertical: {
       backgroundColor: colors.neutral900,
-      profileBackground: colors.neutral800,
     },
   },
 
