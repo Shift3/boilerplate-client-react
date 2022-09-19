@@ -3,7 +3,6 @@ import { DataTable } from 'common/components/DataTable';
 import { DataTableSearchAndFilters } from 'common/components/DataTable/DataTableSearchAndFilters';
 import { FilterInfo } from 'common/components/DataTable/FilterDropdown';
 import { RecentDateFilter, EnumFilter, StringFilter } from 'common/components/DataTable/Filters';
-import { FluidContainer } from 'common/components/FluidContainer';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { PaginatedResult, User } from 'common/models';
@@ -11,7 +10,7 @@ import { TableCard } from 'common/styles/card';
 import { PageHeader } from 'common/styles/page';
 import { HasPermission } from 'features/rbac';
 import { FC, useMemo } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 import { Trans } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserTableItem, useUserTableData } from '../hooks/useUserTableData';
@@ -67,7 +66,7 @@ export const UserListView: FC = () => {
   );
 
   return (
-    <FluidContainer>
+    <Container>
       <PageHeader>
         <div>
           <h1>
@@ -125,6 +124,6 @@ export const UserListView: FC = () => {
           </WithLoadingOverlay>
         </TableCard.Body>
       </TableCard>
-    </FluidContainer>
+    </Container>
   );
 };
