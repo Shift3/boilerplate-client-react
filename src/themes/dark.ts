@@ -15,6 +15,7 @@ export default {
   },
 
   nav: {
+    backgroundColor: 'rgba(0, 0, 0, 0.15)',
     borderColor: colors.neutral900,
     textColor: colors.neutral100,
 
@@ -24,6 +25,11 @@ export default {
 
     activeBackground: colors.blue600,
     hoverColor: colors.blue300,
+
+    link: {
+      activeBackground: colors.blue200,
+      activeText: colors.blue800,
+    },
 
     horizontal: {
       backgroundColor: colors.neutral900,

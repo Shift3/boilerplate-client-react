@@ -112,33 +112,35 @@ export const AgentDetailForm: FC<Props> = ({
       <Form onSubmit={handleSubmit(withOptionalAddress)}>
         <h5>Personal</h5>
         <Row className='mb-2'>
-          <Col xs={12} md={6}>
+          <Col md={4}>
             <Form.Group controlId='create-agent-form-agent-name'>
               <Form.Label>Name</Form.Label>
               <Form.Control type='text' {...register('name')} isInvalid={!!errors.name} />
               <Form.Control.Feedback type='invalid'>{errors.name?.message}</Form.Control.Feedback>
             </Form.Group>
           </Col>
-          <Col xs={12} md={6}>
+          <Col md={4}>
             <Form.Group>
               <Form.Label>Email</Form.Label>
               <Form.Control type='email' {...register('email')} isInvalid={!!errors.email} />
               <Form.Control.Feedback type='invalid'>{errors.email?.message}</Form.Control.Feedback>
             </Form.Group>
           </Col>
-        </Row>
 
-        <Form.Group className='mb-2'>
-          <Form.Label>Phone Number</Form.Label>
-          <Controller
-            name='phoneNumber'
-            control={control}
-            render={({ field }) => (
-              <PhoneInput value={field.value ?? ''} onChange={field.onChange} invalid={!!errors.phoneNumber} />
-            )}
-          />
-          <Form.Control.Feedback type='invalid'>{errors.phoneNumber?.message}</Form.Control.Feedback>
-        </Form.Group>
+          <Col md={4}>
+            <Form.Group className='mb-2'>
+              <Form.Label>Phone Number</Form.Label>
+              <Controller
+                name='phoneNumber'
+                control={control}
+                render={({ field }) => (
+                  <PhoneInput value={field.value ?? ''} onChange={field.onChange} invalid={!!errors.phoneNumber} />
+                )}
+              />
+              <Form.Control.Feedback type='invalid'>{errors.phoneNumber?.message}</Form.Control.Feedback>
+            </Form.Group>
+          </Col>
+        </Row>
 
         <Form.Group>
           <Form.Label>Description</Form.Label>
@@ -148,25 +150,31 @@ export const AgentDetailForm: FC<Props> = ({
 
         <h5 className='mt-3'>Address</h5>
 
-        <Form.Group className='mb-2'>
-          <Form.Label>Address</Form.Label>
-          <Form.Control type='text' {...register('address.address1')} isInvalid={!!errors.address?.address1} />
-          <Form.Control.Feedback type='invalid'>{errors.address?.address1?.message}</Form.Control.Feedback>
-        </Form.Group>
+        <Row>
+          <Col md={6}>
+            <Form.Group className='mb-2'>
+              <Form.Label>Address</Form.Label>
+              <Form.Control type='text' {...register('address.address1')} isInvalid={!!errors.address?.address1} />
+              <Form.Control.Feedback type='invalid'>{errors.address?.address1?.message}</Form.Control.Feedback>
+            </Form.Group>
+          </Col>
 
-        <Form.Group className='mb-2'>
-          <Form.Label>Address2</Form.Label>
-          <Form.Control
-            type='text'
-            {...register('address.address2')}
-            isValid={!!errors.address?.address2}
-            disabled={isBlank(firstAddressLine)}
-          />
-          <Form.Control.Feedback type='invalid'>{errors.address?.address2?.message}</Form.Control.Feedback>
-        </Form.Group>
+          <Col md={6}>
+            <Form.Group className='mb-2'>
+              <Form.Label>Address2</Form.Label>
+              <Form.Control
+                type='text'
+                {...register('address.address2')}
+                isValid={!!errors.address?.address2}
+                disabled={isBlank(firstAddressLine)}
+              />
+              <Form.Control.Feedback type='invalid'>{errors.address?.address2?.message}</Form.Control.Feedback>
+            </Form.Group>
+          </Col>
+        </Row>
 
         <Row>
-          <Col xs={12} md={6}>
+          <Col md={4}>
             <Form.Group>
               <Form.Label>City</Form.Label>
               <Form.Control type='text' {...register('address.city')} isInvalid={!!errors.address?.city} />
@@ -174,7 +182,7 @@ export const AgentDetailForm: FC<Props> = ({
             </Form.Group>
           </Col>
 
-          <Col xs={12} md={6}>
+          <Col md={4}>
             <Form.Group>
               <Form.Label>State</Form.Label>
               <Form.Select {...register('address.state')} isInvalid={!!errors.address?.state}>
@@ -188,7 +196,7 @@ export const AgentDetailForm: FC<Props> = ({
             </Form.Group>
           </Col>
 
-          <Col xs={12} md={6}>
+          <Col md={4}>
             <Form.Group>
               <Form.Label>Zip Code</Form.Label>
               <Form.Control type='text' {...register('address.zipCode')} isInvalid={!!errors.address?.zipCode} />

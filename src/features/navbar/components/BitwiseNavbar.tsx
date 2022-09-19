@@ -1,99 +1,150 @@
-import { CustomSelect } from 'common/components/CustomSelect';
-import { useAuth, useLogout } from 'features/auth/hooks';
-import { FC } from 'react';
-import Nav from 'react-bootstrap/Nav';
-import { useTranslation } from 'react-i18next';
-import { languages } from '../../../i18n/config';
-import { NavLinkConfig, useNavLinks } from '../hooks/useNavLinks';
-import { CustomNavLink, NavLinkStyles } from './CustomNavLink';
-import { Logo } from './Logo';
-import { ThemeToggle } from '../../themes/ToggleSwitch';
-import { Button, Container, Dropdown, Modal, Navbar, NavItem, Offcanvas } from 'react-bootstrap';
-import styled from 'styled-components';
+import { faLanguage } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { LoadingButton } from 'common/components/LoadingButton';
 import { environment } from 'environment';
 import { EnvironmentConfiguration } from 'environment/types';
+import { useAuth, useLogout } from 'features/auth/hooks';
+import { MoonIcon } from 'features/themes/MoonIcon';
+import { SunIcon } from 'features/themes/SunIcon';
+import { useTheme } from 'features/themes/useTheme';
+import { FC } from 'react';
+import { Badge, Button, Container, Modal, Navbar, NavDropdown, NavLink, Offcanvas } from 'react-bootstrap';
+import Nav from 'react-bootstrap/Nav';
+import { useTranslation } from 'react-i18next';
 import { useModal } from 'react-modal-hook';
-import { LoadingButton } from 'common/components/LoadingButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { languages } from '../../../i18n/config';
+import { NavLinkConfig, useNavLinks } from '../hooks/useNavLinks';
+import { CustomNavLink } from './CustomNavLink';
+import { Logo } from './Logo';
 import { UserProfilePicture } from './UserProfilePicture';
 
 type Props = {
   closeVerticalNav?: () => void;
 };
 
-type LanguageOption = {
-  label: string;
-  value: string;
-};
-
-const ResponsiveOffCanvasBody = styled(Offcanvas.Body)`
-  display: flex;
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-    align-items: center;
-  }
-
-  @media (max-width: 767px) {
-    flex-direction: column;
-  }
-`;
-
-const ResponsiveNavLinks = styled(Nav)`
-  @media (min-width: 768px) {
-    flex-direction: row;
-  }
-
-  @media (max-width: 767px) {
-    flex-direction: column;
-    width: 100%;
-  }
-`;
-
-const ResponsiveSection = styled(Nav)`
-  @media (min-width: 768px) {
-    justify-content: end;
-    align-items: center;
-  }
-`;
-
 const StyledNavbar = styled(Navbar)`
   position: fixed;
   margin-bottom: 1rem;
   width: 100%;
-  background-color: ${props => props.theme.nav.horizontal.backgroundColor};
+  background-color: ${props => props.theme.nav.backgroundColor};
+  backdrop-filter: blur(10px);
   z-index: 1030;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   margin-top: ${environment.environment === EnvironmentConfiguration.Staging ? '56px' : '0px'};
+  padding: 0.8rem 0;
+
+  .navbar-toggler {
+    border: none;
+  }
+
+  .navbar-brand {
+    color: ${props => props.theme.textColor};
+  }
+
+  .dropdown-toggle::after {
+    margin-left: 0.25rem;
+    transition: 0.15s ease all;
+    color: ${props => props.theme.textColor};
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: ${props => props.theme.textColor};
+    border-radius: ${props => props.theme.borderRadius};
+    font-weight: 500;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+
+    margin-right: 1rem;
+    &:last-of-type {
+      margin-right: 0;
+    }
+
+    &:hover {
+      background: ${props => props.theme.nav.link.activeBackground};
+      color: ${props => props.theme.nav.link.activeText};
+
+      &:after {
+        color: ${props => props.theme.nav.link.activeText};
+      }
+    }
+  }
+  .dropdown {
+    display: flex;
+  }
+
+  .dropdown-menu {
+    padding-top: 0;
+    padding-bottom: 0;
+    overflow: hidden;
+  }
+
+  .dropdown-header {
+    border-bottom: 1px solid ${props => props.theme.nav.borderColor};
+  }
+
+  .navbar-brand {
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+  .navbar-brand img {
+    width: 40px;
+  }
+
+  .nav-link.active {
+    background: ${props => props.theme.nav.link.activeBackground};
+    color: ${props => props.theme.nav.link.activeText};
+  }
 `;
 
 const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
   background-color: ${props => props.theme.nav.vertical.backgroundColor};
 
-  @media (max-width: 767px) {
-    margin-top: ${environment.environment === EnvironmentConfiguration.Staging ? '56px' : '0px'};
+  .offcanvas-header {
+    background: ${props => props.theme.nav.backgroundColor};
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   }
-`;
 
-const StyledDropdownToggle = styled(Dropdown.Toggle)`
-  color: ${props => props.theme.nav.textColor} !important;
-  border-style: none;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  &:after {
+  .offcanvas-only {
     display: none;
   }
 
-  @media (min-width: 768px) {
-    background-color: ${props => props.theme.nav.horizontal.profileBackground} !important;
-    margin-left: 1rem;
-  }
+  &.show,
+  &.offcanvas-toggling {
+    .offcanvas-only {
+      display: inline-block;
+    }
 
-  @media (max-width: 767px) {
-    background-color: ${props => props.theme.nav.vertical.profileBackground} !important;
-    width: 100%;
-    margin-top: 1rem;
+    .offcanvas-body {
+      display: flex;
+      flex-direction: column;
+
+      .nav-link {
+        padding: 1rem 0;
+      }
+    }
+
+    .navbar-nav {
+      flex: 1 !important;
+    }
+
+    .dropdown-menu {
+      position: relative;
+      top: 0;
+      width: 100%;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      right: 2rem;
+      top: 3px;
+    }
   }
 `;
 
@@ -103,6 +154,7 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
   const { user } = useAuth();
   const navLinks = useNavLinks();
   const navigate = useNavigate();
+  const { toggle, theme } = useTheme();
   const { logout, isLoading } = useLogout();
   const { i18n } = useTranslation();
   const [showModal, hideModal] = useModal(
@@ -155,8 +207,8 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
 
   return (
     <StyledNavbar expand='md'>
-      <Container fluid>
-        <Navbar.Brand href='#'>
+      <Container>
+        <Navbar.Brand onClick={() => navigate('/agents')}>
           <Logo />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='offcanvasNavbar-expand-md' />
@@ -166,53 +218,63 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
           placement='end'
         >
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title id='offcanvasNavbarLabel-expand-md'>React Boilerplate</Offcanvas.Title>
+            <Offcanvas.Title id='offcanvasNavbarLabel-expand-md'>Starter Project</Offcanvas.Title>
           </Offcanvas.Header>
-          <ResponsiveOffCanvasBody>
-            <Nav className='justify-content-start flex-grow-1'>
-              <ResponsiveNavLinks>
-                {navLinks.map(link => (
-                  <CustomNavLink handleSamePathNavigate={closeVerticalNav} key={link.id} link={link} />
-                ))}
-              </ResponsiveNavLinks>
+          <Offcanvas.Body>
+            <Nav className='justify-content-start flex-grow-1 pe-3'>
+              {navLinks.map(link => (
+                <CustomNavLink handleSamePathNavigate={closeVerticalNav} key={link.id} link={link} />
+              ))}
             </Nav>
-            <ResponsiveSection>
-              <ThemeToggle />
-              <CustomSelect<LanguageOption>
-                placeholder='Choose Language'
-                options={__languageOptions}
-                defaultValue={defaultLanguageOption}
-                onChange={option => changeLanguage(option.value)}
-              />
 
-              {user ? (
-                <Dropdown as={NavItem}>
-                  <StyledDropdownToggle>
-                    <div className='d-flex flex-row align-items-center'>
-                      <UserProfilePicture user={user} size='xs' radius={32} />
-                      <div className='d-flex flex-column align-items-start'>
-                        <div>
-                          {user.firstName} {user.lastName.charAt(0)}.
-                        </div>
-                        <small>{user.role.toString()}</small>
-                      </div>
+            <NavLink onClick={() => toggle()} className='theme-toggle me-3 d-flex align-items-center'>
+              <>{theme === 'light' ? <MoonIcon /> : <SunIcon />}</>
+            </NavLink>
+
+            <NavDropdown
+              align='end'
+              title={
+                <>
+                  <FontAwesomeIcon className='me-2' size='lg' icon={faLanguage} />
+                  {defaultLanguageOption?.label}
+                </>
+              }
+              className='me-3'
+            >
+              {__languageOptions.map(option => (
+                <NavDropdown.Item onClick={() => changeLanguage(option.value)}>{option.label}</NavDropdown.Item>
+              ))}
+            </NavDropdown>
+
+            {user ? (
+              <NavDropdown
+                align='end'
+                title={
+                  <>
+                    <UserProfilePicture user={user} size='xs' radius={24} />
+                    <span className='offcanvas-only'>
+                      {user.firstName} {user.lastName.charAt(0)}.
+                    </span>
+                  </>
+                }
+              >
+                <NavDropdown.Header className='d-flex align-items-center'>
+                  <UserProfilePicture user={user} size='xs' radius={32} />
+                  <div>
+                    <div>
+                      {user.firstName} {user.lastName.charAt(0)}.
                     </div>
-                  </StyledDropdownToggle>
-
-                  <Dropdown.Menu>
-                    {dropdownLinks.map(link => (
-                      <Dropdown.Item>
-                        <NavLinkStyles key={link.id} onClick={() => handleLinkClick(link)}>
-                          <FontAwesomeIcon icon={link.icon} />
-                          <span>{link.label}</span>
-                        </NavLinkStyles>
-                      </Dropdown.Item>
-                    ))}
-                  </Dropdown.Menu>
-                </Dropdown>
-              ) : null}
-            </ResponsiveSection>
-          </ResponsiveOffCanvasBody>
+                    <Badge pill>{user.role}</Badge>
+                  </div>
+                </NavDropdown.Header>
+                {dropdownLinks.map(link => (
+                  <NavDropdown.Item key={link.id} onClick={() => handleLinkClick(link)}>
+                    {link.label}
+                  </NavDropdown.Item>
+                ))}
+              </NavDropdown>
+            ) : null}
+          </Offcanvas.Body>
         </StyledNavbarOffcanvas>
       </Container>
     </StyledNavbar>

@@ -20,9 +20,7 @@ export const Content = styled.div`
 
 export const Main = styled.main`
   flex: 1;
-  @media (min-width: 768px) {
-    margin-top: 7rem;
-  }
+  margin-top: calc(40px + 1rem);
 `;
 
 const Footer = styled.footer`
@@ -39,7 +37,7 @@ export const Layout: FC<PropsWithChildren<unknown>> = ({ children }) => {
         <BitwiseNavbar />
       </Header>
       <Content>
-        <div className='d-flex flex-column w-100 px-3 pt-4'>
+        <div className='d-flex flex-column w-100 pt-4'>
           <Main className='content-wrapper'>{children}</Main>
           <Footer className='mt-auto'>
             <FooterContent />

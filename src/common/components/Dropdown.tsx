@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLinkConfig } from 'features/navbar';
-import { NavLinkStyles } from 'features/navbar/components/CustomNavLink';
 import { FC, useEffect, useRef } from 'react';
+import { NavItem } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -87,10 +87,10 @@ export const Dropdown: FC<{
     <StyledDropdown className={show ? 'show' : ''} ref={dropdownContainerRef}>
       <DropdownMenu>
         {navLinks.map(link => (
-          <NavLinkStyles key={link.id} onClick={() => handleLinkClick(link)}>
+          <NavItem key={link.id} onClick={() => handleLinkClick(link)}>
             <FontAwesomeIcon icon={link.icon} />
             <span>{link.label}</span>
-          </NavLinkStyles>
+          </NavItem>
         ))}
       </DropdownMenu>
     </StyledDropdown>
