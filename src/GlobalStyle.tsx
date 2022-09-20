@@ -158,5 +158,23 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
 
+    .react-tel-input .form-control {
+        width: 100%;
+        line-height: 1.5;
+        height: inherit;
+        font-size: 1rem;
+    }
+
+    .react-tel-input .flag-dropdown {
+        border: 1px solid transparent;
+        border-top-left-radius: ${props => props.theme.borderRadius};
+        overflow:hidden;
+        border-bottom-left-radius: ${props => props.theme.borderRadius};
+
+        .flag {
+            margin-left: 0.1rem;
+        }
+    }
+
 `;
 export default GlobalStyle;
