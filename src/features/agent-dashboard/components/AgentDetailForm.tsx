@@ -1,6 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from 'common/components/LoadingButton';
-import { PhoneInput } from 'common/components/PhoneInput';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
 import { addServerErrors } from 'common/error/utilities';
 import { Agent, ServerValidationErrors } from 'common/models';
@@ -8,9 +7,12 @@ import { FC, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
+import PhoneInput from 'react-phone-input-2';
 import { Constants } from 'utils/constants';
 import { stateList } from 'utils/states';
 import * as yup from 'yup';
+
+import 'react-phone-input-2/lib/plain.css';
 
 export type FormData = Pick<Agent, 'name' | 'email' | 'description' | 'phoneNumber' | 'address' | 'thumbnail'>;
 
@@ -72,7 +74,6 @@ export const AgentDetailForm: FC<Props> = ({
         state: defaultValues?.address?.state ?? '',
         address2: defaultValues?.address?.address2 ?? '',
       },
-      // This is necessary to conform to the US_PHONE_REGEX pattern.
       phoneNumber:
         defaultValues.phoneNumber && defaultValues.phoneNumber !== '' ? defaultValues.phoneNumber.substring(2) : '',
     },
@@ -134,7 +135,18 @@ export const AgentDetailForm: FC<Props> = ({
                 name='phoneNumber'
                 control={control}
                 render={({ field }) => (
-                  <PhoneInput value={field.value ?? ''} onChange={field.onChange} invalid={!!errors.phoneNumber} />
+                  <PhoneInput
+                    value={field.value}
+                    onlyCountries={['us']}
+                    country='us'
+                    containerClass={`${errors.phoneNumber ? 'is-invalid' : ''}`}
+                    inputClass={`form-control ${errors.phoneNumber ? 'is-invalid' : ''}`}
+                    placeholder='(702) 123-4567'
+                    disableCountryCode
+                    disableDropdown
+                    specialLabel=''
+                    onChange={field.onChange}
+                  />
                 )}
               />
               <Form.Control.Feedback type='invalid'>{errors.phoneNumber?.message}</Form.Control.Feedback>
