@@ -139,6 +139,7 @@ export const AgentDetailForm: FC<Props> = ({
                     value={field.value}
                     onlyCountries={['us']}
                     country='us'
+                    onEnterKeyPress={handleSubmit(withOptionalAddress)}
                     containerClass={`${errors.phoneNumber ? 'is-invalid' : ''}`}
                     inputClass={`form-control ${errors.phoneNumber ? 'is-invalid' : ''}`}
                     placeholder='(702) 123-4567'
