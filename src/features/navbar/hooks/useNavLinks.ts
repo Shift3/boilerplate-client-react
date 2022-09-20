@@ -5,7 +5,8 @@ export type NavLinkConfig = {
   id: number;
   icon: IconName;
   label: string;
-  path: string;
+  path?: string;
+  method?: () => void;
 };
 
 export const useNavLinks = (): NavLinkConfig[] => {

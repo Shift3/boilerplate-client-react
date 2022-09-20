@@ -1,6 +1,5 @@
 import { Alert, Badge } from 'react-bootstrap';
 import styled, { css } from 'styled-components';
-import { BitwiseNavbar } from './page';
 import { FC, PropsWithChildren } from 'react';
 
 export const SubtleBadge = styled(Badge)<{
@@ -100,7 +99,7 @@ const StagingBanner = styled(Alert).attrs({
   border-radius: 0;
   border: none;
   position: fixed;
-  z-index: 99;
+  z-index: 1090;
   left: 0;
   right: 0;
   background: repeating-linear-gradient(45deg, #fff3cd, #fff3cd 20px, #fdefc3 20px, #fdefc3 40px);
@@ -126,10 +125,6 @@ const BannerWrapper = styled.div<{
             display: block;
             visibility: visible;
           }
-
-          ${BitwiseNavbar} {
-            padding-top: 56px !important;
-
         `
       : null}
 `;

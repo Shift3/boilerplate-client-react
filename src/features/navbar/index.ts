@@ -1,2 +1,2 @@
-export * from './components/VerticalNav';
+export * from './components/BitwiseNavbar';
 export * from './hooks/useNavLinks';

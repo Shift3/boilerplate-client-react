@@ -6,7 +6,7 @@ import {
   useChangePasswordMutation,
   useResendChangeEmailVerificationEmailMutation,
 } from 'common/api/userApi';
-import { PageCrumb, PageHeader, SmallContainer } from 'common/styles/page';
+import { PageCrumb, PageHeader } from 'common/styles/page';
 import { ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import {
@@ -20,7 +20,7 @@ import {
   useUpdateUserProfile,
 } from 'features/user-profile/hooks';
 import { FC, useState } from 'react';
-import { Alert, Col, Nav, Row } from 'react-bootstrap';
+import { Alert, Col, Container, Nav, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -35,14 +35,20 @@ type RouteParams = {
   id: string;
 };
 
-const ProfileNav = styled(Nav)`
-  padding-right: 4rem;
+const ProfileNav = styled(Nav).attrs({ className: 'flex-column' })`
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+
   a {
-    padding-left: 0;
+    margin-bottom: 0.5rem;
     color: ${props => props.theme.textColor};
+    padding: 0.5rem 1rem;
+    border-radius: ${props => props.theme.borderRadius};
 
     &.active {
-      font-weight: bold;
+      font-weight: 500;
+      background: ${props => props.theme.buttons.primaryBackgroundColor};
+      color: ${props => props.theme.buttons.primaryTextColor};
     }
   }
 `;
@@ -123,6 +129,7 @@ export const UpdateUserProfilePage: FC = () => {
     }
     return false;
   };
+
   const onChangePasswordFormSubmit = async (data: ForgotPasswordFormData) => {
     const request: ChangePasswordRequest = { id: user!.id, ...data };
 
@@ -141,7 +148,7 @@ export const UpdateUserProfilePage: FC = () => {
   };
 
   return (
-    <SmallContainer>
+    <Container>
       <PageCrumb>
         <Link to='/agents'>
           <>
@@ -150,6 +157,7 @@ export const UpdateUserProfilePage: FC = () => {
           </>
         </Link>
       </PageCrumb>
+
       <PageHeader className='mb-3'>
         <div className='d-flex'>
           <UserProfilePicture user={user} size='sm' radius={64} />
@@ -163,142 +171,149 @@ export const UpdateUserProfilePage: FC = () => {
           </div>
         </div>
       </PageHeader>
-      <ProfileNav defaultActiveKey='/home'>
-        <ProfileNav.Link onClick={() => setTab('profile')} className={tab === 'profile' ? 'active' : ''}>
-          <Trans i18nKey='userProfile.profile'>Profile</Trans>
-        </ProfileNav.Link>
-        <ProfileNav.Link onClick={() => setTab('security')} className={tab === 'security' ? 'active' : ''}>
-          <Trans i18nKey='userProfile.security'>Security and Password</Trans>
-        </ProfileNav.Link>
-      </ProfileNav>
-      <hr className='mt-0' />
-      {tab === 'profile' ? (
-        <>
-          <Row>
-            <Col md='5'>
-              <h5>
-                <Trans i18nKey='userProfile.generalHeading'>General Information</Trans>
-              </h5>
-              <p className='text-muted'>
-                <Trans i18nKey='userProfile.generalSubheading'>
-                  This information will be used to identify you in our system
-                </Trans>
-              </p>
-            </Col>
-            <Col>
-              <UpdateUserProfileForm
-                onSubmit={onSubmit}
-                defaultValues={{
-                  firstName: user?.firstName ?? '',
-                  lastName: user?.lastName ?? '',
-                }}
-              />
-            </Col>
-          </Row>
 
-          <hr />
+      <Row>
+        <Col md={3}>
+          <ProfileNav defaultActiveKey='/home'>
+            <ProfileNav.Link onClick={() => setTab('profile')} className={tab === 'profile' ? 'active' : ''}>
+              <Trans i18nKey='userProfile.profile'>Profile</Trans>
+            </ProfileNav.Link>
+            <ProfileNav.Link onClick={() => setTab('security')} className={tab === 'security' ? 'active' : ''}>
+              <Trans i18nKey='userProfile.security'>Security and Password</Trans>
+            </ProfileNav.Link>
+          </ProfileNav>
+        </Col>
 
-          <Row>
-            <Col md='5'>
-              <h5>
-                <Trans i18nKey='userProfile.email'>Email Address</Trans>
-              </h5>
-              <p className='text-muted'>
-                <Trans i18nKey='userProfile.emailDescription'>
-                  Your email address on file will be used to communicate with you. Changing your email requires you to
-                  confirm your new email address.
-                </Trans>
-              </p>
-            </Col>
-            <Col>
-              {user?.newEmail && (
-                <Alert variant='warning'>
-                  <div>
-                    <p data-testid='updateUserExistingEmailChangeInfoContent'>
-                      <Trans i18nKey='userProfile.changeEmailDescription'>
-                        You requested an email change. A verification email has been sent to{' '}
-                        <strong>
-                          <>{{ email: user.newEmail }}</>
-                        </strong>
-                        . To confirm your new email, please follow the directions in the verification email.
-                      </Trans>
-                    </p>
-                    <Button
-                      variant='warning'
-                      data-testid='resendVerificationEmailButton'
-                      onClick={handleResendChangeEmailVerificationEmail}
-                    >
-                      <Trans i18nKey='userProfile.resendEmail'>Resend Verification Email</Trans>
-                    </Button>
-                  </div>
-                </Alert>
-              )}
+        <Col>
+          {tab === 'profile' ? (
+            <>
+              <Row>
+                <Col md='5'>
+                  <h5>
+                    <Trans i18nKey='userProfile.generalHeading'>General Information</Trans>
+                  </h5>
+                  <p className='text-muted'>
+                    <Trans i18nKey='userProfile.generalSubheading'>
+                      This information will be used to identify you in our system
+                    </Trans>
+                  </p>
+                </Col>
+                <Col>
+                  <UpdateUserProfileForm
+                    onSubmit={onSubmit}
+                    defaultValues={{
+                      firstName: user?.firstName ?? '',
+                      lastName: user?.lastName ?? '',
+                    }}
+                  />
+                </Col>
+              </Row>
 
-              <UpdateUserEmailForm
-                onSubmit={onSubmitRequestEmailChange}
-                defaultValues={{
-                  email: user?.email ?? '',
-                }}
-                serverValidationErrors={emailFormValidationErrors}
-              />
-            </Col>
-          </Row>
+              <hr />
 
-          <hr />
+              <Row>
+                <Col md='5'>
+                  <h5>
+                    <Trans i18nKey='userProfile.email'>Email Address</Trans>
+                  </h5>
+                  <p className='text-muted'>
+                    <Trans i18nKey='userProfile.emailDescription'>
+                      Your email address on file will be used to communicate with you. Changing your email requires you
+                      to confirm your new email address.
+                    </Trans>
+                  </p>
+                </Col>
+                <Col>
+                  {user?.newEmail && (
+                    <Alert variant='warning'>
+                      <div>
+                        <p data-testid='updateUserExistingEmailChangeInfoContent'>
+                          <Trans i18nKey='userProfile.changeEmailDescription'>
+                            You requested an email change. A verification email has been sent to{' '}
+                            <strong>
+                              <>{{ email: user.newEmail }}</>
+                            </strong>
+                            . To confirm your new email, please follow the directions in the verification email.
+                          </Trans>
+                        </p>
+                        <Button
+                          variant='warning'
+                          data-testid='resendVerificationEmailButton'
+                          onClick={handleResendChangeEmailVerificationEmail}
+                        >
+                          <Trans i18nKey='userProfile.resendEmail'>Resend Verification Email</Trans>
+                        </Button>
+                      </div>
+                    </Alert>
+                  )}
 
-          <Row>
-            <Col md='5'>
-              <h5>
-                <Trans i18nKey='userProfile.photo'>Photo</Trans>
-              </h5>
-              <p className='text-muted'>
-                <Trans i18nKey='userProfile.photoDescription'>
-                  This is the photo of you that other users in the system will be able to see.
-                </Trans>
-              </p>
-            </Col>
-            <Col>
-              <UpdateProfilePictureForm onSubmit={onSubmitNewProfilePicture} />
-              <Button
-                className='mt-3'
-                variant='danger'
-                disabled={!profilePictureIsDefined()}
-                onClick={handleDeleteProfilePicture}
-              >
-                <Trans i18nKey='delete'>Delete</Trans>
-              </Button>
-            </Col>
-          </Row>
-        </>
-      ) : (
-        ''
-      )}
+                  <UpdateUserEmailForm
+                    onSubmit={onSubmitRequestEmailChange}
+                    defaultValues={{
+                      email: user?.email ?? '',
+                    }}
+                    serverValidationErrors={emailFormValidationErrors}
+                  />
+                </Col>
+              </Row>
 
-      {tab === 'security' ? (
-        <>
-          <Row>
-            <Col md='5'>
-              <h5>
-                <Trans i18nKey='userProfile.changePassword'>Change Password</Trans>
-              </h5>
-              <p className='text-muted'>
-                <Trans i18nKey='userProfile.changePasswordDescription'>
-                  Password must be 8 characters or more. Password must contain a lowercase, uppercase, special
-                  character, and a number.
-                </Trans>
-              </p>
-            </Col>
-            <Col>
-              <ChangePasswordForm
-                onSubmit={onChangePasswordFormSubmit}
-                serverValidationErrors={passwordFormValidationErrors}
-              />
-            </Col>
-          </Row>
-        </>
-      ) : (
-        ''
-      )}
-    </SmallContainer>
+              <hr />
+
+              <Row>
+                <Col md='5'>
+                  <h5>
+                    <Trans i18nKey='userProfile.photo'>Photo</Trans>
+                  </h5>
+                  <p className='text-muted'>
+                    <Trans i18nKey='userProfile.photoDescription'>
+                      This is the photo of you that other users in the system will be able to see.
+                    </Trans>
+                  </p>
+                </Col>
+                <Col>
+                  <UpdateProfilePictureForm onSubmit={onSubmitNewProfilePicture} />
+                  <Button
+                    className='mt-3'
+                    variant='danger'
+                    disabled={!profilePictureIsDefined()}
+                    onClick={handleDeleteProfilePicture}
+                  >
+                    <Trans i18nKey='delete'>Delete</Trans>
+                  </Button>
+                </Col>
+              </Row>
+            </>
+          ) : (
+            ''
+          )}
+
+          {tab === 'security' ? (
+            <>
+              <Row>
+                <Col md='5'>
+                  <h5>
+                    <Trans i18nKey='userProfile.changePassword'>Change Password</Trans>
+                  </h5>
+                  <p className='text-muted'>
+                    <Trans i18nKey='userProfile.changePasswordDescription'>
+                      Password must be 8 characters or more. Password must contain a lowercase, uppercase, special
+                      character, and a number.
+                    </Trans>
+                  </p>
+                </Col>
+                <Col>
+                  <ChangePasswordForm
+                    onSubmit={onChangePasswordFormSubmit}
+                    serverValidationErrors={passwordFormValidationErrors}
+                  />
+                </Col>
+              </Row>
+            </>
+          ) : (
+            ''
+          )}
+        </Col>
+      </Row>
+    </Container>
   );
 };

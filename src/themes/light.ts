@@ -15,17 +15,27 @@ export default {
   },
 
   nav: {
-    backgroundColor: colors.neutral100,
     borderColor: colors.neutral300,
     textColor: colors.neutral800,
 
-    profileBackground: colors.neutral300,
     profileHoverBackground: colors.neutral400,
     profileText: colors.neutral900,
     smallText: colors.neutral700,
 
     activeBackground: colors.blue600,
     hoverColor: colors.blue600,
+
+    link: {
+      activeBackground: colors.blue200,
+      activeText: colors.blue800,
+    },
+
+    horizontal: {
+      backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    },
+    vertical: {
+      backgroundColor: colors.neutral100,
+    },
   },
 
   buttons: {

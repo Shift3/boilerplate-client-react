@@ -15,7 +15,7 @@ export type FilterInfo = {
 const StyledDropdown = styled.div`
   position: absolute;
   left: 0;
-  z-index: 9999;
+  z-index: 1000;
   min-width: 240px;
 
   transition: all 0.15s ease-in-out;
