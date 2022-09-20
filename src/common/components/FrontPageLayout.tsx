@@ -69,7 +69,7 @@ export const FrontPageLayout: FC<PropsWithChildren<unknown>> = ({ children }) =>
         <Col>
           <LoginContainer className='content-wrapper'>
             <div>
-              <div className='position-relative'>
+              <div className='mb-3 d-flex justify-content-between align-items-center'>
                 <Logo />
                 <ThemeToggle />
               </div>
