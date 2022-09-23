@@ -19,10 +19,10 @@ import {
   useUpdateProfilePicture,
   useUpdateUserProfile,
 } from 'features/user-profile/hooks';
-import { FC, useState } from 'react';
 import { Alert, Col, Container, Nav, Row } from 'react-bootstrap';
+import { FC, useEffect, useMemo, useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { ProfilePictureFormData, UpdateProfilePictureForm } from '../components/UpdateProfilePictureForm';
 import { UpdateUserEmailForm, UserEmailFormData } from '../components/UpdateUserEmailForm';
@@ -52,6 +52,13 @@ const ProfileNav = styled(Nav).attrs({ className: 'flex-column' })`
   }
 `;
 
+const useQuery = () => {
+  const { search } = useLocation();
+  return useMemo(() => {
+    return new URLSearchParams(search);
+  }, [search]);
+};
+
 export const UpdateUserProfilePage: FC = () => {
   const { id = '' } = useParams<RouteParams>();
   const { user } = useAuth();
@@ -61,11 +68,21 @@ export const UpdateUserProfilePage: FC = () => {
   const { updateUserProfilePicture } = useUpdateProfilePicture();
   const { deleteUserProfilePicture } = useDeleteProfilePicture();
   const [changePassword] = useChangePasswordMutation();
-  const [tab, setTab] = useState('profile');
+  const query = useQuery();
+  const [tab, setTab] = useState(query.get('tab') || 'profile');
   const [emailFormValidationErrors, setEmailFormValidationErrors] =
     useState<ServerValidationErrors<UserEmailFormData> | null>(null);
   const [passwordFormValidationErrors, setPasswordFormValidationErrors] =
     useState<ServerValidationErrors<ForgotPasswordFormData> | null>(null);
+
+  // http://localhost:4200/user/profile/abcd-efgh/?tab=profile
+  // http://localhost:4200/user/profile/abcd-efgh/?tab=subscription
+  // http://localhost:4200/user/profile/abcd-efgh/?tab=security
+
+  useEffect(() => {
+    const newTab = query.get('tab');
+    if (newTab) setTab(newTab);
+  }, [query]);
 
   const onSubmit = async (formData: ProfileFormData) => {
     const data = { id, ...formData };
