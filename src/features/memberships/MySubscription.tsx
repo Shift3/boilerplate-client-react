@@ -42,7 +42,7 @@ export const MySubscription = () => {
           ) : null}
 
           {status === 'cancelled_but_active' ? (
-            <IsCancelled subscription={subscription} onCancel={() => refetch()} />
+            <IsCancelled refetch={refetch} subscription={subscription} onCancel={() => refetch()} />
           ) : null}
 
           {status === 'cancelled' || status === null ? (
