@@ -20,9 +20,9 @@ import {
   useUpdateUserProfile,
 } from 'features/user-profile/hooks';
 import { Alert, Col, Container, Nav, Row } from 'react-bootstrap';
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ProfilePictureFormData, UpdateProfilePictureForm } from '../components/UpdateProfilePictureForm';
 import { UpdateUserEmailForm, UserEmailFormData } from '../components/UpdateUserEmailForm';
@@ -31,6 +31,7 @@ import { isObject } from 'common/error/utilities';
 import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
 import { Trans } from 'react-i18next';
 import { MySubscription } from 'features/memberships/MySubscription';
+import useQuery from 'common/hooks/useQuery';
 
 type RouteParams = {
   id: string;
@@ -52,16 +53,10 @@ const ProfileNav = styled(Nav).attrs({ className: 'flex-column' })`
   }
 `;
 
-const useQuery = () => {
-  const { search } = useLocation();
-  return useMemo(() => {
-    return new URLSearchParams(search);
-  }, [search]);
-};
-
 export const UpdateUserProfilePage: FC = () => {
   const { id = '' } = useParams<RouteParams>();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [resendChangeEmailVerificationEmail] = useResendChangeEmailVerificationEmailMutation();
   const { updateUserProfile } = useUpdateUserProfile();
   const { changeEmailRequest } = useChangeEmailRequest();
@@ -75,14 +70,17 @@ export const UpdateUserProfilePage: FC = () => {
   const [passwordFormValidationErrors, setPasswordFormValidationErrors] =
     useState<ServerValidationErrors<ForgotPasswordFormData> | null>(null);
 
-  // http://localhost:4200/user/profile/abcd-efgh/?tab=profile
-  // http://localhost:4200/user/profile/abcd-efgh/?tab=subscription
-  // http://localhost:4200/user/profile/abcd-efgh/?tab=security
-
   useEffect(() => {
     const newTab = query.get('tab');
     if (newTab) setTab(newTab);
   }, [query]);
+
+  const changeTab = (tab: string) => {
+    const search = new URLSearchParams(window.location.search);
+    search.set('tab', tab);
+    navigate({ search: search.toString() });
+    setTab(tab);
+  };
 
   const onSubmit = async (formData: ProfileFormData) => {
     const data = { id, ...formData };
@@ -191,13 +189,16 @@ export const UpdateUserProfilePage: FC = () => {
       <Row>
         <Col md={3}>
           <ProfileNav defaultActiveKey='/home'>
-            <ProfileNav.Link onClick={() => setTab('profile')} className={tab === 'profile' ? 'active' : ''}>
+            <ProfileNav.Link onClick={() => changeTab('profile')} className={tab === 'profile' ? 'active' : ''}>
               <Trans i18nKey='userProfile.profile'>Profile</Trans>
             </ProfileNav.Link>
-            <ProfileNav.Link onClick={() => setTab('security')} className={tab === 'security' ? 'active' : ''}>
+            <ProfileNav.Link onClick={() => changeTab('security')} className={tab === 'security' ? 'active' : ''}>
               <Trans i18nKey='userProfile.security'>Security and Password</Trans>
             </ProfileNav.Link>
-            <ProfileNav.Link onClick={() => setTab('subscription')} className={tab === 'subscription' ? 'active' : ''}>
+            <ProfileNav.Link
+              onClick={() => changeTab('subscription')}
+              className={tab === 'subscription' ? 'active' : ''}
+            >
               <Trans i18nKey='userProfile.subscription'>Subscription</Trans>
             </ProfileNav.Link>
           </ProfileNav>

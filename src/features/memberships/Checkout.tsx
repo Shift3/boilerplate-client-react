@@ -51,7 +51,7 @@ export const PayForPlan: FC<{
     const result = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `http://localhost:4200/user/profile/${user?.id}`,
+        return_url: `http://localhost:4200/user/profile/${user?.id}?tab=subscription`,
       },
       redirect: 'if_required',
     });
