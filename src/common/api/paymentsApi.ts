@@ -25,6 +25,18 @@ export interface Plan {
 
 type SubscriptionInterval = 'month' | 'year';
 
+export interface PaymentMethod {
+  id: string;
+  type: string;
+  isDefault: boolean;
+  card: {
+    last4: string;
+    brand: string;
+    expMonth: number;
+    expYear: number;
+  };
+}
+
 export interface Subscription {
   activeSubscription: {
     id: string;
@@ -38,18 +50,7 @@ export interface Subscription {
     };
   };
 
-  paymentMethods: [
-    {
-      id: string;
-      type: string;
-      card: {
-        last4: string;
-        brand: string;
-        expMonth: number;
-        expYear: number;
-      };
-    },
-  ];
+  paymentMethods: PaymentMethod[];
 
   billingHistory: [
     {
@@ -84,7 +85,7 @@ export const paymentApi = createApi({
     }),
 
     getMySubscription: builder.query<Subscription, void>({
-      query: () => '/subscriptions/active_subscription/',
+      query: () => '/subscriptions/',
     }),
 
     createSubscription: builder.mutation<{ clientSecret: string; subscription_id: string }, string>({
@@ -115,7 +116,21 @@ export const paymentApi = createApi({
 
     addCardToWallet: builder.mutation<{ clientSecret: string }, void>({
       query: () => ({
-        url: '/subscriptions/card_wallet/',
+        url: '/payment_methods/',
+        method: 'POST',
+      }),
+    }),
+
+    removeCardFromWallet: builder.mutation<void, string>({
+      query: id => ({
+        url: `/payment_methods/${id}/`,
+        method: 'DELETE',
+      }),
+    }),
+
+    makeCardDefault: builder.mutation<void, string>({
+      query: id => ({
+        url: `/payment_methods/${id}/make_default/`,
         method: 'POST',
       }),
     }),
@@ -130,4 +145,6 @@ export const {
   useCancelActiveSubscriptionMutation,
   useReactivateSubscriptionMutation,
   useAddCardToWalletMutation,
+  useRemoveCardFromWalletMutation,
+  useMakeCardDefaultMutation,
 } = paymentApi;

@@ -1,9 +1,16 @@
-import { faCreditCard } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faCreditCard, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Elements, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { stripePromise } from 'app/App';
-import { Subscription, useAddCardToWalletMutation } from 'common/api/paymentsApi';
+import {
+  PaymentMethod,
+  Subscription,
+  useAddCardToWalletMutation,
+  useMakeCardDefaultMutation,
+  useRemoveCardFromWalletMutation,
+} from 'common/api/paymentsApi';
 import { LoadingButton } from 'common/components/LoadingButton';
+import { SimpleConfirmModal } from 'common/components/SimpleConfirmModal';
 import { useModalWithData } from 'common/hooks/useModalWithData';
 import { useAuth } from 'features/auth/hooks';
 import { FC, useState } from 'react';
@@ -21,10 +28,6 @@ const CreditCard = styled.div`
   small {
     display: block;
     color: #999;
-  }
-
-  & > div > div {
-    flex: 1;
   }
 
   span {
@@ -86,15 +89,17 @@ const CardManagementInner: FC<{
 
 export const CardManagement: FC<{
   subscription: Subscription;
-  onCardAdded: () => void;
-}> = ({ subscription, onCardAdded }) => {
+  refetch: () => void;
+}> = ({ subscription, refetch }) => {
   const [addCardToWallet] = useAddCardToWalletMutation();
+  const [removeCardFromWallet] = useRemoveCardFromWalletMutation();
+  const [makeCardDefault] = useMakeCardDefaultMutation();
 
   const [showAddCardModal, hideAddCardModal] = useModalWithData<string>(clientSecret => {
     return ({ in: open, onExited }) => {
       const onSuccess = () => {
         hideAddCardModal();
-        onCardAdded();
+        refetch();
       };
 
       return (
@@ -111,9 +116,47 @@ export const CardManagement: FC<{
     };
   }, []);
 
+  const [showRemoveCardModal, hideRemoveCardModal] = useModalWithData<PaymentMethod>(paymentMethod => {
+    return ({ in: open, onExited }) => {
+      const onConfirm = async () => {
+        try {
+          await removeCardFromWallet(paymentMethod.id).unwrap();
+          refetch();
+        } catch (e) {
+          // TODO: handle errors
+        } finally {
+          hideRemoveCardModal();
+        }
+      };
+
+      return (
+        <SimpleConfirmModal
+          body={
+            <p>
+              Are you sure you want to remove the credit card ending in <b>{paymentMethod.card.last4}</b>?
+            </p>
+          }
+          title='Remove Payment Method'
+          show={open}
+          onExited={onExited}
+          onCancel={hideRemoveCardModal}
+          onConfirm={onConfirm}
+          confirmIcon={faCreditCard}
+          confirmLabel='Remove Payment Method'
+          confirmVariant='danger'
+        />
+      );
+    };
+  }, []);
+
   const addCard = async () => {
     const data = await addCardToWallet().unwrap();
     showAddCardModal(data.clientSecret);
+  };
+
+  const makeDefault = async (paymentMethod: PaymentMethod) => {
+    await makeCardDefault(paymentMethod.id).unwrap();
+    refetch();
   };
 
   return (
@@ -127,9 +170,12 @@ export const CardManagement: FC<{
             </a>
           </div>
           {subscription.paymentMethods.map(paymentMethod => (
-            <CreditCard key={paymentMethod.id} className='d-flex'>
-              <div className='d-flex align-items-center'>
-                <img className='me-3' width={64} src={`/cards/${paymentMethod.card.brand}.png`} alt='Credit Card' />
+            <CreditCard className='d-flex align-items-center' key={paymentMethod.id}>
+              <div className='d-flex flex-fill align-items-center'>
+                <div className='d-flex align-items-center'>
+                  {paymentMethod.isDefault ? <FontAwesomeIcon className='me-2' icon={faCheckCircle} /> : null}
+                  <img className='me-3' width={64} src={`/cards/${paymentMethod.card.brand}.png`} alt='Credit Card' />
+                </div>
                 <div>
                   <span>•••• •••• •••• {paymentMethod.card.last4}</span>
                   <small>
@@ -146,9 +192,11 @@ export const CardManagement: FC<{
                     already default.
                  */}
 
-              <DropdownButton title='' variant='light' size='sm' className='mx-3'>
-                <Dropdown.Item>Make Default</Dropdown.Item>
-                <Dropdown.Item>Remove</Dropdown.Item>
+              <DropdownButton title={<FontAwesomeIcon icon={faEllipsisV} />} variant='light' size='sm' className='mx-3'>
+                <Dropdown.Item onClick={() => makeDefault(paymentMethod)} disabled={paymentMethod.isDefault}>
+                  Make Default
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => showRemoveCardModal(paymentMethod)}>Remove</Dropdown.Item>
               </DropdownButton>
             </CreditCard>
           ))}

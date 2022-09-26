@@ -94,7 +94,7 @@ export const IsActive: FC<{
       </Col>
 
       <Col className='mb-3' md={12} xl={6}>
-        <CardManagement onCardAdded={() => refetch()} subscription={subscription} />
+        <CardManagement refetch={refetch} subscription={subscription} />
       </Col>
     </Row>
   );
