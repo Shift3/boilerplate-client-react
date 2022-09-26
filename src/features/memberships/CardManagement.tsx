@@ -7,7 +7,7 @@ import { LoadingButton } from 'common/components/LoadingButton';
 import { useModalWithData } from 'common/hooks/useModalWithData';
 import { useAuth } from 'features/auth/hooks';
 import { FC, useState } from 'react';
-import { Button, Card, Modal } from 'react-bootstrap';
+import { Card, Dropdown, DropdownButton, Modal } from 'react-bootstrap';
 import styled from 'styled-components';
 
 const CreditCard = styled.div`
@@ -127,7 +127,7 @@ export const CardManagement: FC<{
             </a>
           </div>
           {subscription.paymentMethods.map(paymentMethod => (
-            <CreditCard key={paymentMethod.id}>
+            <CreditCard key={paymentMethod.id} className='d-flex'>
               <div className='d-flex align-items-center'>
                 <img className='me-3' width={64} src={`/cards/${paymentMethod.card.brand}.png`} alt='Credit Card' />
                 <div>
@@ -136,8 +136,8 @@ export const CardManagement: FC<{
                     {paymentMethod.card.expMonth}/{paymentMethod.card.expYear.toString().slice(2)}
                   </small>
                 </div>
-
-                {/*
+              </div>
+              {/*
                     TODO(justin): Lets turn this into a dropdown, with "Make Default"
                     and "Remove". If they only have one card, don't show "Remove"
 
@@ -145,10 +145,11 @@ export const CardManagement: FC<{
                     default should eventually be dimmed and disabled on cards which are
                     already default.
                  */}
-                <Button className='ms-3' variant='link'>
-                  <FontAwesomeIcon size='1x' icon='ellipsis-vertical' />
-                </Button>
-              </div>
+
+              <DropdownButton title='' variant='light' size='sm' className='mx-3'>
+                <Dropdown.Item>Make Default</Dropdown.Item>
+                <Dropdown.Item>Remove</Dropdown.Item>
+              </DropdownButton>
             </CreditCard>
           ))}
         </Card.Body>
