@@ -28,7 +28,7 @@ export const IsCancelled: FC<{
         onCancel={hideCancelModal}
         onConfirm={onConfirm}
         cancelLabel='Stay Unsubscribed'
-        confirmLabel='Reactivevate Subscription'
+        confirmLabel='Reactivate Subscription'
         confirmIcon='refresh'
         confirmVariant='success'
         onExited={onExited}
@@ -50,7 +50,7 @@ export const IsCancelled: FC<{
   return (
     <Row>
       <Col className='mb-3' md={12} xl={6}>
-        <Card>
+        <Card className='mb-3'>
           <Card.Body>
             <div className='mb-3 d-flex align-items-center'>
               <h4 className='flex-fill m-0'>Subscription</h4>
