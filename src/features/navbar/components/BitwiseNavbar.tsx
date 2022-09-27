@@ -12,16 +12,11 @@ import { FC } from 'react';
 import { Badge, Button, Container, Modal, Navbar, NavDropdown, NavLink, Offcanvas } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useModal } from 'react-modal-hook';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { languages } from '../../../i18n/config';
-import { CustomNavLink, NavLinkConfig } from './CustomNavLink';
 import { Logo } from './Logo';
 import { UserProfilePicture } from './UserProfilePicture';
-
-type Props = {
-  closeVerticalNav?: () => void;
-};
 
 const StyledNavbar = styled(Navbar)`
   position: fixed;
@@ -44,7 +39,6 @@ const StyledNavbar = styled(Navbar)`
 
   .dropdown-toggle::after {
     margin-left: 0.25rem;
-    transition: 0.15s ease all;
     color: ${props => props.theme.textColor};
   }
 
@@ -154,9 +148,48 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
   }
 `;
 
-export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
+const StyledMajorNavDropdowns = styled.div`
+  display: flex;
+  justify-content: start;
+  flex-grow: 1;
+
+  .dropdown-item {
+    display: flex;
+    justify-content: center;
+  }
+
+  .dropdown-item.active {
+    background: ${props => props.theme.nav.link.activeBackground};
+    color: ${props => props.theme.nav.link.activeText};
+  }
+
+  @media (min-width: 768px) {
+    display: flex;
+    flex-direction: row;
+    padding-right: 3rem;
+  }
+
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+    padding-bottom: 3rem;
+
+    .dropdown-toggle {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+    }
+
+    .dropdown-menu {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
+`;
+
+export const BitwiseNavbar: FC = () => {
   const { user } = useAuth();
   const { userHasPermission } = useRbac();
+  const location = useLocation();
   const navigate = useNavigate();
   const { toggle, theme } = useTheme();
   const { logout, isLoading } = useLogout();
@@ -194,14 +227,6 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
 
   const defaultLanguageOption = __languageOptions.find(language => language.value === i18n.languages[0]);
 
-  const handleLinkClick = (link: NavLinkConfig) => {
-    if (link.path) {
-      navigate(link.path);
-    } else if (link.method !== undefined) {
-      link.method();
-    }
-  };
-
   return (
     <StyledNavbar expand='md'>
       <Container>
@@ -218,26 +243,22 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
             <Offcanvas.Title id='offcanvasNavbarLabel-expand-md'>Starter Project</Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
-            <div className='d-flex flex-row justify-content-start flex-grow-1 pe-3'>
+            <StyledMajorNavDropdowns>
               {userHasPermission('agent:read') ? (
-                <NavDropdown align='start' title={<div>General</div>}>
-                  <CustomNavLink
-                    link={{ icon: 'stethoscope', label: 'Directory', path: '/agents' }}
-                    category='General'
-                    handleSamePathNavigate={closeVerticalNav}
-                  />
+                <NavDropdown title={<div>General</div>}>
+                  <NavDropdown.Item onClick={() => navigate('/agents')} active={location.pathname === '/agents'}>
+                    Directory
+                  </NavDropdown.Item>
                 </NavDropdown>
               ) : null}
               {userHasPermission('user:read') ? (
-                <NavDropdown align='start' title={<div>Administration</div>}>
-                  <CustomNavLink
-                    link={{ icon: 'user', label: 'Users', path: '/users' }}
-                    category='Administration'
-                    handleSamePathNavigate={closeVerticalNav}
-                  />
+                <NavDropdown title={<div>Administration</div>}>
+                  <NavDropdown.Item onClick={() => navigate('/users')} active={location.pathname === '/users'}>
+                    Users
+                  </NavDropdown.Item>
                 </NavDropdown>
               ) : null}
-            </div>
+            </StyledMajorNavDropdowns>
 
             <NavLink onClick={() => toggle()} className='theme-toggle me-3 d-flex align-items-center'>
               <>{theme === 'light' ? <MoonIcon /> : <SunIcon />}</>
@@ -279,16 +300,8 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
                     <Badge pill>{user.role}</Badge>
                   </div>
                 </NavDropdown.Header>
-                <NavDropdown.Item
-                  onClick={() => handleLinkClick({ icon: 'user', label: 'Profile', path: `/user/profile/${user.id}` })}
-                >
-                  Profile
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  onClick={() => handleLinkClick({ icon: 'sign-out-alt', label: 'Sign Out', method: showModal })}
-                >
-                  Sign Out
-                </NavDropdown.Item>
+                <NavDropdown.Item onClick={() => navigate(`/user/profile/${user.id}`)}>Profile</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => showModal()}>Sign Out</NavDropdown.Item>
               </NavDropdown>
             ) : null}
           </Offcanvas.Body>
