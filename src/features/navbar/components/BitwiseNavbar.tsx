@@ -4,19 +4,18 @@ import { LoadingButton } from 'common/components/LoadingButton';
 import { environment } from 'environment';
 import { EnvironmentConfiguration } from 'environment/types';
 import { useAuth, useLogout } from 'features/auth/hooks';
+import { useRbac } from 'features/rbac';
 import { MoonIcon } from 'features/themes/MoonIcon';
 import { SunIcon } from 'features/themes/SunIcon';
 import { useTheme } from 'features/themes/useTheme';
 import { FC } from 'react';
 import { Badge, Button, Container, Modal, Navbar, NavDropdown, NavLink, Offcanvas } from 'react-bootstrap';
-import Nav from 'react-bootstrap/Nav';
 import { useTranslation } from 'react-i18next';
 import { useModal } from 'react-modal-hook';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { languages } from '../../../i18n/config';
-import { NavLinkConfig, useNavLinks } from '../hooks/useNavLinks';
-import { CustomNavLink } from './CustomNavLink';
+import { CustomNavLink, NavLinkConfig } from './CustomNavLink';
 import { Logo } from './Logo';
 import { UserProfilePicture } from './UserProfilePicture';
 
@@ -156,10 +155,8 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
 `;
 
 export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
-  let dropdownLinks: NavLinkConfig[] = [];
-
   const { user } = useAuth();
-  const navLinks = useNavLinks();
+  const { userHasPermission } = useRbac();
   const navigate = useNavigate();
   const { toggle, theme } = useTheme();
   const { logout, isLoading } = useLogout();
@@ -185,13 +182,6 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
     },
     [isLoading],
   );
-
-  if (user) {
-    dropdownLinks = [
-      { id: 0, icon: 'user', label: 'Profile', path: `/user/profile/${user.id}` },
-      { id: 1, icon: 'sign-out-alt', label: 'Sign Out', method: showModal },
-    ];
-  }
 
   const changeLanguage = (ln: string) => {
     localStorage.setItem('language', ln);
@@ -228,11 +218,26 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
             <Offcanvas.Title id='offcanvasNavbarLabel-expand-md'>Starter Project</Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
-            <Nav className='justify-content-start flex-grow-1 pe-3'>
-              {navLinks.map(link => (
-                <CustomNavLink handleSamePathNavigate={closeVerticalNav} key={link.id} link={link} />
-              ))}
-            </Nav>
+            <div className='d-flex flex-row justify-content-start flex-grow-1 pe-3'>
+              {userHasPermission('agent:read') ? (
+                <NavDropdown align='start' title={<div>General</div>}>
+                  <CustomNavLink
+                    link={{ icon: 'stethoscope', label: 'Directory', path: '/agents' }}
+                    category='General'
+                    handleSamePathNavigate={closeVerticalNav}
+                  />
+                </NavDropdown>
+              ) : null}
+              {userHasPermission('user:read') ? (
+                <NavDropdown align='start' title={<div>Administration</div>}>
+                  <CustomNavLink
+                    link={{ icon: 'user', label: 'Users', path: '/users' }}
+                    category='Administration'
+                    handleSamePathNavigate={closeVerticalNav}
+                  />
+                </NavDropdown>
+              ) : null}
+            </div>
 
             <NavLink onClick={() => toggle()} className='theme-toggle me-3 d-flex align-items-center'>
               <>{theme === 'light' ? <MoonIcon /> : <SunIcon />}</>
@@ -274,11 +279,16 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
                     <Badge pill>{user.role}</Badge>
                   </div>
                 </NavDropdown.Header>
-                {dropdownLinks.map(link => (
-                  <NavDropdown.Item key={link.id} onClick={() => handleLinkClick(link)}>
-                    {link.label}
-                  </NavDropdown.Item>
-                ))}
+                <NavDropdown.Item
+                  onClick={() => handleLinkClick({ icon: 'user', label: 'Profile', path: `/user/profile/${user.id}` })}
+                >
+                  Profile
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  onClick={() => handleLinkClick({ icon: 'sign-out-alt', label: 'Sign Out', method: showModal })}
+                >
+                  Sign Out
+                </NavDropdown.Item>
               </NavDropdown>
             ) : null}
           </Offcanvas.Body>

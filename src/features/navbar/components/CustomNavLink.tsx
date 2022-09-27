@@ -3,14 +3,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC, PropsWithChildren } from 'react';
 import { Nav, NavItem } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { NavLinkConfig } from '../hooks/useNavLinks';
+
+export type NavLinkConfig = {
+  icon: IconName;
+  label: string;
+  path?: string;
+  method?: () => void;
+};
 
 type Props = {
   link: NavLinkConfig;
+  category: string;
   handleSamePathNavigate?: () => void;
 };
 
-export const CustomNavLink: FC<PropsWithChildren<Props>> = ({ link, handleSamePathNavigate = null }) => {
+export const CustomNavLink: FC<PropsWithChildren<Props>> = ({ link, category, handleSamePathNavigate = null }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -18,7 +25,7 @@ export const CustomNavLink: FC<PropsWithChildren<Props>> = ({ link, handleSamePa
     if (location.pathname === link.path && handleSamePathNavigate) {
       handleSamePathNavigate();
     } else if (link.path) {
-      navigate(link.path);
+      navigate(link.path, { state: { category } });
     }
   };
 
@@ -26,7 +33,6 @@ export const CustomNavLink: FC<PropsWithChildren<Props>> = ({ link, handleSamePa
 
   return (
     <Nav.Link onClick={handleClick} className={isActive ? 'active' : ''}>
-      <FontAwesomeIcon className='me-2' icon={link.icon} />
       {link.label}
     </Nav.Link>
   );
