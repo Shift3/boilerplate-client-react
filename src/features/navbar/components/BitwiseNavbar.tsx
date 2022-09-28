@@ -106,11 +106,6 @@ const StyledNavbar = styled(Navbar)`
   .navbar-brand img {
     width: 40px;
   }
-
-  .nav-link.active {
-    background: ${props => props.theme.nav.link.activeBackground};
-    color: ${props => props.theme.nav.link.activeText};
-  }
 `;
 
 const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
@@ -153,16 +148,11 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
       .dropdown-item.active {
         background: ${props => props.theme.nav.link.activeBackground};
         color: ${props => props.theme.nav.link.activeText};
+        border-radius: ${props => props.theme.borderRadius};
       }
 
       a.nav-link {
         padding: 1rem 0rem 1rem 0rem;
-      }
-
-      .nav-link.active {
-        background: ${props => props.theme.nav.link.activeBackground};
-        color: ${props => props.theme.nav.link.activeText};
-        border-radius: ${props => props.theme.borderRadius};
       }
     }
 
