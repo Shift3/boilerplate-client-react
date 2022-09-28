@@ -43,7 +43,6 @@ const StyledNavbar = styled(Navbar)`
     flex-direction: row;
     justify-content: start;
     flex-grow: 1;
-    padding-right: 3rem;
   }
 
   .navbar-toggler {
@@ -172,10 +171,6 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
       display: flex;
       align-items: center;
       flex-direction: row;
-    }
-
-    .dropdown-toggle.nav-link {
-      padding: 0;
     }
 
     .theme-toggle {
