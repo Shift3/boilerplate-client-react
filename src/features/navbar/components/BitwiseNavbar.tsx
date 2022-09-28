@@ -29,6 +29,19 @@ const StyledNavbar = styled(Navbar)`
   margin-top: ${environment.environment === EnvironmentConfiguration.Staging ? '56px' : '0px'};
   padding: 0.8rem 0;
 
+  .dropdown-item.active {
+    background: ${props => props.theme.nav.link.activeBackground};
+    color: ${props => props.theme.nav.link.activeText};
+  }
+
+  .major-dropdowns {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    flex-grow: 1;
+    padding-right: 3rem;
+  }
+
   .navbar-toggler {
     border: none;
   }
@@ -118,8 +131,24 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
       display: flex;
       flex-direction: column;
 
-      a.nav-link {
+      .major-dropdowns {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        flex-grow: 1;
+      }
+
+      .dropdown-item {
         padding: 1rem 0rem 1rem 1rem;
+      }
+
+      .dropdown-item.active {
+        background: ${props => props.theme.nav.link.activeBackground};
+        color: ${props => props.theme.nav.link.activeText};
+      }
+
+      a.nav-link {
+        padding: 1rem 0rem 1rem 0rem;
       }
 
       .nav-link.active {
@@ -137,41 +166,9 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
       position: relative;
       top: 0;
       width: 100%;
+      padding-top: 0;
+      padding-bottom: 0;
     }
-
-    .theme-toggle {
-      padding: 1rem 0;
-      position: absolute;
-      right: 2rem;
-      top: 3px;
-    }
-  }
-`;
-
-const StyledMajorNavDropdowns = styled.div`
-  display: flex;
-  justify-content: start;
-  flex-grow: 1;
-
-  .dropdown-item {
-    display: flex;
-    justify-content: center;
-  }
-
-  .dropdown-item.active {
-    background: ${props => props.theme.nav.link.activeBackground};
-    color: ${props => props.theme.nav.link.activeText};
-  }
-
-  @media (min-width: 768px) {
-    display: flex;
-    flex-direction: row;
-    padding-right: 3rem;
-  }
-
-  @media only screen and (max-width: 768px) {
-    flex-direction: column;
-    padding-bottom: 3rem;
 
     .dropdown-toggle {
       display: flex;
@@ -179,9 +176,15 @@ const StyledMajorNavDropdowns = styled.div`
       flex-direction: row;
     }
 
-    .dropdown-menu {
-      padding-top: 0;
-      padding-bottom: 0;
+    .dropdown-toggle.nav-link {
+      padding: 0;
+    }
+
+    .theme-toggle {
+      padding: 1rem 0;
+      position: absolute;
+      right: 2rem;
+      top: 3px;
     }
   }
 `;
@@ -243,7 +246,7 @@ export const BitwiseNavbar: FC = () => {
             <Offcanvas.Title id='offcanvasNavbarLabel-expand-md'>Starter Project</Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
-            <StyledMajorNavDropdowns>
+            <div className='major-dropdowns'>
               {userHasPermission('agent:read') ? (
                 <NavDropdown title={<div>General</div>}>
                   <NavDropdown.Item onClick={() => navigate('/agents')} active={location.pathname === '/agents'}>
@@ -258,7 +261,7 @@ export const BitwiseNavbar: FC = () => {
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : null}
-            </StyledMajorNavDropdowns>
+            </div>
 
             <NavLink onClick={() => toggle()} className='theme-toggle me-3 d-flex align-items-center'>
               <>{theme === 'light' ? <MoonIcon /> : <SunIcon />}</>
