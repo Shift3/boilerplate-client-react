@@ -29,6 +29,10 @@ const StyledNavbar = styled(Navbar)`
   margin-top: ${environment.environment === EnvironmentConfiguration.Staging ? '56px' : '0px'};
   padding: 0.8rem 0;
 
+  .dropdown-item > svg {
+    margin-inline-end: 0.5rem;
+  }
+
   .dropdown-item.active {
     background: ${props => props.theme.nav.link.activeBackground};
     color: ${props => props.theme.nav.link.activeText};
@@ -142,6 +146,10 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
         padding: 1rem 0rem 1rem 1rem;
       }
 
+      .dropdown-item > svg {
+        margin-inline-end: 0.5rem;
+      }
+
       .dropdown-item.active {
         background: ${props => props.theme.nav.link.activeBackground};
         color: ${props => props.theme.nav.link.activeText};
@@ -250,6 +258,7 @@ export const BitwiseNavbar: FC = () => {
               {userHasPermission('agent:read') ? (
                 <NavDropdown title={<div>General</div>}>
                   <NavDropdown.Item onClick={() => navigate('/agents')} active={location.pathname === '/agents'}>
+                    <FontAwesomeIcon icon='stethoscope' />
                     Directory
                   </NavDropdown.Item>
                 </NavDropdown>
@@ -257,6 +266,7 @@ export const BitwiseNavbar: FC = () => {
               {userHasPermission('user:read') ? (
                 <NavDropdown title={<div>Administration</div>}>
                   <NavDropdown.Item onClick={() => navigate('/users')} active={location.pathname === '/users'}>
+                    <FontAwesomeIcon icon='user' />
                     Users
                   </NavDropdown.Item>
                 </NavDropdown>
@@ -303,8 +313,14 @@ export const BitwiseNavbar: FC = () => {
                     <Badge pill>{user.role}</Badge>
                   </div>
                 </NavDropdown.Header>
-                <NavDropdown.Item onClick={() => navigate(`/user/profile/${user.id}`)}>Profile</NavDropdown.Item>
-                <NavDropdown.Item onClick={() => showModal()}>Sign Out</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => navigate(`/user/profile/${user.id}`)}>
+                  <FontAwesomeIcon icon='user' />
+                  Profile
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={() => showModal()}>
+                  <FontAwesomeIcon icon='sign-out-alt' />
+                  Sign Out
+                </NavDropdown.Item>
               </NavDropdown>
             ) : null}
           </Offcanvas.Body>
