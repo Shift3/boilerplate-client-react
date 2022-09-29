@@ -75,9 +75,8 @@ export const IsActive: FC<{
                 <h4>Billing History</h4>
                 <table className='table'>
                   <tbody>
-                    {subscription.billingHistory.map(({ amount, date, description }, i) => (
-                      // eslint-disable-next-line react/no-array-index-key
-                      <tr key={i}>
+                    {subscription.billingHistory.map(({ amount, date, description }) => (
+                      <tr key={date}>
                         <td key={date}>
                           <Moment format='MMM D, YYYY'>{date}</Moment>
                         </td>
