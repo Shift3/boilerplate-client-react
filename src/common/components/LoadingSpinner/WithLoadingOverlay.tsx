@@ -1,6 +1,17 @@
 import { CenteredSpinnerContainer, DimmableContent, NoContent } from 'common/styles/utilities';
 import { FC, PropsWithChildren, useEffect, useState } from 'react';
 import { LoadingSpinner } from './LoadingSpinner';
+import styled from 'styled-components';
+
+const StyledLoadingSpinner = styled.div`
+  padding: 3rem 0rem;
+  text-align: center;
+  
+  #loading-spinner {
+    width: 4em;
+    height: 4em;
+  }
+`;
 
 export type Props = {
   isLoading: boolean;
@@ -37,7 +48,9 @@ export const WithLoadingOverlay: FC<PropsWithChildren<Props>> = ({
     >
       {!isDelayComplete ? (
         <CenteredSpinnerContainer>
-          <LoadingSpinner />
+          <StyledLoadingSpinner>
+            <LoadingSpinner />
+          </StyledLoadingSpinner>
         </CenteredSpinnerContainer>
       ) : null}
       {isInitialLoad ? <NoContent /> : children}

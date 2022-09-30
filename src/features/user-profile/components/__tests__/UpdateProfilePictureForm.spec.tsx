@@ -21,7 +21,7 @@ describe('UpdateProfilePictureForm', () => {
           <Provider store={createAppStore()}>
             <ModalProvider>
               <ThemeProvider theme={light}>
-                <UpdateProfilePictureForm onSubmit={mockOnSubmit} />
+                <UpdateProfilePictureForm user={null} onSubmit={mockOnSubmit} />
               </ThemeProvider>
             </ModalProvider>
           </Provider>
@@ -31,12 +31,12 @@ describe('UpdateProfilePictureForm', () => {
     mockOnSubmit.mockReset();
   });
 
-  const getProfilePictureInput = () => screen.getByLabelText(/Photo/i) as HTMLInputElement;
+  const getProfilePictureInput = () => screen.getByRole('dialog') as HTMLInputElement;
 
   it('should submit form if profilePicture field is valid', async () => {
     const profilePictureInput = getProfilePictureInput();
     await userEvent.upload(profilePictureInput, file);
-    await userEvent.click(screen.getByRole('button', { name: 'Update' }));
+    await userEvent.click(screen.getByRole('button', { hidden: true }));
 
     waitFor(() => {
       expect(mockOnSubmit).toHaveBeenCalled();
@@ -51,11 +51,5 @@ describe('UpdateProfilePictureForm', () => {
     expect(profilePictureInput.files ? profilePictureInput.files[0] : null).toStrictEqual(file);
     expect(profilePictureInput.files ? profilePictureInput.files.item(0) : null).toStrictEqual(file);
     expect(profilePictureInput.files).toHaveLength(1);
-  });
-
-  it('should show alert when no file has been uploaded', async () => {
-    await userEvent.click(screen.getByRole('button', { name: 'Update' }));
-
-    expect(await screen.findAllByRole('alert')).toHaveLength(1);
   });
 });
