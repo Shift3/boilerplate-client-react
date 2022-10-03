@@ -79,7 +79,7 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
         color: ${({ theme }) => theme.pages.p} !important;
     }
 
-    .btn-primary {
+    .btn.btn-primary {
         background-color: ${({ theme }) => theme.buttons.primaryBackgroundColor};
         border-color: ${({ theme }) => theme.buttons.primaryBorderColor};
         color: ${({ theme }) => theme.buttons.primaryTextColor};
@@ -91,7 +91,7 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
         }
     }
 
-    .btn-default {
+    .btn.btn-default {
         background-color: ${({ theme }) => theme.buttons.defaultBackgroundColor};
         border-color: ${({ theme }) => theme.buttons.defaultBorderColor};
         color: ${({ theme }) => theme.buttons.defaultTextColor};
