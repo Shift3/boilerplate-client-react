@@ -1,4 +1,3 @@
-import { store } from 'app/redux';
 import { notificationApi, useGetUnreadNotificationsQuery } from 'common/api/notificationApi';
 import { AppNotification } from 'common/models/notifications';
 import { environment } from 'environment';
@@ -52,7 +51,7 @@ export const useLiveNotifications = () => {
     initialState,
   );
 
-  let {
+  const {
     data: unreadNotifications,
     isFetching,
     isLoading,
@@ -91,7 +90,9 @@ export const useLiveNotifications = () => {
         notificationDispatch({ type: 'add', notification: payload });
 
         // Grab the component for the notification type
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const Component = (NotificationComponents as any)[payload.type];
+        // eslint-disable-next-line no-console
         console.assert(
           Component,
           `Could not find notification display component ${payload.type} in notifications/components.tsx\nMake sure to define a handler in that file`,
@@ -100,11 +101,9 @@ export const useLiveNotifications = () => {
           toast(<Component key={payload.id} notification={payload} />, { className: 'in-app-notification' });
         }
       };
-    } else {
-      if (eventSource) {
-        (eventSource as EventSource).close();
-        eventSource = null;
-      }
+    } else if (eventSource) {
+      (eventSource as EventSource).close();
+      eventSource = null;
     }
 
     return () => {

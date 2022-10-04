@@ -14,11 +14,11 @@ export const AgentCreatedNotification: FC<{
   }
 
   const isAgentCreatedNotificationData = (data: unknown): data is AgentCreatedData => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return !!(data as any).userName;
   };
 
   const { data } = notification;
-  console.log(data);
   if (!isAgentCreatedNotificationData(data)) return <></>;
 
   return (

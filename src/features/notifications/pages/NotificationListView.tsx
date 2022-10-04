@@ -6,7 +6,7 @@ import { AppNotification } from 'common/models/notifications';
 import { PageHeader, SmallContainer } from 'common/styles/page';
 import { NoContent } from 'common/styles/utilities';
 import { FC, useContext, useEffect, useRef } from 'react';
-import { Button, Card, Container } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import { Trans } from 'react-i18next';
 import * as NotificationComponents from '../components';
 import { NotificationContext } from '../context';
@@ -30,10 +30,7 @@ export const NotificationListView: FC = () => {
   };
 
   useEffect(() => {
-    if (isNotificationsLoading)
-      return () => {
-        console.log('not loaded yet');
-      };
+    if (isNotificationsLoading) return () => {};
 
     const element = scrollElement.current;
 
@@ -50,7 +47,9 @@ export const NotificationListView: FC = () => {
 
   const renderNotification = (notification: AppNotification) => {
     // Dynamic dispatch.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const Component = (NotificationComponents as any)[notification.type];
+    // eslint-disable-next-line no-console
     console.assert(
       Component,
       `Could not find notification display component ${notification.type} in notifications/components.tsx\nMake sure to define a handler in that file`,

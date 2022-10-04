@@ -5,22 +5,21 @@ import { BannerContentWrapper } from 'common/styles/utilities';
 import { environment } from 'environment';
 import { AgentRoutes } from 'features/agent-dashboard';
 import { AuthRoutes, RequireAuth } from 'features/auth';
-import { useAuth } from 'features/auth/hooks';
 import { AppErrorBoundary } from 'features/error-boundary/components/AppErrorBoundary';
-import { NotificationContext, NotificationsProvider } from 'features/notifications/context';
+import { NetworkDetector } from 'features/network-detector/components/NetworkDetector';
+import { NotificationsProvider } from 'features/notifications/context';
 import { NotificationRoutes } from 'features/notifications/Routes';
 import { UserRoutes } from 'features/user-dashboard';
 import { UpdateUserProfilePage } from 'features/user-profile/pages/UpdateUserProfilePage';
-import { createContext, FC, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, FC, useMemo, useState } from 'react';
+import { ModalProvider } from 'react-modal-hook';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Slide, toast, ToastContainer } from 'react-toastify';
-import { ThemeProvider } from 'styled-components';
-import { GlobalStyle } from '../GlobalStyle';
-import light from 'themes/light';
-import dark from 'themes/dark';
-import { NetworkDetector } from 'features/network-detector/components/NetworkDetector';
-import { ModalProvider } from 'react-modal-hook';
 import { TransitionGroup } from 'react-transition-group';
+import { ThemeProvider } from 'styled-components';
+import dark from 'themes/dark';
+import light from 'themes/light';
+import { GlobalStyle } from '../GlobalStyle';
 
 export const ThemeContext = createContext({
   theme: 'light',

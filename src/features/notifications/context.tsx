@@ -1,8 +1,5 @@
-import { notificationApi } from 'common/api/notificationApi';
 import { AppNotification } from 'common/models/notifications';
-import { useAuth } from 'features/auth/hooks';
-import { createContext, FC, PropsWithChildren, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { createContext, FC, PropsWithChildren } from 'react';
 import { useLiveNotifications } from './hooks/useLiveNotifications';
 
 export const NotificationContext = createContext<{
