@@ -1,4 +1,4 @@
-import { faLanguage } from '@fortawesome/free-solid-svg-icons';
+import { faAtlas, faHomeAlt, faLanguage } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { environment } from 'environment';
@@ -9,7 +9,7 @@ import { MoonIcon } from 'features/themes/MoonIcon';
 import { SunIcon } from 'features/themes/SunIcon';
 import { useTheme } from 'features/themes/useTheme';
 import { FC } from 'react';
-import { Badge, Button, Container, Modal, Navbar, NavDropdown, NavLink, Offcanvas } from 'react-bootstrap';
+import { Badge, Button, Container, Modal, Nav, Navbar, NavDropdown, NavLink, Offcanvas } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useModal } from 'react-modal-hook';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -33,16 +33,10 @@ const StyledNavbar = styled(Navbar)`
     margin-inline-end: 0.5rem;
   }
 
+  .nav-link.active,
   .dropdown-item.active {
     background: ${props => props.theme.nav.link.activeBackground};
     color: ${props => props.theme.nav.link.activeText};
-  }
-
-  .major-dropdowns {
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-    flex-grow: 1;
   }
 
   .navbar-toggler {
@@ -66,6 +60,7 @@ const StyledNavbar = styled(Navbar)`
     color: ${props => props.theme.textColor};
     border-radius: ${props => props.theme.borderRadius};
     font-weight: 500;
+    padding: 0.4rem;
     padding-left: 0.5rem !important;
     padding-right: 0.5rem !important;
 
@@ -239,75 +234,85 @@ export const BitwiseNavbar: FC = () => {
             <Offcanvas.Title id='offcanvasNavbarLabel-expand-md'>Starter Project</Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
-            <div className='major-dropdowns'>
+            <Nav className='justify-content-start flex-grow-1 pe-3'>
               {userHasPermission('agent:read') ? (
-                <NavDropdown title={<div>General</div>}>
-                  <NavDropdown.Item onClick={() => navigate('/agents')} active={location.pathname === '/agents'}>
-                    <FontAwesomeIcon icon='stethoscope' />
-                    Directory
-                  </NavDropdown.Item>
-                </NavDropdown>
+                <NavLink
+                  onClick={() => navigate('/agents')}
+                  className={location.pathname === '/agents' ? 'active me-3' : 'me-3'}
+                >
+                  <FontAwesomeIcon className='me-2' icon={faHomeAlt} />
+                  Directory
+                </NavLink>
               ) : null}
               {userHasPermission('user:read') ? (
-                <NavDropdown title={<div>Administration</div>}>
+                <NavDropdown
+                  title={
+                    <div>
+                      <FontAwesomeIcon className='me-2' icon={faAtlas} />
+                      Administration
+                    </div>
+                  }
+                >
                   <NavDropdown.Item onClick={() => navigate('/users')} active={location.pathname === '/users'}>
                     <FontAwesomeIcon icon='user' />
                     Users
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : null}
-            </div>
+            </Nav>
 
-            <NavLink onClick={() => toggle()} className='theme-toggle me-3 d-flex align-items-center'>
-              <>{theme === 'light' ? <MoonIcon /> : <SunIcon />}</>
-            </NavLink>
+            <Nav className='justify-content-end'>
+              <NavLink onClick={() => toggle()} className='theme-toggle me-3 d-flex align-items-center'>
+                <>{theme === 'light' ? <MoonIcon /> : <SunIcon />}</>
+              </NavLink>
 
-            <NavDropdown
-              align='end'
-              title={
-                <>
-                  <FontAwesomeIcon className='me-2' size='lg' icon={faLanguage} />
-                  {defaultLanguageOption?.label}
-                </>
-              }
-              className='me-3'
-            >
-              {__languageOptions.map(option => (
-                <NavDropdown.Item onClick={() => changeLanguage(option.value)}>{option.label}</NavDropdown.Item>
-              ))}
-            </NavDropdown>
-
-            {user ? (
               <NavDropdown
                 align='end'
                 title={
                   <>
-                    <UserProfilePicture user={user} size='xs' radius={24} />
-                    <span className='offcanvas-only'>
-                      {user.firstName} {user.lastName.charAt(0)}.
-                    </span>
+                    <FontAwesomeIcon className='me-2' size='lg' icon={faLanguage} />
+                    {defaultLanguageOption?.label}
                   </>
                 }
+                className='me-3'
               >
-                <NavDropdown.Header className='d-flex align-items-center'>
-                  <UserProfilePicture user={user} size='xs' radius={32} />
-                  <div>
-                    <div>
-                      {user.firstName} {user.lastName.charAt(0)}.
-                    </div>
-                    <Badge pill>{user.role}</Badge>
-                  </div>
-                </NavDropdown.Header>
-                <NavDropdown.Item onClick={() => navigate(`/user/profile/${user.id}`)}>
-                  <FontAwesomeIcon icon='user' />
-                  Profile
-                </NavDropdown.Item>
-                <NavDropdown.Item onClick={() => showModal()}>
-                  <FontAwesomeIcon icon='sign-out-alt' />
-                  Sign Out
-                </NavDropdown.Item>
+                {__languageOptions.map(option => (
+                  <NavDropdown.Item onClick={() => changeLanguage(option.value)}>{option.label}</NavDropdown.Item>
+                ))}
               </NavDropdown>
-            ) : null}
+
+              {user ? (
+                <NavDropdown
+                  align='end'
+                  title={
+                    <>
+                      <UserProfilePicture user={user} size='xs' radius={24} />
+                      <span className='offcanvas-only'>
+                        {user.firstName} {user.lastName.charAt(0)}.
+                      </span>
+                    </>
+                  }
+                >
+                  <NavDropdown.Header className='d-flex align-items-center'>
+                    <UserProfilePicture user={user} size='xs' radius={32} />
+                    <div>
+                      <div>
+                        {user.firstName} {user.lastName.charAt(0)}.
+                      </div>
+                      <Badge pill>{user.role}</Badge>
+                    </div>
+                  </NavDropdown.Header>
+                  <NavDropdown.Item onClick={() => navigate(`/user/profile/${user.id}`)}>
+                    <FontAwesomeIcon icon='user' />
+                    Profile
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => showModal()}>
+                    <FontAwesomeIcon icon='sign-out-alt' />
+                    Sign Out
+                  </NavDropdown.Item>
+                </NavDropdown>
+              ) : null}
+            </Nav>
           </Offcanvas.Body>
         </StyledNavbarOffcanvas>
       </Container>
