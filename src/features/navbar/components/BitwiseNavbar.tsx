@@ -4,11 +4,12 @@ import { LoadingButton } from 'common/components/LoadingButton';
 import { environment } from 'environment';
 import { EnvironmentConfiguration } from 'environment/types';
 import { useAuth, useLogout } from 'features/auth/hooks';
+import { NotificationContext } from 'features/notifications/context';
 import { useRbac } from 'features/rbac';
 import { MoonIcon } from 'features/themes/MoonIcon';
 import { SunIcon } from 'features/themes/SunIcon';
 import { useTheme } from 'features/themes/useTheme';
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { Badge, Button, Container, Modal, Nav, Navbar, NavDropdown, NavLink, Offcanvas } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useModal } from 'react-modal-hook';
@@ -61,8 +62,8 @@ const StyledNavbar = styled(Navbar)`
     border-radius: ${props => props.theme.borderRadius};
     font-weight: 500;
     padding: 0.4rem;
-    padding-left: 0.5rem !important;
-    padding-right: 0.5rem !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
 
     margin-right: 1rem;
     &:last-of-type {
@@ -177,7 +178,70 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
   }
 `;
 
+const NotificationButton = styled(NavLink)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 1rem 0rem 1rem 1rem;
+  position: relative;
+
+  svg {
+    margin-right: 1rem;
+  }
+
+  #notification-label {
+    margin-right: 1rem;
+  }
+
+  #notification-counter {
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.5rem;
+    height: 1.5rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 0.8rem;
+    font-weight: bold;
+    background-color: ${props => props.theme.noticeBackgroundColor};
+    color: ${props => props.theme.noticeTextColor};
+    border-radius: 50%;
+  }
+
+  @media (min-width: 768px) {
+    padding: inherit;
+    justify-content: center;
+
+    svg {
+      margin-right: 0;
+    }
+
+    #notification-label {
+      display: none;
+    }
+
+    #notification-counter {
+      right: 0;
+      top: 0;
+      transform: none;
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    span {
+      color: ${props => props.theme.noticeTextColor};
+      font-size: 0.8rem;
+    }
+  }
+`;
+
 export const BitwiseNavbar: FC = () => {
+  const { count } = useContext(NotificationContext);
   const { user } = useAuth();
   const { userHasPermission } = useRbac();
   const location = useLocation();
@@ -281,6 +345,15 @@ export const BitwiseNavbar: FC = () => {
                 ))}
               </NavDropdown>
 
+              <NotificationButton className='me-3' onClick={() => navigate('/notifications')}>
+                <FontAwesomeIcon size='lg' icon='bell' />
+                <span id='notification-label'>Notifications</span>
+                {count > 0 ? (
+                  <div>
+                    <span id='notification-counter'>{count > 9 ? '9+' : count.toString()}</span>
+                  </div>
+                ) : null}
+              </NotificationButton>
               {user ? (
                 <NavDropdown
                   align='end'

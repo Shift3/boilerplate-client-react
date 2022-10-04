@@ -3,6 +3,7 @@ import {
   faBan,
   faBars,
   faBuilding,
+  faBell,
   faCheck,
   faChevronDown,
   faChevronLeft,
@@ -50,6 +51,7 @@ import reportWebVitals from './reportWebVitals';
 library.add(
   faBan,
   faBars,
+  faBell,
   faBuilding,
   faCheck,
   faChevronLeft,

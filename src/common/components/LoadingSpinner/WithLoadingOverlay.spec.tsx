@@ -6,7 +6,7 @@ describe('WithLoadingOverlay', () => {
     beforeEach(() => {
       render(
         <WithLoadingOverlay isLoading containerHasRoundedCorners={false} containerBorderRadius='0px'>
-          <div data-testid='children'></div>
+          <div data-testid='children' />
         </WithLoadingOverlay>,
       );
     });
@@ -21,7 +21,7 @@ describe('WithLoadingOverlay', () => {
     beforeEach(() => {
       render(
         <WithLoadingOverlay isLoading={false} containerHasRoundedCorners={false} containerBorderRadius='0px'>
-          <div data-testid='children'></div>
+          <div data-testid='children' />
         </WithLoadingOverlay>,
       );
     });

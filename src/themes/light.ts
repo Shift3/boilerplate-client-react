@@ -5,6 +5,8 @@ export default {
   textColor: colors.black,
   linkColor: colors.blue600,
   linkHoverColor: colors.blue700,
+  noticeBackgroundColor: colors.dangerRed,
+  noticeTextColor: colors.white,
 
   borderRadius: '6px',
   boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px',

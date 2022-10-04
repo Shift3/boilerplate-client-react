@@ -11,6 +11,7 @@
     "@sentry/react": "^7.12.1",
     "@sentry/tracing": "^7.12.1",
     "@types/react-table": "^7.7.12",
+    "@testing-library/react": "^13.4.0",
     "bootstrap": "5.2.1",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.2",
@@ -35,6 +36,7 @@
     "react-table": "^7.8.0",
     "react-toastify": "^9.0.8",
     "react-transition-group": "^4.4.5",
+    "react-moment": "^1.1.2",
     "sentry": "^0.1.2",
     "source-map-explorer": "^2.5.2",
     "styled-components": "^5.3.5",
@@ -72,7 +74,6 @@
   "devDependencies": {
     "@faker-js/faker": "^7.5.0",
     "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
     "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^14.4.3",
     "@types/jest": "^29.0.2",
