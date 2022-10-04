@@ -4,25 +4,19 @@ import { LoadingButton } from 'common/components/LoadingButton';
 import { environment } from 'environment';
 import { EnvironmentConfiguration } from 'environment/types';
 import { useAuth, useLogout } from 'features/auth/hooks';
+import { useRbac } from 'features/rbac';
 import { MoonIcon } from 'features/themes/MoonIcon';
 import { SunIcon } from 'features/themes/SunIcon';
 import { useTheme } from 'features/themes/useTheme';
 import { FC } from 'react';
 import { Badge, Button, Container, Modal, Navbar, NavDropdown, NavLink, Offcanvas } from 'react-bootstrap';
-import Nav from 'react-bootstrap/Nav';
 import { useTranslation } from 'react-i18next';
 import { useModal } from 'react-modal-hook';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { languages } from '../../../i18n/config';
-import { NavLinkConfig, useNavLinks } from '../hooks/useNavLinks';
-import { CustomNavLink } from './CustomNavLink';
 import { Logo } from './Logo';
 import { UserProfilePicture } from './UserProfilePicture';
-
-type Props = {
-  closeVerticalNav?: () => void;
-};
 
 const StyledNavbar = styled(Navbar)`
   position: fixed;
@@ -35,6 +29,22 @@ const StyledNavbar = styled(Navbar)`
   margin-top: ${environment.environment === EnvironmentConfiguration.Staging ? '56px' : '0px'};
   padding: 0.8rem 0;
 
+  .dropdown-item > svg {
+    margin-inline-end: 0.5rem;
+  }
+
+  .dropdown-item.active {
+    background: ${props => props.theme.nav.link.activeBackground};
+    color: ${props => props.theme.nav.link.activeText};
+  }
+
+  .major-dropdowns {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    flex-grow: 1;
+  }
+
   .navbar-toggler {
     border: none;
   }
@@ -45,7 +55,6 @@ const StyledNavbar = styled(Navbar)`
 
   .dropdown-toggle::after {
     margin-left: 0.25rem;
-    transition: 0.15s ease all;
     color: ${props => props.theme.textColor};
   }
 
@@ -96,11 +105,6 @@ const StyledNavbar = styled(Navbar)`
   .navbar-brand img {
     width: 40px;
   }
-
-  .nav-link.active {
-    background: ${props => props.theme.nav.link.activeBackground};
-    color: ${props => props.theme.nav.link.activeText};
-  }
 `;
 
 const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
@@ -125,14 +129,29 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
       display: flex;
       flex-direction: column;
 
-      a.nav-link {
+      .major-dropdowns {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        flex-grow: 1;
+      }
+
+      .dropdown-item {
         padding: 1rem 0rem 1rem 1rem;
       }
 
-      .nav-link.active {
+      .dropdown-item > svg {
+        margin-inline-end: 0.5rem;
+      }
+
+      .dropdown-item.active {
         background: ${props => props.theme.nav.link.activeBackground};
         color: ${props => props.theme.nav.link.activeText};
         border-radius: ${props => props.theme.borderRadius};
+      }
+
+      a.nav-link {
+        padding: 1rem 0rem 1rem 0rem;
       }
     }
 
@@ -144,6 +163,14 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
       position: relative;
       top: 0;
       width: 100%;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .dropdown-toggle {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
     }
 
     .theme-toggle {
@@ -155,11 +182,10 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
   }
 `;
 
-export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
-  let dropdownLinks: NavLinkConfig[] = [];
-
+export const BitwiseNavbar: FC = () => {
   const { user } = useAuth();
-  const navLinks = useNavLinks();
+  const { userHasPermission } = useRbac();
+  const location = useLocation();
   const navigate = useNavigate();
   const { toggle, theme } = useTheme();
   const { logout, isLoading } = useLogout();
@@ -186,13 +212,6 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
     [isLoading],
   );
 
-  if (user) {
-    dropdownLinks = [
-      { id: 0, icon: 'user', label: 'Profile', path: `/user/profile/${user.id}` },
-      { id: 1, icon: 'sign-out-alt', label: 'Sign Out', method: showModal },
-    ];
-  }
-
   const changeLanguage = (ln: string) => {
     localStorage.setItem('language', ln);
     i18n.changeLanguage(ln);
@@ -203,14 +222,6 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
   });
 
   const defaultLanguageOption = __languageOptions.find(language => language.value === i18n.languages[0]);
-
-  const handleLinkClick = (link: NavLinkConfig) => {
-    if (link.path) {
-      navigate(link.path);
-    } else if (link.method !== undefined) {
-      link.method();
-    }
-  };
 
   return (
     <StyledNavbar expand='md'>
@@ -228,11 +239,24 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
             <Offcanvas.Title id='offcanvasNavbarLabel-expand-md'>Starter Project</Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
-            <Nav className='justify-content-start flex-grow-1 pe-3'>
-              {navLinks.map(link => (
-                <CustomNavLink handleSamePathNavigate={closeVerticalNav} key={link.id} link={link} />
-              ))}
-            </Nav>
+            <div className='major-dropdowns'>
+              {userHasPermission('agent:read') ? (
+                <NavDropdown title={<div>General</div>}>
+                  <NavDropdown.Item onClick={() => navigate('/agents')} active={location.pathname === '/agents'}>
+                    <FontAwesomeIcon icon='stethoscope' />
+                    Directory
+                  </NavDropdown.Item>
+                </NavDropdown>
+              ) : null}
+              {userHasPermission('user:read') ? (
+                <NavDropdown title={<div>Administration</div>}>
+                  <NavDropdown.Item onClick={() => navigate('/users')} active={location.pathname === '/users'}>
+                    <FontAwesomeIcon icon='user' />
+                    Users
+                  </NavDropdown.Item>
+                </NavDropdown>
+              ) : null}
+            </div>
 
             <NavLink onClick={() => toggle()} className='theme-toggle me-3 d-flex align-items-center'>
               <>{theme === 'light' ? <MoonIcon /> : <SunIcon />}</>
@@ -274,11 +298,14 @@ export const BitwiseNavbar: FC<Props> = ({ closeVerticalNav }) => {
                     <Badge pill>{user.role}</Badge>
                   </div>
                 </NavDropdown.Header>
-                {dropdownLinks.map(link => (
-                  <NavDropdown.Item key={link.id} onClick={() => handleLinkClick(link)}>
-                    {link.label}
-                  </NavDropdown.Item>
-                ))}
+                <NavDropdown.Item onClick={() => navigate(`/user/profile/${user.id}`)}>
+                  <FontAwesomeIcon icon='user' />
+                  Profile
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={() => showModal()}>
+                  <FontAwesomeIcon icon='sign-out-alt' />
+                  Sign Out
+                </NavDropdown.Item>
               </NavDropdown>
             ) : null}
           </Offcanvas.Body>
