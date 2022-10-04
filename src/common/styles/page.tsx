@@ -10,9 +10,7 @@ export const PageWrapper = styled.div`
 `;
 
 export const SmallContainer = styled(Container)`
-  max-width: 540px;
-
-  @media (min-width: 768px) {
+  @media (min-width: 1200px) {
     max-width: 960px;
   }
 `;
@@ -33,6 +31,8 @@ export const PageHeader = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
   align-content: space-between;
+  border-bottom: 1px solid ${props => props.theme.nav.borderColor};
+  margin-bottom: 1.25rem;
 
   & > * {
     margin-bottom: 1rem;
