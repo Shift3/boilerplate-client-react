@@ -1,8 +1,8 @@
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { LoadingButton } from 'common/components/LoadingButton';
 import { showErrorMessage, showSuccessMessage } from 'common/services/notification';
 import { useAuth } from 'features/auth/hooks';
 import { FC } from 'react';
-import { Button } from 'react-bootstrap';
 
 export const CheckoutForm: FC<{
   onComplete: () => void;
@@ -39,9 +39,9 @@ export const CheckoutForm: FC<{
     <form onSubmit={() => handleSubmit()}>
       <PaymentElement id='payment-element' />
       <div className='mt-3 d-grid gap-2'>
-        <Button size='lg' type='submit'>
+        <LoadingButton loading size='lg' type='submit'>
           Pay Now
-        </Button>
+        </LoadingButton>
       </div>
     </form>
   );

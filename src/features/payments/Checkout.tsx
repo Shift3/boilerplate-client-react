@@ -59,7 +59,7 @@ export const Checkout: FC<{
           <CheckoutForm onComplete={onComplete} />
         </Elements>
       ) : (
-        <WithLoadingOverlay isLoading={isLoading} containerHasRoundedCorners containerBorderRadius='6px'>
+        <WithLoadingOverlay isLoading={isLoading}>
           {plans ? (
             <>
               {plans.map((plan: Plan) => (

@@ -28,7 +28,7 @@ export const MySubscription = () => {
   }, [subscription]);
 
   return (
-    <WithLoadingOverlay isLoading={isLoading} containerHasRoundedCorners containerBorderRadius='6px'>
+    <WithLoadingOverlay isLoading={isLoading}>
       {subscription && !isLoading ? (
         <>
           {status === 'active' ? <IsActive subscription={subscription} onCancel={() => refetch()} /> : null}

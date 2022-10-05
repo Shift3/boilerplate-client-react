@@ -68,12 +68,7 @@ export const UpdateAgentView: FC = () => {
 
       <Card>
         <Card.Body>
-          <WithLoadingOverlay
-            isInitialLoad={isLoadingAgent && isFetching}
-            isLoading={isLoadingAgent}
-            containerHasRoundedCorners
-            containerBorderRadius='6px'
-          >
+          <WithLoadingOverlay isInitialLoad={isLoadingAgent && isFetching} isLoading={isLoadingAgent}>
             {!isLoadingAgent ? (
               <AgentDetailForm
                 defaultValues={agent}

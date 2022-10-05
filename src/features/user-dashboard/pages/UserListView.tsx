@@ -97,12 +97,7 @@ export const UserListView: FC = () => {
 
       <TableCard>
         <TableCard.Body>
-          <WithLoadingOverlay
-            isLoading={isPageLoading || isFetching}
-            isInitialLoad={isPageLoading && isFetching}
-            containerHasRoundedCorners
-            containerBorderRadius='6px'
-          >
+          <WithLoadingOverlay isLoading={isPageLoading || isFetching} isInitialLoad={isPageLoading && isFetching}>
             <DataTable<UserTableItem>
               columns={columns}
               data={tableData}
