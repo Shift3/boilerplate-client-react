@@ -5,6 +5,7 @@ export enum EnvironmentConfiguration {
 }
 
 export interface IEnvironment {
+  apiHost: string;
   apiRoute: string;
   environment: EnvironmentConfiguration;
   isProduction: boolean;
