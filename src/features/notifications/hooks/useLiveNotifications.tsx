@@ -84,7 +84,7 @@ export const useLiveNotifications = () => {
   useEffect(() => {
     let eventSource: EventSource | null = null;
     if (user) {
-      eventSource = new EventSource(`${environment.apiRoute}/events/${user!.id}/`, { withCredentials: true });
+      eventSource = new EventSource(`${environment.apiRoute}/events/${user!.id}/`);
       eventSource.onmessage = message => {
         const payload = JSON.parse(message.data);
         notificationDispatch({ type: 'add', notification: payload });
