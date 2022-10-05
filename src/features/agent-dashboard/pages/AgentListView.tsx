@@ -44,6 +44,16 @@ export const AgentListView: FC = () => {
         attributeLabel: 'Name',
         FilterUI: StringFilter(),
       },
+      {
+        attribute: 'email',
+        attributeLabel: 'Email',
+        FilterUI: StringFilter(),
+      },
+      {
+        attribute: 'phoneNumber',
+        attributeLabel: 'Phone Number',
+        FilterUI: StringFilter(),
+      },
     ],
     [],
   );
