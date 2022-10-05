@@ -1,51 +1,20 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useCancelActiveSubscriptionMutation, Subscription } from 'common/api/paymentsApi';
 import { FC } from 'react';
-import { Alert, Badge, Button, Card, Col, Row } from 'react-bootstrap';
-import styled from 'styled-components';
+import { Alert, Badge, Card, Col, Row } from 'react-bootstrap';
 import Moment from 'react-moment';
 import { showSuccessMessage } from 'common/services/notification';
 import { useModal } from 'react-modal-hook';
 import { SimpleConfirmModal } from 'common/components/SimpleConfirmModal';
-
-const CreditCard = styled.div`
-  padding: 1rem;
-  margin: 0.6rem;
-  background: ${props => props.theme.backgroundColor};
-  color: ${props => props.theme.textColor};
-  border-radius: ${props => props.theme.borderRadius};
-  position: relative;
-
-  small {
-    display: block;
-    color: #999;
-  }
-
-  & > div > div {
-    flex: 1;
-  }
-
-  span {
-    display: block;
-    font-family: monospace;
-  }
-
-  img {
-    width: 48px;
-    height: auto;
-  }
-
-  path {
-    fill: ${props => props.theme.textColor};
-  }
-`;
+import { CardManagement } from './CardManagement';
 
 export const IsActive: FC<{
   subscription: Subscription;
+  refetch: () => void;
   onCancel: () => void;
-}> = ({ subscription, onCancel }) => {
+}> = ({ subscription, onCancel, refetch }) => {
   const [cancelActiveSubscription] = useCancelActiveSubscriptionMutation();
-  const [showModal, hideModal] = useModal(({ in: open, onExited }) => {
+
+  const [showCancelModal, hideCancelModal] = useModal(({ in: open, onExited }) => {
     const onConfirm = async () => {
       await cancelActiveSubscription();
       onCancel();
@@ -56,7 +25,7 @@ export const IsActive: FC<{
       <SimpleConfirmModal
         title='Cancel Subscription'
         show={open}
-        onCancel={hideModal}
+        onCancel={hideCancelModal}
         onConfirm={onConfirm}
         cancelLabel='Keep My Subscription'
         confirmLabel='Cancel Subscription'
@@ -82,11 +51,11 @@ export const IsActive: FC<{
   return (
     <Row>
       <Col className='mb-3' md={12} xl={6}>
-        <Card>
+        <Card className='mb-3'>
           <Card.Body>
             <div className='mb-3 d-flex align-items-center'>
               <h4 className='flex-fill m-0'>Current Plan</h4>
-              <a className='text-danger' href='#' onClick={() => showModal()}>
+              <a className='text-danger' href='#' onClick={() => showCancelModal()}>
                 <b>Cancel</b>
               </a>
             </div>
@@ -102,7 +71,7 @@ export const IsActive: FC<{
         {subscription.billingHistory.length > 0 ? (
           <Card>
             <Card.Body>
-              <Col className='mt-2' md={12} xl={6}>
+              <Col className='mt-2'>
                 <h4>Billing History</h4>
                 <table className='table'>
                   <tbody>
@@ -125,27 +94,7 @@ export const IsActive: FC<{
       </Col>
 
       <Col className='mb-3' md={12} xl={6}>
-        <Card>
-          <Card.Body>
-            <h4>Payment Methods</h4>
-            {subscription.paymentMethods.map(paymentMethod => (
-              <CreditCard key={paymentMethod.id}>
-                <div className='d-flex align-items-center'>
-                  <img className='me-3' width={64} src={`/cards/${paymentMethod.card.brand}.png`} alt='Credit Card' />
-                  <div>
-                    <span>•••• •••• •••• {paymentMethod.card.last4}</span>
-                    <small>
-                      {paymentMethod.card.expMonth}/{paymentMethod.card.expYear.toString().slice(2)}
-                    </small>
-                  </div>
-                  <Button className='ms-3' variant='link'>
-                    <FontAwesomeIcon size='1x' icon='ellipsis-vertical' />
-                  </Button>
-                </div>
-              </CreditCard>
-            ))}
-          </Card.Body>
-        </Card>
+        <CardManagement onCardAdded={() => refetch()} subscription={subscription} />
       </Col>
     </Row>
   );

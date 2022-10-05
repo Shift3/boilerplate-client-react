@@ -7,11 +7,7 @@ import { Elements, PaymentElement, useElements, useStripe } from '@stripe/react-
 import { useAuth } from 'features/auth/hooks';
 import { showErrorMessage, showSuccessMessage } from 'common/services/notification';
 import { LoadingButton } from 'common/components/LoadingButton';
-import { loadStripe, Stripe } from '@stripe/stripe-js';
-
-const stripePromise: Promise<Stripe | null> = loadStripe(
-  'pk_test_51LKnI7LBoYuqAVlJCiBaRj3JGO7ud4yqqxSwwaG94okOq4jB3hUQkEwR9eFJYIEvSWewbK9eZhN95gxiuy7bujHA00c47wfziI',
-);
+import { stripePromise } from 'app/App';
 
 const PlanChoice = styled.div`
   background: #efefef;

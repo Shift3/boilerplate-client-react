@@ -20,6 +20,11 @@ import { ThemeProvider } from 'styled-components';
 import dark from 'themes/dark';
 import light from 'themes/light';
 import { GlobalStyle } from '../GlobalStyle';
+import { Stripe, loadStripe } from '@stripe/stripe-js';
+
+export const stripePromise: Promise<Stripe | null> = loadStripe(
+  'pk_test_51LKnI7LBoYuqAVlJCiBaRj3JGO7ud4yqqxSwwaG94okOq4jB3hUQkEwR9eFJYIEvSWewbK9eZhN95gxiuy7bujHA00c47wfziI',
+);
 
 export const ThemeContext = createContext({
   theme: 'light',

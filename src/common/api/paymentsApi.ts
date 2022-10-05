@@ -112,6 +112,13 @@ export const paymentApi = createApi({
         };
       },
     }),
+
+    addCardToWallet: builder.mutation<{ clientSecret: string }, void>({
+      query: () => ({
+        url: '/subscriptions/card_wallet/',
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
@@ -122,4 +129,5 @@ export const {
   useGetMySubscriptionQuery,
   useCancelActiveSubscriptionMutation,
   useReactivateSubscriptionMutation,
+  useAddCardToWalletMutation,
 } = paymentApi;
