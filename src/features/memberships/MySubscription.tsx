@@ -63,8 +63,9 @@ export const MySubscription = () => {
 
                 <table className='table'>
                   <tbody>
-                    {subscription.billingHistory.map(({ amount, date, description }) => (
-                      <tr>
+                    {subscription.billingHistory.map(({ amount, date, description }, i) => (
+                      // eslint-disable-next-line react/no-array-index-key
+                      <tr key={i}>
                         <td key={date}>
                           <Moment format='MMM D, YYYY'>{date}</Moment>
                         </td>

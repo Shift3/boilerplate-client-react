@@ -63,19 +63,29 @@ export const Checkout: FC<{
           {plans ? (
             <>
               {plans.map((plan: Plan) => (
-                <PlanChoice className={plan === selectedPlan ? 'active' : ''} onClick={() => setSelectedPlan(plan)}>
+                <PlanChoice
+                  className={plan === selectedPlan ? 'active' : ''}
+                  onClick={() => setSelectedPlan(plan)}
+                  key={plan.id}
+                >
                   <div className='d-flex align-items-center'>
                     <Form.Check
                       checked={plan === selectedPlan}
+                      defaultChecked
                       className='me-3'
                       type='radio'
+                      key={plan.id}
                       aria-label={`select ${plan.name}`}
                     />
                     <div className='flex-fill'>
-                      <h1 className='h4 m-0'>{plan.name}</h1>
-                      <p className='m-0 text-muted'>{plan.description}</p>
+                      <h1 className='h4 m-0' key={plan.name}>
+                        {plan.name}
+                      </h1>
+                      <p className='m-0 text-muted' key={plan.description}>
+                        {plan.description}
+                      </p>
                     </div>
-                    <span>
+                    <span key={plan.prices[0].id}>
                       {(plan.prices[0].unitAmount / 100).toFixed(2)} / {plan.prices[0].recurring.interval}
                     </span>
                   </div>
