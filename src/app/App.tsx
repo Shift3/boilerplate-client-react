@@ -28,7 +28,6 @@ export const stripePromise: Promise<Stripe | null> = loadStripe(
 
 export const ThemeContext = createContext({
   theme: 'light',
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   toggle: () => {},
 });
 
