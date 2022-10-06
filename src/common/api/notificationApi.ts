@@ -19,6 +19,10 @@ export const notificationApi = createApi({
       providesTags: ['AppNotification'],
     }),
 
+    getEventToken: builder.query<{ token: string }, void>({
+      query: () => '/event-token/',
+    }),
+
     markAllRead: builder.mutation<void, void>({
       query: () => ({
         url: '/notifications/mark_all_read/',
@@ -28,4 +32,4 @@ export const notificationApi = createApi({
   }),
 });
 
-export const { useGetUnreadNotificationsQuery, useMarkAllReadMutation } = notificationApi;
+export const { useGetUnreadNotificationsQuery, useMarkAllReadMutation, useGetEventTokenQuery } = notificationApi;

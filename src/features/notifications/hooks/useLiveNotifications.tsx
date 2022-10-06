@@ -1,4 +1,4 @@
-import { notificationApi, useGetUnreadNotificationsQuery } from 'common/api/notificationApi';
+import { notificationApi, useGetEventTokenQuery, useGetUnreadNotificationsQuery } from 'common/api/notificationApi';
 import { AppNotification } from 'common/models/notifications';
 import { environment } from 'environment';
 import { useAuth } from 'features/auth/hooks';
@@ -60,6 +60,8 @@ export const useLiveNotifications = () => {
     skip: !user,
   });
 
+  const { data: eventToken } = useGetEventTokenQuery(undefined, { skip: !user });
+
   // Append new notifications that we got from the API to
   // oldNotifications list
   useEffect(() => {
@@ -83,8 +85,8 @@ export const useLiveNotifications = () => {
   // Set up receiving SSE events from the server.
   useEffect(() => {
     let eventSource: EventSource | null = null;
-    if (user) {
-      eventSource = new EventSource(`${environment.apiRoute}/events/${user!.id}/`);
+    if (user && eventToken) {
+      eventSource = new EventSource(`${environment.apiRoute}/events/${user!.id}/?token=${eventToken.token}`);
       eventSource.onmessage = message => {
         const payload = JSON.parse(message.data);
         notificationDispatch({ type: 'add', notification: payload });
@@ -112,7 +114,7 @@ export const useLiveNotifications = () => {
         eventSource = null;
       }
     };
-  }, [user]);
+  }, [user, eventToken]);
 
   const clear = useCallback(() => {
     notificationDispatch({ type: 'reset' });
