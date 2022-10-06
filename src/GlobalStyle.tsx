@@ -50,7 +50,8 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
 
     .form-control,
     .form-select,
-    textarea {
+    textarea,
+    .react-tel-input > .form-control {
         background-color: ${({ theme }) => theme.input.backgroundColor};
         color: ${({ theme }) => theme.input.textColor};
         border-color: ${({ theme }) => theme.input.borderColor};
