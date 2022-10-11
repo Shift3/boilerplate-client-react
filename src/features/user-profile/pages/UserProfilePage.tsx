@@ -22,7 +22,7 @@ import {
   useUpdateUserProfile,
 } from 'features/user-profile/hooks';
 import { FC, useRef, useState } from 'react';
-import { Alert, Card, Col, Container, Modal, Nav, Row } from 'react-bootstrap';
+import { Alert, Card, Col, Container, Modal, Nav, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -33,12 +33,47 @@ import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUser
 import { Trans } from 'react-i18next';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { Constants } from 'utils/constants';
-import { faContactCard, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faContactCard, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'react-modal-hook';
+import { LoadingSpinner } from 'common/components/LoadingSpinner';
 
 type RouteParams = {
   id: string;
 };
+
+const UserProfilePictureContainer = styled.div`
+  position: relative;
+  display: inline-block;
+
+  svg {
+    position: absolute;
+    top: 40%;
+    left: 42.5%;
+  }
+`;
+
+const StyledTooltip = styled(Tooltip)`
+  .tooltip-inner {
+    background-color: ${props => props.theme.buttons.tooltipBackgroundColor};
+    color: ${props => props.theme.buttons.tooltipTextColor};
+  }
+  .tooltip-arrow::before {
+    border-bottom-color: ${props => props.theme.buttons.tooltipBackgroundColor};
+  }
+`;
+
+const StyledLoadingSpinner = styled.div`
+  position: absolute;
+  padding-top: 0.15rem;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+
+  #loading-spinner {
+    width: 7.5em;
+    height: 7.5em;
+  }
+`;
 
 const ProfileNav = styled(Nav).attrs({ className: 'flex-column' })`
   margin-bottom: 1rem;
@@ -133,6 +168,7 @@ export const UserProfilePage: FC = () => {
     const formData = new FormData();
     formData.append('file', e.target.files[0]);
     await updateUserProfilePicture({ id: user!.id, profilePicture: formData });
+    e.target.value = '';
   };
 
   const [emailFormValidationErrors, setEmailFormValidationErrors] =
@@ -300,20 +336,31 @@ export const UserProfilePage: FC = () => {
                       </p>
 
                       <div className='d-flex align-items-center justify-content-center flex-column'>
-                        <div className='mt-3'>
-                          <UserProfilePicture user={user} size='md' radius={128} />
+                        <div className='mt-3 mb-3'>
+                          <UserProfilePictureContainer>
+                            {isLoadingUpdateProfilePicture ? (
+                              <StyledLoadingSpinner>
+                                <LoadingSpinner />
+                              </StyledLoadingSpinner>
+                            ) : (
+                              <OverlayTrigger
+                                placement='bottom'
+                                overlay={<StyledTooltip id='tooltip-bottom'>Upload Photo</StyledTooltip>}
+                              >
+                                <FontAwesomeIcon
+                                  role='button'
+                                  onClick={() => inputFile.current.click()}
+                                  icon={faCamera}
+                                  color={user?.profilePicture ? 'white' : 'black'}
+                                  size='lg'
+                                />
+                              </OverlayTrigger>
+                            )}
+                            <UserProfilePicture user={user} size='md' radius={128} />
+                          </UserProfilePictureContainer>
                         </div>
 
                         <div className='w-100 d-grid gap-2'>
-                          <LoadingButton
-                            loading={isLoadingUpdateProfilePicture}
-                            onClick={() => inputFile.current.click()}
-                            variant='default'
-                            className='mt-3'
-                          >
-                            Select File...
-                          </LoadingButton>
-
                           <input
                             hidden
                             ref={inputFile}
