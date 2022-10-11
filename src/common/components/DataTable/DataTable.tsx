@@ -173,6 +173,7 @@ export const DataTable = <D extends Record<string, unknown>>({
           ))}
         </div>
         <div className='tbody' {...getTableBodyProps()}>
+          {tableRows.length === 0 ? <p className='text-muted mt-3 px-4'>No Results...</p> : null}
           {tableRows.map(row => {
             prepareRow(row);
             return (

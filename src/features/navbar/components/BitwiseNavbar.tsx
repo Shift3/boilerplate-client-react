@@ -1,4 +1,4 @@
-import { faAtlas, faHomeAlt, faLanguage } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faHomeAlt, faLanguage, faUserShield } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { environment } from 'environment';
@@ -312,7 +312,7 @@ export const BitwiseNavbar: FC = () => {
                 <NavDropdown
                   title={
                     <div>
-                      <FontAwesomeIcon className='me-2' icon={faAtlas} />
+                      <FontAwesomeIcon className='me-2' icon={faUserShield} />
                       Administration
                     </div>
                   }
@@ -359,7 +359,9 @@ export const BitwiseNavbar: FC = () => {
                   align='end'
                   title={
                     <>
-                      <UserProfilePicture user={user} size='xs' radius={24} />
+                      <div className='me-2'>
+                        <UserProfilePicture user={user} size='xs' radius={24} />
+                      </div>
                       <span className='offcanvas-only'>
                         {user.firstName} {user.lastName.charAt(0)}.
                       </span>
@@ -367,7 +369,9 @@ export const BitwiseNavbar: FC = () => {
                   }
                 >
                   <NavDropdown.Header className='d-flex align-items-center'>
-                    <UserProfilePicture user={user} size='xs' radius={32} />
+                    <div className='me-2'>
+                      <UserProfilePicture user={user} size='xs' radius={32} />
+                    </div>
                     <div>
                       <div>
                         {user.firstName} {user.lastName.charAt(0)}.
@@ -376,8 +380,8 @@ export const BitwiseNavbar: FC = () => {
                     </div>
                   </NavDropdown.Header>
                   <NavDropdown.Item onClick={() => navigate(`/user/profile/${user.id}`)}>
-                    <FontAwesomeIcon icon='user' />
-                    Profile
+                    <FontAwesomeIcon icon={faCog} />
+                    Account Settings
                   </NavDropdown.Item>
                   <NavDropdown.Item onClick={() => showModal()}>
                     <FontAwesomeIcon icon='sign-out-alt' />

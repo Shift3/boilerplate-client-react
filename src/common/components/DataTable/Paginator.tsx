@@ -36,8 +36,9 @@ export const Paginator: FC<Props> = ({
   onNextPageClick,
   onPageSizeChange,
 }) => {
-  const rangeStart = pageSize * (page - 1) + 1;
+  let rangeStart = pageSize * (page - 1) + 1;
   const rangeEnd = page < pageCount ? pageSize * page : count;
+  if (rangeEnd === 0) rangeStart = 0;
   const defaultOption = { label: pageSize.toString(), value: pageSize.toString() };
 
   const __pageSizeOptions = useMemo(

@@ -114,6 +114,9 @@ export const UserDetailForm: FC<Props> = ({
             )}
           />
           <Form.Control.Feedback type='invalid'>{errors.role?.message}</Form.Control.Feedback>
+          <Form.Text className='text-muted'>
+            For more information about the different roles and what they can do, see our <a href='#'>FAQ</a>
+          </Form.Text>
         </Form.Group>
 
         <div className='mt-3'>

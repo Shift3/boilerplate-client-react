@@ -44,7 +44,7 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) =>
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Form.Group>
+        <Form.Group className='mb-2'>
           <Form.Label htmlFor='firstName'>First Name</Form.Label>
           <Form.Control id='firstName' type='text' {...register('firstName')} isInvalid={!!errors.firstName} />
           <Form.Control.Feedback type='invalid' role='alert'>
