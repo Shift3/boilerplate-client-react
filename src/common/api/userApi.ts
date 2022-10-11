@@ -177,6 +177,14 @@ export const userApi = createApi({
       }),
     }),
 
+    cancelChangeEmail: builder.mutation<User, void>({
+      query: () => ({
+        url: `/users/cancel_change_email_request/`,
+        method: 'POST',
+      }),
+      invalidatesTags: ['User'],
+    }),
+
     confirmChangeEmail: builder.mutation<User, ConfirmChangeEmailRequest>({
       query: payload => ({
         url: `/users/confirm_change_email/`,
@@ -215,6 +223,7 @@ export const {
   useDeleteUserMutation,
   useForgotPasswordMutation,
   useGetUsersQuery,
+  useCancelChangeEmailMutation,
   useGetUserByIdQuery,
   useRequestChangeEmailMutation,
   useResendActivationEmailMutation,

@@ -31,8 +31,12 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
     }
 
     .btn {
-        border-radius: ${({ theme }) => theme.borderRadius};
+        border-radius: ${({ theme }) => theme.buttons.borderRadius};
         transition: all 0.3 ease-in-out;
+    }
+
+    .input-group > .btn {
+        border-radius: ${({ theme }) => theme.borderRadius};
     }
 
     button.btn:disabled {
@@ -44,7 +48,7 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
         margin-bottom: .25rem !important;
         margin-top: 0;
         font-size: 0.825rem;
-        font-weight: 500;
+        font-weight: 600;
         color: ${({ theme }) => theme.forms.labelColor};
     }
 
@@ -55,6 +59,7 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
         background-color: ${({ theme }) => theme.input.backgroundColor};
         color: ${({ theme }) => theme.input.textColor};
         border-color: ${({ theme }) => theme.input.borderColor};
+        border-radius: ${({ theme }) => theme.borderRadius};
 
         &:disabled {
             background-color: ${({ theme }) => theme.input.disabledBackground};
@@ -71,15 +76,28 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
 
     .card {
         background-color: ${({ theme }) => theme.card.backgroundColor};
-        border-radius: 6px;
+        border-radius: ${({ theme }) => theme.borderRadius};
         border: none;
         box-shadow: ${({ theme }) => theme.boxShadow};
+    }
+
+    .card-header {
+        background-color: ${({ theme }) => theme.card.backgroundColor};
+        border: none;
+    }
+
+    .card-title {
+        margin: 0;
     }
 
     .text-muted {
         color: ${({ theme }) => theme.pages.p} !important;
     }
-
+    
+    .btn {
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
     .btn.btn-primary {
         background-color: ${({ theme }) => theme.buttons.primaryBackgroundColor};
         border-color: ${({ theme }) => theme.buttons.primaryBorderColor};

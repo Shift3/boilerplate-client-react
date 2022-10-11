@@ -163,7 +163,13 @@ export const useUserTableData: UseUserTableData = (users = []) => {
         Header: 'Name',
         Cell: ({ row }) => (
           <div className='d-flex d-row align-items-center mr-3'>
-            <UserProfilePicture user={{ profilePicture: row.original.profilePicture } as User} size='xs' radius={32} />
+            <div className='me-2'>
+              <UserProfilePicture
+                user={{ profilePicture: row.original.profilePicture } as User}
+                size='xs'
+                radius={32}
+              />
+            </div>
 
             <div className='d-flex flex-column'>
               <span>

@@ -34,9 +34,9 @@ const ForgotPassword = styled.div`
 `;
 
 const TogglePasswordButton = styled(Button)`
-  border-top-right-radius: 3px !important;
-  border-bottom-right-radius: 3px !important;
-  border-color: #ced4da;
+  border-top-right-radius: ${props => props.theme.borderRadius} !important;
+  border-bottom-right-radius: ${props => props.theme.borderRadius} !important;
+  border: 1px solid #ced4da !important;
 `;
 
 export const LogInForm: FC<Props> = ({ onSubmit }) => {
@@ -70,7 +70,7 @@ export const LogInForm: FC<Props> = ({ onSubmit }) => {
             placeholder='Password'
             isInvalid={!!errors.password}
           />
-          <TogglePasswordButton variant='outline-secondary' onClick={() => setShowingPassword(!showingPassword)}>
+          <TogglePasswordButton variant='default' onClick={() => setShowingPassword(!showingPassword)}>
             <FontAwesomeIcon icon={showingPassword ? faEyeSlash : faEye} />
           </TogglePasswordButton>
           <Form.Control.Feedback type='invalid' role='alert'>

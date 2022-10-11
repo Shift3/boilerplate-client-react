@@ -1,14 +1,14 @@
 import { colors } from './colors';
 
 export default {
-  backgroundColor: colors.neutral100,
+  backgroundColor: colors.neutral50,
   textColor: colors.black,
   linkColor: colors.blue600,
   linkHoverColor: colors.blue700,
   noticeBackgroundColor: colors.dangerRed,
   noticeTextColor: colors.white,
 
-  borderRadius: '6px',
+  borderRadius: '8px',
   boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px',
 
   card: {
@@ -28,8 +28,8 @@ export default {
     hoverColor: colors.blue600,
 
     link: {
-      activeBackground: colors.blue200,
-      activeText: colors.blue800,
+      activeBackground: colors.blue100,
+      activeText: colors.blue900,
     },
 
     horizontal: {
@@ -41,8 +41,9 @@ export default {
   },
 
   buttons: {
-    primaryBackgroundColor: colors.blue600,
-    primaryBorderColor: colors.blue600,
+    borderRadius: '24px',
+    primaryBackgroundColor: colors.blue700,
+    primaryBorderColor: colors.blue700,
     primaryTextColor: colors.white,
     primaryHoverBackgroundColor: colors.blue500,
     primaryHoverTextColor: colors.white,

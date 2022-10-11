@@ -64,7 +64,7 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
       <Form name='change-password-form' onSubmit={handleSubmit(onSubmit)}>
-        <Form.Group className='position-relative'>
+        <Form.Group className='mb-2'>
           <Form.Label htmlFor='currentPassword'>Current Password</Form.Label>
           <Form.Control
             id='currentPassword'
@@ -79,7 +79,8 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors
             </Form.Control.Feedback>
           )}
         </Form.Group>
-        <Form.Group>
+
+        <Form.Group className='mb-2'>
           <Form.Label htmlFor='newPassword'>New Password</Form.Label>
           <Form.Control
             id='newPassword'
@@ -93,8 +94,13 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors
               {errors.newPassword?.message}
             </Form.Control.Feedback>
           )}
+          <Form.Text className='text-muted'>
+            Password must be 8 characters or more. Password must contain a lowercase, uppercase, special character, and
+            a number.
+          </Form.Text>
         </Form.Group>
-        <Form.Group>
+
+        <Form.Group className='mb-2'>
           <Form.Label htmlFor='confirmPassword'>Confirm Password</Form.Label>
           <Form.Control
             id='confirmPassword'
@@ -111,7 +117,7 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors
         </Form.Group>
         <div className='mt-3'>
           <LoadingButton type='submit' disabled={!isValid} loading={isSubmitting}>
-            Submit
+            Change my Password
           </LoadingButton>
         </div>
       </Form>

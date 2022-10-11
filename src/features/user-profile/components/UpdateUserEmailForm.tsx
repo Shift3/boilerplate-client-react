@@ -52,10 +52,15 @@ export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues, server
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
+        <Form.Label>New Email address</Form.Label>
         <Form.Control id='email' type='email' {...register('email')} isInvalid={!!errors.email} />
         <Form.Control.Feedback type='invalid' role='alert'>
           {errors.email?.message}
         </Form.Control.Feedback>
+        <Form.Text>
+          Enter a new email to use for your account. An email will be sent to your proposed new email, with a link to
+          confirm the email change.
+        </Form.Text>
       </Form.Group>
       <div className='mt-3'>
         <LoadingButton type='submit' disabled={!isValid} loading={isSubmitting}>

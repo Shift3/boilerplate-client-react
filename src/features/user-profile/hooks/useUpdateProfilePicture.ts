@@ -6,13 +6,9 @@ import * as notificationService from 'common/services/notification';
 import { useUpdateProfilePictureMutation, UpdateProfilePictureRequest } from 'common/api/userApi';
 import * as authLocalStorage from '../../auth/authLocalStorage';
 
-export type UseUpdateProfilePictureHook = () => {
-  updateUserProfilePicture: (data: UpdateProfilePictureRequest) => Promise<void>;
-};
-
-export const useUpdateProfilePicture: UseUpdateProfilePictureHook = () => {
+export const useUpdateProfilePicture = () => {
   const dispatch = useAppDispatch();
-  const [updateProfilePicture] = useUpdateProfilePictureMutation();
+  const [updateProfilePicture, { isLoading }] = useUpdateProfilePictureMutation();
 
   const updateUserProfilePicture = useCallback(
     async (data: UpdateProfilePictureRequest) => {
@@ -38,5 +34,5 @@ export const useUpdateProfilePicture: UseUpdateProfilePictureHook = () => {
     [updateProfilePicture, dispatch],
   );
 
-  return { updateUserProfilePicture };
+  return { updateUserProfilePicture, isLoading };
 };

@@ -10,7 +10,7 @@ import { NetworkDetector } from 'features/network-detector/components/NetworkDet
 import { NotificationsProvider } from 'features/notifications/context';
 import { NotificationRoutes } from 'features/notifications/Routes';
 import { UserRoutes } from 'features/user-dashboard';
-import { UpdateUserProfilePage } from 'features/user-profile/pages/UpdateUserProfilePage';
+import { UserProfilePage } from 'features/user-profile/pages/UserProfilePage';
 import { createContext, FC, useMemo, useState } from 'react';
 import { ModalProvider } from 'react-modal-hook';
 import { Navigate, Route, Routes } from 'react-router-dom';
@@ -71,7 +71,7 @@ export const App: FC = () => {
                       element={
                         <RequireAuth>
                           <Layout>
-                            <UpdateUserProfilePage />
+                            <UserProfilePage />
                           </Layout>
                         </RequireAuth>
                       }

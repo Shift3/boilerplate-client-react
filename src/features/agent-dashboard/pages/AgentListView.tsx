@@ -31,11 +31,16 @@ export const AgentListView: FC = () => {
     addFilter,
     removeFilter,
     resetFilters,
+    filters: psfFilters,
+    searchText: psfSearchText,
     addSearchText,
   } = usePSFQuery<PaginatedResult<Agent>>(useGetAgentsQuery);
   const agents = useMemo(() => data?.results ?? [], [data]);
   const { columns, data: tableData } = useAgentTableData(agents);
-  const isPageLoading = isLoading;
+
+  const isSearchingOrFiltering = useMemo(() => {
+    return psfFilters.length > 0 || psfSearchText.length > 0;
+  }, [psfFilters, psfSearchText]);
 
   const filters: FilterInfo[] = useMemo(
     () => [
@@ -81,12 +86,12 @@ export const AgentListView: FC = () => {
       <TableCard>
         <Card.Body>
           <WithLoadingOverlay
-            isLoading={isPageLoading || isFetching}
-            isInitialLoad={isPageLoading && isFetching}
+            isLoading={isLoading || isFetching}
+            isInitialLoad={isLoading && isFetching}
             containerHasRoundedCorners
             containerBorderRadius='6px'
           >
-            {data?.meta.count !== 0 ? (
+            {isSearchingOrFiltering || isLoading || isFetching || data?.meta.count !== 0 ? (
               <DataTable<AgentTableItem>
                 columns={columns}
                 data={tableData}

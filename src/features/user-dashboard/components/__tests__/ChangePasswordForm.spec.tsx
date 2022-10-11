@@ -42,7 +42,7 @@ describe('ChangePasswordForm', () => {
     expect(screen.getByLabelText(/Current Password/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/New Password/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Confirm Password/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Submit' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /change my password/i })).toBeInTheDocument();
   });
 
   it('should submit form if all form fields are valid', async () => {
@@ -55,7 +55,7 @@ describe('ChangePasswordForm', () => {
     const confirmNewPasswordInput = screen.getByLabelText(/Confirm Password/i);
     await userEvent.type(confirmNewPasswordInput, validFormData.confirmPassword);
 
-    await userEvent.click(screen.getByRole('button', { name: 'Submit' }));
+    await userEvent.click(screen.getByRole('button', { name: /change my password/i }));
 
     waitFor(() => {
       expect(mockOnSubmit).toHaveBeenCalledWith(validFormData, expect.any(Object));
@@ -63,7 +63,7 @@ describe('ChangePasswordForm', () => {
   });
 
   it('should disable the submit button if the form is invalid', () => {
-    const submitButton = screen.getByRole('button', { name: /submit/i });
+    const submitButton = screen.getByRole('button', { name: /change my password/i });
 
     waitFor(() => {
       expect(submitButton.hasAttribute('disabled')).toBeTruthy();
@@ -80,7 +80,7 @@ describe('ChangePasswordForm', () => {
     const confirmNewPasswordInput = screen.getByLabelText(/Confirm Password/i);
     await userEvent.type(confirmNewPasswordInput, validFormData.confirmPassword);
 
-    const submitButton = screen.getByRole('button', { name: /submit/i });
+    const submitButton = screen.getByRole('button', { name: /change my password/i });
 
     waitFor(() => {
       expect(submitButton.hasAttribute('disabled')).toBeFalsy();

@@ -76,7 +76,7 @@ export const UpdateProfilePictureForm: FC<Props> = ({ onSubmit, defaultValues })
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit)} className='d-grid'>
         <Form.Group className='d-flex flex-column'>
           {imgPreviewState.src !== '' ? (
             <img className='img-fluid img-thumbnail' src={imgPreviewState.src} alt={imgPreviewState.alt} />
