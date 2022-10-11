@@ -15,6 +15,8 @@ export const StringFilter = () => {
     const [comparitor, setComparitor] = useState<FilterOp>('icontains');
 
     const onTextChange = (text: string) => {
+      console.log('text:', text);
+      console.log('converted text:', '+1' + text.replace('(', '').replace(') ', '').replace('-', ''));
       if (text.length > 0) setFilter(attribute, comparitor, text);
       else removeFilter(attribute, comparitor);
     };

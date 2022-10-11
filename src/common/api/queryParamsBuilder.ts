@@ -29,7 +29,13 @@ export class QueryParamsBuilder {
 
   public setFilterParam(filters: Filter[]): QueryParamsBuilder {
     filters.forEach(f => {
-      this.setParam(`${f.attr}__${f.op}`, f.value);
+      // this.setParam(`${f.attr}__${f.op}`, f.value);
+
+      if (f.attr === 'phoneNumber' && f.op === 'istartswith') {
+        this.setParam(`${f.attr}__${f.op}`, '+1' + f.value.replace('(', '').replace(')', '').replaceAll(' ', '').replace('-', ''));
+      } else {
+        this.setParam(`${f.attr}__${f.op}`, f.value);
+      }
     });
     return this;
   }

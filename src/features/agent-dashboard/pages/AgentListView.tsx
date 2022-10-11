@@ -37,6 +37,8 @@ export const AgentListView: FC = () => {
   const { columns, data: tableData } = useAgentTableData(agents);
   const isPageLoading = isLoading;
 
+  // console.log('agents:', agents);
+
   const filters: FilterInfo[] = useMemo(
     () => [
       {
