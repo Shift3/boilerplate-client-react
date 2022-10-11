@@ -1,14 +1,6 @@
 import styled from 'styled-components';
 import { Container } from 'react-bootstrap';
 
-export const PageWrapper = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const SmallContainer = styled(Container)`
   @media (min-width: 1200px) {
     max-width: 960px;

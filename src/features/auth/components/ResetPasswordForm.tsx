@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'react-bootstrap';
@@ -37,15 +37,10 @@ export const ResetPasswordForm: FC<Props> = ({ onSubmit }) => {
     formState: { errors, isDirty, isSubmitting, isSubmitted, isValid },
     handleSubmit,
     register,
-    trigger,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
   });
-
-  useEffect(() => {
-    trigger();
-  }, [trigger]);
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
