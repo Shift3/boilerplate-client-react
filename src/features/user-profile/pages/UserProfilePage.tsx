@@ -36,6 +36,7 @@ import { Constants } from 'utils/constants';
 import { faCamera, faContactCard, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'react-modal-hook';
 import { LoadingSpinner } from 'common/components/LoadingSpinner';
+import { DimmableContent } from 'common/styles/utilities';
 
 type RouteParams = {
   id: string;
@@ -110,6 +111,7 @@ export const UserProfilePage: FC = () => {
   const [tab, setTab] = useState('profile');
   const [passwordFormValidationErrors, setPasswordFormValidationErrors] =
     useState<ServerValidationErrors<ForgotPasswordFormData> | null>(null);
+  const [isMouseOverProfilePicture, setIsMouseOverProfilePicture] = useState(false);
 
   const onSubmit = async (formData: ProfileFormData) => {
     const data = { id, ...formData };
@@ -338,27 +340,37 @@ export const UserProfilePage: FC = () => {
 
                       <div className='d-flex align-items-center justify-content-center flex-column'>
                         <div className='mt-3 mb-3'>
-                          <UserProfilePictureContainer>
-                            {isLoadingUpdateProfilePicture ? (
-                              <StyledLoadingSpinner>
-                                <LoadingSpinner />
-                              </StyledLoadingSpinner>
-                            ) : (
-                              <OverlayTrigger
-                                placement='bottom'
-                                overlay={<StyledTooltip id='tooltip-bottom'>Upload Photo</StyledTooltip>}
-                              >
-                                <FontAwesomeIcon
-                                  role='button'
-                                  onClick={() => inputFile.current.click()}
-                                  icon={faCamera}
-                                  color={user?.profilePicture ? 'white' : 'black'}
-                                  size='lg'
-                                />
-                              </OverlayTrigger>
-                            )}
-                            <UserProfilePicture user={user} size='md' radius={128} />
-                          </UserProfilePictureContainer>
+                          <OverlayTrigger
+                            placement='top'
+                            overlay={<StyledTooltip id='tooltip-bottom'>Upload Photo</StyledTooltip>}
+                          >
+                            <UserProfilePictureContainer
+                              onClick={() => inputFile.current.click()}
+                              onMouseEnter={() => setIsMouseOverProfilePicture(true)}
+                              onMouseLeave={() => setIsMouseOverProfilePicture(false)}
+                            >
+                              {isLoadingUpdateProfilePicture ? (
+                                <StyledLoadingSpinner>
+                                  <LoadingSpinner />
+                                </StyledLoadingSpinner>
+                              ) : null}
+                              {isMouseOverProfilePicture ? (
+                                <>
+                                  <FontAwesomeIcon
+                                    role='button'
+                                    icon={faCamera}
+                                    color={user?.profilePicture ? 'white' : 'black'}
+                                    size='lg'
+                                  />
+                                  <DimmableContent dim containerHasRoundedCorners containerBorderRadius='128px'>
+                                    <UserProfilePicture user={user} size='md' radius={128} />
+                                  </DimmableContent>
+                                </>
+                              ) : (
+                                <UserProfilePicture user={user} size='md' radius={128} />
+                              )}
+                            </UserProfilePictureContainer>
+                          </OverlayTrigger>
                         </div>
 
                         <div className='w-100 d-grid gap-2'>
