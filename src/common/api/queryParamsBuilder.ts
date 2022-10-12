@@ -27,18 +27,22 @@ export class QueryParamsBuilder {
     return this.setParam('ordering', value);
   }
 
+  private static replaceCommonPhoneNumberCharactersWithEmptyStrings(phoneNumber: string) {
+    return phoneNumber.replace('(', '').replace(')', '').replace(' ', '').replace('-', '');
+  }
+
   public setFilterParam(filters: Filter[]): QueryParamsBuilder {
     filters.forEach(f => {
       if (f.attr === 'phoneNumber') {
         if (f.op === 'iendswith') {
           this.setParam(
             `${f.attr}__${f.op}`,
-            f.value.replace('(', '').replace(')', '').replaceAll(' ', '').replace('-', ''),
+            QueryParamsBuilder.replaceCommonPhoneNumberCharactersWithEmptyStrings(f.value),
           );
         } else {
           this.setParam(
             `${f.attr}__${f.op}`,
-            `+1${  f.value.replace('(', '').replace(')', '').replaceAll(' ', '').replace('-', '')}`,
+            `+1${QueryParamsBuilder.replaceCommonPhoneNumberCharactersWithEmptyStrings(f.value)}`,
           );
         }
       } else {
