@@ -45,7 +45,6 @@ export const agentApi = createApi({
           .setSortParam(sortBy)
           .setFilterParam(filters)
           .build();
-
         return { url: `/agents/?${queryParams}` };
       },
       providesTags: ['Agent'],
