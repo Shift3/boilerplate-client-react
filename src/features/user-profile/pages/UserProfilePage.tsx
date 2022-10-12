@@ -47,10 +47,9 @@ const UserProfilePictureContainer = styled.div`
 
   svg {
     position: absolute;
-    top: 42%;
-    transform: translateY(-42%);
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) translateY(-50%);
   }
 `;
 
