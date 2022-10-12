@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAuth } from 'features/auth/hooks';
 import { handleApiError, isFetchBaseQueryError } from 'common/api/handleApiError';
 import {
@@ -21,10 +20,10 @@ import {
   useUpdateProfilePicture,
   useUpdateUserProfile,
 } from 'features/user-profile/hooks';
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { Alert, Card, Col, Container, Modal, Nav, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { UpdateUserEmailForm, UserEmailFormData } from '../components/UpdateUserEmailForm';
 import { UserProfilePicture } from 'features/navbar/components/UserProfilePicture';
@@ -33,8 +32,9 @@ import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUser
 import { Trans } from 'react-i18next';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { Constants } from 'utils/constants';
-import { faContactCard, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'react-modal-hook';
+import useQuery from 'common/hooks/useQuery';
+import { MySubscription } from 'features/memberships/MySubscription';
 
 type RouteParams = {
   id: string;
@@ -74,6 +74,20 @@ export const UserProfilePage: FC = () => {
   const [tab, setTab] = useState('profile');
   const [passwordFormValidationErrors, setPasswordFormValidationErrors] =
     useState<ServerValidationErrors<ForgotPasswordFormData> | null>(null);
+  const navigate = useNavigate();
+  const query = useQuery();
+
+  useEffect(() => {
+    const newTab = query.get('tab');
+    if (newTab) setTab(newTab);
+  }, [query]);
+
+  const changeTab = (tab: string) => {
+    const search = new URLSearchParams(window.location.search);
+    search.set('tab', tab);
+    navigate({ search: search.toString() });
+    setTab(tab);
+  };
 
   const onSubmit = async (formData: ProfileFormData) => {
     const data = { id, ...formData };
@@ -200,13 +214,17 @@ export const UserProfilePage: FC = () => {
       <Row>
         <Col md={3}>
           <ProfileNav defaultActiveKey='/home'>
-            <ProfileNav.Link onClick={() => setTab('profile')} className={tab === 'profile' ? 'active' : ''}>
-              <FontAwesomeIcon className='me-2' icon={faContactCard} />
+            <ProfileNav.Link onClick={() => changeTab('profile')} className={tab === 'profile' ? 'active' : ''}>
               <Trans i18nKey='userProfile.profile'>Profile</Trans>
             </ProfileNav.Link>
-            <ProfileNav.Link onClick={() => setTab('security')} className={tab === 'security' ? 'active' : ''}>
-              <FontAwesomeIcon className='me-2' icon={faUnlockKeyhole} />
+            <ProfileNav.Link onClick={() => changeTab('security')} className={tab === 'security' ? 'active' : ''}>
               <Trans i18nKey='userProfile.security'>Security and Password</Trans>
+            </ProfileNav.Link>
+            <ProfileNav.Link
+              onClick={() => changeTab('subscription')}
+              className={tab === 'subscription' ? 'active' : ''}
+            >
+              <Trans i18nKey='userProfile.subscription'>Subscription</Trans>
             </ProfileNav.Link>
           </ProfileNav>
         </Col>
@@ -379,6 +397,7 @@ export const UserProfilePage: FC = () => {
           ) : (
             ''
           )}
+          {tab === 'subscription' ? <MySubscription /> : ''}
         </Col>
       </Row>
     </Container>
