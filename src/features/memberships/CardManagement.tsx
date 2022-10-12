@@ -183,15 +183,6 @@ export const CardManagement: FC<{
                   </small>
                 </div>
               </div>
-              {/*
-                    TODO(justin): Lets turn this into a dropdown, with "Make Default"
-                    and "Remove". If they only have one card, don't show "Remove"
-
-                    We currently don't have the mechanisms for "Make Default" but make
-                    default should eventually be dimmed and disabled on cards which are
-                    already default.
-                 */}
-
               <DropdownButton title={<FontAwesomeIcon icon={faEllipsisV} />} variant='light' size='sm' className='mx-3'>
                 <Dropdown.Item onClick={() => makeDefault(paymentMethod)} disabled={paymentMethod.isDefault}>
                   Make Default
