@@ -3,18 +3,21 @@ import { FC, PropsWithChildren, useEffect, useState } from 'react';
 import { LoadingSpinner } from './LoadingSpinner';
 import styled from 'styled-components';
 
-const StyledLoadingSpinner = styled.div`
+const StyledLoadingSpinner = styled.div<{
+  length: number;
+}>`
   padding: 3rem 0rem;
   text-align: center;
-  
+
   #loading-spinner {
-    width: 4em;
-    height: 4em;
+    width: ${props => `${props.length}em`};
+    height: ${props => `${props.length}em`};
   }
 `;
 
 export type Props = {
   isLoading: boolean;
+  length?: number;
   isInitialLoad?: boolean;
   containerHasRoundedCorners: boolean;
   containerBorderRadius: string;
@@ -22,6 +25,7 @@ export type Props = {
 
 export const WithLoadingOverlay: FC<PropsWithChildren<Props>> = ({
   isLoading,
+  length = 4,
   containerHasRoundedCorners,
   containerBorderRadius,
   children,
@@ -48,7 +52,7 @@ export const WithLoadingOverlay: FC<PropsWithChildren<Props>> = ({
     >
       {!isDelayComplete ? (
         <CenteredSpinnerContainer>
-          <StyledLoadingSpinner>
+          <StyledLoadingSpinner length={length}>
             <LoadingSpinner />
           </StyledLoadingSpinner>
         </CenteredSpinnerContainer>
