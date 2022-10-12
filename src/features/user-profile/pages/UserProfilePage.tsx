@@ -137,47 +137,50 @@ export const UserProfilePage: FC = () => {
 
   const [emailFormValidationErrors, setEmailFormValidationErrors] =
     useState<ServerValidationErrors<UserEmailFormData> | null>(null);
-  const [showModal, hideModal] = useModal(({ in: open, onExited }) => {
-    const onSubmitRequestEmailChange = async (formData: UserEmailFormData) => {
-      const data = { id, ...formData };
-      try {
-        await changeEmailRequest(data);
-        hideModal();
-      } catch (error) {
-        if (error && isFetchBaseQueryError(error)) {
-          if (isObject(error.data)) {
-            setEmailFormValidationErrors(error.data);
-          }
-        } else {
-          throw error;
-        }
-      }
-    };
-
-    return (
-      <Modal
-        show={open}
-        onHide={() => {
+  const [showModal, hideModal] = useModal(
+    ({ in: open, onExited }) => {
+      const onSubmitRequestEmailChange = async (formData: UserEmailFormData) => {
+        const data = { id, ...formData };
+        try {
+          await changeEmailRequest(data);
           hideModal();
-        }}
-        onExited={onExited}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Change my Email</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>
-            Changing your email will change your login email, as well as where emails are sent when you need to be
-            notified.
-          </p>
-          <UpdateUserEmailForm
-            onSubmit={onSubmitRequestEmailChange}
-            serverValidationErrors={emailFormValidationErrors}
-          />
-        </Modal.Body>
-      </Modal>
-    );
-  });
+        } catch (error) {
+          if (error && isFetchBaseQueryError(error)) {
+            if (isObject(error.data)) {
+              setEmailFormValidationErrors(error.data);
+            }
+          } else {
+            throw error;
+          }
+        }
+      };
+
+      return (
+        <Modal
+          show={open}
+          onHide={() => {
+            hideModal();
+          }}
+          onExited={onExited}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Change my Email</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>
+              Changing your email will change your login email, as well as where emails are sent when you need to be
+              notified.
+            </p>
+            <UpdateUserEmailForm
+              onSubmit={onSubmitRequestEmailChange}
+              serverValidationErrors={emailFormValidationErrors}
+            />
+          </Modal.Body>
+        </Modal>
+      );
+    },
+    [emailFormValidationErrors, setEmailFormValidationErrors],
+  );
 
   return (
     <Container>
