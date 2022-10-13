@@ -63,7 +63,6 @@ const UserProfilePictureContainer = styled.div<{
     text-align: center;
     border-radius: 0.375em;
     padding: 0.313em 0;
-
     position: absolute;
     z-index: 1080;
     bottom: 100%;
@@ -76,7 +75,7 @@ const UserProfilePictureContainer = styled.div<{
     position: absolute;
     top: 100%;
     left: 50%;
-    margin-left: -0.313em;
+    transform: translateX(-50%);
     border-width: 0.313em;
     border-style: solid;
     border-color: ${props => props.theme.buttons.tooltipBackgroundColor} transparent transparent transparent;
