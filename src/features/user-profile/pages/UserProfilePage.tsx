@@ -22,7 +22,7 @@ import {
   useUpdateUserProfile,
 } from 'features/user-profile/hooks';
 import { FC, useRef, useState } from 'react';
-import { Alert, Card, Col, Container, Modal, Nav, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
+import { Alert, Card, Col, Container, Modal, Nav, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -42,7 +42,9 @@ type RouteParams = {
   id: string;
 };
 
-const UserProfilePictureContainer = styled.div`
+const UserProfilePictureContainer = styled.div<{
+  hover: boolean;
+}>`
   position: relative;
   display: inline-block;
 
@@ -52,15 +54,32 @@ const UserProfilePictureContainer = styled.div`
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
   }
-`;
 
-const StyledTooltip = styled(Tooltip)`
-  .tooltip-inner {
+  .tooltiptext {
+    visibility: ${props => `${props.hover ? 'visible' : 'hidden'}`};
+    width: 7.5em;
     background-color: ${props => props.theme.buttons.tooltipBackgroundColor};
     color: ${props => props.theme.buttons.tooltipTextColor};
+    text-align: center;
+    border-radius: 0.375em;
+    padding: 0.313em 0;
+
+    position: absolute;
+    z-index: 1080;
+    bottom: 100%;
+    left: 5%;
+    margin-bottom: 5%;
   }
-  .tooltip-arrow::before {
-    border-bottom-color: ${props => props.theme.buttons.tooltipBackgroundColor};
+
+  .tooltiptext::after {
+    content: ' ';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -0.313em;
+    border-width: 0.313em;
+    border-style: solid;
+    border-color: ${props => props.theme.buttons.tooltipBackgroundColor} transparent transparent transparent;
   }
 `;
 
@@ -340,37 +359,34 @@ export const UserProfilePage: FC = () => {
 
                       <div className='d-flex align-items-center justify-content-center flex-column'>
                         <div className='mt-3 mb-3'>
-                          <OverlayTrigger
-                            placement='top'
-                            overlay={<StyledTooltip id='tooltip-bottom'>Upload Photo</StyledTooltip>}
+                          <UserProfilePictureContainer
+                            hover={isMouseOverProfilePicture}
+                            onClick={() => inputFile.current.click()}
+                            onMouseEnter={() => setIsMouseOverProfilePicture(true)}
+                            onMouseLeave={() => setIsMouseOverProfilePicture(false)}
                           >
-                            <UserProfilePictureContainer
-                              onClick={() => inputFile.current.click()}
-                              onMouseEnter={() => setIsMouseOverProfilePicture(true)}
-                              onMouseLeave={() => setIsMouseOverProfilePicture(false)}
-                            >
-                              {isLoadingUpdateProfilePicture ? (
-                                <StyledLoadingSpinner>
-                                  <LoadingSpinner />
-                                </StyledLoadingSpinner>
-                              ) : null}
-                              {isMouseOverProfilePicture ? (
-                                <>
-                                  <FontAwesomeIcon role='button' icon={faCamera} color='white' size='lg' />
-                                  <DimmableContent
-                                    dim
-                                    type={DimType.DARK}
-                                    containerHasRoundedCorners
-                                    containerBorderRadius='128px'
-                                  >
-                                    <UserProfilePicture user={user} size='md' radius={128} />
-                                  </DimmableContent>
-                                </>
-                              ) : (
-                                <UserProfilePicture user={user} size='md' radius={128} />
-                              )}
-                            </UserProfilePictureContainer>
-                          </OverlayTrigger>
+                            <span className='tooltiptext'>Upload Photo</span>
+                            {isLoadingUpdateProfilePicture ? (
+                              <StyledLoadingSpinner>
+                                <LoadingSpinner />
+                              </StyledLoadingSpinner>
+                            ) : null}
+                            {isMouseOverProfilePicture ? (
+                              <>
+                                <FontAwesomeIcon role='button' icon={faCamera} color='white' size='lg' />
+                                <DimmableContent
+                                  dim
+                                  type={DimType.DARK}
+                                  containerHasRoundedCorners
+                                  containerBorderRadius='128px'
+                                >
+                                  <UserProfilePicture user={user} size='md' radius={128} />
+                                </DimmableContent>
+                              </>
+                            ) : (
+                              <UserProfilePicture user={user} size='md' radius={128} />
+                            )}
+                          </UserProfilePictureContainer>
                         </div>
 
                         <div className='w-100 d-grid gap-2'>
