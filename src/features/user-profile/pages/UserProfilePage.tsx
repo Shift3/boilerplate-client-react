@@ -66,8 +66,9 @@ const UserProfilePictureContainer = styled.div<{
     position: absolute;
     z-index: 1080;
     bottom: 100%;
-    left: 5%;
-    margin-bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 0.313em;
   }
 
   .tooltiptext::after {
