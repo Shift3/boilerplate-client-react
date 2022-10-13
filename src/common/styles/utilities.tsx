@@ -44,8 +44,14 @@ export const CenteredSpinnerContainer = styled.div`
   z-index: 1060; // consistent with Bootstrap's $zindex-modal value
 `;
 
+export enum DimType {
+  LIGHT = 'LIGHT',
+  DARK = 'DARK',
+}
+
 export const DimmableContent = styled.div<{
   dim: boolean;
+  type: DimType;
   containerHasRoundedCorners: boolean;
   containerBorderRadius: string;
 }>`
@@ -59,8 +65,8 @@ export const DimmableContent = styled.div<{
             right: 0;
             top: 0;
             bottom: 0;
-            background: white;
-            opacity: 0.5;
+            background: ${props.type === DimType.LIGHT ? 'white' : 'black'};
+            opacity: ${props.type === DimType.LIGHT ? '0.5' : '0.1'};
             border-radius: ${props.containerHasRoundedCorners ? props.containerBorderRadius : '0px'};
           }
         `

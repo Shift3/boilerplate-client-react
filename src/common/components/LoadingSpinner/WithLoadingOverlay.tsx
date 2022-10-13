@@ -1,4 +1,4 @@
-import { CenteredSpinnerContainer, DimmableContent, NoContent } from 'common/styles/utilities';
+import { CenteredSpinnerContainer, DimmableContent, DimType, NoContent } from 'common/styles/utilities';
 import { FC, PropsWithChildren, useEffect, useState } from 'react';
 import { LoadingSpinner } from './LoadingSpinner';
 import styled from 'styled-components';
@@ -47,6 +47,7 @@ export const WithLoadingOverlay: FC<PropsWithChildren<Props>> = ({
   return (
     <DimmableContent
       dim={!isDelayComplete}
+      type={DimType.LIGHT}
       containerHasRoundedCorners={containerHasRoundedCorners}
       containerBorderRadius={containerBorderRadius}
     >

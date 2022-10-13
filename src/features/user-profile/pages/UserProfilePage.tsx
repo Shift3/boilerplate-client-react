@@ -36,7 +36,7 @@ import { Constants } from 'utils/constants';
 import { faCamera, faContactCard, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'react-modal-hook';
 import { LoadingSpinner } from 'common/components/LoadingSpinner';
-import { DimmableContent } from 'common/styles/utilities';
+import { DimmableContent, DimType } from 'common/styles/utilities';
 
 type RouteParams = {
   id: string;
@@ -356,13 +356,13 @@ export const UserProfilePage: FC = () => {
                               ) : null}
                               {isMouseOverProfilePicture ? (
                                 <>
-                                  <FontAwesomeIcon
-                                    role='button'
-                                    icon={faCamera}
-                                    color={user?.profilePicture ? 'white' : 'black'}
-                                    size='lg'
-                                  />
-                                  <DimmableContent dim containerHasRoundedCorners containerBorderRadius='128px'>
+                                  <FontAwesomeIcon role='button' icon={faCamera} color='white' size='lg' />
+                                  <DimmableContent
+                                    dim
+                                    type={DimType.DARK}
+                                    containerHasRoundedCorners
+                                    containerBorderRadius='128px'
+                                  >
                                     <UserProfilePicture user={user} size='md' radius={128} />
                                   </DimmableContent>
                                 </>
