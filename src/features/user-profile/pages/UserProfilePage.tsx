@@ -46,20 +46,21 @@ const UserProfilePictureContainer = styled.div`
   position: relative;
   display: inline-block;
 
-  svg {
+  svg,
+  #dimmableContent,
+  #tooltiptext {
+    display: none;
     visibility: hidden;
+  }
+
+  svg {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
   }
 
-  #dimmableContent {
-    visibility: hidden;
-  }
-
   #tooltiptext {
-    visibility: hidden;
     width: 7.5em;
     background-color: ${props => props.theme.buttons.tooltipBackgroundColor};
     color: ${props => props.theme.buttons.tooltipTextColor};
@@ -81,6 +82,7 @@ const UserProfilePictureContainer = styled.div`
     #tooltiptext,
     #dimmableContent {
       visibility: visible;
+      display: block;
     }
   }
 
