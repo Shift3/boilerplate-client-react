@@ -42,21 +42,24 @@ type RouteParams = {
   id: string;
 };
 
-const UserProfilePictureContainer = styled.div<{
-  hover: boolean;
-}>`
+const UserProfilePictureContainer = styled.div`
   position: relative;
   display: inline-block;
 
   svg {
+    visibility: hidden;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
   }
 
-  .tooltiptext {
-    visibility: ${props => `${props.hover ? 'visible' : 'hidden'}`};
+  #dimmableContent {
+    visibility: hidden;
+  }
+
+  #tooltiptext {
+    visibility: hidden;
     width: 7.5em;
     background-color: ${props => props.theme.buttons.tooltipBackgroundColor};
     color: ${props => props.theme.buttons.tooltipTextColor};
@@ -71,7 +74,17 @@ const UserProfilePictureContainer = styled.div<{
     margin-bottom: 0.313em;
   }
 
-  .tooltiptext::after {
+  &:hover {
+    cursor: pointer;
+
+    svg,
+    #tooltiptext,
+    #dimmableContent {
+      visibility: visible;
+    }
+  }
+
+  #tooltiptext::after {
     content: ' ';
     position: absolute;
     top: 100%;
@@ -130,7 +143,6 @@ export const UserProfilePage: FC = () => {
   const [tab, setTab] = useState('profile');
   const [passwordFormValidationErrors, setPasswordFormValidationErrors] =
     useState<ServerValidationErrors<ForgotPasswordFormData> | null>(null);
-  const [isMouseOverProfilePicture, setIsMouseOverProfilePicture] = useState(false);
 
   const onSubmit = async (formData: ProfileFormData) => {
     const data = { id, ...formData };
@@ -359,33 +371,22 @@ export const UserProfilePage: FC = () => {
 
                       <div className='d-flex align-items-center justify-content-center flex-column'>
                         <div className='mt-3 mb-3'>
-                          <UserProfilePictureContainer
-                            hover={isMouseOverProfilePicture}
-                            onClick={() => inputFile.current.click()}
-                            onMouseEnter={() => setIsMouseOverProfilePicture(true)}
-                            onMouseLeave={() => setIsMouseOverProfilePicture(false)}
-                          >
-                            <span className='tooltiptext'>Upload Photo</span>
+                          <UserProfilePictureContainer onClick={() => inputFile.current.click()}>
+                            <span id='tooltiptext'>Upload Photo</span>
                             {isLoadingUpdateProfilePicture ? (
                               <StyledLoadingSpinner>
                                 <LoadingSpinner />
                               </StyledLoadingSpinner>
                             ) : null}
-                            {isMouseOverProfilePicture ? (
-                              <>
-                                <FontAwesomeIcon role='button' icon={faCamera} color='white' size='lg' />
-                                <DimmableContent
-                                  dim
-                                  type={DimType.DARK}
-                                  containerHasRoundedCorners
-                                  containerBorderRadius='128px'
-                                >
-                                  <UserProfilePicture user={user} size='md' radius={128} />
-                                </DimmableContent>
-                              </>
-                            ) : (
-                              <UserProfilePicture user={user} size='md' radius={128} />
-                            )}
+                            <FontAwesomeIcon role='button' icon={faCamera} color='white' size='lg' />
+                            <DimmableContent
+                              id='dimmableContent'
+                              dim
+                              type={DimType.DARK}
+                              containerHasRoundedCorners
+                              containerBorderRadius='128px'
+                            />
+                            <UserProfilePicture user={user} size='md' radius={128} />
                           </UserProfilePictureContainer>
                         </div>
 
