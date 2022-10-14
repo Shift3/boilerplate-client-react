@@ -39,6 +39,9 @@ const FilterMenu = styled(Card)`
   border-radius: ${props => props.theme.borderRadius};
   background-color: ${props => props.theme.card.backgroundColor};
   box-shadow: ${props => props.theme.boxShadow} !important;
+  border-width: 0.063em !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  border-style: solid !important;
 
   & ul {
     list-style: none;
