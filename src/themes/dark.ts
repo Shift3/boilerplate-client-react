@@ -14,7 +14,7 @@ export default {
   card: {
     backgroundColor: colors.neutral800,
     textColor: colors.white,
-    border: `0.063em solid ${  colors.darkGray}`,
+    border: `1px solid ${colors.neutral700}`,
   },
 
   nav: {
@@ -34,7 +34,7 @@ export default {
     },
 
     horizontal: {
-      backgroundColor: colors.darkGray,
+      backgroundColor: 'rgba(255, 255, 255, 0.10)',
     },
     vertical: {
       backgroundColor: colors.neutral900,
