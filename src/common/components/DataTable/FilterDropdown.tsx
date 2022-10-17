@@ -61,7 +61,7 @@ const FilterHeader = styled.div`
   }
 `;
 
-const FilterCategory = styled.div`
+const OldFilterCategory = styled.div`
   display: block;
   &:not(:last-of-type) {
     border-bottom: 1px solid ${props => props.theme.buttons.defaultBackgroundColor};
@@ -114,6 +114,87 @@ const FilterCategory = styled.div`
       color: ${props => props.theme.textColor};
 
       svg {
+        transform: rotateZ(180deg);
+      }
+    }
+
+    & > .content {
+      visibility: visible;
+      max-height: 250px;
+      padding: 1rem;
+    }
+  }
+`;
+
+const FilterCategory = styled.div`
+  display: block;
+  &:not(:last-of-type) {
+    border-bottom: 1px solid ${props => props.theme.buttons.defaultBackgroundColor};
+  }
+
+  #button-container {
+    display: flex;
+    align-items: center;
+
+    #close {
+      margin-right: 1em;
+      margin-left: 1em;
+      flex: 1;
+    }
+
+    #toggle {
+      margin-right: 1em;
+      transition: all 0.15s ease;
+      flex: 1;
+    }
+  }
+
+  #button-container > .category {
+    padding: 0.75rem 1rem;
+    flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: ${props => props.theme.pages.p};
+    transition: all 0.15s ease;
+
+    &:hover {
+      color: ${props => props.theme.textColor};
+    }
+
+    span {
+      flex: 1;
+
+      &.active {
+        color: ${props => props.theme.textColor};
+        font-weight: 600;
+      }
+    }
+  }
+
+  & > .content {
+    visibility: hidden;
+    max-height: 0;
+    padding: 0 1rem;
+    transition: all 0.15s ease;
+    overflow: hidden;
+    background: ${props => props.theme.backgroundColor};
+
+    label {
+      color: ${props => props.theme.textColor};
+      font-weight: normal;
+      font-size: 0.9rem;
+    }
+  }
+
+  &.open {
+    #button-container > .category {
+      color: ${props => props.theme.textColor};
+    }
+
+    #button-container {
+      #toggle {
         transform: rotateZ(180deg);
       }
     }
@@ -179,11 +260,14 @@ export const FilterDropdown: FC<{
 
         {filters.map(filter => (
           <FilterCategory key={filter.attribute} className={openFilter === filter ? 'open' : ''}>
-            <div role='button' tabIndex={-1} className='category' onClick={() => toggleCategory(filter)}>
-              <span className={activeFilters.filter(a => a.attr === filter.attribute).length ? 'active' : ''}>
-                {filter.attributeLabel}
-              </span>
-              <FontAwesomeIcon icon='chevron-down' />
+            <div id='button-container'>
+              <div role='button' tabIndex={-1} className='category' onClick={() => toggleCategory(filter)}>
+                <span className={activeFilters.filter(a => a.attr === filter.attribute).length ? 'active' : ''}>
+                  {filter.attributeLabel}
+                </span>
+              </div>
+              <FontAwesomeIcon id='close' icon='xmark' />
+              <FontAwesomeIcon id='toggle' icon='chevron-down' />
             </div>
 
             <div className='content'>
