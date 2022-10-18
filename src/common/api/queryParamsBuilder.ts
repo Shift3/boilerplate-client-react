@@ -1,5 +1,4 @@
 import { Filter, SortOrder } from 'common/models';
-import { replaceCommonPhoneNumberCharactersWithEmptyStrings } from 'utils/phone';
 
 export class QueryParamsBuilder {
   private queryParams: URLSearchParams;
@@ -30,15 +29,7 @@ export class QueryParamsBuilder {
 
   public setFilterParam(filters: Filter[]): QueryParamsBuilder {
     filters.forEach(f => {
-      if (f.attr === 'phoneNumber') {
-        if (f.op === 'iendswith') {
-          this.setParam(`${f.attr}__${f.op}`, replaceCommonPhoneNumberCharactersWithEmptyStrings(f.value));
-        } else {
-          this.setParam(`${f.attr}__${f.op}`, `+1${replaceCommonPhoneNumberCharactersWithEmptyStrings(f.value)}`);
-        }
-      } else {
-        this.setParam(`${f.attr}__${f.op}`, f.value);
-      }
+      this.setParam(`${f.attr}__${f.op}`, f.value);
     });
     return this;
   }

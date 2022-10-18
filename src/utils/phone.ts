@@ -24,7 +24,3 @@ export const formatPhoneNumber = (value: string): string => {
 export const normalizePhoneNumber = (value: string): string => {
   return value.replace(/\D/g, '');
 };
-
-export const replaceCommonPhoneNumberCharactersWithEmptyStrings = (value: string) => {
-  return value.replace('(', '').replace(')', '').replace(' ', '').replace('-', '');
-};
