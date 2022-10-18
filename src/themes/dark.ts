@@ -62,6 +62,11 @@ export default {
     hoverBackgroundColor: colors.blue500,
   },
 
+  tooltips: {
+    backgroundColor: colors.white,
+    textColor: colors.black,
+  },
+
   footer: {
     textColor: colors.neutral800,
     height: '35px',

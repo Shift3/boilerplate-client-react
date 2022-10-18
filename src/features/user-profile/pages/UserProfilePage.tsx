@@ -22,23 +22,77 @@ import {
   useUpdateUserProfile,
 } from 'features/user-profile/hooks';
 import { FC, useRef, useState } from 'react';
-import { Alert, Card, Col, Container, Modal, Nav, Row } from 'react-bootstrap';
+import { Alert, Card, Col, Container, Modal, Nav, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { UpdateUserEmailForm, UserEmailFormData } from '../components/UpdateUserEmailForm';
-import { UserProfilePicture } from 'features/navbar/components/UserProfilePicture';
+import { UserProfileImg } from 'features/navbar/components/UserProfilePicture';
 import { isObject } from 'common/error/utilities';
 import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
 import { Trans } from 'react-i18next';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { Constants } from 'utils/constants';
-import { faContactCard, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faContactCard, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'react-modal-hook';
+import { LoadingSpinner } from 'common/components/LoadingSpinner';
 
 type RouteParams = {
   id: string;
 };
+
+const UserProfilePictureContainer = styled.div`
+  position: relative;
+  display: inline-block;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+
+  #loading-spinner {
+    position: absolute;
+    padding-top: 0.15rem;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  svg {
+    visibility: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    z-index: 1;
+    opacity: 0;
+    transition: 0.3s all ease-in-out;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: black;
+    opacity: 0;
+    overflow: hidden;
+    transition: 0.3s all ease-in-out;
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    &:after {
+      opacity: 0.4;
+    }
+
+    svg {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+`;
 
 const ProfileNav = styled(Nav).attrs({ className: 'flex-column' })`
   margin-bottom: 1rem;
@@ -133,6 +187,7 @@ export const UserProfilePage: FC = () => {
     const formData = new FormData();
     formData.append('file', e.target.files[0]);
     await updateUserProfilePicture({ id: user!.id, profilePicture: formData });
+    e.target.value = '';
   };
 
   const [emailFormValidationErrors, setEmailFormValidationErrors] =
@@ -300,20 +355,21 @@ export const UserProfilePage: FC = () => {
                       </p>
 
                       <div className='d-flex align-items-center justify-content-center flex-column'>
-                        <div className='mt-3'>
-                          <UserProfilePicture user={user} size='md' radius={128} />
+                        <div className='mt-3 mb-3'>
+                          <OverlayTrigger overlay={<Tooltip>Upload Photo</Tooltip>}>
+                            <UserProfilePictureContainer
+                              onClick={() => !isLoadingUpdateProfilePicture && inputFile.current.click()}
+                            >
+                              {isLoadingUpdateProfilePicture && <LoadingSpinner />}
+                              {!isLoadingUpdateProfilePicture && (
+                                <FontAwesomeIcon role='button' icon={faCamera} color='white' size='lg' />
+                              )}
+                              <UserProfileImg user={user!} size='md' />
+                            </UserProfilePictureContainer>
+                          </OverlayTrigger>
                         </div>
 
                         <div className='w-100 d-grid gap-2'>
-                          <LoadingButton
-                            loading={isLoadingUpdateProfilePicture}
-                            onClick={() => inputFile.current.click()}
-                            variant='default'
-                            className='mt-3'
-                          >
-                            Select File...
-                          </LoadingButton>
-
                           <input
                             hidden
                             ref={inputFile}

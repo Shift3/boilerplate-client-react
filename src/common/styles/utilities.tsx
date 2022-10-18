@@ -44,28 +44,39 @@ export const CenteredSpinnerContainer = styled.div`
   z-index: 1060; // consistent with Bootstrap's $zindex-modal value
 `;
 
-export const DimmableContent = styled.div<{
-  dim: boolean;
-  containerHasRoundedCorners: boolean;
-  containerBorderRadius: string;
-}>`
-  ${props =>
-    props.dim
-      ? css`
-          &:after {
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            background: white;
-            opacity: 0.5;
-            border-radius: ${props.containerHasRoundedCorners ? props.containerBorderRadius : '0px'};
-          }
-        `
-      : null}
+const DimmableStyles = styled.div`
+  .dimmable-content-container {
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: #fff;
+      opacity: 0;
+      transition: 0.3s all ease-in-out;
+      pointer-events: none;
+    }
+
+    &.active {
+      &:after {
+        opacity: 0.4;
+        pointer-events: auto;
+      }
+    }
+  }
 `;
+
+export const DimmableContent: FC<
+  PropsWithChildren<{
+    dim?: boolean;
+  }>
+> = ({ dim = true, children }) => (
+  <DimmableStyles>
+    <div className={`dimmable-content-container ${dim && 'active'}`}>{children}</div>
+  </DimmableStyles>
+);
 
 export const CircularImg = styled.img<{
   radius: number;

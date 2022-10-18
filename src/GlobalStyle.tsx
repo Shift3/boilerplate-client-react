@@ -92,11 +92,23 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
         color: ${({ theme }) => theme.forms.errorTextColor};
     }
 
+    .tooltip-inner {
+        background-color: ${({ theme }) => theme.tooltips.backgroundColor};
+        color: ${({ theme }) => theme.tooltips.textColor};
+    }
+    .tooltip-arrow::before {
+        border-top-color: ${({ theme }) => theme.tooltips.backgroundColor} !important;
+    }
+
     .card {
         background-color: ${({ theme }) => theme.card.backgroundColor};
         border-radius: ${({ theme }) => theme.borderRadius};
         border: none;
         box-shadow: ${({ theme }) => theme.boxShadow};
+        
+        .dimmable-content-container::after {
+            border-radius: ${({ theme }) => theme.borderRadius};
+        }
     }
 
     .card-header {

@@ -9,20 +9,28 @@ type Props = {
   radius: number;
 };
 
-export const UserProfilePicture: FC<Props> = ({ user, size, radius }) => {
-  let imageSource = '';
-  const fullName = user ? `${user.firstName} ${user.lastName}` : 'User';
-
-  if (user && user.profilePicture) {
+const getUserThumbnailOfSize = (user: User, size: string) => {
+  if (user.profilePicture) {
     const assocThumbnails = user.profilePicture.thumbnails.filter((thumbnail: Thumbnail) => thumbnail.size === size);
     if (assocThumbnails.length !== 0) {
-      imageSource = assocThumbnails[0].file.url;
-    } else {
-      imageSource = user.profilePicture.file.url;
+      return assocThumbnails[0].file.url;
     }
-  } else {
-    imageSource = portraitPlaceholder;
+    return user.profilePicture.file.url;
   }
+
+  return portraitPlaceholder;
+};
+
+export const UserProfileImg: FC<{ user: User; size: string }> = ({ user, size }) => {
+  const fullName = user ? `${user.firstName} ${user.lastName}` : 'User';
+  const imageSource = getUserThumbnailOfSize(user, size);
+
+  return <img alt={fullName} src={imageSource} />;
+};
+
+export const UserProfilePicture: FC<Props> = ({ user, size, radius }) => {
+  const fullName = user ? `${user.firstName} ${user.lastName}` : 'User';
+  const imageSource = getUserThumbnailOfSize(user!, size);
 
   return <CircularImg radius={radius} src={imageSource} alt={fullName} />;
 };
