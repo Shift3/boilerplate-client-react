@@ -1,5 +1,9 @@
 import { FieldValues, UseFormSetError } from 'react-hook-form';
 
+export function isKeyOfObject<T>(key: string | number | symbol, obj: T): key is keyof T {
+  return key in obj;
+}
+
 export const isObject = (value: unknown): value is Record<string, unknown> => {
   return value !== null && typeof value === 'object';
 };
