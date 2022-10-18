@@ -70,7 +70,6 @@ const FilterCategory = styled.div`
   #action-container {
     display: flex;
     align-items: center;
-    justify-content: spaced-between;
 
     svg#remove {
       flex: 0.5;
