@@ -135,17 +135,22 @@ const FilterCategory = styled.div`
   #button-container {
     display: flex;
     align-items: center;
+    justify-content: spaced-between;
 
     #close {
-      margin-right: 1em;
-      margin-left: 1em;
       flex: 1;
+      padding: 0.75rem 0;
+      display: none;
+
+      &.active {
+        display: inline-block;
+      }
     }
 
     #toggle {
-      margin-right: 1em;
       transition: all 0.15s ease;
       flex: 1;
+      padding: 0.75rem 0;
     }
   }
 
@@ -266,8 +271,8 @@ export const FilterDropdown: FC<{
                   {filter.attributeLabel}
                 </span>
               </div>
-              <FontAwesomeIcon id='close' icon='xmark' />
-              <FontAwesomeIcon id='toggle' icon='chevron-down' />
+              <FontAwesomeIcon id='close' className={activeFilters.filter(a => a.attr === filter.attribute).length ? 'active' : ''} icon='xmark' />
+              <FontAwesomeIcon id='toggle' icon='chevron-down' onClick={() => toggleCategory(filter)} />
             </div>
 
             <div className='content'>
