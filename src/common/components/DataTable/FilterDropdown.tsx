@@ -139,9 +139,15 @@ const FilterCategory = styled.div`
 
     svg#clear {
       flex: .5;
-      padding: 0.75rem 0;
+      padding: 0.50rem 0;
+      border-radius: ${props => props.theme.borderRadius};
       display: none;
       cursor: pointer;
+
+      &:hover {
+        background-color: ${props => props.theme.noticeBackgroundColor};
+        color: ${props => props.theme.noticeTextColor};
+      }
 
       &.active {
         display: inline-block;
