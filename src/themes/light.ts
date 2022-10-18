@@ -60,9 +60,11 @@ export default {
     backgroundColor: colors.blue600,
     disabledBackgroundColor: colors.neutral100,
     hoverBackgroundColor: colors.blue500,
+  },
 
-    tooltipBackgroundColor: colors.black,
-    tooltipTextColor: colors.white,
+  tooltips: {
+    backgroundColor: colors.black,
+    textColor: colors.white,
   },
 
   footer: {

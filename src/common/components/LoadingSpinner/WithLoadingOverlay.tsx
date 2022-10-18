@@ -1,36 +1,19 @@
-import { CenteredSpinnerContainer, DimmableContent, DimType, NoContent } from 'common/styles/utilities';
+import { CenteredSpinnerContainer, DimmableContent, NoContent } from 'common/styles/utilities';
 import { FC, PropsWithChildren, useEffect, useState } from 'react';
 import { LoadingSpinner } from './LoadingSpinner';
 import styled from 'styled-components';
 
-const StyledLoadingSpinner = styled.div<{
-  length: number;
-}>`
+const StyledLoadingSpinner = styled.div`
   padding: 3rem 0rem;
   text-align: center;
-
-  #loading-spinner {
-    width: ${props => `${props.length}em`};
-    height: ${props => `${props.length}em`};
-  }
 `;
 
 export type Props = {
   isLoading: boolean;
-  length?: number;
   isInitialLoad?: boolean;
-  containerHasRoundedCorners: boolean;
-  containerBorderRadius: string;
 };
 
-export const WithLoadingOverlay: FC<PropsWithChildren<Props>> = ({
-  isLoading,
-  length = 4,
-  containerHasRoundedCorners,
-  containerBorderRadius,
-  children,
-  isInitialLoad = false,
-}) => {
+export const WithLoadingOverlay: FC<PropsWithChildren<Props>> = ({ isLoading, children, isInitialLoad = false }) => {
   const [isDelayComplete, setIsDelayComplete] = useState(false);
 
   useEffect(() => {
@@ -45,15 +28,10 @@ export const WithLoadingOverlay: FC<PropsWithChildren<Props>> = ({
   }, [isLoading]);
 
   return (
-    <DimmableContent
-      dim={!isDelayComplete}
-      type={DimType.LIGHT}
-      containerHasRoundedCorners={containerHasRoundedCorners}
-      containerBorderRadius={containerBorderRadius}
-    >
+    <DimmableContent dim={!isDelayComplete}>
       {!isDelayComplete ? (
         <CenteredSpinnerContainer>
-          <StyledLoadingSpinner length={length}>
+          <StyledLoadingSpinner>
             <LoadingSpinner />
           </StyledLoadingSpinner>
         </CenteredSpinnerContainer>

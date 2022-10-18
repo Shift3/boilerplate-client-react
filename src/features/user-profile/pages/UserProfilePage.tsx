@@ -22,12 +22,12 @@ import {
   useUpdateUserProfile,
 } from 'features/user-profile/hooks';
 import { FC, useRef, useState } from 'react';
-import { Alert, Card, Col, Container, Modal, Nav, Row } from 'react-bootstrap';
+import { Alert, Card, Col, Container, Modal, Nav, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { UpdateUserEmailForm, UserEmailFormData } from '../components/UpdateUserEmailForm';
-import { UserProfilePicture } from 'features/navbar/components/UserProfilePicture';
+import { UserProfileImg } from 'features/navbar/components/UserProfilePicture';
 import { isObject } from 'common/error/utilities';
 import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
 import { Trans } from 'react-i18next';
@@ -36,7 +36,6 @@ import { Constants } from 'utils/constants';
 import { faCamera, faContactCard, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'react-modal-hook';
 import { LoadingSpinner } from 'common/components/LoadingSpinner';
-import { DimmableContent, DimType } from 'common/styles/utilities';
 
 type RouteParams = {
   id: string;
@@ -45,69 +44,53 @@ type RouteParams = {
 const UserProfilePictureContainer = styled.div`
   position: relative;
   display: inline-block;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 
-  svg,
-  #dimmableContent,
-  #tooltiptext {
-    display: none;
-    visibility: hidden;
+  #loading-spinner {
+    position: absolute;
+    padding-top: 0.15rem;
+    text-align: center;
+    height: 100%;
+    width: 100%;
   }
 
   svg {
+    visibility: hidden;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
+    z-index: 1;
+    opacity: 0;
+    transition: 0.3s all ease-in-out;
   }
 
-  #tooltiptext {
-    width: 7.5em;
-    background-color: ${props => props.theme.buttons.tooltipBackgroundColor};
-    color: ${props => props.theme.buttons.tooltipTextColor};
-    text-align: center;
-    border-radius: 0.375em;
-    padding: 0.313em 0;
+  &:after {
+    content: '';
     position: absolute;
-    z-index: 1080;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-bottom: 0.313em;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: black;
+    opacity: 0;
+    overflow: hidden;
+    transition: 0.3s all ease-in-out;
   }
 
   &:hover {
     cursor: pointer;
 
-    svg,
-    #tooltiptext,
-    #dimmableContent {
-      visibility: visible;
-      display: block;
+    &:after {
+      opacity: 0.4;
     }
-  }
 
-  #tooltiptext::after {
-    content: ' ';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 0.313em;
-    border-style: solid;
-    border-color: ${props => props.theme.buttons.tooltipBackgroundColor} transparent transparent transparent;
-  }
-`;
-
-const StyledLoadingSpinner = styled.div`
-  position: absolute;
-  padding-top: 0.15rem;
-  text-align: center;
-  height: 100%;
-  width: 100%;
-
-  #loading-spinner {
-    width: 7.5em;
-    height: 7.5em;
+    svg {
+      visibility: visible;
+      opacity: 1;
+    }
   }
 `;
 
@@ -373,23 +356,17 @@ export const UserProfilePage: FC = () => {
 
                       <div className='d-flex align-items-center justify-content-center flex-column'>
                         <div className='mt-3 mb-3'>
-                          <UserProfilePictureContainer onClick={() => inputFile.current.click()}>
-                            <span id='tooltiptext'>Upload Photo</span>
-                            {isLoadingUpdateProfilePicture ? (
-                              <StyledLoadingSpinner>
-                                <LoadingSpinner />
-                              </StyledLoadingSpinner>
-                            ) : null}
-                            <FontAwesomeIcon role='button' icon={faCamera} color='white' size='lg' />
-                            <DimmableContent
-                              id='dimmableContent'
-                              dim
-                              type={DimType.DARK}
-                              containerHasRoundedCorners
-                              containerBorderRadius='128px'
-                            />
-                            <UserProfilePicture user={user} size='md' radius={128} />
-                          </UserProfilePictureContainer>
+                          <OverlayTrigger overlay={<Tooltip>Upload Photo</Tooltip>}>
+                            <UserProfilePictureContainer
+                              onClick={() => !isLoadingUpdateProfilePicture && inputFile.current.click()}
+                            >
+                              {isLoadingUpdateProfilePicture && <LoadingSpinner />}
+                              {!isLoadingUpdateProfilePicture && (
+                                <FontAwesomeIcon role='button' icon={faCamera} color='white' size='lg' />
+                              )}
+                              <UserProfileImg user={user!} size='md' />
+                            </UserProfilePictureContainer>
+                          </OverlayTrigger>
                         </div>
 
                         <div className='w-100 d-grid gap-2'>
