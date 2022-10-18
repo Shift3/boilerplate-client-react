@@ -85,7 +85,7 @@ export default {
   },
 
   table: {
-    rowHoverColor: colors.neutral800,
+    rowHoverColor: colors.neutral900,
   },
 
   modals: {

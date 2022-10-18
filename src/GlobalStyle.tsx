@@ -70,6 +70,24 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
         }
     }
 
+    .dropdown-menu {
+        border-radius: ${({ theme }) => theme.borderRadius};
+        background-color: ${({ theme }) => theme.card.backgroundColor};
+        border: 1px solid ${({ theme }) => theme.nav.borderColor};
+        margin-top: 0.5rem !important;
+        box-shadow: ${({ theme }) => theme.boxShadow};
+
+        .dropdown-item {
+            color: ${({ theme }) => theme.card.textColor};
+
+            &:hover,
+            &:active {
+                color: ${({ theme }) => theme.card.backgroundColor};
+                background-color: ${({ theme }) => theme.card.textColor};
+            }
+        }
+    }
+
     .invalid-feedback {
         color: ${({ theme }) => theme.forms.errorTextColor};
     }

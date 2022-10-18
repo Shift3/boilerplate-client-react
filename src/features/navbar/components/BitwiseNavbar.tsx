@@ -30,6 +30,10 @@ const StyledNavbar = styled(Navbar)`
   margin-top: ${environment.environment === EnvironmentConfiguration.Staging ? '56px' : '0px'};
   padding: 0.8rem 0;
 
+  .dropdown-menu {
+    min-width: 200px;
+  }
+
   .dropdown-item > svg {
     margin-inline-end: 0.5rem;
   }
@@ -51,6 +55,11 @@ const StyledNavbar = styled(Navbar)`
   .dropdown-toggle::after {
     margin-left: 0.25rem;
     color: ${props => props.theme.textColor};
+  }
+
+  .show > .nav-link {
+    background: ${props => props.theme.nav.link.activeBackground};
+    color: ${props => props.theme.nav.link.activeText};
   }
 
   .nav-link {
