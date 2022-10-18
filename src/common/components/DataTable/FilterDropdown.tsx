@@ -137,20 +137,22 @@ const FilterCategory = styled.div`
     align-items: center;
     justify-content: spaced-between;
 
-    #close {
-      flex: 1;
+    svg#clear {
+      flex: .5;
       padding: 0.75rem 0;
       display: none;
+      cursor: pointer;
 
       &.active {
         display: inline-block;
       }
     }
 
-    #toggle {
+    svg#toggle {
       transition: all 0.15s ease;
-      flex: 1;
+      flex: .5;
       padding: 0.75rem 0;
+      cursor: pointer;
     }
   }
 
@@ -199,7 +201,7 @@ const FilterCategory = styled.div`
     }
 
     #button-container {
-      #toggle {
+      svg#toggle {
         transform: rotateZ(180deg);
       }
     }
@@ -253,6 +255,10 @@ export const FilterDropdown: FC<{
     else setOpenFilter(filter);
   };
 
+  const checkIfActiveFilter = (filter: FilterInfo): string => {
+    return activeFilters.filter(a => a.attr === filter.attribute).length ? 'active' : '';
+  } 
+
   return (
     <StyledDropdown className={show ? 'show' : ''} ref={dropdownContainerRef}>
       <FilterMenu>
@@ -267,11 +273,11 @@ export const FilterDropdown: FC<{
           <FilterCategory key={filter.attribute} className={openFilter === filter ? 'open' : ''}>
             <div id='button-container'>
               <div role='button' tabIndex={-1} className='category' onClick={() => toggleCategory(filter)}>
-                <span className={activeFilters.filter(a => a.attr === filter.attribute).length ? 'active' : ''}>
+                <span className={checkIfActiveFilter(filter)}>
                   {filter.attributeLabel}
                 </span>
               </div>
-              <FontAwesomeIcon id='close' className={activeFilters.filter(a => a.attr === filter.attribute).length ? 'active' : ''} icon='xmark' />
+              <FontAwesomeIcon id='clear' className={checkIfActiveFilter(filter)} icon='xmark' onClick={() => console.log('Remove Filter')} />
               <FontAwesomeIcon id='toggle' icon='chevron-down' onClick={() => toggleCategory(filter)} />
             </div>
 
