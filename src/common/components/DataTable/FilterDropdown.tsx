@@ -259,6 +259,12 @@ export const FilterDropdown: FC<{
     return activeFilters.filter(a => a.attr === filter.attribute).length ? 'active' : '';
   } 
 
+  const handleFilterRemoval = (filter: FilterInfo) => {
+    const filterToRemove = activeFilters.filter(a => a.attr === filter.attribute)[0];
+
+    removeFilter(filterToRemove.attr, filterToRemove.op);
+  }
+
   return (
     <StyledDropdown className={show ? 'show' : ''} ref={dropdownContainerRef}>
       <FilterMenu>
@@ -277,7 +283,7 @@ export const FilterDropdown: FC<{
                   {filter.attributeLabel}
                 </span>
               </div>
-              <FontAwesomeIcon id='clear' className={checkIfActiveFilter(filter)} icon='xmark' onClick={() => console.log('Remove Filter')} />
+              <FontAwesomeIcon id='clear' className={checkIfActiveFilter(filter)} icon='xmark' onClick={() => handleFilterRemoval(filter)} />
               <FontAwesomeIcon id='toggle' icon='chevron-down' onClick={() => toggleCategory(filter)} />
             </div>
 
