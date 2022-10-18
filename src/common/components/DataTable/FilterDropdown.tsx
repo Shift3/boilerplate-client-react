@@ -61,85 +61,20 @@ const FilterHeader = styled.div`
   }
 `;
 
-const OldFilterCategory = styled.div`
-  display: block;
-  &:not(:last-of-type) {
-    border-bottom: 1px solid ${props => props.theme.buttons.defaultBackgroundColor};
-  }
-
-  & > .category {
-    padding: 0.75rem 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: ${props => props.theme.pages.p};
-    transition: all 0.15s ease;
-
-    &:hover {
-      color: ${props => props.theme.textColor};
-    }
-
-    span {
-      flex: 1;
-
-      &.active {
-        color: ${props => props.theme.textColor};
-        font-weight: 600;
-      }
-    }
-
-    svg {
-      transition: all 0.15s ease;
-    }
-  }
-
-  & > .content {
-    visibility: hidden;
-    max-height: 0;
-    padding: 0 1rem;
-    transition: all 0.15s ease;
-    overflow: hidden;
-    background: ${props => props.theme.backgroundColor};
-
-    label {
-      color: ${props => props.theme.textColor};
-      font-weight: normal;
-      font-size: 0.9rem;
-    }
-  }
-
-  &.open {
-    & > .category {
-      color: ${props => props.theme.textColor};
-
-      svg {
-        transform: rotateZ(180deg);
-      }
-    }
-
-    & > .content {
-      visibility: visible;
-      max-height: 250px;
-      padding: 1rem;
-    }
-  }
-`;
-
 const FilterCategory = styled.div`
   display: block;
   &:not(:last-of-type) {
     border-bottom: 1px solid ${props => props.theme.buttons.defaultBackgroundColor};
   }
 
-  #button-container {
+  #action-container {
     display: flex;
     align-items: center;
     justify-content: spaced-between;
 
-    svg#clear {
-      flex: .5;
-      padding: 0.50rem 0;
+    svg#remove {
+      flex: 0.5;
+      padding: 0.5rem 0;
       border-radius: ${props => props.theme.borderRadius};
       display: none;
       cursor: pointer;
@@ -156,32 +91,32 @@ const FilterCategory = styled.div`
 
     svg#toggle {
       transition: all 0.15s ease;
-      flex: .5;
+      flex: 0.5;
       padding: 0.75rem 0;
       cursor: pointer;
     }
-  }
 
-  #button-container > .category {
-    padding: 0.75rem 1rem;
-    flex: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: ${props => props.theme.pages.p};
-    transition: all 0.15s ease;
+    .category {
+      padding: 0.75rem 1rem;
+      flex: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: ${props => props.theme.pages.p};
+      transition: all 0.15s ease;
 
-    &:hover {
-      color: ${props => props.theme.textColor};
-    }
-
-    span {
-      flex: 1;
-
-      &.active {
+      &:hover {
         color: ${props => props.theme.textColor};
-        font-weight: 600;
+      }
+
+      span {
+        flex: 1;
+
+        &.active {
+          color: ${props => props.theme.textColor};
+          font-weight: 600;
+        }
       }
     }
   }
@@ -202,11 +137,11 @@ const FilterCategory = styled.div`
   }
 
   &.open {
-    #button-container > .category {
+    #action-container > .category {
       color: ${props => props.theme.textColor};
     }
 
-    #button-container {
+    #action-container {
       svg#toggle {
         transform: rotateZ(180deg);
       }
@@ -263,13 +198,13 @@ export const FilterDropdown: FC<{
 
   const checkIfActiveFilter = (filter: FilterInfo): string => {
     return activeFilters.filter(a => a.attr === filter.attribute).length ? 'active' : '';
-  } 
+  };
 
   const handleFilterRemoval = (filter: FilterInfo) => {
     const filterToRemove = activeFilters.filter(a => a.attr === filter.attribute)[0];
 
     removeFilter(filterToRemove.attr, filterToRemove.op);
-  }
+  };
 
   return (
     <StyledDropdown className={show ? 'show' : ''} ref={dropdownContainerRef}>
@@ -283,13 +218,16 @@ export const FilterDropdown: FC<{
 
         {filters.map(filter => (
           <FilterCategory key={filter.attribute} className={openFilter === filter ? 'open' : ''}>
-            <div id='button-container'>
+            <div id='action-container'>
               <div role='button' tabIndex={-1} className='category' onClick={() => toggleCategory(filter)}>
-                <span className={checkIfActiveFilter(filter)}>
-                  {filter.attributeLabel}
-                </span>
+                <span className={checkIfActiveFilter(filter)}>{filter.attributeLabel}</span>
               </div>
-              <FontAwesomeIcon id='clear' className={checkIfActiveFilter(filter)} icon='xmark' onClick={() => handleFilterRemoval(filter)} />
+              <FontAwesomeIcon
+                id='remove'
+                className={checkIfActiveFilter(filter)}
+                icon='xmark'
+                onClick={() => handleFilterRemoval(filter)}
+              />
               <FontAwesomeIcon id='toggle' icon='chevron-down' onClick={() => toggleCategory(filter)} />
             </div>
 
