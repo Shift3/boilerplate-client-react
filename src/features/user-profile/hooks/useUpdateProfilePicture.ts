@@ -5,11 +5,7 @@ import { authSlice, AuthState } from '../../auth/authSlice';
 import * as notificationService from 'common/services/notification';
 import { useUpdateProfilePictureMutation, UpdateProfilePictureRequest } from 'common/api/userApi';
 import * as authLocalStorage from '../../auth/authLocalStorage';
-import { isObject, isStringArray } from 'common/error/utilities';
-
-export function isKeyOfObject<T>(key: string | number | symbol, obj: T): key is keyof T {
-  return key in obj;
-}
+import { isObject, isStringArray, isKeyOfObject } from 'common/error/utilities';
 
 export const useUpdateProfilePicture = () => {
   const dispatch = useAppDispatch();
