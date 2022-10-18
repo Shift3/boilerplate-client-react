@@ -14,6 +14,7 @@ export default {
   card: {
     backgroundColor: colors.white,
     textColor: colors.black,
+    border: 'none',
   },
 
   nav: {
