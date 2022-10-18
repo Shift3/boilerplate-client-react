@@ -5,6 +5,11 @@ import { authSlice, AuthState } from '../../auth/authSlice';
 import * as notificationService from 'common/services/notification';
 import { useUpdateProfilePictureMutation, UpdateProfilePictureRequest } from 'common/api/userApi';
 import * as authLocalStorage from '../../auth/authLocalStorage';
+import { isObject, isStringArray } from 'common/error/utilities';
+
+export function isKeyOfObject<T>(key: string | number | symbol, obj: T): key is keyof T {
+  return key in obj;
+}
 
 export const useUpdateProfilePicture = () => {
   const dispatch = useAppDispatch();
@@ -24,7 +29,14 @@ export const useUpdateProfilePicture = () => {
         }
       } catch (error) {
         if (isFetchBaseQueryError(error)) {
-          handleApiError(error);
+          if (error.data && isObject(error.data) && isKeyOfObject('file', error.data)) {
+            const fileErrorMessages = error.data.file;
+            if (isStringArray(fileErrorMessages)) {
+              notificationService.showErrorMessage(fileErrorMessages.join(' '));
+            }
+          } else {
+            handleApiError(error);
+          }
         } else {
           notificationService.showErrorMessage('Unable to upload profile picture.');
           throw error;
