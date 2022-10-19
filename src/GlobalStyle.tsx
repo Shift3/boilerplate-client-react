@@ -177,7 +177,6 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
     .modal-dialog {
         display: flex;
         align-items: center;
-        min-height: calc(100% - 1rem);
     }
 
     .modal-content {
@@ -201,6 +200,19 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
         border-bottom-left-radius: calc(${({ theme }) => theme.borderRadius} * 3);;
         border-bottom-right-radius: calc(${({ theme }) => theme.borderRadius} * 3);;
         background: ${({ theme }) => theme.backgroundColor}
+    }
+
+    .changelog-modal-content {
+        height: 50vh;
+    }
+
+    .changelog-modal-body {
+        overflow-y: auto;
+        height: 85%;
+    }
+
+    .changelog-modal-footer {
+        height: 15%;
     }
 
     .action-shadow {

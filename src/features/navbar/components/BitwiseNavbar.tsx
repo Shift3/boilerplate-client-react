@@ -261,7 +261,7 @@ export const BitwiseNavbar: FC = () => {
   const [showModal, hideModal] = useModal(
     ({ in: open, onExited }) => {
       return (
-        <Modal show={open} onHide={hideModal} onExited={onExited}>
+        <Modal show={open} onHide={hideModal} onExited={onExited} centered>
           <Modal.Header closeButton>
             <Modal.Title>Sign Out</Modal.Title>
           </Modal.Header>

@@ -119,6 +119,8 @@ export default {
   },
 
   changelogs: {
-    accentTextColor: colors.neutral50,
+    textColor: colors.white,
+    accentTextColor: colors.blue400,
+    backgroundColor: colors.neutral800
   },
 };
