@@ -67,11 +67,11 @@ const FilterCategory = styled.div`
     border-bottom: 1px solid ${props => props.theme.buttons.defaultBackgroundColor};
   }
 
-  #action-container {
+  .action-container {
     display: flex;
     align-items: center;
 
-    svg#remove {
+    svg.remove {
       flex: 0.5;
       padding: 0.5rem 0;
       border-radius: ${props => props.theme.borderRadius};
@@ -88,7 +88,7 @@ const FilterCategory = styled.div`
       }
     }
 
-    svg#toggle {
+    svg.toggle {
       transition: all 0.15s ease;
       flex: 0.5;
       padding: 0.75rem 0;
@@ -136,12 +136,12 @@ const FilterCategory = styled.div`
   }
 
   &.open {
-    #action-container > .category {
+    .action-container > .category {
       color: ${props => props.theme.textColor};
     }
 
-    #action-container {
-      svg#toggle {
+    .action-container {
+      svg.toggle {
         transform: rotateZ(180deg);
       }
     }
@@ -195,14 +195,16 @@ export const FilterDropdown: FC<{
     else setOpenFilter(filter);
   };
 
-  const checkIfActiveFilter = (filter: FilterInfo): string => {
-    return activeFilters.filter(a => a.attr === filter.attribute).length ? 'active' : '';
+  const isFilterActive = (filter: FilterInfo) => {
+    return activeFilters.find(a => a.attr === filter.attribute);
   };
 
   const handleFilterRemoval = (filter: FilterInfo) => {
-    const filterToRemove = activeFilters.filter(a => a.attr === filter.attribute)[0];
+    const filterToRemove = activeFilters.find(a => a.attr === filter.attribute);
 
-    removeFilter(filterToRemove.attr, filterToRemove.op);
+    if (filterToRemove) {
+      removeFilter(filterToRemove.attr, filterToRemove.op);
+    }
   };
 
   return (
@@ -217,17 +219,16 @@ export const FilterDropdown: FC<{
 
         {filters.map(filter => (
           <FilterCategory key={filter.attribute} className={openFilter === filter ? 'open' : ''}>
-            <div id='action-container'>
+            <div className='action-container'>
               <div role='button' tabIndex={-1} className='category' onClick={() => toggleCategory(filter)}>
-                <span className={checkIfActiveFilter(filter)}>{filter.attributeLabel}</span>
+                <span className={isFilterActive(filter) ? 'active' : ''}>{filter.attributeLabel}</span>
               </div>
               <FontAwesomeIcon
-                id='remove'
-                className={checkIfActiveFilter(filter)}
+                className={`remove ${isFilterActive(filter) ? 'active' : ''}`}
                 icon='xmark'
                 onClick={() => handleFilterRemoval(filter)}
               />
-              <FontAwesomeIcon id='toggle' icon='chevron-down' onClick={() => toggleCategory(filter)} />
+              <FontAwesomeIcon className='toggle' icon='chevron-down' onClick={() => toggleCategory(filter)} />
             </div>
 
             <div className='content'>
