@@ -60,7 +60,10 @@ export const useLiveNotifications = () => {
     skip: !user,
   });
 
-  const { data: eventToken } = useGetEventTokenQuery(undefined, { skip: !user });
+  const { data: eventToken } = useGetEventTokenQuery(undefined, {
+    skip: !user,
+    refetchOnReconnect: true,
+  });
 
   // Append new notifications that we got from the API to
   // oldNotifications list
@@ -118,8 +121,8 @@ export const useLiveNotifications = () => {
 
   const clear = useCallback(() => {
     notificationDispatch({ type: 'reset' });
-    refetch();
-  }, [notificationDispatch, refetch]);
+    dispatch(notificationApi.util.resetApiState());
+  }, [notificationDispatch, dispatch]);
 
   const getMore = useCallback(() => {
     if (unreadNotifications?.links.next && !isFetching) {

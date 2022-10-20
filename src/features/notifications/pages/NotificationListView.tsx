@@ -1,65 +1,17 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useMarkAllReadMutation } from 'common/api/notificationApi';
-import { LoadingButton } from 'common/components/LoadingButton';
-import { LoadingSpinner } from 'common/components/LoadingSpinner';
-import { AppNotification } from 'common/models/notifications';
 import { PageHeader, SmallContainer } from 'common/styles/page';
-import { NoContent } from 'common/styles/utilities';
-import { FC, useContext, useEffect, useRef } from 'react';
-import { Card } from 'react-bootstrap';
+import { ProfileNav } from 'features/user-profile/pages/UserProfilePage';
+import { FC, useContext } from 'react';
+import { Badge, Col, Row } from 'react-bootstrap';
 import { Trans } from 'react-i18next';
-import * as NotificationComponents from '../components';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { ReadNotifications } from '../components/ReadNotifications';
+import { UnreadNotifications } from '../components/UnreadNotifications';
 import { NotificationContext } from '../context';
 
 export const NotificationListView: FC = () => {
-  const scrollElement = useRef<HTMLDivElement>(null);
-  const {
-    notifications,
-    hasMore,
-    isFetching,
-    isLoading: isNotificationsLoading,
-    getMore,
-    clear,
-  } = useContext(NotificationContext);
-
-  const [markAllRead, { isLoading }] = useMarkAllReadMutation();
-
-  const markRead = async () => {
-    await markAllRead().unwrap();
-    clear();
-  };
-
-  useEffect(() => {
-    if (isNotificationsLoading) return () => {};
-
-    const element = scrollElement.current;
-
-    const observer = new IntersectionObserver(entries => {
-      const [entry] = entries;
-      if (entry.isIntersecting && hasMore) getMore();
-    }, {});
-    if (element) observer.observe(element);
-
-    return () => {
-      if (element) observer.unobserve(element);
-    };
-  }, [scrollElement, getMore, hasMore, isNotificationsLoading, isFetching, notifications]);
-
-  const renderNotification = (notification: AppNotification) => {
-    // Dynamic dispatch.
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const Component = (NotificationComponents as any)[notification.type];
-    // eslint-disable-next-line no-console
-    console.assert(
-      Component,
-      `Could not find notification display component ${notification.type} in notifications/components.tsx\nMake sure to define a handler in that file`,
-    );
-    if (!Component) {
-      // No component for type found.
-      return <></>;
-    }
-    return <Component notification={notification} />;
-  };
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { count } = useContext(NotificationContext);
 
   return (
     <SmallContainer>
@@ -72,31 +24,41 @@ export const NotificationListView: FC = () => {
             <Trans i18nKey='notification.subheading'>Notifications that have been sent to me.</Trans>
           </p>
         </div>
-        <div>
-          <LoadingButton onClick={() => markRead()} loading={isLoading || isNotificationsLoading || isFetching}>
-            Mark all Read
-          </LoadingButton>
-        </div>
       </PageHeader>
 
-      {!isNotificationsLoading && notifications.length === 0 ? (
-        <Card>
-          <NoContent>
-            <FontAwesomeIcon className='text-muted' size='2x' icon={['fas', 'bell']} />
-            <p className='lead mb-0'>No Notifications</p>
-          </NoContent>
-        </Card>
-      ) : null}
+      <Row>
+        <Col md={3}>
+          <ProfileNav className='flex-column'>
+            <ProfileNav.Link
+              onClick={() => navigate('/notifications')}
+              className={location.pathname === '/notifications' ? 'active' : ''}
+            >
+              <div className='d-flex align-items-center'>
+                <div className='flex-fill'>Unread</div>
+                {count > 0 && (
+                  <Badge pill bg='danger'>
+                    {count}
+                  </Badge>
+                )}
+              </div>
+            </ProfileNav.Link>
 
-      {notifications.map(notification => (
-        <Card key={notification.id} className='mb-3'>
-          <Card.Body>{renderNotification(notification)}</Card.Body>
-        </Card>
-      ))}
+            <ProfileNav.Link
+              onClick={() => navigate('/notifications/read')}
+              className={location.pathname === '/notifications/read' ? 'active' : ''}
+            >
+              Read
+            </ProfileNav.Link>
+          </ProfileNav>
+        </Col>
 
-      <div hidden={!hasMore} ref={scrollElement}>
-        <LoadingSpinner />
-      </div>
+        <Col>
+          <Routes>
+            <Route path='/' element={<UnreadNotifications />} />
+            <Route path='/read' element={<ReadNotifications />} />
+          </Routes>
+        </Col>
+      </Row>
     </SmallContainer>
   );
 };

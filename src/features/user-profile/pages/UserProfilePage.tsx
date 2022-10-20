@@ -94,7 +94,7 @@ const UserProfilePictureContainer = styled.div`
   }
 `;
 
-const ProfileNav = styled(Nav).attrs({ className: 'flex-column' })`
+export const ProfileNav = styled(Nav).attrs({ className: 'flex-column' })`
   margin-bottom: 1rem;
   margin-right: 1rem;
 
