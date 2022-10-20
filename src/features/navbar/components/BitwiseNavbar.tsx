@@ -363,6 +363,7 @@ export const BitwiseNavbar: FC = () => {
                   </div>
                 ) : null}
               </NotificationButton>
+
               {user ? (
                 <NavDropdown
                   align='end'

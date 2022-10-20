@@ -32,4 +32,9 @@ export const notificationApi = createApi({
   }),
 });
 
-export const { useGetUnreadNotificationsQuery, useMarkAllReadMutation, useGetEventTokenQuery } = notificationApi;
+export const {
+  useGetUnreadNotificationsQuery,
+  useGetReadNotificationsQuery,
+  useMarkAllReadMutation,
+  useGetEventTokenQuery,
+} = notificationApi;
