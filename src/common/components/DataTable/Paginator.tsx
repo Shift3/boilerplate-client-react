@@ -68,7 +68,7 @@ export const Paginator: FC<Props> = ({
         {/* Display the range of results currently showing */}
         <Col className='d-flex justify-content-end align-items-center'>
           <span className='text-muted' style={{ marginRight: '10px' }}>
-            {rangeStart} - {rangeEnd} of {count}
+            {count !== 0 ? `${rangeStart} - ${rangeEnd} of ${count}` : 'No Results'}
           </span>
           <Button variant='link' disabled={!hasPreviousPage} onClick={onPreviousPageClick}>
             <FontAwesomeIcon icon={faChevronLeft} />{' '}
