@@ -3,7 +3,7 @@ import { AppNotification } from 'common/models/notifications';
 import { environment } from 'environment';
 import { useAuth } from 'features/auth/hooks';
 import * as NotificationComponents from 'features/notifications/components';
-import { useCallback, useEffect, useMemo, useReducer } from 'react';
+import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
@@ -50,7 +50,6 @@ export const useLiveNotifications = () => {
     reducer,
     initialState,
   );
-
   const {
     data: unreadNotifications,
     isFetching,
@@ -60,9 +59,10 @@ export const useLiveNotifications = () => {
     skip: !user,
   });
 
+  const [enablePolling, setEnablePolling] = useState(true);
   const { data: eventToken } = useGetEventTokenQuery(undefined, {
     skip: !user,
-    refetchOnReconnect: true,
+    pollingInterval: enablePolling ? 3000 : 0,
   });
 
   // Append new notifications that we got from the API to
@@ -88,8 +88,10 @@ export const useLiveNotifications = () => {
   // Set up receiving SSE events from the server.
   useEffect(() => {
     let eventSource: EventSource | null = null;
-    if (user && eventToken) {
+    if (user && eventToken && eventToken.token) {
+      setEnablePolling(false);
       eventSource = new EventSource(`${environment.apiRoute}/events/${user!.id}/?token=${eventToken.token}`);
+
       eventSource.onmessage = message => {
         const payload = JSON.parse(message.data);
         notificationDispatch({ type: 'add', notification: payload });
@@ -106,18 +108,20 @@ export const useLiveNotifications = () => {
           toast(<Component key={payload.id} notification={payload} />, { className: 'in-app-notification' });
         }
       };
-    } else if (eventSource) {
-      (eventSource as EventSource).close();
-      eventSource = null;
+
+      eventSource.onerror = () => {
+        setEnablePolling(true);
+      };
+    }
+
+    if (!user) {
+      eventSource?.close();
     }
 
     return () => {
-      if (eventSource) {
-        eventSource.close();
-        eventSource = null;
-      }
+      eventSource?.close();
     };
-  }, [user, eventToken]);
+  }, [user, eventToken, setEnablePolling]);
 
   const clear = useCallback(() => {
     notificationDispatch({ type: 'reset' });
