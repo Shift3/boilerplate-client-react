@@ -10,9 +10,13 @@ const baseQuery = fetchBaseQuery({
   baseUrl: environment.apiRoute,
   prepareHeaders: (headers: Headers, { getState }) => {
     const { token } = (getState() as RootState).auth;
+    const currentLanguage = localStorage.getItem('language');
+      
+    console.log('current language:', currentLanguage);
 
-    if (token) {
+    if (token && currentLanguage) {
       headers.set('authorization', `Token ${token}`);
+      headers.set('accept-language', currentLanguage);
     }
 
     return headers;
