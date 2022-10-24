@@ -76,8 +76,6 @@ export const AgentDetailForm: FC<Props> = ({
     mode: 'all',
     defaultValues: {
       ...defaultValues,
-      phoneNumber:
-        defaultValues?.phoneNumber && defaultValues.phoneNumber !== '' ? defaultValues.phoneNumber.substring(2) : '',
     },
   });
 
