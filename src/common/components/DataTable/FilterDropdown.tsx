@@ -67,30 +67,49 @@ const FilterCategory = styled.div`
     border-bottom: 1px solid ${props => props.theme.buttons.defaultBackgroundColor};
   }
 
-  & > .category {
-    padding: 0.75rem 1rem;
+  .action-container {
     display: flex;
     align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: ${props => props.theme.pages.p};
-    transition: all 0.15s ease;
 
-    &:hover {
-      color: ${props => props.theme.textColor};
-    }
-
-    span {
-      flex: 1;
+    svg.remove {
+      padding: 0.5rem 0.75rem;
+      display: none;
+      cursor: pointer;
 
       &.active {
-        color: ${props => props.theme.textColor};
-        font-weight: 600;
+        display: inline-block;
       }
     }
 
-    svg {
+    svg.toggle {
+      padding: 0.5rem 0.75rem;
       transition: all 0.15s ease;
+      min-width: 2rem;
+      cursor: pointer;
+    }
+
+    .category {
+      padding: 0.75rem 1rem;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: ${props => props.theme.pages.p};
+      transition: all 0.15s ease;
+
+      &:hover {
+        color: ${props => props.theme.textColor};
+      }
+
+      span {
+        flex: 1;
+
+        &.active {
+          color: ${props => props.theme.textColor};
+          font-weight: 600;
+        }
+      }
     }
   }
 
@@ -110,10 +129,12 @@ const FilterCategory = styled.div`
   }
 
   &.open {
-    & > .category {
+    .action-container > .category {
       color: ${props => props.theme.textColor};
+    }
 
-      svg {
+    .action-container {
+      svg.toggle {
         transform: rotateZ(180deg);
       }
     }
@@ -167,6 +188,18 @@ export const FilterDropdown: FC<{
     else setOpenFilter(filter);
   };
 
+  const isFilterActive = (filter: FilterInfo) => {
+    return activeFilters.find(a => a.attr === filter.attribute);
+  };
+
+  const handleFilterRemoval = (filter: FilterInfo) => {
+    const filterToRemove = activeFilters.find(a => a.attr === filter.attribute);
+
+    if (filterToRemove) {
+      removeFilter(filterToRemove.attr, filterToRemove.op);
+    }
+  };
+
   return (
     <StyledDropdown className={show ? 'show' : ''} ref={dropdownContainerRef}>
       <FilterMenu>
@@ -179,11 +212,16 @@ export const FilterDropdown: FC<{
 
         {filters.map(filter => (
           <FilterCategory key={filter.attribute} className={openFilter === filter ? 'open' : ''}>
-            <div role='button' tabIndex={-1} className='category' onClick={() => toggleCategory(filter)}>
-              <span className={activeFilters.filter(a => a.attr === filter.attribute).length ? 'active' : ''}>
-                {filter.attributeLabel}
-              </span>
-              <FontAwesomeIcon icon='chevron-down' />
+            <div className='action-container'>
+              <div role='button' tabIndex={-1} className='category' onClick={() => toggleCategory(filter)}>
+                <span className={isFilterActive(filter) ? 'active' : ''}>{filter.attributeLabel}</span>
+              </div>
+              <FontAwesomeIcon
+                className={`remove ${isFilterActive(filter) ? 'active' : ''}`}
+                icon='xmark'
+                onClick={() => handleFilterRemoval(filter)}
+              />
+              <FontAwesomeIcon className='toggle' icon='chevron-down' onClick={() => toggleCategory(filter)} />
             </div>
 
             <div className='content'>
