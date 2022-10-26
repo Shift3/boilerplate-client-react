@@ -87,7 +87,7 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
   };
 
   const removeFilter = (attr: string, op: FilterOp) => {
-    setActiveFilters(activeFilters.filter(filter => filter.attr !== attr));
+    setActiveFilters(activeFilters.filter(filter => !(filter.attr === attr && filter.op === op)));
     onRemoveFilter(attr, op);
   };
 
