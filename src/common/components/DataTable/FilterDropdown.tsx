@@ -72,16 +72,9 @@ const FilterCategory = styled.div`
     align-items: center;
 
     svg.remove {
-      flex: 0.5;
-      padding: 0.5rem 0;
-      border-radius: ${props => props.theme.borderRadius};
+      padding: 0.5rem 0.75rem;
       display: none;
       cursor: pointer;
-
-      &:hover {
-        background-color: ${props => props.theme.noticeBackgroundColor};
-        color: ${props => props.theme.noticeTextColor};
-      }
 
       &.active {
         display: inline-block;
@@ -89,15 +82,15 @@ const FilterCategory = styled.div`
     }
 
     svg.toggle {
+      padding: 0.5rem 0.75rem;
       transition: all 0.15s ease;
-      flex: 0.5;
-      padding: 0.75rem 0;
+      min-width: 2rem;
       cursor: pointer;
     }
 
     .category {
       padding: 0.75rem 1rem;
-      flex: 2;
+      flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
