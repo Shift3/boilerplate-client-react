@@ -11,8 +11,6 @@ const baseQuery = fetchBaseQuery({
   prepareHeaders: (headers: Headers, { getState }) => {
     const { token } = (getState() as RootState).auth;
     const currentLanguage = localStorage.getItem('language');
-      
-    console.log('current language:', currentLanguage);
 
     if (token && currentLanguage) {
       headers.set('authorization', `Token ${token}`);
