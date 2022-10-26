@@ -1,6 +1,8 @@
 import { Alert, Badge } from 'react-bootstrap';
 import styled, { css } from 'styled-components';
-import { FC, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren, ReactNode } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 export const SubtleBadge = styled(Badge)<{
   variant?: 'warning' | 'danger' | 'secondary' | 'info';
@@ -88,7 +90,7 @@ export const CircularImg = styled.img<{
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 `;
 
-export const NoContent = styled.div`
+const NoContentStyles = styled.div`
   min-height: 320px;
   display: flex;
   align-items: center;
@@ -101,6 +103,20 @@ export const NoContent = styled.div`
     margin-bottom: 0.5rem;
   }
 `;
+
+export const NoContent: FC<{
+  title: string;
+  icon?: IconDefinition;
+  extra?: ReactNode;
+}> = ({ title, icon, extra }) => {
+  return (
+    <NoContentStyles>
+      {icon && <FontAwesomeIcon icon={icon} className='text-muted' size='2x' />}
+      <p className='lead mb-0'>{title}</p>
+      {extra}
+    </NoContentStyles>
+  );
+};
 
 const StagingBanner = styled(Alert).attrs({
   variant: 'warning',
