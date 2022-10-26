@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetAgentsQuery } from 'common/api/agentApi';
 import { DataTable } from 'common/components/DataTable';
 import { DataTableSearchAndFilters } from 'common/components/DataTable/DataTableSearchAndFilters';
@@ -16,6 +15,7 @@ import { AgentTableItem, useAgentTableData } from '../hooks/useAgentTableData';
 import { Trans } from 'react-i18next';
 import { StringFilter } from 'common/components/DataTable/Filters';
 import { FilterInfo } from 'common/components/DataTable/FilterDropdown';
+import { faStethoscope } from '@fortawesome/free-solid-svg-icons';
 
 export const AgentListView: FC = () => {
   const navigate = useNavigate();
@@ -111,17 +111,18 @@ export const AgentListView: FC = () => {
                 }}
               />
             ) : (
-              <NoContent>
-                <FontAwesomeIcon className='text-muted' size='2x' icon={['fas', 'stethoscope']} />
-                <p className='lead mb-0'>No Agents</p>
-
-                <HasPermission perform='agent:create'>
-                  <p className='text-muted'>Get started by creating a new agent.</p>
-                  <Link to='/agents/create-agent'>
-                    <Button variant='default'>Add Agent</Button>
-                  </Link>
-                </HasPermission>
-              </NoContent>
+              <NoContent
+                title='No Agents'
+                icon={faStethoscope}
+                extra={
+                  <HasPermission perform='agent:create'>
+                    <p className='text-muted'>Get started by creating a new agent.</p>
+                    <Link to='/agents/create-agent'>
+                      <Button variant='default'>Add Agent</Button>
+                    </Link>
+                  </HasPermission>
+                }
+              />
             )}
           </WithLoadingOverlay>
         </Card.Body>
