@@ -28,7 +28,7 @@ export const ThemeContext = createContext({
 });
 
 export const App: FC = () => {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
   const themeProviderValue = useMemo(() => {
     const toggleTheme = () => {
