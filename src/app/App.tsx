@@ -23,7 +23,6 @@ import { GlobalStyle } from '../GlobalStyle';
 
 export const ThemeContext = createContext({
   theme: 'light',
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   toggleTheme: () => {},
 });
 
