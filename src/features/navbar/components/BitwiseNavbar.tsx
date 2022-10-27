@@ -255,7 +255,7 @@ export const BitwiseNavbar: FC = () => {
   const { userHasPermission } = useRbac();
   const location = useLocation();
   const navigate = useNavigate();
-  const { toggle, theme } = useTheme();
+  const { toggleTheme, theme } = useTheme();
   const { logout, isLoading } = useLogout();
   const { i18n } = useTranslation();
   const [showModal, hideModal] = useModal(
@@ -335,7 +335,7 @@ export const BitwiseNavbar: FC = () => {
             </Nav>
 
             <Nav className='justify-content-end'>
-              <NavLink onClick={() => toggle()} className='theme-toggle me-3 d-flex align-items-center'>
+              <NavLink onClick={() => toggleTheme()} className='theme-toggle me-3 d-flex align-items-center'>
                 <>{theme === 'light' ? <MoonIcon /> : <SunIcon />}</>
               </NavLink>
 
