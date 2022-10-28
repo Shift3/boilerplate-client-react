@@ -23,21 +23,26 @@ import { GlobalStyle } from '../GlobalStyle';
 
 export const ThemeContext = createContext({
   theme: 'light',
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  toggle: () => {},
+  toggleTheme: () => {},
 });
 
 export const App: FC = () => {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
   const themeProviderValue = useMemo(() => {
-    const toggle = () => {
-      return theme === 'light' ? setTheme('dark') : setTheme('light');
+    const toggleTheme = () => {
+      if (theme === 'light') {
+        window.localStorage.setItem('theme', 'dark');
+        setTheme('dark');
+      } else {
+        window.localStorage.setItem('theme', 'light');
+        setTheme('light');
+      }
     };
 
     return {
       theme,
-      toggle,
+      toggleTheme,
     };
   }, [theme]);
 
