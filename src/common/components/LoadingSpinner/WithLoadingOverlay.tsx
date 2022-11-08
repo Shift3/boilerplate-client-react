@@ -36,7 +36,7 @@ export const WithLoadingOverlay: FC<PropsWithChildren<Props>> = ({ isLoading, ch
           </StyledLoadingSpinner>
         </CenteredSpinnerContainer>
       ) : null}
-      {isInitialLoad ? <NoContent /> : children}
+      {isInitialLoad ? <NoContent title='' /> : children}
     </DimmableContent>
   );
 };

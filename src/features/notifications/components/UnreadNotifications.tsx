@@ -1,4 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { useMarkAllReadMutation } from 'common/api/notificationApi';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { NoContent } from 'common/styles/utilities';
@@ -28,10 +28,7 @@ export const UnreadNotifications: FC = () => {
     <>
       {!isNotificationsLoading && notifications.length === 0 ? (
         <Card>
-          <NoContent>
-            <FontAwesomeIcon className='text-muted' size='2x' icon={['fas', 'bell']} />
-            <p className='lead mb-0'>No Notifications</p>
-          </NoContent>
+          <NoContent title='No Notifications' icon={faBell} />
         </Card>
       ) : null}
 
