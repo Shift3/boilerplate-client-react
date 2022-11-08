@@ -46,7 +46,6 @@ export const CenteredSpinnerContainer = styled.div`
   z-index: 1060; // consistent with Bootstrap's $zindex-modal value
 `;
 
-<<<<<<< HEAD
 const DimmableStyles = styled.div`
   .dimmable-content-container {
     &:after {
@@ -69,27 +68,6 @@ const DimmableStyles = styled.div`
       }
     }
   }
-=======
-export const DimmableContent = styled.div<{
-  dim: boolean;
-}>`
-  ${props =>
-    props.dim
-      ? css`
-          &:after {
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            background: white;
-            opacity: 0.5;
-            border-radius: containerHasRoundedCorners;
-          }
-        `
-      : null}
->>>>>>> bf8eccf (feat(stripe):resolved merge conflicts)
 `;
 
 export const DimmableContent: FC<

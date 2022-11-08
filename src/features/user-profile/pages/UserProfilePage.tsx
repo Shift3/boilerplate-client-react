@@ -20,13 +20,8 @@ import {
   useUpdateProfilePicture,
   useUpdateUserProfile,
 } from 'features/user-profile/hooks';
-<<<<<<< HEAD
-import { FC, useRef, useState } from 'react';
-import { Alert, Card, Col, Container, Modal, Nav, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
-=======
 import { FC, useEffect, useRef, useState } from 'react';
-import { Alert, Card, Col, Container, Modal, Nav, Row } from 'react-bootstrap';
->>>>>>> bf8eccf (feat(stripe):resolved merge conflicts)
+import { Alert, Card, Col, Container, Modal, Nav, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -37,15 +32,12 @@ import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUser
 import { Trans } from 'react-i18next';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { Constants } from 'utils/constants';
-<<<<<<< HEAD
-import { faCamera, faContactCard, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faCreditCard, faUnlockKeyhole, faUserFriends } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'react-modal-hook';
 import { LoadingSpinner } from 'common/components/LoadingSpinner';
-=======
-import { useModal } from 'react-modal-hook';
 import useQuery from 'common/hooks/useQuery';
 import { MySubscription } from 'features/memberships/MySubscription';
->>>>>>> bf8eccf (feat(stripe):resolved merge conflicts)
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type RouteParams = {
   id: string;
@@ -280,15 +272,18 @@ export const UserProfilePage: FC = () => {
         <Col md={3}>
           <ProfileNav defaultActiveKey='/home'>
             <ProfileNav.Link onClick={() => changeTab('profile')} className={tab === 'profile' ? 'active' : ''}>
+              <FontAwesomeIcon className='me-2' icon={faUserFriends} />
               <Trans i18nKey='userProfile.profile'>Profile</Trans>
             </ProfileNav.Link>
             <ProfileNav.Link onClick={() => changeTab('security')} className={tab === 'security' ? 'active' : ''}>
+              <FontAwesomeIcon className='me-2' icon={faUnlockKeyhole} />
               <Trans i18nKey='userProfile.security'>Security and Password</Trans>
             </ProfileNav.Link>
             <ProfileNav.Link
               onClick={() => changeTab('subscription')}
               className={tab === 'subscription' ? 'active' : ''}
             >
+              <FontAwesomeIcon className='me-2' icon={faCreditCard} />
               <Trans i18nKey='userProfile.subscription'>Subscription</Trans>
             </ProfileNav.Link>
           </ProfileNav>
