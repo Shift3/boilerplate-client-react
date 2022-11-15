@@ -4,12 +4,13 @@ import { LoadingButton } from 'common/components/LoadingButton';
 import { environment } from 'environment';
 import { EnvironmentConfiguration } from 'environment/types';
 import { useAuth, useLogout } from 'features/auth/hooks';
+import { NotificationDropdown } from 'features/notifications/components/NotificationDropdown';
 import { NotificationContext } from 'features/notifications/context';
 import { useRbac } from 'features/rbac';
 import { MoonIcon } from 'features/themes/MoonIcon';
 import { SunIcon } from 'features/themes/SunIcon';
 import { useTheme } from 'features/themes/useTheme';
-import { FC, useContext } from 'react';
+import { FC, useContext, useState } from 'react';
 import { Badge, Button, Container, Modal, Nav, Navbar, NavDropdown, NavLink, Offcanvas } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useModal } from 'react-modal-hook';
@@ -110,6 +111,11 @@ const StyledNavbar = styled(Navbar)`
   .navbar-brand img {
     width: 40px;
   }
+  #notification-dropdown {
+    position: absolute;
+    right: 10rem; // temp
+    top: 4.063rem;
+  }
 `;
 
 const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
@@ -122,6 +128,10 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
 
   .offcanvas-only {
     display: none;
+
+    #notification-button {
+      display: none;
+    }
   }
 
   &.show,
@@ -183,6 +193,24 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
       position: absolute;
       right: 2rem;
       top: 3px;
+    }
+
+    #notification-dropdown {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: 0.5rem;
+      box-shadow: -4px -4px 5px 20px lightgrey;
+      max-width: 767px;
+      width: calc(100% - 1rem);
+      height: calc(100% - 1rem);
+
+      #body > #tabs-and-mark-all > #notification-type-tabs {
+        display: flex;
+        flex-direction: row;
+      }
     }
   }
 `;
@@ -258,6 +286,7 @@ export const BitwiseNavbar: FC = () => {
   const { toggleTheme, theme } = useTheme();
   const { logout, isLoading } = useLogout();
   const { i18n } = useTranslation();
+  const [showNotificationDropdown, setShowNotificationDropdown] = useState(false);
   const [showModal, hideModal] = useModal(
     ({ in: open, onExited }) => {
       return (
@@ -290,6 +319,10 @@ export const BitwiseNavbar: FC = () => {
   });
 
   const defaultLanguageOption = __languageOptions.find(language => language.value === i18n.languages[0]);
+
+  const toggleNotificationDropdown = () => {
+    setShowNotificationDropdown(!showNotificationDropdown);
+  };
 
   return (
     <StyledNavbar expand='md'>
@@ -356,7 +389,12 @@ export const BitwiseNavbar: FC = () => {
                 ))}
               </NavDropdown>
 
-              <NotificationButton className='me-3' alt='Notification' onClick={() => navigate('/notifications')}>
+              <NotificationButton
+                className='me-3'
+                alt='Notification'
+                id='notification-button'
+                onClick={() => toggleNotificationDropdown()}
+              >
                 <FontAwesomeIcon size='lg' icon='bell' />
                 <span id='notification-label'>Notifications</span>
                 {count > 0 ? (
@@ -365,6 +403,8 @@ export const BitwiseNavbar: FC = () => {
                   </div>
                 ) : null}
               </NotificationButton>
+
+              {user && showNotificationDropdown && <NotificationDropdown onClose={toggleNotificationDropdown} />}
 
               {user ? (
                 <NavDropdown
