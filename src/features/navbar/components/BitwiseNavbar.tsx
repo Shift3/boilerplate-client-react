@@ -354,7 +354,7 @@ export const BitwiseNavbar: FC = () => {
                 ))}
               </NavDropdown>
 
-              <NotificationButton className='me-3' onClick={() => navigate('/notifications')}>
+              <NotificationButton className='me-3' alt='Notification' onClick={() => navigate('/notifications')}>
                 <FontAwesomeIcon size='lg' icon='bell' />
                 <span id='notification-label'>Notifications</span>
                 {count > 0 ? (
