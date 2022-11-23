@@ -4,7 +4,7 @@ import { handleApiError, isFetchBaseQueryError } from 'common/api/handleApiError
 import * as notificationService from 'common/services/notification';
 import { useResetPasswordMutation } from 'common/api/userApi';
 import { FormData, ResetPasswordForm } from '../components/ResetPasswordForm';
-import { PageWrapper } from 'common/styles/page';
+import { FrontPageLayout, Title } from 'common/components/FrontPageLayout';
 
 export const ResetPasswordPage: FC = () => {
   const navigate = useNavigate();
@@ -29,9 +29,10 @@ export const ResetPasswordPage: FC = () => {
   };
 
   return (
-    <PageWrapper>
-      <h1>Reset Password</h1>
+    <FrontPageLayout>
+      <Title>Reset Password</Title>
+      <p className='text-muted'>Enter a new password you would like to use for your account.</p>
       <ResetPasswordForm onSubmit={onSubmit} />
-    </PageWrapper>
+    </FrontPageLayout>
   );
 };

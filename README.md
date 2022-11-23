@@ -8,7 +8,7 @@
 This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react/wiki) which explains the project and its implementation in much greater detail than the code comments.
 
 > Note that this repository used to be compatible with our NestJS
-> backend, however we have switched to using django as our primary
+> backend, however we have switched to using [django](https://github.com/Shift3/dj-starter) as our primary
 > backend. If you are looking for the NestJS compatible version, we
 > still maintain it in the `nestjs-compatibility` branch
 
@@ -96,19 +96,22 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ### AWS
 
-Deploying to AWS requires having AWS credentials configured on the machine. The deployment script is set to look for an AWS profile named `shift3`. See the following links for documentation on configuring the AWS CLI, creating an AWS credential file, and creating a named profile:
+Deploying to AWS requires having AWS credentials configured on the machine. Deployment will also require aws cli v2. The deployment script is set to look for an AWS profile named `BWTC-Developer`. See the following links for documentation on configuring the AWS SSO and creating a named profile:
 
-- [Configuration and credential file settings](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
-- [Named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
+- [AWS SSO Configuration](https://docs.google.com/document/d/1qUTh_z4lef0j-DT8cFxzlZZcfseR75aQjPNO018CYic)
 
 ### Terraform
 
 Configuring, building, and changing the AWS infrastructure **for the sandbox** is handled by Terraform. As a prerequisite, Terraform needs the AWS credentials configured as described in the [above section](#aws), which developers should already have or can access through Zoho Vault.
 
+Before deployments or initializing terraform you must have aws sso configured and then login with the following commmand:
+
+`aws sso login --profile BWTC-Developer`
+
 Terraform also needs the project secrets saved in `terraform/staging/terraform.tfvars`. This file is not committed to version control since it can contain sensitive information such as database credentials and should be added locally. Create the `terraform/staging/terraform.tfvars` file with the following structure:
 
 ```
-profile = "shift3"
+profile = "BWTC-Developer"
 
 region = "us-west-2"
 
@@ -157,6 +160,9 @@ After your CircleCI project is set up, the only thing you need to do to get depl
 - `STAGING_AWS_DEFAULT_REGION`
   - The default region your infrastructure is deployed to.
   - `us-west-2`
+- `SENTRY_DSN`
+  - Optional Sentry DSN, enables sentry tracing/logging
+  - `https://a1a1a1a1a1a1a1a1a1a1a1aa1a1a1a1a@oooooo.ingest.sentry.io/1234567`
 
 Once these are set up, your project will be **automatically deployed** whenever new commits to the `develop` branch are pushed to Github.
 
@@ -179,8 +185,8 @@ In `package.json`, updated the `"deploy:staging"` and the `deploy:production` np
   ...,
   "scripts": {
     ...
-    "deploy:staging": "aws s3 sync ./build s3://example-staging.shift3sandbox.com --profile shift3 --delete"
-    "deploy:production": "aws s3 sync ./build s3://example-prod.shift3sandbox.com --profile shift3 --delete"
+    "deploy:staging": "aws s3 sync ./build s3://example-staging.shift3sandbox.com --profile BWTC-Developer --delete"
+    "deploy:production": "aws s3 sync ./build s3://example-prod.shift3sandbox.com --profile BWTC-Developer --delete"
     ...
   }
 }

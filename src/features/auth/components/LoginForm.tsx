@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from 'common/components/LoadingButton';
-import { LoginButton } from 'common/styles/button';
 import { FC, useState } from 'react';
 import { Button, InputGroup } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
@@ -35,9 +34,9 @@ const ForgotPassword = styled.div`
 `;
 
 const TogglePasswordButton = styled(Button)`
-  border-top-right-radius: 3px !important;
-  border-bottom-right-radius: 3px !important;
-  border-color: #ced4da;
+  border-top-right-radius: ${props => props.theme.borderRadius} !important;
+  border-bottom-right-radius: ${props => props.theme.borderRadius} !important;
+  border: 1px solid #ced4da !important;
 `;
 
 export const LogInForm: FC<Props> = ({ onSubmit }) => {
@@ -71,7 +70,7 @@ export const LogInForm: FC<Props> = ({ onSubmit }) => {
             placeholder='Password'
             isInvalid={!!errors.password}
           />
-          <TogglePasswordButton variant='outline-secondary' onClick={() => setShowingPassword(!showingPassword)}>
+          <TogglePasswordButton variant='default' onClick={() => setShowingPassword(!showingPassword)}>
             <FontAwesomeIcon icon={showingPassword ? faEyeSlash : faEye} />
           </TogglePasswordButton>
           <Form.Control.Feedback type='invalid' role='alert'>
@@ -85,7 +84,7 @@ export const LogInForm: FC<Props> = ({ onSubmit }) => {
         </small>
       </ForgotPassword>
       <div className='d-grid gap-2 mt-3'>
-        <LoadingButton type='submit' as={LoginButton} disabled={!isValid} loading={isSubmitting}>
+        <LoadingButton type='submit' disabled={!isValid} loading={isSubmitting}>
           Log In
         </LoadingButton>
       </div>

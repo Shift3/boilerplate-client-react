@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from 'common/components/LoadingButton';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
 import { FC, useEffect } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Constants } from 'utils/constants';
 import * as yup from 'yup';
@@ -44,7 +44,7 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) =>
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Form.Group>
+        <Form.Group className='mb-2'>
           <Form.Label htmlFor='firstName'>First Name</Form.Label>
           <Form.Control id='firstName' type='text' {...register('firstName')} isInvalid={!!errors.firstName} />
           <Form.Control.Feedback type='invalid' role='alert'>
@@ -59,7 +59,7 @@ export const UpdateUserProfileForm: FC<Props> = ({ onSubmit, defaultValues }) =>
           </Form.Control.Feedback>
         </Form.Group>
         <div className='mt-3'>
-          <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
+          <LoadingButton type='submit' disabled={!isValid} loading={isSubmitting}>
             Update
           </LoadingButton>
         </div>

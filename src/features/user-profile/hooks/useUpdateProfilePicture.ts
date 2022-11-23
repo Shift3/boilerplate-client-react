@@ -5,14 +5,12 @@ import { authSlice, AuthState } from '../../auth/authSlice';
 import * as notificationService from 'common/services/notification';
 import { useUpdateProfilePictureMutation, UpdateProfilePictureRequest } from 'common/api/userApi';
 import * as authLocalStorage from '../../auth/authLocalStorage';
+import { isObject, isStringArray, isKeyOfObject } from 'common/error/utilities';
+import { StatusCodes } from 'http-status-codes';
 
-export type UseUpdateProfilePictureHook = () => {
-  updateUserProfilePicture: (data: UpdateProfilePictureRequest) => Promise<void>;
-};
-
-export const useUpdateProfilePicture: UseUpdateProfilePictureHook = () => {
+export const useUpdateProfilePicture = () => {
   const dispatch = useAppDispatch();
-  const [updateProfilePicture] = useUpdateProfilePictureMutation();
+  const [updateProfilePicture, { isLoading }] = useUpdateProfilePictureMutation();
 
   const updateUserProfilePicture = useCallback(
     async (data: UpdateProfilePictureRequest) => {
@@ -28,7 +26,16 @@ export const useUpdateProfilePicture: UseUpdateProfilePictureHook = () => {
         }
       } catch (error) {
         if (isFetchBaseQueryError(error)) {
-          handleApiError(error);
+          if (error.status === StatusCodes.REQUEST_TOO_LONG) {
+            notificationService.showErrorMessage('File is too large, please upload a smaller file.');
+          } else if (error.data && isObject(error.data) && isKeyOfObject('file', error.data)) {
+            const fileErrorMessages = error.data.file;
+            if (isStringArray(fileErrorMessages)) {
+              notificationService.showErrorMessage(fileErrorMessages.join(' '));
+            }
+          } else {
+            handleApiError(error);
+          }
         } else {
           notificationService.showErrorMessage('Unable to upload profile picture.');
           throw error;
@@ -38,5 +45,5 @@ export const useUpdateProfilePicture: UseUpdateProfilePictureHook = () => {
     [updateProfilePicture, dispatch],
   );
 
-  return { updateUserProfilePicture };
+  return { updateUserProfilePicture, isLoading };
 };

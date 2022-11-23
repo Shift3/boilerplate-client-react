@@ -6,6 +6,7 @@ import light from 'themes/light';
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createAppStore } from 'app/redux';
+import { ModalProvider } from 'react-modal-hook';
 
 const mockOnSubmit = jest.fn();
 const defaultValues = {
@@ -19,13 +20,11 @@ describe('UpdateUserProfileForm', () => {
       render(
         <MemoryRouter>
           <Provider store={createAppStore()}>
-            <ThemeProvider theme={light}>
-              <UpdateUserProfileForm
-                onSubmit={mockOnSubmit}
-                defaultValues={defaultValues}
-                serverValidationErrors={null}
-              />
-            </ThemeProvider>
+            <ModalProvider>
+              <ThemeProvider theme={light}>
+                <UpdateUserProfileForm onSubmit={mockOnSubmit} defaultValues={defaultValues} />
+              </ThemeProvider>
+            </ModalProvider>
           </Provider>
         </MemoryRouter>,
       );
@@ -34,7 +33,7 @@ describe('UpdateUserProfileForm', () => {
   });
 
   it('should submit form if all form fields are valid', async () => {
-    await act(async () => userEvent.click(screen.getByRole('button', { name: 'Update' })));
+    await userEvent.click(screen.getByRole('button', { name: 'Update' }));
     expect(mockOnSubmit).toHaveBeenCalledWith(defaultValues, expect.any(Object));
   });
 
@@ -45,9 +44,7 @@ describe('UpdateUserProfileForm', () => {
     const lastNameInput = screen.getByLabelText(/Last Name/i);
     userEvent.type(lastNameInput, '567');
 
-    await act(async () => {
-      userEvent.click(screen.getByRole('button', { name: 'Update' }));
-    });
+    await userEvent.click(screen.getByRole('button', { name: 'Update' }));
 
     expect(await screen.findAllByRole('alert')).toHaveLength(2);
   });

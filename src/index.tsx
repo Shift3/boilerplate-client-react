@@ -1,15 +1,16 @@
-import { createRoot } from 'react-dom/client';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faBan,
   faBars,
   faBuilding,
+  faBell,
   faCheck,
+  faChevronDown,
   faChevronLeft,
   faChevronRight,
-  faChevronDown,
-  faCog,
+  faCirclePlus,
   faClose,
+  faCog,
   faEdit,
   faEllipsisH,
   faEnvelope,
@@ -17,6 +18,8 @@ import {
   faEyeSlash,
   faFilter,
   faLock,
+  faPen,
+  faQuestion,
   faSignOutAlt,
   faSort,
   faSortDown,
@@ -26,22 +29,21 @@ import {
   faUser,
   faUsers,
   faX,
-  faCirclePlus,
-  faPen,
-  faQuestion,
 } from '@fortawesome/free-solid-svg-icons';
 import * as Sentry from '@sentry/react';
+import { BrowserTracing } from '@sentry/tracing';
 import { store } from 'app/redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { environment } from 'environment';
 import { StrictMode, Suspense } from 'react';
+import { createRoot } from 'react-dom/client';
+import { I18nextProvider, withTranslation } from 'react-i18next';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { App } from './app/App';
-import reportWebVitals from './reportWebVitals';
-import { I18nextProvider, withTranslation } from 'react-i18next';
 import i18n from './i18n/config';
-import { environment } from 'environment';
+import reportWebVitals from './reportWebVitals';
 
 // Font Awesome recommends importing icons via a “library” in the initializing module of the app
 // so you add them once in your React app and reference them in any component
@@ -49,6 +51,7 @@ import { environment } from 'environment';
 library.add(
   faBan,
   faBars,
+  faBell,
   faBuilding,
   faCheck,
   faChevronLeft,
@@ -77,18 +80,14 @@ library.add(
   faQuestion,
 );
 
-Sentry.init({
-  environment: environment.environment,
-  dsn: environment.sentryDSN ?? undefined,
-  beforeSend(event) {
-    if (process.env.NODE_ENV === 'production') {
-      return event;
-    }
-
-    return null;
-  },
-  autoSessionTracking: false,
-});
+if (environment.sentryDSN) {
+  Sentry.init({
+    environment: environment.environment,
+    dsn: environment.sentryDSN,
+    integrations: [new BrowserTracing()],
+    autoSessionTracking: false,
+  });
+}
 
 const TranslatedApp = withTranslation()(App);
 

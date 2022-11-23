@@ -1,34 +1,48 @@
 import { colors } from './colors';
 
 export default {
-  backgroundColor: '#222222',
+  backgroundColor: colors.neutral900,
   textColor: colors.white,
   linkColor: colors.blue400,
   linkHoverColor: colors.blue300,
+  noticeBackgroundColor: colors.dangerRed,
+  noticeTextColor: colors.white,
 
-  borderRadius: '6px',
+  borderRadius: '8px',
   boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.5)',
 
   card: {
-    backgroundColor: colors.neutral900,
+    backgroundColor: colors.neutral800,
     textColor: colors.white,
+    border: `1px solid ${colors.neutral700}`,
   },
 
   nav: {
-    backgroundColor: colors.neutral900,
-    borderColor: colors.neutral900,
+    borderColor: colors.neutral600,
     textColor: colors.neutral100,
 
-    profileBackground: colors.neutral800,
     profileHoverBackground: colors.neutral700,
     profileText: colors.white,
     smallText: colors.white,
 
     activeBackground: colors.blue600,
     hoverColor: colors.blue300,
+
+    link: {
+      activeBackground: colors.blue800,
+      activeText: colors.blue100,
+    },
+
+    horizontal: {
+      backgroundColor: 'rgba(255, 255, 255, 0.10)',
+    },
+    vertical: {
+      backgroundColor: colors.neutral900,
+    },
   },
 
   buttons: {
+    borderRadius: '24px',
     primaryBackgroundColor: colors.blue600,
     primaryBorderColor: colors.blue600,
     primaryTextColor: colors.white,
@@ -46,6 +60,11 @@ export default {
     backgroundColor: colors.blue500,
     disabledBackgroundColor: colors.neutral100,
     hoverBackgroundColor: colors.blue500,
+  },
+
+  tooltips: {
+    backgroundColor: colors.white,
+    textColor: colors.black,
   },
 
   footer: {
@@ -71,7 +90,7 @@ export default {
   },
 
   table: {
-    rowHoverColor: colors.neutral800,
+    rowHoverColor: colors.neutral900,
   },
 
   modals: {

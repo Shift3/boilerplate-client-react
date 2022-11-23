@@ -1,22 +1,29 @@
-import { FC } from 'react';
-import { ButtonProps, Spinner } from 'react-bootstrap';
+import { FC, PropsWithChildren } from 'react';
+import { Button, ButtonProps, Spinner } from 'react-bootstrap';
+import styled from 'styled-components';
 
-interface LoadingButtonProps extends Omit<ButtonProps, 'as'> {
+interface LoadingButtonProps extends ButtonProps {
   loading: boolean;
-  as: FC<ButtonProps>;
 }
 
-export const LoadingButton: FC<LoadingButtonProps> = ({
-  as: ButtonComponent,
-  loading,
-  children,
-  disabled,
-  ...buttonProps
-}) => {
+const LoadingButtonStyles = styled.span`
+  .spinner-container {
+    padding-right: 8px;
+  }
+`;
+
+export const LoadingButton: FC<PropsWithChildren<LoadingButtonProps>> = ({ loading, children, disabled, ...rest }) => {
   return (
-    <ButtonComponent {...buttonProps} disabled={disabled || loading}>
-      {loading && <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' />}
-      {children}
-    </ButtonComponent>
+    <Button {...rest} disabled={disabled || loading}>
+      <LoadingButtonStyles>
+        {loading ? (
+          <span className='spinner-container'>
+            <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' />
+          </span>
+        ) : null}
+
+        {children}
+      </LoadingButtonStyles>
+    </Button>
   );
 };

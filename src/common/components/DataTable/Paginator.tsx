@@ -36,8 +36,9 @@ export const Paginator: FC<Props> = ({
   onNextPageClick,
   onPageSizeChange,
 }) => {
-  const rangeStart = pageSize * (page - 1) + 1;
+  let rangeStart = pageSize * (page - 1) + 1;
   const rangeEnd = page < pageCount ? pageSize * page : count;
+  if (rangeEnd === 0) rangeStart = 0;
   const defaultOption = { label: pageSize.toString(), value: pageSize.toString() };
 
   const __pageSizeOptions = useMemo(
@@ -67,7 +68,7 @@ export const Paginator: FC<Props> = ({
         {/* Display the range of results currently showing */}
         <Col className='d-flex justify-content-end align-items-center'>
           <span className='text-muted' style={{ marginRight: '10px' }}>
-            {rangeStart} - {rangeEnd} of {count}
+            {count !== 0 ? `${rangeStart} - ${rangeEnd} of ${count}` : 'No Results'}
           </span>
           <Button variant='link' disabled={!hasPreviousPage} onClick={onPreviousPageClick}>
             <FontAwesomeIcon icon={faChevronLeft} />{' '}

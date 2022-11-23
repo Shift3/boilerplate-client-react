@@ -71,6 +71,8 @@ type SearchActions = {
   addSearchText: (searchText: string) => void;
 };
 
+type SearchManager = SearchTextState & SearchActions;
+
 // --------------------------------------------------------------------------------------------------------------------
 type PSFQueryState = PaginationState & SortState & FilterState & SearchTextState;
 
@@ -84,7 +86,7 @@ type PSFQueryAction =
   | { type: 'all/dataUpdated'; payload: { data: PaginatedResult<unknown> | unknown } }
   | { type: 'addSearchText'; payload: { data: string } };
 
-export type PSFQueryManager = PaginationManager & SortManager & FilterManager & SearchActions;
+export type PSFQueryManager = PaginationManager & SortManager & FilterManager & SearchManager;
 
 export type PSFConfig = PaginationConfig;
 

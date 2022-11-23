@@ -1,4 +1,4 @@
-import { act, render, screen } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ThemeProvider } from 'styled-components';
 import light from 'themes/light';
@@ -6,6 +6,7 @@ import { ChangePasswordForm, FormData } from '../ChangePasswordForm';
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createAppStore } from 'app/redux';
+import { ModalProvider } from 'react-modal-hook';
 
 describe('ChangePasswordForm', () => {
   const validFormData: FormData = {
@@ -24,9 +25,11 @@ describe('ChangePasswordForm', () => {
       render(
         <MemoryRouter>
           <Provider store={createAppStore()}>
-            <ThemeProvider theme={light}>
-              <ChangePasswordForm onSubmit={mockOnSubmit} serverValidationErrors={null} />
-            </ThemeProvider>
+            <ModalProvider>
+              <ThemeProvider theme={light}>
+                <ChangePasswordForm onSubmit={mockOnSubmit} serverValidationErrors={null} />
+              </ThemeProvider>
+            </ModalProvider>
           </Provider>
         </MemoryRouter>,
       );
@@ -39,44 +42,48 @@ describe('ChangePasswordForm', () => {
     expect(screen.getByLabelText(/Current Password/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/New Password/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Confirm Password/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Submit' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /change my password/i })).toBeInTheDocument();
   });
 
   it('should submit form if all form fields are valid', async () => {
-    await act(async () => {
-      const currentPasswordInput = screen.getByLabelText(/Current Password/i);
-      await userEvent.type(currentPasswordInput, validFormData.currentPassword);
+    const currentPasswordInput = screen.getByLabelText(/Current Password/i);
+    await userEvent.type(currentPasswordInput, validFormData.currentPassword);
 
-      const newPasswordInput = screen.getByLabelText(/New Password/i);
-      await userEvent.type(newPasswordInput, validFormData.newPassword);
+    const newPasswordInput = screen.getByLabelText(/New Password/i);
+    await userEvent.type(newPasswordInput, validFormData.newPassword);
 
-      const confirmNewPasswordInput = screen.getByLabelText(/Confirm Password/i);
-      await userEvent.type(confirmNewPasswordInput, validFormData.confirmPassword);
+    const confirmNewPasswordInput = screen.getByLabelText(/Confirm Password/i);
+    await userEvent.type(confirmNewPasswordInput, validFormData.confirmPassword);
+
+    await userEvent.click(screen.getByRole('button', { name: /change my password/i }));
+
+    waitFor(() => {
+      expect(mockOnSubmit).toHaveBeenCalledWith(validFormData, expect.any(Object));
     });
-
-    await act(async () => userEvent.click(screen.getByRole('button', { name: 'Submit' })));
-
-    expect(mockOnSubmit).toHaveBeenCalledWith(validFormData, expect.any(Object));
   });
 
   it('should disable the submit button if the form is invalid', () => {
-    const submitButton = screen.getByRole('button', { name: /submit/i });
-    expect(submitButton.hasAttribute('disabled')).toBeTruthy();
+    const submitButton = screen.getByRole('button', { name: /change my password/i });
+
+    waitFor(() => {
+      expect(submitButton.hasAttribute('disabled')).toBeTruthy();
+    });
   });
 
   it('should not disable the submit button if the form is valid', async () => {
-    await act(async () => {
-      const currentPasswordInput = screen.getByLabelText(/Current Password/i);
-      await userEvent.type(currentPasswordInput, validFormData.currentPassword);
+    const currentPasswordInput = screen.getByLabelText(/Current Password/i);
+    await userEvent.type(currentPasswordInput, validFormData.currentPassword);
 
-      const newPasswordInput = screen.getByLabelText(/New Password/i);
-      await userEvent.type(newPasswordInput, validFormData.newPassword);
+    const newPasswordInput = screen.getByLabelText(/New Password/i);
+    await userEvent.type(newPasswordInput, validFormData.newPassword);
 
-      const confirmNewPasswordInput = screen.getByLabelText(/Confirm Password/i);
-      await userEvent.type(confirmNewPasswordInput, validFormData.confirmPassword);
+    const confirmNewPasswordInput = screen.getByLabelText(/Confirm Password/i);
+    await userEvent.type(confirmNewPasswordInput, validFormData.confirmPassword);
+
+    const submitButton = screen.getByRole('button', { name: /change my password/i });
+
+    waitFor(() => {
+      expect(submitButton.hasAttribute('disabled')).toBeFalsy();
     });
-
-    const submitButton = screen.getByRole('button', { name: /submit/i });
-    expect(submitButton.hasAttribute('disabled')).toBeFalsy();
   });
 });

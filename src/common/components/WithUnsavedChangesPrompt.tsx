@@ -1,7 +1,8 @@
-import { useConfirmationModal } from 'features/confirmation-modal';
 import { Blocker, History, Location, Transition } from 'history';
 import { FC, PropsWithChildren, useCallback, useContext, useEffect, useState } from 'react';
 import { UNSAFE_NavigationContext, useLocation, useNavigate } from 'react-router-dom';
+import { useModal } from 'react-modal-hook';
+import { Button, Modal } from 'react-bootstrap';
 
 const useBlocker = (blocker: Blocker, when = true) => {
   // The following cast is necessary because the react-router-dom team has removed
@@ -13,6 +14,7 @@ const useBlocker = (blocker: Blocker, when = true) => {
     // Had to return undefined here because we have the "consistent-return" lint rule
     // on which requires that return statements either always or never specify values.
     if (!when) return undefined;
+    if (!navigator.block) return undefined;
 
     const unblock = navigator.block((transition: Transition) => {
       const autoUnblockingTx = {
@@ -75,19 +77,46 @@ type WithUnsavedChangesPromptProps = {
 
 const WithUnsavedChangesPrompt: FC<PropsWithChildren<WithUnsavedChangesPromptProps>> = ({ when, children }) => {
   const { showPrompt, confirmNavigation, cancelNavigation } = usePrompt(when);
-  const { openModal } = useConfirmationModal();
+  const [showModal, hideModal] = useModal(({ in: open, onExited }) => (
+    <Modal
+      show={open}
+      onHide={() => {
+        cancelNavigation();
+        hideModal();
+      }}
+      onExited={onExited}
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>Unsaved Changes</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <p>
+          You have unsaved changes, are you sure you want to navigate away from this page? If you leave this page, you
+          will lose your changes.
+        </p>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button
+          variant='link'
+          onClick={() => {
+            cancelNavigation();
+            hideModal();
+          }}
+        >
+          Stay on This Page
+        </Button>
+        <Button variant='danger' onClick={confirmNavigation}>
+          Leave This Page
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  ));
 
   useEffect(() => {
     if (showPrompt) {
-      openModal({
-        message: 'You have unsaved changes, are you sure you want to leave?',
-        confirmButtonLabel: 'Continue',
-        declineButtonLabel: 'Cancel',
-        onConfirm: async () => confirmNavigation(),
-        onDecline: async () => cancelNavigation(),
-      });
+      showModal();
     }
-  }, [showPrompt, confirmNavigation, cancelNavigation, openModal]);
+  }, [showPrompt, showModal]);
 
   return <>{children}</>;
 };

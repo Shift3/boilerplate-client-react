@@ -1,4 +1,4 @@
-import { act, render, screen } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ThemeProvider } from 'styled-components';
 import light from 'themes/light';
@@ -24,15 +24,13 @@ describe('ActivateAccountForm', () => {
       passwordConfirmation: 'Test1234!',
     };
 
-    await act(async () => {
-      const newPasswordInput = screen.getByLabelText(/New Password/i);
-      await userEvent.type(newPasswordInput, testFormData.password);
+    const newPasswordInput = screen.getByLabelText(/New Password/i);
+    await userEvent.type(newPasswordInput, testFormData.password);
 
-      const confirmPasswordInput = screen.getByLabelText(/Confirm Password/i);
-      await userEvent.type(confirmPasswordInput, testFormData.passwordConfirmation);
-    });
+    const confirmPasswordInput = screen.getByLabelText(/Confirm Password/i);
+    await userEvent.type(confirmPasswordInput, testFormData.passwordConfirmation);
 
-    await act(async () => userEvent.click(screen.getByRole('button', { name: 'Submit' })));
+    await userEvent.click(screen.getByRole('button', { name: 'Submit' }));
 
     expect(mockOnSubmit).toHaveBeenCalledWith(testFormData, expect.any(Object));
   });
@@ -48,16 +46,17 @@ describe('ActivateAccountForm', () => {
       passwordConfirmation: 'Test1234!',
     };
 
-    await act(async () => {
-      const newPasswordInput = screen.getByLabelText(/New Password/i);
-      await userEvent.type(newPasswordInput, testFormData.password);
+    const newPasswordInput = screen.getByLabelText(/New Password/i);
+    await userEvent.type(newPasswordInput, testFormData.password);
 
-      const confirmPasswordInput = screen.getByLabelText(/Confirm Password/i);
-      await userEvent.type(confirmPasswordInput, testFormData.passwordConfirmation);
-    });
+    const confirmPasswordInput = screen.getByLabelText(/Confirm Password/i);
+    await userEvent.type(confirmPasswordInput, testFormData.passwordConfirmation);
 
     const button = screen.getByRole('button', { name: 'Submit' });
-    expect(button.hasAttribute('disabled')).toBeFalsy();
+
+    waitFor(() => {
+      expect(button.hasAttribute('disabled')).toBeFalsy();
+    });
   });
 
   it('should validate user inputs and provide error messages', async () => {
@@ -67,9 +66,7 @@ describe('ActivateAccountForm', () => {
     const confirmPasswordInput = screen.getByLabelText(/Confirm Password/i);
     await userEvent.type(confirmPasswordInput, '123');
 
-    await act(async () => {
-      await userEvent.click(screen.getByRole('button', { name: 'Submit' }));
-    });
+    await userEvent.click(screen.getByRole('button', { name: 'Submit' }));
     expect(await screen.findAllByRole('alert')).toHaveLength(2);
   });
 });

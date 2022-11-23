@@ -1,18 +1,8 @@
 import styled from 'styled-components';
-import { Container, Navbar } from 'react-bootstrap';
-
-export const PageWrapper = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+import { Container } from 'react-bootstrap';
 
 export const SmallContainer = styled(Container)`
-  max-width: 540px;
-
-  @media (min-width: 768px) {
+  @media (min-width: 1200px) {
     max-width: 960px;
   }
 `;
@@ -33,6 +23,8 @@ export const PageHeader = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
   align-content: space-between;
+  border-bottom: 1px solid ${props => props.theme.nav.borderColor};
+  margin-bottom: 1.25rem;
 
   & > * {
     margin-bottom: 1rem;
@@ -59,44 +51,6 @@ export const PageHeader = styled.div`
       font-size: 2rem;
       margin: 0;
       margin-bottom: 0.25rem;
-    }
-  }
-`;
-
-export const BitwiseNavbar = styled(Navbar)`
-  background: ${props => props.theme.nav.backgroundColor};
-  align-items: flex-start;
-  padding: 2rem;
-  overflow-y: auto;
-  width: 280px;
-  height: 100vh;
-  z-index: 1;
-  position: fixed;
-  box-shadow: 1px 0 0 0 ${props => props.theme.nav.borderColor};
-
-  .navbar-brand {
-    padding-top: 0;
-  }
-
-  .navbar-brand > img {
-    width: 64px;
-    margin-left: 1rem;
-    margin-bottom: 2rem;
-    opacity: 0.9;
-    margin-top: 1.5rem;
-  }
-
-  .nav-wrap {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-
-    .navbar-nav:first-of-type {
-      flex: 1;
-    }
-
-    .navbar-nav:nth-of-type(2) {
-      margin-bottom: 1rem;
     }
   }
 `;

@@ -1,4 +1,4 @@
-import { act, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createAppStore } from 'app/redux';
 import { Provider } from 'react-redux';
@@ -29,15 +29,13 @@ describe('LoginForm', () => {
       password: 'Test12345!',
     };
 
-    await act(async () => {
-      const emailInput = screen.getByLabelText(/email/i);
-      await userEvent.type(emailInput, testFormData.email);
+    const emailInput = screen.getByLabelText(/email/i);
+    await userEvent.type(emailInput, testFormData.email);
 
-      const passwordInput = screen.getByLabelText(/password/i);
-      await userEvent.type(passwordInput, testFormData.password);
-    });
+    const passwordInput = screen.getByLabelText(/password/i);
+    await userEvent.type(passwordInput, testFormData.password);
 
-    await act(async () => userEvent.click(screen.getByRole('button', { name: 'Log In' })));
+    await userEvent.click(screen.getByRole('button', { name: 'Log In' }));
 
     expect(mockOnSubmit).toHaveBeenCalledWith(testFormData, expect.any(Object));
   });
@@ -49,9 +47,7 @@ describe('LoginForm', () => {
     const passwordInput = screen.getByLabelText(/password/i);
     await userEvent.type(passwordInput, '123');
 
-    await act(async () => {
-      await userEvent.click(screen.getByRole('button', { name: 'Log In' }));
-    });
+    await userEvent.click(screen.getByRole('button', { name: 'Log In' }));
 
     expect(await screen.findAllByRole('alert')).toHaveLength(2);
   });

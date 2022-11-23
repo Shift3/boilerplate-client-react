@@ -5,12 +5,9 @@ import { MoonIcon } from './MoonIcon';
 import { useTheme } from './useTheme';
 
 const Switch = styled.div`
-  position: absolute;
-  top: 28px;
-  right: 0;
   cursor: pointer;
-  padding: 16px;
   border-radius: ${props => props.theme.borderRadius};
+  padding: 8px;
 
   &:hover {
     background: ${props => props.theme.buttons.defaultBackgroundColor};
@@ -18,11 +15,11 @@ const Switch = styled.div`
 `;
 
 export const ThemeToggle: FC = () => {
-  const { toggle, theme } = useTheme();
+  const { toggleTheme, theme } = useTheme();
 
   return (
     <div>
-      <Switch onClick={() => toggle()}>{theme === 'light' ? <MoonIcon /> : <SunIcon />}</Switch>
+      <Switch onClick={() => toggleTheme()}>{theme === 'light' ? <MoonIcon /> : <SunIcon />}</Switch>
     </div>
   );
 };

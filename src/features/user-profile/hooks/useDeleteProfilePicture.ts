@@ -6,13 +6,9 @@ import * as notificationService from 'common/services/notification';
 import { useDeleteProfilePictureMutation, DeleteProfilePictureRequest } from 'common/api/userApi';
 import * as authLocalStorage from '../../auth/authLocalStorage';
 
-export type UseDeleteProfilePictureHook = () => {
-  deleteUserProfilePicture: (data: DeleteProfilePictureRequest) => Promise<void>;
-};
-
-export const useDeleteProfilePicture: UseDeleteProfilePictureHook = () => {
+export const useDeleteProfilePicture = () => {
   const dispatch = useAppDispatch();
-  const [deleteProfilePicture] = useDeleteProfilePictureMutation();
+  const [deleteProfilePicture, { isLoading }] = useDeleteProfilePictureMutation();
 
   const getUserWithNullProfilePicture = () => {
     const user = authLocalStorage.getAuthState()?.user ?? null;
@@ -44,5 +40,5 @@ export const useDeleteProfilePicture: UseDeleteProfilePictureHook = () => {
     [deleteProfilePicture, dispatch],
   );
 
-  return { deleteUserProfilePicture };
+  return { deleteUserProfilePicture, isLoading };
 };

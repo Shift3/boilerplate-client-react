@@ -1,7 +1,7 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
@@ -37,15 +37,10 @@ export const ResetPasswordForm: FC<Props> = ({ onSubmit }) => {
     formState: { errors, isDirty, isSubmitting, isSubmitted, isValid },
     handleSubmit,
     register,
-    trigger,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
   });
-
-  useEffect(() => {
-    trigger();
-  }, [trigger]);
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
@@ -77,7 +72,7 @@ export const ResetPasswordForm: FC<Props> = ({ onSubmit }) => {
           </Form.Control.Feedback>
         </Form.Group>
         <div className='mt-3'>
-          <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
+          <LoadingButton type='submit' disabled={!isValid} loading={isSubmitting}>
             Submit
           </LoadingButton>
         </div>
