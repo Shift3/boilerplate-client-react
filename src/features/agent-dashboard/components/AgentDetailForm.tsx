@@ -52,7 +52,7 @@ const schema = yup.object().shape({
     .required('Phone number is required.'),
   thumbnail: yup.string(),
   address1: yup.string().optional(),
-  address2: yup.string(),
+  address2: yup.string().optional(),
   city: yup.string().when('address1', { is: notBlank, then: yup.string().required('City is required.') }),
   state: yup.string().when('address1', { is: notBlank, then: yup.string().required('State is required.') }),
   zipCode: yup.string().when('address1', { is: notBlank, then: yup.string().required('Zip code is required.') }),

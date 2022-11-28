@@ -7,8 +7,8 @@ export interface Agent {
   phoneNumber: string;
   categoryList: unknown[];
   documentList: unknown[];
-  address1: string;
-  address2: string;
+  address1?: string;
+  address2?: string;
   city: string;
   state: string;
   zipCode: string;
