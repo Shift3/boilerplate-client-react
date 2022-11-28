@@ -9,7 +9,7 @@ export interface Agent {
   documentList: unknown[];
   address1?: string;
   address2?: string;
-  city: string;
-  state: string;
-  zipCode: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
 }

@@ -68,22 +68,37 @@ export const AgentDetailForm: FC<Props> = ({
     register,
     formState: { errors, isValid, isDirty, isSubmitting, isSubmitted },
     handleSubmit,
+    trigger,
     control,
+    watch,
     setError,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
     defaultValues: {
       ...defaultValues,
+      address1: defaultValues.address1,
+      address2: defaultValues.address2 ?? '',
       state: defaultValues?.state ?? '',
+      phoneNumber:
+        defaultValues.phoneNumber && defaultValues.phoneNumber !== '' ? defaultValues.phoneNumber.substring(2) : '',
     },
   });
+
+  const firstAddressLine = watch('address1');
 
   const withOptionalAddress = (data: FormData) => {
     onSubmit({
       ...data,
+      address1: isBlank(firstAddressLine) ? undefined : data.address1,
     });
   };
+
+  useEffect(() => {
+    trigger('city');
+    trigger('state');
+    trigger('zipCode');
+  }, [trigger, firstAddressLine]);
 
   useEffect(() => {
     if (serverValidationErrors) {
