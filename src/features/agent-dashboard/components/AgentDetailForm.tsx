@@ -76,6 +76,7 @@ export const AgentDetailForm: FC<Props> = ({
     mode: 'all',
     defaultValues: {
       ...defaultValues,
+      state: defaultValues?.state ?? '',
     },
   });
 
