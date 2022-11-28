@@ -11,7 +11,6 @@ import PhoneInput from 'react-phone-input-2';
 import { Constants } from 'utils/constants';
 import { stateList } from 'utils/states';
 import * as yup from 'yup';
-
 import 'react-phone-input-2/lib/plain.css';
 
 export type FormData = Pick<
@@ -80,13 +79,6 @@ export const AgentDetailForm: FC<Props> = ({
     },
   });
 
-  /**
-   * Submits agent data with either a complete address or nothing at all, to
-   * prevent errors due to partial or empty address data.
-   *
-   * Note this relies on validation rules, which enforce filling in all address
-   * fields if the first line is filled in.
-   * */
   const withOptionalAddress = (data: FormData) => {
     onSubmit({
       ...data,
@@ -165,7 +157,7 @@ export const AgentDetailForm: FC<Props> = ({
 
           <Col md={6}>
             <Form.Group className='mb-2'>
-              <Form.Label>Address2</Form.Label>
+              <Form.Label>Address 2</Form.Label>
               <Form.Control
                 type='text'
                 {...register('address2')}
