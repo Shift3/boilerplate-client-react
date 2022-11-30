@@ -7,12 +7,31 @@ import { QueryParamsBuilder } from './queryParamsBuilder';
 
 export type CreateAgentRequest = Pick<
   Agent,
-  'description' | 'email' | 'name' | 'phoneNumber' | 'thumbnail' | 'address'
+  | 'description'
+  | 'email'
+  | 'name'
+  | 'phoneNumber'
+  | 'thumbnail'
+  | 'address1'
+  | 'address2'
+  | 'city'
+  | 'state'
+  | 'zipCode'
 >;
 
 export type UpdateAgentRequest = Pick<
   Agent,
-  'id' | 'description' | 'email' | 'name' | 'phoneNumber' | 'thumbnail' | 'address'
+  | 'id'
+  | 'description'
+  | 'email'
+  | 'name'
+  | 'phoneNumber'
+  | 'thumbnail'
+  | 'address1'
+  | 'address2'
+  | 'city'
+  | 'state'
+  | 'zipCode'
 >;
 
 export type GetAgentHistory = {
