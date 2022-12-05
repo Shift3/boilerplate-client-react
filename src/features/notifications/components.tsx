@@ -72,3 +72,36 @@ export const AgentCreatedNotification: FC<{
     </BaseNotification>
   );
 };
+
+export const UserAcceptedInvitationNotification: FC<{
+  notification: AppNotification;
+}> = ({ notification }) => {
+  const { markRead } = useMarkRead();
+
+  interface UserAcceptedInvitation {
+    userId: string;
+    userName: string;
+  }
+
+  const isUserAcceptedInvitationNotificationData = (data: unknown): data is UserAcceptedInvitation => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return !!(data as any).userName;
+  };
+
+  const { data } = notification;
+  if (!isUserAcceptedInvitationNotificationData(data)) return <></>;
+
+  return (
+    <BaseNotification title='User Accepted Invitation' notification={notification}>
+      <p className='p-0 m-0 mb-2'>
+        <Moment className='fw-normal fs-6 text-muted' fromNow>
+          {notification.created}
+        </Moment>
+      </p>
+      <Link to={`/users/update-user/${data.userId}`} onClick={() => markRead(notification)}>
+        {data.userName}
+      </Link>{' '}
+      accepter their inviation.{' '}
+    </BaseNotification>
+  );
+};
