@@ -78,12 +78,12 @@ export const UserAcceptedInvitationNotification: FC<{
 }> = ({ notification }) => {
   const { markRead } = useMarkRead();
 
-  interface UserAcceptedInvitation {
+  interface UserAcceptedInvitationData {
     userId: string;
     userName: string;
   }
 
-  const isUserAcceptedInvitationNotificationData = (data: unknown): data is UserAcceptedInvitation => {
+  const isUserAcceptedInvitationNotificationData = (data: unknown): data is UserAcceptedInvitationData => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return !!(data as any).userName;
   };
@@ -101,7 +101,7 @@ export const UserAcceptedInvitationNotification: FC<{
       <Link to={`/users/update-user/${data.userId}`} onClick={() => markRead(notification)}>
         {data.userName}
       </Link>{' '}
-      accepter their inviation.{' '}
+      accepter their invitation.{' '}
     </BaseNotification>
   );
 };
