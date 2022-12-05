@@ -73,23 +73,23 @@ export const AgentCreatedNotification: FC<{
   );
 };
 
-export const UserAcceptedInvitationNotification: FC<{
+export const UserInvitationAcceptedNotification: FC<{
   notification: AppNotification;
 }> = ({ notification }) => {
   const { markRead } = useMarkRead();
 
-  interface UserAcceptedInvitationData {
+  interface UserInvitationAcceptedNotificationData {
     userId: string;
     userName: string;
   }
 
-  const isUserAcceptedInvitationNotificationData = (data: unknown): data is UserAcceptedInvitationData => {
+  const isUserInvitationAcceptedNotificationData = (data: unknown): data is UserInvitationAcceptedNotificationData => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return !!(data as any).userName;
   };
 
   const { data } = notification;
-  if (!isUserAcceptedInvitationNotificationData(data)) return <></>;
+  if (!isUserInvitationAcceptedNotificationData(data)) return <></>;
 
   return (
     <BaseNotification title='User Accepted Invitation' notification={notification}>
