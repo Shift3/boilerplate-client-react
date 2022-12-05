@@ -1,9 +1,13 @@
 import { FC, useContext } from 'react';
-import { CloseButton, Nav, Row, Tab } from 'react-bootstrap';
+import { Button, CloseButton, Nav, Row, Tab } from 'react-bootstrap';
 import styled from 'styled-components';
 import { useGetReadNotificationsQuery } from 'common/api/notificationApi';
 import { renderNotification } from './renderNotification';
 import { NotificationContext } from '../context';
+import { AppNotification } from 'common/models/notifications';
+import { PaginatedResult } from 'common/models';
+import { useInfiniteLoading } from 'common/hooks/useInfiniteLoading';
+import { useNavigate } from 'react-router-dom';
 
 const StyledContainer = styled.div`
   width: 400px;
@@ -95,7 +99,14 @@ const StyledContainer = styled.div`
           overflow-y: auto;
         }
 
+        .tab-pane.active {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
         .tab-pane > .notification-item {
+          width: 100%;
           padding: 0.5rem 0;
           border-top: 1px solid grey;
         }
@@ -109,9 +120,14 @@ interface Props {
 }
 
 export const NotificationDropdown: FC<Props> = ({ onClose }) => {
-  const { notifications: unreadNotifications } = useContext(NotificationContext);
+  const navigate = useNavigate();
 
-  const { data: readNotifications } = useGetReadNotificationsQuery('');
+  const { notifications: unreadNotifications, hasMore: hasMoreUnreadNotifications } = useContext(NotificationContext);
+
+  const { loadedData: readNotifications, hasMore: hasMoreReadNotifications } = useInfiniteLoading<
+    AppNotification,
+    PaginatedResult<AppNotification>
+  >('', useGetReadNotificationsQuery);
 
   return (
     <StyledContainer id='notification-dropdown' className='dropdown-menu'>
@@ -142,13 +158,23 @@ export const NotificationDropdown: FC<Props> = ({ onClose }) => {
                     {renderNotification(notification)}
                   </div>
                 ))}
+                {hasMoreUnreadNotifications && (
+                  <Button className='mt-3' onClick={() => navigate('/notifications')}>
+                    View All Notifications
+                  </Button>
+                )}
               </Tab.Pane>
               <Tab.Pane eventKey='read'>
-                {readNotifications?.results.map(notification => (
+                {readNotifications.map(notification => (
                   <div key={notification.id} className='notification-item'>
                     {renderNotification(notification)}
                   </div>
                 ))}
+                {hasMoreReadNotifications && (
+                  <Button className='mt-3' onClick={() => navigate('/notifications')}>
+                    View All Notifications
+                  </Button>
+                )}
               </Tab.Pane>
             </Tab.Content>
           </Row>
