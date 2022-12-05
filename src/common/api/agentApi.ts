@@ -1,6 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { FilterQueryParams, PaginatedResult, PaginationQueryParams, SearchTextParams } from 'common/models';
+import { FilterQueryParams, PaginatedResult, PaginationQueryParams, SearchTextParams, User } from 'common/models';
 import { Agent } from 'common/models/agent';
+import { HistoricalRecord } from 'common/models/historicalRecord';
 import { SortingQueryParams } from 'common/models/sorting';
 import { customBaseQuery } from './customBaseQuery';
 import { QueryParamsBuilder } from './queryParamsBuilder';
@@ -33,12 +34,6 @@ export type UpdateAgentRequest = Pick<
   | 'state'
   | 'zipCode'
 >;
-
-export type GetAgentHistory = {
-  id: string | undefined;
-  page: number;
-  pageSize: number;
-};
 
 export const agentApi = createApi({
   reducerPath: 'agentApi',
@@ -74,11 +69,8 @@ export const agentApi = createApi({
       providesTags: ['Agent'],
     }),
 
-    getAgentHistory: builder.query<PaginatedResult<unknown>, GetAgentHistory>({
-      query: arg => {
-        const queryParams = new QueryParamsBuilder().setPaginationParams(arg.page, arg.pageSize).build();
-        return { url: `/agents/${arg.id}/change-history?${queryParams}` };
-      },
+    getAgentHistory: builder.query<PaginatedResult<HistoricalRecord<User>>, string>({
+      query: url => url
     }),
 
     createAgent: builder.mutation<Agent, CreateAgentRequest>({
