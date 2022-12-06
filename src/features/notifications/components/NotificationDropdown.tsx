@@ -112,6 +112,10 @@ const StyledContainer = styled.div`
               color: ${props => props.theme.textColor};
             }
           }
+
+          .notification-item:last-of-type {
+            border-bottom: 1px solid ${props => props.theme.notifications.borderColor};
+          }
         }
 
         .tab-pane.active {
