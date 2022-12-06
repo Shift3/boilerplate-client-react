@@ -48,8 +48,7 @@ export const AgentCreatedNotification: FC<{
   }
 
   const isAgentCreatedNotificationData = (data: unknown): data is AgentCreatedData => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return !!(data as any).userName;
+    return !!(data as AgentCreatedData).userName;
   };
 
   const { data } = notification;
@@ -84,8 +83,7 @@ export const UserInvitationAcceptedNotification: FC<{
   }
 
   const isUserInvitationAcceptedNotificationData = (data: unknown): data is UserInvitationAcceptedNotificationData => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return !!(data as any).userName;
+    return !!(data as UserInvitationAcceptedNotificationDatas).userName;
   };
 
   const { data } = notification;
