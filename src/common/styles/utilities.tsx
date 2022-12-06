@@ -109,6 +109,9 @@ const NoContentStyles = styled.div`
     color: ${props => props.theme.textColor};
     margin-bottom: 0.5rem;
   }
+  p.lead {
+    color: ${props => props.theme.textColor};
+  }
 `;
 
 export const NoContent: FC<{

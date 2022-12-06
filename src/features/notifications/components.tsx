@@ -65,7 +65,7 @@ export const AgentCreatedNotification: FC<{
       <Link to={`/users/update-user/${data.userId}`} onClick={() => markRead(notification)}>
         {data.userName}
       </Link>{' '}
-      created a new agent named{' '}
+      <span>created a new agent named </span>
       <Link to={`/agents/update-agent/${data.agentId}`} onClick={() => markRead(notification)}>
         {data.agentName}
       </Link>

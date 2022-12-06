@@ -29,6 +29,7 @@ const StyledContainer = styled.div`
 
     h3 {
       padding-top: 1rem;
+      color: ${props => props.theme.textColor};
     }
 
     button {
@@ -60,15 +61,14 @@ const StyledContainer = styled.div`
 
         .nav-item a.active {
           border-radius: 0px;
-          border-bottom: 2px solid blue;
+          border-bottom: 2px solid ${props => props.theme.linkColor};
           background: none;
-          color: blue;
+          color: ${props => props.theme.linkColor};
         }
 
         .nav-item a:hover {
           border-radius: 0px;
           background: none;
-          color: blue;
         }
       }
 
@@ -83,6 +83,8 @@ const StyledContainer = styled.div`
           padding: 0.188rem 0.438rem;
           border-radius: 0.375rem;
           pointer: cursor;
+          background-color: ${props => props.theme.buttons.darkBackgroundColor};
+          color: ${props => props.theme.buttons.primaryTextColor};
         }
       }
     }
@@ -99,6 +101,17 @@ const StyledContainer = styled.div`
         .tab-pane {
           height: 100%;
           overflow-y: auto;
+
+          .notification-item {
+            width: 100%;
+            padding: 0.5rem 0;
+            border-top: 1px solid grey;
+
+            div h1,
+            span {
+              color: ${props => props.theme.textColor};
+            }
+          }
         }
 
         .tab-pane.active {
@@ -112,12 +125,6 @@ const StyledContainer = styled.div`
             height: 100%;
             min-height: 0px;
           }
-        }
-
-        .tab-pane > .notification-item {
-          width: 100%;
-          padding: 0.5rem 0;
-          border-top: 1px solid grey;
         }
       }
     }
@@ -165,12 +172,7 @@ export const NotificationDropdown: FC<Props> = ({ onClose }) => {
               </Nav.Item>
             </Nav>
             <div id='mark-all-container'>
-              <LoadingButton
-                variant='dark'
-                id='mark-all-btn'
-                onClick={() => handleMarkAllRead()}
-                loading={isLoadingMarkAllRead}
-              >
+              <LoadingButton id='mark-all-btn' onClick={() => handleMarkAllRead()} loading={isLoadingMarkAllRead}>
                 mark all as read
               </LoadingButton>
             </div>

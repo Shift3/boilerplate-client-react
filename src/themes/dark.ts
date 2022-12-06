@@ -60,6 +60,8 @@ export default {
     backgroundColor: colors.blue500,
     disabledBackgroundColor: colors.neutral100,
     hoverBackgroundColor: colors.blue500,
+
+    darkBackgroundColor: colors.blue600,
   },
 
   tooltips: {
