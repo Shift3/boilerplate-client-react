@@ -350,7 +350,9 @@ export const BitwiseNavbar: FC = () => {
                 className='me-3'
               >
                 {__languageOptions.map(option => (
-                  <NavDropdown.Item onClick={() => changeLanguage(option.value)}>{option.label}</NavDropdown.Item>
+                  <NavDropdown.Item key={option.value} onClick={() => changeLanguage(option.value)}>
+                    {option.label}
+                  </NavDropdown.Item>
                 ))}
               </NavDropdown>
 

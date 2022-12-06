@@ -155,19 +155,19 @@ export const DataTable = <D extends Record<string, unknown>>({
           {headerGroups.map(headerGroup => (
             <div className='tr' {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
-                <>
+                <div key={headerGroup.id}>
                   {sortByEnabled && column.canSort ? (
                     // Add the sorting props to control sorting and sort direction indicator.
                     <div className='th' {...column.getHeaderProps(column.getSortByToggleProps())}>
                       {column.render('Header')}{' '}
-                      <SortIndicator isSorted={column.isSorted} isDesc={column.isSortedDesc} />
+                      <SortIndicator key={headerGroup.id} isSorted={column.isSorted} isDesc={column.isSortedDesc} />
                     </div>
                   ) : (
-                    <div className='th' {...column.getHeaderProps()}>
+                    <div className='th' {...column.getHeaderProps()} key={headerGroup.id}>
                       {column.render('Header')}
                     </div>
                   )}
-                </>
+                </div>
               ))}
             </div>
           ))}
