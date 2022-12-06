@@ -32,6 +32,7 @@ export const useInfiniteLoading = <T, ResultType extends PaginatedResult<T>>(
   return {
     loadedData,
     error,
+    isLoading,
     isFetching,
     totalCount: data?.meta.count,
     hasMore,

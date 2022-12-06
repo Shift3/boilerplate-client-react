@@ -121,6 +121,10 @@ export default {
   changelogs: {
     textColor: colors.white,
     accentTextColor: colors.blue400,
-    backgroundColor: colors.neutral800
+    backgroundColor: colors.neutral800,
+  },
+
+  notifications: {
+    noContentBorder: colors.white,
   },
 };
