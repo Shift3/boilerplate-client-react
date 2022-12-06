@@ -207,6 +207,22 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
       width: calc(100% - 1rem);
       height: calc(100% - 1rem);
 
+      div#header {
+        height: 5%;
+      }
+
+      div#body {
+        height: 95%;
+
+        div#tabs-and-mark-all {
+          height: 3%;
+        }
+
+        div#notification-lists {
+          height: 97%;
+        }
+      }
+
       #body > #tabs-and-mark-all > #notification-type-tabs {
         display: flex;
         flex-direction: row;

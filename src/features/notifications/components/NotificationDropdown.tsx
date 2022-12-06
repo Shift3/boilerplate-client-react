@@ -56,6 +56,7 @@ const StyledContainer = styled.div`
         .nav-item a {
           padding: 0px 0.4rem !important;
           margin: 0px 0.625rem 0px 0px;
+          color: ${props => props.theme.textColor};
         }
 
         .nav-item a.active {
