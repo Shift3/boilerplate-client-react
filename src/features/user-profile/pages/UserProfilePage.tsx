@@ -233,6 +233,7 @@ export const UserProfilePage: FC = () => {
             hideModal();
           }}
           onExited={onExited}
+          centered
         >
           <Modal.Header closeButton>
             <Modal.Title>Change my Email</Modal.Title>

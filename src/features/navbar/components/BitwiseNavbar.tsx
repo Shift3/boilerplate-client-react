@@ -261,7 +261,7 @@ export const BitwiseNavbar: FC = () => {
   const [showModal, hideModal] = useModal(
     ({ in: open, onExited }) => {
       return (
-        <Modal show={open} onHide={hideModal} onExited={onExited}>
+        <Modal show={open} onHide={hideModal} onExited={onExited} centered>
           <Modal.Header closeButton>
             <Modal.Title>Sign Out</Modal.Title>
           </Modal.Header>
@@ -349,13 +349,13 @@ export const BitwiseNavbar: FC = () => {
                 className='me-3'
               >
                 {__languageOptions.map(option => (
-                  <NavDropdown.Item key={option.label} onClick={() => changeLanguage(option.value)}>
+                  <NavDropdown.Item key={option.value} onClick={() => changeLanguage(option.value)}>
                     {option.label}
                   </NavDropdown.Item>
                 ))}
               </NavDropdown>
 
-              <NotificationButton className='me-3' onClick={() => navigate('/notifications')}>
+              <NotificationButton className='me-3' alt='Notification' onClick={() => navigate('/notifications')}>
                 <FontAwesomeIcon size='lg' icon='bell' />
                 <span id='notification-label'>Notifications</span>
                 {count > 0 ? (

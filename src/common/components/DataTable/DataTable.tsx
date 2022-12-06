@@ -160,10 +160,10 @@ export const DataTable = <D extends Record<string, unknown>>({
                     // Add the sorting props to control sorting and sort direction indicator.
                     <div className='th' {...column.getHeaderProps(column.getSortByToggleProps())}>
                       {column.render('Header')}{' '}
-                      <SortIndicator isSorted={column.isSorted} isDesc={column.isSortedDesc} />
+                      <SortIndicator key={headerGroup.id} isSorted={column.isSorted} isDesc={column.isSortedDesc} />
                     </div>
                   ) : (
-                    <div className='th' {...column.getHeaderProps()}>
+                    <div className='th' {...column.getHeaderProps()} key={headerGroup.id}>
                       {column.render('Header')}
                     </div>
                   )}
