@@ -155,7 +155,7 @@ export const DataTable = <D extends Record<string, unknown>>({
           {headerGroups.map(headerGroup => (
             <div className='tr' {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
-                <div key={headerGroup.id}>
+                <div key={column.id}>
                   {sortByEnabled && column.canSort ? (
                     // Add the sorting props to control sorting and sort direction indicator.
                     <div className='th' {...column.getHeaderProps(column.getSortByToggleProps())}>
