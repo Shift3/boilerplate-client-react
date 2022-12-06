@@ -1,13 +1,14 @@
 import { FC, useContext } from 'react';
 import { Button, CloseButton, Nav, Row, Tab } from 'react-bootstrap';
 import styled from 'styled-components';
-import { useGetReadNotificationsQuery } from 'common/api/notificationApi';
+import { useGetReadNotificationsQuery, useMarkAllReadMutation } from 'common/api/notificationApi';
 import { renderNotification } from './renderNotification';
 import { NotificationContext } from '../context';
 import { AppNotification } from 'common/models/notifications';
 import { PaginatedResult } from 'common/models';
 import { useInfiniteLoading } from 'common/hooks/useInfiniteLoading';
 import { useNavigate } from 'react-router-dom';
+import { LoadingButton } from 'common/components/LoadingButton';
 
 const StyledContainer = styled.div`
   width: 400px;
@@ -75,12 +76,11 @@ const StyledContainer = styled.div`
         justify-content: flex-end;
         padding: 0px;
 
-        span#mark-all-btn {
+        button#mark-all-btn {
           display: inline;
           padding: 0.188rem 0.438rem;
-          background-color: black;
-          color: white;
           border-radius: 0.375rem;
+          pointer: cursor;
         }
       }
     }
@@ -121,13 +121,20 @@ interface Props {
 
 export const NotificationDropdown: FC<Props> = ({ onClose }) => {
   const navigate = useNavigate();
-
-  const { notifications: unreadNotifications, hasMore: hasMoreUnreadNotifications } = useContext(NotificationContext);
-
+  const {
+    notifications: unreadNotifications,
+    hasMore: hasMoreUnreadNotifications,
+    clear,
+  } = useContext(NotificationContext);
   const { loadedData: readNotifications, hasMore: hasMoreReadNotifications } = useInfiniteLoading<
     AppNotification,
     PaginatedResult<AppNotification>
   >('', useGetReadNotificationsQuery);
+  const [markAllRead, { isLoading }] = useMarkAllReadMutation();
+  const handleMarkAllRead = async () => {
+    await markAllRead().unwrap();
+    clear();
+  };
 
   return (
     <StyledContainer id='notification-dropdown' className='dropdown-menu'>
@@ -147,7 +154,9 @@ export const NotificationDropdown: FC<Props> = ({ onClose }) => {
               </Nav.Item>
             </Nav>
             <div id='mark-all-container'>
-              <span id='mark-all-btn'>mark all as read</span>
+              <LoadingButton variant='dark' id='mark-all-btn' onClick={() => handleMarkAllRead()} loading={isLoading}>
+                mark all as read
+              </LoadingButton>
             </div>
           </Row>
           <Row id='notification-lists'>
