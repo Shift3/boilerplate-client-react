@@ -54,8 +54,7 @@ const StyledContainer = styled.div`
         flex: 4;
 
         .nav-item a {
-          padding: 0px;
-          padding: 0px !important;
+          padding: 0px 0.4rem !important;
           margin: 0px 0.625rem 0px 0px;
         }
 
@@ -105,7 +104,7 @@ const StyledContainer = styled.div`
           .notification-item {
             width: 100%;
             padding: 0.5rem 0;
-            border-top: 1px solid grey;
+            border-top: 1px solid ${props => props.theme.notifications.borderColor};
 
             div h1,
             span {
@@ -120,7 +119,7 @@ const StyledContainer = styled.div`
           align-items: center;
 
           div.noContentStyles {
-            border: 1px dashed ${props => props.theme.notifications.noContentBorder};
+            border: 1px dashed ${props => props.theme.notifications.borderColor};
             width: 100%;
             height: 100%;
             min-height: 0px;

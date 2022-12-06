@@ -127,6 +127,6 @@ export default {
   },
 
   notifications: {
-    noContentBorder: colors.neutral400,
+    borderColor: colors.neutral400,
   },
 };
