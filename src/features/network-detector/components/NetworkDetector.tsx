@@ -14,9 +14,9 @@ export const NetworkDetector: FC<PropsWithChildren<unknown>> = ({ children }) =>
     window.addEventListener('offline', handleConnectionChange);
 
     if (isDisconnected) {
-      notificationService.showEndlessErrorMessage('Internet Connection Lost');
+      notificationService.showErrorMessage('Internet Connection Lost');
     } else if (prevDisconnectionStatus.current) {
-      notificationService.showEndlessSuccessMessage('Internet Connection Restored');
+      notificationService.showSuccessMessage('Internet Connection Restored');
     }
 
     prevDisconnectionStatus.current = isDisconnected;
