@@ -128,5 +128,6 @@ export default {
 
   notifications: {
     borderColor: colors.neutral400,
+    boxShadowColor: colors.neutral200,
   },
 };

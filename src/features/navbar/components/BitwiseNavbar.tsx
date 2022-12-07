@@ -198,7 +198,7 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
       right: 0;
       bottom: 0;
       margin: 0.5rem;
-      box-shadow: -4px -4px 5px 20px lightgrey;
+      box-shadow: -4px -4px 5px 20px ${props => props.theme.notifications.boxShadowColor};
       max-width: 767px;
       width: calc(100% - 1rem);
       height: calc(100% - 1rem);
@@ -416,7 +416,7 @@ export const BitwiseNavbar: FC = () => {
                 ) : null}
               </NotificationButton>
 
-              {user && showNotificationDropdown && <NotificationDropdown onClose={toggleNotificationDropdown} />}
+              {showNotificationDropdown && <NotificationDropdown onClose={toggleNotificationDropdown} />}
 
               {user ? (
                 <NavDropdown
