@@ -113,7 +113,7 @@ const StyledNavbar = styled(Navbar)`
   }
   #notification-dropdown {
     position: absolute;
-    right: 10rem;
+    right: auto;
     top: 4.063rem;
   }
 `;
