@@ -128,10 +128,6 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
 
   .offcanvas-only {
     display: none;
-
-    #notification-button {
-      display: none;
-    }
   }
 
   &.show,
