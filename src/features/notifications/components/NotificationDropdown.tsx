@@ -1,7 +1,7 @@
 import { FC, useContext } from 'react';
 import { Button, CloseButton, Nav, Row, Tab } from 'react-bootstrap';
 import styled from 'styled-components';
-import { useGetReadNotificationsQuery, useMarkAllReadMutation } from 'common/api/notificationApi';
+import { notificationApi, useGetReadNotificationsQuery, useMarkAllReadMutation } from 'common/api/notificationApi';
 import { renderNotification } from './renderNotification';
 import { NotificationContext } from '../context';
 import { AppNotification } from 'common/models/notifications';
@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { NoContent } from 'common/styles/utilities';
+import { useDispatch } from 'react-redux';
 
 const StyledContainer = styled.div`
   width: 400px;
@@ -141,6 +142,7 @@ interface Props {
 
 export const NotificationDropdown: FC<Props> = ({ onClose }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
     notifications: unreadNotifications,
     isLoading: isLoadingUnreadNotifications,
@@ -153,16 +155,22 @@ export const NotificationDropdown: FC<Props> = ({ onClose }) => {
     hasMore: hasMoreReadNotifications,
   } = useInfiniteLoading<AppNotification, PaginatedResult<AppNotification>>('', useGetReadNotificationsQuery);
   const [markAllRead, { isLoading: isLoadingMarkAllRead }] = useMarkAllReadMutation();
+
   const handleMarkAllRead = async () => {
     await markAllRead().unwrap();
     clear();
+  };
+
+  const handleClose = () => {
+    dispatch(notificationApi.util.resetApiState());
+    onClose();
   };
 
   return (
     <StyledContainer id='notification-dropdown' className='dropdown-menu'>
       <div id='header'>
         <h3>Notifications</h3>
-        <CloseButton onClick={() => onClose()} />
+        <CloseButton onClick={() => handleClose()} />
       </div>
       <div id='body'>
         <Tab.Container defaultActiveKey='unread'>
