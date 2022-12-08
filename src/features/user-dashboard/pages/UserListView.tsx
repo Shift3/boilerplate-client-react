@@ -32,7 +32,7 @@ export const UserListView: FC = () => {
     addSearchText,
   } = usePSFQuery<PaginatedResult<User>>(useGetUsersQuery);
   const users = useMemo(() => data?.results ?? [], [data]);
-  const { columns, data: tableData } = useUserTableData(users);
+  const { columns, data: tableData, initialColumnBreakpointVisibility } = useUserTableData(users);
   const isPageLoading = isLoading;
 
   const filters: FilterInfo[] = useMemo(
@@ -115,6 +115,7 @@ export const UserListView: FC = () => {
               sorting={{
                 onSortByChange: changeSortBy,
               }}
+              initialColumnBreakpointVisibility={initialColumnBreakpointVisibility}
             />
           </WithLoadingOverlay>
         </TableCard.Body>

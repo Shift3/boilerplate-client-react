@@ -1,11 +1,16 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDeleteAgentMutation } from 'common/api/agentApi';
+import { CustomToggle } from 'common/components/CustomToggle';
+import { ColumnBreakpoints } from 'common/components/DataTable/Responsiveness/models/ColumnBreakpoints';
 import { SimpleConfirmModal } from 'common/components/SimpleConfirmModal';
 import { useModalWithData } from 'common/hooks/useModalWithData';
 import { Agent } from 'common/models';
 import * as notificationService from 'common/services/notification';
-import { ActionButton, ActionButtonProps } from 'common/styles/button';
+import { ActionButtonProps, TableActionsStyling } from 'common/styles/button';
+import { getBorderRadiusForDropdownItem } from 'common/styles/utilities';
 import { useRbac } from 'features/rbac';
 import { useMemo } from 'react';
+import { Dropdown } from 'react-bootstrap';
 import { Column } from 'react-table';
 import { formatPhoneNumber } from 'utils/phone';
 
@@ -20,6 +25,7 @@ export type AgentTableItem = {
 export type UseAgentTableData = (agents?: Agent[]) => {
   columns: Column<AgentTableItem>[];
   data: AgentTableItem[];
+  initialColumnBreakpointVisibility: ColumnBreakpoints;
 };
 
 export const useAgentTableData: UseAgentTableData = (agents = []) => {
@@ -73,11 +79,24 @@ export const useAgentTableData: UseAgentTableData = (agents = []) => {
         accessor: 'actions',
         Header: '',
         Cell: ({ value: actions }) => (
-          <>
-            {actions.map(action => (
-              <ActionButton key={action.text} {...action} />
-            ))}
-          </>
+          <Dropdown onClick={e => e.stopPropagation()}>
+            <Dropdown.Toggle as={CustomToggle} id='dropdown-basic'>
+              <TableActionsStyling>
+                <FontAwesomeIcon icon={['fas', 'ellipsis-h']} size='xs' />
+              </TableActionsStyling>
+            </Dropdown.Toggle>
+            <Dropdown.Menu className='p-0'>
+              {actions.map((action, index) => (
+                <Dropdown.Item
+                  className={getBorderRadiusForDropdownItem(index, actions.length)}
+                  key={action.text}
+                  {...action}
+                >
+                  {action.text}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
         ),
         disableSortBy: true,
       },
@@ -107,8 +126,16 @@ export const useAgentTableData: UseAgentTableData = (agents = []) => {
     [agents, userHasPermission, showDeleteModal],
   );
 
+  const initialColumnBreakpointVisibility: ColumnBreakpoints = {
+    name: { xs: true, sm: true, md: true, lg: true, xl: true, xxl: true },
+    email: { xs: false, sm: true, md: true, lg: true, xl: true, xxl: true },
+    phoneNumber: { xs: false, sm: false, md: true, lg: true, xl: true, xxl: true },
+    actions: { xs: true, sm: true, md: true, lg: true, xl: true, xxl: true },
+  };
+
   return {
     columns,
     data,
+    initialColumnBreakpointVisibility,
   };
 };

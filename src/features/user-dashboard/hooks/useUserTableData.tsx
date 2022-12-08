@@ -1,16 +1,18 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { handleApiError, isFetchBaseQueryError } from 'common/api/handleApiError';
 import { useDeleteUserMutation, useForgotPasswordMutation, useResendActivationEmailMutation } from 'common/api/userApi';
+import { CustomToggle } from 'common/components/CustomToggle';
+import { ColumnBreakpoints } from 'common/components/DataTable/Responsiveness/models/ColumnBreakpoints';
 import { SimpleConfirmModal } from 'common/components/SimpleConfirmModal';
 import { useModalWithData } from 'common/hooks/useModalWithData';
 import { Image, Role, RoleType, User } from 'common/models';
 import * as notificationService from 'common/services/notification';
-import { ActionButton, ActionButtonProps, TableActions } from 'common/styles/button';
-import { SubtleBadge } from 'common/styles/utilities';
+import { ActionButton, ActionButtonProps, TableActionsStyling } from 'common/styles/button';
+import { getBorderRadiusForDropdownItem, SubtleBadge } from 'common/styles/utilities';
 import { UserProfilePicture } from 'features/navbar/components/UserProfilePicture';
 import { useRbac } from 'features/rbac';
 import { useMemo } from 'react';
-import { Button } from 'react-bootstrap';
+import { Dropdown } from 'react-bootstrap';
 import { Column } from 'react-table';
 
 export type UserTableItem = {
@@ -27,6 +29,7 @@ export type UserTableItem = {
 export type UseUserTableData = (agents?: User[]) => {
   columns: Column<UserTableItem>[];
   data: UserTableItem[];
+  initialColumnBreakpointVisibility: ColumnBreakpoints;
 };
 
 export const useUserTableData: UseUserTableData = (users = []) => {
@@ -210,22 +213,27 @@ export const useUserTableData: UseUserTableData = (users = []) => {
       {
         accessor: 'actions',
         Header: '',
-        Cell: ({ value: actions }) => (
-          <>
-            {actions.filter(action => action.show).length > 0 ? (
-              <TableActions>
-                <Button variant='link' onClick={e => e.stopPropagation()}>
+        Cell: ({ value: actions }) =>
+          actions.filter(action => action.show).length > 0 ? (
+            <Dropdown onClick={e => e.stopPropagation()}>
+              <Dropdown.Toggle as={CustomToggle} id='dropdown-basic'>
+                <TableActionsStyling>
                   <FontAwesomeIcon icon={['fas', 'ellipsis-h']} size='xs' />
-                </Button>
-                <div>
-                  {actions.map(action => (
-                    <ActionButton key={action.text} {...action} />
-                  ))}
-                </div>
-              </TableActions>
-            ) : null}
-          </>
-        ),
+                </TableActionsStyling>
+              </Dropdown.Toggle>
+              <Dropdown.Menu className='p-0'>
+                {actions.map((action, index) => (
+                  <Dropdown.Item
+                    className={getBorderRadiusForDropdownItem(index, actions.length)}
+                    key={action.text}
+                    {...action}
+                  >
+                    {action.text}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+          ) : null,
         disableSortBy: true,
       },
     ],
@@ -274,5 +282,12 @@ export const useUserTableData: UseUserTableData = (users = []) => {
     [users, userHasPermission, showDeleteModal, showForgotPasswordModal, showResendActivationModal],
   );
 
-  return { columns, data };
+  const initialColumnBreakpointVisibility: ColumnBreakpoints = {
+    lastName: { xs: true, sm: true, md: true, lg: true, xl: true, xxl: true },
+    role: { xs: false, sm: true, md: true, lg: true, xl: true, xxl: true },
+    activatedAt: { xs: false, sm: false, md: true, lg: true, xl: true, xxl: true },
+    actions: { xs: true, sm: true, md: true, lg: true, xl: true, xxl: true },
+  };
+
+  return { columns, data, initialColumnBreakpointVisibility };
 };

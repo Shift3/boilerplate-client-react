@@ -1,8 +1,30 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SortOrder } from 'common/models/sorting';
-import React, { ReactElement, useEffect } from 'react';
+import { TableActionsStyling } from 'common/styles/button';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import { Button, Dropdown, Modal, Table } from 'react-bootstrap';
 import { Column, useFlexLayout, usePagination, useSortBy, useTable } from 'react-table';
+import { CustomToggle } from '../CustomToggle';
 import { Paginator } from './Paginator';
 import { SortIndicator } from './SortIndicator';
+import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+import { useViewport } from './Responsiveness/hooks/useViewport';
+import { isKeyOfObject } from 'common/error/utilities';
+import { useModal } from 'react-modal-hook';
+import styled from 'styled-components';
+import { ColumnBreakpoints } from './Responsiveness/models/ColumnBreakpoints';
+
+const OverrideTableStyling = styled.div`
+  padding: 0px !important;
+`;
+
+const TableModalStyling = styled.div`
+  padding: 0px;
+
+  & > div > table {
+    color: ${props => props.theme.textColor};
+  }
+`;
 
 export type DataTableProps<D extends Record<string, unknown>> = {
   columns: Column<D>[];
@@ -21,6 +43,7 @@ export type DataTableProps<D extends Record<string, unknown>> = {
   sorting?: {
     onSortByChange: (sortBy: SortOrder | undefined) => void;
   };
+  initialColumnBreakpointVisibility: ColumnBreakpoints;
 };
 
 export const DataTable = <D extends Record<string, unknown>>({
@@ -29,7 +52,23 @@ export const DataTable = <D extends Record<string, unknown>>({
   onRowClick,
   pagination,
   sorting,
+  initialColumnBreakpointVisibility,
 }: DataTableProps<D>): ReactElement => {
+  const { breakpoint } = useViewport();
+  const [columnVisibility, setColumnVisibility] = useState(initialColumnBreakpointVisibility);
+
+  const identifyHiddenColumns = useCallback(() => {
+    const hiddenColumns: string[] = [];
+
+    Object.entries(columnVisibility).forEach(([key, value]) => {
+      if (isKeyOfObject(breakpoint, value) && !value[breakpoint]) {
+        hiddenColumns.push(key);
+      }
+    });
+
+    return hiddenColumns;
+  }, [breakpoint, columnVisibility]);
+
   // Evaluate these conditions once instead of re-computing in multiple places.
   const sortByEnabled = sorting !== undefined;
   const paginationEnabled = pagination !== undefined;
@@ -44,6 +83,7 @@ export const DataTable = <D extends Record<string, unknown>>({
 
   // Generate the required initial state for the enabled plugins.
   const initialState = {
+    hiddenColumns: identifyHiddenColumns(),
     ...(sortByEnabled ? {} : {}), // TODO: add initial state for sorting
     ...(paginationEnabled ? { pageIndex: 0, pageSize: pagination.pageSize } : {}),
   };
@@ -148,10 +188,89 @@ export const DataTable = <D extends Record<string, unknown>>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagination?.page]);
 
+  useEffect(() => {
+    tableInstance.setHiddenColumns(identifyHiddenColumns());
+  }, [breakpoint, tableInstance, identifyHiddenColumns]);
+
+  const getHeaderForColumn = (colName: string) => {
+    let result = '';
+
+    columns.forEach(col => {
+      const colAccessor = col.accessor;
+
+      if (typeof colAccessor === 'string') {
+        if (colAccessor === colName) {
+          if (typeof col.Header === 'string') {
+            if (colAccessor === 'actions') {
+              result = 'Actions';
+            } else {
+              result = col.Header;
+            }
+          }
+        }
+      }
+    });
+    return result;
+  };
+
+  const [showModal, hideModal] = useModal(
+    ({ in: open, onExited }) => {
+      return (
+        <Modal show={open} onHide={hideModal} onExited={onExited} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>Edit Columns (for screen size)</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <TableModalStyling>
+              <Table bordered responsive className='mb-0'>
+                <thead>
+                  <tr>
+                    {['Columns', 'Extra Small', 'Small', 'Medium', 'Large', 'Extra Large', 'Extra Extra Large'].map(
+                      col => (
+                        <th className='text-nowrap text-center'>{col}</th>
+                      ),
+                    )}
+                  </tr>
+                </thead>
+                <tbody>
+                  {Object.entries(columnVisibility).map(([col, breakpoints]) => (
+                    <tr key={col}>
+                      <td className='text-center align-middle'>{getHeaderForColumn(col)}</td>
+                      {Object.entries(breakpoints).map(([breakpoint, visibility]) => (
+                        <td key={breakpoint} className='text-center align-middle'>
+                          <Button
+                            onClick={() =>
+                              setColumnVisibility({
+                                ...columnVisibility,
+                                [col]: { ...breakpoints, [breakpoint]: !visibility },
+                              })
+                            }
+                          >
+                            {visibility === true ? 'Show' : 'Hide'}
+                          </Button>
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </TableModalStyling>
+          </Modal.Body>
+          <Modal.Footer className='d-flex justify-content-end mt-0'>
+            <Button variant='link' onClick={hideModal}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      );
+    },
+    [columnVisibility],
+  );
+
   return (
     <div className='d-flex flex-column'>
       <div className='table' {...getTableProps()}>
-        <div className='thead'>
+        <div className='thead d-flex justify-content-between align-items-center'>
           {headerGroups.map(headerGroup => (
             <div className='tr' {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
@@ -163,7 +282,7 @@ export const DataTable = <D extends Record<string, unknown>>({
                       <SortIndicator key={headerGroup.id} isSorted={column.isSorted} isDesc={column.isSortedDesc} />
                     </div>
                   ) : (
-                    <div className='th' {...column.getHeaderProps()} key={headerGroup.id}>
+                    <div className='th d-none' {...column.getHeaderProps()} key={headerGroup.id}>
                       {column.render('Header')}
                     </div>
                   )}
@@ -171,6 +290,20 @@ export const DataTable = <D extends Record<string, unknown>>({
               ))}
             </div>
           ))}
+          <Dropdown onClick={e => e.stopPropagation()}>
+            <Dropdown.Toggle as={CustomToggle} id='dropdown-basic'>
+              <TableActionsStyling>
+                <FontAwesomeIcon icon={faEllipsisV} size='xs' />
+              </TableActionsStyling>
+            </Dropdown.Toggle>
+            <OverrideTableStyling>
+              <Dropdown.Menu className='p-0'>
+                <Dropdown.Item className='rounded' onClick={() => showModal()}>
+                  Edit Columns
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </OverrideTableStyling>
+          </Dropdown>
         </div>
         <div className='tbody' {...getTableBodyProps()}>
           {tableRows.length === 0 ? <p className='text-muted mt-3 px-4'>No Results...</p> : null}

@@ -36,7 +36,7 @@ export const AgentListView: FC = () => {
     addSearchText,
   } = usePSFQuery<PaginatedResult<Agent>>(useGetAgentsQuery);
   const agents = useMemo(() => data?.results ?? [], [data]);
-  const { columns, data: tableData } = useAgentTableData(agents);
+  const { columns, data: tableData, initialColumnBreakpointVisibility } = useAgentTableData(agents);
 
   const isSearchingOrFiltering = useMemo(() => {
     return psfFilters.length > 0 || psfSearchText.length > 0;
@@ -109,6 +109,7 @@ export const AgentListView: FC = () => {
                 sorting={{
                   onSortByChange: changeSortBy,
                 }}
+                initialColumnBreakpointVisibility={initialColumnBreakpointVisibility}
               />
             ) : (
               <NoContent

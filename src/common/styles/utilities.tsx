@@ -179,3 +179,16 @@ export const BannerContentWrapper: FC<
     </BannerWrapper>
   );
 };
+
+export const getBorderRadiusForDropdownItem = (index: number, totalItems: number): string => {
+  if (totalItems === 1) {
+    return 'rounded';
+  }
+  if (index === 0) {
+    return 'rounded-top';
+  }
+  if (index === totalItems - 1) {
+    return 'rounded-bottom';
+  }
+  return 'rounded-0';
+};
