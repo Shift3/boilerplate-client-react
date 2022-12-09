@@ -29,6 +29,13 @@ export const notificationApi = createApi({
         method: 'POST',
       }),
     }),
+
+    markRead: builder.mutation<void, number>({
+      query: notificationId => ({
+        url: `notifications/${notificationId}/mark_read/`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
@@ -37,4 +44,5 @@ export const {
   useGetReadNotificationsQuery,
   useMarkAllReadMutation,
   useGetEventTokenQuery,
+  useMarkReadMutation,
 } = notificationApi;
