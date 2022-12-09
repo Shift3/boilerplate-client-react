@@ -8,6 +8,10 @@ export const isObject = (value: unknown): value is Record<string, unknown> => {
   return value !== null && typeof value === 'object';
 };
 
+export const isStringOrNumber = (value: unknown): value is string | number => {
+  return typeof value === 'string' || typeof value === 'number';
+};
+
 export const isStringArray = (errorValues: unknown): errorValues is string[] => {
   if (Array.isArray(errorValues)) {
     let arrayOnlyContainsStrings = true;
