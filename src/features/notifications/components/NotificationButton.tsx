@@ -67,7 +67,7 @@ const StyledNotificationButton = styled(NavLink)`
 
 interface Props {
   count: number;
-  handleOnClick: (isInOffcanvasView?: boolean) => void;
+  handleOnClick: () => void;
 }
 
 export const NotificationButton: FC<Props> = ({ count, handleOnClick }) => {
