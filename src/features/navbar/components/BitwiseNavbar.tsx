@@ -194,8 +194,9 @@ const StyledNavbar = styled(Navbar)`
   @media (min-width: 768px) {
     #notification-dropdown {
       position: absolute;
-      right: 19rem;
       top: 4.063rem;
+      right: 0;
+      margin-right: 13vw;
     }
   }
 `;
