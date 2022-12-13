@@ -66,27 +66,25 @@ const StyledNotificationButton = styled(NavLink)`
 `;
 
 interface Props {
-    count: number;
-    onClick: () => void;
-};
+  count: number;
+  handleOnClick: (isInOffcanvasView?: boolean) => void;
+}
 
-
-export const NotificationButton: FC<Props> = ({ count, onClick }) => {
-
-    return (
-        <StyledNotificationButton
-            className='me-3'
-            alt='Notification'
-            id='notification-button'
-            onClick={() => onClick()}
-            >
-            <FontAwesomeIcon size='lg' icon='bell' />
-            <span id='notification-label'>Notifications</span>
-            {count > 0 ? (
-                <div>
-                <span id='notification-counter'>{count > 9 ? '9+' : count.toString()}</span>
-                </div>
-            ) : null}
-        </StyledNotificationButton>
+export const NotificationButton: FC<Props> = ({ count, handleOnClick }) => {
+  return (
+    <StyledNotificationButton
+      className='me-3'
+      alt='Notification'
+      id='notification-button'
+      onClick={() => handleOnClick()}
+    >
+      <FontAwesomeIcon size='lg' icon='bell' />
+      <span id='notification-label'>Notifications</span>
+      {count > 0 ? (
+        <div>
+          <span id='notification-counter'>{count > 9 ? '9+' : count.toString()}</span>
+        </div>
+      ) : null}
+    </StyledNotificationButton>
   );
 };

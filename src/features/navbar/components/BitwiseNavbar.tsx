@@ -11,8 +11,19 @@ import { useRbac } from 'features/rbac';
 import { MoonIcon } from 'features/themes/MoonIcon';
 import { SunIcon } from 'features/themes/SunIcon';
 import { useTheme } from 'features/themes/useTheme';
-import { FC, useContext, useState } from 'react';
-import { Badge, Button, Container, Modal, Nav, Navbar, NavDropdown, NavLink, Offcanvas } from 'react-bootstrap';
+import { FC, useContext, useRef, useState } from 'react';
+import {
+  Badge,
+  Button,
+  Container,
+  Modal,
+  Nav,
+  Navbar,
+  NavDropdown,
+  NavLink,
+  Offcanvas,
+  OffcanvasProps,
+} from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useModal } from 'react-modal-hook';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -143,10 +154,49 @@ const StyledNavbar = styled(Navbar)`
   .navbar-brand img {
     width: 40px;
   }
-  #notification-dropdown {
-    position: absolute;
-    right: auto;
-    top: 4.063rem;
+
+  @media (max-width: 767px) {
+    #notification-dropdown {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: 0.5rem;
+      margin-bttom: 0px !important;
+      box-shadow: -4px -4px 5px 20px ${props => props.theme.notifications.boxShadowColor};
+      width: auto;
+      height: calc(100vh - 1rem);
+
+      div#header {
+        height: 5%;
+      }
+
+      div#body {
+        height: 95%;
+
+        div#tabs-and-mark-all {
+          height: 3%;
+        }
+
+        div#notification-lists {
+          height: 97%;
+        }
+      }
+
+      #body > #tabs-and-mark-all > #notification-type-tabs {
+        display: flex;
+        flex-direction: row;
+      }
+    }
+  }
+
+  @media (min-width: 768px) {
+    #notification-dropdown {
+      position: absolute;
+      right: 19rem;
+      top: 4.063rem;
+    }
   }
 `;
 
@@ -222,40 +272,6 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
       right: 2rem;
       top: 3px;
     }
-
-    #notification-dropdown {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      margin: 0.5rem;
-      box-shadow: -4px -4px 5px 20px ${props => props.theme.notifications.boxShadowColor};
-      max-width: 767px;
-      width: calc(100% - 1rem);
-      height: calc(100% - 1rem);
-
-      div#header {
-        height: 5%;
-      }
-
-      div#body {
-        height: 95%;
-
-        div#tabs-and-mark-all {
-          height: 3%;
-        }
-
-        div#notification-lists {
-          height: 97%;
-        }
-      }
-
-      #body > #tabs-and-mark-all > #notification-type-tabs {
-        display: flex;
-        flex-direction: row;
-      }
-    }
   }
 `;
 
@@ -268,6 +284,8 @@ export const BitwiseNavbar: FC = () => {
   const { toggleTheme, theme } = useTheme();
   const { logout, isLoading } = useLogout();
   const { i18n } = useTranslation();
+  const navigationToggle = useRef<HTMLButtonElement>(null!);
+  const navbarOffcanvas = useRef<OffcanvasProps>(null!);
   const [showNotificationDropdown, setShowNotificationDropdown] = useState(false);
   const [showModal, hideModal] = useModal(
     ({ in: open, onExited }) => {
@@ -303,24 +321,29 @@ export const BitwiseNavbar: FC = () => {
   const defaultLanguageOption = __languageOptions.find(language => language.value === i18n.languages[0]);
 
   const toggleNotificationDropdown = () => {
-    console.log('toggle clicked');
+    if (navbarOffcanvas.current.isTopModal()) {
+      navigationToggle.current.click();
+    }
+
     setShowNotificationDropdown(!showNotificationDropdown);
   };
 
   return (
     <StyledNavbar expand='md'>
+      {showNotificationDropdown && <NotificationDropdown onClose={toggleNotificationDropdown} />}
       <Container>
         <Navbar.Brand onClick={() => navigate('/agents')}>
           <Logo />
         </Navbar.Brand>
         <div id='notification-btn-and-toggle-container'>
-          <NotificationButton count={count} onClick={() => toggleNotificationDropdown()} />
-          <Navbar.Toggle aria-controls='offcanvasNavbar-expand-md' />
+          <NotificationButton count={count} handleOnClick={toggleNotificationDropdown} />
+          <Navbar.Toggle ref={navigationToggle} aria-controls='offcanvasNavbar-expand-md' />
         </div>
         <StyledNavbarOffcanvas
           id='offcanvasNavbar-expand-md'
           aria-labelledby='offcanvasNavbarLabel-expand-md'
           placement='end'
+          ref={navbarOffcanvas}
         >
           <Offcanvas.Header closeButton>
             <Offcanvas.Title id='offcanvasNavbarLabel-expand-md'>Starter Project</Offcanvas.Title>
@@ -373,9 +396,7 @@ export const BitwiseNavbar: FC = () => {
                 ))}
               </NavDropdown>
 
-              <NotificationButton count={count} onClick={() => toggleNotificationDropdown()} />
-
-              {showNotificationDropdown && <NotificationDropdown onClose={toggleNotificationDropdown} />}
+              <NotificationButton count={count} handleOnClick={toggleNotificationDropdown} />
 
               {user ? (
                 <NavDropdown
