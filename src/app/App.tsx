@@ -7,7 +7,8 @@ import { AgentRoutes } from 'features/agent-dashboard';
 import { AuthRoutes, RequireAuth } from 'features/auth';
 import { AppErrorBoundary } from 'features/error-boundary/components/AppErrorBoundary';
 import { NetworkDetector } from 'features/network-detector/components/NetworkDetector';
-import { NotificationsProvider } from 'features/notifications/context';
+import { UnreadNotificationsProvider } from 'features/notifications/unreadContext';
+import { ReadNotificationsProvider } from 'features/notifications/readContext';
 import { NotificationRoutes } from 'features/notifications/Routes';
 import { UserRoutes } from 'features/user-dashboard';
 import { UserProfilePage } from 'features/user-profile/pages/UserProfilePage';
@@ -52,65 +53,67 @@ export const App: FC = () => {
         <ThemeContext.Provider value={themeProviderValue}>
           <ThemeProvider theme={theme === 'light' ? light : dark}>
             <ModalProvider rootComponent={TransitionGroup}>
-              <NotificationsProvider>
-                <GlobalStyle />
+              <UnreadNotificationsProvider>
+                <ReadNotificationsProvider>
+                  <GlobalStyle />
 
-                <ToastContainer
-                  autoClose={5000}
-                  closeButton
-                  closeOnClick
-                  newestOnTop
-                  hideProgressBar={false}
-                  position={toast.POSITION.TOP_RIGHT}
-                  role='alert'
-                  theme='light'
-                  limit={3}
-                  transition={Slide}
-                />
+                  <ToastContainer
+                    autoClose={5000}
+                    closeButton
+                    closeOnClick
+                    newestOnTop
+                    hideProgressBar={false}
+                    position={toast.POSITION.TOP_RIGHT}
+                    role='alert'
+                    theme='light'
+                    limit={3}
+                    transition={Slide}
+                  />
 
-                <BannerContentWrapper bannerShowing={environment.environment === 'staging'}>
-                  <Routes>
-                    <Route path='/auth/*' element={<AuthRoutes />} />
-                    <Route
-                      path='/user/profile/:id'
-                      element={
-                        <RequireAuth>
-                          <Layout>
-                            <UserProfilePage />
-                          </Layout>
-                        </RequireAuth>
-                      }
-                    />
-                    <Route
-                      path='/agents/*'
-                      element={
-                        <RequireAuth>
-                          <AgentRoutes />
-                        </RequireAuth>
-                      }
-                    />
-                    <Route
-                      path='/users/*'
-                      element={
-                        <RequireAuth allowedRoles={[Role.ADMIN]}>
-                          <UserRoutes />
-                        </RequireAuth>
-                      }
-                    />
-                    <Route
-                      path='/notifications/*'
-                      element={
-                        <RequireAuth>
-                          <NotificationRoutes />
-                        </RequireAuth>
-                      }
-                    />
+                  <BannerContentWrapper bannerShowing={environment.environment === 'staging'}>
+                    <Routes>
+                      <Route path='/auth/*' element={<AuthRoutes />} />
+                      <Route
+                        path='/user/profile/:id'
+                        element={
+                          <RequireAuth>
+                            <Layout>
+                              <UserProfilePage />
+                            </Layout>
+                          </RequireAuth>
+                        }
+                      />
+                      <Route
+                        path='/agents/*'
+                        element={
+                          <RequireAuth>
+                            <AgentRoutes />
+                          </RequireAuth>
+                        }
+                      />
+                      <Route
+                        path='/users/*'
+                        element={
+                          <RequireAuth allowedRoles={[Role.ADMIN]}>
+                            <UserRoutes />
+                          </RequireAuth>
+                        }
+                      />
+                      <Route
+                        path='/notifications/*'
+                        element={
+                          <RequireAuth>
+                            <NotificationRoutes />
+                          </RequireAuth>
+                        }
+                      />
 
-                    <Route path='/' element={<Navigate to='/agents' />} />
-                    <Route path='*' element={<NotFoundView />} />
-                  </Routes>
-                </BannerContentWrapper>
-              </NotificationsProvider>
+                      <Route path='/' element={<Navigate to='/agents' />} />
+                      <Route path='*' element={<NotFoundView />} />
+                    </Routes>
+                  </BannerContentWrapper>
+                </ReadNotificationsProvider>
+              </UnreadNotificationsProvider>
             </ModalProvider>
           </ThemeProvider>
         </ThemeContext.Provider>

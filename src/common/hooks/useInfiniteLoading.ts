@@ -29,6 +29,10 @@ export const useInfiniteLoading = <T, ResultType extends PaginatedResult<T>>(
     }
   };
 
+  const clear = () => {
+    setLoadedData([]);
+  };
+
   return {
     loadedData,
     error,
@@ -37,5 +41,6 @@ export const useInfiniteLoading = <T, ResultType extends PaginatedResult<T>>(
     totalCount: data?.meta.count,
     hasMore,
     fetchMore,
+    clear,
   };
 };

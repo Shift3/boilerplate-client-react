@@ -1,10 +1,10 @@
 import { useMarkReadMutation } from 'common/api/notificationApi';
 import { AppNotification } from 'common/models/notifications';
 import { useContext } from 'react';
-import { NotificationContext } from '../context';
+import { UnreadNotificationsContext } from '../unreadContext';
 
 export const useMarkRead = () => {
-  const { remove } = useContext(NotificationContext);
+  const { remove } = useContext(UnreadNotificationsContext);
   const [markReadRequest, { isLoading }] = useMarkReadMutation();
 
   const markRead = async (notification: AppNotification) => {
