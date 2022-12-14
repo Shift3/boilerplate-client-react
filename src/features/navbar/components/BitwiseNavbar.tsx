@@ -48,8 +48,6 @@ const StyledNavbar = styled(Navbar)`
     flex-direction: row;
 
     #notification-button {
-      margin-right: 0px;
-
       #notification-label {
         display: none;
       }
