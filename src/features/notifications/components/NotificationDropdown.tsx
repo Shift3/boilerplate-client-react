@@ -145,6 +145,7 @@ export const NotificationDropdown: FC<Props> = ({ onClose }) => {
   const {
     notifications: unreadNotifications,
     isLoading: isLoadingUnreadNotifications,
+    count: unreadNotificationsCount,
     hasMore: hasMoreUnreadNotifications,
     clear: clearUnreadNotifications,
   } = useContext(UnreadNotificationsContext);
@@ -188,7 +189,12 @@ export const NotificationDropdown: FC<Props> = ({ onClose }) => {
               </Nav.Item>
             </Nav>
             <div id='mark-all-container'>
-              <LoadingButton id='mark-all-btn' onClick={() => handleMarkAllRead()} loading={isLoadingMarkAllRead}>
+              <LoadingButton
+                id='mark-all-btn'
+                onClick={() => handleMarkAllRead()}
+                loading={isLoadingMarkAllRead}
+                disabled={unreadNotificationsCount === 0}
+              >
                 mark all as read
               </LoadingButton>
             </div>
