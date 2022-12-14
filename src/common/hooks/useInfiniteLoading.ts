@@ -54,6 +54,5 @@ export const useInfiniteLoading = <T, ResultType extends PaginatedResult<T>>(
     totalCount: data?.meta.count,
     hasMore,
     fetchMore,
-    clear,
   };
 };

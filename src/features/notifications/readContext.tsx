@@ -12,7 +12,6 @@ export const ReadNotificationsContext = createContext<{
   error: unknown;
   totalCount: number | undefined;
   fetchMore: () => void;
-  clear: () => void;
 }>({
   loadedData: [],
   hasMore: false,
@@ -22,8 +21,6 @@ export const ReadNotificationsContext = createContext<{
   totalCount: 0,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   fetchMore: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  clear: () => {},
 });
 
 export const ReadNotificationsProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {

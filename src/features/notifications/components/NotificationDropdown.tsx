@@ -152,7 +152,6 @@ export const NotificationDropdown: FC<Props> = ({ onClose }) => {
     loadedData: readNotifications,
     isLoading: isLoadingReadNotifications,
     hasMore: hasMoreReadNotifications,
-    clear: clearReadNotifications,
   } = useContext(ReadNotificationsContext);
   const [markAllRead, { isLoading: isLoadingMarkAllRead }] = useMarkAllReadMutation();
 
@@ -164,7 +163,6 @@ export const NotificationDropdown: FC<Props> = ({ onClose }) => {
   const handleClose = () => {
     dispatch(notificationApi.util.resetApiState());
     clearUnreadNotifications();
-    clearReadNotifications();
     onClose();
   };
 
