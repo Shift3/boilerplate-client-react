@@ -31,6 +31,7 @@ export const useInfiniteLoading = <T, ResultType extends PaginatedResult<T>>(
 
   const clear = () => {
     setLoadedData([]);
+    setUrl('');
   };
 
   return {
