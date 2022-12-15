@@ -26,7 +26,6 @@ export const ReadNotificationsContext = createContext<{
 export const ReadNotificationsProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
   const notificationProviderValue = useInfiniteLoading<AppNotification, PaginatedResult<AppNotification>>(
     '',
-    true,
     useGetReadNotificationsQuery,
   );
 
