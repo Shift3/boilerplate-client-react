@@ -33,7 +33,7 @@ import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUser
 import { Trans } from 'react-i18next';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { Constants } from 'utils/constants';
-import { faCamera, faContactCard, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faContactCard, faGear, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'react-modal-hook';
 import { LoadingSpinner } from 'common/components/LoadingSpinner';
 
@@ -256,6 +256,10 @@ export const UserProfilePage: FC = () => {
       <Row>
         <Col md={3}>
           <ProfileNav defaultActiveKey='/home'>
+            <ProfileNav.Link onClick={() => setTab('settings')} className={tab === 'settings' ? 'active' : ''}>
+              <FontAwesomeIcon className='me-2' icon={faGear} />
+              <Trans i18nKey='userProfile.settings'>Settings</Trans>
+            </ProfileNav.Link>
             <ProfileNav.Link onClick={() => setTab('profile')} className={tab === 'profile' ? 'active' : ''}>
               <FontAwesomeIcon className='me-2' icon={faContactCard} />
               <Trans i18nKey='userProfile.profile'>Profile</Trans>
@@ -268,6 +272,24 @@ export const UserProfilePage: FC = () => {
         </Col>
 
         <Col>
+          {tab === 'settings' ? (
+            <>
+              <Row>
+                <Col md={8}>
+                  <Card className='mb-4'>
+                    <Card.Body>
+                      <h5>
+                        <Trans i18nKey='userProfile.generalHeading'>Themes</Trans>
+                      </h5>
+                      <p className='text-muted'>Customize your application</p>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              </Row>
+            </>
+          ) : (
+            ''
+          )}
           {tab === 'profile' ? (
             <>
               <Row>
