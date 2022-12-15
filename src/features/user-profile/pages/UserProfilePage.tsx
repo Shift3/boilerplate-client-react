@@ -34,6 +34,7 @@ import {
   OverlayTrigger,
   Row,
   Tooltip,
+  Form,
 } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import { useParams } from 'react-router-dom';
@@ -48,9 +49,6 @@ import { Constants } from 'utils/constants';
 import { faCamera, faContactCard, faGear, faLanguage, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'react-modal-hook';
 import { LoadingSpinner } from 'common/components/LoadingSpinner';
-import { MoonIcon } from 'features/themes/MoonIcon';
-import { SunIcon } from 'features/themes/SunIcon';
-import { useTheme } from 'features/themes/useTheme';
 import { languages } from 'i18n/config';
 
 type RouteParams = {
@@ -128,8 +126,6 @@ export const ProfileNav = styled(Nav).attrs({ className: 'flex-column' })`
   }
 `;
 
-const StyledToggleMode = styled.div``;
-
 export const UserProfilePage: FC = () => {
   const { id = '' } = useParams<RouteParams>();
   const { user } = useAuth();
@@ -146,7 +142,6 @@ export const UserProfilePage: FC = () => {
   const [tab, setTab] = useState('profile');
   const [passwordFormValidationErrors, setPasswordFormValidationErrors] =
     useState<ServerValidationErrors<ForgotPasswordFormData> | null>(null);
-  const { toggleTheme, theme } = useTheme();
   const { i18n } = useTranslation();
 
   const onSubmit = async (formData: ProfileFormData) => {
@@ -313,11 +308,12 @@ export const UserProfilePage: FC = () => {
                         <h5>
                           <Trans i18nKey='userProfile.generalHeading'>Account Settings</Trans>
                         </h5>
+
                         <div className=''>
                           <p className='text-muted'>Select your preferred mode</p>
-                          <StyledToggleMode onClick={() => toggleTheme()}>
-                            <>{theme === 'light' ? <MoonIcon /> : <SunIcon />}</>
-                          </StyledToggleMode>
+                          <Form>
+                            <Form.Check type='switch' id='custom-switch' label='Dark Mode' />
+                          </Form>
                         </div>
                         <div className='language'>
                           <p className='text-muted'>Select your preffered language</p>
