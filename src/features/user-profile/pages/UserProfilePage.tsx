@@ -275,13 +275,21 @@ export const UserProfilePage: FC = () => {
           {tab === 'settings' ? (
             <>
               <Row>
-                <Col md={8}>
+                <Col md={6}>
                   <Card className='mb-4'>
                     <Card.Body>
-                      <h5>
-                        <Trans i18nKey='userProfile.generalHeading'>Themes</Trans>
-                      </h5>
-                      <p className='text-muted'>Customize your application</p>
+                      <div>
+                        <h5>
+                          <Trans i18nKey='userProfile.generalHeading'>Account Settings</Trans>
+                        </h5>
+                        <div className='mode'>
+                          <p className='text-muted'>Select your preferred mode</p>
+                          <div className='flex-end' />
+                        </div>
+                        <div className='language'>
+                          <p className='text-muted'>Select your preffered language</p>
+                        </div>
+                      </div>
                     </Card.Body>
                   </Card>
                 </Col>

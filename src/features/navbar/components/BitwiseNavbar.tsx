@@ -28,7 +28,7 @@ import { useTranslation } from 'react-i18next';
 import { useModal } from 'react-modal-hook';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { languages } from '../../../i18n/config';
+import { languages } from 'i18n/config';
 import { Logo } from './Logo';
 import { UserProfilePicture } from './UserProfilePicture';
 
