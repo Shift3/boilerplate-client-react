@@ -4,6 +4,7 @@ import { UseQuery, UseQueryOptions } from 'rtk-query-config';
 
 export const useInfiniteLoading = <T, ResultType extends PaginatedResult<T>>(
   initialUrl: string,
+  resetUrlOnClear: boolean,
   useQuery: UseQuery<ResultType>,
   options?: UseQueryOptions,
 ) => {
@@ -13,26 +14,28 @@ export const useInfiniteLoading = <T, ResultType extends PaginatedResult<T>>(
 
   const { data, error, isLoading, isFetching } = useQuery(url, options);
 
-  const clear = () => {
-    rerenderingType.current = 'clear';
-    setLoadedData([]);
-    setUrl('');
-  };
-
   useEffect(() => {
-    if (rerenderingType.current === 'fetchMore') {
+    const clear = () => {
       rerenderingType.current = 'clear';
-    }
+      setLoadedData([]);
+      if (resetUrlOnClear) {
+        setUrl('');
+      }
+    };
 
     if (data && !isLoading) {
       setLoadedData(n => [...n, ...data.results]);
     }
+
     return () => {
       if (rerenderingType.current === 'clear') {
         clear();
       }
+      if (rerenderingType.current === 'fetchMore') {
+        rerenderingType.current = 'clear';
+      }
     };
-  }, [data, isLoading]);
+  }, [data, isLoading, resetUrlOnClear]);
 
   const hasMore = useMemo(() => {
     if (isLoading || isFetching) return false;

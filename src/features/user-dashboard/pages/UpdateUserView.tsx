@@ -44,9 +44,14 @@ export const UpdateUserView: FC = () => {
     totalCount,
     hasMore,
     fetchMore,
-  } = useInfiniteLoading<HistoricalRecord<User>, PaginatedResult<HistoricalRecord<User>>>(url, useGetUserHistoryQuery, {
-    skip: loggedInUser?.role !== 'ADMIN',
-  });
+  } = useInfiniteLoading<HistoricalRecord<User>, PaginatedResult<HistoricalRecord<User>>>(
+    url,
+    false,
+    useGetUserHistoryQuery,
+    {
+      skip: loggedInUser?.role !== 'ADMIN',
+    },
+  );
 
   const roles = Object.values(Role);
 

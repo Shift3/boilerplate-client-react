@@ -43,6 +43,7 @@ export const UpdateAgentView: FC = () => {
     fetchMore,
   } = useInfiniteLoading<HistoricalRecord<User>, PaginatedResult<HistoricalRecord<User>>>(
     url,
+    false,
     useGetAgentHistoryQuery,
     { skip: user?.role !== 'ADMIN' },
   );
