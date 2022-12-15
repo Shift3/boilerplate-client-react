@@ -1,5 +1,5 @@
 import { PaginatedResult } from 'common/models';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { UseQuery, UseQueryOptions } from 'rtk-query-config';
 
 export const useInfiniteLoading = <T, ResultType extends PaginatedResult<T>>(
@@ -9,14 +9,30 @@ export const useInfiniteLoading = <T, ResultType extends PaginatedResult<T>>(
 ) => {
   const [url, setUrl] = useState<string | null>(initialUrl);
   const [loadedData, setLoadedData] = useState<T[]>([]);
+  const rerenderingType = useRef<string>('clear');
 
   const { data, error, isLoading, isFetching } = useQuery(url, options);
 
   useEffect(() => {
+    const clear = () => {
+      rerenderingType.current = 'clear';
+      setLoadedData([]);
+      setUrl(initialUrl);
+    };
+
     if (data && !isLoading) {
       setLoadedData(n => [...n, ...data.results]);
     }
-  }, [data, isLoading]);
+
+    return () => {
+      if (rerenderingType.current === 'clear') {
+        clear();
+      }
+      if (rerenderingType.current === 'fetchMore') {
+        rerenderingType.current = 'clear';
+      }
+    };
+  }, [data, isLoading, initialUrl]);
 
   const hasMore = useMemo(() => {
     if (isLoading || isFetching) return false;
@@ -25,6 +41,7 @@ export const useInfiniteLoading = <T, ResultType extends PaginatedResult<T>>(
 
   const fetchMore = () => {
     if (hasMore && data) {
+      rerenderingType.current = 'fetchMore';
       setUrl(data.links.next);
     }
   };
@@ -32,6 +49,7 @@ export const useInfiniteLoading = <T, ResultType extends PaginatedResult<T>>(
   return {
     loadedData,
     error,
+    isLoading,
     isFetching,
     totalCount: data?.meta.count,
     hasMore,

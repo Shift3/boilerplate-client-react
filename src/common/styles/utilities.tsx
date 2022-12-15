@@ -109,6 +109,9 @@ const NoContentStyles = styled.div`
     color: ${props => props.theme.textColor};
     margin-bottom: 0.5rem;
   }
+  p.lead {
+    color: ${props => props.theme.textColor};
+  }
 `;
 
 export const NoContent: FC<{
@@ -117,7 +120,7 @@ export const NoContent: FC<{
   extra?: ReactNode;
 }> = ({ title, icon, extra }) => {
   return (
-    <NoContentStyles>
+    <NoContentStyles className='noContentStyles'>
       {icon && <FontAwesomeIcon icon={icon} className='text-muted' size='2x' />}
       <p className='lead mb-0'>{title}</p>
       {extra}

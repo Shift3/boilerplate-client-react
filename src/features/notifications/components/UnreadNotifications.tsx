@@ -14,6 +14,7 @@ export const UnreadNotifications: FC = () => {
     isFetching,
     isLoading: isNotificationsLoading,
     getMore,
+    count,
     clear,
   } = useContext(NotificationContext);
 
@@ -36,6 +37,7 @@ export const UnreadNotifications: FC = () => {
           <LoadingButton
             onClick={() => handleMarkAllRead()}
             loading={isLoading || isNotificationsLoading || isFetching}
+            disabled={count === 0}
           >
             Mark all Read
           </LoadingButton>
