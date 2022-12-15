@@ -22,7 +22,19 @@ import {
   useUpdateUserProfile,
 } from 'features/user-profile/hooks';
 import { FC, useRef, useState } from 'react';
-import { Alert, Card, Col, Container, Modal, Nav, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
+import {
+  Alert,
+  Card,
+  Col,
+  Container,
+  Dropdown,
+  DropdownButton,
+  Modal,
+  Nav,
+  OverlayTrigger,
+  Row,
+  Tooltip,
+} from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -30,15 +42,16 @@ import { UpdateUserEmailForm, UserEmailFormData } from '../components/UpdateUser
 import { UserProfileImg } from 'features/navbar/components/UserProfilePicture';
 import { isObject } from 'common/error/utilities';
 import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { Constants } from 'utils/constants';
-import { faCamera, faContactCard, faGear, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faContactCard, faGear, faLanguage, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'react-modal-hook';
 import { LoadingSpinner } from 'common/components/LoadingSpinner';
 import { MoonIcon } from 'features/themes/MoonIcon';
 import { SunIcon } from 'features/themes/SunIcon';
 import { useTheme } from 'features/themes/useTheme';
+import { languages } from 'i18n/config';
 
 type RouteParams = {
   id: string;
@@ -134,6 +147,7 @@ export const UserProfilePage: FC = () => {
   const [passwordFormValidationErrors, setPasswordFormValidationErrors] =
     useState<ServerValidationErrors<ForgotPasswordFormData> | null>(null);
   const { toggleTheme, theme } = useTheme();
+  const { i18n } = useTranslation();
 
   const onSubmit = async (formData: ProfileFormData) => {
     const data = { id, ...formData };
@@ -244,6 +258,17 @@ export const UserProfilePage: FC = () => {
     [emailFormValidationErrors, setEmailFormValidationErrors],
   );
 
+  const changeLanguage = (ln: string) => {
+    localStorage.setItem('language', ln);
+    i18n.changeLanguage(ln);
+  };
+
+  const __languageOptions = languages.map(language => {
+    return { label: language.label, value: language.shortcode };
+  });
+
+  const defaultLanguageOption = __languageOptions.find(language => language.value === i18n.languages[0]);
+
   return (
     <Container>
       <PageHeader className='mb-4'>
@@ -296,6 +321,21 @@ export const UserProfilePage: FC = () => {
                         </div>
                         <div className='language'>
                           <p className='text-muted'>Select your preffered language</p>
+                          <DropdownButton
+                            title={
+                              <>
+                                <FontAwesomeIcon className='me-2' size='lg' icon={faLanguage} />
+                                {defaultLanguageOption?.label}
+                              </>
+                            }
+                            className='me-3'
+                          >
+                            {__languageOptions.map(option => (
+                              <Dropdown.Item key={option.value} onClick={() => changeLanguage(option.value)}>
+                                {option.label}
+                              </Dropdown.Item>
+                            ))}
+                          </DropdownButton>
                         </div>
                       </div>
                     </Card.Body>
