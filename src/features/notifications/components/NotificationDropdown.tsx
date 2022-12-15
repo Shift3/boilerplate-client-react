@@ -1,16 +1,17 @@
 import { FC, useContext } from 'react';
 import { Button, CloseButton, Nav, Row, Tab } from 'react-bootstrap';
 import styled from 'styled-components';
-import { notificationApi, useMarkAllReadMutation } from 'common/api/notificationApi';
+import { notificationApi, useGetReadNotificationsQuery, useMarkAllReadMutation } from 'common/api/notificationApi';
 import { renderNotification } from './renderNotification';
-import { UnreadNotificationsContext } from '../unreadContext';
+import { NotificationContext } from '../context';
 import { useNavigate } from 'react-router-dom';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { NoContent } from 'common/styles/utilities';
 import { useDispatch } from 'react-redux';
-import { ReadNotificationsContext } from '../readContext';
 import { AppNotification } from 'common/models/notifications';
+import { useInfiniteLoading } from 'common/hooks/useInfiniteLoading';
+import { PaginatedResult } from 'common/models';
 
 const StyledContainer = styled.div`
   width: 400px;
@@ -148,12 +149,12 @@ export const NotificationDropdown: FC<Props> = ({ onClose }) => {
     count: unreadNotificationsCount,
     hasMore: hasMoreUnreadNotifications,
     clear: clearUnreadNotifications,
-  } = useContext(UnreadNotificationsContext);
+  } = useContext(NotificationContext);
   const {
     loadedData: readNotifications,
     isLoading: isLoadingReadNotifications,
     hasMore: hasMoreReadNotifications,
-  } = useContext(ReadNotificationsContext);
+  } = useInfiniteLoading<AppNotification, PaginatedResult<AppNotification>>('', useGetReadNotificationsQuery);
   const [markAllRead, { isLoading: isLoadingMarkAllRead }] = useMarkAllReadMutation();
 
   const handleMarkAllRead = async () => {
@@ -165,10 +166,6 @@ export const NotificationDropdown: FC<Props> = ({ onClose }) => {
     dispatch(notificationApi.util.resetApiState());
     clearUnreadNotifications();
     onClose();
-  };
-
-  const getLimitedResults = (notifications: AppNotification[]) => {
-    return notifications.slice(0, notifications.length >= 10 ? 10 : notifications.length);
   };
 
   return (
@@ -205,7 +202,7 @@ export const NotificationDropdown: FC<Props> = ({ onClose }) => {
                 {!isLoadingUnreadNotifications && unreadNotifications.length === 0 ? (
                   <NoContent title='No Notifications' icon={faBell} />
                 ) : null}
-                {getLimitedResults(unreadNotifications).map(notification => (
+                {unreadNotifications.map(notification => (
                   <div key={notification.id} className='notification-item'>
                     {renderNotification(notification)}
                   </div>
@@ -220,7 +217,7 @@ export const NotificationDropdown: FC<Props> = ({ onClose }) => {
                 {!isLoadingReadNotifications && readNotifications.length === 0 ? (
                   <NoContent title='No Notifications' icon={faBell} />
                 ) : null}
-                {getLimitedResults(readNotifications).map(notification => (
+                {readNotifications.map(notification => (
                   <div key={notification.id} className='notification-item'>
                     {renderNotification(notification)}
                   </div>

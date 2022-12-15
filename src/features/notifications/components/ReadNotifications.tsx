@@ -1,11 +1,18 @@
+import { useGetReadNotificationsQuery } from 'common/api/notificationApi';
+import { useInfiniteLoading } from 'common/hooks/useInfiniteLoading';
+import { PaginatedResult } from 'common/models';
 import { AppNotification } from 'common/models/notifications';
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 import { Button, Card } from 'react-bootstrap';
-import { ReadNotificationsContext } from '../readContext';
 import { renderNotification } from './renderNotification';
 
 export const ReadNotifications: FC = () => {
-  const { loadedData: notifications, isFetching, hasMore, fetchMore } = useContext(ReadNotificationsContext);
+  const {
+    loadedData: notifications,
+    isFetching,
+    hasMore,
+    fetchMore,
+  } = useInfiniteLoading<AppNotification, PaginatedResult<AppNotification>>('', useGetReadNotificationsQuery);
 
   return (
     <>

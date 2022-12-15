@@ -2,7 +2,7 @@ import { AppNotification } from 'common/models/notifications';
 import { createContext, FC, PropsWithChildren } from 'react';
 import { useLiveNotifications } from './hooks/useLiveNotifications';
 
-export const UnreadNotificationsContext = createContext<{
+export const NotificationContext = createContext<{
   notifications: AppNotification[];
   count: number;
   hasMore: boolean;
@@ -25,12 +25,8 @@ export const UnreadNotificationsContext = createContext<{
   remove: () => {},
 });
 
-export const UnreadNotificationsProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
+export const NotificationsProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
   const notificationProviderValue = useLiveNotifications();
 
-  return (
-    <UnreadNotificationsContext.Provider value={notificationProviderValue}>
-      {children}
-    </UnreadNotificationsContext.Provider>
-  );
+  return <NotificationContext.Provider value={notificationProviderValue}>{children}</NotificationContext.Provider>;
 };

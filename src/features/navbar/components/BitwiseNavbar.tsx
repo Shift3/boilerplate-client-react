@@ -6,7 +6,7 @@ import { EnvironmentConfiguration } from 'environment/types';
 import { useAuth, useLogout } from 'features/auth/hooks';
 import { NotificationButton } from 'features/notifications/components/NotificationButton';
 import { NotificationDropdown } from 'features/notifications/components/NotificationDropdown';
-import { UnreadNotificationsContext } from 'features/notifications/unreadContext';
+import { NotificationContext } from 'features/notifications/context';
 import { useRbac } from 'features/rbac';
 import { MoonIcon } from 'features/themes/MoonIcon';
 import { SunIcon } from 'features/themes/SunIcon';
@@ -275,7 +275,7 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
 `;
 
 export const BitwiseNavbar: FC = () => {
-  const { count } = useContext(UnreadNotificationsContext);
+  const { count } = useContext(NotificationContext);
   const { user } = useAuth();
   const { userHasPermission } = useRbac();
   const location = useLocation();

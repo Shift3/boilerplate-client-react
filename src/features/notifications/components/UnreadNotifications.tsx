@@ -4,7 +4,7 @@ import { LoadingButton } from 'common/components/LoadingButton';
 import { NoContent } from 'common/styles/utilities';
 import { FC, useContext } from 'react';
 import { Button, Card } from 'react-bootstrap';
-import { UnreadNotificationsContext } from '../unreadContext';
+import { NotificationContext } from '../context';
 import { renderNotification } from './renderNotification';
 
 export const UnreadNotifications: FC = () => {
@@ -16,7 +16,7 @@ export const UnreadNotifications: FC = () => {
     getMore,
     count,
     clear,
-  } = useContext(UnreadNotificationsContext);
+  } = useContext(NotificationContext);
 
   const [markAllRead, { isLoading }] = useMarkAllReadMutation();
   const handleMarkAllRead = async () => {

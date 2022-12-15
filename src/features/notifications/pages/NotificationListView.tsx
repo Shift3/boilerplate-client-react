@@ -6,12 +6,12 @@ import { Trans } from 'react-i18next';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ReadNotifications } from '../components/ReadNotifications';
 import { UnreadNotifications } from '../components/UnreadNotifications';
-import { UnreadNotificationsContext } from '../unreadContext';
+import { NotificationContext } from '../context';
 
 export const NotificationListView: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { count } = useContext(UnreadNotificationsContext);
+  const { count } = useContext(NotificationContext);
 
   return (
     <SmallContainer>
