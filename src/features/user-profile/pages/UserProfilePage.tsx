@@ -36,6 +36,9 @@ import { Constants } from 'utils/constants';
 import { faCamera, faContactCard, faGear, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'react-modal-hook';
 import { LoadingSpinner } from 'common/components/LoadingSpinner';
+import { MoonIcon } from 'features/themes/MoonIcon';
+import { SunIcon } from 'features/themes/SunIcon';
+import { useTheme } from 'features/themes/useTheme';
 
 type RouteParams = {
   id: string;
@@ -112,6 +115,8 @@ export const ProfileNav = styled(Nav).attrs({ className: 'flex-column' })`
   }
 `;
 
+const StyledToggleMode = styled.div``;
+
 export const UserProfilePage: FC = () => {
   const { id = '' } = useParams<RouteParams>();
   const { user } = useAuth();
@@ -128,6 +133,7 @@ export const UserProfilePage: FC = () => {
   const [tab, setTab] = useState('profile');
   const [passwordFormValidationErrors, setPasswordFormValidationErrors] =
     useState<ServerValidationErrors<ForgotPasswordFormData> | null>(null);
+  const { toggleTheme, theme } = useTheme();
 
   const onSubmit = async (formData: ProfileFormData) => {
     const data = { id, ...formData };
@@ -282,9 +288,11 @@ export const UserProfilePage: FC = () => {
                         <h5>
                           <Trans i18nKey='userProfile.generalHeading'>Account Settings</Trans>
                         </h5>
-                        <div className='mode'>
+                        <div className=''>
                           <p className='text-muted'>Select your preferred mode</p>
-                          <div className='flex-end' />
+                          <StyledToggleMode onClick={() => toggleTheme()}>
+                            <>{theme === 'light' ? <MoonIcon /> : <SunIcon />}</>
+                          </StyledToggleMode>
                         </div>
                         <div className='language'>
                           <p className='text-muted'>Select your preffered language</p>

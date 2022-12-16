@@ -8,9 +8,6 @@ import { NotificationButton } from 'features/notifications/components/Notificati
 import { NotificationDropdown } from 'features/notifications/components/NotificationDropdown';
 import { NotificationContext } from 'features/notifications/context';
 import { useRbac } from 'features/rbac';
-import { MoonIcon } from 'features/themes/MoonIcon';
-import { SunIcon } from 'features/themes/SunIcon';
-import { useTheme } from 'features/themes/useTheme';
 import { FC, useContext, useRef, useState } from 'react';
 import {
   Badge,
@@ -280,7 +277,6 @@ export const BitwiseNavbar: FC = () => {
   const { userHasPermission } = useRbac();
   const location = useLocation();
   const navigate = useNavigate();
-  const { toggleTheme, theme } = useTheme();
   const { logout, isLoading } = useLogout();
   const { i18n } = useTranslation();
   const navigationToggle = useRef<HTMLButtonElement>(null!);
@@ -376,10 +372,6 @@ export const BitwiseNavbar: FC = () => {
             </Nav>
 
             <Nav className='justify-content-end'>
-              <NavLink onClick={() => toggleTheme()} className='theme-toggle me-3 d-flex align-items-center'>
-                <>{theme === 'light' ? <MoonIcon /> : <SunIcon />}</>
-              </NavLink>
-
               <NavDropdown
                 align='end'
                 title={
