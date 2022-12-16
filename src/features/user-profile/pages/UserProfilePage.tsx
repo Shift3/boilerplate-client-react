@@ -22,20 +22,7 @@ import {
   useUpdateUserProfile,
 } from 'features/user-profile/hooks';
 import { FC, useRef, useState } from 'react';
-import {
-  Alert,
-  Card,
-  Col,
-  Container,
-  Dropdown,
-  DropdownButton,
-  Modal,
-  Nav,
-  OverlayTrigger,
-  Row,
-  Tooltip,
-  Form,
-} from 'react-bootstrap';
+import { Alert, Card, Col, Container, Modal, Nav, OverlayTrigger, Row, Tooltip, Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -50,6 +37,8 @@ import { faCamera, faContactCard, faGear, faLanguage, faUnlockKeyhole } from '@f
 import { useModal } from 'react-modal-hook';
 import { LoadingSpinner } from 'common/components/LoadingSpinner';
 import { languages } from 'i18n/config';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 type RouteParams = {
   id: string;
