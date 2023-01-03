@@ -1,5 +1,5 @@
+import { faCamera, faContactCard, faGear, faLanguage, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useAuth } from 'features/auth/hooks';
 import { handleApiError, isFetchBaseQueryError } from 'common/api/handleApiError';
 import {
   ChangePasswordRequest,
@@ -7,9 +7,15 @@ import {
   useForgotPasswordMutation,
   useResendChangeEmailVerificationEmailMutation,
 } from 'common/api/userApi';
-import { PageHeader } from 'common/styles/page';
+import { LoadingButton } from 'common/components/LoadingButton';
+import { LoadingSpinner } from 'common/components/LoadingSpinner';
+import { isObject } from 'common/error/utilities';
 import { ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
+import { PageHeader } from 'common/styles/page';
+import { useAuth } from 'features/auth/hooks';
+import { UserProfileImg } from 'features/navbar/components/UserProfilePicture';
+import { useTheme } from 'features/themes/useTheme';
 import {
   ChangePasswordForm,
   FormData as ForgotPasswordFormData,
@@ -21,24 +27,19 @@ import {
   useUpdateProfilePicture,
   useUpdateUserProfile,
 } from 'features/user-profile/hooks';
-import { FC, useRef, useState } from 'react';
-import { Alert, Card, Col, Container, Modal, Nav, OverlayTrigger, Row, Tooltip, Form } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
-import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import { UpdateUserEmailForm, UserEmailFormData } from '../components/UpdateUserEmailForm';
-import { UserProfileImg } from 'features/navbar/components/UserProfilePicture';
-import { isObject } from 'common/error/utilities';
-import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
-import { Trans, useTranslation } from 'react-i18next';
-import { LoadingButton } from 'common/components/LoadingButton';
-import { Constants } from 'utils/constants';
-import { faCamera, faContactCard, faGear, faLanguage, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
-import { useModal } from 'react-modal-hook';
-import { LoadingSpinner } from 'common/components/LoadingSpinner';
 import { languages } from 'i18n/config';
+import { FC, useRef, useState } from 'react';
+import { Alert, Card, Col, Container, Form, Modal, Nav, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import { Trans, useTranslation } from 'react-i18next';
+import { useModal } from 'react-modal-hook';
+import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import { Constants } from 'utils/constants';
+import { UpdateUserEmailForm, UserEmailFormData } from '../components/UpdateUserEmailForm';
+import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
 
 type RouteParams = {
   id: string;
@@ -132,6 +133,7 @@ export const UserProfilePage: FC = () => {
   const [passwordFormValidationErrors, setPasswordFormValidationErrors] =
     useState<ServerValidationErrors<ForgotPasswordFormData> | null>(null);
   const { i18n } = useTranslation();
+  const { toggleTheme } = useTheme();
 
   const onSubmit = async (formData: ProfileFormData) => {
     const data = { id, ...formData };
@@ -290,20 +292,33 @@ export const UserProfilePage: FC = () => {
           {tab === 'settings' ? (
             <>
               <Row>
-                <Col md={6}>
+                <Col md={12} className='d-flex'>
                   <Card className='mb-4'>
                     <Card.Body>
                       <div>
                         <h5>
-                          <Trans i18nKey='userProfile.generalHeading'>Account Settings</Trans>
+                          <Trans i18nKey='userProfile.generalHeading'>Theme Settings</Trans>
                         </h5>
-
                         <div className=''>
                           <p className='text-muted'>Select your preferred mode</p>
                           <Form>
-                            <Form.Check type='switch' id='custom-switch' label='Dark Mode' />
+                            <Form.Check
+                              type='switch'
+                              id='custom-switch'
+                              label='Dark Mode'
+                              onClick={() => toggleTheme()}
+                            />
                           </Form>
                         </div>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                  <Card className='mb-4'>
+                    <Card.Body>
+                      <div>
+                        <h5>
+                          <Trans i18nKey='userProfile.generalHeading'>Language Settings</Trans>
+                        </h5>
                         <div className='language'>
                           <p className='text-muted'>Select your preffered language</p>
                           <DropdownButton
