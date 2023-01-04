@@ -273,9 +273,12 @@ export const UserProfilePage: FC = () => {
       <Row>
         <Col md={3}>
           <ProfileNav defaultActiveKey='/home'>
-            <ProfileNav.Link onClick={() => setTab('settings')} className={tab === 'settings' ? 'active' : ''}>
+            <ProfileNav.Link
+              onClick={() => setTab('themeSettings')}
+              className={tab === 'themeSettings' ? 'active' : ''}
+            >
               <FontAwesomeIcon className='me-2' icon={faGear} />
-              <Trans i18nKey='userProfile.settings'>Settings</Trans>
+              <Trans i18nKey='userProfile.themeSettings'>Theme Settings</Trans>
             </ProfileNav.Link>
             <ProfileNav.Link onClick={() => setTab('profile')} className={tab === 'profile' ? 'active' : ''}>
               <FontAwesomeIcon className='me-2' icon={faContactCard} />
@@ -289,7 +292,7 @@ export const UserProfilePage: FC = () => {
         </Col>
 
         <Col>
-          {tab === 'settings' ? (
+          {tab === 'themeSettings' ? (
             <>
               <Row>
                 <Col md={12} className='d-flex'>
@@ -297,7 +300,7 @@ export const UserProfilePage: FC = () => {
                     <Card.Body>
                       <div>
                         <h5>
-                          <Trans i18nKey='userProfile.generalHeading'>Theme Settings</Trans>
+                          <Trans i18nKey='userProfile.generalHeading'>Theme Prerences</Trans>
                         </h5>
                         <div className=''>
                           <p className='text-muted'>Select your preferred mode</p>
@@ -317,7 +320,7 @@ export const UserProfilePage: FC = () => {
                     <Card.Body>
                       <div>
                         <h5>
-                          <Trans i18nKey='userProfile.generalHeading'>Language Settings</Trans>
+                          <Trans i18nKey='userProfile.generalHeading'>Language Preference</Trans>
                         </h5>
                         <div className='language'>
                           <p className='text-muted'>Select your preffered language</p>
