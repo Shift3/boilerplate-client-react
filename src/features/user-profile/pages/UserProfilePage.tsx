@@ -273,12 +273,9 @@ export const UserProfilePage: FC = () => {
       <Row>
         <Col md={3}>
           <ProfileNav defaultActiveKey='/home'>
-            <ProfileNav.Link
-              onClick={() => setTab('themeSettings')}
-              className={tab === 'themeSettings' ? 'active' : ''}
-            >
+            <ProfileNav.Link onClick={() => setTab('theme')} className={tab === 'theme' ? 'active' : ''}>
               <FontAwesomeIcon className='me-2' icon={faGear} />
-              <Trans i18nKey='userProfile.themeSettings'>Theme Settings</Trans>
+              <Trans i18nKey='userProfile.theme'>Theme</Trans>
             </ProfileNav.Link>
             <ProfileNav.Link onClick={() => setTab('profile')} className={tab === 'profile' ? 'active' : ''}>
               <FontAwesomeIcon className='me-2' icon={faContactCard} />
@@ -292,7 +289,7 @@ export const UserProfilePage: FC = () => {
         </Col>
 
         <Col>
-          {tab === 'themeSettings' ? (
+          {tab === 'theme' ? (
             <>
               <Row>
                 <Col md={12} className='d-flex'>
