@@ -297,7 +297,7 @@ export const UserProfilePage: FC = () => {
                     <Card.Body>
                       <div>
                         <h5>
-                          <Trans i18nKey='userProfile.generalHeading'>Theme Prerences</Trans>
+                          <Trans i18nKey='userProfile.generalHeading'>Theme Prerence</Trans>
                         </h5>
                         <div className=''>
                           <p className='text-muted'>Select your preferred mode</p>
