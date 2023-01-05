@@ -49,10 +49,27 @@ to see a demo with new features, you can check out our [staging site](https://bo
 
 ## Quick Start
 
-To start the project, make sure yarn is installed on your local machine. If you have already installed our [laptop script](https://github.com/Shift3/laptop), you should already have yarn.
+To start the project, make sure nvm is installed on your local machine. If you have already installed our [laptop script](https://github.com/Shift3/laptop), you should already have nvm.
 
-1. Install Dependencies via `yarn install`
-2. Start the Project in development mode via `yarn start`
+1. Ensure you have to correct node version installed
+
+```bash
+nvm install # to install the required node version for project
+nvm use     # to use the required node version for project
+```
+
+1. Install Dependencies
+
+```bash
+npm i -g yarn # install yarn
+yarn install  # install dependencies with yarn
+```
+
+1. Start the Project in development mode
+
+```bash
+yarn start
+```
 
 Open [http://localhost:4200](http://localhost:4200) to view the project in the browser.
 
