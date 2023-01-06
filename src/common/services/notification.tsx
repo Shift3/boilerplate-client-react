@@ -1,27 +1,13 @@
 import { toast } from 'react-toastify';
 
-export const showSuccessMessage = (message: string): void => {
+export const showSuccessMessage = (message: string, id?: string): void => {
   toast.success(message, {
-    toastId: message,
+    toastId: id ?? message,
   });
 };
 
-export const showEndlessSuccessMessage = (message: string): void => {
-  toast.success(message, {
-    toastId: message,
-    autoClose: false,
-  });
-};
-
-export const showErrorMessage = (message: string): void => {
+export const showErrorMessage = (message: string, id?: string): void => {
   toast.error(message, {
-    toastId: message,
-  });
-};
-
-export const showEndlessErrorMessage = (message: string): void => {
-  toast.error(message, {
-    toastId: message,
-    autoClose: false,
+    toastId: id ?? message,
   });
 };
