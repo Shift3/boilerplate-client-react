@@ -292,7 +292,7 @@ export const UserProfilePage: FC = () => {
           {tab === 'theme' ? (
             <>
               <Row>
-                <Col md={12} className='d-flex'>
+                <Col md={6}>
                   <Card className='mb-4'>
                     <Card.Body>
                       <div>
@@ -313,6 +313,9 @@ export const UserProfilePage: FC = () => {
                       </div>
                     </Card.Body>
                   </Card>
+                </Col>
+
+                <Col md={6}>
                   <Card className='mb-4'>
                     <Card.Body>
                       <div>
