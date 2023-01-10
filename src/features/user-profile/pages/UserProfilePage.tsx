@@ -129,7 +129,7 @@ export const UserProfilePage: FC = () => {
   const { updateUserProfilePicture, isLoading: isLoadingUpdateProfilePicture } = useUpdateProfilePicture();
   const { deleteUserProfilePicture, isLoading: isLoadingDeleteProfilePicture } = useDeleteProfilePicture();
   const [changePassword] = useChangePasswordMutation();
-  const [tab, setTab] = useState('profile');
+  const [tab, setTab] = useState('settings');
   const [passwordFormValidationErrors, setPasswordFormValidationErrors] =
     useState<ServerValidationErrors<ForgotPasswordFormData> | null>(null);
   const { i18n } = useTranslation();
@@ -273,9 +273,9 @@ export const UserProfilePage: FC = () => {
       <Row>
         <Col md={3}>
           <ProfileNav defaultActiveKey='/home'>
-            <ProfileNav.Link onClick={() => setTab('theme')} className={tab === 'theme' ? 'active' : ''}>
+            <ProfileNav.Link onClick={() => setTab('settings')} className={tab === 'settings' ? 'active' : ''}>
               <FontAwesomeIcon className='me-2' icon={faGear} />
-              <Trans i18nKey='userProfile.theme'>Theme</Trans>
+              <Trans i18nKey='userProfile.settings'>App Settings</Trans>
             </ProfileNav.Link>
             <ProfileNav.Link onClick={() => setTab('profile')} className={tab === 'profile' ? 'active' : ''}>
               <FontAwesomeIcon className='me-2' icon={faContactCard} />
@@ -289,7 +289,7 @@ export const UserProfilePage: FC = () => {
         </Col>
 
         <Col>
-          {tab === 'theme' ? (
+          {tab === 'settings' ? (
             <>
               <Row>
                 <Col md={6}>
@@ -297,7 +297,7 @@ export const UserProfilePage: FC = () => {
                     <Card.Body>
                       <div>
                         <h5>
-                          <Trans i18nKey='userProfile.generalHeading'>Theme Prerence</Trans>
+                          <Trans i18nKey='userProfile.generalHeading'>Theme Preference</Trans>
                         </h5>
                         <div className=''>
                           <p className='text-muted'>Select your preferred mode</p>
