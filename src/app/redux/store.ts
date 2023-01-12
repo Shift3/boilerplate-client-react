@@ -1,5 +1,6 @@
 import { configureStore, ConfigureStoreOptions } from '@reduxjs/toolkit';
 import { farmApi } from 'common/api/farmApi';
+import { setupListeners } from '@reduxjs/toolkit/query';
 import { authApi } from 'common/api/authApi';
 import { notificationApi } from 'common/api/notificationApi';
 import { userApi } from 'common/api/userApi';
@@ -30,6 +31,8 @@ export const createAppStore = (options?: ConfigureStoreOptions['preloadedState']
   });
 
 export const store = createAppStore();
+
+setupListeners(store.dispatch);
 
 export type RootState = ReturnType<typeof store.getState>;
 

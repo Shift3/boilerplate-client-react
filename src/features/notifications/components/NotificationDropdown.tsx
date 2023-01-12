@@ -2,7 +2,7 @@ import { faBell, faEnvelope, faEnvelopeOpen } from '@fortawesome/free-solid-svg-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetReadNotificationsQuery, useMarkAllReadMutation } from 'common/api/notificationApi';
 import { LoadingButton } from 'common/components/LoadingButton';
-import { useInfiniteLoading } from 'common/hooks/useInfiniteLoading';
+import { WithIdentifier, useInfiniteLoading } from 'common/hooks/useInfiniteLoading';
 import { PaginatedResult } from 'common/models';
 import { AppNotification } from 'common/models/notifications';
 import { NoContent } from 'common/styles/utilities';
@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { NotificationContext } from '../context';
 import { renderNotification } from './renderNotification';
+import { notificationApi } from 'common/api/notificationApi';
 
 const StyledContainer = styled.div`
   min-width: 420px;
@@ -72,10 +73,15 @@ export const NotificationDropdown: FC = () => {
     count: unreadNotificationsCount,
     clear: clearUnreadNotifications,
   } = useContext(NotificationContext);
-  const { loadedData: readNotifications, isLoading: isLoadingReadNotifications } = useInfiniteLoading<
-    AppNotification,
-    PaginatedResult<AppNotification>
-  >('', useGetReadNotificationsQuery);
+  const {
+    items: readNotifications,
+    isLoading: isLoadingReadNotifications,
+    hasMore: hasMoreReadNotifications,
+  } = useInfiniteLoading<AppNotification & WithIdentifier, PaginatedResult<AppNotification>>(
+    '',
+    useGetReadNotificationsQuery,
+    notificationApi.util.resetApiState,
+  );
   const [markAllRead, { isLoading: isLoadingMarkAllRead }] = useMarkAllReadMutation();
 
   const handleMarkAllRead = async () => {

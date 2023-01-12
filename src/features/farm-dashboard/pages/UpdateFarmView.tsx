@@ -12,13 +12,13 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FarmDetailForm, FormData } from '../components/FarmDetailForm';
 import { useAuth } from 'features/auth/hooks';
 import { ChangeLog } from 'common/components/ChangeLog/ChangeLog';
-import { useInfiniteLoading } from 'common/hooks/useInfiniteLoading';
 import { QueryParamsBuilder } from 'common/api/queryParamsBuilder';
 import { HistoricalRecord } from 'common/models/historicalRecord';
 import { ChangeListGroup } from 'common/components/ChangeLog/ChangeListGroup';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { useModal } from 'react-modal-hook';
 import { DimmableContent } from 'common/styles/utilities';
+import { WithIdentifier, useInfiniteLoading } from 'common/hooks/useInfiniteLoading';
 
 export type RouteParams = {
   id: string;
@@ -35,15 +35,18 @@ export const UpdateFarmView: FC = () => {
   const queryParams = new QueryParamsBuilder().setPaginationParams(1, pageSize).build();
   const url = `/farms/${id}/history/?${queryParams}`;
   const {
-    loadedData: farmHistory,
+    items: farmHistory,
     error: farmHistoryError,
     isFetching: isFetchingHistory,
-    totalCount,
+    count: totalCount,
     hasMore,
-    fetchMore,
-  } = useInfiniteLoading<HistoricalRecord<User>, PaginatedResult<HistoricalRecord<User>>>(url, useGetFarmHistoryQuery, {
-    skip: user?.role !== 'ADMIN',
-  });
+    getMore,
+  } = useInfiniteLoading<HistoricalRecord<User> & WithIdentifier, PaginatedResult<HistoricalRecord<User>>>(
+    url,
+    useGetFarmHistoryQuery,
+    undefined,
+    { skip: user?.role !== 'ADMIN' },
+  );
 
   const [formValidationErrors, setFormValidationErrors] = useState<ServerValidationErrors<FormData> | null>(null);
 
@@ -65,7 +68,7 @@ export const UpdateFarmView: FC = () => {
                 className='action-shadow'
                 loading={isFetchingHistory}
                 variant='primary'
-                onClick={() => fetchMore()}
+                onClick={() => getMore()}
               >
                 Load More
               </LoadingButton>
