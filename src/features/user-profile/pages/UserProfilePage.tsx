@@ -133,7 +133,7 @@ export const UserProfilePage: FC = () => {
   const [passwordFormValidationErrors, setPasswordFormValidationErrors] =
     useState<ServerValidationErrors<ForgotPasswordFormData> | null>(null);
   const { i18n } = useTranslation();
-  const { toggleTheme } = useTheme();
+  const { toggleTheme, theme } = useTheme();
 
   const onSubmit = async (formData: ProfileFormData) => {
     const data = { id, ...formData };
@@ -304,8 +304,9 @@ export const UserProfilePage: FC = () => {
                           <Form>
                             <Form.Check
                               type='switch'
-                              id='custom-switch'
+                              id='witch'
                               label='Dark Mode'
+                              checked={theme === 'dark'}
                               onClick={() => toggleTheme()}
                             />
                           </Form>
