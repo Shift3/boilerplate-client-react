@@ -1,4 +1,4 @@
-import { faCog, faHomeAlt, faLanguage, faUserShield } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faHomeAlt, faUserShield } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { environment } from 'environment';
@@ -8,9 +8,6 @@ import { NotificationButton } from 'features/notifications/components/Notificati
 import { NotificationDropdown } from 'features/notifications/components/NotificationDropdown';
 import { NotificationContext } from 'features/notifications/context';
 import { useRbac } from 'features/rbac';
-import { MoonIcon } from 'features/themes/MoonIcon';
-import { SunIcon } from 'features/themes/SunIcon';
-import { useTheme } from 'features/themes/useTheme';
 import { FC, useContext, useRef, useState } from 'react';
 import {
   Badge,
@@ -24,11 +21,9 @@ import {
   Offcanvas,
   OffcanvasProps,
 } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
 import { useModal } from 'react-modal-hook';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { languages } from '../../../i18n/config';
 import { Logo } from './Logo';
 import { UserProfilePicture } from './UserProfilePicture';
 
@@ -280,9 +275,7 @@ export const BitwiseNavbar: FC = () => {
   const { userHasPermission } = useRbac();
   const location = useLocation();
   const navigate = useNavigate();
-  const { toggleTheme, theme } = useTheme();
   const { logout, isLoading } = useLogout();
-  const { i18n } = useTranslation();
   const navigationToggle = useRef<HTMLButtonElement>(null!);
   const navbarOffcanvas = useRef<OffcanvasProps>(null!);
   const [showNotificationDropdown, setShowNotificationDropdown] = useState(false);
@@ -307,17 +300,6 @@ export const BitwiseNavbar: FC = () => {
     },
     [isLoading],
   );
-
-  const changeLanguage = (ln: string) => {
-    localStorage.setItem('language', ln);
-    i18n.changeLanguage(ln);
-  };
-
-  const __languageOptions = languages.map(language => {
-    return { label: language.label, value: language.shortcode };
-  });
-
-  const defaultLanguageOption = __languageOptions.find(language => language.value === i18n.languages[0]);
 
   const toggleNotificationDropdown = () => {
     if (navbarOffcanvas.current.isTopModal()) {
@@ -376,25 +358,6 @@ export const BitwiseNavbar: FC = () => {
             </Nav>
 
             <Nav className='justify-content-end'>
-              <NavLink onClick={() => toggleTheme()} className='theme-toggle me-3 d-flex align-items-center'>
-                <>{theme === 'light' ? <MoonIcon /> : <SunIcon />}</>
-              </NavLink>
-
-              <NavDropdown
-                align='end'
-                title={
-                  <>
-                    <FontAwesomeIcon className='me-2' size='lg' icon={faLanguage} />
-                    {defaultLanguageOption?.label}
-                  </>
-                }
-                className='me-3'
-              >
-                {__languageOptions.map(option => (
-                  <NavDropdown.Item onClick={() => changeLanguage(option.value)}>{option.label}</NavDropdown.Item>
-                ))}
-              </NavDropdown>
-
               <NotificationButton count={count} handleOnClick={toggleNotificationDropdown} />
 
               {user ? (
