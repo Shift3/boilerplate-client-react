@@ -1,5 +1,7 @@
 import { FC } from 'react';
 import styled from 'styled-components';
+import { MoonIcon } from './MoonIcon';
+import { SunIcon } from './SunIcon';
 import { useTheme } from './useTheme';
 
 const Switch = styled.div`
@@ -12,12 +14,12 @@ const Switch = styled.div`
   }
 `;
 
-export const ThemeToggle: FC = () => {
+export const ToggleSwitch: FC = () => {
   const { toggleTheme, theme } = useTheme();
 
   return (
     <div>
-      <Switch onClick={() => toggleTheme()}>{theme === 'light' ? 'light' : 'dark'}</Switch>
+      <Switch onClick={() => toggleTheme()}>{theme === 'light' ? <MoonIcon /> : <SunIcon />}</Switch>
     </div>
   );
 };

@@ -1,9 +1,9 @@
-import { Container, Col, Row } from 'react-bootstrap';
 import tile from 'assets/img/tile.jpg';
-import styled from 'styled-components';
-import { FC, PropsWithChildren } from 'react';
-import { ThemeToggle } from 'features/themes/ToggleSwitch';
 import { Logo } from 'features/navbar/components/Logo';
+import { ToggleSwitch } from 'features/themes/ToggleSwitch';
+import { FC, PropsWithChildren } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import styled from 'styled-components';
 
 export const Title = styled.h1`
   color: ${props => props.theme.forms.title};
@@ -71,7 +71,7 @@ export const FrontPageLayout: FC<PropsWithChildren<unknown>> = ({ children }) =>
             <div>
               <div className='mb-3 d-flex justify-content-between align-items-center'>
                 <Logo />
-                <ThemeToggle />
+                <ToggleSwitch />
               </div>
               {children}
             </div>
