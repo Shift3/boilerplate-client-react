@@ -3,6 +3,9 @@ import { NotFoundView } from 'common/components/NotFoundView';
 import { useAuth } from 'features/auth/hooks';
 import { FC } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { AdminHomePage } from './pages/AdminHomePage';
+import { EditorHomePage } from './pages/EditorHomePage';
+import { UserHomePage } from './pages/UserHomePage';
 
 export const HomeRoutes: FC = () => {
   const { user } = useAuth();
@@ -15,9 +18,9 @@ export const HomeRoutes: FC = () => {
           element={
             user
               ? {
-                  ADMIN: <div>Admin</div>,
-                  EDITOR: <div>Editor</div>,
-                  USER: <div>User</div>,
+                  ADMIN: <AdminHomePage />,
+                  EDITOR: <EditorHomePage />,
+                  USER: <UserHomePage />,
                 }[user.role]
               : null
           }

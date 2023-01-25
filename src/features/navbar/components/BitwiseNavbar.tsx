@@ -313,7 +313,7 @@ export const BitwiseNavbar: FC = () => {
     <StyledNavbar expand='md'>
       {showNotificationDropdown && <NotificationDropdown onClose={toggleNotificationDropdown} />}
       <Container>
-        <Navbar.Brand onClick={() => navigate('/agents')}>
+        <Navbar.Brand onClick={() => navigate('/')}>
           <Logo />
         </Navbar.Brand>
         <div id='notification-btn-and-toggle-container'>
