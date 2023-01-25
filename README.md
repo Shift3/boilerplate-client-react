@@ -1,9 +1,10 @@
 Boilerplate Client React
+
 Branch Status
 
 develop: Shift3
 main: Shift3
-This boilerplate provides a starting point for building a React client that can interact with a backend API.
+This batteries-included boilerplate provides a starting point for efficient development of a React clien, that can interact with a backend API.
 
 Note: This repository used to be compatible with our NestJS backend, however we have switched to using django as our primary backend. If you are looking for the NestJS-compatible version, it can still be found on the nestjs-compatibility branch.
 
