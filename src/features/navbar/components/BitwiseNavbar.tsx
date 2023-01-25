@@ -331,7 +331,7 @@ export const BitwiseNavbar: FC = () => {
           </Offcanvas.Header>
           <Offcanvas.Body>
             <Nav className='justify-content-start flex-grow-1 pe-3'>
-              {userHasPermission('user:read') ? (
+              {userHasPermission('agent:read') ? (
                 <NavLink onClick={() => navigate('/')} className={location.pathname === '/' ? 'active me-3' : 'me-3'}>
                   <FontAwesomeIcon className='me-2' icon={faHomeAlt} />
                   Home
