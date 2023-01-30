@@ -1,4 +1,4 @@
-Boilerplate Client React
+# Boilerplate Client React
 
 Branch Status
 
@@ -6,18 +6,29 @@ develop: Shift3
 main: Shift3
 This batteries-included boilerplate provides a starting point for efficient development of a React clien, that can interact with a backend API.
 
-Note: This repository used to be compatible with our NestJS backend, however we have switched to using django as our primary backend. If you are looking for the NestJS-compatible version, it can still be found on the nestjs-compatibility branch.
+Note: This repository is compatible with our primary Django backend dj_starter_demo, as well as our node-js-backend.s
+
+## Features
+
+This boilerplate application provides the following features:
+
+- User Authentication
+- Notifications
+- Payment Processing
+- xxxxx
+- xxxxx
+- xxxxx
 
 ## Staging URL
 
-A demo of the project can be found on either our [production site](https://boilerplate-client-react-prod.shift3sandbox.com) or
-to see a demo with new features, you can check out our [staging site](https://boilerplate-client-react.shift3sandbox.com/).
+A production demo of the project can be found at [production site](https://boilerplate-client-react-prod.shift3sandbox.com) or
+to a staging demo with new features, can be found at [staging site](https://boilerplate-client-react.shift3sandbox.com/).
 
 ## Quick Start
 
 To get started, make sure you have yarn installed on your local machine. If you have already installed our [laptop script](https://github.com/Shift3/laptop), you should already have yarn.
 
-1. Install dependencies via `yarn install`.
+1. Clone this repository and install dependencies via `yarn install`.
 2. Start the project in development mode via `yarn start`.
 
 Open [http://localhost:4200](http://localhost:4200) to view the project in the browser.
@@ -61,3 +72,9 @@ Secrets
 profile: This must match the AWS credentials name on the development machine
 region: This is usually us-west-2
 web_domain_name: This will be
+
+## Bug Report
+
+## Submit Feature Request
+
+## Contributing
