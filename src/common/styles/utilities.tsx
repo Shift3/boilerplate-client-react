@@ -1,6 +1,6 @@
 import { Alert, Badge } from 'react-bootstrap';
 import styled, { css } from 'styled-components';
-import { FC, PropsWithChildren, ReactNode } from 'react';
+import React, { FC, PropsWithChildren, ReactNode } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
@@ -103,6 +103,7 @@ const NoContentStyles = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  text-align: center;
 
   i,
   svg {
@@ -115,14 +116,14 @@ const NoContentStyles = styled.div`
 `;
 
 export const NoContent: FC<{
-  title: string;
+  title: string | ReactNode;
   icon?: IconDefinition;
   extra?: ReactNode;
 }> = ({ title, icon, extra }) => {
   return (
     <NoContentStyles className='noContentStyles'>
       {icon && <FontAwesomeIcon icon={icon} className='text-muted' size='2x' />}
-      <p className='lead mb-0'>{title}</p>
+      {typeof title === 'string' ? <p className='lead mb-0'>{title}</p> : title}
       {extra}
     </NoContentStyles>
   );

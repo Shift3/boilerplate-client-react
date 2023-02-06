@@ -4,7 +4,7 @@ import { Container } from 'react-bootstrap';
 import { Trans } from 'react-i18next';
 import { TableCard } from 'common/styles/card';
 import { NoContent } from 'common/styles/utilities';
-import { faGhost } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 
 export const UserHomePage: FC = () => {
   return (
@@ -20,7 +20,15 @@ export const UserHomePage: FC = () => {
         </div>
       </PageHeader>
       <TableCard>
-        <NoContent title='Nothing to see here' icon={faGhost} />
+        <NoContent
+          title={
+            <p className='lead mb-0'>
+              This is the homepage for <b>Non-Admin</b> and <b>Non-Editor</b> users. Replace this content with whatever
+              you would like!
+            </p>
+          }
+          icon={faExclamationCircle}
+        />
       </TableCard>
     </Container>
   );

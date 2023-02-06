@@ -16,13 +16,11 @@ export const HomeRoutes: FC = () => {
         <Route
           path='/'
           element={
-            user
-              ? {
-                  ADMIN: <AdminHomePage />,
-                  EDITOR: <EditorHomePage />,
-                  USER: <UserHomePage />,
-                }[user.role]
-              : null
+            {
+              ADMIN: <AdminHomePage />,
+              EDITOR: <EditorHomePage />,
+              USER: <UserHomePage />,
+            }[user!.role]
           }
         />
         <Route path='*' element={<NotFoundView />} />
