@@ -1,5 +1,3 @@
-import { Address } from './address';
-
 export interface Agent {
   id: number;
   thumbnail: string;
@@ -9,5 +7,9 @@ export interface Agent {
   phoneNumber: string;
   categoryList: unknown[];
   documentList: unknown[];
-  address?: Address;
+  address1?: string;
+  address2?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
 }
