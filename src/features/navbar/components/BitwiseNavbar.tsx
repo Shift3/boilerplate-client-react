@@ -1,4 +1,4 @@
-import { faCog, faHomeAlt, faUserShield } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faHomeAlt, faUserShield, faSitemap } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { environment } from 'environment';
@@ -313,7 +313,7 @@ export const BitwiseNavbar: FC = () => {
     <StyledNavbar expand='md'>
       {showNotificationDropdown && <NotificationDropdown onClose={toggleNotificationDropdown} />}
       <Container>
-        <Navbar.Brand onClick={() => navigate('/agents')}>
+        <Navbar.Brand onClick={() => navigate('/')}>
           <Logo />
         </Navbar.Brand>
         <div id='notification-btn-and-toggle-container'>
@@ -332,11 +332,17 @@ export const BitwiseNavbar: FC = () => {
           <Offcanvas.Body>
             <Nav className='justify-content-start flex-grow-1 pe-3'>
               {userHasPermission('agent:read') ? (
+                <NavLink onClick={() => navigate('/')} className={location.pathname === '/' ? 'active me-3' : 'me-3'}>
+                  <FontAwesomeIcon className='me-2' icon={faHomeAlt} />
+                  Home
+                </NavLink>
+              ) : null}
+              {userHasPermission('agent:read') ? (
                 <NavLink
                   onClick={() => navigate('/agents')}
                   className={location.pathname === '/agents' ? 'active me-3' : 'me-3'}
                 >
-                  <FontAwesomeIcon className='me-2' icon={faHomeAlt} />
+                  <FontAwesomeIcon className='me-2' icon={faSitemap} />
                   Directory
                 </NavLink>
               ) : null}
