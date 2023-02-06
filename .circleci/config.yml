@@ -41,10 +41,9 @@ jobs:
   test:
     working_directory: ~/repo
     docker:
-      - image: 'circleci/node:14-browsers'
+      - image: 'circleci/node:16-browsers'
     steps:
       - checkout
-      - run: sudo apt-get update
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
@@ -75,10 +74,9 @@ jobs:
   test-coverage:
     working_directory: ~/repo
     docker:
-      - image: 'circleci/node:14-browsers'
+      - image: 'circleci/node:16-browsers'
     steps:
       - checkout
-      - run: sudo apt-get update
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
@@ -96,7 +94,7 @@ jobs:
 
   deploy-staging:
     docker:
-      - image: 'circleci/node:14'
+      - image: 'circleci/node:16'
     steps:
       - deploy:
           aws_access_key_env: STAGING_AWS_ACCESS_KEY_ID
@@ -107,7 +105,7 @@ jobs:
 
   deploy-production:
     docker:
-      - image: 'circleci/node:14'
+      - image: 'circleci/node:16'
     steps:
       - deploy:
           aws_access_key_env: PRODUCTION_AWS_ACCESS_KEY_ID

@@ -48,10 +48,10 @@ export const App: FC = () => {
 
   return (
     <AppErrorBoundary>
-      <ModalProvider rootComponent={TransitionGroup}>
-        <NetworkDetector>
-          <ThemeContext.Provider value={themeProviderValue}>
-            <ThemeProvider theme={theme === 'light' ? light : dark}>
+      <NetworkDetector>
+        <ThemeContext.Provider value={themeProviderValue}>
+          <ThemeProvider theme={theme === 'light' ? light : dark}>
+            <ModalProvider rootComponent={TransitionGroup}>
               <NotificationsProvider>
                 <GlobalStyle />
 
@@ -111,10 +111,10 @@ export const App: FC = () => {
                   </Routes>
                 </BannerContentWrapper>
               </NotificationsProvider>
-            </ThemeProvider>
-          </ThemeContext.Provider>
-        </NetworkDetector>
-      </ModalProvider>
+            </ModalProvider>
+          </ThemeProvider>
+        </ThemeContext.Provider>
+      </NetworkDetector>
     </AppErrorBoundary>
   );
 };

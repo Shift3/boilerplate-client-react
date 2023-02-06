@@ -85,6 +85,7 @@ const WithUnsavedChangesPrompt: FC<PropsWithChildren<WithUnsavedChangesPromptPro
         hideModal();
       }}
       onExited={onExited}
+      centered
     >
       <Modal.Header closeButton>
         <Modal.Title>Unsaved Changes</Modal.Title>

@@ -14,7 +14,19 @@ import * as yup from 'yup';
 
 import 'react-phone-input-2/lib/plain.css';
 
-export type FormData = Pick<Agent, 'name' | 'email' | 'description' | 'phoneNumber' | 'address' | 'thumbnail'>;
+export type FormData = Pick<
+  Agent,
+  | 'name'
+  | 'email'
+  | 'description'
+  | 'phoneNumber'
+  | 'address1'
+  | 'address2'
+  | 'city'
+  | 'state'
+  | 'zipCode'
+  | 'thumbnail'
+>;
 
 export type Props = {
   defaultValues?: FormData;
@@ -40,13 +52,11 @@ const schema = yup.object().shape({
     })
     .required('Phone number is required.'),
   thumbnail: yup.string(),
-  address: yup.object().shape({
-    address1: yup.string().optional(),
-    address2: yup.string(),
-    city: yup.string().when('address1', { is: notBlank, then: yup.string().required('City is required.') }),
-    state: yup.string().when('address1', { is: notBlank, then: yup.string().required('State is required.') }),
-    zipCode: yup.string().when('address1', { is: notBlank, then: yup.string().required('Zip code is required.') }),
-  }),
+  address1: yup.string().optional(),
+  address2: yup.string().optional(),
+  city: yup.string().when('address1', { is: notBlank, then: yup.string().required('City is required.') }),
+  state: yup.string().when('address1', { is: notBlank, then: yup.string().required('State is required.') }),
+  zipCode: yup.string().when('address1', { is: notBlank, then: yup.string().required('Zip code is required.') }),
 });
 
 export const AgentDetailForm: FC<Props> = ({
@@ -59,48 +69,18 @@ export const AgentDetailForm: FC<Props> = ({
     register,
     formState: { errors, isValid, isDirty, isSubmitting, isSubmitted },
     handleSubmit,
-    trigger,
     control,
-    watch,
     setError,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
     defaultValues: {
       ...defaultValues,
-      // Make state dropdown default to empty instead of first option + Ensure that the address2 confirms to the string type requirement
-      address: {
-        ...defaultValues.address,
-        state: defaultValues?.address?.state ?? '',
-        address2: defaultValues?.address?.address2 ?? '',
-      },
+      state: defaultValues?.state ?? '',
       phoneNumber:
         defaultValues.phoneNumber && defaultValues.phoneNumber !== '' ? defaultValues.phoneNumber.substring(2) : '',
     },
   });
-
-  const firstAddressLine = watch('address.address1');
-
-  /**
-   * Submits agent data with either a complete address or nothing at all, to
-   * prevent errors due to partial or empty address data.
-   *
-   * Note this relies on validation rules, which enforce filling in all address
-   * fields if the first line is filled in.
-   * */
-  const withOptionalAddress = (data: FormData) => {
-    onSubmit({
-      ...data,
-      address: isBlank(firstAddressLine) ? undefined : data.address,
-    });
-  };
-
-  // Trigger address validation when the first line changes.
-  useEffect(() => {
-    trigger('address.city');
-    trigger('address.state');
-    trigger('address.zipCode');
-  }, [trigger, firstAddressLine]);
 
   useEffect(() => {
     if (serverValidationErrors) {
@@ -110,7 +90,7 @@ export const AgentDetailForm: FC<Props> = ({
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
-      <Form onSubmit={handleSubmit(withOptionalAddress)}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <h5>Personal</h5>
         <Row className='mb-2'>
           <Col md={4}>
@@ -139,7 +119,7 @@ export const AgentDetailForm: FC<Props> = ({
                     value={field.value}
                     onlyCountries={['us']}
                     country='us'
-                    onEnterKeyPress={handleSubmit(withOptionalAddress)}
+                    onEnterKeyPress={handleSubmit(onSubmit)}
                     containerClass={`${errors.phoneNumber ? 'is-invalid' : ''}`}
                     inputClass={`form-control ${errors.phoneNumber ? 'is-invalid' : ''}`}
                     placeholder='(702) 123-4567'
@@ -167,21 +147,21 @@ export const AgentDetailForm: FC<Props> = ({
           <Col md={6}>
             <Form.Group className='mb-2'>
               <Form.Label>Address</Form.Label>
-              <Form.Control type='text' {...register('address.address1')} isInvalid={!!errors.address?.address1} />
-              <Form.Control.Feedback type='invalid'>{errors.address?.address1?.message}</Form.Control.Feedback>
+              <Form.Control type='text' {...register('address1')} isInvalid={!!errors.address1} />
+              <Form.Control.Feedback type='invalid'>{errors.address1?.message}</Form.Control.Feedback>
             </Form.Group>
           </Col>
 
           <Col md={6}>
             <Form.Group className='mb-2'>
-              <Form.Label>Address2</Form.Label>
+              <Form.Label>Address 2</Form.Label>
               <Form.Control
                 type='text'
-                {...register('address.address2')}
-                isValid={!!errors.address?.address2}
-                disabled={isBlank(firstAddressLine)}
+                {...register('address2')}
+                isValid={!!errors.address2}
+                disabled={isBlank('address1')}
               />
-              <Form.Control.Feedback type='invalid'>{errors.address?.address2?.message}</Form.Control.Feedback>
+              <Form.Control.Feedback type='invalid'>{errors.address2?.message}</Form.Control.Feedback>
             </Form.Group>
           </Col>
         </Row>
@@ -190,30 +170,30 @@ export const AgentDetailForm: FC<Props> = ({
           <Col md={4}>
             <Form.Group>
               <Form.Label>City</Form.Label>
-              <Form.Control type='text' {...register('address.city')} isInvalid={!!errors.address?.city} />
-              <Form.Control.Feedback type='invalid'>{errors.address?.city?.message}</Form.Control.Feedback>
+              <Form.Control type='text' {...register('city')} isInvalid={!!errors.city} />
+              <Form.Control.Feedback type='invalid'>{errors.city?.message}</Form.Control.Feedback>
             </Form.Group>
           </Col>
 
           <Col md={4}>
             <Form.Group>
               <Form.Label>State</Form.Label>
-              <Form.Select {...register('address.state')} isInvalid={!!errors.address?.state}>
+              <Form.Select {...register('state')} isInvalid={!!errors.state}>
                 {stateList.map(({ name, value }) => (
                   <option key={value} value={value}>
                     {name}
                   </option>
                 ))}
               </Form.Select>
-              <Form.Control.Feedback type='invalid'>{errors.address?.state?.message}</Form.Control.Feedback>
+              <Form.Control.Feedback type='invalid'>{errors.state?.message}</Form.Control.Feedback>
             </Form.Group>
           </Col>
 
           <Col md={4}>
             <Form.Group>
               <Form.Label>Zip Code</Form.Label>
-              <Form.Control type='text' {...register('address.zipCode')} isInvalid={!!errors.address?.zipCode} />
-              <Form.Control.Feedback type='invalid'>{errors.address?.zipCode?.message}</Form.Control.Feedback>
+              <Form.Control type='text' {...register('zipCode')} isInvalid={!!errors.zipCode} />
+              <Form.Control.Feedback type='invalid'>{errors.zipCode?.message}</Form.Control.Feedback>
             </Form.Group>
           </Col>
         </Row>
