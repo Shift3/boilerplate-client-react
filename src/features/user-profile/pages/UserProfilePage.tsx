@@ -1,5 +1,5 @@
+import { faCamera, faContactCard, faGear, faLanguage, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useAuth } from 'features/auth/hooks';
 import { handleApiError, isFetchBaseQueryError } from 'common/api/handleApiError';
 import {
   ChangePasswordRequest,
@@ -7,9 +7,15 @@ import {
   useForgotPasswordMutation,
   useResendChangeEmailVerificationEmailMutation,
 } from 'common/api/userApi';
-import { PageHeader } from 'common/styles/page';
+import { LoadingButton } from 'common/components/LoadingButton';
+import { LoadingSpinner } from 'common/components/LoadingSpinner';
+import { isObject } from 'common/error/utilities';
 import { ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
+import { PageHeader } from 'common/styles/page';
+import { useAuth } from 'features/auth/hooks';
+import { UserProfileImg } from 'features/navbar/components/UserProfilePicture';
+import { useTheme } from 'features/themes/useTheme';
 import {
   ChangePasswordForm,
   FormData as ForgotPasswordFormData,
@@ -21,21 +27,19 @@ import {
   useUpdateProfilePicture,
   useUpdateUserProfile,
 } from 'features/user-profile/hooks';
+import { languages } from 'i18n/config';
 import { FC, useRef, useState } from 'react';
-import { Alert, Card, Col, Container, Modal, Nav, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
+import { Alert, Card, Col, Container, Form, Modal, Nav, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import { Trans, useTranslation } from 'react-i18next';
+import { useModal } from 'react-modal-hook';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { UpdateUserEmailForm, UserEmailFormData } from '../components/UpdateUserEmailForm';
-import { UserProfileImg } from 'features/navbar/components/UserProfilePicture';
-import { isObject } from 'common/error/utilities';
-import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
-import { Trans } from 'react-i18next';
-import { LoadingButton } from 'common/components/LoadingButton';
 import { Constants } from 'utils/constants';
-import { faCamera, faContactCard, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
-import { useModal } from 'react-modal-hook';
-import { LoadingSpinner } from 'common/components/LoadingSpinner';
+import { UpdateUserEmailForm, UserEmailFormData } from '../components/UpdateUserEmailForm';
+import { ProfileFormData, UpdateUserProfileForm } from '../components/UpdateUserProfileForm';
 
 type RouteParams = {
   id: string;
@@ -125,9 +129,11 @@ export const UserProfilePage: FC = () => {
   const { updateUserProfilePicture, isLoading: isLoadingUpdateProfilePicture } = useUpdateProfilePicture();
   const { deleteUserProfilePicture, isLoading: isLoadingDeleteProfilePicture } = useDeleteProfilePicture();
   const [changePassword] = useChangePasswordMutation();
-  const [tab, setTab] = useState('profile');
+  const [tab, setTab] = useState('settings');
   const [passwordFormValidationErrors, setPasswordFormValidationErrors] =
     useState<ServerValidationErrors<ForgotPasswordFormData> | null>(null);
+  const { i18n } = useTranslation();
+  const { toggleTheme, theme } = useTheme();
 
   const onSubmit = async (formData: ProfileFormData) => {
     const data = { id, ...formData };
@@ -217,6 +223,7 @@ export const UserProfilePage: FC = () => {
             hideModal();
           }}
           onExited={onExited}
+          centered
         >
           <Modal.Header closeButton>
             <Modal.Title>Change my Email</Modal.Title>
@@ -237,6 +244,17 @@ export const UserProfilePage: FC = () => {
     [emailFormValidationErrors, setEmailFormValidationErrors],
   );
 
+  const changeLanguage = (ln: string) => {
+    localStorage.setItem('language', ln);
+    i18n.changeLanguage(ln);
+  };
+
+  const __languageOptions = languages.map(language => {
+    return { label: language.label, value: language.shortcode };
+  });
+
+  const defaultLanguageOption = __languageOptions.find(language => language.value === i18n.languages[0]);
+
   return (
     <Container>
       <PageHeader className='mb-4'>
@@ -255,6 +273,10 @@ export const UserProfilePage: FC = () => {
       <Row>
         <Col md={3}>
           <ProfileNav defaultActiveKey='/home'>
+            <ProfileNav.Link onClick={() => setTab('settings')} className={tab === 'settings' ? 'active' : ''}>
+              <FontAwesomeIcon className='me-2' icon={faGear} />
+              <Trans i18nKey='userProfile.settings'>App Settings</Trans>
+            </ProfileNav.Link>
             <ProfileNav.Link onClick={() => setTab('profile')} className={tab === 'profile' ? 'active' : ''}>
               <FontAwesomeIcon className='me-2' icon={faContactCard} />
               <Trans i18nKey='userProfile.profile'>Profile</Trans>
@@ -267,6 +289,67 @@ export const UserProfilePage: FC = () => {
         </Col>
 
         <Col>
+          {tab === 'settings' ? (
+            <>
+              <Row>
+                <Col md={6}>
+                  <Card className='mb-4'>
+                    <Card.Body>
+                      <div>
+                        <h5>
+                          <Trans i18nKey='userProfile.generalHeading'>Theme Preference</Trans>
+                        </h5>
+                        <div className=''>
+                          <p className='text-muted'>Select your preferred mode</p>
+                          <Form>
+                            <Form.Check
+                              type='switch'
+                              id='witch'
+                              label='Dark Mode'
+                              checked={theme === 'dark'}
+                              onClick={() => toggleTheme()}
+                            />
+                          </Form>
+                        </div>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                </Col>
+
+                <Col md={6}>
+                  <Card className='mb-4'>
+                    <Card.Body>
+                      <div>
+                        <h5>
+                          <Trans i18nKey='userProfile.generalHeading'>Language Preference</Trans>
+                        </h5>
+                        <div className='language'>
+                          <p className='text-muted'>Select your preffered language</p>
+                          <DropdownButton
+                            title={
+                              <>
+                                <FontAwesomeIcon className='me-2' size='lg' icon={faLanguage} />
+                                {defaultLanguageOption?.label}
+                              </>
+                            }
+                            className='me-3'
+                          >
+                            {__languageOptions.map(option => (
+                              <Dropdown.Item key={option.value} onClick={() => changeLanguage(option.value)}>
+                                {option.label}
+                              </Dropdown.Item>
+                            ))}
+                          </DropdownButton>
+                        </div>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              </Row>
+            </>
+          ) : (
+            ''
+          )}
           {tab === 'profile' ? (
             <>
               <Row>

@@ -9,14 +9,18 @@ export const NetworkDetector: FC<PropsWithChildren<unknown>> = ({ children }) =>
     setDisconnectedStatus(!navigator.onLine);
   };
 
+  const getRandomNumber = () => {
+    return new Date().valueOf().toString();
+  };
+
   useEffect(() => {
     window.addEventListener('online', handleConnectionChange);
     window.addEventListener('offline', handleConnectionChange);
 
     if (isDisconnected) {
-      notificationService.showEndlessErrorMessage('Internet Connection Lost');
+      notificationService.showErrorMessage('Internet Connection Lost', getRandomNumber());
     } else if (prevDisconnectionStatus.current) {
-      notificationService.showEndlessSuccessMessage('Internet Connection Restored');
+      notificationService.showSuccessMessage('Internet Connection Restored', getRandomNumber());
     }
 
     prevDisconnectionStatus.current = isDisconnected;

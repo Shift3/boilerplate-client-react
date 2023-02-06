@@ -37,7 +37,7 @@ export const SimpleConfirmModal: FC<SimpleConfirmModalProps> = ({
   };
 
   return (
-    <Modal show={show} onHide={onCancel} {...rest}>
+    <Modal show={show} onHide={onCancel} centered {...rest}>
       <Modal.Header closeButton>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>

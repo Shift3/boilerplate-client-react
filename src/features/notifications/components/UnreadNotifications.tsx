@@ -14,12 +14,12 @@ export const UnreadNotifications: FC = () => {
     isFetching,
     isLoading: isNotificationsLoading,
     getMore,
+    count,
     clear,
   } = useContext(NotificationContext);
 
   const [markAllRead, { isLoading }] = useMarkAllReadMutation();
-
-  const markRead = async () => {
+  const handleMarkAllRead = async () => {
     await markAllRead().unwrap();
     clear();
   };
@@ -34,7 +34,11 @@ export const UnreadNotifications: FC = () => {
 
       {notifications.length ? (
         <div className='text-end mb-3'>
-          <LoadingButton onClick={() => markRead()} loading={isLoading || isNotificationsLoading || isFetching}>
+          <LoadingButton
+            onClick={() => handleMarkAllRead()}
+            loading={isLoading || isNotificationsLoading || isFetching}
+            disabled={count === 0}
+          >
             Mark all Read
           </LoadingButton>
         </div>

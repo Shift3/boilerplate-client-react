@@ -90,6 +90,13 @@ export const CircularImg = styled.img<{
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 `;
 
+export const CircularContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+`;
+
 const NoContentStyles = styled.div`
   min-height: 320px;
   display: flex;
@@ -102,6 +109,9 @@ const NoContentStyles = styled.div`
     color: ${props => props.theme.textColor};
     margin-bottom: 0.5rem;
   }
+  p.lead {
+    color: ${props => props.theme.textColor};
+  }
 `;
 
 export const NoContent: FC<{
@@ -110,7 +120,7 @@ export const NoContent: FC<{
   extra?: ReactNode;
 }> = ({ title, icon, extra }) => {
   return (
-    <NoContentStyles>
+    <NoContentStyles className='noContentStyles'>
       {icon && <FontAwesomeIcon icon={icon} className='text-muted' size='2x' />}
       <p className='lead mb-0'>{title}</p>
       {extra}
