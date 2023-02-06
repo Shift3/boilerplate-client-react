@@ -1,30 +1,18 @@
 import { useGetReadNotificationsQuery } from 'common/api/notificationApi';
+import { useInfiniteLoading } from 'common/hooks/useInfiniteLoading';
+import { PaginatedResult } from 'common/models';
 import { AppNotification } from 'common/models/notifications';
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC } from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { renderNotification } from './renderNotification';
 
 export const ReadNotifications: FC = () => {
-  const [url, setUrl] = useState<string | null>(null);
-  const { data, isLoading, isFetching } = useGetReadNotificationsQuery(url, { refetchOnMountOrArgChange: true });
-  const [notifications, setNotifications] = useState<AppNotification[]>([]);
-
-  const hasMore = useMemo(() => {
-    if (isLoading || isFetching) return false;
-    return !!data?.links.next;
-  }, [data, isLoading, isFetching]);
-
-  useEffect(() => {
-    if (data && !isLoading) {
-      setNotifications(n => [...n, ...data.results]);
-    }
-  }, [data, isLoading]);
-
-  const fetchMore = () => {
-    if (hasMore && data) {
-      setUrl(data.links.next);
-    }
-  };
+  const {
+    loadedData: notifications,
+    isFetching,
+    hasMore,
+    fetchMore,
+  } = useInfiniteLoading<AppNotification, PaginatedResult<AppNotification>>('', useGetReadNotificationsQuery);
 
   return (
     <>
