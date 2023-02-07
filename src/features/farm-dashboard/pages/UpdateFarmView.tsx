@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useGetAgentByIdQuery, useGetAgentHistoryQuery, useUpdateAgentMutation } from 'common/api/agentApi';
+import { useGetFarmByIdQuery, useGetFarmHistoryQuery, useUpdateFarmMutation } from 'common/api/farmApi';
 import { isFetchBaseQueryError } from 'common/api/handleApiError';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { isObject } from 'common/error/utilities';
@@ -9,7 +9,7 @@ import { Card, Modal } from 'react-bootstrap';
 import { PageCrumb, PageHeader, SmallContainer } from 'common/styles/page';
 import { FC, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
+import { FarmDetailForm, FormData } from '../components/FarmDetailForm';
 import { useAuth } from 'features/auth/hooks';
 import { ChangeLog } from 'common/components/ChangeLog/ChangeLog';
 import { useInfiniteLoading } from 'common/hooks/useInfiniteLoading';
@@ -24,28 +24,26 @@ export type RouteParams = {
   id: string;
 };
 
-export const UpdateAgentView: FC = () => {
+export const UpdateFarmView: FC = () => {
   const { id } = useParams<RouteParams>();
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [updateAgent] = useUpdateAgentMutation();
-  const { data: agent, isLoading: isLoadingAgent, isFetching, error } = useGetAgentByIdQuery(id!);
+  const [updateFarm] = useUpdateFarmMutation();
+  const { data: Farm, isLoading: isLoadingFarm, isFetching, error } = useGetFarmByIdQuery(id!);
 
   const pageSize = 5;
   const queryParams = new QueryParamsBuilder().setPaginationParams(1, pageSize).build();
-  const url = `/agents/${id}/history/?${queryParams}`;
+  const url = `/Farms/${id}/history/?${queryParams}`;
   const {
-    loadedData: agentHistory,
-    error: agentHistoryError,
+    loadedData: FarmHistory,
+    error: FarmHistoryError,
     isFetching: isFetchingHistory,
     totalCount,
     hasMore,
     fetchMore,
-  } = useInfiniteLoading<HistoricalRecord<User>, PaginatedResult<HistoricalRecord<User>>>(
-    url,
-    useGetAgentHistoryQuery,
-    { skip: user?.role !== 'ADMIN' },
-  );
+  } = useInfiniteLoading<HistoricalRecord<User>, PaginatedResult<HistoricalRecord<User>>>(url, useGetFarmHistoryQuery, {
+    skip: user?.role !== 'ADMIN',
+  });
 
   const [formValidationErrors, setFormValidationErrors] = useState<ServerValidationErrors<FormData> | null>(null);
 
@@ -58,7 +56,7 @@ export const UpdateAgentView: FC = () => {
           </Modal.Header>
           <Modal.Body className='changelog-modal-body'>
             <DimmableContent dim={isFetchingHistory}>
-              <ChangeListGroup changeList={agentHistory} />
+              <ChangeListGroup changeList={FarmHistory} />
             </DimmableContent>
           </Modal.Body>
           <Modal.Footer className='d-flex justify-content-center changelog-modal-footer'>
@@ -76,18 +74,18 @@ export const UpdateAgentView: FC = () => {
         </Modal>
       );
     },
-    [agentHistory, isFetchingHistory],
+    [FarmHistory, isFetchingHistory],
   );
 
   useEffect(() => {
     if (error) {
-      notificationService.showErrorMessage('Unable to load agent. Returning to agent list.');
-      navigate('/agents', { replace: true });
+      notificationService.showErrorMessage('Unable to load Farm. Returning to Farm list.');
+      navigate('/Farms', { replace: true });
     }
-    if (agentHistoryError) {
-      notificationService.showErrorMessage("Unable to load the agent's change history.");
+    if (FarmHistoryError) {
+      notificationService.showErrorMessage("Unable to load the Farm's change history.");
     }
-  }, [error, navigate, agentHistoryError]);
+  }, [error, navigate, FarmHistoryError]);
 
   const handleShowAllChanges = () => {
     showModal();
@@ -100,11 +98,11 @@ export const UpdateAgentView: FC = () => {
   const handleFormSubmit = async (data: FormData) => {
     const updateRequest = { id: Number(id), ...data };
     try {
-      await updateAgent(updateRequest).unwrap();
-      notificationService.showSuccessMessage('Agent updated.');
-      navigate('/agents');
+      await updateFarm(updateRequest).unwrap();
+      notificationService.showSuccessMessage('Farm updated.');
+      navigate('/Farms');
     } catch (error) {
-      notificationService.showErrorMessage('Unable to update agent.');
+      notificationService.showErrorMessage('Unable to update Farm.');
       if (error && isFetchBaseQueryError(error)) {
         if (isObject(error.data)) {
           setFormValidationErrors(error.data);
@@ -118,24 +116,24 @@ export const UpdateAgentView: FC = () => {
   return (
     <SmallContainer>
       <PageCrumb>
-        <Link to='/agents'>
-          <FontAwesomeIcon icon={['fas', 'chevron-left']} /> Back to Agent List
+        <Link to='/Farms'>
+          <FontAwesomeIcon icon={['fas', 'chevron-left']} /> Back to Farm List
         </Link>
       </PageCrumb>
 
       <PageHeader>
         <div>
-          <h1>Edit Agent</h1>
-          <p className='text-muted'>Update this agents details here.</p>
+          <h1>Edit Farm</h1>
+          <p className='text-muted'>Update this Farms details here.</p>
         </div>
       </PageHeader>
 
       <Card>
         <Card.Body>
-          <WithLoadingOverlay isInitialLoad={isLoadingAgent && isFetching} isLoading={isLoadingAgent}>
-            {!isLoadingAgent ? (
-              <AgentDetailForm
-                defaultValues={agent}
+          <WithLoadingOverlay isInitialLoad={isLoadingFarm && isFetching} isLoading={isLoadingFarm}>
+            {!isLoadingFarm ? (
+              <FarmDetailForm
+                defaultValues={Farm}
                 submitButtonLabel='Save'
                 onSubmit={handleFormSubmit}
                 onCancel={handleFormCancel}
@@ -146,9 +144,9 @@ export const UpdateAgentView: FC = () => {
         </Card.Body>
       </Card>
       <div className='mt-3'>
-        {agentHistory && totalCount ? (
+        {FarmHistory && totalCount ? (
           <ChangeLog
-            changeList={agentHistory}
+            changeList={FarmHistory}
             previewSize={pageSize}
             totalChanges={totalCount}
             handleShowAllChanges={handleShowAllChanges}
