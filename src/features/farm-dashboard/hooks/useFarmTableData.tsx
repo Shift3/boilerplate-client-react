@@ -100,7 +100,7 @@ export const useFarmTableData: UseFarmTableData = (Farms = []) => {
               e.stopPropagation();
               showDeleteModal(Farm);
             },
-            show: userHasPermission({ permission: 'Farm:delete', data: Farm }),
+            show: userHasPermission({ permission: 'farm:delete', data: Farm }),
           },
         ],
       })),

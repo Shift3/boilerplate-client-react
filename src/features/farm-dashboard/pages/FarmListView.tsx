@@ -69,7 +69,7 @@ export const FarmListView: FC = () => {
             <Trans i18nKey='FarmList.subheading'>All Farms in the system.</Trans>
           </p>
         </div>
-        <HasPermission perform='Farm:create'>
+        <HasPermission perform='farm:create'>
           <div>
             <Link to='/Farms/create-Farm'>
               <Button>
@@ -115,7 +115,7 @@ export const FarmListView: FC = () => {
                 title='No Farms'
                 icon={faStethoscope}
                 extra={
-                  <HasPermission perform='Farm:create'>
+                  <HasPermission perform='farm:create'>
                     <p className='text-muted'>Get started by creating a new Farm.</p>
                     <Link to='/Farms/create-Farm'>
                       <Button variant='default'>Add Farm</Button>
