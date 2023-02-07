@@ -1,8 +1,8 @@
 {
-  "agentList": {
-    "heading": "Lista de agentes",
-    "subheading": "Todos los agentes del sistema.",
-    "createButton": "Agregar agente"
+  "farmList": {
+    "heading": "Lista de granjas",
+    "subheading": "Todos las granjas del sistema.",
+    "createButton": "Agregar granga"
   },
   "userDetail": {
     "heading": "Perfil",
