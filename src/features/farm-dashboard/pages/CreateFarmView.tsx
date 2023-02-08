@@ -23,7 +23,7 @@ export const CreateFarmView: FC = () => {
     try {
       await createFarm({ ...data, thumbnail: 'https://shift3tech.com/images/s3-logo-white.svg' }).unwrap();
       notificationService.showSuccessMessage('Farm created.');
-      navigate('/Farms');
+      navigate('/farms');
     } catch (error) {
       notificationService.showErrorMessage('Unable to add Farm.');
       if (error && isFetchBaseQueryError(error)) {
@@ -39,7 +39,7 @@ export const CreateFarmView: FC = () => {
   return (
     <SmallContainer>
       <PageCrumb>
-        <Link to='/Farms'>
+        <Link to='/farms'>
           <FontAwesomeIcon icon={['fas', 'chevron-left']} /> Back to Farm List
         </Link>
       </PageCrumb>

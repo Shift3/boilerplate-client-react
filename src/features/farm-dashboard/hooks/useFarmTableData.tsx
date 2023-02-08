@@ -17,20 +17,20 @@ export type FarmTableItem = {
   actions: ActionButtonProps[];
 };
 
-export type UseFarmTableData = (Farms?: Farm[]) => {
+export type UseFarmTableData = (farms?: Farm[]) => {
   columns: Column<FarmTableItem>[];
   data: FarmTableItem[];
 };
 
-export const useFarmTableData: UseFarmTableData = (Farms = []) => {
+export const useFarmTableData: UseFarmTableData = (farms = []) => {
   const { userHasPermission } = useRbac();
 
   const [deleteFarm] = useDeleteFarmMutation();
   const [showDeleteModal, hideDeleteModal] = useModalWithData<Farm>(
-    Farm =>
+    farm =>
       ({ in: open, onExited }) => {
         const onConfirm = async () => {
-          await deleteFarm(Farm.id);
+          await deleteFarm(farm.id);
           notificationService.showSuccessMessage('Farm deleted.');
           hideDeleteModal();
         };
@@ -47,7 +47,7 @@ export const useFarmTableData: UseFarmTableData = (Farms = []) => {
             onExited={onExited}
             body={
               <p className='m-0'>
-                Are you sure you want to delete the Farm named <b>{Farm.name}</b>?{' '}
+                Are you sure you want to delete the Farm named <b>{farm.name}</b>?{' '}
                 <span className='text-danger'>
                   Note that this action <b>cannot</b> be undone.
                 </span>
@@ -88,23 +88,23 @@ export const useFarmTableData: UseFarmTableData = (Farms = []) => {
   // Transform Farm objects into the data format expected by the table.
   const data: FarmTableItem[] = useMemo(
     () =>
-      Farms.map(Farm => ({
-        id: Farm.id,
-        name: Farm.name,
-        email: Farm.email,
-        phoneNumber: Farm.phoneNumber,
+      farms.map(farm => ({
+        id: farm.id,
+        name: farm.name,
+        email: farm.email,
+        phoneNumber: farm.phoneNumber,
         actions: [
           {
             text: 'Delete',
             onClick: e => {
               e.stopPropagation();
-              showDeleteModal(Farm);
+              showDeleteModal(farm);
             },
-            show: userHasPermission({ permission: 'farm:delete', data: Farm }),
+            show: userHasPermission({ permission: 'farm:delete', data: farm }),
           },
         ],
       })),
-    [Farms, userHasPermission, showDeleteModal],
+    [farms, userHasPermission, showDeleteModal],
   );
 
   return {

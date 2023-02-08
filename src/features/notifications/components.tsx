@@ -42,9 +42,9 @@ export const FarmCreatedNotification: FC<{
 
   interface FarmCreatedData {
     userId: string;
-    FarmId: number;
+    farmId: number;
     userName: string;
-    FarmName: string;
+    farmName: string;
   }
 
   const isFarmCreatedNotificationData = (data: unknown): data is FarmCreatedData => {
@@ -65,8 +65,8 @@ export const FarmCreatedNotification: FC<{
         {data.userName}
       </Link>{' '}
       <span>created a new Farm named </span>
-      <Link to={`/Farms/update-Farm/${data.FarmId}`} onClick={() => markRead(notification)}>
-        {data.FarmName}
+      <Link to={`/farms/update-farm/${data.farmId}`} onClick={() => markRead(notification)}>
+        {data.farmName}
       </Link>
     </BaseNotification>
   );

@@ -8,8 +8,8 @@ export const FarmRoutes: FC = () => (
   <Layout>
     <Routes>
       <Route path='/' element={<FarmListView />} />
-      <Route path='/create-Farm' element={<CreateFarmView />} />
-      <Route path='/update-Farm/:id' element={<UpdateFarmView />} />
+      <Route path='/create-farm' element={<CreateFarmView />} />
+      <Route path='/update-farm/:id' element={<UpdateFarmView />} />
       <Route path='/*' element={<NotFoundView />} />
     </Routes>
   </Layout>

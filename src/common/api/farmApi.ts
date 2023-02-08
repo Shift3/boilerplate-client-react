@@ -36,7 +36,7 @@ export type UpdateFarmRequest = Pick<
 >;
 
 export const farmApi = createApi({
-  reducerPath: 'FarmApi',
+  reducerPath: 'farmApi',
 
   baseQuery: customBaseQuery,
 
@@ -59,13 +59,13 @@ export const farmApi = createApi({
           .setSortParam(sortBy)
           .setFilterParam(filters)
           .build();
-        return { url: `/Farms/?${queryParams}` };
+        return { url: `/farms/?${queryParams}` };
       },
       providesTags: ['Farm'],
     }),
 
     getFarmById: builder.query<Farm, number | string>({
-      query: id => ({ url: `/Farms/${id}/` }),
+      query: id => ({ url: `/farms/${id}/` }),
       providesTags: ['Farm'],
     }),
 
@@ -75,7 +75,7 @@ export const farmApi = createApi({
 
     createFarm: builder.mutation<Farm, CreateFarmRequest>({
       query: payload => ({
-        url: '/Farms/',
+        url: '/farms/',
         method: 'POST',
         body: payload,
       }),
@@ -84,7 +84,7 @@ export const farmApi = createApi({
 
     updateFarm: builder.mutation<Farm, UpdateFarmRequest>({
       query: ({ id, ...FarmUpdate }) => ({
-        url: `/Farms/${id}/`,
+        url: `/farms/${id}/`,
         method: 'PUT',
         body: FarmUpdate,
       }),
@@ -93,7 +93,7 @@ export const farmApi = createApi({
 
     deleteFarm: builder.mutation<void, number>({
       query: FarmId => ({
-        url: `/Farms/${FarmId}/`,
+        url: `/farms/${FarmId}/`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Farm'],

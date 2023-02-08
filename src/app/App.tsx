@@ -83,7 +83,7 @@ export const App: FC = () => {
                       }
                     />
                     <Route
-                      path='/Farms/*'
+                      path='/farms/*'
                       element={
                         <RequireAuth>
                           <FarmRoutes />

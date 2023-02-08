@@ -94,7 +94,7 @@ export const FarmDetailForm: FC<Props> = ({
         <h5>Personal</h5>
         <Row className='mb-2'>
           <Col md={4}>
-            <Form.Group controlId='create-Farm-form-Farm-name'>
+            <Form.Group controlId='create-farm-form-farm-name'>
               <Form.Label>Name</Form.Label>
               <Form.Control type='text' {...register('name')} isInvalid={!!errors.name} />
               <Form.Control.Feedback type='invalid'>{errors.name?.message}</Form.Control.Feedback>

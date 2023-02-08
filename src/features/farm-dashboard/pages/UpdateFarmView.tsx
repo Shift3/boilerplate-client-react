@@ -29,14 +29,14 @@ export const UpdateFarmView: FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [updateFarm] = useUpdateFarmMutation();
-  const { data: Farm, isLoading: isLoadingFarm, isFetching, error } = useGetFarmByIdQuery(id!);
+  const { data: farm, isLoading: isLoadingFarm, isFetching, error } = useGetFarmByIdQuery(id!);
 
   const pageSize = 5;
   const queryParams = new QueryParamsBuilder().setPaginationParams(1, pageSize).build();
-  const url = `/Farms/${id}/history/?${queryParams}`;
+  const url = `/farms/${id}/history/?${queryParams}`;
   const {
-    loadedData: FarmHistory,
-    error: FarmHistoryError,
+    loadedData: farmHistory,
+    error: farmHistoryError,
     isFetching: isFetchingHistory,
     totalCount,
     hasMore,
@@ -56,7 +56,7 @@ export const UpdateFarmView: FC = () => {
           </Modal.Header>
           <Modal.Body className='changelog-modal-body'>
             <DimmableContent dim={isFetchingHistory}>
-              <ChangeListGroup changeList={FarmHistory} />
+              <ChangeListGroup changeList={farmHistory} />
             </DimmableContent>
           </Modal.Body>
           <Modal.Footer className='d-flex justify-content-center changelog-modal-footer'>
@@ -74,18 +74,18 @@ export const UpdateFarmView: FC = () => {
         </Modal>
       );
     },
-    [FarmHistory, isFetchingHistory],
+    [farmHistory, isFetchingHistory],
   );
 
   useEffect(() => {
     if (error) {
       notificationService.showErrorMessage('Unable to load Farm. Returning to Farm list.');
-      navigate('/Farms', { replace: true });
+      navigate('/farms', { replace: true });
     }
-    if (FarmHistoryError) {
+    if (farmHistoryError) {
       notificationService.showErrorMessage("Unable to load the Farm's change history.");
     }
-  }, [error, navigate, FarmHistoryError]);
+  }, [error, navigate, farmHistoryError]);
 
   const handleShowAllChanges = () => {
     showModal();
@@ -100,7 +100,7 @@ export const UpdateFarmView: FC = () => {
     try {
       await updateFarm(updateRequest).unwrap();
       notificationService.showSuccessMessage('Farm updated.');
-      navigate('/Farms');
+      navigate('/farms');
     } catch (error) {
       notificationService.showErrorMessage('Unable to update Farm.');
       if (error && isFetchBaseQueryError(error)) {
@@ -116,7 +116,7 @@ export const UpdateFarmView: FC = () => {
   return (
     <SmallContainer>
       <PageCrumb>
-        <Link to='/Farms'>
+        <Link to='/farms'>
           <FontAwesomeIcon icon={['fas', 'chevron-left']} /> Back to Farm List
         </Link>
       </PageCrumb>
@@ -133,7 +133,7 @@ export const UpdateFarmView: FC = () => {
           <WithLoadingOverlay isInitialLoad={isLoadingFarm && isFetching} isLoading={isLoadingFarm}>
             {!isLoadingFarm ? (
               <FarmDetailForm
-                defaultValues={Farm}
+                defaultValues={farm}
                 submitButtonLabel='Save'
                 onSubmit={handleFormSubmit}
                 onCancel={handleFormCancel}
@@ -144,9 +144,9 @@ export const UpdateFarmView: FC = () => {
         </Card.Body>
       </Card>
       <div className='mt-3'>
-        {FarmHistory && totalCount ? (
+        {farmHistory && totalCount ? (
           <ChangeLog
-            changeList={FarmHistory}
+            changeList={farmHistory}
             previewSize={pageSize}
             totalChanges={totalCount}
             handleShowAllChanges={handleShowAllChanges}

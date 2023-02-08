@@ -35,8 +35,8 @@ export const FarmListView: FC = () => {
     searchText: psfSearchText,
     addSearchText,
   } = usePSFQuery<PaginatedResult<Farm>>(useGetFarmsQuery);
-  const Farms = useMemo(() => data?.results ?? [], [data]);
-  const { columns, data: tableData } = useFarmTableData(Farms);
+  const farms = useMemo(() => data?.results ?? [], [data]);
+  const { columns, data: tableData } = useFarmTableData(farms);
 
   const isSearchingOrFiltering = useMemo(() => {
     return psfFilters.length > 0 || psfSearchText.length > 0;
@@ -63,17 +63,17 @@ export const FarmListView: FC = () => {
       <PageHeader>
         <div>
           <h1>
-            <Trans i18nKey='FarmList.heading'>Farm List</Trans>
+            <Trans i18nKey='farmList.heading'>Farm List</Trans>
           </h1>
           <p>
-            <Trans i18nKey='FarmList.subheading'>All Farms in the system.</Trans>
+            <Trans i18nKey='farmList.subheading'>All Farms in the system.</Trans>
           </p>
         </div>
         <HasPermission perform='farm:create'>
           <div>
-            <Link to='/Farms/create-Farm'>
+            <Link to='/farms/create-farm'>
               <Button>
-                <Trans i18nKey='FarmList.createButton'>Add Farm</Trans>
+                <Trans i18nKey='farmList.createButton'>Add Farm</Trans>
               </Button>
             </Link>
           </div>
@@ -95,7 +95,7 @@ export const FarmListView: FC = () => {
               <DataTable<FarmTableItem>
                 columns={columns}
                 data={tableData}
-                onRowClick={item => navigate(`/Farms/update-Farm/${item.id}`)}
+                onRowClick={item => navigate(`/farms/update-farm/${item.id}`)}
                 pagination={{
                   basePage: 1,
                   page,
@@ -117,7 +117,7 @@ export const FarmListView: FC = () => {
                 extra={
                   <HasPermission perform='farm:create'>
                     <p className='text-muted'>Get started by creating a new Farm.</p>
-                    <Link to='/Farms/create-Farm'>
+                    <Link to='/farms/create-farm'>
                       <Button variant='default'>Add Farm</Button>
                     </Link>
                   </HasPermission>
