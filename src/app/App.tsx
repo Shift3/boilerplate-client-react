@@ -12,7 +12,7 @@ import { NotificationRoutes } from 'features/notifications/Routes';
 import { UserRoutes } from 'features/user-dashboard';
 import { HomeRoutes } from 'features/user-dashboard/HomeRoutes';
 import { UserProfilePage } from 'features/user-profile/pages/UserProfilePage';
-import { createContext, FC, useMemo, useState } from 'react';
+import { createContext, FC, useEffect, useMemo, useState } from 'react';
 import { ModalProvider } from 'react-modal-hook';
 import { Route, Routes } from 'react-router-dom';
 import { Slide, toast, ToastContainer } from 'react-toastify';
@@ -46,6 +46,21 @@ export const App: FC = () => {
       toggleTheme,
     };
   }, [theme]);
+
+  useEffect(() => {
+    window.addEventListener('load', () => {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+          .register('/sw.js')
+          .then(() => {
+            console.log('Service worker registered!');
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
+  })
 
   return (
     <AppErrorBoundary>

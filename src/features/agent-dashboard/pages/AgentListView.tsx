@@ -8,7 +8,7 @@ import { TableCard } from 'common/styles/card';
 import { PageHeader } from 'common/styles/page';
 import { NoContent } from 'common/styles/utilities';
 import { HasPermission } from 'features/rbac';
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { Button, Card, Container } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { AgentTableItem, useAgentTableData } from '../hooks/useAgentTableData';
@@ -16,6 +16,8 @@ import { Trans } from 'react-i18next';
 import { StringFilter } from 'common/components/DataTable/Filters';
 import { FilterInfo } from 'common/components/DataTable/FilterDropdown';
 import { faStethoscope } from '@fortawesome/free-solid-svg-icons';
+import { getConnectionStatus } from 'features/network-detector/components/NetworkDetector';
+import { readAllData } from 'common/db/utility';
 
 export const AgentListView: FC = () => {
   const navigate = useNavigate();
@@ -35,7 +37,7 @@ export const AgentListView: FC = () => {
     searchText: psfSearchText,
     addSearchText,
   } = usePSFQuery<PaginatedResult<Agent>>(useGetAgentsQuery);
-  const agents = useMemo(() => data?.results ?? [], [data]);
+  const [ agents, setAgents ] = useState<Agent[]>(data?.results ?? []);
   const { columns, data: tableData } = useAgentTableData(agents);
 
   const isSearchingOrFiltering = useMemo(() => {
@@ -57,6 +59,18 @@ export const AgentListView: FC = () => {
     ],
     [],
   );
+
+  useEffect(() => {
+    if (data) {
+      setAgents(data?.results ?? []);
+    } 
+
+    if (!getConnectionStatus() && 'indexedDB' in window) {
+      readAllData('agents').then((data) => {
+        setAgents(data);
+      })
+    }
+  }, [data]);
 
   return (
     <Container>
