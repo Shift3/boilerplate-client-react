@@ -5,7 +5,7 @@ import { AppNotification } from 'common/models/notifications';
 import { FC, PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 import { useMarkRead } from './hooks/useMarkRead';
-import { formatDistance } from 'date-fns';
+import { formatDistance, parseISO } from 'date-fns';
 
 const BaseNotification: FC<
   PropsWithChildren<{
@@ -57,7 +57,9 @@ export const AgentCreatedNotification: FC<{
   return (
     <BaseNotification title='New Agent Created' notification={notification}>
       <p className='p-0 m-0 mb-2'>
-        <div className='fw-normal fs-6 text-muted'>{formatDistance(new Date(), notification.created)}</div>
+        <span className='fw-normal fs-6 text-muted'>
+          {formatDistance(new Date(), parseISO(notification.created))} ago
+        </span>
       </p>
       <Link to={`/users/update-user/${data.userId}`} onClick={() => markRead(notification)}>
         {data.userName}
