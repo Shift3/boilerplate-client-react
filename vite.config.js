@@ -14,9 +14,6 @@ export default defineConfig({
       protocolImports: true,
     }),
   ],
-  build: {
-    sourcemap: true,
-  },
   define: {
     'process.env': {},
   },

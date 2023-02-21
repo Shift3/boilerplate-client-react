@@ -49,3 +49,4 @@
 //   });
 
 // export default { i18next };
+export {};

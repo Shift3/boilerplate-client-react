@@ -43,13 +43,13 @@
     "yup": "^0.32.9"
   },
   "scripts": {
-    "start": "cross-env PORT=4200 vite",
+    "start": "cross-env VITE_PORT=4200 vite",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "build": "tsc && vite build",
-    "predeploy:staging": "cross-env REACT_APP_CONFIGURATION=staging react-scripts build",
-    "predeploy:production": "cross-env REACT_APP_CONFIGURATION=production react-scripts build",
-    "deploy:staging": "aws s3 sync ./build s3://<< replace-with-s3-bucket-name >> --profile shift3 --delete",
-    "deploy:production": "aws s3 sync ./build s3://<< replace-with-s3-bucket-name >> --profile shift3 --delete",
+    "predeploy:staging": "cross-env tsc && cross-env vite build --mode staging",
+    "predeploy:production": "cross-env tsc && cross-env vite build",
+    "deploy:staging": "aws s3 sync ./dist s3://<< replace-with-s3-bucket-name >> --profile shift3 --delete",
+    "deploy:production": "aws s3 sync ./dist s3://<< replace-with-s3-bucket-name >> --profile shift3 --delete",
     "test": "echo",
     "test-ci": "echo",
     "test-cov": "echo",

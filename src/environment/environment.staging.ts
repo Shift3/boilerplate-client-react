@@ -7,7 +7,7 @@ export const environment: IEnvironment = {
   apiHost,
   apiRoute: `https://${apiHost}`,
   environment: EnvironmentConfiguration.Staging,
-  isProduction: process.env.NODE_ENV === 'production',
+  isProduction: true,
   name: packageJson.name,
   version: packageJson.version,
   sentryDSN: process.env.SENTRY_DSN,

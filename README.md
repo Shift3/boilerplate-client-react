@@ -202,8 +202,8 @@ In `package.json`, updated the `"deploy:staging"` and the `deploy:production` np
   ...,
   "scripts": {
     ...
-    "deploy:staging": "aws s3 sync ./build s3://example-staging.shift3sandbox.com --profile BWTC-Developer --delete"
-    "deploy:production": "aws s3 sync ./build s3://example-prod.shift3sandbox.com --profile BWTC-Developer --delete"
+    "deploy:staging": "aws s3 sync ./dist s3://example-staging.shift3sandbox.com --profile BWTC-Developer --delete"
+    "deploy:production": "aws s3 sync ./dist s3://example-prod.shift3sandbox.com --profile BWTC-Developer --delete"
     ...
   }
 }
