@@ -1,4 +1,4 @@
-import { faCamera, faContactCard, faGear, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faContactCard, faGear, faLanguage, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { handleApiError, isFetchBaseQueryError } from 'common/api/handleApiError';
 import {
@@ -27,11 +27,24 @@ import {
   useUpdateProfilePicture,
   useUpdateUserProfile,
 } from 'features/user-profile/hooks';
-// import { languages } from 'i18n/config';
+import { languages } from 'i18n/config';
 import { FC, useRef, useState } from 'react';
-import { Alert, Card, Col, Container, Form, Modal, Nav, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
+import {
+  Alert,
+  Card,
+  Col,
+  Container,
+  Dropdown,
+  DropdownButton,
+  Form,
+  Modal,
+  Nav,
+  OverlayTrigger,
+  Row,
+  Tooltip,
+} from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useModal } from 'react-modal-hook';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -130,7 +143,7 @@ export const UserProfilePage: FC = () => {
   const [tab, setTab] = useState('settings');
   const [passwordFormValidationErrors, setPasswordFormValidationErrors] =
     useState<ServerValidationErrors<ForgotPasswordFormData> | null>(null);
-  // const { i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const { toggleTheme, theme } = useTheme();
 
   const onSubmit = async (formData: ProfileFormData) => {
@@ -242,16 +255,16 @@ export const UserProfilePage: FC = () => {
     [emailFormValidationErrors, setEmailFormValidationErrors],
   );
 
-  // const changeLanguage = (ln: string) => {
-  //   localStorage.setItem('language', ln);
-  //   i18n.changeLanguage(ln);
-  // };
+  const changeLanguage = (ln: string) => {
+    localStorage.setItem('language', ln);
+    i18n.changeLanguage(ln);
+  };
 
-  // const __languageOptions = languages.map(language => {
-  //   return { label: language.label, value: language.shortcode };
-  // });
+  const __languageOptions = languages.map(language => {
+    return { label: language.label, value: language.shortcode };
+  });
 
-  // const defaultLanguageOption = __languageOptions.find(language => language.value === i18n.languages[0]);
+  const defaultLanguageOption = __languageOptions.find(language => language.value === i18n.languages[0]);
 
   return (
     <Container>
@@ -314,12 +327,12 @@ export const UserProfilePage: FC = () => {
                   </Card>
                 </Col>
 
-                {/* <Col md={6}>
+                <Col md={6}>
                   <Card className='mb-4'>
                     <Card.Body>
                       <div>
                         <h5>
-                          <Trans i18nKey='userProfile.generalHeading'>Language Preference</Trans>
+                          <Trans i18nKey='userProfile.languagePreference'>Language Preference</Trans>
                         </h5>
                         <div className='language'>
                           <p className='text-muted'>Select your preffered language</p>
@@ -342,7 +355,7 @@ export const UserProfilePage: FC = () => {
                       </div>
                     </Card.Body>
                   </Card>
-                </Col> */}
+                </Col>
               </Row>
             </>
           ) : (
