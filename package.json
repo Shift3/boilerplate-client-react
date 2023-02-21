@@ -13,8 +13,6 @@
     "@testing-library/react": "^13.4.0",
     "@types/react-table": "^7.7.12",
     "bootstrap": "5.2.1",
-    "cross-env": "^7.0.3",
-    "dotenv": "^16.0.2",
     "history": "^5.3.0",
     "http-status-codes": "^2.1.4",
     "i18next": "^22.4.10",
@@ -43,11 +41,11 @@
     "yup": "^0.32.9"
   },
   "scripts": {
-    "start": "cross-env vite",
+    "start": "vite",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "build": "tsc && vite build",
-    "predeploy:staging": "cross-env tsc && cross-env vite build --mode staging",
-    "predeploy:production": "cross-env tsc && cross-env vite build",
+    "predeploy:staging": "tsc && vite build --mode staging",
+    "predeploy:production": "tsc && vite build",
     "deploy:staging": "aws s3 sync ./dist s3://<< replace-with-s3-bucket-name >> --profile shift3 --delete",
     "deploy:production": "aws s3 sync ./dist s3://<< replace-with-s3-bucket-name >> --profile shift3 --delete",
     "test": "echo",
