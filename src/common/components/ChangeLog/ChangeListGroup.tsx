@@ -4,9 +4,9 @@ import { FC } from 'react';
 import { ListGroup } from 'react-bootstrap';
 import { CircularContainer } from 'common/styles/utilities';
 import styled from 'styled-components';
-import moment from 'moment';
 import { HistoricalRecord } from 'common/models/historicalRecord';
 import { User } from 'common/models';
+import { format, parseISO } from 'date-fns';
 
 export type Props = {
   changeList: HistoricalRecord<User>[];
@@ -72,7 +72,7 @@ export const ChangeListGroup: FC<Props> = ({ changeList }) => {
                   ? getShortenedName(`${changeItem.historyUser.firstName} ${changeItem.historyUser.lastName}`)
                   : 'System'}
               </span>
-              <span className='text-muted d-block'>{moment(changeItem.historyDate).format('MMM D, h:mm a')}</span>
+              <span className='text-muted d-block'>{format(parseISO(changeItem.historyDate), 'MMM d, h:mm a')}</span>
             </div>
           </StyledListGroupItem>
         );

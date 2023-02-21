@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { AppNotification } from 'common/models/notifications';
 import { FC, PropsWithChildren } from 'react';
-import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import { useMarkRead } from './hooks/useMarkRead';
+import { formatDistance } from 'date-fns';
 
 const BaseNotification: FC<
   PropsWithChildren<{
@@ -57,9 +57,7 @@ export const AgentCreatedNotification: FC<{
   return (
     <BaseNotification title='New Agent Created' notification={notification}>
       <p className='p-0 m-0 mb-2'>
-        <Moment className='fw-normal fs-6 text-muted' fromNow>
-          {notification.created}
-        </Moment>
+        <div className='fw-normal fs-6 text-muted'>{formatDistance(new Date(), notification.created)}</div>
       </p>
       <Link to={`/users/update-user/${data.userId}`} onClick={() => markRead(notification)}>
         {data.userName}

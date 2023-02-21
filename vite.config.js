@@ -1,11 +1,11 @@
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import { esbuildCommonjs } from '@originjs/vite-plugin-commonjs';
+import { viteCommonjs, esbuildCommonjs } from '@originjs/vite-plugin-commonjs';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 // https://vitejs.dev/config/
-export default defineConfig(({ command, mode }) => {
+export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
 
   return {
@@ -15,6 +15,7 @@ export default defineConfig(({ command, mode }) => {
       nodePolyfills({
         protocolImports: true,
       }),
+      viteCommonjs(),
     ],
     server: {
       port: process.env.PORT || 4200,
@@ -24,7 +25,7 @@ export default defineConfig(({ command, mode }) => {
     },
     optimizeDeps: {
       esbuildOptions: {
-        plugins: [esbuildCommonjs(['react-moment', 'lodash'])],
+        plugins: [esbuildCommonjs(['lodash'])],
       },
     },
   };
