@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import * as path from 'path';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { esbuildCommonjs } from '@originjs/vite-plugin-commonjs';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
@@ -14,6 +13,9 @@ export default defineConfig({
       protocolImports: true,
     }),
   ],
+  server: {
+    port: process.env.PORT || 4200,
+  },
   define: {
     'process.env': {},
   },

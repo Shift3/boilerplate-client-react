@@ -43,7 +43,7 @@
     "yup": "^0.32.9"
   },
   "scripts": {
-    "start": "cross-env VITE_PORT=4200 vite",
+    "start": "cross-env vite",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "build": "tsc && vite build",
     "predeploy:staging": "cross-env tsc && cross-env vite build --mode staging",
