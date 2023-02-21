@@ -318,7 +318,7 @@ export const UserProfilePage: FC = () => {
                               id='witch'
                               label='Dark Mode'
                               checked={theme === 'dark'}
-                              onClick={() => toggleTheme()}
+                              onChange={() => toggleTheme()}
                             />
                           </Form>
                         </div>
