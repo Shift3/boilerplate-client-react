@@ -335,7 +335,7 @@ export const UserProfilePage: FC = () => {
                           <Trans i18nKey='userProfile.languagePreference'>Language Preference</Trans>
                         </h5>
                         <div className='language'>
-                          <p className='text-muted'>Select your preffered language</p>
+                          <p className='text-muted'>Select your preferred language</p>
                           <DropdownButton
                             title={
                               <>
