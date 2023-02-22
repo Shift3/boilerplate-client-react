@@ -29,7 +29,11 @@ export const useLogin: UseLoginHook = () => {
         const auth = { token: session.token, user: session.user };
         dispatch(authSlice.actions.userLoggedIn(auth));
         authLocalStorage.saveAuthState(auth);
+<<<<<<< HEAD
         navigate('/', { replace: true });
+=======
+        navigate('/farms', { replace: true });
+>>>>>>> 3413e64 (removed yarn.lock)
       } catch (error) {
         if (isFetchBaseQueryError(error)) {
           handleApiError(error);

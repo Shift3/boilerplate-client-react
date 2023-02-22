@@ -27,7 +27,7 @@
     "createButton": "Agregar usuario"
   },
   "userProfile": {
-    "back": "Volver a la lista de agentes",
+    "back": "Volver a la lista de granjas",
     "subheading": "Configuración de su cuenta",
     "profile": "Perfil",
     "security": "Seguridad y Contraseña",
