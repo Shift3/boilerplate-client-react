@@ -102,7 +102,7 @@ export const UpdateFarmView: FC = () => {
       notificationService.showSuccessMessage('Farm updated.');
       navigate('/farms');
     } catch (error) {
-      notificationService.showErrorMessage('Unable to update Farm.');
+      notificationService.showErrorMessage('Unable to update farm.');
       if (error && isFetchBaseQueryError(error)) {
         if (isObject(error.data)) {
           setFormValidationErrors(error.data);
@@ -124,7 +124,7 @@ export const UpdateFarmView: FC = () => {
       <PageHeader>
         <div>
           <h1>Edit Farm</h1>
-          <p className='text-muted'>Update this Farms details here.</p>
+          <p className='text-muted'>Update this farm's details here.</p>
         </div>
       </PageHeader>
 

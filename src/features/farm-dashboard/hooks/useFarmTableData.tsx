@@ -47,7 +47,7 @@ export const useFarmTableData: UseFarmTableData = (farms = []) => {
             onExited={onExited}
             body={
               <p className='m-0'>
-                Are you sure you want to delete the Farm named <b>{farm.name}</b>?{' '}
+                Are you sure you want to delete the farm named <b>{farm.name}</b>?{' '}
                 <span className='text-danger'>
                   Note that this action <b>cannot</b> be undone.
                 </span>

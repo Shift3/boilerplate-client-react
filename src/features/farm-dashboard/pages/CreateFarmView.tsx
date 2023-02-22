@@ -25,7 +25,7 @@ export const CreateFarmView: FC = () => {
       notificationService.showSuccessMessage('Farm created.');
       navigate('/farms');
     } catch (error) {
-      notificationService.showErrorMessage('Unable to add Farm.');
+      notificationService.showErrorMessage('Unable to add farm.');
       if (error && isFetchBaseQueryError(error)) {
         if (isObject(error.data)) {
           setFormValidationErrors(error.data);
@@ -46,7 +46,7 @@ export const CreateFarmView: FC = () => {
       <PageHeader>
         <div>
           <h1>Create Farm</h1>
-          <p className='text-muted'>Add a new Farm to the system.</p>
+          <p className='text-muted'>Add a new farm to the system.</p>
         </div>
       </PageHeader>
 
