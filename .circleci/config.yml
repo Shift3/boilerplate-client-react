@@ -31,7 +31,7 @@ commands:
       - aws-s3/sync:
           arguments: |
             --delete
-          from: './build'
+          from: './dist'
           aws-region: <<parameters.aws_default_region_env>>
           aws-access-key-id: <<parameters.aws_access_key_env>>
           aws-secret-access-key: <<parameters.aws_secret_key_env>>

@@ -1,7 +1,7 @@
 import { Filter, FilterOp } from 'common/models';
-import moment from 'moment';
 import { FC, useState } from 'react';
 import { Form } from 'react-bootstrap';
+import { subDays } from 'date-fns';
 
 export type FilterUI = FC<{
   attribute: string;
@@ -93,7 +93,7 @@ export const RecentDateFilter = (days: number[]) => {
     const [choice, setChoice] = useState(days[0]);
 
     const filterDaysAgo = (days: number) => {
-      const date = moment().subtract(days, 'd');
+      const date = subDays(new Date(), days);
       setFilter(attribute, 'gt', date.toISOString());
       setChoice(days);
     };

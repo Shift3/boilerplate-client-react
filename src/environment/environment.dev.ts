@@ -7,7 +7,7 @@ export const environment: IEnvironment = {
   apiHost,
   apiRoute: `http://${apiHost}:8000`,
   environment: EnvironmentConfiguration.Development,
-  isProduction: process.env.NODE_ENV === 'production',
+  isProduction: false,
   name: packageJson.name,
   version: packageJson.version,
 };

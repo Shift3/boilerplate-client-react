@@ -29,10 +29,21 @@ import {
 } from 'features/user-profile/hooks';
 import { languages } from 'i18n/config';
 import { FC, useRef, useState } from 'react';
-import { Alert, Card, Col, Container, Form, Modal, Nav, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
+import {
+  Alert,
+  Card,
+  Col,
+  Container,
+  Dropdown,
+  DropdownButton,
+  Form,
+  Modal,
+  Nav,
+  OverlayTrigger,
+  Row,
+  Tooltip,
+} from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
 import { Trans, useTranslation } from 'react-i18next';
 import { useModal } from 'react-modal-hook';
 import { useParams } from 'react-router-dom';
@@ -307,7 +318,7 @@ export const UserProfilePage: FC = () => {
                               id='witch'
                               label='Dark Mode'
                               checked={theme === 'dark'}
-                              onClick={() => toggleTheme()}
+                              onChange={() => toggleTheme()}
                             />
                           </Form>
                         </div>
@@ -321,7 +332,7 @@ export const UserProfilePage: FC = () => {
                     <Card.Body>
                       <div>
                         <h5>
-                          <Trans i18nKey='userProfile.generalHeading'>Language Preference</Trans>
+                          <Trans i18nKey='userProfile.languagePreference'>Language Preference</Trans>
                         </h5>
                         <div className='language'>
                           <p className='text-muted'>Select your preffered language</p>
