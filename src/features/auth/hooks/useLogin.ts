@@ -29,7 +29,7 @@ export const useLogin: UseLoginHook = () => {
         const auth = { token: session.token, user: session.user };
         dispatch(authSlice.actions.userLoggedIn(auth));
         authLocalStorage.saveAuthState(auth);
-        navigate('/agents', { replace: true });
+        navigate('/', { replace: true });
       } catch (error) {
         if (isFetchBaseQueryError(error)) {
           handleApiError(error);
