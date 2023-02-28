@@ -3382,7 +3382,7 @@ This is generally NOT safe. Learn more at https://bit.ly/wb-precache`;
   };
 
   // public/sw.ts
-  precacheAndRoute([{"revision":"b75ae000439862b6a97d2129c85680e8","url":"bootstrap.bundle.min.js"},{"revision":"3f30c2c47d7d23c7a994db0c862d45a5","url":"bootstrap.min.css"},{"revision":"7f98bafec3debd677ae13746caf0425d","url":"favicon.ico"},{"revision":"678d28bb57ed549b52407df3fed58e81","url":"index.html"},{"revision":"33dbdd0177549353eeeb785d02c294af","url":"logo192.png"},{"revision":"917515db74ea8d1aee6a246cfbcc0b45","url":"logo512.png"},{"revision":"2188852b35933f66039e6caeb7d99f71","url":"manifest.json"},{"revision":"4ef48feda6e0082530020001b73e8a80","url":"offline.html"},{"revision":"fa1ded1ed7c11438a9b0385b1e112850","url":"robots.txt"}]);
+  precacheAndRoute([{"revision":"b75ae000439862b6a97d2129c85680e8","url":"bootstrap.bundle.min.js"},{"revision":"3f30c2c47d7d23c7a994db0c862d45a5","url":"bootstrap.min.css"},{"revision":"7f98bafec3debd677ae13746caf0425d","url":"favicon.ico"},{"revision":"33dbdd0177549353eeeb785d02c294af","url":"logo192.png"},{"revision":"917515db74ea8d1aee6a246cfbcc0b45","url":"logo512.png"},{"revision":"2188852b35933f66039e6caeb7d99f71","url":"manifest.json"},{"revision":"4ef48feda6e0082530020001b73e8a80","url":"offline.html"},{"revision":"fa1ded1ed7c11438a9b0385b1e112850","url":"robots.txt"}]);
   registerRoute(
     /http:\/\/localhost:8000\/agents\/\?.*/,
     async (args) => {
@@ -3418,7 +3418,9 @@ This is generally NOT safe. Learn more at https://bit.ly/wb-precache`;
     }
   };
   registerRoute(function(routeData) {
-    return routeData.event.request.headers.get("accept").includes("*/*");
+    console.log("routeData:", routeData);
+    console.log("routeData - get -", routeData.event.request.headers.get("accept"));
+    return routeData.event.request.headers.get("accept").includes("application/json") || routeData.event.request.headers.get("accept").includes("text/html") || routeData.event.request.headers.get("accept").includes("img/jpeg") || routeData.event.request.headers.get("accept").includes("img/png") || routeData.event.request.headers.get("accept").includes("*/*");
   }, async (args) => {
     return caches.match(args.event.request).then(function(response) {
       if (response) {
@@ -3435,7 +3437,7 @@ This is generally NOT safe. Learn more at https://bit.ly/wb-precache`;
       }
     });
   });
-  var bgSyncPlugin = new BackgroundSyncPlugin("TestQueue", {
+  var bgSyncPlugin = new BackgroundSyncPlugin("RequestQueue", {
     maxRetentionTime: 24 * 60
     // Retry for max of 24 Hours (specified in minutes)
   });

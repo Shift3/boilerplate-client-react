@@ -57,7 +57,14 @@ const precacheHandler = async ({request}) => {
 }
 
 registerRoute(function (routeData) {
-  return (routeData.event.request.headers.get('accept').includes('*/*'));
+  console.log('routeData:', routeData);
+  console.log('routeData - get -', routeData.event.request.headers.get('accept'));
+  return (routeData.event.request.headers.get('accept').includes('application/json') 
+          || routeData.event.request.headers.get('accept').includes('text/html')
+          || routeData.event.request.headers.get('accept').includes('img/jpeg')
+          || routeData.event.request.headers.get('accept').includes('img/png')
+          || routeData.event.request.headers.get('accept').includes('*/*')
+          );
 }, async (args) => {
   return caches.match(args.event.request)
     .then(function (response) {

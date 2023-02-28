@@ -43,9 +43,9 @@
     "yup": "^0.32.9"
   },
   "scripts": {
-    "start": "vite",
+    "start": "esbuild --outfile=public/sw.js --bundle public/sw.ts && workbox injectManifest workbox-config.js && vite",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "build": "tsc && vite build",
+    "build": "esbuild --outfile=public/sw.js --bundle public/sw.ts && workbox injectManifest workbox-config.js && tsc && vite build",
     "predeploy:staging": "tsc && vite build --mode staging",
     "predeploy:production": "tsc && vite build",
     "deploy:staging": "aws s3 sync ./dist s3://<< replace-with-s3-bucket-name >> --profile shift3 --delete",
@@ -56,8 +56,7 @@
     "test-cov-ci": "echo",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "i18n": "i18next **/*.tsx",
-    "swBuild": "esbuild --outfile=public/sw.js --bundle public/sw.ts && workbox injectManifest workbox-config.js"
+    "i18n": "i18next **/*.tsx"
   },
   "browserslist": {
     "production": [
