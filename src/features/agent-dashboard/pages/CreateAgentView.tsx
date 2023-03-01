@@ -9,11 +9,13 @@ import { PageCrumb, PageHeader, SmallContainer } from 'common/styles/page';
 import { FC, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
+import { getConnectionStatus } from 'features/network-detector/components/NetworkDetector';
 
 export const CreateAgentView: FC = () => {
   const navigate = useNavigate();
   const [createAgent] = useCreateAgentMutation();
   const [formValidationErrors, setFormValidationErrors] = useState<ServerValidationErrors<FormData> | null>(null);
+  const isOnline = getConnectionStatus();
 
   const handleFormCancel = () => {
     navigate(-1);
@@ -25,14 +27,20 @@ export const CreateAgentView: FC = () => {
       notificationService.showSuccessMessage('Agent created.');
       navigate('/agents');
     } catch (error) {
-      notificationService.showErrorMessage('Unable to add agent.');
+      
+      if (isOnline) {
+        notificationService.showErrorMessage('Unable to add agent.');
+      } else {
+        notificationService.showEndlessInfoMessage(`You created an agent (${ data.name }) while offline. It will be posted to the server when you reconnect.`);
+      }
+      
       if (error && isFetchBaseQueryError(error)) {
         if (isObject(error.data)) {
           setFormValidationErrors(error.data);
         } else {
           throw error;
         }
-      }
+      }  
     }
   };
 

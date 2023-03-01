@@ -3,7 +3,7 @@ import { useGetAgentByIdQuery, useGetAgentHistoryQuery, useUpdateAgentMutation }
 import { isFetchBaseQueryError } from 'common/api/handleApiError';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { isObject } from 'common/error/utilities';
-import { PaginatedResult, ServerValidationErrors, User } from 'common/models';
+import { Agent, PaginatedResult, ServerValidationErrors, User } from 'common/models';
 import * as notificationService from 'common/services/notification';
 import { Card, Modal } from 'react-bootstrap';
 import { PageCrumb, PageHeader, SmallContainer } from 'common/styles/page';
@@ -19,6 +19,8 @@ import { ChangeListGroup } from 'common/components/ChangeLog/ChangeListGroup';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { useModal } from 'react-modal-hook';
 import { DimmableContent } from 'common/styles/utilities';
+import { readSpecifiedData } from 'common/db/utility';
+import { getConnectionStatus } from 'features/network-detector/components/NetworkDetector';
 
 export type RouteParams = {
   id: string;
@@ -30,6 +32,8 @@ export const UpdateAgentView: FC = () => {
   const navigate = useNavigate();
   const [updateAgent] = useUpdateAgentMutation();
   const { data: agent, isLoading: isLoadingAgent, isFetching, error } = useGetAgentByIdQuery(id!);
+  const [ localAgent, setLocalAgent ] = useState<Agent>();
+  const connectionStatus = getConnectionStatus();
 
   const pageSize = 5;
   const queryParams = new QueryParamsBuilder().setPaginationParams(1, pageSize).build();
@@ -81,13 +85,24 @@ export const UpdateAgentView: FC = () => {
 
   useEffect(() => {
     if (error) {
-      notificationService.showErrorMessage('Unable to load agent. Returning to agent list.');
-      navigate('/agents', { replace: true });
+      if (connectionStatus) {
+        notificationService.showErrorMessage('Unable to load agent. Returning to agent list.');
+        navigate('/agents', { replace: true });
+      } else {
+        readSpecifiedData('agents', parseInt(id!, 10)).then((data) => {
+          if (data) {
+            setLocalAgent(data);
+          } else {
+            notificationService.showErrorMessage('Unable to load agent. Returning to agent list.');
+            navigate('/agents', { replace: true });
+          }
+        });
+      }
     }
     if (agentHistoryError) {
       notificationService.showErrorMessage("Unable to load the agent's change history.");
     }
-  }, [error, navigate, agentHistoryError]);
+  }, [error, navigate, agentHistoryError, id, agent, connectionStatus]);
 
   const handleShowAllChanges = () => {
     showModal();
@@ -132,7 +147,8 @@ export const UpdateAgentView: FC = () => {
 
       <Card>
         <Card.Body>
-          <WithLoadingOverlay isInitialLoad={isLoadingAgent && isFetching} isLoading={isLoadingAgent}>
+          { getConnectionStatus() &&
+            <WithLoadingOverlay isInitialLoad={isLoadingAgent && isFetching} isLoading={isLoadingAgent}>
             {!isLoadingAgent ? (
               <AgentDetailForm
                 defaultValues={agent}
@@ -142,7 +158,19 @@ export const UpdateAgentView: FC = () => {
                 serverValidationErrors={formValidationErrors}
               />
             ) : null}
-          </WithLoadingOverlay>
+            </WithLoadingOverlay>
+          }
+          { !getConnectionStatus() && 
+            <WithLoadingOverlay isInitialLoad={!localAgent} isLoading={!localAgent}>
+              <AgentDetailForm
+              defaultValues={localAgent}
+              submitButtonLabel='Save'
+              onSubmit={handleFormSubmit}
+              onCancel={handleFormCancel}
+              serverValidationErrors={formValidationErrors}
+              />
+            </WithLoadingOverlay>
+          }
         </Card.Body>
       </Card>
       <div className='mt-3'>
