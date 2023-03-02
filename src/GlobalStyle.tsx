@@ -25,6 +25,12 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
         }
     }
 
+    @media (min-width: 768px) {
+        .md-only {
+            display: none !important;
+        }
+    }
+
     .bg-dark {
         background-color: ${({ theme }) => theme.textColor} !important;
         color: ${({ theme }) => theme.backgroundColor} !important;
@@ -238,8 +244,16 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
     }
 
     .in-app-notification {
-        color: black;
         font-size: 1rem;
+        background-color: ${({ theme }) => theme.card.backgroundColor};
+        color: ${({ theme }) => theme.card.textColor};
+    }
+
+    .nocaret {
+        .dropdown-toggle::after {
+            content: '';
+            display: none;
+        }
     }
 `;
 export default GlobalStyle;

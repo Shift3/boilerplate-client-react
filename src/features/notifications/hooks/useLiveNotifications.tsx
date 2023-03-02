@@ -119,7 +119,9 @@ export const useLiveNotifications = () => {
           `Could not find notification display component ${payload.type} in notifications/components.tsx\nMake sure to define a handler in that file`,
         );
         if (Component) {
-          toast(<Component key={payload.id} notification={payload} />, { className: 'in-app-notification' });
+          toast(<Component key={payload.id} notification={payload} />, {
+            className: 'in-app-notification',
+          });
         }
       };
 
