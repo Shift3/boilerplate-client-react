@@ -42,5 +42,17 @@
     "changePassword": "Cambia la contraseña",
     "changePasswordDescription": "La contraseña debe tener 8 caracteres o más. La contraseña debe contener un carácter especial en minúsculas, mayúsculas y un número."
   },
-  "delete": "Borrar"
+  "delete": "Borrar",
+  "userHomePage": {
+    "heading": "Página de inicio del usuario",
+    "subheading": "Página de inicio de marcador de posición para usuarios que no son administradores ni editores"
+  },
+  "editorHomePage": {
+    "heading": "Página de inicio del editor",
+    "subheading": "Página de inicio de marcador de posición para editores"
+  },
+  "adminHomePage": {
+    "heading": "Página de inicio de administración",
+    "subheading": "Página de inicio de posición para administradoras"
+  }
 }

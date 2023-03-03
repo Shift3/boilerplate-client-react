@@ -10,10 +10,11 @@ import { NetworkDetector } from 'features/network-detector/components/NetworkDet
 import { NotificationsProvider } from 'features/notifications/context';
 import { NotificationRoutes } from 'features/notifications/Routes';
 import { UserRoutes } from 'features/user-dashboard';
+import { HomeRoutes } from 'features/user-dashboard/HomeRoutes';
 import { UserProfilePage } from 'features/user-profile/pages/UserProfilePage';
 import { createContext, FC, useMemo, useState } from 'react';
 import { ModalProvider } from 'react-modal-hook';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { Slide, toast, ToastContainer } from 'react-toastify';
 import { TransitionGroup } from 'react-transition-group';
 import { ThemeProvider } from 'styled-components';
@@ -48,10 +49,10 @@ export const App: FC = () => {
 
   return (
     <AppErrorBoundary>
-      <ModalProvider rootComponent={TransitionGroup}>
-        <NetworkDetector>
-          <ThemeContext.Provider value={themeProviderValue}>
-            <ThemeProvider theme={theme === 'light' ? light : dark}>
+      <NetworkDetector>
+        <ThemeContext.Provider value={themeProviderValue}>
+          <ThemeProvider theme={theme === 'light' ? light : dark}>
+            <ModalProvider rootComponent={TransitionGroup}>
               <NotificationsProvider>
                 <GlobalStyle />
 
@@ -106,15 +107,22 @@ export const App: FC = () => {
                       }
                     />
 
-                    <Route path='/' element={<Navigate to='/agents' />} />
+                    <Route
+                      path='/'
+                      element={
+                        <RequireAuth allowedRoles={[Role.ADMIN, Role.EDITOR, Role.USER]}>
+                          <HomeRoutes />
+                        </RequireAuth>
+                      }
+                    />
                     <Route path='*' element={<NotFoundView />} />
                   </Routes>
                 </BannerContentWrapper>
               </NotificationsProvider>
-            </ThemeProvider>
-          </ThemeContext.Provider>
-        </NetworkDetector>
-      </ModalProvider>
+            </ModalProvider>
+          </ThemeProvider>
+        </ThemeContext.Provider>
+      </NetworkDetector>
     </AppErrorBoundary>
   );
 };
