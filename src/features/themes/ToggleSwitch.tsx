@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import styled from 'styled-components';
-import { SunIcon } from './SunIcon';
 import { MoonIcon } from './MoonIcon';
+import { SunIcon } from './SunIcon';
 import { useTheme } from './useTheme';
 
 const Switch = styled.div`
@@ -14,7 +14,7 @@ const Switch = styled.div`
   }
 `;
 
-export const ThemeToggle: FC = () => {
+export const ToggleSwitch: FC = () => {
   const { toggleTheme, theme } = useTheme();
 
   return (

@@ -1,10 +1,10 @@
-import i18n, { Resource } from 'i18next';
-import Backend from 'i18next-http-backend';
-import LanguageDetector from 'i18next-browser-languagedetector';
-import { initReactI18next } from 'react-i18next';
 import translationEN from './en/translation.json';
 import translationES from './es/translation.json';
 import { environment } from 'environment';
+import i18n, { Resource } from 'i18next';
+import I18nextBrowserLanguageDetector from 'i18next-browser-languagedetector';
+import I18NextHttpBackend from 'i18next-http-backend';
+import { initReactI18next } from 'react-i18next';
 
 i18n.on('languageChanged', lng => {
   localStorage.setItem('lng', lng);
@@ -31,8 +31,8 @@ languages.forEach(language => {
 });
 
 i18n
-  .use(Backend)
-  .use(LanguageDetector)
+  .use(I18NextHttpBackend)
+  .use(I18nextBrowserLanguageDetector)
   .use(initReactI18next)
   .init({
     fallbackLng: 'en',

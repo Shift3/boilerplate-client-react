@@ -1,21 +1,29 @@
-import { faCog, faHomeAlt, faLanguage, faUserShield } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faHomeAlt, faUserShield, faSitemap } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { environment } from 'environment';
 import { EnvironmentConfiguration } from 'environment/types';
 import { useAuth, useLogout } from 'features/auth/hooks';
+import { NotificationButton } from 'features/notifications/components/NotificationButton';
+import { NotificationDropdown } from 'features/notifications/components/NotificationDropdown';
 import { NotificationContext } from 'features/notifications/context';
 import { useRbac } from 'features/rbac';
-import { MoonIcon } from 'features/themes/MoonIcon';
-import { SunIcon } from 'features/themes/SunIcon';
-import { useTheme } from 'features/themes/useTheme';
-import { FC, useContext } from 'react';
-import { Badge, Button, Container, Modal, Nav, Navbar, NavDropdown, NavLink, Offcanvas } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
+import { FC, useContext, useRef, useState } from 'react';
+import {
+  Badge,
+  Button,
+  Container,
+  Modal,
+  Nav,
+  Navbar,
+  NavDropdown,
+  NavLink,
+  Offcanvas,
+  OffcanvasProps,
+} from 'react-bootstrap';
 import { useModal } from 'react-modal-hook';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { languages } from '../../../i18n/config';
 import { Logo } from './Logo';
 import { UserProfilePicture } from './UserProfilePicture';
 
@@ -29,6 +37,35 @@ const StyledNavbar = styled(Navbar)`
   box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   margin-top: ${environment.environment === EnvironmentConfiguration.Staging ? '56px' : '0px'};
   padding: 0.8rem 0;
+
+  #notification-btn-and-toggle-container {
+    display: flex;
+    flex-direction: row;
+
+    #notification-button {
+      #notification-label {
+        display: none;
+      }
+
+      #notification-counter {
+        right: 0;
+        top: 0;
+        transform: none;
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+
+      svg {
+        margin-right: 0;
+      }
+    }
+
+    @media (min-width: 767px) {
+      #notification-button {
+        display: none;
+      }
+    }
+  }
 
   .dropdown-menu {
     min-width: 200px;
@@ -110,6 +147,51 @@ const StyledNavbar = styled(Navbar)`
   .navbar-brand img {
     width: 40px;
   }
+
+  @media (max-width: 767px) {
+    #notification-dropdown {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: 0.5rem;
+      margin-bttom: 0px !important;
+      box-shadow: -4px -4px 5px 20px ${props => props.theme.notifications.boxShadowColor};
+      width: auto;
+      height: calc(100vh - 1rem);
+
+      div#header {
+        height: 5%;
+      }
+
+      div#body {
+        height: 95%;
+
+        div#tabs-and-mark-all {
+          height: 3%;
+        }
+
+        div#notification-lists {
+          height: 97%;
+        }
+      }
+
+      #body > #tabs-and-mark-all > #notification-type-tabs {
+        display: flex;
+        flex-direction: row;
+      }
+    }
+  }
+
+  @media (min-width: 768px) {
+    #notification-dropdown {
+      position: absolute;
+      top: 4.063rem;
+      right: 0;
+      margin-right: 13vw;
+    }
+  }
 `;
 
 const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
@@ -187,81 +269,20 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
   }
 `;
 
-const NotificationButton = styled(NavLink)`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 1rem 0rem 1rem 1rem;
-  position: relative;
-
-  svg {
-    margin-right: 1rem;
-  }
-
-  #notification-label {
-    margin-right: 1rem;
-  }
-
-  #notification-counter {
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 1.5rem;
-    height: 1.5rem;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    font-size: 0.8rem;
-    font-weight: bold;
-    background-color: ${props => props.theme.noticeBackgroundColor};
-    color: ${props => props.theme.noticeTextColor};
-    border-radius: 50%;
-  }
-
-  @media (min-width: 768px) {
-    padding: inherit;
-    justify-content: center;
-
-    svg {
-      margin-right: 0;
-    }
-
-    #notification-label {
-      display: none;
-    }
-
-    #notification-counter {
-      right: 0;
-      top: 0;
-      transform: none;
-      width: 1.25rem;
-      height: 1.25rem;
-    }
-
-    span {
-      color: ${props => props.theme.noticeTextColor};
-      font-size: 0.8rem;
-    }
-  }
-`;
-
 export const BitwiseNavbar: FC = () => {
   const { count } = useContext(NotificationContext);
   const { user } = useAuth();
   const { userHasPermission } = useRbac();
   const location = useLocation();
   const navigate = useNavigate();
-  const { toggleTheme, theme } = useTheme();
   const { logout, isLoading } = useLogout();
-  const { i18n } = useTranslation();
+  const navigationToggle = useRef<HTMLButtonElement>(null!);
+  const navbarOffcanvas = useRef<OffcanvasProps>(null!);
+  const [showNotificationDropdown, setShowNotificationDropdown] = useState(false);
   const [showModal, hideModal] = useModal(
     ({ in: open, onExited }) => {
       return (
-        <Modal show={open} onHide={hideModal} onExited={onExited}>
+        <Modal show={open} onHide={hideModal} onExited={onExited} centered>
           <Modal.Header closeButton>
             <Modal.Title>Sign Out</Modal.Title>
           </Modal.Header>
@@ -280,28 +301,30 @@ export const BitwiseNavbar: FC = () => {
     [isLoading],
   );
 
-  const changeLanguage = (ln: string) => {
-    localStorage.setItem('language', ln);
-    i18n.changeLanguage(ln);
+  const toggleNotificationDropdown = () => {
+    if (navbarOffcanvas.current.isTopModal()) {
+      navigationToggle.current.click();
+    }
+
+    setShowNotificationDropdown(!showNotificationDropdown);
   };
-
-  const __languageOptions = languages.map(language => {
-    return { label: language.label, value: language.shortcode };
-  });
-
-  const defaultLanguageOption = __languageOptions.find(language => language.value === i18n.languages[0]);
 
   return (
     <StyledNavbar expand='md'>
+      {showNotificationDropdown && <NotificationDropdown onClose={toggleNotificationDropdown} />}
       <Container>
-        <Navbar.Brand onClick={() => navigate('/agents')}>
+        <Navbar.Brand onClick={() => navigate('/')}>
           <Logo />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls='offcanvasNavbar-expand-md' />
+        <div id='notification-btn-and-toggle-container'>
+          <NotificationButton count={count} handleOnClick={toggleNotificationDropdown} />
+          <Navbar.Toggle ref={navigationToggle} aria-controls='offcanvasNavbar-expand-md' />
+        </div>
         <StyledNavbarOffcanvas
           id='offcanvasNavbar-expand-md'
           aria-labelledby='offcanvasNavbarLabel-expand-md'
           placement='end'
+          ref={navbarOffcanvas}
         >
           <Offcanvas.Header closeButton>
             <Offcanvas.Title id='offcanvasNavbarLabel-expand-md'>Starter Project</Offcanvas.Title>
@@ -309,11 +332,17 @@ export const BitwiseNavbar: FC = () => {
           <Offcanvas.Body>
             <Nav className='justify-content-start flex-grow-1 pe-3'>
               {userHasPermission('agent:read') ? (
+                <NavLink onClick={() => navigate('/')} className={location.pathname === '/' ? 'active me-3' : 'me-3'}>
+                  <FontAwesomeIcon className='me-2' icon={faHomeAlt} />
+                  Home
+                </NavLink>
+              ) : null}
+              {userHasPermission('agent:read') ? (
                 <NavLink
                   onClick={() => navigate('/agents')}
                   className={location.pathname === '/agents' ? 'active me-3' : 'me-3'}
                 >
-                  <FontAwesomeIcon className='me-2' icon={faHomeAlt} />
+                  <FontAwesomeIcon className='me-2' icon={faSitemap} />
                   Directory
                 </NavLink>
               ) : null}
@@ -335,34 +364,7 @@ export const BitwiseNavbar: FC = () => {
             </Nav>
 
             <Nav className='justify-content-end'>
-              <NavLink onClick={() => toggleTheme()} className='theme-toggle me-3 d-flex align-items-center'>
-                <>{theme === 'light' ? <MoonIcon /> : <SunIcon />}</>
-              </NavLink>
-
-              <NavDropdown
-                align='end'
-                title={
-                  <>
-                    <FontAwesomeIcon className='me-2' size='lg' icon={faLanguage} />
-                    {defaultLanguageOption?.label}
-                  </>
-                }
-                className='me-3'
-              >
-                {__languageOptions.map(option => (
-                  <NavDropdown.Item onClick={() => changeLanguage(option.value)}>{option.label}</NavDropdown.Item>
-                ))}
-              </NavDropdown>
-
-              <NotificationButton className='me-3' onClick={() => navigate('/notifications')}>
-                <FontAwesomeIcon size='lg' icon='bell' />
-                <span id='notification-label'>Notifications</span>
-                {count > 0 ? (
-                  <div>
-                    <span id='notification-counter'>{count > 9 ? '9+' : count.toString()}</span>
-                  </div>
-                ) : null}
-              </NotificationButton>
+              <NotificationButton count={count} handleOnClick={toggleNotificationDropdown} />
 
               {user ? (
                 <NavDropdown
