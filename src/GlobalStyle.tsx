@@ -241,6 +241,5 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
         color: black;
         font-size: 1rem;
     }
-
 `;
 export default GlobalStyle;

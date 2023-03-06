@@ -1,11 +1,16 @@
+import { Breakpoint, useBreakpoint } from 'common/hooks/useBreakpoint';
 import { SortOrder } from 'common/models/sorting';
 import React, { ReactElement, useEffect } from 'react';
 import { Column, useFlexLayout, usePagination, useSortBy, useTable } from 'react-table';
 import { Paginator } from './Paginator';
 import { SortIndicator } from './SortIndicator';
 
+export type ResponsiveColumn<D extends object> = Column<D> & {
+  responsive?: Breakpoint;
+};
+
 export type DataTableProps<D extends Record<string, unknown>> = {
-  columns: Column<D>[];
+  columns: ResponsiveColumn<D>[];
   data: D[];
   onRowClick?: (item: D) => void;
   pagination?: {
@@ -147,6 +152,14 @@ export const DataTable = <D extends Record<string, unknown>>({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagination?.page]);
+
+  const { breakpoint, isLessThan } = useBreakpoint();
+
+  useEffect(() => {
+    tableInstance.setHiddenColumns(
+      columns.filter(c => c.responsive && isLessThan(breakpoint, c.responsive)).map(c => c.accessor) as string[],
+    );
+  }, [breakpoint, columns, isLessThan, tableInstance]);
 
   return (
     <div className='d-flex flex-column'>
