@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useCreateAgentMutation } from 'common/api/agentApi';
+import { useCreateFarmMutation } from 'common/api/farmApi';
 import { isFetchBaseQueryError } from 'common/api/handleApiError';
 import { isObject } from 'common/error/utilities';
 import { ServerValidationErrors } from 'common/models';
@@ -8,11 +8,11 @@ import { Card } from 'react-bootstrap';
 import { PageCrumb, PageHeader, SmallContainer } from 'common/styles/page';
 import { FC, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AgentDetailForm, FormData } from '../components/AgentDetailForm';
+import { FarmDetailForm, FormData } from '../components/FarmDetailForm';
 
-export const CreateAgentView: FC = () => {
+export const CreateFarmView: FC = () => {
   const navigate = useNavigate();
-  const [createAgent] = useCreateAgentMutation();
+  const [createFarm] = useCreateFarmMutation();
   const [formValidationErrors, setFormValidationErrors] = useState<ServerValidationErrors<FormData> | null>(null);
 
   const handleFormCancel = () => {
@@ -21,11 +21,11 @@ export const CreateAgentView: FC = () => {
 
   const handleFormSubmit = async (data: FormData) => {
     try {
-      await createAgent({ ...data, thumbnail: 'https://shift3tech.com/images/s3-logo-white.svg' }).unwrap();
-      notificationService.showSuccessMessage('Agent created.');
-      navigate('/agents');
+      await createFarm({ ...data, thumbnail: 'https://shift3tech.com/images/s3-logo-white.svg' }).unwrap();
+      notificationService.showSuccessMessage('Farm created.');
+      navigate('/farms');
     } catch (error) {
-      notificationService.showErrorMessage('Unable to add agent.');
+      notificationService.showErrorMessage('Unable to add farm.');
       if (error && isFetchBaseQueryError(error)) {
         if (isObject(error.data)) {
           setFormValidationErrors(error.data);
@@ -39,20 +39,20 @@ export const CreateAgentView: FC = () => {
   return (
     <SmallContainer>
       <PageCrumb>
-        <Link to='/agents'>
-          <FontAwesomeIcon icon={['fas', 'chevron-left']} /> Back to Agent List
+        <Link to='/farms'>
+          <FontAwesomeIcon icon={['fas', 'chevron-left']} /> Back to Farm List
         </Link>
       </PageCrumb>
       <PageHeader>
         <div>
-          <h1>Create Agent</h1>
-          <p className='text-muted'>Add a new agent to the system.</p>
+          <h1>Create Farm</h1>
+          <p className='text-muted'>Add a new farm to the system.</p>
         </div>
       </PageHeader>
 
       <Card>
         <Card.Body>
-          <AgentDetailForm
+          <FarmDetailForm
             submitButtonLabel='Create'
             onCancel={handleFormCancel}
             onSubmit={handleFormSubmit}

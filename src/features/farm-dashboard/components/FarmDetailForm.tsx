@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from 'common/components/LoadingButton';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
 import { addServerErrors } from 'common/error/utilities';
-import { Agent, ServerValidationErrors } from 'common/models';
+import { Farm, ServerValidationErrors } from 'common/models';
 import { FC, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
@@ -15,7 +15,7 @@ import * as yup from 'yup';
 import 'react-phone-input-2/lib/plain.css';
 
 export type FormData = Pick<
-  Agent,
+  Farm,
   | 'name'
   | 'email'
   | 'description'
@@ -59,7 +59,7 @@ const schema = yup.object().shape({
   zipCode: yup.string().when('address1', { is: notBlank, then: yup.string().required('Zip code is required.') }),
 });
 
-export const AgentDetailForm: FC<Props> = ({
+export const FarmDetailForm: FC<Props> = ({
   defaultValues = {},
   onSubmit,
   submitButtonLabel = 'Submit',
@@ -94,7 +94,7 @@ export const AgentDetailForm: FC<Props> = ({
         <h5>Personal</h5>
         <Row className='mb-2'>
           <Col md={4}>
-            <Form.Group controlId='create-agent-form-agent-name'>
+            <Form.Group controlId='create-farm-form-farm-name'>
               <Form.Label>Name</Form.Label>
               <Form.Control type='text' {...register('name')} isInvalid={!!errors.name} />
               <Form.Control.Feedback type='invalid'>{errors.name?.message}</Form.Control.Feedback>

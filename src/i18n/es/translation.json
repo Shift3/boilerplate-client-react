@@ -1,8 +1,8 @@
 {
-  "agentList": {
-    "heading": "Lista de agentes",
-    "subheading": "Todos los agentes del sistema.",
-    "createButton": "Agregar agente"
+  "farmList": {
+    "heading": "Lista de granjas",
+    "subheading": "Todos las granjas del sistema.",
+    "createButton": "Agregar granga"
   },
   "userDetail": {
     "heading": "Perfil",
@@ -27,7 +27,7 @@
     "createButton": "Agregar usuario"
   },
   "userProfile": {
-    "back": "Volver a la lista de agentes",
+    "back": "Volver a la lista de granjas",
     "subheading": "Configuración de su cuenta",
     "profile": "Perfil",
     "security": "Seguridad y Contraseña",

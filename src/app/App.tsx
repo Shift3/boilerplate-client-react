@@ -3,7 +3,7 @@ import { NotFoundView } from 'common/components/NotFoundView';
 import { Role } from 'common/models';
 import { BannerContentWrapper } from 'common/styles/utilities';
 import { environment } from 'environment';
-import { AgentRoutes } from 'features/agent-dashboard';
+import { FarmRoutes } from 'features/farm-dashboard';
 import { AuthRoutes, RequireAuth } from 'features/auth';
 import { AppErrorBoundary } from 'features/error-boundary/components/AppErrorBoundary';
 import { NetworkDetector } from 'features/network-detector/components/NetworkDetector';
@@ -83,10 +83,10 @@ export const App: FC = () => {
                       }
                     />
                     <Route
-                      path='/agents/*'
+                      path='/farms/*'
                       element={
                         <RequireAuth>
-                          <AgentRoutes />
+                          <FarmRoutes />
                         </RequireAuth>
                       }
                     />

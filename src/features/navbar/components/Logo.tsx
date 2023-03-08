@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 export const Logo: FC = () => {
   const { theme } = useTheme();
   return (
-    <Navbar.Brand as={Link} to='/agents'>
+    <Navbar.Brand as={Link} to='/farms'>
       <img
         src={theme === 'light' ? logo : logoInverted}
         alt='Bitwise Technology Consulting'

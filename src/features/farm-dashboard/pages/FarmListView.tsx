@@ -1,9 +1,9 @@
-import { useGetAgentsQuery } from 'common/api/agentApi';
+import { useGetFarmsQuery } from 'common/api/farmApi';
 import { DataTable } from 'common/components/DataTable';
 import { DataTableSearchAndFilters } from 'common/components/DataTable/DataTableSearchAndFilters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
-import { Agent, PaginatedResult } from 'common/models';
+import { Farm, PaginatedResult } from 'common/models';
 import { TableCard } from 'common/styles/card';
 import { PageHeader } from 'common/styles/page';
 import { NoContent } from 'common/styles/utilities';
@@ -11,13 +11,13 @@ import { HasPermission } from 'features/rbac';
 import { FC, useMemo } from 'react';
 import { Button, Card, Container } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { AgentTableItem, useAgentTableData } from '../hooks/useAgentTableData';
+import { FarmTableItem, useFarmTableData } from '../hooks/useFarmTableData';
 import { Trans } from 'react-i18next';
 import { StringFilter } from 'common/components/DataTable/Filters';
 import { FilterInfo } from 'common/components/DataTable/FilterDropdown';
 import { faStethoscope } from '@fortawesome/free-solid-svg-icons';
 
-export const AgentListView: FC = () => {
+export const FarmListView: FC = () => {
   const navigate = useNavigate();
   const {
     data,
@@ -34,9 +34,9 @@ export const AgentListView: FC = () => {
     filters: psfFilters,
     searchText: psfSearchText,
     addSearchText,
-  } = usePSFQuery<PaginatedResult<Agent>>(useGetAgentsQuery);
-  const agents = useMemo(() => data?.results ?? [], [data]);
-  const { columns, data: tableData } = useAgentTableData(agents);
+  } = usePSFQuery<PaginatedResult<Farm>>(useGetFarmsQuery);
+  const farms = useMemo(() => data?.results ?? [], [data]);
+  const { columns, data: tableData } = useFarmTableData(farms);
 
   const isSearchingOrFiltering = useMemo(() => {
     return psfFilters.length > 0 || psfSearchText.length > 0;
@@ -63,17 +63,17 @@ export const AgentListView: FC = () => {
       <PageHeader>
         <div>
           <h1>
-            <Trans i18nKey='agentList.heading'>Agent List</Trans>
+            <Trans i18nKey='farmList.heading'>Farm List</Trans>
           </h1>
           <p>
-            <Trans i18nKey='agentList.subheading'>All agents in the system.</Trans>
+            <Trans i18nKey='farmList.subheading'>All Farms in the system.</Trans>
           </p>
         </div>
-        <HasPermission perform='agent:create'>
+        <HasPermission perform='farm:create'>
           <div>
-            <Link to='/agents/create-agent'>
+            <Link to='/farms/create-farm'>
               <Button>
-                <Trans i18nKey='agentList.createButton'>Add Agent</Trans>
+                <Trans i18nKey='farmList.createButton'>Add Farm</Trans>
               </Button>
             </Link>
           </div>
@@ -92,10 +92,10 @@ export const AgentListView: FC = () => {
         <Card.Body>
           <WithLoadingOverlay isLoading={isLoading || isFetching} isInitialLoad={isLoading && isFetching}>
             {isSearchingOrFiltering || isLoading || isFetching || data?.meta.count !== 0 ? (
-              <DataTable<AgentTableItem>
+              <DataTable<FarmTableItem>
                 columns={columns}
                 data={tableData}
-                onRowClick={item => navigate(`/agents/update-agent/${item.id}`)}
+                onRowClick={item => navigate(`/farms/update-farm/${item.id}`)}
                 pagination={{
                   basePage: 1,
                   page,
@@ -112,13 +112,13 @@ export const AgentListView: FC = () => {
               />
             ) : (
               <NoContent
-                title='No Agents'
+                title='No Farms'
                 icon={faStethoscope}
                 extra={
-                  <HasPermission perform='agent:create'>
-                    <p className='text-muted'>Get started by creating a new agent.</p>
-                    <Link to='/agents/create-agent'>
-                      <Button variant='default'>Add Agent</Button>
+                  <HasPermission perform='farm:create'>
+                    <p className='text-muted'>Get started by creating a new Farm.</p>
+                    <Link to='/farms/create-farm'>
+                      <Button variant='default'>Add Farm</Button>
                     </Link>
                   </HasPermission>
                 }

@@ -35,27 +35,27 @@ const BaseNotification: FC<
   );
 };
 
-export const AgentCreatedNotification: FC<{
+export const FarmCreatedNotification: FC<{
   notification: AppNotification;
 }> = ({ notification }) => {
   const { markRead } = useMarkRead();
 
-  interface AgentCreatedData {
+  interface FarmCreatedData {
     userId: string;
-    agentId: number;
+    farmId: number;
     userName: string;
-    agentName: string;
+    farmName: string;
   }
 
-  const isAgentCreatedNotificationData = (data: unknown): data is AgentCreatedData => {
-    return !!(data as AgentCreatedData).userName;
+  const isFarmCreatedNotificationData = (data: unknown): data is FarmCreatedData => {
+    return !!(data as FarmCreatedData).userName;
   };
 
   const { data } = notification;
-  if (!isAgentCreatedNotificationData(data)) return <></>;
+  if (!isFarmCreatedNotificationData(data)) return <></>;
 
   return (
-    <BaseNotification title='New Agent Created' notification={notification}>
+    <BaseNotification title='New Farm Created' notification={notification}>
       <p className='p-0 m-0 mb-2'>
         <span className='fw-normal fs-6 text-muted'>
           {formatDistance(new Date(), parseISO(notification.created))} ago
@@ -64,9 +64,9 @@ export const AgentCreatedNotification: FC<{
       <Link to={`/users/update-user/${data.userId}`} onClick={() => markRead(notification)}>
         {data.userName}
       </Link>{' '}
-      <span>created a new agent named </span>
-      <Link to={`/agents/update-agent/${data.agentId}`} onClick={() => markRead(notification)}>
-        {data.agentName}
+      <span>created a new Farm named </span>
+      <Link to={`/farms/update-farm/${data.farmId}`} onClick={() => markRead(notification)}>
+        {data.farmName}
       </Link>
     </BaseNotification>
   );

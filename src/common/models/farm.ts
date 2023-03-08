@@ -1,4 +1,4 @@
-export interface Agent {
+export interface Farm {
   id: number;
   thumbnail: string;
   name: string;

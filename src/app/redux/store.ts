@@ -1,5 +1,5 @@
 import { configureStore, ConfigureStoreOptions } from '@reduxjs/toolkit';
-import { agentApi } from 'common/api/agentApi';
+import { farmApi } from 'common/api/farmApi';
 import { authApi } from 'common/api/authApi';
 import { notificationApi } from 'common/api/notificationApi';
 import { userApi } from 'common/api/userApi';
@@ -11,7 +11,7 @@ export const createAppStore = (options?: ConfigureStoreOptions['preloadedState']
   configureStore({
     reducer: {
       auth: authSlice.reducer,
-      [agentApi.reducerPath]: agentApi.reducer,
+      [farmApi.reducerPath]: farmApi.reducer,
       [authApi.reducerPath]: authApi.reducer,
       [userApi.reducerPath]: userApi.reducer,
       [notificationApi.reducerPath]: notificationApi.reducer,
@@ -19,7 +19,7 @@ export const createAppStore = (options?: ConfigureStoreOptions['preloadedState']
 
     middleware: getDefaultMiddleware =>
       getDefaultMiddleware().concat(
-        agentApi.middleware,
+        farmApi.middleware,
         authApi.middleware,
         userApi.middleware,
         notificationApi.middleware,

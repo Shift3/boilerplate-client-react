@@ -24,7 +24,7 @@ export type UserTableItem = {
   actions: ActionButtonProps[];
 };
 
-export type UseUserTableData = (agents?: User[]) => {
+export type UseUserTableData = (farms?: User[]) => {
   columns: Column<UserTableItem>[];
   data: UserTableItem[];
 };

@@ -1,13 +1,13 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { FilterQueryParams, PaginatedResult, PaginationQueryParams, SearchTextParams, User } from 'common/models';
-import { Agent } from 'common/models/agent';
+import { Farm } from 'common/models/farm';
 import { HistoricalRecord } from 'common/models/historicalRecord';
 import { SortingQueryParams } from 'common/models/sorting';
 import { customBaseQuery } from './customBaseQuery';
 import { QueryParamsBuilder } from './queryParamsBuilder';
 
-export type CreateAgentRequest = Pick<
-  Agent,
+export type CreateFarmRequest = Pick<
+  Farm,
   | 'description'
   | 'email'
   | 'name'
@@ -20,8 +20,8 @@ export type CreateAgentRequest = Pick<
   | 'zipCode'
 >;
 
-export type UpdateAgentRequest = Pick<
-  Agent,
+export type UpdateFarmRequest = Pick<
+  Farm,
   | 'id'
   | 'description'
   | 'email'
@@ -35,8 +35,8 @@ export type UpdateAgentRequest = Pick<
   | 'zipCode'
 >;
 
-export const agentApi = createApi({
-  reducerPath: 'agentApi',
+export const farmApi = createApi({
+  reducerPath: 'farmApi',
 
   baseQuery: customBaseQuery,
 
@@ -45,11 +45,11 @@ export const agentApi = createApi({
   refetchOnMountOrArgChange: true,
   refetchOnReconnect: true,
 
-  tagTypes: ['Agent'],
+  tagTypes: ['Farm'],
 
   endpoints: builder => ({
-    getAgents: builder.query<
-      PaginatedResult<Agent>,
+    getFarms: builder.query<
+      PaginatedResult<Farm>,
       PaginationQueryParams & SortingQueryParams & FilterQueryParams & SearchTextParams
     >({
       query: ({ page = 1, pageSize = 10, sortBy, filters, searchText }) => {
@@ -59,53 +59,53 @@ export const agentApi = createApi({
           .setSortParam(sortBy)
           .setFilterParam(filters)
           .build();
-        return { url: `/agents/?${queryParams}` };
+        return { url: `/farms/?${queryParams}` };
       },
-      providesTags: ['Agent'],
+      providesTags: ['Farm'],
     }),
 
-    getAgentById: builder.query<Agent, number | string>({
-      query: id => ({ url: `/agents/${id}/` }),
-      providesTags: ['Agent'],
+    getFarmById: builder.query<Farm, number | string>({
+      query: id => ({ url: `/farms/${id}/` }),
+      providesTags: ['Farm'],
     }),
 
-    getAgentHistory: builder.query<PaginatedResult<HistoricalRecord<User>>, string>({
-      query: url => url
+    getFarmHistory: builder.query<PaginatedResult<HistoricalRecord<User>>, string>({
+      query: url => url,
     }),
 
-    createAgent: builder.mutation<Agent, CreateAgentRequest>({
+    createFarm: builder.mutation<Farm, CreateFarmRequest>({
       query: payload => ({
-        url: '/agents/',
+        url: '/farms/',
         method: 'POST',
         body: payload,
       }),
-      invalidatesTags: ['Agent'],
+      invalidatesTags: ['Farm'],
     }),
 
-    updateAgent: builder.mutation<Agent, UpdateAgentRequest>({
-      query: ({ id, ...agentUpdate }) => ({
-        url: `/agents/${id}/`,
+    updateFarm: builder.mutation<Farm, UpdateFarmRequest>({
+      query: ({ id, ...FarmUpdate }) => ({
+        url: `/farms/${id}/`,
         method: 'PUT',
-        body: agentUpdate,
+        body: FarmUpdate,
       }),
-      invalidatesTags: ['Agent'],
+      invalidatesTags: ['Farm'],
     }),
 
-    deleteAgent: builder.mutation<void, number>({
-      query: agentId => ({
-        url: `/agents/${agentId}/`,
+    deleteFarm: builder.mutation<void, number>({
+      query: FarmId => ({
+        url: `/farms/${FarmId}/`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Agent'],
+      invalidatesTags: ['Farm'],
     }),
   }),
 });
 
 export const {
-  useGetAgentsQuery,
-  useGetAgentByIdQuery,
-  useGetAgentHistoryQuery,
-  useCreateAgentMutation,
-  useUpdateAgentMutation,
-  useDeleteAgentMutation,
-} = agentApi;
+  useGetFarmsQuery,
+  useGetFarmByIdQuery,
+  useGetFarmHistoryQuery,
+  useCreateFarmMutation,
+  useUpdateFarmMutation,
+  useDeleteFarmMutation,
+} = farmApi;
