@@ -8,8 +8,6 @@ import { Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
 
-// This funkery is needed due to a build issue with vite.
-// TODO: Fix this issue with react-phone-input-2
 import PhoneInput from 'react-phone-input-2';
 
 import { Constants } from 'utils/constants';
@@ -18,7 +16,10 @@ import * as yup from 'yup';
 
 import 'react-phone-input-2/lib/plain.css';
 
-const PhoneInputComponent = PhoneInput.default ? PhoneInput.default : PhoneInput;
+// This funkery is needed due to a build issue with vite.
+// TODO: Fix this issue with react-phone-input-2
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const PhoneInputComponent = (PhoneInput as any).default ? (PhoneInput as any).default : PhoneInput;
 
 export type FormData = Pick<
   Farm,
