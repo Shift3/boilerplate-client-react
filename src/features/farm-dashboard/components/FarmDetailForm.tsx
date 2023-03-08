@@ -7,12 +7,18 @@ import { FC, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
+
+// This funkery is needed due to a build issue with vite.
+// TODO: Fix this issue with react-phone-input-2
 import PhoneInput from 'react-phone-input-2';
+
 import { Constants } from 'utils/constants';
 import { stateList } from 'utils/states';
 import * as yup from 'yup';
 
 import 'react-phone-input-2/lib/plain.css';
+
+const PhoneInputComponent = PhoneInput.default ? PhoneInput.default : PhoneInput;
 
 export type FormData = Pick<
   Farm,
@@ -115,7 +121,7 @@ export const FarmDetailForm: FC<Props> = ({
                 name='phoneNumber'
                 control={control}
                 render={({ field }) => (
-                  <PhoneInput
+                  <PhoneInputComponent
                     value={field.value}
                     onlyCountries={['us']}
                     country='us'

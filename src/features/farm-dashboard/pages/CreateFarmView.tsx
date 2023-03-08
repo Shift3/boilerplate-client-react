@@ -8,7 +8,7 @@ import { Card } from 'react-bootstrap';
 import { PageCrumb, PageHeader, SmallContainer } from 'common/styles/page';
 import { FC, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FarmDetailForm, FormData } from '../components/FarmDetailForm';
+import { FarmDetailForm, FormData } from 'features/farm-dashboard/components/FarmDetailForm';
 
 export const CreateFarmView: FC = () => {
   const navigate = useNavigate();
