@@ -1,4 +1,5 @@
 import { useDeleteFarmMutation } from 'common/api/farmApi';
+import { ResponsiveColumn } from 'common/components/DataTable';
 import { SimpleConfirmModal } from 'common/components/SimpleConfirmModal';
 import { useModalWithData } from 'common/hooks/useModalWithData';
 import { Farm } from 'common/models';
@@ -6,7 +7,6 @@ import * as notificationService from 'common/services/notification';
 import { ActionButton, ActionButtonProps } from 'common/styles/button';
 import { useRbac } from 'features/rbac';
 import { useMemo } from 'react';
-import { Column } from 'react-table';
 import { formatPhoneNumber } from 'utils/phone';
 
 export type FarmTableItem = {
@@ -17,12 +17,7 @@ export type FarmTableItem = {
   actions: ActionButtonProps[];
 };
 
-export type UseFarmTableData = (farms?: Farm[]) => {
-  columns: Column<FarmTableItem>[];
-  data: FarmTableItem[];
-};
-
-export const useFarmTableData: UseFarmTableData = (farms = []) => {
+export const useFarmTableData = (farms: Farm[] = []) => {
   const { userHasPermission } = useRbac();
 
   const [deleteFarm] = useDeleteFarmMutation();
@@ -60,12 +55,14 @@ export const useFarmTableData: UseFarmTableData = (farms = []) => {
   );
 
   // Set up columns and headers
-  const columns: Column<FarmTableItem>[] = useMemo(
+
+  const columns: ResponsiveColumn<FarmTableItem>[] = useMemo(
     () => [
       { accessor: 'name', Header: 'Farm Name' },
-      { accessor: 'email', Header: 'Email' },
+      { accessor: 'email', responsive: 'sm', Header: 'Email' },
       {
         accessor: 'phoneNumber',
+        responsive: 'md',
         Header: 'Phone Number',
         Cell: ({ value }) => <span>{formatPhoneNumber(value)}</span>,
       },
