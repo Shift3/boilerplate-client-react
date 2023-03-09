@@ -17,12 +17,7 @@ export type FarmTableItem = {
   actions: ActionButtonProps[];
 };
 
-export type UseFarmTableData = (agents?: Farm[]) => {
-  columns: ResponsiveColumn<FarmTableItem>[];
-  data: FarmTableItem[];
-};
-
-export const useFarmTableData: UseFarmTableData = (farms = []) => {
+export const useFarmTableData = (farms: Farm[] = []) => {
   const { userHasPermission } = useRbac();
 
   const [deleteFarm] = useDeleteFarmMutation();

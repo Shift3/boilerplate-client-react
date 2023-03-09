@@ -12,7 +12,6 @@ import { UserProfilePicture } from 'features/navbar/components/UserProfilePictur
 import { useRbac } from 'features/rbac';
 import { useMemo } from 'react';
 import { Button } from 'react-bootstrap';
-import { Column } from 'react-table';
 
 export type UserTableItem = {
   id: string;
@@ -25,12 +24,7 @@ export type UserTableItem = {
   actions: ActionButtonProps[];
 };
 
-export type UseUserTableData = (farms?: User[]) => {
-  columns: Column<UserTableItem>[];
-  data: UserTableItem[];
-};
-
-export const useUserTableData: UseUserTableData = (users = []) => {
+export const useUserTableData = (users: User[] = []) => {
   const { userHasPermission } = useRbac();
 
   const [deleteUser] = useDeleteUserMutation();
