@@ -21,103 +21,102 @@ import { UserProfilePage } from 'features/user-profile/pages/UserProfilePage';
 import { useRoutes } from 'react-router-dom';
 
 export const Routes = () => {
-    const { user } = useAuth();
-    const element = useRoutes([
+  const { user } = useAuth();
+  const element = useRoutes([
+    {
+      path: '/auth/*',
+      children: [
+        { path: 'login', element: <LogInPage /> },
+        { path: 'signup', element: <SignUpPage /> },
+        { path: 'activate-account/:uid/:token', element: <ActivateAccountPage /> },
+        { path: 'confirm-change-email/:uid/:token', element: <ConfirmChangeEmailPage /> },
+        { path: 'forgot-password', element: <ForgotPasswordPage /> },
+        { path: 'reset-password/:uid/:token', element: <ResetPasswordPage /> },
+      ],
+    },
+    {
+      path: '/user/profile/:id',
+      element: (
+        <RequireAuth>
+          <Layout>
+            <UserProfilePage />
+          </Layout>
+        </RequireAuth>
+      ),
+    },
+    {
+      path: '/farms/*',
+      children: [
+        { path: '', element: <FarmListView /> },
+        { path: 'create-farm', element: <CreateFarmView /> },
+        { path: 'update-farm/:id', element: <UpdateFarmView /> },
+        { path: '*', element: <NotFoundView /> },
+      ].map(item => ({
+        ...item,
+        element: (
+          <RequireAuth>
+            <Layout>{item.element}</Layout>
+          </RequireAuth>
+        ),
+      })),
+    },
+    {
+      path: '/users/*',
+      children: [
+        { path: '', element: <UserListView /> },
+        { path: 'create-user', element: <CreateUserView /> },
+        { path: 'update-user/:id', element: <UpdateUserView /> },
+        { path: '*', element: <NotFoundView /> },
+      ].map(item => ({
+        ...item,
+        element: (
+          <RequireAuth>
+            <Layout>{item.element}</Layout>
+          </RequireAuth>
+        ),
+      })),
+    },
+    {
+      path: '/notifications/*',
+      children: [
+        { path: '', element: <UnreadNotifications /> },
+        { path: 'read', element: <ReadNotifications /> },
+      ].map(item => ({
+        ...item,
+        element: (
+          <RequireAuth>
+            <Layout>
+              <NotificationListView>{item.element}</NotificationListView>
+            </Layout>
+          </RequireAuth>
+        ),
+      })),
+    },
+    {
+      path: '/',
+      children: [
         {
-            path: '/auth/*',
-            children: [
-                { path: 'login', element: <LogInPage /> },
-                { path: 'signup', element: <SignUpPage /> },
-                { path: 'activate-account/:uid/:token', element: <ActivateAccountPage /> },
-                { path: 'confirm-change-email/:uid/:token', element: <ConfirmChangeEmailPage /> },
-                { path: 'forgot-password', element: <ForgotPasswordPage /> },
-                { path: 'reset-password/:uid/:token', element: <ResetPasswordPage /> },
-            ],
+          path: '',
+          element: (
+            <RequireAuth allowedRoles={[Role.ADMIN, Role.EDITOR, Role.USER]}>
+              <Layout>
+                {user &&
+                  {
+                    ADMIN: <AdminHomePage />,
+                    EDITOR: <EditorHomePage />,
+                    USER: <UserHomePage />,
+                  }[user.role]}
+              </Layout>
+            </RequireAuth>
+          ),
         },
-        {
-            path: '/user/profile/:id',
-            element: (
-                <RequireAuth>
-                    <Layout>
-                        <UserProfilePage />
-                    </Layout>
-                </RequireAuth>
-            ),
-        },
-        {
-            path: '/agents/*',
-            children: [
-                { path: '', element: <FarmListView /> },
-                { path: 'create-agent', element: <CreateFarmView /> },
-                { path: 'update-agent/:id', element: <UpdateFarmView /> },
-                { path: '*', element: <NotFoundView /> },
-            ].map(item => ({
-                ...item,
-                element: (
-                    <RequireAuth>
-                        <Layout>{item.element}</Layout>
-                    </RequireAuth>
-                ),
-            })),
-        },
-        {
-            path: '/users/*',
-            children: [
-                { path: '', element: <UserListView /> },
-                { path: 'create-user', element: <CreateUserView /> },
-                { path: 'update-user/:id', element: <UpdateUserView /> },
-                { path: '*', element: <NotFoundView /> },
-            ].map(item => ({
-                ...item,
-                element: (
-                    <RequireAuth>
-                        <Layout>{item.element}</Layout>
-                    </RequireAuth>
-                ),
-            })),
-        },
-        {
-            path: '/notifications/*',
-            children: [
-                { path: '', element: <UnreadNotifications /> },
-                { path: 'read', element: <ReadNotifications /> },
-            ].map(item => ({
-                ...item,
-                element: (
-                    <RequireAuth>
-                        <Layout>
-                            <NotificationListView>
-                                {item.element}
-                            </NotificationListView>
-                        </Layout>
-                    </RequireAuth>
-                ),
-            })),
-        },
-        {
-            path: '/',
-            children: [
-                {
-                    path: '', element:
-                        (<RequireAuth allowedRoles={[Role.ADMIN, Role.EDITOR, Role.USER]}>
-                            <Layout>
-                                {
-                                    user && {
-                                        ADMIN: <AdminHomePage />,
-                                        EDITOR: <EditorHomePage />,
-                                        USER: <UserHomePage />,
-                                    }[user.role]
-                                }
-                            </Layout>
-                        </RequireAuth>)
-                },
-            ],
-        },
-        {
-            path: '*',
-            element: <NotFoundView />,
-        },
-    ]);
+      ],
+    },
+    {
+      path: '*',
+      element: <NotFoundView />,
+    },
+  ]);
 
-    return element;
+  return element;
 };
