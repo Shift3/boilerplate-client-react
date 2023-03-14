@@ -1,4 +1,4 @@
-import { faCog, faHomeAlt, faUserShield, faSitemap } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faHomeAlt, faSitemap, faUserShield } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { environment } from 'environment';
@@ -8,7 +8,7 @@ import { NotificationButton } from 'features/notifications/components/Notificati
 import { NotificationDropdown } from 'features/notifications/components/NotificationDropdown';
 import { NotificationContext } from 'features/notifications/context';
 import { useRbac } from 'features/rbac';
-import { FC, useContext, useRef, useState } from 'react';
+import { FC, useContext, useRef } from 'react';
 import {
   Badge,
   Button,
@@ -37,35 +37,6 @@ const StyledNavbar = styled(Navbar)`
   box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   margin-top: ${environment.environment === EnvironmentConfiguration.Staging ? '56px' : '0px'};
   padding: 0.8rem 0;
-
-  #notification-btn-and-toggle-container {
-    display: flex;
-    flex-direction: row;
-
-    #notification-button {
-      #notification-label {
-        display: none;
-      }
-
-      #notification-counter {
-        right: 0;
-        top: 0;
-        transform: none;
-        width: 1.25rem;
-        height: 1.25rem;
-      }
-
-      svg {
-        margin-right: 0;
-      }
-    }
-
-    @media (min-width: 767px) {
-      #notification-button {
-        display: none;
-      }
-    }
-  }
 
   .dropdown-menu {
     min-width: 200px;
@@ -108,8 +79,6 @@ const StyledNavbar = styled(Navbar)`
     border-radius: ${props => props.theme.borderRadius};
     font-weight: 500;
     padding: 0.4rem;
-    padding-left: 0.75rem !important;
-    padding-right: 0.75rem !important;
 
     margin-right: 1rem;
     &:last-of-type {
@@ -147,51 +116,6 @@ const StyledNavbar = styled(Navbar)`
   .navbar-brand img {
     width: 40px;
   }
-
-  @media (max-width: 767px) {
-    #notification-dropdown {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      margin: 0.5rem;
-      margin-bttom: 0px !important;
-      box-shadow: -4px -4px 5px 20px ${props => props.theme.notifications.boxShadowColor};
-      width: auto;
-      height: calc(100vh - 1rem);
-
-      div#header {
-        height: 5%;
-      }
-
-      div#body {
-        height: 95%;
-
-        div#tabs-and-mark-all {
-          height: 3%;
-        }
-
-        div#notification-lists {
-          height: 97%;
-        }
-      }
-
-      #body > #tabs-and-mark-all > #notification-type-tabs {
-        display: flex;
-        flex-direction: row;
-      }
-    }
-  }
-
-  @media (min-width: 768px) {
-    #notification-dropdown {
-      position: absolute;
-      top: 4.063rem;
-      right: 0;
-      margin-right: 13vw;
-    }
-  }
 `;
 
 const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
@@ -202,6 +126,10 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   }
 
+  .navbar-only {
+    display: inline-block;
+  }
+
   .offcanvas-only {
     display: none;
   }
@@ -210,6 +138,10 @@ const StyledNavbarOffcanvas = styled(Navbar.Offcanvas)`
   &.offcanvas-toggling {
     .offcanvas-only {
       display: inline-block;
+    }
+
+    .navbar-only {
+      display: none;
     }
 
     .offcanvas-body {
@@ -274,11 +206,10 @@ export const BitwiseNavbar: FC = () => {
   const { user } = useAuth();
   const { userHasPermission } = useRbac();
   const location = useLocation();
+  const navigationToggle = useRef<HTMLButtonElement>(null!);
   const navigate = useNavigate();
   const { logout, isLoading } = useLogout();
-  const navigationToggle = useRef<HTMLButtonElement>(null!);
   const navbarOffcanvas = useRef<OffcanvasProps>(null!);
-  const [showNotificationDropdown, setShowNotificationDropdown] = useState(false);
   const [showModal, hideModal] = useModal(
     ({ in: open, onExited }) => {
       return (
@@ -301,25 +232,20 @@ export const BitwiseNavbar: FC = () => {
     [isLoading],
   );
 
-  const toggleNotificationDropdown = () => {
-    if (navbarOffcanvas.current.isTopModal()) {
-      navigationToggle.current.click();
-    }
-
-    setShowNotificationDropdown(!showNotificationDropdown);
-  };
-
   return (
     <StyledNavbar expand='md'>
-      {showNotificationDropdown && <NotificationDropdown onClose={toggleNotificationDropdown} />}
       <Container>
         <Navbar.Brand onClick={() => navigate('/')}>
           <Logo />
         </Navbar.Brand>
-        <div id='notification-btn-and-toggle-container'>
-          <NotificationButton count={count} handleOnClick={toggleNotificationDropdown} />
+
+        <div className='d-flex'>
+          <NavLink className='md-only' onClick={() => navigate('/notifications')}>
+            <NotificationButton count={count} />
+          </NavLink>
           <Navbar.Toggle ref={navigationToggle} aria-controls='offcanvasNavbar-expand-md' />
         </div>
+
         <StyledNavbarOffcanvas
           id='offcanvasNavbar-expand-md'
           aria-labelledby='offcanvasNavbarLabel-expand-md'
@@ -364,7 +290,13 @@ export const BitwiseNavbar: FC = () => {
             </Nav>
 
             <Nav className='justify-content-end'>
-              <NotificationButton count={count} handleOnClick={toggleNotificationDropdown} />
+              <NavDropdown
+                className='nocaret navbar-only me-2'
+                align='end'
+                title={<NotificationButton count={count} />}
+              >
+                <NotificationDropdown />
+              </NavDropdown>
 
               {user ? (
                 <NavDropdown

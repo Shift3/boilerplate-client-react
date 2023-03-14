@@ -1,11 +1,13 @@
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { LoadingButton } from 'common/components/LoadingButton';
 import { AppNotification } from 'common/models/notifications';
 import { FC, PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 import { useMarkRead } from './hooks/useMarkRead';
 import { formatDistance, parseISO } from 'date-fns';
+import styled from 'styled-components';
+
+const BaseNotificationStyles = styled.div`
+  color: ${({ theme }) => theme.textColor};
+`;
 
 const BaseNotification: FC<
   PropsWithChildren<{
@@ -13,25 +15,15 @@ const BaseNotification: FC<
     notification: AppNotification;
   }>
 > = ({ title, notification, children }) => {
-  const { markRead, isLoading } = useMarkRead();
-
   return (
-    <div key={notification.id}>
+    <BaseNotificationStyles key={notification.id}>
       <div className='d-flex'>
         <div className='flex-fill'>
           <h1 className='fs-5 mb-0'>{title}</h1>
           {children}
         </div>
-
-        {!notification.read && (
-          <div className='d-flex align-items-center justify-content-center'>
-            <LoadingButton loading={isLoading} variant='default' onClick={() => markRead(notification)}>
-              {!isLoading && <FontAwesomeIcon icon={faCheck} />}
-            </LoadingButton>
-          </div>
-        )}
       </div>
-    </div>
+    </BaseNotificationStyles>
   );
 };
 
