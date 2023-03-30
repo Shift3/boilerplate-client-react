@@ -10,6 +10,13 @@ terraform {
     region  = "us-west-2"
     profile = "BWTC-Developer"
   }
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+  }
 }
 
 locals {
