@@ -18,6 +18,7 @@ export interface Props {
   availableRoles: Role[];
   defaultValues?: Partial<FormData>;
   submitButtonLabel?: string;
+  isRoleSelectorDisabled?: boolean;
   onSubmit: (data: FormData) => void;
   serverValidationErrors: ServerValidationErrors<FormData> | null;
 }
@@ -25,6 +26,7 @@ export interface Props {
 export const UserDetailForm: FC<Props> = ({
   availableRoles,
   defaultValues = {},
+  isRoleSelectorDisabled,
   onSubmit,
   submitButtonLabel = 'Submit',
   serverValidationErrors,
@@ -112,13 +114,19 @@ export const UserDetailForm: FC<Props> = ({
           <Trans i18nKey='userDetail.accessHeading'>Access Information</Trans>
         </h5>
         <Form.Group className='mb-2' controlId='create-user-form-role'>
-          <Form.Label>{t('role', { ns: 'common' })}</Form.Label>
+          <Form.Label>
+            {t('role', { ns: 'common' })}
+            {isRoleSelectorDisabled && 
+                <p className='text-danger mb-0'>{t('userDetail.roleRestriction', { ns: 'translation' })}</p>
+            }
+          </Form.Label>
           <Controller
             control={control}
             name='role'
             render={({ field: { onChange } }) => (
               <CustomSelect<RoleOption>
                 placeholder={t('userDetail.selectRole')!}
+                isDisabled={isRoleSelectorDisabled}
                 defaultValue={{ label: defaultValues?.role?.toString() || '', value: defaultValues?.role || Role.USER }}
                 options={options}
                 onChange={option => onChange(option.value)}

@@ -8,7 +8,7 @@ import * as notificationService from 'common/services/notification';
 import { Card, Modal } from 'react-bootstrap';
 import { PageCrumb, PageHeader, SmallContainer } from 'common/styles/page';
 import { useRbac } from 'features/rbac';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
 import { Trans, useTranslation } from 'react-i18next';
@@ -94,6 +94,10 @@ export const UpdateUserView: FC = () => {
     }
   }, [getUserError, navigate, userHistoryError, t]);
 
+  const isRoleSelectorDisabled = useMemo(() => {
+    return user?.id === loggedInUser?.id;
+  }, [user, loggedInUser]);
+
   const handleShowAllChanges = () => {
     showModal();
   };
@@ -151,6 +155,7 @@ export const UpdateUserView: FC = () => {
                 availableRoles={availableRoles}
                 defaultValues={user}
                 submitButtonLabel={t('save', { ns: 'common' })!}
+                isRoleSelectorDisabled={isRoleSelectorDisabled}
                 onSubmit={handleFormSubmit}
                 serverValidationErrors={formValidationErrors}
               />

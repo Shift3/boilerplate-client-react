@@ -36,7 +36,8 @@
     "heading": "User Profile",
     "accessHeading": "Access Information",
     "selectRole": "Select a role...",
-    "roleInfo": "For more information about the different roles and what they can do, see our <strong>FAQ</strong>"
+    "roleInfo": "For more information about the different roles and what they can do, see our <strong>FAQ</strong>",
+    "roleRestriction": "You cannot change your own role."
   },
   "createUser": {
     "back": "Back to User List",
