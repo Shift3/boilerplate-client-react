@@ -1,8 +1,9 @@
-import logo from 'assets/img/logo.jpg';
-import { Container, Col, Row } from 'react-bootstrap';
 import tile from 'assets/img/tile.jpg';
-import styled from 'styled-components';
+import { Logo } from 'features/navbar/components/Logo';
+import { ToggleSwitch } from 'features/themes/ToggleSwitch';
 import { FC, PropsWithChildren } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import styled from 'styled-components';
 
 export const Title = styled.h1`
   color: ${props => props.theme.forms.title};
@@ -23,7 +24,8 @@ export const LoginContainer = styled(Container)`
   }
 
   img {
-    border-radius: 6px;
+    margin-top: 1.5rem;
+    border-radius: ${props => props.theme.borderRadius};
     margin-bottom: 1rem;
     opacity: 0.9;
   }
@@ -67,7 +69,10 @@ export const FrontPageLayout: FC<PropsWithChildren<unknown>> = ({ children }) =>
         <Col>
           <LoginContainer className='content-wrapper'>
             <div>
-              <img src={logo} alt='Bitwise Logo' />
+              <div className='mb-3 d-flex justify-content-between align-items-center'>
+                <Logo />
+                <ToggleSwitch />
+              </div>
               {children}
             </div>
           </LoginContainer>

@@ -1,5 +1,8 @@
-import { Badge } from 'react-bootstrap';
+import { Alert, Badge } from 'react-bootstrap';
 import styled, { css } from 'styled-components';
+import React, { FC, PropsWithChildren, ReactNode } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 export const SubtleBadge = styled(Badge)<{
   variant?: 'warning' | 'danger' | 'secondary' | 'info';
@@ -43,28 +46,39 @@ export const CenteredSpinnerContainer = styled.div`
   z-index: 1060; // consistent with Bootstrap's $zindex-modal value
 `;
 
-export const DimmableContent = styled.div<{
-  dim: boolean;
-  containerHasRoundedCorners: boolean;
-  containerBorderRadius: string;
-}>`
-  ${props =>
-    props.dim
-      ? css`
-          &:after {
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            background: white;
-            opacity: 0.5;
-            border-radius: ${props.containerHasRoundedCorners ? props.containerBorderRadius : '0px'};
-          }
-        `
-      : null}
+const DimmableStyles = styled.div`
+  .dimmable-content-container {
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: #fff;
+      opacity: 0;
+      transition: 0.3s all ease-in-out;
+      pointer-events: none;
+    }
+
+    &.active {
+      &:after {
+        opacity: 0.4;
+        pointer-events: auto;
+      }
+    }
+  }
 `;
+
+export const DimmableContent: FC<
+  PropsWithChildren<{
+    dim?: boolean;
+  }>
+> = ({ dim = true, children }) => (
+  <DimmableStyles>
+    <div className={`dimmable-content-container ${dim && 'active'}`}>{children}</div>
+  </DimmableStyles>
+);
 
 export const CircularImg = styled.img<{
   radius: number;
@@ -73,20 +87,96 @@ export const CircularImg = styled.img<{
   height: ${props => `${props.radius}px`};
   width: ${props => `${props.radius}px`};
   margin: 0;
-  margin-right: 0.75rem;
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 `;
 
-export const NoContent = styled.div`
+export const CircularContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+`;
+
+const NoContentStyles = styled.div`
   min-height: 320px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  text-align: center;
 
   i,
   svg {
-    color: #333;
+    color: ${props => props.theme.textColor};
     margin-bottom: 0.5rem;
   }
+  p.lead {
+    color: ${props => props.theme.textColor};
+  }
 `;
+
+export const NoContent: FC<{
+  title: string | ReactNode;
+  icon?: IconDefinition;
+  extra?: ReactNode;
+}> = ({ title, icon, extra }) => {
+  return (
+    <NoContentStyles className='noContentStyles'>
+      {icon && <FontAwesomeIcon icon={icon} className='text-muted' size='2x' />}
+      {typeof title === 'string' ? <p className='lead mb-0'>{title}</p> : title}
+      {extra}
+    </NoContentStyles>
+  );
+};
+
+const StagingBanner = styled(Alert).attrs({
+  variant: 'warning',
+})`
+  text-align: center;
+  border-radius: 0;
+  border: none;
+  position: fixed;
+  z-index: 1090;
+  left: 0;
+  right: 0;
+  background: repeating-linear-gradient(45deg, #fff3cd, #fff3cd 20px, #fdefc3 20px, #fdefc3 40px);
+  border-bottom: 1px #dadada solid;
+`;
+
+const BannerWrapper = styled.div<{
+  bannerShowing: boolean;
+}>`
+  ${StagingBanner} {
+    display: none;
+    visibility: hidden;
+  }
+
+  ${props =>
+    props.bannerShowing
+      ? css`
+          .content-wrapper {
+            padding-top: 56px !important;
+          }
+
+          ${StagingBanner} {
+            display: block;
+            visibility: visible;
+          }
+        `
+      : null}
+`;
+
+export const BannerContentWrapper: FC<
+  PropsWithChildren<{
+    bannerShowing: boolean;
+  }>
+> = ({ children, bannerShowing }) => {
+  return (
+    <BannerWrapper bannerShowing={bannerShowing}>
+      <StagingBanner>
+        You are currently on the <b>staging</b> server.
+      </StagingBanner>
+      {children}
+    </BannerWrapper>
+  );
+};

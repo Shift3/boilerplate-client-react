@@ -1,7 +1,7 @@
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CustomSelect } from 'common/components/CustomSelect';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -36,10 +36,19 @@ export const Paginator: FC<Props> = ({
   onNextPageClick,
   onPageSizeChange,
 }) => {
-  const rangeStart = pageSize * (page - 1) + 1;
+  let rangeStart = pageSize * (page - 1) + 1;
   const rangeEnd = page < pageCount ? pageSize * page : count;
+  if (rangeEnd === 0) rangeStart = 0;
   const defaultOption = { label: pageSize.toString(), value: pageSize.toString() };
-  const __pageSizeOptions = pageSizeOptions.map(option => ({ label: option.toString(), value: option.toString() }));
+
+  const __pageSizeOptions = useMemo(
+    () =>
+      pageSizeOptions.map(option => ({
+        label: option.toString(),
+        value: option.toString(),
+      })),
+    [pageSizeOptions],
+  );
 
   return (
     <div className='table-paginator'>
@@ -59,7 +68,7 @@ export const Paginator: FC<Props> = ({
         {/* Display the range of results currently showing */}
         <Col className='d-flex justify-content-end align-items-center'>
           <span className='text-muted' style={{ marginRight: '10px' }}>
-            {rangeStart} - {rangeEnd} of {count}
+            {count !== 0 ? `${rangeStart} - ${rangeEnd} of ${count}` : 'No Results'}
           </span>
           <Button variant='link' disabled={!hasPreviousPage} onClick={onPreviousPageClick}>
             <FontAwesomeIcon icon={faChevronLeft} />{' '}

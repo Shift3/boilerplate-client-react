@@ -1,11 +1,16 @@
+import { Breakpoint, useBreakpoint } from 'common/hooks/useBreakpoint';
 import { SortOrder } from 'common/models/sorting';
-import { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { Column, useFlexLayout, usePagination, useSortBy, useTable } from 'react-table';
 import { Paginator } from './Paginator';
 import { SortIndicator } from './SortIndicator';
 
+export type ResponsiveColumn<D extends object> = Column<D> & {
+  responsive?: Breakpoint;
+};
+
 export type DataTableProps<D extends Record<string, unknown>> = {
-  columns: Column<D>[];
+  columns: ResponsiveColumn<D>[];
   data: D[];
   onRowClick?: (item: D) => void;
   pagination?: {
@@ -67,6 +72,17 @@ export const DataTable = <D extends Record<string, unknown>>({
       columns,
       data,
       initialState,
+      stateReducer: (newState, action) => {
+        switch (action.type) {
+          case 'filter or search was used':
+            return {
+              ...newState,
+              pageIndex: 0,
+            };
+          default:
+            return newState;
+        }
+      },
       ...extraTableOptions,
     },
     useFlexLayout,
@@ -89,6 +105,7 @@ export const DataTable = <D extends Record<string, unknown>>({
     nextPage,
     previousPage,
     setPageSize,
+    dispatch,
     // Instance state
     state: { pageIndex, pageSize, sortBy },
   } = tableInstance;
@@ -123,6 +140,27 @@ export const DataTable = <D extends Record<string, unknown>>({
     [pageIndex, pageSize, paginationEnabled, pagination?.onPageChange, pagination?.onPageSizeChange],
   );
 
+  // When switching between pages via the Paginator, the table's pageIndex will always be 1 less than pagination.page.
+  // However, if the user uses search or a filter, then pagination.page will be less than or equal to the pageIndex.
+  // In this case, we need to reset the table's pageIndex to 0. This will cause the pagination numbering and next/previous
+  // buttons to be updated and the result will be consistent with the current data set.
+  useEffect(() => {
+    if (pagination) {
+      if (pagination.page <= pageIndex) {
+        dispatch({ type: 'filter or search was used' });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pagination?.page]);
+
+  const { breakpoint, isLessThan } = useBreakpoint();
+
+  useEffect(() => {
+    tableInstance.setHiddenColumns(
+      columns.filter(c => c.responsive && isLessThan(breakpoint, c.responsive)).map(c => c.accessor) as string[],
+    );
+  }, [breakpoint, columns, isLessThan, tableInstance]);
+
   return (
     <div className='d-flex flex-column'>
       <div className='table' {...getTableProps()}>
@@ -130,24 +168,25 @@ export const DataTable = <D extends Record<string, unknown>>({
           {headerGroups.map(headerGroup => (
             <div className='tr' {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
-                <>
+                <React.Fragment key={column.id}>
                   {sortByEnabled && column.canSort ? (
                     // Add the sorting props to control sorting and sort direction indicator.
                     <div className='th' {...column.getHeaderProps(column.getSortByToggleProps())}>
                       {column.render('Header')}{' '}
-                      <SortIndicator isSorted={column.isSorted} isDesc={column.isSortedDesc} />
+                      <SortIndicator key={headerGroup.id} isSorted={column.isSorted} isDesc={column.isSortedDesc} />
                     </div>
                   ) : (
-                    <div className='th' {...column.getHeaderProps()}>
+                    <div className='th' {...column.getHeaderProps()} key={headerGroup.id}>
                       {column.render('Header')}
                     </div>
                   )}
-                </>
+                </React.Fragment>
               ))}
             </div>
           ))}
         </div>
         <div className='tbody' {...getTableBodyProps()}>
+          {tableRows.length === 0 ? <p className='text-muted mt-3 px-4'>No Results...</p> : null}
           {tableRows.map(row => {
             prepareRow(row);
             return (

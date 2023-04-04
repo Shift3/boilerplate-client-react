@@ -62,7 +62,19 @@ type FilterActions = {
 type FilterManager = FilterState & FilterActions;
 
 // --------------------------------------------------------------------------------------------------------------------
-type PSFQueryState = PaginationState & SortState & FilterState;
+
+type SearchTextState = {
+  searchText: string;
+};
+
+type SearchActions = {
+  addSearchText: (searchText: string) => void;
+};
+
+type SearchManager = SearchTextState & SearchActions;
+
+// --------------------------------------------------------------------------------------------------------------------
+type PSFQueryState = PaginationState & SortState & FilterState & SearchTextState;
 
 type PSFQueryAction =
   | { type: 'pagination/setPage'; payload: { page: number } }
@@ -71,9 +83,10 @@ type PSFQueryAction =
   | { type: 'filter/add'; payload: { attr: string; op: FilterOp; value: string } }
   | { type: 'filter/remove'; payload: { attr: string; op: FilterOp } }
   | { type: 'filter/reset' }
-  | { type: 'all/dataUpdated'; payload: { data: PaginatedResult<unknown> | unknown } };
+  | { type: 'all/dataUpdated'; payload: { data: PaginatedResult<unknown> | unknown } }
+  | { type: 'addSearchText'; payload: { data: string } };
 
-export type PSFQueryManager = PaginationManager & SortManager & FilterManager;
+export type PSFQueryManager = PaginationManager & SortManager & FilterManager & SearchManager;
 
 export type PSFConfig = PaginationConfig;
 
@@ -104,10 +117,15 @@ export const usePSFQuery = <ResultType>(
     filters: [],
   };
 
+  const initialSearchTextState: SearchTextState = {
+    searchText: '',
+  };
+
   const initialState: PSFQueryState = {
     ...initialPaginationState,
     ...initialSortState,
     ...initialFilterState,
+    ...initialSearchTextState,
   };
 
   // Set up the reducer that will create and manage the pagination, sort, and filter states of the query.
@@ -137,7 +155,8 @@ export const usePSFQuery = <ResultType>(
 
         if (minPageSize <= size && size <= maxPageSize) {
           const pageSize = size;
-          return { ...state, pageSize };
+          const pageCount = Math.ceil(state.count / pageSize);
+          return { ...state, pageSize, pageCount };
         }
 
         return state;
@@ -154,9 +173,15 @@ export const usePSFQuery = <ResultType>(
         const { basePage } = config;
         const { filters: oldFilters } = state;
         const { payload } = action;
-        const newFilters = !oldFilters.find(filter => filter.attr === payload.attr && filter.op === payload.op)
-          ? [...oldFilters, payload]
-          : oldFilters;
+
+        const existingFilter = oldFilters.find(filter => filter.attr === payload.attr);
+        let newFilters;
+        if (existingFilter) {
+          newFilters = [...oldFilters.filter(filter => filter.attr !== payload.attr), payload];
+        } else {
+          newFilters = [...oldFilters, payload];
+        }
+
         return { ...state, page: basePage, filters: newFilters };
       }
 
@@ -171,6 +196,12 @@ export const usePSFQuery = <ResultType>(
       case 'filter/reset': {
         const { basePage } = config;
         return { ...state, page: basePage, filters: [] };
+      }
+
+      case 'addSearchText': {
+        const { payload } = action;
+        const page = state.searchText !== payload.data ? 1 : state.page;
+        return { ...state, searchText: payload.data, page };
       }
 
       case 'all/dataUpdated': {
@@ -201,8 +232,8 @@ export const usePSFQuery = <ResultType>(
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // Use the query hook.
-  const { page, pageSize, sortBy, filters } = state;
-  const queryArg = { page, pageSize, sortBy, filters };
+  const { page, pageSize, sortBy, filters, searchText } = state;
+  const queryArg = { page, pageSize, sortBy, filters, searchText };
   const queryResult = useQuery(queryArg, options);
 
   // Certain metadata is returned as part of the response from the server. For example, `count` and `pageCount`
@@ -255,6 +286,11 @@ export const usePSFQuery = <ResultType>(
     [dispatch],
   );
 
+  const addSearchText = useCallback(
+    (searchText: string) => dispatch({ type: 'addSearchText', payload: { data: searchText } }),
+    [dispatch],
+  );
+
   const resetFilters = useCallback(() => dispatch({ type: 'filter/reset' }), [dispatch]);
 
   return {
@@ -268,5 +304,6 @@ export const usePSFQuery = <ResultType>(
     addFilter,
     removeFilter,
     resetFilters,
+    addSearchText,
   };
 };

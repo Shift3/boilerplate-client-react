@@ -1,10 +1,13 @@
 import packageJson from '../../package.json';
 import { EnvironmentConfiguration, IEnvironment } from './types';
 
+const apiHost = 'localhost';
+
 export const environment: IEnvironment = {
-  apiRoute: 'http://localhost:8000',
+  apiHost,
+  apiRoute: `http://${apiHost}:8000`,
   environment: EnvironmentConfiguration.Development,
-  isProduction: process.env.NODE_ENV === 'production',
+  isProduction: false,
   name: packageJson.name,
   version: packageJson.version,
 };

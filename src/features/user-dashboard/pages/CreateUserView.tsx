@@ -4,12 +4,13 @@ import { useInviteUserMutation } from 'common/api/userApi';
 import { isObject } from 'common/error/utilities';
 import { Role, ServerValidationErrors } from 'common/models';
 import * as notificationService from 'common/services/notification';
-import { FormCard, StyledFormWrapper } from 'common/styles/form';
+import { Card } from 'react-bootstrap';
 import { PageCrumb, PageHeader, SmallContainer } from 'common/styles/page';
 import { useRbac } from 'features/rbac';
 import { FC, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
+import { Trans } from 'react-i18next';
 
 export const CreateUserView: FC = () => {
   const navigate = useNavigate();
@@ -43,30 +44,35 @@ export const CreateUserView: FC = () => {
     <SmallContainer>
       <PageCrumb>
         <Link to='/users'>
-          <FontAwesomeIcon icon={['fas', 'chevron-left']} /> Back to User List
+          <>
+            <FontAwesomeIcon icon={['fas', 'chevron-left']} />
+            <Trans i18nKey='createUser.back'>Back to User List</Trans>
+          </>
         </Link>
       </PageCrumb>
 
       <PageHeader>
         <div>
-          <h1>Create User</h1>
-          <p className='text-muted'>Add a new user to the system.</p>
+          <h1>
+            <Trans i18nKey='createUser.heading'>Create User</Trans>
+          </h1>
+          <p className='text-muted'>
+            <Trans i18nKey='createUser.subheading'>Add a new user to the system.</Trans>
+          </p>
         </div>
       </PageHeader>
 
-      <FormCard>
-        <FormCard.Body>
-          <StyledFormWrapper>
-            <UserDetailForm
-              availableRoles={availableRoles}
-              defaultValues={defaultValues}
-              submitButtonLabel='Create'
-              onSubmit={handleFormSubmit}
-              serverValidationErrors={formValidationErrors}
-            />
-          </StyledFormWrapper>
-        </FormCard.Body>
-      </FormCard>
+      <Card>
+        <Card.Body>
+          <UserDetailForm
+            availableRoles={availableRoles}
+            defaultValues={defaultValues}
+            submitButtonLabel='Create'
+            onSubmit={handleFormSubmit}
+            serverValidationErrors={formValidationErrors}
+          />
+        </Card.Body>
+      </Card>
     </SmallContainer>
   );
 };

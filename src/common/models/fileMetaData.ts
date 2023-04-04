@@ -1,5 +1,5 @@
 export interface FileMetaData {
-    id: number;
-    key: string;
-    url: string;
-  }
+  id: number;
+  key: string;
+  url: string;
+}

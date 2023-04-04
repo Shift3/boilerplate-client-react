@@ -5,10 +5,11 @@ import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt
 import { addServerErrors } from 'common/error/utilities';
 import { Role, User, RoleOption, ServerValidationErrors } from 'common/models';
 import { FC, useEffect } from 'react';
-import { Button, Col, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
+import { Trans } from 'react-i18next';
 
 export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'role'>;
 
@@ -60,11 +61,15 @@ export const UserDetailForm: FC<Props> = ({
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
       <Form name='create-user-form' onSubmit={handleSubmit(onSubmit)}>
-        <h5>Profile</h5>
+        <h5>
+          <Trans i18nKey='userDetail.heading'>Profile</Trans>
+        </h5>
         <Row className='mb-2'>
           <Col xs={12} md={6}>
             <Form.Group controlId='create-user-form-first-name'>
-              <Form.Label>First Name</Form.Label>
+              <Form.Label>
+                <Trans i18nKey='userDetail.firstName'>First Name</Trans>
+              </Form.Label>
               <Form.Control type='text' {...register('firstName')} isInvalid={!!errors.firstName} />
               <Form.Control.Feedback type='invalid'>{errors.firstName?.message}</Form.Control.Feedback>
             </Form.Group>
@@ -72,7 +77,9 @@ export const UserDetailForm: FC<Props> = ({
 
           <Col xs={12} md={6}>
             <Form.Group controlId='create-user-form-last-name'>
-              <Form.Label>Last Name</Form.Label>
+              <Form.Label>
+                <Trans i18nKey='userDetail.lastName'>Last Name</Trans>
+              </Form.Label>
               <Form.Control type='text' {...register('lastName')} isInvalid={!!errors.lastName} />
               <Form.Control.Feedback type='invalid'>{errors.lastName?.message}</Form.Control.Feedback>
             </Form.Group>
@@ -80,15 +87,19 @@ export const UserDetailForm: FC<Props> = ({
         </Row>
 
         <Form.Group controlId='create-user-form-email'>
-          <Form.Label>Email</Form.Label>
+          <Form.Label>
+            <Trans i18nKey='userDetail.email'>Email</Trans>
+          </Form.Label>
           <Form.Control type='email' {...register('email')} isInvalid={!!errors.email} />
           <Form.Control.Feedback type='invalid'>{errors.email?.message}</Form.Control.Feedback>
         </Form.Group>
-
-        <h5 className='mt-3'>Access Information</h5>
-
+        <h5 className='mt-3'>
+          <Trans i18nKey='userDetail.accessHeading'>Access Information</Trans>
+        </h5>
         <Form.Group className='mb-2' controlId='create-user-form-role'>
-          <Form.Label>Role</Form.Label>
+          <Form.Label>
+            <Trans i18nKey='role'>Role</Trans>
+          </Form.Label>
           <Controller
             control={control}
             name='role'
@@ -103,10 +114,13 @@ export const UserDetailForm: FC<Props> = ({
             )}
           />
           <Form.Control.Feedback type='invalid'>{errors.role?.message}</Form.Control.Feedback>
+          <Form.Text className='text-muted'>
+            For more information about the different roles and what they can do, see our <a href='#'>FAQ</a>
+          </Form.Text>
         </Form.Group>
 
         <div className='mt-3'>
-          <LoadingButton type='submit' as={Button} disabled={!isValid} loading={isSubmitting}>
+          <LoadingButton type='submit' disabled={!isValid} loading={isSubmitting}>
             {submitButtonLabel}
           </LoadingButton>
         </div>

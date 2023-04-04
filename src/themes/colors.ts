@@ -1,0 +1,27 @@
+export const colors = {
+  white: '#FFFFFF',
+  black: '#000000',
+  dangerRed: '#DC2626',
+
+  neutral50: '#f8fafc',
+  neutral100: '#f1f5f9',
+  neutral200: '#e2e8f0',
+  neutral300: '#cbd5e1',
+  neutral400: '#94a3b8',
+  neutral500: '#64748b',
+  neutral600: '#475569',
+  neutral700: '#334155',
+  neutral800: '#1e293b',
+  neutral900: '#0f172a',
+
+  blue50: '#eff6ff',
+  blue100: '#dbeafe',
+  blue200: '#bfdbfe',
+  blue300: '#93c5fd',
+  blue400: '#60a5fa',
+  blue500: '#3b82f6',
+  blue600: '#2563eb',
+  blue700: '#1d4ed8',
+  blue800: '#1e40af',
+  blue900: '#1e3a8a',
+};

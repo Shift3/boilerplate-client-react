@@ -1,14 +1,13 @@
-import { ErrorNotificationIcon, SuccessNotificationIcon } from 'common/components/Notification';
 import { toast } from 'react-toastify';
 
-export const showSuccessMessage = (message: string): void => {
+export const showSuccessMessage = (message: string, id?: string): void => {
   toast.success(message, {
-    icon: <SuccessNotificationIcon />,
+    toastId: id ?? message,
   });
 };
 
-export const showErrorMessage = (message: string): void => {
+export const showErrorMessage = (message: string, id?: string): void => {
   toast.error(message, {
-    icon: <ErrorNotificationIcon />,
+    toastId: id ?? message,
   });
 };

@@ -1,105 +1,73 @@
-import { ErrorBoundary } from '@sentry/react';
-import { Layout } from 'common/components/Layout';
-import { NotFoundView } from 'common/components/NotFoundView';
-import { NotificationContainer } from 'common/components/Notification';
+import { BannerContentWrapper } from 'common/styles/utilities';
 import { environment } from 'environment';
-import { AgentRoutes } from 'features/agent-dashboard';
-import { AuthRoutes, RequireAuth } from 'features/auth';
-import { ConfirmationModal } from 'features/confirmation-modal';
-import { BitwiseNavbar } from 'features/navbar';
-import { UserRoutes } from 'features/user-dashboard';
-import { UpdateUserProfilePage } from 'features/user-profile/pages/UpdateUserProfilePage';
-import { FC } from 'react';
-import { Alert } from 'react-bootstrap';
-import { Navigate, Route, Routes } from 'react-router-dom';
-import styled, { css, ThemeProvider } from 'styled-components';
-import AppTheme from 'utils/styleValues';
+import { AppErrorBoundary } from 'features/error-boundary/components/AppErrorBoundary';
+import { NetworkDetector } from 'features/network-detector/components/NetworkDetector';
+import { NotificationsProvider } from 'features/notifications/context';
+import { createContext, FC, useMemo, useState } from 'react';
+import { ModalProvider } from 'react-modal-hook';
+import { Slide, toast, ToastContainer } from 'react-toastify';
+import { TransitionGroup } from 'react-transition-group';
+import { ThemeProvider } from 'styled-components';
+import dark from 'themes/dark';
+import light from 'themes/light';
 import { GlobalStyle } from '../GlobalStyle';
-import { Role } from 'common/models';
+import { Routes } from './Routes';
 
-const StagingBanner = styled(Alert).attrs({
-  variant: 'warning',
-})`
-  text-align: center;
-  border-radius: 0;
-  border: none;
-  position: fixed;
-  z-index: 99;
-  left: 0;
-  right: 0;
-  background: repeating-linear-gradient(45deg, #fff3cd, #fff3cd 20px, #fdefc3 20px, #fdefc3 40px);
-  border-bottom: 1px #dadada solid;
-`;
+export const ThemeContext = createContext({
+  theme: 'light',
+  toggleTheme: () => {},
+});
 
-const BannerWrapper = styled.div<{
-  bannerShowing: boolean;
-}>`
-  ${StagingBanner} {
-    display: none;
-    visibility: hidden;
-  }
+export const App: FC = () => {
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
-  ${props =>
-    props.bannerShowing
-      ? css`
-          .content-wrapper {
-            padding-top: 56px !important;
-          }
+  const themeProviderValue = useMemo(() => {
+    const toggleTheme = () => {
+      if (theme === 'light') {
+        window.localStorage.setItem('theme', 'dark');
+        setTheme('dark');
+      } else {
+        window.localStorage.setItem('theme', 'light');
+        setTheme('light');
+      }
+    };
 
-          ${StagingBanner} {
-            display: block;
-            visibility: visible;
-          }
+    return {
+      theme,
+      toggleTheme,
+    };
+  }, [theme]);
 
-          ${BitwiseNavbar} {
-            padding-top: 56px !important;
+  return (
+    <AppErrorBoundary>
+      <NetworkDetector>
+        <ThemeContext.Provider value={themeProviderValue}>
+          <ThemeProvider theme={theme === 'light' ? light : dark}>
+            <ModalProvider rootComponent={TransitionGroup}>
+              <NotificationsProvider>
+                <GlobalStyle />
 
-        `
-      : null}
-`;
+                <ToastContainer
+                  autoClose={5000}
+                  closeButton
+                  closeOnClick
+                  newestOnTop
+                  hideProgressBar={false}
+                  position={toast.POSITION.TOP_RIGHT}
+                  role='alert'
+                  theme='light'
+                  limit={3}
+                  transition={Slide}
+                />
 
-export const App: FC = () => (
-  <ErrorBoundary>
-    <ThemeProvider theme={AppTheme}>
-      <ConfirmationModal />
-      <NotificationContainer />
-      <BannerWrapper bannerShowing={environment.environment === 'staging'}>
-        <StagingBanner>
-          You are currently on the <b>staging</b> server.
-        </StagingBanner>
-        <Routes>
-          <Route path='/auth/*' element={<AuthRoutes />} />
-          <Route
-            path='/user/profile/:id'
-            element={
-              <RequireAuth>
-                <Layout>
-                  <UpdateUserProfilePage />
-                </Layout>
-              </RequireAuth>
-            }
-          />
-          <Route
-            path='/agents/*'
-            element={
-              <RequireAuth>
-                <AgentRoutes />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path='/users/*'
-            element={
-              <RequireAuth allowedRoles={[ Role.ADMIN ]}>
-                <UserRoutes />
-              </RequireAuth>
-            }
-          />
-          <Route path='/' element={<Navigate to='/agents' />} />
-          <Route path='*' element={<NotFoundView />} />
-        </Routes>
-      </BannerWrapper>
-    </ThemeProvider>
-    <GlobalStyle />
-  </ErrorBoundary>
-);
+                <BannerContentWrapper bannerShowing={environment.environment === 'staging'}>
+                  <Routes />
+                </BannerContentWrapper>
+              </NotificationsProvider>
+            </ModalProvider>
+          </ThemeProvider>
+        </ThemeContext.Provider>
+      </NetworkDetector>
+    </AppErrorBoundary>
+  );
+};

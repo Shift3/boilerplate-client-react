@@ -1,14 +1,14 @@
 # Boilerplate Client React
 
-| Branch      | Status                                                                                                                                                                                                                   |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| development | [![Shift3](https://circleci.com/gh/Shift3/boilerplate-client-react.svg?style=shield&circle-token=7906113b0233ea67936098a26da5e8f598eec7ac)](https://circleci.com/gh/Shift3/boilerplate-client-react)                     |
-| main        | [![Shift3](https://circleci.com/gh/Shift3/boilerplate-client-react/tree/main.svg?style=shield&circle-token=7906113b0233ea67936098a26da5e8f598eec7ac)](https://circleci.com/gh/Shift3/boilerplate-client-react/tree/main) |
+| Branch  | Status                                                                                                                                                                                                                   |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| develop | [![Shift3](https://circleci.com/gh/Shift3/boilerplate-client-react.svg?style=shield&circle-token=7906113b0233ea67936098a26da5e8f598eec7ac)](https://circleci.com/gh/Shift3/boilerplate-client-react)                     |
+| main    | [![Shift3](https://circleci.com/gh/Shift3/boilerplate-client-react/tree/main.svg?style=shield&circle-token=7906113b0233ea67936098a26da5e8f598eec7ac)](https://circleci.com/gh/Shift3/boilerplate-client-react/tree/main) |
 
 This boilerplate has a [wiki](https://github.com/Shift3/boilerplate-client-react/wiki) which explains the project and its implementation in much greater detail than the code comments.
 
 > Note that this repository used to be compatible with our NestJS
-> backend, however we have switched to using django as our primary
+> backend, however we have switched to using [django](https://github.com/Shift3/dj-starter) as our primary
 > backend. If you are looking for the NestJS compatible version, we
 > still maintain it in the `nestjs-compatibility` branch
 
@@ -49,10 +49,27 @@ to see a demo with new features, you can check out our [staging site](https://bo
 
 ## Quick Start
 
-To start the project, make sure yarn is installed on your local machine. If you have already installed our [laptop script](https://github.com/Shift3/laptop), you should already have yarn.
+To start the project, make sure nvm is installed on your local machine. If you have already installed our [laptop script](https://github.com/Shift3/laptop), you should already have nvm.
 
-1. Install Dependencies via `yarn install`
-2. Start the Project in development mode via `yarn start`
+1. Ensure you have to correct node version installed
+
+```bash
+nvm install # to install the required node version for project
+nvm use     # to use the required node version for project
+```
+
+1. Install Dependencies
+
+```bash
+npm i -g yarn # install yarn
+yarn install  # install dependencies with yarn
+```
+
+1. Start the Project in development mode
+
+```bash
+yarn start
+```
 
 Open [http://localhost:4200](http://localhost:4200) to view the project in the browser.
 
@@ -96,19 +113,22 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ### AWS
 
-Deploying to AWS requires having AWS credentials configured on the machine. The deployment script is set to look for an AWS profile named `shift3`. See the following links for documentation on configuring the AWS CLI, creating an AWS credential file, and creating a named profile:
+Deploying to AWS requires having AWS credentials configured on the machine. Deployment will also require aws cli v2. The deployment script is set to look for an AWS profile named `BWTC-Developer`. See the following links for documentation on configuring the AWS SSO and creating a named profile:
 
-- [Configuration and credential file settings](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
-- [Named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
+- [AWS SSO Configuration](https://docs.google.com/document/d/1qUTh_z4lef0j-DT8cFxzlZZcfseR75aQjPNO018CYic)
 
 ### Terraform
 
 Configuring, building, and changing the AWS infrastructure **for the sandbox** is handled by Terraform. As a prerequisite, Terraform needs the AWS credentials configured as described in the [above section](#aws), which developers should already have or can access through Zoho Vault.
 
+Before deployments or initializing terraform you must have aws sso configured and then login with the following commmand:
+
+`aws sso login --profile BWTC-Developer`
+
 Terraform also needs the project secrets saved in `terraform/staging/terraform.tfvars`. This file is not committed to version control since it can contain sensitive information such as database credentials and should be added locally. Create the `terraform/staging/terraform.tfvars` file with the following structure:
 
 ```
-profile = "shift3"
+profile = "BWTC-Developer"
 
 region = "us-west-2"
 
@@ -139,7 +159,7 @@ Update the `apiRoute` property in `environment.staging.ts` with the provisioned 
 
 ### Build and Deploy
 
-The boilerplate can either be deployed manually, or automatically via CircleCI. The preferred way to deploy is with automatic deployments. The default CircleCI configuration will deploy to the staging environment when there are new commits pushed to the `development` branch, and will deploy to production when new commits are pushed to the `main` branch.
+The boilerplate can either be deployed manually, or automatically via CircleCI. The preferred way to deploy is with automatic deployments. The default CircleCI configuration will deploy to the staging environment when there are new commits pushed to the `develop` branch, and will deploy to production when new commits are pushed to the `main` branch.
 
 #### CircleCI Deployments
 
@@ -157,8 +177,11 @@ After your CircleCI project is set up, the only thing you need to do to get depl
 - `STAGING_AWS_DEFAULT_REGION`
   - The default region your infrastructure is deployed to.
   - `us-west-2`
+- `SENTRY_DSN`
+  - Optional Sentry DSN, enables sentry tracing/logging
+  - `https://a1a1a1a1a1a1a1a1a1a1a1aa1a1a1a1a@oooooo.ingest.sentry.io/1234567`
 
-Once these are set up, your project will be **automatically deployed** whenever new commits to the `development` branch are pushed to Github.
+Once these are set up, your project will be **automatically deployed** whenever new commits to the `develop` branch are pushed to Github.
 
 Production deploys from the `main` branch use the same set of environment variables, just with `PRODUCTION` instead of `STAGING` int the names. The list of those variables follow:
 
@@ -179,8 +202,8 @@ In `package.json`, updated the `"deploy:staging"` and the `deploy:production` np
   ...,
   "scripts": {
     ...
-    "deploy:staging": "aws s3 sync ./build s3://example-staging.shift3sandbox.com --profile shift3 --delete"
-    "deploy:production": "aws s3 sync ./build s3://example-prod.shift3sandbox.com --profile shift3 --delete"
+    "deploy:staging": "aws s3 sync ./dist s3://example-staging.shift3sandbox.com --profile BWTC-Developer --delete"
+    "deploy:production": "aws s3 sync ./dist s3://example-prod.shift3sandbox.com --profile BWTC-Developer --delete"
     ...
   }
 }
@@ -254,7 +277,7 @@ It is recommended to use the above configuration, however if you choose to alter
 
 #### Wiki Automation
 
-The CircleCI config includes a `deploy-wiki` job to automatically deploy Wiki pages that are placed in the `wiki/` folder. This workflow only runs when changes are commited directly to the `development` branch or when a feature branch is merged into the `development` branch.
+The CircleCI config includes a `deploy-wiki` job to automatically deploy Wiki pages that are placed in the `wiki/` folder. This workflow only runs when changes are commited directly to the `develop` branch or when a feature branch is merged into the `develop` branch.
 
 After forking the project, you will need to make the following changes to ensure the `deploy-wiki` job works properly:
 
@@ -351,3 +374,7 @@ const PersonForm = () => {
 ```
 
 For more information, see the [useForm](https://react-hook-form.com/api/useform) and [@hookform/resolvers](https://github.com/react-hook-form/resolvers) documentation.
+
+## Contributing
+
+For information on contributing to this repo, see the [CONTRIBUTING.md](https://github.com/Shift3/boilerplate-client-react/blob/develop/CONTRIBUTING.md) file

@@ -1,6 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { customBaseQuery } from 'common/api/customBaseQuery';
-import { FilterQueryParams, PaginatedResult, PaginationQueryParams, Session } from 'common/models';
+import { FilterQueryParams, PaginatedResult, PaginationQueryParams, SearchTextParams, Session } from 'common/models';
+import { HistoricalRecord } from 'common/models/historicalRecord';
 import { SortingQueryParams } from 'common/models/sorting';
 import { User } from 'common/models/user';
 import { QueryParamsBuilder } from './queryParamsBuilder';
@@ -53,9 +54,13 @@ export const userApi = createApi({
   tagTypes: ['User'],
 
   endpoints: builder => ({
-    getUsers: builder.query<PaginatedResult<User>, PaginationQueryParams & SortingQueryParams & FilterQueryParams>({
-      query: ({ page, pageSize, sortBy, filters }) => {
+    getUsers: builder.query<
+      PaginatedResult<User>,
+      PaginationQueryParams & SortingQueryParams & FilterQueryParams & SearchTextParams
+    >({
+      query: ({ page, pageSize, sortBy, filters, searchText }) => {
         const queryParams = new QueryParamsBuilder()
+          .setSearchParam(searchText)
           .setPaginationParams(page, pageSize)
           .setSortParam(sortBy)
           .setFilterParam(filters)
@@ -68,6 +73,10 @@ export const userApi = createApi({
     getUserById: builder.query<User, string>({
       query: id => `/users/${id}/`,
       providesTags: ['User'],
+    }),
+
+    getUserHistory: builder.query<PaginatedResult<HistoricalRecord<User>>, string>({
+      query: url => url
     }),
 
     inviteUser: builder.mutation<User, CreateUserRequest>({
@@ -173,6 +182,14 @@ export const userApi = createApi({
       }),
     }),
 
+    cancelChangeEmail: builder.mutation<User, void>({
+      query: () => ({
+        url: `/users/cancel_change_email_request/`,
+        method: 'POST',
+      }),
+      invalidatesTags: ['User'],
+    }),
+
     confirmChangeEmail: builder.mutation<User, ConfirmChangeEmailRequest>({
       query: payload => ({
         url: `/users/confirm_change_email/`,
@@ -211,6 +228,7 @@ export const {
   useDeleteUserMutation,
   useForgotPasswordMutation,
   useGetUsersQuery,
+  useCancelChangeEmailMutation,
   useGetUserByIdQuery,
   useRequestChangeEmailMutation,
   useResendActivationEmailMutation,
@@ -221,4 +239,5 @@ export const {
   useUpdateUserMutation,
   useUpdateProfilePictureMutation,
   useDeleteProfilePictureMutation,
+  useGetUserHistoryQuery,
 } = userApi;

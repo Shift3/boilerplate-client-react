@@ -1,15 +1,17 @@
 import { useGetUsersQuery } from 'common/api/userApi';
 import { DataTable } from 'common/components/DataTable';
-import { DataTableFilters, FilterInfo } from 'common/components/DataTable/DataTableFilters';
+import { DataTableSearchAndFilters } from 'common/components/DataTable/DataTableSearchAndFilters';
+import { FilterInfo } from 'common/components/DataTable/FilterDropdown';
+import { RecentDateFilter, EnumFilter, StringFilter } from 'common/components/DataTable/Filters';
 import { WithLoadingOverlay } from 'common/components/LoadingSpinner';
 import { usePSFQuery } from 'common/hooks';
 import { PaginatedResult, User } from 'common/models';
-import { CreateButton } from 'common/styles/button';
 import { TableCard } from 'common/styles/card';
 import { PageHeader } from 'common/styles/page';
 import { HasPermission } from 'features/rbac';
 import { FC, useMemo } from 'react';
-import Container from 'react-bootstrap/Container';
+import { Button, Container } from 'react-bootstrap';
+import { Trans } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserTableItem, useUserTableData } from '../hooks/useUserTableData';
 
@@ -27,6 +29,7 @@ export const UserListView: FC = () => {
     addFilter,
     removeFilter,
     resetFilters,
+    addSearchText,
   } = usePSFQuery<PaginatedResult<User>>(useGetUsersQuery);
   const users = useMemo(() => data?.results ?? [], [data]);
   const { columns, data: tableData } = useUserTableData(users);
@@ -37,46 +40,26 @@ export const UserListView: FC = () => {
       {
         attribute: 'firstName',
         attributeLabel: 'First Name',
-        operationOptions: [
-          {
-            operation: 'eq',
-            operationLabel: 'is',
-          },
-          {
-            operation: 'icontains',
-            operationLabel: 'contains',
-          },
-          {
-            operation: 'startswith',
-            operationLabel: 'starts with',
-          },
-          {
-            operation: 'endswith',
-            operationLabel: 'ends with',
-          },
-        ],
+        FilterUI: StringFilter(),
       },
       {
         attribute: 'lastName',
         attributeLabel: 'Last Name',
-        operationOptions: [
-          {
-            operation: 'eq',
-            operationLabel: 'is',
-          },
-          {
-            operation: 'icontains',
-            operationLabel: 'contains',
-          },
-          {
-            operation: 'startswith',
-            operationLabel: 'starts with',
-          },
-          {
-            operation: 'endswith',
-            operationLabel: 'ends with',
-          },
-        ],
+        FilterUI: StringFilter(),
+      },
+      {
+        attribute: 'role',
+        attributeLabel: 'Role',
+        FilterUI: EnumFilter([
+          { label: 'User', value: 'USER' },
+          { label: 'Editor', value: 'EDITOR' },
+          { label: 'Admin', value: 'ADMIN' },
+        ]),
+      },
+      {
+        attribute: 'activatedAt',
+        attributeLabel: 'Activated Date',
+        FilterUI: RecentDateFilter([30, 90, 180]),
       },
     ],
     [],
@@ -86,33 +69,35 @@ export const UserListView: FC = () => {
     <Container>
       <PageHeader>
         <div>
-          <h1>User List</h1>
-          <p className='text-muted'>Active and invited users in the system.</p>
+          <h1>
+            <Trans i18nKey='userList.heading'>User List</Trans>
+          </h1>
+          <p>
+            <Trans i18nKey='userList.subheading'>Active and invited users in the system.</Trans>
+          </p>
         </div>
         <HasPermission perform='user:create'>
           <div>
             <Link to='/users/create-user'>
-              <CreateButton>Add User</CreateButton>
+              <Button>
+                <Trans i18nKey='userList.createButton'>Add User</Trans>
+              </Button>
             </Link>
           </div>
         </HasPermission>
       </PageHeader>
-      <DataTableFilters
+
+      <DataTableSearchAndFilters
         filters={filters}
-        defaultFilterAttribute='firstName'
-        defaultFilterOperation='icontains'
         onSetFilter={addFilter}
         onRemoveFilter={removeFilter}
         onClearFilters={resetFilters}
+        onSetSearchText={addSearchText}
       />
+
       <TableCard>
         <TableCard.Body>
-          <WithLoadingOverlay
-            isLoading={isPageLoading || isFetching}
-            isInitialLoad={isPageLoading && isFetching}
-            containerHasRoundedCorners
-            containerBorderRadius='6px'
-          >
+          <WithLoadingOverlay isLoading={isPageLoading || isFetching} isInitialLoad={isPageLoading && isFetching}>
             <DataTable<UserTableItem>
               columns={columns}
               data={tableData}
