@@ -25,6 +25,7 @@ type Action =
   | { type: 'add'; notification: AppNotification }
   | { type: 'add-old'; notifications: AppNotification[]; count: number }
   | { type: 'set-next-notification-url'; nextNotificationUrl: string | null }
+  | { type: 'remove'; notification: AppNotification }
   | { type: 'reset' };
 
 const reducer = (state: State, action: Action) => {
@@ -33,6 +34,19 @@ const reducer = (state: State, action: Action) => {
       return { ...state, notifications: [action.notification, ...state.notifications] };
     case 'add-old':
       return { ...state, oldNotifications: [...state.oldNotifications, ...action.notifications], count: action.count };
+    case 'remove': {
+      const notifications = state.notifications.filter(n => n.id !== action.notification.id);
+      const oldNotifications = state.oldNotifications.filter(n => n.id !== action.notification.id);
+      let numRemoved = state.notifications.length - notifications.length;
+      numRemoved += state.oldNotifications.length - oldNotifications.length;
+
+      return {
+        ...state,
+        notifications,
+        oldNotifications,
+        count: state.count - numRemoved,
+      };
+    }
     case 'reset':
       return { ...initialState };
     case 'set-next-notification-url':
@@ -105,7 +119,9 @@ export const useLiveNotifications = () => {
           `Could not find notification display component ${payload.type} in notifications/components.tsx\nMake sure to define a handler in that file`,
         );
         if (Component) {
-          toast(<Component key={payload.id} notification={payload} />, { className: 'in-app-notification' });
+          toast(<Component key={payload.id} notification={payload} />, {
+            className: 'in-app-notification',
+          });
         }
       };
 
@@ -128,6 +144,13 @@ export const useLiveNotifications = () => {
     dispatch(notificationApi.util.resetApiState());
   }, [notificationDispatch, dispatch]);
 
+  const remove = useCallback(
+    (notification: AppNotification) => {
+      notificationDispatch({ type: 'remove', notification });
+    },
+    [notificationDispatch],
+  );
+
   const getMore = useCallback(() => {
     if (unreadNotifications?.links.next && !isFetching) {
       notificationDispatch({ type: 'set-next-notification-url', nextNotificationUrl: unreadNotifications.links.next });
@@ -141,11 +164,12 @@ export const useLiveNotifications = () => {
       hasMore: !!unreadNotifications?.links.next,
       isFetching,
       isLoading,
+      remove,
       clear,
       getMore,
     };
     return result;
-  }, [clear, getMore, notifications, unreadNotifications, count, oldNotifications, isFetching, isLoading]);
+  }, [clear, remove, getMore, notifications, unreadNotifications, count, oldNotifications, isFetching, isLoading]);
 
   return notificationProviderValue;
 };

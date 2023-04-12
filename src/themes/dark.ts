@@ -60,6 +60,8 @@ export default {
     backgroundColor: colors.blue500,
     disabledBackgroundColor: colors.neutral100,
     hoverBackgroundColor: colors.blue500,
+
+    darkBackgroundColor: colors.blue600,
   },
 
   tooltips: {
@@ -119,6 +121,13 @@ export default {
   },
 
   changelogs: {
-    accentTextColor: colors.neutral50,
+    textColor: colors.white,
+    accentTextColor: colors.blue400,
+    backgroundColor: colors.neutral800,
+  },
+
+  notifications: {
+    borderColor: colors.white,
+    boxShadowColor: colors.neutral500,
   },
 };

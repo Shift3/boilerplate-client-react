@@ -1,14 +1,12 @@
 import { PageHeader, SmallContainer } from 'common/styles/page';
 import { ProfileNav } from 'features/user-profile/pages/UserProfilePage';
-import { FC, useContext } from 'react';
+import { FC, PropsWithChildren, useContext } from 'react';
 import { Badge, Col, Row } from 'react-bootstrap';
 import { Trans } from 'react-i18next';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { ReadNotifications } from '../components/ReadNotifications';
-import { UnreadNotifications } from '../components/UnreadNotifications';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { NotificationContext } from '../context';
 
-export const NotificationListView: FC = () => {
+export const NotificationListView: FC<PropsWithChildren<unknown>> = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { count } = useContext(NotificationContext);
@@ -51,12 +49,8 @@ export const NotificationListView: FC = () => {
             </ProfileNav.Link>
           </ProfileNav>
         </Col>
-
         <Col>
-          <Routes>
-            <Route path='/' element={<UnreadNotifications />} />
-            <Route path='/read' element={<ReadNotifications />} />
-          </Routes>
+          { children }
         </Col>
       </Row>
     </SmallContainer>
