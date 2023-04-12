@@ -1,33 +1,30 @@
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { useGetReadNotificationsQuery } from 'common/api/notificationApi';
+import { useInfiniteLoading } from 'common/hooks/useInfiniteLoading';
+import { PaginatedResult } from 'common/models';
 import { AppNotification } from 'common/models/notifications';
-import { FC, useEffect, useMemo, useState } from 'react';
+import { NoContent } from 'common/styles/utilities';
+import { FC } from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { renderNotification } from './renderNotification';
 
 export const ReadNotifications: FC = () => {
-  const [url, setUrl] = useState<string | null>(null);
-  const { data, isLoading, isFetching } = useGetReadNotificationsQuery(url, { refetchOnMountOrArgChange: true });
-  const [notifications, setNotifications] = useState<AppNotification[]>([]);
-
-  const hasMore = useMemo(() => {
-    if (isLoading || isFetching) return false;
-    return !!data?.links.next;
-  }, [data, isLoading, isFetching]);
-
-  useEffect(() => {
-    if (data && !isLoading) {
-      setNotifications(n => [...n, ...data.results]);
-    }
-  }, [data, isLoading]);
-
-  const fetchMore = () => {
-    if (hasMore && data) {
-      setUrl(data.links.next);
-    }
-  };
+  const {
+    loadedData: notifications,
+    isLoading,
+    isFetching,
+    hasMore,
+    fetchMore,
+  } = useInfiniteLoading<AppNotification, PaginatedResult<AppNotification>>('', useGetReadNotificationsQuery);
 
   return (
     <>
+      {!isLoading && notifications.length === 0 ? (
+        <Card>
+          <NoContent title='No Notifications' icon={faBell} />
+        </Card>
+      ) : null}
+
       {notifications &&
         notifications.map((notification: AppNotification) => (
           <Card key={notification.id} className='mb-3'>

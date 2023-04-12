@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { handleApiError, isFetchBaseQueryError } from 'common/api/handleApiError';
 import { useDeleteUserMutation, useForgotPasswordMutation, useResendActivationEmailMutation } from 'common/api/userApi';
+import { ResponsiveColumn } from 'common/components/DataTable';
 import { SimpleConfirmModal } from 'common/components/SimpleConfirmModal';
 import { useModalWithData } from 'common/hooks/useModalWithData';
 import { Image, Role, RoleType, User } from 'common/models';
@@ -11,7 +12,6 @@ import { UserProfilePicture } from 'features/navbar/components/UserProfilePictur
 import { useRbac } from 'features/rbac';
 import { useMemo } from 'react';
 import { Button } from 'react-bootstrap';
-import { Column } from 'react-table';
 
 export type UserTableItem = {
   id: string;
@@ -24,12 +24,7 @@ export type UserTableItem = {
   actions: ActionButtonProps[];
 };
 
-export type UseUserTableData = (agents?: User[]) => {
-  columns: Column<UserTableItem>[];
-  data: UserTableItem[];
-};
-
-export const useUserTableData: UseUserTableData = (users = []) => {
+export const useUserTableData = (users: User[] = []) => {
   const { userHasPermission } = useRbac();
 
   const [deleteUser] = useDeleteUserMutation();
@@ -156,7 +151,7 @@ export const useUserTableData: UseUserTableData = (users = []) => {
   };
 
   // Set up columns and headers
-  const columns: Column<UserTableItem>[] = useMemo(
+  const columns: ResponsiveColumn<UserTableItem>[] = useMemo(
     () => [
       {
         accessor: 'lastName',
@@ -193,6 +188,7 @@ export const useUserTableData: UseUserTableData = (users = []) => {
       {
         accessor: 'activatedAt',
         Header: 'Activated',
+        responsive: 'md',
         Cell: ({ value: activatedAt }) => (
           <>
             {activatedAt instanceof Date ? (
