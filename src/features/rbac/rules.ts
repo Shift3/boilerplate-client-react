@@ -1,10 +1,10 @@
 import { Role, RoleType, User } from 'common/models';
 
 export type Permission =
-  | 'agent:create'
-  | 'agent:read'
-  | 'agent:update'
-  | 'agent:delete'
+  | 'farm:create'
+  | 'farm:read'
+  | 'farm:update'
+  | 'farm:delete'
   | 'role:read'
   | 'user:create'
   | 'user:read'
@@ -28,10 +28,10 @@ export type RbacRules = {
 
 const rules: RbacRules = {
   [Role.ADMIN]: {
-    'agent:create': true,
-    'agent:read': true,
-    'agent:update': true,
-    'agent:delete': true,
+    'farm:create': true,
+    'farm:read': true,
+    'farm:update': true,
+    'farm:delete': true,
     'role:read': true,
     'user:create': true,
     'user:read': true,
@@ -41,11 +41,11 @@ const rules: RbacRules = {
     'user:send-reset-password-email': (self: User, other: unknown) => (other as User).id !== self.id,
   },
   [Role.EDITOR]: {
-    'agent:read': true,
-    'agent:update': true,
+    'farm:read': true,
+    'farm:update': true,
   },
   [Role.USER]: {
-    'agent:read': true,
+    'farm:read': true,
   },
 };
 

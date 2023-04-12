@@ -10,6 +10,7 @@ export const NotificationContext = createContext<{
   isLoading: boolean;
   getMore: () => void;
   clear: () => void;
+  remove: (notification: AppNotification) => void;
 }>({
   notifications: [],
   count: 0,
@@ -20,6 +21,8 @@ export const NotificationContext = createContext<{
   getMore: () => {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   clear: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  remove: () => {},
 });
 
 export const NotificationsProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {

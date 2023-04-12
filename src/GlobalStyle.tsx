@@ -25,6 +25,12 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
         }
     }
 
+    @media (min-width: 768px) {
+        .md-only {
+            display: none !important;
+        }
+    }
+
     .bg-dark {
         background-color: ${({ theme }) => theme.textColor} !important;
         color: ${({ theme }) => theme.backgroundColor} !important;
@@ -177,7 +183,6 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
     .modal-dialog {
         display: flex;
         align-items: center;
-        min-height: calc(100% - 1rem);
     }
 
     .modal-content {
@@ -203,6 +208,19 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
         background: ${({ theme }) => theme.backgroundColor}
     }
 
+    .changelog-modal-content {
+        height: 50vh;
+    }
+
+    .changelog-modal-body {
+        overflow-y: auto;
+        height: 85%;
+    }
+
+    .changelog-modal-footer {
+        height: 15%;
+    }
+
     .action-shadow {
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
@@ -226,9 +244,16 @@ export const GlobalStyle = createGlobalStyle<{ theme: typeof dark }>`
     }
 
     .in-app-notification {
-        color: black;
         font-size: 1rem;
+        background-color: ${({ theme }) => theme.card.backgroundColor};
+        color: ${({ theme }) => theme.card.textColor};
     }
 
+    .nocaret {
+        .dropdown-toggle::after {
+            content: '';
+            display: none;
+        }
+    }
 `;
 export default GlobalStyle;

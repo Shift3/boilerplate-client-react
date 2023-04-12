@@ -21,7 +21,7 @@ export const RequireAuth: FC<PropsWithChildren<RequireAuthProps>> = ({ children,
 
   if (allowedRoles.length !== 0 && !allowedRoles.includes(auth.user.role)) {
     notificationService.showErrorMessage('Not authorized to view the requested page.');
-    return <Navigate to='/agents' replace />;
+    return <Navigate to='/farms' replace />;
   }
 
   return <>{children}</>;
