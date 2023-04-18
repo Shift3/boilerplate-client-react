@@ -3,7 +3,7 @@ import { environment } from 'environment';
 import { AppErrorBoundary } from 'features/error-boundary/components/AppErrorBoundary';
 import { NetworkDetector } from 'features/network-detector/components/NetworkDetector';
 import { NotificationsProvider } from 'features/notifications/context';
-import { createContext, FC, useMemo, useState } from 'react';
+import { createContext, FC, useEffect, useMemo, useState } from 'react';
 import { ModalProvider } from 'react-modal-hook';
 import { Slide, toast, ToastContainer } from 'react-toastify';
 import { TransitionGroup } from 'react-transition-group';
