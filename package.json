@@ -43,34 +43,29 @@
     "build": "tsc && vite build",
     "predeploy:staging": "tsc && vite build --mode staging",
     "predeploy:production": "tsc && vite build",
-    "deploy:staging": "aws s3 sync ./dist s3://<< replace-with-s3-bucket-name >> --profile shift3 --delete",
-    "deploy:production": "aws s3 sync ./dist s3://<< replace-with-s3-bucket-name >> --profile shift3 --delete",
+    "deploy:staging": "aws s3 sync ./dist s3://<< replace-with-s3-bucket-name >> --profile BWTC-Developer --delete",
+    "deploy:production": "aws s3 sync ./dist s3://<< replace-with-s3-bucket-name >> --profile client-profile --delete",
     "test": "echo",
     "test-ci": "echo",
     "test-cov": "echo",
     "test-cov-ci": "echo",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-<<<<<<< HEAD
     "switch-state": "npm run terra:init -target=\"$npm_config_target\" -- -reconfigure",
-    "switch-state:dev": "npm run switch-state -target=development",
-    "switch-state:stg": "npm run switch-state -target=staging",
-    "switch-state:prod": "npm run switch-state -target=production",
+    "env:staging": "npm run switch-state -target=staging",
+    "env:production": "npm run switch-state -target=production",
     "terra:init": "cd terraform && terraform init -backend-config=\"environment/$npm_config_target.backend.conf\"",
     "terra:init-wrks": "cd terraform && if ! terraform workspace list | grep -q \"\\s$npm_config_name$\"; then terraform workspace new \"$npm_config_name\"; fi",
     "terra:update": "cd terraform && terraform get -update",
     "preprovision": "npm run terra:init && npm run terra:init-wrks -name=\"$npm_config_target\"",
     "provision": "cd terraform && terraform workspace select \"$npm_config_target\" && terraform apply -var-file \"environment/$npm_config_target.tfvars\"",
-    "provision:dev": "npm run provision -target=development",
-    "provision:stg": "npm run provision -target=staging",
-    "provision:prod": "npm run provision -target=production",
+    "provision:staging": "npm run provision -target=staging",
+    "provision:production": "npm run provision -target=production",
     "plan": "cd terraform && terraform workspace select \"$npm_config_target\" && terraform plan -var-file \"environment/$npm_config_target.tfvars\"",
     "plan:dev": "npm run plan -target=development",
     "plan:stg": "npm run plan -target=staging",
-    "plan:prod": "npm run plan -target=production"
-=======
+    "plan:prod": "npm run plan -target=production",
     "i18n": "i18next **/*.tsx"
->>>>>>> origin/develop
   },
   "browserslist": {
     "production": [
