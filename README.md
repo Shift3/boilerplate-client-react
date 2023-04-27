@@ -125,31 +125,37 @@ Before deployments or initializing terraform you must have aws sso configured an
 
 `aws sso login --profile BWTC-Developer`
 
-Terraform also needs the project secrets saved in `terraform/staging/terraform.tfvars`. This file is not committed to version control since it can contain sensitive information such as database credentials and should be added locally. Create the `terraform/staging/terraform.tfvars` file with the following structure:
+Terraform also needs the project secrets saved in `terraform/environment/staging.tfvars` and `terraform/environment/staging.backend.conf`. This new configurations will allow us to utilize terraform workspaces.
 
-```
-profile = "BWTC-Developer"
+Terraform workspaces are a way to manage multiple instances of the same infrastructure stack in parallel, such as for different environments like development, staging, and production. They allow you to switch between workspaces to update configurations and make changes without affecting other environments or duplicating your code.
 
-region = "us-west-2"
+### Configuring Terraform Environment Files
 
-web_domain_name = ""
+To configure staging environment you will need to change two values
 
-```
+1. navigate to `terraform/environment/staging.backend.conf` and change the key, replace the folder name in `<test-staging-boilerplate-client-react>` with the name of your project and then add a `-staging`.
 
-| Secret          |                                                                                             Note |
-| :-------------- | -----------------------------------------------------------------------------------------------: |
-| profile         |                              This must match the AWS credentials name on the development machine |
-| region          |                                                                      This is usually `us-west-2` |
-| web_domain_name | This will be the web domain name for the project, an example may be: `example.shift3sandbox.com` |
+The value will look like this in the file
+`key     = "<test-staging-boilerplate-client-react>/terraform.tfstate"`
 
-After adding the `terraform/staging/terraform.tfvars` file, `cd` into the `terraform/staging` directory and run the following commands to configure and build the AWS infrastructure for the sandbox environment
+2. navigate to `terraform/environment/staging.tfvars` and set the webdomain to `project-name-environment.shift3sandbox.com`
 
-```
-terraform init
-terraform apply
-```
+To initialize or switch to the staging environment run
 
-The infrastructure can be updated by changing the Terraform configuration files and running these commands again.
+`yarn env:staging`
+
+To then deploy staging aws infrastructure run
+
+`yarn provision:staging`
+
+### Description of .backend.conf variables and values.
+
+| Variable |                                                                                                          Note |
+| :------- | ------------------------------------------------------------------------------------------------------------: |
+| profile  | This must match the AWS credentials name on the development machine. You can locate the name in `.aws/config` |
+| region   |                                                                                   This is usually `us-west-2` |
+| bucket   |                                                 This will be a S3 bucket that holds your terraform state file |
+| key      |                               This will be the path to your Terraform state file located within an S3 bucket. |
 
 ### Environment Configuration
 
