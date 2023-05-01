@@ -10,7 +10,7 @@
     "@reduxjs/toolkit": "^1.8.5",
     "@sentry/react": "^7.12.1",
     "@sentry/tracing": "^7.12.1",
-    "@types/react-table": "^7.7.12",
+    "@types/react-table": "^7.7.14",
     "@testing-library/react": "^13.4.0",
     "bootstrap": "5.2.1",
     "cross-env": "^7.0.3",
