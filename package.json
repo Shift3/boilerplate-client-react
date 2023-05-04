@@ -12,6 +12,8 @@
     "@sentry/tracing": "^7.12.1",
     "@types/react-table": "^7.7.12",
     "bootstrap": "5.2.3",
+    "@types/react-table": "^7.7.14",
+    "bootstrap": "5.2.1",
     "date-fns": "^2.29.3",
     "history": "^5.3.0",
     "http-status-codes": "^2.1.4",
