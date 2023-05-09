@@ -10,8 +10,6 @@
     "@reduxjs/toolkit": "^1.8.5",
     "@sentry/react": "^7.12.1",
     "@sentry/tracing": "^7.12.1",
-    "@types/react-table": "^7.7.12",
-    "bootstrap": "5.2.3",
     "@types/react-table": "^7.7.14",
     "bootstrap": "5.2.1",
     "date-fns": "^2.29.3",
@@ -20,6 +18,7 @@
     "i18next": "^22.4.10",
     "i18next-browser-languagedetector": "^6.1.5",
     "i18next-http-backend": "^1.4.1",
+    "latest": "^0.2.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.6.0",
     "react-dom": "^18.2.0",
@@ -68,7 +67,7 @@
     ]
   },
   "devDependencies": {
-    "@types/node": "^18.14.2",
+    "@types/node": "^20.1.0",
     "@types/react": "^18.0.20",
     "@types/react-bootstrap": "^0.32.30",
     "@types/react-dom": "^18.0.6",
