@@ -28,7 +28,7 @@ export default defineConfig(({ mode }) => {
           'robots.txt',
         ],
         workbox: {
-          globPatterns: ['**/*.{js,css,html,jpg}'],
+          globPatterns: ['**/*.{js,css,html,jpg,png}'],
         },
       }),
     ],
