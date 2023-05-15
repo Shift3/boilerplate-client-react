@@ -59,13 +59,16 @@ export const UserListView: FC = () => {
       {
         attribute: 'active',
         attributeLabel: 'Account Status',
+        FilterUI: EnumFilter([
+          { label: 'Enabled', value: 'ENABLED' },
+          { label: 'Disabled', value: 'DISABLED' },
+        ]),
+      },
+      {
+        attribute: 'activatedAt',
+        attributeLabel: 'Activated Date',
         FilterUI: RecentDateFilter([30, 90, 180]),
       },
-      // {
-      //   attribute: 'activatedAt',
-      //   attributeLabel: 'Activated Date',
-      //   FilterUI: RecentDateFilter([30, 90, 180]),
-      // },
     ],
     [],
   );
