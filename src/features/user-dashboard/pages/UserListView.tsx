@@ -56,6 +56,11 @@ export const UserListView: FC = () => {
           { label: 'Admin', value: 'ADMIN' },
         ]),
       },
+      // {
+      //   attribute: 'active',
+      //   attributeLabel: 'Account Status',
+      //   FilterUI: RecentDateFilter([30, 90, 180]),
+      // },
       {
         attribute: 'activatedAt',
         attributeLabel: 'Activated Date',

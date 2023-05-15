@@ -10,4 +10,5 @@ export interface User {
   profilePicture: Image | null;
   role: Role;
   newEmail: string | null;
+  active: boolean;
 }

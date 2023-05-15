@@ -22,6 +22,7 @@ export type UserTableItem = {
   role: RoleType;
   profilePicture: Image | null;
   actions: ActionButtonProps[];
+  isActive: boolean;
 };
 
 export const useUserTableData = (users: User[] = []) => {
@@ -237,6 +238,7 @@ export const useUserTableData = (users: User[] = []) => {
         firstName: user.firstName,
         email: user.email,
         role: user.role,
+        isActive: user.active,
         profilePicture: user.profilePicture,
         activatedAt: user.activatedAt
           ? new Date(user.activatedAt)
