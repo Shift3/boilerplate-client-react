@@ -187,6 +187,11 @@ export const useUserTableData = (users: User[] = []) => {
         ),
       },
       {
+        accessor: 'isActive',
+        Header: 'Account Status',
+        Cell: ({ value: isActive }) => <span>{isActive ? 'Enabled' : 'Disabled'}</span>,
+      },
+      {
         accessor: 'activatedAt',
         Header: 'Activated',
         responsive: 'md',
