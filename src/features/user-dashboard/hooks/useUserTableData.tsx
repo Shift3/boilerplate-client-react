@@ -24,7 +24,6 @@ export type UserTableItem = {
   actions: ActionButtonProps[];
   isActive: boolean;
 };
-
 export const useUserTableData = (users: User[] = []) => {
   const { userHasPermission } = useRbac();
 

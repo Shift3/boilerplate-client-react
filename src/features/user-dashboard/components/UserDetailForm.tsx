@@ -10,6 +10,15 @@ import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Trans } from 'react-i18next';
+import styled from 'styled-components';
+import Button from 'react-bootstrap/Button';
+
+const DisableButton = styled(Button)`
+  margin-left: 100px;
+  .spinner-container {
+    padding-right: 8px;
+},
+`;
 
 export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'role'>;
 
@@ -27,6 +36,10 @@ const schema = yup.object({
   email: yup.string().email().required('Email is required.'),
   role: yup.string().required('Role is required.'),
 });
+
+const disable = () => {
+  <div>Disable</div>;
+};
 
 export const UserDetailForm: FC<Props> = ({
   availableRoles,
@@ -119,10 +132,15 @@ export const UserDetailForm: FC<Props> = ({
           </Form.Text>
         </Form.Group>
 
-        <div className='mt-3'>
-          <LoadingButton type='submit' disabled={!isValid} loading={isSubmitting}>
-            {submitButtonLabel}
-          </LoadingButton>
+        <div className='mt-3 d-flex'>
+          <div>
+            <LoadingButton type='submit' disabled={!isValid} loading={isSubmitting}>
+              {submitButtonLabel}
+            </LoadingButton>
+          </div>
+          <div className=''>
+            <DisableButton onClick={disable}>Disable</DisableButton>
+          </div>
         </div>
       </Form>
     </WithUnsavedChangesPrompt>
