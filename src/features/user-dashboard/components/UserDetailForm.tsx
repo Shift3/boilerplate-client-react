@@ -38,6 +38,7 @@ const schema = yup.object({
 });
 
 const disable = () => {
+  //
   <div>Disable</div>;
 };
 
@@ -132,14 +133,16 @@ export const UserDetailForm: FC<Props> = ({
           </Form.Text>
         </Form.Group>
 
-        <div className='mt-3 d-flex'>
+        <div className='mt-3 d-flex justify-content-between'>
           <div>
             <LoadingButton type='submit' disabled={!isValid} loading={isSubmitting}>
               {submitButtonLabel}
             </LoadingButton>
           </div>
-          <div className=''>
-            <DisableButton onClick={disable}>Disable</DisableButton>
+          <div>
+            <DisableButton onClick={disable} variant='btn btn-danger'>
+              Disable
+            </DisableButton>
           </div>
         </div>
       </Form>
