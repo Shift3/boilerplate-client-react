@@ -1,4 +1,4 @@
-import { ActionCreatorWithoutPayload } from '@reduxjs/toolkit';
+import { ActionCreatorWithoutPayload, ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { PaginatedResult } from 'common/models';
 import { useCallback, useEffect, useMemo, useReducer } from 'react';
 import { useDispatch } from 'react-redux';
@@ -13,6 +13,7 @@ interface State<T> {
   nextItemUrl: string | null;
   count: number;
   isGettingMore: boolean;
+  isResetting: boolean;
 }
 
 const initialState = {
@@ -20,6 +21,7 @@ const initialState = {
   nextItemUrl: null,
   count: 0,
   isGettingMore: false,
+  isResetting: false
 };
 
 type Action<T> =
@@ -35,7 +37,7 @@ const reducer = <T extends WithIdentifier>(state: State<T>, action: Action<T>) =
     case 'addOneToFront':
       return { ...state, items: [action.item, ...state.items], count: state.count + 1 };
     case 'addMultipleToBack':
-      return { ...state, items: [...state.items, ...action.items], count: action.totalCount };
+      return { ...state, items: [...state.items, ...action.items], count: action.totalCount, isResetting: false };
     case 'remove':
       return {
         ...state,
@@ -43,7 +45,7 @@ const reducer = <T extends WithIdentifier>(state: State<T>, action: Action<T>) =
         count: state.count - 1,
       };
     case 'reset':
-      return { ...initialState, nextItemUrl: action.nextItemUrl };
+      return { ...initialState, nextItemUrl: action.nextItemUrl, isResetting: true };
     case 'set-next-item-url':
       return { ...state, nextItemUrl: action.nextItemUrl, isGettingMore: true, allItemsRemoved: false };
     default:
@@ -54,10 +56,10 @@ const reducer = <T extends WithIdentifier>(state: State<T>, action: Action<T>) =
 export const useInfiniteLoading = <T extends WithIdentifier, ResultType extends PaginatedResult<T>>(
   initialUrl: string | null,
   useQuery: UseQuery<ResultType>,
-  resetApiStateFunction?: ActionCreatorWithoutPayload,
+  api?: any,
   options?: UseQueryOptions,
 ) => {
-  const [{ items, nextItemUrl, count, isGettingMore }, itemDispatch] = useReducer(reducer, {
+  const [{ items, nextItemUrl, count, isGettingMore, isResetting }, itemDispatch] = useReducer(reducer, {
     ...initialState,
     nextItemUrl: initialUrl,
   });
@@ -74,10 +76,7 @@ export const useInfiniteLoading = <T extends WithIdentifier, ResultType extends 
 
   const clear = useCallback(() => {
     itemDispatch({ type: 'reset', nextItemUrl: initialUrl });
-    if (resetApiStateFunction) {
-      dispatch(resetApiStateFunction());
-    }
-  }, [itemDispatch, initialUrl, dispatch, resetApiStateFunction]);
+  }, [itemDispatch, initialUrl, dispatch, api]);
 
   const remove = useCallback(
     (itemToRemove: T) => {
@@ -85,6 +84,14 @@ export const useInfiniteLoading = <T extends WithIdentifier, ResultType extends 
     },
     [itemDispatch],
   );
+
+  useEffect(() => {
+    if (isResetting) {
+      dispatch(api.util.invalidateTags([
+        { type: 'AppNotification' },
+      ]));
+    }
+  }, [isResetting]);
 
   const hasMore = useMemo(() => {
     if (isLoading || isFetching) return false;

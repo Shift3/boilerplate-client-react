@@ -18,6 +18,8 @@ export const UnreadNotifications: FC = () => {
     clear,
   } = useContext(NotificationContext);
 
+  console.log('notifications:', notifications);
+
   const [markAllRead, { isLoading }] = useMarkAllReadMutation();
   const handleMarkAllRead = async () => {
     await markAllRead().unwrap();

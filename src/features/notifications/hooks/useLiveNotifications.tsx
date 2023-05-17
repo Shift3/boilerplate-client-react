@@ -16,7 +16,9 @@ export const useLiveNotifications = () => {
   const { items, count, hasMore, getMore, isFetching, isLoading, refetch, clear, addOneToFront, remove } = useInfiniteLoading<
     AppNotification,
     PaginatedResult<AppNotification>
-  >(null, useGetUnreadNotificationsQuery, notificationApi.util.resetApiState, { skip: !user });
+  >(null, useGetUnreadNotificationsQuery, notificationApi, { skip: !user });
+
+  console.log('useLiveNotifications - items -', items);
 
   const [enablePolling, setEnablePolling] = useState(true);
   const { data: eventToken } = useGetEventTokenQuery(undefined, {
