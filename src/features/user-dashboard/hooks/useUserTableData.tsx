@@ -23,7 +23,8 @@ export type UserTableItem = {
   profilePicture: Image | null;
   actions: ActionButtonProps[];
   isActive: boolean;
-  deactivatedAt: Date;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  disabledAt: string | null | any;
 };
 export const useUserTableData = (users: User[] = []) => {
   const { userHasPermission } = useRbac();
@@ -210,13 +211,13 @@ export const useUserTableData = (users: User[] = []) => {
         ),
       },
       {
-        accessor: 'deactivatedAt',
-        Header: 'Deactivated On',
-        Cell: ({ value: deactivatedAt }) => (
+        accessor: 'disabledAt',
+        Header: 'Disabled On',
+        Cell: ({ value: disabledAt }) => (
           <>
-            {deactivatedAt instanceof Date ? (
-              <time dateTime={deactivatedAt.toISOString()}>
-                {new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(deactivatedAt)}
+            {disabledAt instanceof Date ? (
+              <time dateTime={disabledAt.toISOString()}>
+                {new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(disabledAt)}
               </time>
             ) : (
               <></>
@@ -260,7 +261,7 @@ export const useUserTableData = (users: User[] = []) => {
         role: user.role,
         isActive: user.active,
         profilePicture: user.profilePicture,
-        deactivatedAt: user.deactivatedAt,
+        disabledAt: user.disabledAt,
         activatedAt: user.activatedAt
           ? new Date(user.activatedAt)
           : {
