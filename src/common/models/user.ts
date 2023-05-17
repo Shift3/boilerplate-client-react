@@ -11,4 +11,5 @@ export interface User {
   role: Role;
   newEmail: string | null;
   active: boolean;
+  deactivatedAt: string | null;
 }

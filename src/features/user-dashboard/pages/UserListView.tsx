@@ -69,6 +69,11 @@ export const UserListView: FC = () => {
         attributeLabel: 'Activated Date',
         FilterUI: RecentDateFilter([30, 90, 180]),
       },
+      {
+        attribute: 'deactivatedAt',
+        attributeLabel: 'Deactivated Date',
+        FilterUI: RecentDateFilter([30, 90, 180]),
+      },
     ],
     [],
   );

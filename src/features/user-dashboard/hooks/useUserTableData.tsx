@@ -23,6 +23,7 @@ export type UserTableItem = {
   profilePicture: Image | null;
   actions: ActionButtonProps[];
   isActive: boolean;
+  deactivatedAt: Date;
 };
 export const useUserTableData = (users: User[] = []) => {
   const { userHasPermission } = useRbac();
@@ -209,6 +210,21 @@ export const useUserTableData = (users: User[] = []) => {
         ),
       },
       {
+        accessor: 'deactivatedAt',
+        Header: 'Deactivated On',
+        Cell: ({ value: deactivatedAt }) => (
+          <>
+            {deactivatedAt instanceof Date ? (
+              <time dateTime={deactivatedAt.toISOString()}>
+                {new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(deactivatedAt)}
+              </time>
+            ) : (
+              <></>
+            )}
+          </>
+        ),
+      },
+      {
         accessor: 'actions',
         Header: '',
         Cell: ({ value: actions }) => (
@@ -244,6 +260,7 @@ export const useUserTableData = (users: User[] = []) => {
         role: user.role,
         isActive: user.active,
         profilePicture: user.profilePicture,
+        deactivatedAt: user.deactivatedAt,
         activatedAt: user.activatedAt
           ? new Date(user.activatedAt)
           : {
