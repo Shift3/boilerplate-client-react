@@ -40,6 +40,8 @@ export type UpdateProfilePictureRequest = {
   profilePicture: FormData;
 };
 export type DeleteProfilePictureRequest = Pick<User, 'id'>;
+export type DisableUserReqeust = Pick<User, 'id'>;
+export type EnableUserRequest = Pick<User, 'id'>;
 
 export const userApi = createApi({
   reducerPath: 'userApi',
@@ -76,7 +78,7 @@ export const userApi = createApi({
     }),
 
     getUserHistory: builder.query<PaginatedResult<HistoricalRecord<User>>, string>({
-      query: url => url
+      query: url => url,
     }),
 
     inviteUser: builder.mutation<User, CreateUserRequest>({
@@ -215,6 +217,20 @@ export const userApi = createApi({
       }),
       invalidatesTags: ['User'],
     }),
+
+    disableUser: builder.mutation<User, DisableUserReqeust>({
+      query: ({ id }) => ({
+        url: `/users/${id}/disable/`,
+        method: 'POST',
+      }),
+    }),
+
+    enableUser: builder.mutation<User, EnableUserRequest>({
+      query: ({ id }) => ({
+        url: `/users/${id}/enable/`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
@@ -240,4 +256,6 @@ export const {
   useUpdateProfilePictureMutation,
   useDeleteProfilePictureMutation,
   useGetUserHistoryQuery,
+  useDisableUserMutation,
+  useEnableUserMutation,
 } = userApi;
