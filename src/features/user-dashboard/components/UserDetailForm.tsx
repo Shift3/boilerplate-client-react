@@ -37,7 +37,8 @@ const schema = yup.object({
   role: yup.string().required('Role is required.'),
 });
 
-const disable = () => {
+const openDisableModal = () => {
+  // Call confirmation modal
   //
   <div>Disable</div>;
 };
@@ -140,7 +141,7 @@ export const UserDetailForm: FC<Props> = ({
             </LoadingButton>
           </div>
           <div>
-            <DisableButton onClick={disable} variant='btn btn-danger'>
+            <DisableButton onClick={openDisableModal()} variant='btn btn-danger'>
               Disable
             </DisableButton>
           </div>

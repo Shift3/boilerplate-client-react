@@ -259,9 +259,9 @@ export const useUserTableData = (users: User[] = []) => {
         firstName: user.firstName,
         email: user.email,
         role: user.role,
-        isActive: user.active,
+        isActive: user.isActive,
         profilePicture: user.profilePicture,
-        disabledAt: user.disabledAt,
+        disabledAt: user.disabledAt ? new Date(user.disabledAt) : '',
         activatedAt: user.activatedAt
           ? new Date(user.activatedAt)
           : {
