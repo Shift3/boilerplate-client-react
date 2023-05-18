@@ -5,6 +5,7 @@ import { FC, useMemo } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   page: number;
@@ -36,6 +37,8 @@ export const Paginator: FC<Props> = ({
   onNextPageClick,
   onPageSizeChange,
 }) => {
+  const { t } = useTranslation(['translation', 'common']);
+
   let rangeStart = pageSize * (page - 1) + 1;
   const rangeEnd = page < pageCount ? pageSize * page : count;
   if (rangeEnd === 0) rangeStart = 0;
@@ -63,12 +66,12 @@ export const Paginator: FC<Props> = ({
               onChange={option => onPageSizeChange(Number(option.value))}
             />
           </div>
-          <span className='text-muted'>items per page</span>
+          <span className='text-muted'>{t('itemsPerPage', { ns: 'common' })}</span>
         </Col>
         {/* Display the range of results currently showing */}
         <Col className='d-flex justify-content-end align-items-center'>
           <span className='text-muted' style={{ marginRight: '10px' }}>
-            {count !== 0 ? `${rangeStart} - ${rangeEnd} of ${count}` : 'No Results'}
+            {count !== 0 ? `${rangeStart} - ${rangeEnd} of ${count}` : t('noResults', { ns: 'common' })}
           </span>
           <Button variant='link' disabled={!hasPreviousPage} onClick={onPreviousPageClick}>
             <FontAwesomeIcon icon={faChevronLeft} />{' '}

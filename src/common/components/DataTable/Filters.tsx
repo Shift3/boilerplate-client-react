@@ -2,6 +2,7 @@ import { Filter, FilterOp } from 'common/models';
 import { FC, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { subDays } from 'date-fns';
+import { Trans, useTranslation } from 'react-i18next';
 
 export type FilterUI = FC<{
   attribute: string;
@@ -12,6 +13,7 @@ export type FilterUI = FC<{
 
 export const StringFilter = () => {
   const StringFilterComponent: FilterUI = ({ attribute, activeFilters, setFilter, removeFilter }) => {
+    const { t } = useTranslation(['common']);
     const [comparitor, setComparitor] = useState<FilterOp>('icontains');
 
     const onTextChange = (text: string) => {
@@ -39,7 +41,7 @@ export const StringFilter = () => {
             className='mb-1'
             type='radio'
             name={attribute}
-            label='Contains'
+            label={t('contains')}
           />
         </Form.Group>
 
@@ -50,7 +52,7 @@ export const StringFilter = () => {
             className='mb-1'
             type='radio'
             name={attribute}
-            label='Is Exactly'
+            label={t('isExactly')}
           />
         </Form.Group>
 
@@ -61,7 +63,7 @@ export const StringFilter = () => {
             className='mb-1'
             type='radio'
             name={attribute}
-            label='Starts With'
+            label={t('startsWith')}
           />
         </Form.Group>
 
@@ -72,13 +74,13 @@ export const StringFilter = () => {
             className='mb-1'
             type='radio'
             name={attribute}
-            label='Ends With'
+            label={t('endsWith')}
           />
         </Form.Group>
 
         <Form.Control
           type='text'
-          placeholder='Enter filter text...'
+          placeholder={t('filterPlaceholder') ?? undefined}
           value={activeFilters[0]?.value ?? ''}
           onChange={event => onTextChange(event.target.value)}
         />
@@ -90,6 +92,7 @@ export const StringFilter = () => {
 
 export const RecentDateFilter = (days: number[]) => {
   const AfterDaysFilterComponent: FilterUI = ({ attribute, activeFilters, setFilter, removeFilter }) => {
+    const { t } = useTranslation(['common']);
     const [choice, setChoice] = useState(days[0]);
 
     const filterDaysAgo = (days: number) => {
@@ -107,19 +110,23 @@ export const RecentDateFilter = (days: number[]) => {
             className='mb-1'
             type='radio'
             name={attribute}
-            label='All'
+            label={t('all')}
           />
         </Form.Group>
 
-        {days.map(d => (
-          <Form.Group key={d} controlId={`${attribute}-days${d}`}>
+        {days.map(count => (
+          <Form.Group key={count} controlId={`${attribute}-days${count}`}>
             <Form.Check
-              checked={activeFilters.length > 0 && choice === d}
+              checked={activeFilters.length > 0 && choice === count}
               className='mb-1'
-              onChange={() => filterDaysAgo(d)}
+              onChange={() => filterDaysAgo(count)}
               type='radio'
               name={attribute}
-              label={`In the last ${d} days`}
+              label={
+                <Trans i18nKey="lastNDays" count={count}>
+                  In the last {{ count }} days
+                </Trans>
+              }
             />
           </Form.Group>
         ))}

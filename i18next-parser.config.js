@@ -36,7 +36,7 @@ module.exports = {
 
   namespaceSeparator: ':',
 
-  output: 'src/i18n/$LOCALE/translation.json',
+  output: 'src/i18n/$LOCALE/$NAMESPACE.json',
 
   pluralSeparator: '_',
 

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { HistoricalRecord } from 'common/models/historicalRecord';
 import { User } from 'common/models';
 import { ChangeListGroup } from './ChangeListGroup';
+import { Trans, useTranslation } from 'react-i18next';
 
 export type Props = {
   changeList: HistoricalRecord<User>[];
@@ -17,12 +18,12 @@ const StyledShowAllChangesButton = styled(Button)`
 `;
 
 export const ChangeLog: FC<Props> = ({ changeList, previewSize, totalChanges, handleShowAllChanges }) => {
-  
+  const { t } = useTranslation(['translation', 'common']);
   return (
     <>
       {changeList.length > 0 ? (
         <div>
-          <h5 className='mb-3'>Latest Changes</h5>
+          <h5 className='mb-3'>{t('latestChanges')}</h5>
           <ChangeListGroup changeList={changeList.slice(0, previewSize)} />
           {totalChanges > previewSize ? (
             <div className='d-flex w-100 justify-content-center mt-3'>
@@ -30,12 +31,16 @@ export const ChangeLog: FC<Props> = ({ changeList, previewSize, totalChanges, ha
                 variant='link'
                 onClick={() => handleShowAllChanges()}
                 className='text-decoration-none'
-              >{`Show all ${totalChanges} changes...`}</StyledShowAllChangesButton>
+              >
+                <Trans i18nKey="changeLog.showAllNChanges" count={totalChanges}>
+                  Show all {totalChanges} changes...
+                </Trans>
+              </StyledShowAllChangesButton>
             </div>
           ) : null}
         </div>
       ) : (
-        <h5 className='mt-3 mb-3'>No Changes Found</h5>
+        <h5 className='mt-3 mb-3'>{t('noChangesFound')}</h5>
       )}
     </>
   );

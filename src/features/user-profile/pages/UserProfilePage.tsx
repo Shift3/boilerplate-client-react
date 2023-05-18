@@ -143,7 +143,7 @@ export const UserProfilePage: FC = () => {
   const [tab, setTab] = useState('settings');
   const [passwordFormValidationErrors, setPasswordFormValidationErrors] =
     useState<ServerValidationErrors<ForgotPasswordFormData> | null>(null);
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation(['translation', 'common']);
   const { toggleTheme, theme } = useTheme();
 
   const onSubmit = async (formData: ProfileFormData) => {
@@ -308,15 +308,15 @@ export const UserProfilePage: FC = () => {
                     <Card.Body>
                       <div>
                         <h5>
-                          <Trans i18nKey='userProfile.generalHeading'>Theme Preference</Trans>
+                          <Trans i18nKey='userProfile.themeHeading'>Theme Preference</Trans>
                         </h5>
                         <div className=''>
-                          <p className='text-muted'>Select your preferred mode</p>
+                          <p className='text-muted'>{t('userProfile.themeSubheading')}</p>
                           <Form>
                             <Form.Check
                               type='switch'
                               id='witch'
-                              label='Dark Mode'
+                              label={t('userProfile.darkMode')}
                               checked={theme === 'dark'}
                               onChange={() => toggleTheme()}
                             />
@@ -335,7 +335,7 @@ export const UserProfilePage: FC = () => {
                           <Trans i18nKey='userProfile.languagePreference'>Language Preference</Trans>
                         </h5>
                         <div className='language'>
-                          <p className='text-muted'>Select your preferred language</p>
+                          <p className='text-muted'>{t('userProfile.languageSubheading')}</p>
                           <DropdownButton
                             title={
                               <>
@@ -370,7 +370,7 @@ export const UserProfilePage: FC = () => {
                       <h5>
                         <Trans i18nKey='userProfile.generalHeading'>General Information</Trans>
                       </h5>
-                      <p className='text-muted'>This information will be used to identify you in our system</p>
+                      <p className='text-muted'>{t('userProfile.generalSubheading')}</p>
                       <UpdateUserProfileForm
                         onSubmit={onSubmit}
                         defaultValues={{
@@ -384,19 +384,16 @@ export const UserProfilePage: FC = () => {
                   <Card className='mb-4'>
                     <Card.Body>
                       <h5>
-                        <Trans i18nKey='userProfile.email'>Change Email Address</Trans>
+                        <Trans i18nKey='userProfile.changeEmail'>Change Email Address</Trans>
                       </h5>
 
                       {user!.newEmail ? (
                         <Alert variant='warning'>
                           <div>
                             <p data-testid='updateUserExistingEmailChangeInfoContent'>
-                              <Trans i18nKey='userProfile.changeEmailDescription'>
-                                You requested an email change. A verification email has been sent to{' '}
-                                <strong>
-                                  <>{{ email: user!.newEmail }}</>
-                                </strong>
-                                . To confirm your new email, please follow the directions in the verification email.
+                              <Trans i18nKey='userProfile.changeEmailDescription' values={{ email: user!.email }}>
+                                You requested an email change. To confirm your new email, please follow the directions
+                                in the verification email.
                               </Trans>
                             </p>
                             <LoadingButton
@@ -413,22 +410,20 @@ export const UserProfilePage: FC = () => {
                               className='ms-2'
                               variant='default'
                             >
-                              Cancel Request
+                              {t('userProfile.cancelRequest')}
                             </LoadingButton>
                           </div>
                         </Alert>
                       ) : (
                         <>
                           <p className='text-muted'>
-                            <Trans i18nKey='userProfile.emailDescription'>
-                              Your email address on file will be used to communicate with you. Your current email on
-                              file is <b>{user!.email}</b>. Changing your email requires you to confirm your new email
-                              address.
+                            <Trans i18nKey='userProfile.emailDescription' user={user!.email}>
+                              Your email address on record will be used to communicate with you.
                             </Trans>
                           </p>
 
                           <Button onClick={() => showModal()} variant='default'>
-                            Change my Email
+                            {t('userProfile.changeMyEmail')}
                           </Button>
                         </>
                       )}
@@ -450,7 +445,7 @@ export const UserProfilePage: FC = () => {
 
                       <div className='d-flex align-items-center justify-content-center flex-column'>
                         <div className='mt-3 mb-3'>
-                          <OverlayTrigger overlay={<Tooltip>Upload Photo</Tooltip>}>
+                          <OverlayTrigger overlay={<Tooltip>{t('userProfile.uploadPhoto')}</Tooltip>}>
                             <UserProfilePictureContainer
                               onClick={() => !isLoadingUpdateProfilePicture && inputFile.current.click()}
                             >
@@ -478,7 +473,7 @@ export const UserProfilePage: FC = () => {
                             disabled={!profilePictureIsDefined()}
                             onClick={handleDeleteProfilePicture}
                           >
-                            <Trans i18nKey='delete'>Delete</Trans>
+                            {t('userProfile.deletePhoto')}
                           </LoadingButton>
                         </div>
                       </div>
@@ -515,12 +510,10 @@ export const UserProfilePage: FC = () => {
               <Col md={4}>
                 <Card>
                   <Card.Body>
-                    <h5>Forgot your password?</h5>
-                    <p className='text-muted'>
-                      Click the button below to be sent instructions on how to reset your password.
-                    </p>
+                    <h5>{t('userProfile.forgotPassword')}</h5>
+                    <p className='text-muted'>{t('userProfile.forgotPasswordInstructions')}</p>
                     <LoadingButton loading={isLoadingForgotPassword} onClick={() => resetPassword()} variant='default'>
-                      Reset my Password
+                      {t('userProfile.resetMyPassword')}
                     </LoadingButton>
                   </Card.Body>
                 </Card>

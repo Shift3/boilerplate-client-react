@@ -1,5 +1,7 @@
 import translationEN from './en/translation.json';
+import commonEN from './en/common.json';
 import translationES from './es/translation.json';
+import commonES from './es/common.json';
 import { environment } from 'environment';
 import i18n, { Resource } from 'i18next';
 import I18nextBrowserLanguageDetector from 'i18next-browser-languagedetector';
@@ -15,11 +17,13 @@ export const languages = [
     label: 'English',
     shortcode: 'en',
     translation: translationEN,
+    common: commonEN,
   },
   {
     label: 'Español',
     shortcode: 'es',
     translation: translationES,
+    common: commonES,
   },
 ];
 
@@ -27,6 +31,7 @@ const resources: Resource = {};
 languages.forEach(language => {
   resources[language.shortcode] = {
     translation: language.translation,
+    common: language.common,
   };
 });
 

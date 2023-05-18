@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { User, Thumbnail } from 'common/models';
 import portraitPlaceholder from 'assets/img/portrait_placeholder.png';
 import { CircularImg } from 'common/styles/utilities';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   user: User | null;
@@ -22,14 +23,16 @@ const getUserThumbnailOfSize = (user: User, size: string) => {
 };
 
 export const UserProfileImg: FC<{ user: User; size: string }> = ({ user, size }) => {
-  const fullName = user ? `${user.firstName} ${user.lastName}` : 'User';
+  const { t } = useTranslation('common');
+  const fullName = user ? `${user.firstName} ${user.lastName}` : t('user');
   const imageSource = getUserThumbnailOfSize(user, size);
 
   return <img alt={fullName} src={imageSource} />;
 };
 
 export const UserProfilePicture: FC<Props> = ({ user, size, radius }) => {
-  const fullName = user ? `${user.firstName} ${user.lastName}` : 'User';
+  const { t } = useTranslation('common');
+  const fullName = user ? `${user.firstName} ${user.lastName}` : t('user');
   const imageSource = getUserThumbnailOfSize(user!, size);
 
   return <CircularImg radius={radius} src={imageSource} alt={fullName} />;

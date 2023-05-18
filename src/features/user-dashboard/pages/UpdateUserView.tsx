@@ -11,7 +11,7 @@ import { useRbac } from 'features/rbac';
 import { FC, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { ChangeLog } from 'common/components/ChangeLog/ChangeLog';
 import { useAuth } from 'features/auth/hooks';
 import { LoadingButton } from 'common/components/LoadingButton';
@@ -33,6 +33,7 @@ export const UpdateUserView: FC = () => {
   const { userHasPermission } = useRbac();
   const [updateUser] = useUpdateUserMutation();
   const { data: user, isLoading: isLoadingUser, isFetching, error: getUserError } = useGetUserByIdQuery(id);
+  const { t } = useTranslation(['translation', 'common']);
 
   const pageSize = 5;
   const queryParams = new QueryParamsBuilder().setPaginationParams(1, pageSize).build();
@@ -58,7 +59,7 @@ export const UpdateUserView: FC = () => {
       return (
         <Modal show={open} onHide={hideModal} onExited={onExited} centered contentClassName='changelog-modal-content'>
           <Modal.Header closeButton>
-            <Modal.Title>Changes</Modal.Title>
+            <Modal.Title>{t('changes', { ns: 'common' })}</Modal.Title>
           </Modal.Header>
           <Modal.Body className='changelog-modal-body'>
             <DimmableContent dim={isFetchingHistory}>
@@ -73,7 +74,7 @@ export const UpdateUserView: FC = () => {
                 variant='primary'
                 onClick={() => fetchMore()}
               >
-                Load More
+                {t('loadMore', { ns: 'common' })}
               </LoadingButton>
             )}
           </Modal.Footer>
@@ -149,7 +150,7 @@ export const UpdateUserView: FC = () => {
               <UserDetailForm
                 availableRoles={availableRoles}
                 defaultValues={user}
-                submitButtonLabel='Save'
+                submitButtonLabel={t('save', { ns: 'common' }) ?? undefined}
                 onSubmit={handleFormSubmit}
                 serverValidationErrors={formValidationErrors}
               />

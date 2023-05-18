@@ -37,7 +37,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { environment } from 'environment';
 import { StrictMode, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
-import { I18nextProvider, withTranslation } from 'react-i18next';
+import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -89,8 +89,6 @@ if (environment.sentryDSN) {
   });
 }
 
-const TranslatedApp = withTranslation()(App);
-
 const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(
@@ -99,7 +97,7 @@ root.render(
       <Provider store={store}>
         <Suspense fallback='loading'>
           <I18nextProvider i18n={i18n}>
-            <TranslatedApp />
+            <App />
           </I18nextProvider>
         </Suspense>
       </Provider>

@@ -16,6 +16,8 @@ import * as yup from 'yup';
 
 import 'react-phone-input-2/lib/plain.css';
 
+import { useTranslation } from 'react-i18next';
+
 // This funkery is needed due to a build issue with vite.
 // TODO: Fix this issue with react-phone-input-2
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -67,11 +69,12 @@ const schema = yup.object().shape({
 });
 
 export const FarmDetailForm: FC<Props> = ({
-  defaultValues = {},
+  defaultValues = {} as FormData,
   onSubmit,
   submitButtonLabel = 'Submit',
   serverValidationErrors,
 }) => {
+  const { t } = useTranslation(['translation', 'common']);
   const {
     register,
     formState: { errors, isValid, isDirty, isSubmitting, isSubmitted },
@@ -98,18 +101,18 @@ export const FarmDetailForm: FC<Props> = ({
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <h5>Personal</h5>
+        <h5>{t('farmDetail.farmInfo')}</h5>
         <Row className='mb-2'>
           <Col md={4}>
             <Form.Group controlId='create-farm-form-farm-name'>
-              <Form.Label>Name</Form.Label>
+              <Form.Label>{t('name', { ns: 'common' })}</Form.Label>
               <Form.Control type='text' {...register('name')} isInvalid={!!errors.name} />
               <Form.Control.Feedback type='invalid'>{errors.name?.message}</Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col md={4}>
             <Form.Group>
-              <Form.Label>Email</Form.Label>
+              <Form.Label>{t('email', { ns: 'common' })}</Form.Label>
               <Form.Control type='email' {...register('email')} isInvalid={!!errors.email} />
               <Form.Control.Feedback type='invalid'>{errors.email?.message}</Form.Control.Feedback>
             </Form.Group>
@@ -117,7 +120,7 @@ export const FarmDetailForm: FC<Props> = ({
 
           <Col md={4}>
             <Form.Group className='mb-2'>
-              <Form.Label>Phone Number</Form.Label>
+              <Form.Label>{t('phoneNumber', { ns: 'common' })}</Form.Label>
               <Controller
                 name='phoneNumber'
                 control={control}
@@ -143,17 +146,17 @@ export const FarmDetailForm: FC<Props> = ({
         </Row>
 
         <Form.Group>
-          <Form.Label>Description</Form.Label>
+          <Form.Label>{t('description', { ns: 'common' })}</Form.Label>
           <Form.Control as='textarea' {...register('description')} isInvalid={!!errors.description} />
           <Form.Control.Feedback type='invalid'>{errors.description?.message}</Form.Control.Feedback>
         </Form.Group>
 
-        <h5 className='mt-3'>Address</h5>
+        <h5 className='mt-3'>{t('address', { ns: 'common' })}</h5>
 
         <Row>
           <Col md={6}>
             <Form.Group className='mb-2'>
-              <Form.Label>Address</Form.Label>
+              <Form.Label>{t('address', { ns: 'common' })}</Form.Label>
               <Form.Control type='text' {...register('address1')} isInvalid={!!errors.address1} />
               <Form.Control.Feedback type='invalid'>{errors.address1?.message}</Form.Control.Feedback>
             </Form.Group>
@@ -161,7 +164,7 @@ export const FarmDetailForm: FC<Props> = ({
 
           <Col md={6}>
             <Form.Group className='mb-2'>
-              <Form.Label>Address 2</Form.Label>
+              <Form.Label>{t('address2', { ns: 'common' })}</Form.Label>
               <Form.Control
                 type='text'
                 {...register('address2')}
@@ -176,7 +179,7 @@ export const FarmDetailForm: FC<Props> = ({
         <Row>
           <Col md={4}>
             <Form.Group>
-              <Form.Label>City</Form.Label>
+              <Form.Label>{t('city', { ns: 'common' })}</Form.Label>
               <Form.Control type='text' {...register('city')} isInvalid={!!errors.city} />
               <Form.Control.Feedback type='invalid'>{errors.city?.message}</Form.Control.Feedback>
             </Form.Group>
@@ -184,7 +187,7 @@ export const FarmDetailForm: FC<Props> = ({
 
           <Col md={4}>
             <Form.Group>
-              <Form.Label>State</Form.Label>
+              <Form.Label>{t('state', { ns: 'common' })}</Form.Label>
               <Form.Select {...register('state')} isInvalid={!!errors.state}>
                 {stateList.map(({ name, value }) => (
                   <option key={value} value={value}>
@@ -198,7 +201,7 @@ export const FarmDetailForm: FC<Props> = ({
 
           <Col md={4}>
             <Form.Group>
-              <Form.Label>Zip Code</Form.Label>
+              <Form.Label>{t('zipcode', { ns: 'common' })}</Form.Label>
               <Form.Control type='text' {...register('zipCode')} isInvalid={!!errors.zipCode} />
               <Form.Control.Feedback type='invalid'>{errors.zipCode?.message}</Form.Control.Feedback>
             </Form.Group>
