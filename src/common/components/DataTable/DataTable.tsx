@@ -4,6 +4,7 @@ import React, { ReactElement, useEffect } from 'react';
 import { Column, useFlexLayout, usePagination, useSortBy, useTable } from 'react-table';
 import { Paginator } from './Paginator';
 import { SortIndicator } from './SortIndicator';
+import { useTranslation } from 'react-i18next';
 
 export type ResponsiveColumn<D extends object> = Column<D> & {
   responsive?: Breakpoint;
@@ -35,6 +36,8 @@ export const DataTable = <D extends Record<string, unknown>>({
   pagination,
   sorting,
 }: DataTableProps<D>): ReactElement => {
+  const { t } = useTranslation(['translation', 'common']);
+
   // Evaluate these conditions once instead of re-computing in multiple places.
   const sortByEnabled = sorting !== undefined;
   const paginationEnabled = pagination !== undefined;
@@ -186,7 +189,7 @@ export const DataTable = <D extends Record<string, unknown>>({
           ))}
         </div>
         <div className='tbody' {...getTableBodyProps()}>
-          {tableRows.length === 0 ? <p className='text-muted mt-3 px-4'>No Results...</p> : null}
+          {tableRows.length === 0 ? <p className='text-muted mt-3 px-4'>{t('noResults', { ns: 'common' })}</p> : null}
           {tableRows.map(row => {
             prepareRow(row);
             return (

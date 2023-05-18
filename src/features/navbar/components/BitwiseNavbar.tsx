@@ -26,6 +26,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Logo } from './Logo';
 import { UserProfilePicture } from './UserProfilePicture';
+import { useTranslation } from 'react-i18next';
 
 const StyledNavbar = styled(Navbar)`
   position: fixed;
@@ -210,20 +211,21 @@ export const BitwiseNavbar: FC = () => {
   const navigate = useNavigate();
   const { logout, isLoading } = useLogout();
   const navbarOffcanvas = useRef<OffcanvasProps>(null!);
+  const { t } = useTranslation('common');
   const [showModal, hideModal] = useModal(
     ({ in: open, onExited }) => {
       return (
         <Modal show={open} onHide={hideModal} onExited={onExited} centered>
           <Modal.Header closeButton>
-            <Modal.Title>Sign Out</Modal.Title>
+            <Modal.Title>{t('signOut')}</Modal.Title>
           </Modal.Header>
           <Modal.Body>Are you sure you want to sign out?</Modal.Body>
           <Modal.Footer>
             <Button variant='link' onClick={hideModal}>
-              Cancel
+              {t('cancel')}
             </Button>
             <LoadingButton className='action-shadow' loading={isLoading} variant='primary' onClick={() => logout()}>
-              <FontAwesomeIcon icon='sign-out-alt' /> Sign Out
+              <FontAwesomeIcon icon='sign-out-alt' /> {t('signOut')}
             </LoadingButton>
           </Modal.Footer>
         </Modal>
@@ -260,7 +262,7 @@ export const BitwiseNavbar: FC = () => {
               {userHasPermission('farm:read') ? (
                 <NavLink onClick={() => navigate('/')} className={location.pathname === '/' ? 'active me-3' : 'me-3'}>
                   <FontAwesomeIcon className='me-2' icon={faHomeAlt} />
-                  Home
+                  {t('home')}
                 </NavLink>
               ) : null}
               {userHasPermission('farm:read') ? (
@@ -269,7 +271,7 @@ export const BitwiseNavbar: FC = () => {
                   className={location.pathname === '/farms' ? 'active me-3' : 'me-3'}
                 >
                   <FontAwesomeIcon className='me-2' icon={faSitemap} />
-                  Directory
+                  {t('directory')}
                 </NavLink>
               ) : null}
               {userHasPermission('user:read') ? (
@@ -277,13 +279,13 @@ export const BitwiseNavbar: FC = () => {
                   title={
                     <div>
                       <FontAwesomeIcon className='me-2' icon={faUserShield} />
-                      Administration
+                      {t('administration')}
                     </div>
                   }
                 >
                   <NavDropdown.Item onClick={() => navigate('/users')} active={location.pathname === '/users'}>
                     <FontAwesomeIcon icon='user' />
-                    Users
+                    {t('users')}
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : null}
@@ -325,11 +327,11 @@ export const BitwiseNavbar: FC = () => {
                   </NavDropdown.Header>
                   <NavDropdown.Item onClick={() => navigate(`/user/profile/${user.id}`)}>
                     <FontAwesomeIcon icon={faCog} />
-                    Account Settings
+                    {t('accountSettings')}
                   </NavDropdown.Item>
                   <NavDropdown.Item onClick={() => showModal()}>
                     <FontAwesomeIcon icon='sign-out-alt' />
-                    Sign Out
+                    {t('signOut')}
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : null}

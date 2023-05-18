@@ -8,6 +8,7 @@ import { Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Constants } from 'utils/constants';
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 
 export type FormData = {
   currentPassword: string;
@@ -40,6 +41,7 @@ const schema: yup.SchemaOf<FormData> = yup.object().shape({
 });
 
 export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
+  const { t } = useTranslation(['translation', 'common']);
   const {
     formState: { errors, isDirty, isSubmitting, isSubmitted, isValid, isSubmitSuccessful },
     handleSubmit,
@@ -65,11 +67,11 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
       <Form name='change-password-form' onSubmit={handleSubmit(onSubmit)}>
         <Form.Group className='mb-2'>
-          <Form.Label htmlFor='currentPassword'>Current Password</Form.Label>
+          <Form.Label htmlFor='currentPassword'>{t('changePasswordPage.currentPassword')}</Form.Label>
           <Form.Control
             id='currentPassword'
             type='password'
-            placeholder='Enter current password'
+            placeholder={t('changePasswordPage.currentPasswordPlaceholder') ?? undefined}
             isInvalid={!!errors.currentPassword}
             {...register('currentPassword')}
           />
@@ -81,11 +83,11 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors
         </Form.Group>
 
         <Form.Group className='mb-2'>
-          <Form.Label htmlFor='newPassword'>New Password</Form.Label>
+          <Form.Label htmlFor='newPassword'>{t('changePasswordPage.newPassword')}</Form.Label>
           <Form.Control
             id='newPassword'
             type='password'
-            placeholder='Enter new password'
+            placeholder={t('changePasswordPage.newPasswordPlaceholder') ?? undefined}
             isInvalid={!!errors.newPassword}
             {...register('newPassword')}
           />
@@ -94,18 +96,15 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors
               {errors.newPassword?.message}
             </Form.Control.Feedback>
           )}
-          <Form.Text className='text-muted'>
-            Password must be 8 characters or more. Password must contain a lowercase, uppercase, special character, and
-            a number.
-          </Form.Text>
+          <Form.Text className='text-muted'>{t('changePasswordPage.passwordRequirements')}</Form.Text>
         </Form.Group>
 
         <Form.Group className='mb-2'>
-          <Form.Label htmlFor='confirmPassword'>Confirm Password</Form.Label>
+          <Form.Label htmlFor='confirmPassword'>{t('changePasswordPage.confirmPassword')}</Form.Label>
           <Form.Control
             id='confirmPassword'
             type='password'
-            placeholder='Confirm password'
+            placeholder={t('changePasswordPage.confirmPasswordPlaceholder') ?? undefined}
             isInvalid={!!errors.confirmPassword}
             {...register('confirmPassword')}
           />
@@ -117,7 +116,7 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors
         </Form.Group>
         <div className='mt-3'>
           <LoadingButton type='submit' disabled={!isValid} loading={isSubmitting}>
-            Change my Password
+            {t('changePasswordPage.changeMyPassword')}
           </LoadingButton>
         </div>
       </Form>
