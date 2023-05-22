@@ -52,8 +52,6 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
   const [activeFilters, setActiveFilters] = useState<Filter[]>([]);
   const { t } = useTranslation('common');
 
-  placeholder = t('searchPlaceholder');
-
   const handleDropdownToggle = () => {
     if (filters.length) {
       setShowFilterDropdown(show => !show);

@@ -123,8 +123,8 @@ export const RecentDateFilter = (days: number[]) => {
               type='radio'
               name={attribute}
               label={
-                <Trans i18nKey="lastNDays" count={count}>
-                  In the last {{ count }} days
+                <Trans ns='common' i18nKey='lastNDays' count={count}>
+                  In the last {{ count }} dayz
                 </Trans>
               }
             />

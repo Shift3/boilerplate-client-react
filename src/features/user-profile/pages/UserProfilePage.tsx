@@ -417,7 +417,7 @@ export const UserProfilePage: FC = () => {
                       ) : (
                         <>
                           <p className='text-muted'>
-                            <Trans i18nKey='userProfile.emailDescription' user={user!.email}>
+                            <Trans i18nKey='userProfile.emailDescription' values={{ email: user!.email }}>
                               Your email address on record will be used to communicate with you.
                             </Trans>
                           </p>
