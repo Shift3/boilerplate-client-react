@@ -32,9 +32,7 @@ export const ChangeLog: FC<Props> = ({ changeList, previewSize, totalChanges, ha
                 onClick={() => handleShowAllChanges()}
                 className='text-decoration-none'
               >
-                <Trans i18nKey="changeLog.showAllNChanges" count={totalChanges}>
-                  Show all {totalChanges} changes...
-                </Trans>
+                <Trans i18nKey='changeLog.showAllNChanges'>Show all {{ count: totalChanges }} changes...</Trans>
               </StyledShowAllChangesButton>
             </div>
           ) : null}

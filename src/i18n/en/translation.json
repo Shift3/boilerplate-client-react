@@ -18,6 +18,15 @@
     "backToFarmList": "Back to farm List",
     "addFarmToSystem": "Add a new farm to the system."
   },
+  "updateFarm": {
+    "unableToLoadFarm": "Unable to load Farm. Returning to Farm list.",
+    "unableToLoadHistory": "Unable to load the Farm's change history.",
+    "farmUpdated": "Farm updated.",
+    "unableToUpdate": "Unable to update farm.",
+    "backToFarmList": "Back to Farm List",
+    "editFarm": "Edit Farm",
+    "editFarmDescription": "Update this farm's details here."
+  },
   "farmDetail": {
     "farmInfo": "Farm Info"
   },
@@ -113,7 +122,7 @@
   "changeLog": {
     "latestChanges": "Latest Changes",
     "noChangesFound": "No Changes Found",
-    "showAllNChanges": "Show all {{num}} changes..."
+    "showAllNChanges": "Show all {{count}} changes..."
   },
   "notifications": {
     "title": "My Notifications",

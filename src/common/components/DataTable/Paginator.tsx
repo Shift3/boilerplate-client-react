@@ -5,7 +5,7 @@ import { FC, useMemo } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 type Props = {
   page: number;
@@ -71,7 +71,9 @@ export const Paginator: FC<Props> = ({
         {/* Display the range of results currently showing */}
         <Col className='d-flex justify-content-end align-items-center'>
           <span className='text-muted' style={{ marginRight: '10px' }}>
-            {count !== 0 ? `${rangeStart} - ${rangeEnd} of ${count}` : t('noResults', { ns: 'common' })}
+            <Trans ns='common' i18nKey="paginationRange" count={count}>
+              Showing {{ start: rangeStart }} - {{ end: rangeEnd }} of {{ count }}
+            </Trans>
           </span>
           <Button variant='link' disabled={!hasPreviousPage} onClick={onPreviousPageClick}>
             <FontAwesomeIcon icon={faChevronLeft} />{' '}

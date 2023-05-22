@@ -18,6 +18,15 @@
     "backToFarmList": "Volver a la Lista de Fincas",
     "addFarmToSystem": "Agregar una nueva finca al sistema."
   },
+  "updateFarm": {
+    "unableToLoadFarm": "No se pudo cargar la finca. Volviendo a la lista de fincas.",
+    "unableToLoadHistory": "No se pudo cargar el historial de cambios de la finca.",
+    "farmUpdated": "Finca actualizada.",
+    "unableToUpdate": "No se pudo actualizar la finca.",
+    "backToFarmList": "Volver a la Lista de Fincas",
+    "editFarm": "Editar Finca",
+    "editFarmDescription": "Actualiza los detalles de esta finca aquí."
+  },
   "farmDetail": {
     "farmInfo": "Información de la Finca"
   },
@@ -113,7 +122,7 @@
   "changeLog": {
     "latestChanges": "Últimos Cambios",
     "noChangesFound": "No se encontraron cambios",
-    "showAllNChanges": "Mostrar todos los {{num}} cambios..."
+    "showAllNChanges": "Mostrar todos los {{count}} cambios..."
   },
   "notifications": {
     "title": "Mis Notificaciones",

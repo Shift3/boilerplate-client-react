@@ -2,6 +2,7 @@ import { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 const Container = styled.div`
   height: 100%;
@@ -41,14 +42,15 @@ const GoBackButton = styled(Button)`
 
 export const NotFoundView: FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation('common');
 
   return (
     <Container>
       <Wrapper>
         <NotFoundStatusCode>404</NotFoundStatusCode>
-        <NotFoundLabel>Something went wrong or this page doesn&apos;t exist anymore.</NotFoundLabel>
+        <NotFoundLabel>{t('somethingWentWrong')}</NotFoundLabel>
         <GoBackButton type='button' onClick={() => navigate(-1)}>
-          Go Back
+          {t('goBack')}
         </GoBackButton>
       </Wrapper>
     </Container>
