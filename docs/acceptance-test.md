@@ -200,3 +200,11 @@ The User should receive a forbidden or unauthorized error code if their account 
 - [ ] Log in with one user
 - [ ] In a separate browser, log in with an admin
 - [ ] Delete the account of the user. When this happens, the user should be logged out of the app and be presented with the log in screen and a toast message that describes what happened.
+
+#### Internet Offline Notification
+
+If the application loses Internet access, it will show a toast message to inform the user.
+
+- [ ] Go into your browser's Developer Tools > Network tab and switch it to "Offline" (can be found in Chrome in the "No throttling" dropdown).
+- [ ] You should see an "Internet Connection Lost" toast message show up.
+- [ ] When you reconnect, you should see an "Internet Connection Restored" toast message show up.
