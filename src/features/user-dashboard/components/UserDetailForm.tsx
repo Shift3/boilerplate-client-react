@@ -11,10 +11,10 @@ import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Trans } from 'react-i18next';
 import styled from 'styled-components';
-import { useDisableUserMutation } from 'common/api/userApi';
 import { useModalWithData } from 'common/hooks/useModalWithData';
 import { SimpleConfirmModal } from 'common/components/SimpleConfirmModal';
 import * as notificationService from 'common/services/notification';
+import { useDisableUserMutation } from 'common/api/userApi';
 
 const DisableButton = styled(Button)`
   margin-left: 100px;
@@ -79,8 +79,8 @@ export const UserDetailForm: FC<Props> = ({
     user =>
       // eslint-disable-next-line react/no-unstable-nested-components
       ({ in: open, onExited }) => {
-        const onConfirm = async () => {
-          await disableUser({ id: user.id });
+        const onSubmit = async () => {
+          await disableUser({ id: user.id }).unwrap();
           notificationService.showSuccessMessage('User disabled.');
           hideDisableModal();
         };
@@ -90,7 +90,7 @@ export const UserDetailForm: FC<Props> = ({
             title='Disable User'
             show={open}
             onCancel={hideDisableModal}
-            onConfirm={onConfirm}
+            onConfirm={onSubmit}
             confirmLabel='Disable'
             confirmIcon='trash-alt'
             confirmVariant='danger'
