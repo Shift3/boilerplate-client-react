@@ -15,7 +15,7 @@ import { Trans } from 'react-i18next';
 import { ChangeLog } from 'common/components/ChangeLog/ChangeLog';
 import { useAuth } from 'features/auth/hooks';
 import { LoadingButton } from 'common/components/LoadingButton';
-import { useInfiniteLoading } from 'common/hooks/useInfiniteLoading';
+import { useInfiniteLoading, WithIdentifier } from 'common/hooks/useInfiniteLoading';
 import { HistoricalRecord } from 'common/models/historicalRecord';
 import { QueryParamsBuilder } from 'common/api/queryParamsBuilder';
 import { ChangeListGroup } from 'common/components/ChangeLog/ChangeListGroup';
@@ -38,15 +38,20 @@ export const UpdateUserView: FC = () => {
   const queryParams = new QueryParamsBuilder().setPaginationParams(1, pageSize).build();
   const url = `/users/${id}/history/?${queryParams}`;
   const {
-    loadedData: userHistory,
+    items: userHistory,
     error: userHistoryError,
     isFetching: isFetchingHistory,
-    totalCount,
+    count: totalCount,
     hasMore,
-    fetchMore,
-  } = useInfiniteLoading<HistoricalRecord<User>, PaginatedResult<HistoricalRecord<User>>>(url, useGetUserHistoryQuery, {
-    skip: loggedInUser?.role !== 'ADMIN',
-  });
+    getMore,
+  } = useInfiniteLoading<HistoricalRecord<User> & WithIdentifier, PaginatedResult<HistoricalRecord<User>>>(
+    url,
+    useGetUserHistoryQuery,
+    undefined,
+    {
+      skip: loggedInUser?.role !== 'ADMIN',
+    },
+  );
 
   const roles = Object.values(Role);
 
@@ -71,7 +76,7 @@ export const UpdateUserView: FC = () => {
                 className='action-shadow'
                 loading={isFetchingHistory}
                 variant='primary'
-                onClick={() => fetchMore()}
+                onClick={() => getMore()}
               >
                 Load More
               </LoadingButton>

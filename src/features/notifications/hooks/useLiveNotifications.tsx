@@ -1,77 +1,22 @@
 import { notificationApi, useGetEventTokenQuery, useGetUnreadNotificationsQuery } from 'common/api/notificationApi';
+import { useInfiniteLoading } from 'common/hooks/useInfiniteLoading';
+import { PaginatedResult } from 'common/models';
 import { AppNotification } from 'common/models/notifications';
 import { environment } from 'environment';
 import { useAuth } from 'features/auth/hooks';
 import * as NotificationComponents from 'features/notifications/components';
-import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-
-type State = {
-  notifications: AppNotification[];
-  oldNotifications: AppNotification[];
-  nextNotificationUrl: string | null;
-  count: number;
-};
-
-const initialState: State = {
-  notifications: [],
-  oldNotifications: [],
-  nextNotificationUrl: null,
-  count: 0,
-};
-
-type Action =
-  | { type: 'add'; notification: AppNotification }
-  | { type: 'add-old'; notifications: AppNotification[]; count: number }
-  | { type: 'set-next-notification-url'; nextNotificationUrl: string | null }
-  | { type: 'remove'; notification: AppNotification }
-  | { type: 'reset' };
-
-const reducer = (state: State, action: Action) => {
-  switch (action.type) {
-    case 'add':
-      return { ...state, notifications: [action.notification, ...state.notifications] };
-    case 'add-old':
-      return { ...state, oldNotifications: [...state.oldNotifications, ...action.notifications], count: action.count };
-    case 'remove': {
-      const notifications = state.notifications.filter(n => n.id !== action.notification.id);
-      const oldNotifications = state.oldNotifications.filter(n => n.id !== action.notification.id);
-      let numRemoved = state.notifications.length - notifications.length;
-      numRemoved += state.oldNotifications.length - oldNotifications.length;
-
-      return {
-        ...state,
-        notifications,
-        oldNotifications,
-        count: state.count - numRemoved,
-      };
-    }
-    case 'reset':
-      return { ...initialState };
-    case 'set-next-notification-url':
-      return { ...state, nextNotificationUrl: action.nextNotificationUrl };
-    default:
-      return { ...initialState };
-  }
-};
 
 export const useLiveNotifications = () => {
   const { user } = useAuth();
   const dispatch = useDispatch();
 
-  const [{ notifications, oldNotifications, nextNotificationUrl, count }, notificationDispatch] = useReducer(
-    reducer,
-    initialState,
-  );
-  const {
-    data: unreadNotifications,
-    isFetching,
-    isLoading,
-    refetch,
-  } = useGetUnreadNotificationsQuery(nextNotificationUrl, {
-    skip: !user,
-  });
+  const { items, count, hasMore, getMore, isFetching, isLoading, refetch, clear, addOneToFront, remove } = useInfiniteLoading<
+    AppNotification,
+    PaginatedResult<AppNotification>
+  >(null, useGetUnreadNotificationsQuery, notificationApi.util.resetApiState, { skip: !user });
 
   const [enablePolling, setEnablePolling] = useState(true);
   const { data: eventToken } = useGetEventTokenQuery(undefined, {
@@ -79,25 +24,14 @@ export const useLiveNotifications = () => {
     pollingInterval: enablePolling ? 3000 : 0,
   });
 
-  // Append new notifications that we got from the API to
-  // oldNotifications list
-  useEffect(() => {
-    notificationDispatch({
-      type: 'add-old',
-      notifications: unreadNotifications?.results || [],
-      count: unreadNotifications?.meta.count || 0,
-    });
-  }, [unreadNotifications]);
-
   useEffect(() => {
     if (user) {
       refetch();
     } else {
       // User no longer logged in. Clean up state.
-      dispatch(notificationApi.util.resetApiState());
-      notificationDispatch({ type: 'reset' });
+      clear();
     }
-  }, [user, refetch, notificationDispatch, dispatch]);
+  }, [user, refetch, clear, dispatch]);
 
   // Set up receiving SSE events from the server.
   useEffect(() => {
@@ -108,7 +42,7 @@ export const useLiveNotifications = () => {
 
       eventSource.onmessage = message => {
         const payload = JSON.parse(message.data);
-        notificationDispatch({ type: 'add', notification: payload });
+        addOneToFront(payload);
 
         // Grab the component for the notification type
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -137,31 +71,13 @@ export const useLiveNotifications = () => {
     return () => {
       eventSource?.close();
     };
-  }, [user, eventToken, setEnablePolling]);
-
-  const clear = useCallback(() => {
-    notificationDispatch({ type: 'reset' });
-    dispatch(notificationApi.util.resetApiState());
-  }, [notificationDispatch, dispatch]);
-
-  const remove = useCallback(
-    (notification: AppNotification) => {
-      notificationDispatch({ type: 'remove', notification });
-    },
-    [notificationDispatch],
-  );
-
-  const getMore = useCallback(() => {
-    if (unreadNotifications?.links.next && !isFetching) {
-      notificationDispatch({ type: 'set-next-notification-url', nextNotificationUrl: unreadNotifications.links.next });
-    }
-  }, [notificationDispatch, isFetching, unreadNotifications]);
+  }, [user, eventToken, setEnablePolling, addOneToFront]);
 
   const notificationProviderValue = useMemo(() => {
     const result = {
-      notifications: [...notifications, ...oldNotifications],
-      count: notifications.length + count, // I'm not so sure this is right.
-      hasMore: !!unreadNotifications?.links.next,
+      notifications: items,
+      count,
+      hasMore,
       isFetching,
       isLoading,
       remove,
@@ -169,7 +85,7 @@ export const useLiveNotifications = () => {
       getMore,
     };
     return result;
-  }, [clear, remove, getMore, notifications, unreadNotifications, count, oldNotifications, isFetching, isLoading]);
+  }, [clear, remove, getMore, hasMore, items, count, isFetching, isLoading]);
 
   return notificationProviderValue;
 };

@@ -5,7 +5,14 @@ import { customBaseQuery } from './customBaseQuery';
 
 export const notificationApi = createApi({
   reducerPath: 'notificationApi',
+
   baseQuery: customBaseQuery,
+
+  // Always refetch data, don't used cache.
+  keepUnusedDataFor: 0,
+  refetchOnMountOrArgChange: true,
+  refetchOnReconnect: true,
+
   tagTypes: ['AppNotification'],
 
   endpoints: builder => ({
