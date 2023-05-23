@@ -150,7 +150,7 @@ export const UpdateUserView: FC = () => {
               <UserDetailForm
                 availableRoles={availableRoles}
                 defaultValues={user}
-                submitButtonLabel={t('save', { ns: 'common' }) ?? undefined}
+                submitButtonLabel={t('save', { ns: 'common' })!}
                 onSubmit={handleFormSubmit}
                 serverValidationErrors={formValidationErrors}
               />

@@ -55,7 +55,7 @@ export const CreateFarmView: FC = () => {
       <Card>
         <Card.Body>
           <FarmDetailForm
-            submitButtonLabel={t('create', { ns: 'common' }) ?? undefined}
+            submitButtonLabel={t('create', { ns: 'common' })!}
             onCancel={handleFormCancel}
             onSubmit={handleFormSubmit}
             serverValidationErrors={formValidationErrors}

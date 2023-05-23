@@ -7,6 +7,7 @@ import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { addServerErrors } from 'common/error/utilities';
 import { ServerValidationErrors } from 'common/models';
+import { useTranslation } from 'react-i18next';
 
 export type UserEmailFormData = {
   email: string;
@@ -19,12 +20,14 @@ type Props = {
 };
 
 export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues, serverValidationErrors }) => {
+  const { t } = useTranslation(['translation', 'common']);
+
   const schema: yup.SchemaOf<UserEmailFormData> = yup.object().shape({
     email: yup
       .string()
-      .required(Constants.errorMessages.EMAIL_REQUIRED)
-      .email(Constants.errorMessages.INVALID_EMAIL)
-      .notOneOf([defaultValues?.email], Constants.errorMessages.SAME_EMAIL),
+      .required(t(Constants.validationMessages.emailRequired, { ns: 'common' })!)
+      .email(t(Constants.validationMessages.invalidEmail, { ns: 'common' })!)
+      .notOneOf([defaultValues?.email], t(Constants.validationMessages.sameEmail, { ns: 'common' })!),
   });
 
   const {
@@ -52,19 +55,22 @@ export const UpdateUserEmailForm: FC<Props> = ({ onSubmit, defaultValues, server
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
-        <Form.Label>New Email address</Form.Label>
-        <Form.Control id='email' type='email' {...register('email')} isInvalid={!!errors.email} />
+        <Form.Label>{t('userEmailForm.newEmail')}</Form.Label>
+        <Form.Control
+          id='email'
+          type='email'
+          {...register('email')}
+          placeholder={t('emailPlaceholder', { ns: 'common' })!}
+          isInvalid={!!errors.email}
+        />
         <Form.Control.Feedback type='invalid' role='alert'>
           {errors.email?.message}
         </Form.Control.Feedback>
-        <Form.Text>
-          Enter a new email to use for your account. An email will be sent to your proposed new email, with a link to
-          confirm the email change.
-        </Form.Text>
+        <Form.Text>{t('userEmailForm.newEmailDescription')}</Form.Text>
       </Form.Group>
       <div className='mt-3'>
         <LoadingButton type='submit' disabled={!isValid} loading={isSubmitting}>
-          Change my Email
+          {t('userEmailForm.changeMyEmail')}
         </LoadingButton>
       </div>
     </Form>

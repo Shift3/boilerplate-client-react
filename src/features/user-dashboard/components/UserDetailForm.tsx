@@ -10,6 +10,7 @@ import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Trans, useTranslation } from 'react-i18next';
+import { Constants } from 'utils/constants';
 
 export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'role'>;
 
@@ -20,13 +21,6 @@ export interface Props {
   onSubmit: (data: FormData) => void;
   serverValidationErrors: ServerValidationErrors<FormData> | null;
 }
-
-const schema = yup.object({
-  firstName: yup.string().required('First Name is required.'),
-  lastName: yup.string().required('Last Name is required.'),
-  email: yup.string().email().required('Email is required.'),
-  role: yup.string().required('Role is required.'),
-});
 
 export const UserDetailForm: FC<Props> = ({
   availableRoles,
@@ -39,7 +33,17 @@ export const UserDetailForm: FC<Props> = ({
 
   const options: RoleOption[] = [];
   availableRoles.forEach(role => {
-    options.push({ label: role, value: role });
+    options.push({ label: t(role.toLocaleLowerCase(), { ns: 'common' }), value: role });
+  });
+
+  const schema = yup.object({
+    firstName: yup.string().required(t(Constants.validationMessages.firstNameRequired, { ns: 'common' })!),
+    lastName: yup.string().required(t(Constants.validationMessages.lastNameRequired, { ns: 'common' })!),
+    email: yup
+      .string()
+      .email()
+      .required(t(Constants.validationMessages.emailRequired, { ns: 'common' })!),
+    role: yup.string().required(t(Constants.validationMessages.roleRequired, { ns: 'common' })!),
   });
 
   const {
@@ -70,7 +74,12 @@ export const UserDetailForm: FC<Props> = ({
           <Col xs={12} md={6}>
             <Form.Group controlId='create-user-form-first-name'>
               <Form.Label>{t('firstName', { ns: 'common' })}</Form.Label>
-              <Form.Control type='text' {...register('firstName')} isInvalid={!!errors.firstName} />
+              <Form.Control
+                type='text'
+                {...register('firstName')}
+                placeholder={t('firstNamePlaceholder', { ns: 'common' })!}
+                isInvalid={!!errors.firstName}
+              />
               <Form.Control.Feedback type='invalid'>{errors.firstName?.message}</Form.Control.Feedback>
             </Form.Group>
           </Col>
@@ -78,7 +87,12 @@ export const UserDetailForm: FC<Props> = ({
           <Col xs={12} md={6}>
             <Form.Group controlId='create-user-form-last-name'>
               <Form.Label>{t('lastName', { ns: 'common' })}</Form.Label>
-              <Form.Control type='text' {...register('lastName')} isInvalid={!!errors.lastName} />
+              <Form.Control
+                type='text'
+                {...register('lastName')}
+                placeholder={t('lastNamePlaceholder', { ns: 'common' })!}
+                isInvalid={!!errors.lastName}
+              />
               <Form.Control.Feedback type='invalid'>{errors.lastName?.message}</Form.Control.Feedback>
             </Form.Group>
           </Col>
@@ -86,7 +100,12 @@ export const UserDetailForm: FC<Props> = ({
 
         <Form.Group controlId='create-user-form-email'>
           <Form.Label>{t('email', { ns: 'common' })}</Form.Label>
-          <Form.Control type='email' {...register('email')} isInvalid={!!errors.email} />
+          <Form.Control
+            type='email'
+            {...register('email')}
+            placeholder={t('emailPlaceholder', { ns: 'common' })!}
+            isInvalid={!!errors.email}
+          />
           <Form.Control.Feedback type='invalid'>{errors.email?.message}</Form.Control.Feedback>
         </Form.Group>
         <h5 className='mt-3'>
@@ -99,7 +118,7 @@ export const UserDetailForm: FC<Props> = ({
             name='role'
             render={({ field: { onChange } }) => (
               <CustomSelect<RoleOption>
-                placeholder={t('selectRole') ?? ''}
+                placeholder={t('userDetail.selectRole')!}
                 defaultValue={{ label: defaultValues?.role?.toString() || '', value: defaultValues?.role || Role.USER }}
                 options={options}
                 onChange={option => onChange(option.value)}
@@ -109,7 +128,7 @@ export const UserDetailForm: FC<Props> = ({
           />
           <Form.Control.Feedback type='invalid'>{errors.role?.message}</Form.Control.Feedback>
           <Form.Text className='text-muted'>
-            For more information about the different roles and what they can do, see our <a href='#'>FAQ</a>
+            <Trans i18nKey="userDetail.roleInfo">For more info regarding roles...</Trans>
           </Form.Text>
         </Form.Group>
 

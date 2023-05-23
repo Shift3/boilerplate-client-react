@@ -49,25 +49,6 @@ export type Props = {
 const isBlank = (val: string) => !val || !val.trim();
 const notBlank = (val: string) => !isBlank(val);
 
-const schema = yup.object().shape({
-  name: yup.string().required('Name is required.'),
-  email: yup.string().email().required('Email is required.'),
-  description: yup.string().required('Description is required.'),
-  phoneNumber: yup
-    .string()
-    .matches(Constants.patterns.US_PHONE_REGEX, {
-      message: 'Please enter a valid 10 digit phone number.',
-      excludeEmptyString: true,
-    })
-    .required('Phone number is required.'),
-  thumbnail: yup.string(),
-  address1: yup.string().optional(),
-  address2: yup.string().optional(),
-  city: yup.string().when('address1', { is: notBlank, then: yup.string().required('City is required.') }),
-  state: yup.string().when('address1', { is: notBlank, then: yup.string().required('State is required.') }),
-  zipCode: yup.string().when('address1', { is: notBlank, then: yup.string().required('Zip code is required.') }),
-});
-
 export const FarmDetailForm: FC<Props> = ({
   defaultValues = {} as FormData,
   onSubmit,
@@ -75,6 +56,39 @@ export const FarmDetailForm: FC<Props> = ({
   serverValidationErrors,
 }) => {
   const { t } = useTranslation(['translation', 'common']);
+
+  // We use the non-null assertion operator (!) to indicate that the value returned by t() will always be a non-null string.
+  const schema = yup.object().shape({
+    name: yup.string().required(t(Constants.validationMessages.nameRequired, { ns: 'common' })!),
+    email: yup
+      .string()
+      .email()
+      .required(t(Constants.validationMessages.emailRequired, { ns: 'common' })!),
+    description: yup.string().required(t(Constants.validationMessages.descriptionRequired, { ns: 'common' })!),
+    phoneNumber: yup
+      .string()
+      .matches(Constants.patterns.US_PHONE_REGEX, {
+        message: t(Constants.validationMessages.phoneNumberInvalid, { ns: 'common' })!,
+        excludeEmptyString: true,
+      })
+      .required(t(Constants.validationMessages.phoneNumberRequired, { ns: 'common' })!),
+    thumbnail: yup.string(),
+    address1: yup.string().optional(),
+    address2: yup.string().optional(),
+    city: yup.string().when('address1', {
+      is: notBlank,
+      then: yup.string().required(t(Constants.validationMessages.cityRequired, { ns: 'common' })!),
+    }),
+    state: yup.string().when('address1', {
+      is: notBlank,
+      then: yup.string().required(t(Constants.validationMessages.stateRequired, { ns: 'common' })!),
+    }),
+    zipCode: yup.string().when('address1', {
+      is: notBlank,
+      then: yup.string().required(t(Constants.validationMessages.zipCodeRequired, { ns: 'common' })!),
+    }),
+  });
+
   const {
     register,
     formState: { errors, isValid, isDirty, isSubmitting, isSubmitted },
@@ -106,14 +120,24 @@ export const FarmDetailForm: FC<Props> = ({
           <Col md={4}>
             <Form.Group controlId='create-farm-form-farm-name'>
               <Form.Label>{t('name', { ns: 'common' })}</Form.Label>
-              <Form.Control type='text' {...register('name')} isInvalid={!!errors.name} />
+              <Form.Control
+                type='text'
+                {...register('name')}
+                placeholder={t('farmDetail.namePlaceholder')!}
+                isInvalid={!!errors.name}
+              />
               <Form.Control.Feedback type='invalid'>{errors.name?.message}</Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col md={4}>
             <Form.Group>
               <Form.Label>{t('email', { ns: 'common' })}</Form.Label>
-              <Form.Control type='email' {...register('email')} isInvalid={!!errors.email} />
+              <Form.Control
+                type='email'
+                {...register('email')}
+                placeholder={t('farmDetail.emailPlaceholder')!}
+                isInvalid={!!errors.email}
+              />
               <Form.Control.Feedback type='invalid'>{errors.email?.message}</Form.Control.Feedback>
             </Form.Group>
           </Col>

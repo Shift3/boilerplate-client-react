@@ -80,7 +80,7 @@ export const StringFilter = () => {
 
         <Form.Control
           type='text'
-          placeholder={t('filterPlaceholder') ?? undefined}
+          placeholder={t('filterPlaceholder')!}
           value={activeFilters[0]?.value ?? ''}
           onChange={event => onTextChange(event.target.value)}
         />

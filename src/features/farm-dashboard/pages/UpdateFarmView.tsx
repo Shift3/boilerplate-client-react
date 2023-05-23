@@ -136,7 +136,7 @@ export const UpdateFarmView: FC = () => {
             {!isLoadingFarm ? (
               <FarmDetailForm
                 defaultValues={farm}
-                submitButtonLabel={t('save', { ns: 'common' }) ?? undefined}
+                submitButtonLabel={t('save', { ns: 'common' })!}
                 onSubmit={handleFormSubmit}
                 onCancel={handleFormCancel}
                 serverValidationErrors={formValidationErrors}

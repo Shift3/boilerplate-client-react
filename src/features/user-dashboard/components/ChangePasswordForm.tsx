@@ -21,27 +21,31 @@ type Props = {
   serverValidationErrors: ServerValidationErrors<FormData> | null;
 };
 
-const schema: yup.SchemaOf<FormData> = yup.object().shape({
-  currentPassword: yup.string().required(Constants.errorMessages.CURRENT_PASSWORD_REQUIRED),
-
-  newPassword: yup
-    .string()
-    .required(Constants.errorMessages.NEW_PASSWORD_REQUIRED)
-    .min(8, Constants.errorMessages.PASSWORD_LENGTH)
-    .matches(Constants.patterns.LOWERCASE_REGEX, Constants.errorMessages.PASSWORD_LOWERCASE)
-    .matches(Constants.patterns.UPPERCASE_REGEX, Constants.errorMessages.PASSWORD_UPPERCASE)
-    .matches(Constants.patterns.SYMBOL_REGEX, Constants.errorMessages.PASSWORD_SPECIAL_CHARACTER)
-    .matches(Constants.patterns.DIGIT_REGEX, Constants.errorMessages.PASSWORD_NUMBER)
-    .notOneOf([yup.ref('currentPassword')], Constants.errorMessages.PASSWORD_MUST_MISMATCH),
-
-  confirmPassword: yup
-    .string()
-    .required(Constants.errorMessages.CONFIRM_PASSWORD_REQUIRED)
-    .oneOf([yup.ref('newPassword')], Constants.errorMessages.PASSWORD_MUST_MATCH),
-});
-
 export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
   const { t } = useTranslation(['translation', 'common']);
+
+  const schema: yup.SchemaOf<FormData> = yup.object().shape({
+    currentPassword: yup.string().required(t(Constants.validationMessages.currentPasswordRequired, { ns: 'common' })!),
+
+    newPassword: yup
+      .string()
+      .required(t(Constants.validationMessages.newPasswordRequired, { ns: 'common' })!)
+      .min(Constants.passwordMinLength, t(Constants.validationMessages.passwordLength, { ns: 'common' })!)
+      .matches(Constants.patterns.LOWERCASE_REGEX, t(Constants.validationMessages.passwordLowercase, { ns: 'common' })!)
+      .matches(Constants.patterns.UPPERCASE_REGEX, t(Constants.validationMessages.passwordUppercase, { ns: 'common' })!)
+      .matches(
+        Constants.patterns.SYMBOL_REGEX,
+        t(Constants.validationMessages.passwordSpecialCharacter, { ns: 'common' })!,
+      )
+      .matches(Constants.patterns.DIGIT_REGEX, t(Constants.validationMessages.passwordNumber, { ns: 'common' })!)
+      .notOneOf([yup.ref('currentPassword')], t(Constants.validationMessages.passwordMustMismatch, { ns: 'common' })!),
+
+    confirmPassword: yup
+      .string()
+      .required(t(Constants.validationMessages.confirmPasswordRequired, { ns: 'common' })!)
+      .oneOf([yup.ref('newPassword')], t(Constants.validationMessages.passwordMustMatch, { ns: 'common' })!),
+  });
+
   const {
     formState: { errors, isDirty, isSubmitting, isSubmitted, isValid, isSubmitSuccessful },
     handleSubmit,
@@ -71,7 +75,7 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors
           <Form.Control
             id='currentPassword'
             type='password'
-            placeholder={t('changePasswordPage.currentPasswordPlaceholder') ?? undefined}
+            placeholder={t('changePasswordPage.currentPasswordPlaceholder')!}
             isInvalid={!!errors.currentPassword}
             {...register('currentPassword')}
           />
@@ -87,7 +91,7 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors
           <Form.Control
             id='newPassword'
             type='password'
-            placeholder={t('changePasswordPage.newPasswordPlaceholder') ?? undefined}
+            placeholder={t('changePasswordPage.newPasswordPlaceholder')!}
             isInvalid={!!errors.newPassword}
             {...register('newPassword')}
           />
@@ -104,7 +108,7 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors
           <Form.Control
             id='confirmPassword'
             type='password'
-            placeholder={t('changePasswordPage.confirmPasswordPlaceholder') ?? undefined}
+            placeholder={t('changePasswordPage.confirmPasswordPlaceholder')!}
             isInvalid={!!errors.confirmPassword}
             {...register('confirmPassword')}
           />

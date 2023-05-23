@@ -38,13 +38,13 @@ export const useFarmTableData = (farms: Farm[] = []) => {
             show={open}
             onCancel={hideDeleteModal}
             onConfirm={onConfirm}
-            confirmLabel={t('delete', { ns: 'common' }) ?? undefined}
+            confirmLabel={t('delete', { ns: 'common' })!}
             confirmIcon='trash-alt'
             confirmVariant='danger'
             onExited={onExited}
             body={
               <p className='m-0'>
-                <Trans i18nKey="farmTable.areYouSureYouWantToDelete">
+                <Trans i18nKey='farmTable.areYouSureYouWantToDelete'>
                   Are you sure you want to delete the farm named <b>{farm.name}</b>?
                 </Trans>
                 <span className='text-danger'>{t('actionCannotBeUndone', { ns: 'common' })}</span>
@@ -60,12 +60,12 @@ export const useFarmTableData = (farms: Farm[] = []) => {
 
   const columns: ResponsiveColumn<FarmTableItem>[] = useMemo(
     () => [
-      { accessor: 'name', Header: t('farmTable.farmName') ?? undefined },
-      { accessor: 'email', responsive: 'sm', Header: t('email', { ns: 'common' }) ?? undefined },
+      { accessor: 'name', Header: t('farmTable.farmName')! },
+      { accessor: 'email', responsive: 'sm', Header: t('email', { ns: 'common' })! },
       {
         accessor: 'phoneNumber',
         responsive: 'md',
-        Header: t('phoneNumber', { ns: 'common' }) ?? undefined,
+        Header: t('phoneNumber', { ns: 'common' })!,
         Cell: ({ value }) => <span>{formatPhoneNumber(value)}</span>,
       },
       {

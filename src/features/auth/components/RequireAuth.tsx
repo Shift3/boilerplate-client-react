@@ -3,12 +3,14 @@ import { FC, PropsWithChildren } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks';
 import * as notificationService from 'common/services/notification';
+import { useTranslation } from 'react-i18next';
 
 type RequireAuthProps = {
   allowedRoles?: RoleType[];
 };
 
 export const RequireAuth: FC<PropsWithChildren<RequireAuthProps>> = ({ children, allowedRoles = [] }) => {
+  const { t } = useTranslation(['translation', 'common']);
   const auth = useAuth();
   const location = useLocation();
 
@@ -20,7 +22,7 @@ export const RequireAuth: FC<PropsWithChildren<RequireAuthProps>> = ({ children,
   }
 
   if (allowedRoles.length !== 0 && !allowedRoles.includes(auth.user.role)) {
-    notificationService.showErrorMessage('Not authorized to view the requested page.');
+    notificationService.showErrorMessage(t('notAuthorizedToView', { ns: 'common' }));
     return <Navigate to='/farms' replace />;
   }
 

@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 const ForgotPassword = styled.div`
   display: flex;
@@ -9,8 +10,11 @@ const ForgotPassword = styled.div`
   padding-top: 18px;
 `;
 
-export const ForgotPasswordLink: FC = () => (
-  <ForgotPassword>
-    <Link to='/auth/forgot-password'>Forgot Password?</Link>
-  </ForgotPassword>
-);
+export const ForgotPasswordLink: FC = () => {
+  const { t } = useTranslation(['translation', 'common']);
+  return (
+    <ForgotPassword>
+      <Link to='/auth/forgot-password'>{t('userProfile.forgotPassword')}</Link>
+    </ForgotPassword>
+  );
+};
