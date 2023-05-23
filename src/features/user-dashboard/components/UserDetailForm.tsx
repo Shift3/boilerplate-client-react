@@ -5,20 +5,27 @@ import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt
 import { addServerErrors } from 'common/error/utilities';
 import { Role, User, RoleOption, ServerValidationErrors } from 'common/models';
 import { FC, useEffect } from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Button, Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Trans } from 'react-i18next';
 import styled from 'styled-components';
-import Button from 'react-bootstrap/Button';
+import { useDisableUserMutation } from 'common/api/userApi';
+import { useModalWithData } from 'common/hooks/useModalWithData';
+import { SimpleConfirmModal } from 'common/components/SimpleConfirmModal';
+import * as notificationService from 'common/services/notification';
 
 const DisableButton = styled(Button)`
   margin-left: 100px;
   .spinner-container {
     padding-right: 8px;
-},
+  }
 `;
+
+export type DisableUserRequest = {
+  id: string;
+};
 
 export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'role'>;
 
@@ -36,12 +43,6 @@ const schema = yup.object({
   email: yup.string().email().required('Email is required.'),
   role: yup.string().required('Role is required.'),
 });
-
-const openDisableModal = () => {
-  // Call confirmation modal
-  //
-  <div>Disable</div>;
-};
 
 export const UserDetailForm: FC<Props> = ({
   availableRoles,
@@ -72,6 +73,38 @@ export const UserDetailForm: FC<Props> = ({
       addServerErrors(serverValidationErrors, setError);
     }
   }, [serverValidationErrors, setError]);
+
+  const [disableUser] = useDisableUserMutation();
+  const [showDisableModal, hideDisableModal] = useModalWithData<User>(
+    user =>
+      // eslint-disable-next-line react/no-unstable-nested-components
+      ({ in: open, onExited }) => {
+        const onConfirm = async () => {
+          await disableUser({ id: user.id });
+          notificationService.showSuccessMessage('User disabled.');
+          hideDisableModal();
+        };
+
+        return (
+          <SimpleConfirmModal
+            title='Disable User'
+            show={open}
+            onCancel={hideDisableModal}
+            onConfirm={onConfirm}
+            confirmLabel='Disable'
+            confirmIcon='trash-alt'
+            confirmVariant='danger'
+            onExited={onExited}
+            body={
+              <div>
+                <p className='m-0'>Are you sure you want to disable this user?</p>
+              </div>
+            }
+          />
+        );
+      },
+    [],
+  );
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
@@ -121,7 +154,10 @@ export const UserDetailForm: FC<Props> = ({
             render={({ field: { onChange } }) => (
               <CustomSelect<RoleOption>
                 placeholder='Select a role...'
-                defaultValue={{ label: defaultValues?.role?.toString() || '', value: defaultValues?.role || Role.USER }}
+                defaultValue={{
+                  label: defaultValues?.role?.toString() || '',
+                  value: defaultValues?.role || Role.USER,
+                }}
                 options={options}
                 onChange={option => onChange(option.value)}
                 isInvalid={!!errors.role}
@@ -141,7 +177,7 @@ export const UserDetailForm: FC<Props> = ({
             </LoadingButton>
           </div>
           <div>
-            <DisableButton onClick={openDisableModal()} variant='btn btn-danger'>
+            <DisableButton onClick={showDisableModal} variant='btn btn-danger'>
               Disable
             </DisableButton>
           </div>

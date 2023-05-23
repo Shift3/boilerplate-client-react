@@ -49,9 +49,7 @@ export const NotificationListView: FC<PropsWithChildren<unknown>> = ({ children 
             </ProfileNav.Link>
           </ProfileNav>
         </Col>
-        <Col>
-          { children }
-        </Col>
+        <Col>{children}</Col>
       </Row>
     </SmallContainer>
   );

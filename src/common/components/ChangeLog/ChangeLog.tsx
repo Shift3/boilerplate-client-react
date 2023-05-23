@@ -17,7 +17,6 @@ const StyledShowAllChangesButton = styled(Button)`
 `;
 
 export const ChangeLog: FC<Props> = ({ changeList, previewSize, totalChanges, handleShowAllChanges }) => {
-  
   return (
     <>
       {changeList.length > 0 ? (

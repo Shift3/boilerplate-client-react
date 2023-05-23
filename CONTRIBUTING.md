@@ -6,7 +6,7 @@
 
 **Recommendation:** Do this outside of your code editor.
 
-**(Step 2)** Run `git flow` 
+**(Step 2)** Run `git flow`
 
 If you don't have Git Flow installed, use `brew install git-flow` to install it via brew.
 
@@ -24,7 +24,7 @@ You should define your new version number at the end, ex. 2.0.1.
 
 **(Step 7)** Run `git flow release finish <release_name>`
 
-The `release_name` is whatever you put for the version number in step 4. 
+The `release_name` is whatever you put for the version number in step 4.
 
 This command will open nano. You will need to use it in order to write and submit a commit message. After submitting the message, you will then need to write and submit a message for the commit's tag, ex. version 2.0.1 release.
 
