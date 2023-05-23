@@ -80,7 +80,7 @@ export const UserDetailForm: FC<Props> = ({
       // eslint-disable-next-line react/no-unstable-nested-components
       ({ in: open, onExited }) => {
         const onSubmit = async () => {
-          await disableUser({ id: user.id }).unwrap();
+          await disableUser({ id: user.id });
           notificationService.showSuccessMessage('User disabled.');
           hideDisableModal();
         };
