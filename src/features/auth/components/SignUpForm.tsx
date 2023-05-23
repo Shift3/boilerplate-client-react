@@ -8,6 +8,7 @@ import { Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Constants } from 'utils/constants';
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 
 export type FormData = {
   email: string;
@@ -21,18 +22,29 @@ type Props = {
   serverValidationErrors: ServerValidationErrors<FormData> | null;
 };
 
-const schema: yup.SchemaOf<FormData> = yup.object().shape({
-  email: yup.string().required(Constants.errorMessages.EMAIL_REQUIRED).email(Constants.errorMessages.INVALID_EMAIL),
-  confirmEmail: yup
-    .string()
-    .trim()
-    .required(Constants.errorMessages.EMAIL_REQUIRED)
-    .oneOf([yup.ref('email'), null], Constants.errorMessages.EMAIL_MATCH),
-  firstName: yup.string().trim().required(Constants.errorMessages.FIRST_NAME_REQUIRED),
-  lastName: yup.string().trim().required(Constants.errorMessages.LAST_NAME_REQUIRED),
-});
-
 export const SignUpForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
+  const { t } = useTranslation(['translation', 'common']);
+
+  const schema: yup.SchemaOf<FormData> = yup.object().shape({
+    email: yup
+      .string()
+      .required(t(Constants.validationMessages.emailRequired, { ns: 'common' })!)
+      .email(t(Constants.validationMessages.invalidEmail, { ns: 'common' })!),
+    confirmEmail: yup
+      .string()
+      .trim()
+      .required(t(Constants.validationMessages.emailRequired, { ns: 'common' })!)
+      .oneOf([yup.ref('email'), null], t(Constants.validationMessages.emailMatch, { ns: 'common' })!),
+    firstName: yup
+      .string()
+      .trim()
+      .required(t(Constants.validationMessages.firstNameRequired, { ns: 'common' })!),
+    lastName: yup
+      .string()
+      .trim()
+      .required(t(Constants.validationMessages.lastNameRequired, { ns: 'common' })!),
+  });
+
   const {
     formState: { errors, isDirty, isSubmitting, isSubmitted, isValid },
     handleSubmit,
@@ -55,13 +67,13 @@ export const SignUpForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
         <Row>
           <Form.Group as={Col}>
             <Form.Label htmlFor='firstName' placeholder='Enter your first name'>
-              First Name
+              {t('firstName', { ns: 'common' })}
             </Form.Label>
             <Form.Control
               id='firstName'
               type='text'
               {...register('firstName')}
-              placeholder='First Name'
+              placeholder={t('firstNamePlaceholder', { ns: 'common' })!}
               isInvalid={!!errors.firstName}
             />
             <Form.Control.Feedback type='invalid' role='alert'>
@@ -71,13 +83,13 @@ export const SignUpForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
 
           <Form.Group as={Col}>
             <Form.Label htmlFor='lastName' placeholder='Enter your last name'>
-              Last Name
+              {t('lastName', { ns: 'common' })}
             </Form.Label>
             <Form.Control
               id='lastName'
               type='text'
               {...register('lastName')}
-              placeholder='Last Name'
+              placeholder={t('lastNamePlaceholder', { ns: 'common' })!}
               isInvalid={!!errors.lastName}
             />
             <Form.Control.Feedback type='invalid' role='alert'>
@@ -87,12 +99,12 @@ export const SignUpForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
         </Row>
 
         <Form.Group>
-          <Form.Label htmlFor='email'>Email</Form.Label>
+          <Form.Label htmlFor='email'>{t('email', { ns: 'common' })}</Form.Label>
           <Form.Control
             id='email'
             type='email'
             {...register('email')}
-            placeholder='Enter your Email'
+            placeholder={t('emailPlaceholder', { ns: 'common' })!}
             isInvalid={!!errors.email}
           />
           <Form.Control.Feedback type='invalid' role='alert'>
@@ -101,13 +113,13 @@ export const SignUpForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
         </Form.Group>
         <Form.Group>
           <Form.Label htmlFor='confirmEmail' placeholder='Confirm email'>
-            Confirm Email
+            {t('confirmEmail', { ns: 'common' })}
           </Form.Label>
           <Form.Control
             id='confirmEmail'
             type='email'
             {...register('confirmEmail')}
-            placeholder='Confirm your Email'
+            placeholder={t('confirmEmailPlaceholder', { ns: 'common' })!}
             isInvalid={!!errors.confirmEmail}
           />
           <Form.Control.Feedback type='invalid' role='alert'>
@@ -117,7 +129,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
 
         <div className='d-grid gap-2 mt-4'>
           <LoadingButton type='submit' disabled={!isValid} loading={isSubmitting}>
-            Register
+            {t('register', { ns: 'common' })}
           </LoadingButton>
         </div>
       </Form>

@@ -28,20 +28,22 @@
     "editFarmDescription": "Actualiza los detalles de esta finca aquí."
   },
   "farmDetail": {
-    "farmInfo": "Información de la Finca"
+    "farmInfo": "Información de la Finca",
+    "namePlaceholder": "Ingrese el nombre de la finca",
+    "emailPlaceholder": "Ingrese el correo electrónico de la finca"
   },
   "userDetail": {
     "heading": "Perfil de Usuario",
-    "firstName": "Nombre",
-    "lastName": "Apellido",
-    "email": "Correo Electrónico",
     "accessHeading": "Información de Acceso",
-    "selectRole": "Selecciona un rol..."
+    "selectRole": "Selecciona un rol...",
+    "roleInfo": "Para obtener más información sobre los diferentes roles y lo que pueden hacer, consulta nuestras <strong>Preguntas Frecuentes</strong>"
   },
   "createUser": {
     "back": "Volver a la Lista de Usuarios",
     "heading": "Crear Usuario",
-    "subheading": "Agrega un nuevo usuario al sistema."
+    "subheading": "Agregar un nuevo usuario al sistema.",
+    "emailSentTo": "Se ha enviado un correo electrónico con instrucciones para completar la activación de la cuenta a:",
+    "unableToAddUser": "No se pudo agregar el usuario."
   },
   "updateUser": {
     "heading": "Actualizar Usuario",
@@ -64,6 +66,11 @@
     "sendResetPasswordEmail": "Enviar Correo de Restablecimiento de Contraseña",
     "passwordResetEmailSent": "Se ha enviado el correo de restablecimiento de contraseña.",
     "resetPassword": "Restablecer Contraseña"
+  },
+  "userEmailForm": {
+    "newEmail": "Nuevo Correo Electrónico",
+    "newEmailDescription": "Ingresa una nueva dirección de correo electrónico para usar en tu cuenta. Se enviará un correo electrónico a tu nuevo correo propuesto, con un enlace para confirmar el cambio de correo electrónico.",
+    "changeMyEmail": "Cambiar Mi Dirección de Correo Electrónico"
   },
   "userProfile": {
     "heading": "Configuración de la Cuenta",
@@ -126,6 +133,42 @@
   },
   "notifications": {
     "title": "Mis Notificaciones",
-    "subheading": "Notificaciones que me han sido enviadas."
+    "subheading": "Notificaciones que me han sido enviadas.",
+    "newFarmCreated": "Nueva Finca Creada",
+    "farmCreatedBy": "<0>{{userName}}</0> creó una nueva finca llamada <2>{{farmName}}</2>"
+  },
+  "activateAccountPage": {
+    "accountHasBeenActivated": "Esta cuenta ha sido activada. Por favor, inicia sesión.",
+    "unableToActivateAccount": "No se pudo activar la cuenta.",
+    "activateAccount": "Activar cuenta",
+    "activateAccountDescription": "¡Solo un paso más! Elige una contraseña para activar tu cuenta.",
+    "hereByMistake": "¿Llegaste aquí por error?"
+  },
+  "forgotPasswordPage": {
+    "youWillReceiveEmail": "Si el correo electrónico que ingresaste está en nuestro sistema, recibirás un correo electrónico para restablecer tu contraseña.",
+    "unableToResetPassword": "No se pudo realizar la solicitud de restablecimiento de contraseña.",
+    "forgotPassword": "Olvidé mi contraseña",
+    "forgotPasswordDescription": "Ingresa el correo electrónico asociado con tu cuenta y te enviaremos instrucciones sobre cómo restablecer tu contraseña.",
+    "rememberYourPassword": "¿Recuerdas tu contraseña?",
+    "goBackToLogIn": "Volver a iniciar sesión"
+  },
+  "loginPage": {
+    "memberLogIn": "Inicio de sesión de miembro",
+    "memberLogInDescription": "Bienvenido de nuevo a Bitwise Admin, el mejor panel de administración en Internet.",
+    "dontHaveAnAccount": "¿No tienes una cuenta?",
+    "registerForAccount": "¡Regístrate!"
+  },
+  "resetPasswordPage": {
+    "resetPassword": "Restablecer contraseña",
+    "resetPasswordDescription": "Ingresa una nueva contraseña que te gustaría usar para tu cuenta.",
+    "passwordResetSuccessful": "La contraseña se restableció correctamente. Por favor, inicia sesión.",
+    "unableToResetPassword": "No se pudo restablecer la contraseña."
+  },
+  "signUpPage": {
+    "memberRegistration": "Registro de Miembros",
+    "memberRegistrationDescription": "Regístrate en el Panel de Administración de Bitwise para unirte al mejor panel de administración en Internet.",
+    "alreadyHaveAnAccount": "¿Ya tienes una cuenta?",
+    "activationEmailSentTo": "Se ha enviado un correo electrónico de activación a:",
+    "unableToCreateAccount": "No se pudo crear la cuenta."
   }
 }

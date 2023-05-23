@@ -8,36 +8,47 @@ interface IPattern {
   LOWERCASE_REGEX: RegExp;
   UPPERCASE_REGEX: RegExp;
 }
-interface IErrorMessages {
-  FIELD_REQUIRED: string;
-  PASSWORD_LENGTH: string;
-  PASSWORD_LOWERCASE: string;
-  PASSWORD_UPPERCASE: string;
-  PASSWORD_SPECIAL_CHARACTER: string;
-  PASSWORD_NUMBER: string;
-  PASSWORD_MUST_MISMATCH: string;
-  PASSWORD_MUST_MATCH: string;
-  EMAIL_REQUIRED: string;
-  INVALID_EMAIL: string;
-  PASSWORD_REQUIRED: string;
-  EMAIL_MATCH: string;
-  FIRST_NAME_REQUIRED: string;
-  LAST_NAME_REQUIRED: string;
-  CURRENT_PASSWORD_REQUIRED: string;
-  NEW_PASSWORD_REQUIRED: string;
-  CONFIRM_PASSWORD_REQUIRED: string;
-  ROLE_REQUIRED: string;
-  SAME_EMAIL: string;
-  VERIFICATION_CODE_REQUIRED: string;
-  VERIFICATION_CODE_LENGTH_MISMATCH: string;
-  VALID_PROFILE_PICTURE_FORMAT: string;
+interface IValidationMessages {
+  fieldRequired: string;
+  passwordLength: string;
+  passwordLowercase: string;
+  passwordUppercase: string;
+  passwordSpecialCharacter: string;
+  passwordNumber: string;
+  passwordMustMismatch: string;
+  passwordMustMatch: string;
+  emailMatch: string;
+  nameRequired: string;
+  firstNameRequired: string;
+  lastNameRequired: string;
+  emailRequired: string;
+  invalidEmail: string;
+  passwordRequired: string;
+  currentPasswordRequired: string;
+  newPasswordRequired: string;
+  confirmPasswordRequired: string;
+  roleRequired: string;
+  sameEmail: string;
+  verificationCodeRequired: string;
+  verificationCodeLengthMismatch: string;
+  validProfilePictureFormat: string;
+  descriptionRequired: string;
+  phoneNumberInvalid: string;
+  phoneNumberRequired: string;
+  cityRequired: string;
+  stateRequired: string;
+  zipCodeRequired: string;
 }
 
 export interface IConstant {
   patterns: IPattern;
-  errorMessages: IErrorMessages;
+  validationMessages: IValidationMessages;
+  passwordMinLength: number;
   version: string;
   creationYear: number;
+  applicationName: string;
+  footerCopyright: string;
+  environmentName: string;
   SUPPORTED_PROFILE_PICTURE_FORMATS: string[];
 }
 
@@ -51,31 +62,42 @@ export const Constants: IConstant = {
     LOWERCASE_REGEX: /(?=.*[a-z])/,
     UPPERCASE_REGEX: /(?=.*[A-Z])/,
   },
-  errorMessages: {
-    FIELD_REQUIRED: 'Field is required.',
-    PASSWORD_LENGTH: 'Password must be at least 8 characters.',
-    PASSWORD_LOWERCASE: 'Password must contain at least one lowercase letter.',
-    PASSWORD_UPPERCASE: 'Password must contain at least one uppercase letter.',
-    PASSWORD_SPECIAL_CHARACTER: 'Password must contain at least one special character.',
-    PASSWORD_NUMBER: 'Password must contain at least one number.',
-    PASSWORD_MUST_MISMATCH: 'New password should not match current password.',
-    PASSWORD_MUST_MATCH: 'Passwords must match.',
-    EMAIL_MATCH: 'Email addresses must match.',
-    FIRST_NAME_REQUIRED: 'First name is required.',
-    LAST_NAME_REQUIRED: 'Last name is required.',
-    EMAIL_REQUIRED: 'Email is required.',
-    INVALID_EMAIL: 'Please enter a valid email address.',
-    PASSWORD_REQUIRED: 'Password is required.',
-    CURRENT_PASSWORD_REQUIRED: 'Current password is required.',
-    NEW_PASSWORD_REQUIRED: 'New password is required.',
-    CONFIRM_PASSWORD_REQUIRED: 'Confirm password is required.',
-    ROLE_REQUIRED: 'Role is required.',
-    SAME_EMAIL: 'Email must be different from current value.',
-    VERIFICATION_CODE_REQUIRED: 'Verification code is required.',
-    VERIFICATION_CODE_LENGTH_MISMATCH: 'Verification code must contain 6 digits.',
-    VALID_PROFILE_PICTURE_FORMAT: 'Must select a supported image type (.jpeg, .jpg, or .png).',
+  validationMessages: {
+    fieldRequired: 'validationMessages.fieldRequired',
+    passwordLength: 'validationMessages.passwordLength',
+    passwordLowercase: 'validationMessages.passwordLowercase',
+    passwordUppercase: 'validationMessages.passwordUppercase',
+    passwordSpecialCharacter: 'validationMessages.passwordSpecialCharacter',
+    passwordNumber: 'validationMessages.passwordNumber',
+    passwordMustMismatch: 'validationMessages.passwordMustMismatch',
+    passwordMustMatch: 'validationMessages.passwordMustMatch',
+    emailMatch: 'validationMessages.emailMatch',
+    nameRequired: 'validationMessages.nameRequired',
+    firstNameRequired: 'validationMessages.firstNameRequired',
+    lastNameRequired: 'validationMessages.lastNameRequired',
+    emailRequired: 'validationMessages.emailRequired',
+    invalidEmail: 'validationMessages.invalidEmail',
+    passwordRequired: 'validationMessages.passwordRequired',
+    currentPasswordRequired: 'validationMessages.currentPasswordRequired',
+    newPasswordRequired: 'validationMessages.newPasswordRequired',
+    confirmPasswordRequired: 'validationMessages.confirmPasswordRequired',
+    roleRequired: 'validationMessages.roleRequired',
+    sameEmail: 'validationMessages.sameEmail',
+    verificationCodeRequired: 'validationMessages.verificationCodeRequired',
+    verificationCodeLengthMismatch: 'validationMessages.verificationCodeLengthMismatch',
+    validProfilePictureFormat: 'validationMessages.validProfilePictureFormat',
+    descriptionRequired: 'validationMessages.descriptionRequired',
+    phoneNumberInvalid: 'validationMessages.phoneNumberInvalid',
+    phoneNumberRequired: 'validationMessages.phoneNumberRequired',
+    cityRequired: 'validationMessages.cityRequired',
+    stateRequired: 'validationMessages.stateRequired',
+    zipCodeRequired: 'validationMessages.zipCodeRequired',
   },
+  passwordMinLength: 8,
   version: environment.version,
+  environmentName: environment.environment,
   creationYear: 2021,
+  applicationName: 'BW React Boilerplate',
+  footerCopyright: '&copy; Bitwise Industries',
   SUPPORTED_PROFILE_PICTURE_FORMATS: ['image/jpg', 'image/jpeg', 'image/png'],
 };

@@ -27,6 +27,7 @@ import styled from 'styled-components';
 import { Logo } from './Logo';
 import { UserProfilePicture } from './UserProfilePicture';
 import { useTranslation } from 'react-i18next';
+import { Constants } from 'utils/constants';
 
 const StyledNavbar = styled(Navbar)`
   position: fixed;
@@ -212,6 +213,7 @@ export const BitwiseNavbar: FC = () => {
   const { logout, isLoading } = useLogout();
   const navbarOffcanvas = useRef<OffcanvasProps>(null!);
   const { t } = useTranslation('common');
+
   const [showModal, hideModal] = useModal(
     ({ in: open, onExited }) => {
       return (
@@ -219,7 +221,7 @@ export const BitwiseNavbar: FC = () => {
           <Modal.Header closeButton>
             <Modal.Title>{t('signOut')}</Modal.Title>
           </Modal.Header>
-          <Modal.Body>Are you sure you want to sign out?</Modal.Body>
+          <Modal.Body>{t('areYouSureSignOut')}</Modal.Body>
           <Modal.Footer>
             <Button variant='link' onClick={hideModal}>
               {t('cancel')}
@@ -255,7 +257,7 @@ export const BitwiseNavbar: FC = () => {
           ref={navbarOffcanvas}
         >
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title id='offcanvasNavbarLabel-expand-md'>Starter Project</Offcanvas.Title>
+            <Offcanvas.Title id='offcanvasNavbarLabel-expand-md'>{Constants.applicationName}</Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
             <Nav className='justify-content-start flex-grow-1 pe-3'>
@@ -322,7 +324,7 @@ export const BitwiseNavbar: FC = () => {
                       <div>
                         {user.firstName} {user.lastName.charAt(0)}.
                       </div>
-                      <Badge pill>{user.role}</Badge>
+                      <Badge pill>{t(user.role.toLocaleLowerCase(), { ns: 'common' })}</Badge>
                     </div>
                   </NavDropdown.Header>
                   <NavDropdown.Item onClick={() => navigate(`/user/profile/${user.id}`)}>

@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import { Constants } from 'utils/constants';
 import { LoadingButton } from 'common/components/LoadingButton';
 import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt';
+import { useTranslation } from 'react-i18next';
 
 export type FormData = {
   newPassword: string;
@@ -16,23 +17,28 @@ type Props = {
   onSubmit: (data: FormData) => void;
 };
 
-const schema: yup.SchemaOf<FormData> = yup.object().shape({
-  newPassword: yup
-    .string()
-    .required(Constants.errorMessages.NEW_PASSWORD_REQUIRED)
-    .min(8, Constants.errorMessages.PASSWORD_LENGTH)
-    .matches(Constants.patterns.LOWERCASE_REGEX, Constants.errorMessages.PASSWORD_LOWERCASE)
-    .matches(Constants.patterns.UPPERCASE_REGEX, Constants.errorMessages.PASSWORD_UPPERCASE)
-    .matches(Constants.patterns.SYMBOL_REGEX, Constants.errorMessages.PASSWORD_SPECIAL_CHARACTER)
-    .matches(Constants.patterns.DIGIT_REGEX, Constants.errorMessages.PASSWORD_NUMBER),
-
-  confirmPassword: yup
-    .string()
-    .required(Constants.errorMessages.CONFIRM_PASSWORD_REQUIRED)
-    .oneOf([yup.ref('newPassword')], Constants.errorMessages.PASSWORD_MUST_MATCH),
-});
-
 export const ResetPasswordForm: FC<Props> = ({ onSubmit }) => {
+  const { t } = useTranslation(['translation', 'common']);
+
+  const schema: yup.SchemaOf<FormData> = yup.object().shape({
+    newPassword: yup
+      .string()
+      .required(t(Constants.validationMessages.newPasswordRequired, { ns: 'common' })!)
+      .min(Constants.passwordMinLength, t(Constants.validationMessages.passwordLength, { ns: 'common' })!)
+      .matches(Constants.patterns.LOWERCASE_REGEX, t(Constants.validationMessages.passwordLowercase, { ns: 'common' })!)
+      .matches(Constants.patterns.UPPERCASE_REGEX, t(Constants.validationMessages.passwordUppercase, { ns: 'common' })!)
+      .matches(
+        Constants.patterns.SYMBOL_REGEX,
+        t(Constants.validationMessages.passwordSpecialCharacter, { ns: 'common' })!,
+      )
+      .matches(Constants.patterns.DIGIT_REGEX, t(Constants.validationMessages.passwordNumber, { ns: 'common' })!),
+
+    confirmPassword: yup
+      .string()
+      .required(t(Constants.validationMessages.confirmPasswordRequired, { ns: 'common' })!)
+      .oneOf([yup.ref('newPassword')], t(Constants.validationMessages.passwordMustMatch, { ns: 'common' })!),
+  });
+
   const {
     formState: { errors, isDirty, isSubmitting, isSubmitted, isValid },
     handleSubmit,
@@ -46,12 +52,12 @@ export const ResetPasswordForm: FC<Props> = ({ onSubmit }) => {
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Form.Group>
-          <Form.Label htmlFor='newPassword'>New Password</Form.Label>
+          <Form.Label htmlFor='newPassword'>{t('changePasswordPage.newPassword')}</Form.Label>
           <Form.Control
             id='newPassword'
             type='password'
             {...register('newPassword')}
-            placeholder='Enter new password'
+            placeholder={t('changePasswordPage.newPasswordPlaceholder')!}
             isInvalid={!!errors.newPassword}
           />
           <Form.Control.Feedback type='invalid' role='alert'>
@@ -59,12 +65,12 @@ export const ResetPasswordForm: FC<Props> = ({ onSubmit }) => {
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group>
-          <Form.Label htmlFor='confirmPassword'>Confirm Password</Form.Label>
+          <Form.Label htmlFor='confirmPassword'>{t('changePasswordPage.confirmPassword')}</Form.Label>
           <Form.Control
             id='confirmPassword'
             type='password'
             {...register('confirmPassword')}
-            placeholder='Confirm password'
+            placeholder={t('changePasswordPage.confirmPasswordPlaceholder')!}
             isInvalid={!!errors.confirmPassword}
           />
           <Form.Control.Feedback type='invalid' role='alert'>
@@ -73,7 +79,7 @@ export const ResetPasswordForm: FC<Props> = ({ onSubmit }) => {
         </Form.Group>
         <div className='mt-3'>
           <LoadingButton type='submit' disabled={!isValid} loading={isSubmitting}>
-            Submit
+            {t('submit', { ns: 'common' })}
           </LoadingButton>
         </div>
       </Form>

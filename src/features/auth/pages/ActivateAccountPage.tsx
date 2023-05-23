@@ -5,8 +5,10 @@ import * as notificationService from 'common/services/notification';
 import { FC } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ActivateAccountForm, FormData } from '../components/ActivateAccountForm';
+import { useTranslation } from 'react-i18next';
 
 export const ActivateAccountPage: FC = () => {
+  const { t } = useTranslation(['translation', 'common']);
   const navigate = useNavigate();
   const { token = '', uid = '' } = useParams<{ token: string; uid: string }>();
   const [activateAccount] = useActivateAccountMutation();
@@ -16,13 +18,13 @@ export const ActivateAccountPage: FC = () => {
 
     try {
       await activateAccount(data);
-      notificationService.showSuccessMessage('This account has been activated. Please log in.');
+      notificationService.showSuccessMessage(t('activateAccountPage.accountHasBeenActivated'));
       navigate('/auth/login');
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
         handleApiError(error);
       } else {
-        notificationService.showErrorMessage('Unable to activate account.');
+        notificationService.showErrorMessage(t('activateAccountPage.unableToActivateAccount'));
         throw error;
       }
     }
@@ -30,12 +32,12 @@ export const ActivateAccountPage: FC = () => {
 
   return (
     <FrontPageLayout>
-      <Title>Activate Account</Title>
-      <p className='text-muted'>Just one more step! Choose a password to active your account.</p>
+      <Title>{t('activateAccountPage.activateAccount')}</Title>
+      <p className='text-muted'>{t('activateAccountPage.activateAccountDescription')}</p>
       <ActivateAccountForm onSubmit={onSubmit} />
       <div className='mt-2 mb-2'>
         <small>
-          Ended up here by mistake? <Link to='/auth/login'>Log In</Link>
+          {t('activateAccountPage.hereByMistake')} <Link to='/auth/login'>{t('logIn', { ns: 'common' })}</Link>
         </small>
       </div>
     </FrontPageLayout>

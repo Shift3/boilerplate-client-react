@@ -45,7 +45,7 @@ export const useUserTableData = (users: User[] = []) => {
             show={open}
             onCancel={hideDeleteModal}
             onConfirm={onConfirm}
-            confirmLabel={t('delete', { ns: 'common' }) ?? undefined}
+            confirmLabel={t('delete', { ns: 'common' })!}
             confirmIcon='trash-alt'
             confirmVariant='danger'
             onExited={onExited}
@@ -54,7 +54,7 @@ export const useUserTableData = (users: User[] = []) => {
                 <p className='m-0'>
                   {t('userTable.areYouSureDelete')}{' '}
                   <span className='text-danger'>
-                    <Trans ns="common" i18nKey="actionCannotBeUndone">
+                    <Trans ns='common' i18nKey='actionCannotBeUndone'>
                       Note that this action <strong>cannot</strong> be undone.
                     </Trans>
                   </span>
@@ -91,12 +91,12 @@ export const useUserTableData = (users: User[] = []) => {
             show={open}
             onCancel={hideResendActivationModal}
             onConfirm={onConfirm}
-            confirmLabel={t('userTable.sendEmail') ?? undefined}
+            confirmLabel={t('userTable.sendEmail')!}
             confirmIcon='envelope'
             onExited={onExited}
             body={
               <p className='m-0'>
-                <Trans i18nKey="userTable.wouldYouLikeToResendActivationEmail" user={user.email}>
+                <Trans i18nKey='userTable.wouldYouLikeToResendActivationEmail' user={user.email}>
                   Would you like to resend an activation email to <strong>{user.email}</strong>?
                 </Trans>{' '}
               </p>
@@ -132,12 +132,12 @@ export const useUserTableData = (users: User[] = []) => {
             show={open}
             onCancel={hideForgotPasswordModal}
             onConfirm={onConfirm}
-            confirmLabel={t('userTable.sendEmail') ?? undefined}
+            confirmLabel={t('userTable.sendEmail')!}
             confirmIcon='envelope'
             onExited={onExited}
             body={
               <p className='m-0'>
-                <Trans i18nKey="userTable.wouldYouLikeToSendActivationEmail" user={user.email}>
+                <Trans i18nKey='userTable.wouldYouLikeToSendActivationEmail' user={user.email}>
                   Would you like to send an activation email to <strong>{user.email}</strong>?
                 </Trans>{' '}
               </p>
@@ -163,7 +163,7 @@ export const useUserTableData = (users: User[] = []) => {
     () => [
       {
         accessor: 'lastName',
-        Header: t('name', { ns: 'common' }) ?? '',
+        Header: t('name', { ns: 'common' })!,
         Cell: ({ row }) => (
           <div className='d-flex d-row align-items-center mr-3'>
             <div className='me-2'>
@@ -186,16 +186,16 @@ export const useUserTableData = (users: User[] = []) => {
       },
       {
         accessor: 'role',
-        Header: t('role', { ns: 'common' }) ?? '',
+        Header: t('role', { ns: 'common' })!,
         Cell: ({ value: role }) => (
           <SubtleBadge pill variant={roleVariant(role)}>
-            {role}
+            {t(role.toLocaleLowerCase(), { ns: 'common' })}
           </SubtleBadge>
         ),
       },
       {
         accessor: 'activatedAt',
-        Header: t('activatedDate', { ns: 'common' }) ?? '',
+        Header: t('activatedDate', { ns: 'common' })!,
         responsive: 'md',
         Cell: ({ value: activatedAt }) => (
           <>

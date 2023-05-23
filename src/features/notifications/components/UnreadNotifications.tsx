@@ -6,8 +6,10 @@ import { FC, useContext } from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { NotificationContext } from '../context';
 import { renderNotification } from './renderNotification';
+import { useTranslation } from 'react-i18next';
 
 export const UnreadNotifications: FC = () => {
+  const { t } = useTranslation(['translation', 'common']);
   const {
     notifications,
     hasMore,
@@ -28,7 +30,7 @@ export const UnreadNotifications: FC = () => {
     <>
       {!isNotificationsLoading && notifications.length === 0 ? (
         <Card>
-          <NoContent title='No Notifications' icon={faBell} />
+          <NoContent title={t('noNotifications', { ns: 'common' })} icon={faBell} />
         </Card>
       ) : null}
 
@@ -39,7 +41,7 @@ export const UnreadNotifications: FC = () => {
             loading={isLoading || isNotificationsLoading || isFetching}
             disabled={count === 0}
           >
-            Mark all Read
+            {t('markAsRead', { ns: 'common' })}
           </LoadingButton>
         </div>
       ) : null}
@@ -53,7 +55,7 @@ export const UnreadNotifications: FC = () => {
       {hasMore && (
         <div className='mt-3 mb-3 text-center'>
           <Button disabled={isFetching} onClick={() => getMore()} variant='default'>
-            Load More
+            {t('loadMore', { ns: 'common' })}
           </Button>
         </div>
       )}

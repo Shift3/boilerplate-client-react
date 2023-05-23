@@ -28,20 +28,22 @@
     "editFarmDescription": "Update this farm's details here."
   },
   "farmDetail": {
-    "farmInfo": "Farm Info"
+    "farmInfo": "Farm Info",
+    "namePlaceholder": "Enter farm name",
+    "emailPlaceholder": "Enter farm email"
   },
   "userDetail": {
     "heading": "User Profile",
-    "firstName": "First Name",
-    "lastName": "Last Name",
-    "email": "Email",
     "accessHeading": "Access Information",
-    "selectRole": "Select a role..."
+    "selectRole": "Select a role...",
+    "roleInfo": "For more information about the different roles and what they can do, see our <strong>FAQ</strong>"
   },
   "createUser": {
     "back": "Back to User List",
     "heading": "Create User",
-    "subheading": "Add a new user to the system."
+    "subheading": "Add a new user to the system.",
+    "emailSentTo": "An email with instructions to finish activating the account has been sent to:",
+    "unableToAddUser": "Unable to add user."
   },
   "updateUser": {
     "heading": "Update User",
@@ -64,6 +66,11 @@
     "sendResetPasswordEmail": "Send Reset Password Email",
     "passwordResetEmailSent": "Password reset email has been sent",
     "resetPassword": "Reset Password"
+  },
+  "userEmailForm": {
+    "newEmail": "New Email Address",
+    "newEmailDescription": "Enter a new email address to use for your account. An email will be sent to your proposed new email, with a link to confirm the email change.",
+    "changeMyEmail": "Change My Email Address"
   },
   "userProfile": {
     "heading": "Account Settings",
@@ -126,6 +133,42 @@
   },
   "notifications": {
     "title": "My Notifications",
-    "subheading": "Notifications that have been sent to me."
+    "subheading": "Notifications that have been sent to me.",
+    "newFarmCreated": "New Farm Created",
+    "farmCreatedBy": "<0>{{userName}}</0> created a new Farm named <2>{{farmName}}</2>"
+  },
+  "activateAccountPage": {
+    "accountHasBeenActivated": "This account has been activated. Please log in.",
+    "unableToActivateAccount": "Unable to activate account.",
+    "activateAccount": "Activate Account",
+    "activateAccountDescription": "Just one more step! Choose a password to active your account.",
+    "hereByMistake": "Ended up here by mistake?"
+  },
+  "forgotPasswordPage": {
+    "youWillReceiveEmail": "If the email you entered is in our system, you will receive a password reset email.",
+    "unableToResetPassword": "Unable to perform forgot password request.",
+    "forgotPassword": "Forgot Password",
+    "forgotPasswordDescription": "Enter the email associated with your account and we'll send you instruction on how to reset your password.",
+    "rememberYourPassword": "Remember your password?",
+    "goBackToLogIn": "Go back to login"
+  },
+  "loginPage": {
+    "memberLogIn": "Member Log In",
+    "memberLogInDescription": "Welcome back to Bitwise Admin, the best admin panel on the internet.",
+    "dontHaveAnAccount": "Don't have an account?",
+    "registerForAccount": "Register for one!"
+  },
+  "resetPasswordPage": {
+    "resetPassword": "Reset Password",
+    "resetPasswordDescription": "Enter a new password you would like to use for your account.",
+    "passwordResetSuccessful": "The password was reset successfully. Please log in.",
+    "unableToResetPassword": "Unable to reset password."
+  },
+  "signUpPage": {
+    "memberRegistration": "Member Registration",
+    "memberRegistrationDescription": "Register for the Bitwise Admin Panel to join the best admin panel on the internet.",
+    "alreadyHaveAnAccount": "Already have an account?",
+    "activationEmailSentTo": "An activation email has been sent to:",
+    "unableToCreateAccount": "Unable to create account."
   }
 }
