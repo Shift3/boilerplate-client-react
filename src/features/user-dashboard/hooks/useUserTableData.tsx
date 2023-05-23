@@ -96,7 +96,7 @@ export const useUserTableData = (users: User[] = []) => {
             onExited={onExited}
             body={
               <p className='m-0'>
-                <Trans i18nKey='userTable.wouldYouLikeToResendActivationEmail' user={user.email}>
+                <Trans i18nKey='userTable.wouldYouLikeToResendActivationEmail' values={{ user: user.email }}>
                   Would you like to resend an activation email to <strong>{user.email}</strong>?
                 </Trans>{' '}
               </p>
@@ -137,7 +137,7 @@ export const useUserTableData = (users: User[] = []) => {
             onExited={onExited}
             body={
               <p className='m-0'>
-                <Trans i18nKey='userTable.wouldYouLikeToSendActivationEmail' user={user.email}>
+                <Trans i18nKey='userTable.wouldYouLikeToSendActivationEmail' values={{ user: user.email }}>
                   Would you like to send an activation email to <strong>{user.email}</strong>?
                 </Trans>{' '}
               </p>
@@ -201,7 +201,7 @@ export const useUserTableData = (users: User[] = []) => {
           <>
             {activatedAt instanceof Date ? (
               <time dateTime={activatedAt.toISOString()}>
-                {new Intl.DateTimeFormat(i18n.language, { dateStyle: 'long' }).format(activatedAt)}
+                {new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(activatedAt)}
               </time>
             ) : (
               <>
@@ -233,7 +233,7 @@ export const useUserTableData = (users: User[] = []) => {
         disableSortBy: true,
       },
     ],
-    [i18n.language, t],
+    [t],
   );
 
   // Transform User objects into the data format expected by the table.

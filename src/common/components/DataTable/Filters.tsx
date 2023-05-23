@@ -124,7 +124,7 @@ export const RecentDateFilter = (days: number[]) => {
               name={attribute}
               label={
                 <Trans ns='common' i18nKey='lastNDays' count={count}>
-                  In the last {{ count }} dayz
+                  In the last {{ count }} days
                 </Trans>
               }
             />
