@@ -47,12 +47,30 @@
   },
   "updateUser": {
     "heading": "Actualizar Usuario",
-    "subheading": "Actualiza los detalles y roles de este usuario."
+    "subheading": "Actualizar los detalles y roles de este usuario.",
+    "unableToLoadUser": "No se puede cargar el usuario. Volviendo a la lista de usuarios.",
+    "unableToLoadHistory": "No se puede cargar el historial de cambios del usuario.",
+    "userUpdated": "Usuario actualizado.",
+    "unableToUpdate": "No se puede actualizar el usuario."
   },
   "userList": {
     "heading": "Lista de Usuarios",
     "subheading": "Usuarios activos e invitados en el sistema.",
     "createButton": "Agregar Usuario"
+  },
+  "userServices": {
+    "emailChangeCancelled": "Solicitud de cambio de correo electrónico cancelada.",
+    "unableToCancel": "No se puede cancelar, inténtalo de nuevo más tarde.",
+    "emailVerificationSent": "Verificación de correo electrónico enviada. Sigue las instrucciones en el correo electrónico para continuar.",
+    "unableToSendVerification": "No se puede enviar la verificación de correo electrónico.",
+    "profilePhotoDeleted": "Foto de perfil eliminada.",
+    "unableToDeletePhoto": "No se puede eliminar la foto de perfil.",
+    "profilePhotoUpdated": "Foto de perfil actualizada.",
+    "fileTooLarge": "El archivo es demasiado grande, por favor sube un archivo más pequeño.",
+    "unableToUploadPhoto": "No se puede subir la foto de perfil.",
+    "profileUpdated": "Perfil actualizado.",
+    "unableToUpdateProfile": "No se puede actualizar el perfil.",
+    "sessionExpired": "Tu sesión ha expirado, por favor intenta iniciar sesión nuevamente."
   },
   "userTable": {
     "userDeleted": "Usuario eliminado.",
@@ -65,12 +83,20 @@
     "wouldYouLikeToResendActivationEmail": "¿Te gustaría reenviar un correo de activación a <strong>{{user}}</strong>?",
     "sendResetPasswordEmail": "Enviar Correo de Restablecimiento de Contraseña",
     "passwordResetEmailSent": "Se ha enviado el correo de restablecimiento de contraseña.",
+    "unableToSendPasswordReset": "No se puede enviar el correo electrónico de restablecimiento de contraseña.",
     "resetPassword": "Restablecer Contraseña"
   },
   "userEmailForm": {
     "newEmail": "Nuevo Correo Electrónico",
     "newEmailDescription": "Ingresa una nueva dirección de correo electrónico para usar en tu cuenta. Se enviará un correo electrónico a tu nuevo correo propuesto, con un enlace para confirmar el cambio de correo electrónico.",
     "changeMyEmail": "Cambiar Mi Dirección de Correo Electrónico"
+  },
+  "confirmEmailChangePage": {
+    "emailChangeSuccessful": "Cambio de correo electrónico exitoso.",
+    "unableToChangeEmail": "No se pudo cambiar el correo electrónico.",
+    "heading": "Verificar Cambio de Correo Electrónico",
+    "subheading": "Has solicitado un cambio de correo electrónico. Haz clic en el botón de abajo para completar el cambio de correo electrónico.",
+    "changeMyEmail": "Cambiar Mi Correo Electrónico"
   },
   "userProfile": {
     "heading": "Configuración de la Cuenta",
@@ -96,10 +122,15 @@
     "settings": "Configuración de la Aplicación",
     "cancelRequest": "Cancelar Solicitud",
     "changeMyEmail": "Cambiar Mi Dirección de Correo Electrónico",
+    "changeMyEmailDescription": "Cambiar tu correo electrónico modificará tu correo de inicio de sesión, así como el destino de los correos electrónicos cuando necesites recibir notificaciones.",
     "uploadPhoto": "Cargar Foto",
     "forgotPassword": "¿Olvidaste tu contraseña?",
     "forgotPasswordInstructions": "Haz clic en el botón de abajo para recibir instrucciones sobre cómo restablecer tu contraseña.",
-    "resetMyPassword": "Restablecer Mi Contraseña"
+    "resetMyPassword": "Restablecer Mi Contraseña",
+    "changeEmailVerificationSent": "Se ha enviado un correo electrónico de verificación.",
+    "unableToSendChangeEmailVerification": "No se pudo enviar el correo electrónico de verificación.",
+    "passwordUpdated": "Contraseña actualizada.",
+    "passwordInstructionsSent": "Se han enviado instrucciones sobre cómo restablecer tu contraseña a tu correo electrónico."
   },
   "changePasswordPage": {
     "currentPassword": "Contraseña Actual",
@@ -129,7 +160,7 @@
   "changeLog": {
     "latestChanges": "Últimos Cambios",
     "noChangesFound": "No se encontraron cambios",
-    "showAllNChanges": "Mostrar todos los {{count}} cambios..."
+    "showAllNChanges": "Mostrar todos los {{num}} cambios..."
   },
   "notifications": {
     "title": "Mis Notificaciones",

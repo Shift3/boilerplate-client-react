@@ -47,12 +47,30 @@
   },
   "updateUser": {
     "heading": "Update User",
-    "subheading": "Update this user's details and roles."
+    "subheading": "Update this user's details and roles.",
+    "unableToLoadUser": "Unable to load user. Returning to user list.",
+    "unableToLoadHistory": "Unable to load the user's change history.",
+    "userUpdated": "User updated.",
+    "unableToUpdate": "Unable to update user."
   },
   "userList": {
     "heading": "User List",
     "subheading": "Active and invited users in the system.",
     "createButton": "Add User"
+  },
+  "userServices": {
+    "emailChangeCancelled": "Email change request cancelled.",
+    "unableToCancel": "Unable to cancel, try again later'",
+    "emailVerificationSent": "Email Verification sent. Follow the instructions in the email to proceed.",
+    "unableToSendVerification": "Unable to send email verification.",
+    "profilePhotoDeleted": "Profile Photo Deleted.",
+    "unableToDeletePhoto": "Unable to delete profile picture.",
+    "profilePhotoUpdated": "Profile Photo Updated.",
+    "fileTooLarge": "File is too large, please upload a smaller file.",
+    "unableToUploadPhoto": "Unable to upload profile picture.",
+    "profileUpdated": "Profile updated.",
+    "unableToUpdateProfile": "Unable to update profile.",
+    "sessionExpired": "Your login has expired, please try logging in again."
   },
   "userTable": {
     "userDeleted": "User deleted.",
@@ -64,13 +82,21 @@
     "wouldYouLikeToSendActivationEmail": "Would you like to resend an activation email to <strong>{{user}}</strong>?",
     "wouldYouLikeToResendActivationEmail": "Would you like to resend an activation email to <strong>{{user}}</strong>?",
     "sendResetPasswordEmail": "Send Reset Password Email",
-    "passwordResetEmailSent": "Password reset email has been sent",
+    "passwordResetEmailSent": "Password reset email has been sent.",
+    "unableToSendPasswordReset": "Unable to send password reset email.",
     "resetPassword": "Reset Password"
   },
   "userEmailForm": {
     "newEmail": "New Email Address",
     "newEmailDescription": "Enter a new email address to use for your account. An email will be sent to your proposed new email, with a link to confirm the email change.",
     "changeMyEmail": "Change My Email Address"
+  },
+  "confirmEmailChangePage": {
+    "emailChangeSuccessful": "Email change successful.",
+    "unableToChangeEmail": "Unable to change email.",
+    "heading": "Verify Email Change",
+    "subheading": " You have requested an email change. Click the button below to complete the email change.",
+    "changeMyEmail": "Change My Email"
   },
   "userProfile": {
     "heading": "Account Settings",
@@ -96,10 +122,15 @@
     "settings": "App Settings",
     "cancelRequest": "Cancel Request",
     "changeMyEmail": "Change My Email Address",
+    "changeMyEmailDescription": "Changing your email will change your login email, as well as where emails are sent when you need to be notified.",
     "uploadPhoto": "Upload Photo",
     "forgotPassword": "Forgot your password?",
     "forgotPasswordInstructions": "Click the button below to be sent instructions on how to reset your password.",
-    "resetMyPassword": "Reset My Password"
+    "resetMyPassword": "Reset My Password",
+    "changeEmailVerificationSent": "A verification email has been sent.",
+    "unableToSendChangeEmailVerification": "Unable to send verification email.",
+    "passwordUpdated": "Password updated.",
+    "passwordInstructionsSent": "Instructions on how to reset your password have been sent to your email."
   },
   "changePasswordPage": {
     "currentPassword": "Current Password",
@@ -129,7 +160,7 @@
   "changeLog": {
     "latestChanges": "Latest Changes",
     "noChangesFound": "No Changes Found",
-    "showAllNChanges": "Show all {{count}} changes..."
+    "showAllNChanges": "Show all {{num}} changes..."
   },
   "notifications": {
     "title": "My Notifications",

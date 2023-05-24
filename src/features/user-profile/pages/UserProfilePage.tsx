@@ -155,12 +155,12 @@ export const UserProfilePage: FC = () => {
   const handleResendChangeEmailVerificationEmail = async () => {
     try {
       await resendChangeEmailVerificationEmail({ id });
-      notificationService.showSuccessMessage('Change Email verification email has been sent.');
+      notificationService.showSuccessMessage(t('userProfile.changeEmailVerificationSent'));
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
         handleApiError(error);
       } else {
-        notificationService.showErrorMessage('Unable to Send Change Email verification email');
+        notificationService.showErrorMessage(t('userProfile.unableToSendChangeEmailVerification'));
         throw error;
       }
     }
@@ -183,7 +183,7 @@ export const UserProfilePage: FC = () => {
 
     try {
       await changePassword(request).unwrap();
-      notificationService.showSuccessMessage('Password updated.');
+      notificationService.showSuccessMessage(t('userProfile.passwordUpdated'));
     } catch (error) {
       if (error && isFetchBaseQueryError(error)) {
         if (isObject(error.data)) {
@@ -197,7 +197,7 @@ export const UserProfilePage: FC = () => {
 
   const resetPassword = async () => {
     await forgotPassword({ email: user!.email });
-    notificationService.showSuccessMessage('Instructions on how to reset your password have been sent to your email.');
+    notificationService.showSuccessMessage(t('userProfile.passwordInstructionsSent'));
   };
 
   const onProfileImageChange = async (e: React.BaseSyntheticEvent) => {
@@ -237,13 +237,10 @@ export const UserProfilePage: FC = () => {
           centered
         >
           <Modal.Header closeButton>
-            <Modal.Title>Change my Email</Modal.Title>
+            <Modal.Title>{t('userProfile.changeMyEmail')}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>
-              Changing your email will change your login email, as well as where emails are sent when you need to be
-              notified.
-            </p>
+            <p>{t('userProfile.changeMyEmailDescription')}</p>
             <UpdateUserEmailForm
               onSubmit={onSubmitRequestEmailChange}
               serverValidationErrors={emailFormValidationErrors}

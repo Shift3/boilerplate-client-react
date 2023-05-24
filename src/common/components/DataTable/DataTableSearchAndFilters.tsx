@@ -42,7 +42,7 @@ export type DataTableSearchAndFilterProps = {
 
 export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
   filters = [],
-  placeholder = 'Search...',
+  placeholder = null,
   onSetFilter,
   onRemoveFilter,
   onClearFilters,
@@ -51,6 +51,10 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
   const [activeFilters, setActiveFilters] = useState<Filter[]>([]);
   const { t } = useTranslation('common');
+
+  if (placeholder === null) {
+    placeholder = t('searchPlaceholder')!;
+  }
 
   const handleDropdownToggle = () => {
     if (filters.length) {

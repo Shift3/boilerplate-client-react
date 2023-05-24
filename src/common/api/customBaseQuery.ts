@@ -46,6 +46,7 @@ export const customBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBase
         throw response;
       }
     } catch (e) {
+      // todo: this can't be translated because this is not a react component or hook. refactor required.
       notificationService.showErrorMessage('Your login has expired, please try logging in again.');
       api.dispatch(authSlice.actions.userLoggedOut());
       authLocalStorage.clearAuthState();

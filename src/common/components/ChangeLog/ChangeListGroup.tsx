@@ -69,7 +69,7 @@ export const ChangeListGroup: FC<Props> = ({ changeList }) => {
               <FontAwesomeIcon icon={changeTypeData.icon} />
             </StyledCircularContainer>
             <div className='ms-3'>
-              <span className='changeTypeName'>{`${changeTypeData.changeName}`}</span>
+              <span className='changeTypeName'>{`${changeTypeData.changeName}`}</span>{' '}
               <span className='editorName'>
                 {changeItem.historyUser
                   ? getShortenedName(`${changeItem.historyUser.firstName} ${changeItem.historyUser.lastName}`)

@@ -81,18 +81,18 @@ export const UpdateUserView: FC = () => {
         </Modal>
       );
     },
-    [userHistory, isFetchingHistory],
+    [userHistory, isFetchingHistory, t],
   );
 
   useEffect(() => {
     if (getUserError) {
-      notificationService.showErrorMessage('Unable to load user. Returning to user list.');
+      notificationService.showErrorMessage(t('updateUser.unableToLoadUser'));
       navigate('/users', { replace: true });
     }
     if (userHistoryError) {
-      notificationService.showErrorMessage("Unable to load the user's change history.");
+      notificationService.showErrorMessage(t('updateUser.unableToLoadHistory'));
     }
-  }, [getUserError, navigate, userHistoryError]);
+  }, [getUserError, navigate, userHistoryError, t]);
 
   const handleShowAllChanges = () => {
     showModal();
@@ -108,9 +108,9 @@ export const UpdateUserView: FC = () => {
         email: data.email,
       }).unwrap();
       navigate('/users');
-      notificationService.showSuccessMessage('User updated.');
+      notificationService.showSuccessMessage(t('updateUser.userUpdated'));
     } catch (error) {
-      notificationService.showErrorMessage('Unable to update user.');
+      notificationService.showErrorMessage(t('updateUser.unableToUpdate'));
       if (error && isFetchBaseQueryError(error)) {
         if (isObject(error.data)) {
           setFormValidationErrors(error.data);

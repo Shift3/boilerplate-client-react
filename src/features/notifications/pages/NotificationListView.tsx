@@ -20,7 +20,7 @@ export const NotificationListView: FC<PropsWithChildren<unknown>> = ({ children 
             <Trans i18nKey='notifications.title'>My Notifications</Trans>
           </h1>
           <p>
-            <Trans i18nKey='notification.subheading'>Notifications that have been sent to me.</Trans>
+            <Trans i18nKey='notifications.subheading'>Notifications that have been sent to me.</Trans>
           </p>
         </div>
       </PageHeader>

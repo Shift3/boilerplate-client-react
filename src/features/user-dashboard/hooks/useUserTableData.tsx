@@ -114,7 +114,9 @@ export const useUserTableData = (users: User[] = []) => {
         const onConfirm = async () => {
           try {
             await sendForgotPasswordEmail({ email: user.email });
+            notificationService.showSuccessMessage(t('userTable.passwordResetEmailSent'));
           } catch (e) {
+            notificationService.showErrorMessage(t('userTable.unableToSendPasswordReset'));
             if (isFetchBaseQueryError(e)) {
               handleApiError(e);
             } else {
@@ -123,7 +125,6 @@ export const useUserTableData = (users: User[] = []) => {
           } finally {
             hideForgotPasswordModal();
           }
-          notificationService.showSuccessMessage(t('userTable.passwordResetEmailSent'));
         };
 
         return (

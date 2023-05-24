@@ -19,11 +19,12 @@ const StyledShowAllChangesButton = styled(Button)`
 
 export const ChangeLog: FC<Props> = ({ changeList, previewSize, totalChanges, handleShowAllChanges }) => {
   const { t } = useTranslation(['translation', 'common']);
+
   return (
     <>
       {changeList.length > 0 ? (
         <div>
-          <h5 className='mb-3'>{t('latestChanges')}</h5>
+          <h5 className='mb-3'>{t('changeLog.latestChanges')}</h5>
           <ChangeListGroup changeList={changeList.slice(0, previewSize)} />
           {totalChanges > previewSize ? (
             <div className='d-flex w-100 justify-content-center mt-3'>
@@ -32,13 +33,15 @@ export const ChangeLog: FC<Props> = ({ changeList, previewSize, totalChanges, ha
                 onClick={() => handleShowAllChanges()}
                 className='text-decoration-none'
               >
-                <Trans i18nKey='changeLog.showAllNChanges'>Show all {{ count: totalChanges }} changes...</Trans>
+                <Trans i18nKey='changeLog.showAllNChanges' values={{ num: totalChanges }}>
+                  Show all {{ totalChanges }} changes...
+                </Trans>
               </StyledShowAllChangesButton>
             </div>
           ) : null}
         </div>
       ) : (
-        <h5 className='mt-3 mb-3'>{t('noChangesFound')}</h5>
+        <h5 className='mt-3 mb-3'>{t('changeLog.noChangesFound')}</h5>
       )}
     </>
   );

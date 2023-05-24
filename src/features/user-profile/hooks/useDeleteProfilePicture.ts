@@ -5,10 +5,12 @@ import { authSlice, AuthState } from '../../auth/authSlice';
 import * as notificationService from 'common/services/notification';
 import { useDeleteProfilePictureMutation, DeleteProfilePictureRequest } from 'common/api/userApi';
 import * as authLocalStorage from '../../auth/authLocalStorage';
+import { useTranslation } from 'react-i18next';
 
 export const useDeleteProfilePicture = () => {
   const dispatch = useAppDispatch();
   const [deleteProfilePicture, { isLoading }] = useDeleteProfilePictureMutation();
+  const { t } = useTranslation(['translation', 'common']);
 
   const getUserWithNullProfilePicture = () => {
     const user = authLocalStorage.getAuthState()?.user ?? null;
@@ -26,10 +28,10 @@ export const useDeleteProfilePicture = () => {
         if (auth) {
           dispatch(authSlice.actions.userUpdatedProfilePicture(null));
           authLocalStorage.saveAuthState({ ...auth, user: getUserWithNullProfilePicture() });
-          notificationService.showSuccessMessage('Profile Photo Deleted');
+          notificationService.showSuccessMessage(t('userServices.profilePhotoDeleted'));
         }
       } catch (error) {
-        notificationService.showErrorMessage('Unable to delete profile picture.');
+        notificationService.showErrorMessage(t('userServices.unableToDeletePhoto'));
         if (isFetchBaseQueryError(error)) {
           handleApiError(error);
         } else {
@@ -37,7 +39,7 @@ export const useDeleteProfilePicture = () => {
         }
       }
     },
-    [deleteProfilePicture, dispatch],
+    [deleteProfilePicture, dispatch, t],
   );
 
   return { deleteUserProfilePicture, isLoading };
