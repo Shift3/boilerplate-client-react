@@ -14,7 +14,8 @@ import styled from 'styled-components';
 import { useModalWithData } from 'common/hooks/useModalWithData';
 import { SimpleConfirmModal } from 'common/components/SimpleConfirmModal';
 import * as notificationService from 'common/services/notification';
-import { useDisableUserMutation } from 'common/api/userApi';
+import { useDisableUserMutation, useEnableUserMutation } from 'common/api/userApi';
+import { handleApiError, isFetchBaseQueryError } from 'common/api/handleApiError';
 
 const DisableButton = styled(Button)`
   margin-left: 100px;
@@ -27,7 +28,7 @@ export type DisableUserRequest = {
   id: string;
 };
 
-export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'role'>;
+export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'role' | 'id' | 'isActive'>;
 
 export interface Props {
   availableRoles: Role[];
@@ -75,29 +76,50 @@ export const UserDetailForm: FC<Props> = ({
   }, [serverValidationErrors, setError]);
 
   const [disableUser] = useDisableUserMutation();
+  const [enableUser] = useEnableUserMutation();
+
   const [showDisableModal, hideDisableModal] = useModalWithData<User>(
     user =>
       // eslint-disable-next-line react/no-unstable-nested-components
       ({ in: open, onExited }) => {
         const onSubmit = async () => {
-          await disableUser({ id: user.id });
-          notificationService.showSuccessMessage('User disabled.');
-          hideDisableModal();
+          try {
+            if (user.isActive) {
+              await disableUser({ id: user.id }).unwrap();
+              notificationService.showSuccessMessage('User disabled.');
+            } else {
+              await enableUser({ id: user.id }).unwrap();
+              notificationService.showSuccessMessage('User enabled.');
+            }
+
+            hideDisableModal();
+          } catch (error) {
+            if (isFetchBaseQueryError(error)) {
+              handleApiError(error);
+            } else {
+              // add Error message for enabling user.
+              notificationService.showErrorMessage('Could not disable user.');
+              throw error;
+            }
+          }
         };
 
         return (
           <SimpleConfirmModal
-            title='Disable User'
+            title={user.isActive ? 'Disable User' : 'Enable User'}
             show={open}
             onCancel={hideDisableModal}
             onConfirm={onSubmit}
-            confirmLabel='Disable'
-            confirmIcon='trash-alt'
+            confirmLabel={user.isActive ? 'Disable User' : 'Enable User'}
             confirmVariant='danger'
             onExited={onExited}
             body={
               <div>
-                <p className='m-0'>Are you sure you want to disable this user?</p>
+                <p className='m-0'>
+                  {user.isActive
+                    ? 'Are you sure you want to disable this user?'
+                    : 'Are you sure you want to enable this user?'}
+                </p>
               </div>
             }
           />
@@ -105,6 +127,12 @@ export const UserDetailForm: FC<Props> = ({
       },
     [],
   );
+
+  // what's left to do
+  // the button should have 3 states:
+  //   create user - don't show button
+  //   user is disabled - enable user
+  //   user is enabled - disable user
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
@@ -177,9 +205,11 @@ export const UserDetailForm: FC<Props> = ({
             </LoadingButton>
           </div>
           <div>
-            <DisableButton onClick={showDisableModal} variant='btn btn-danger'>
-              Disable
-            </DisableButton>
+            {defaultValues.id ? (
+              <DisableButton onClick={() => showDisableModal(defaultValues as User)} variant='btn btn-danger'>
+                {defaultValues.isActive ? 'Disable' : 'Enable'}
+              </DisableButton>
+            ) : null}
           </div>
         </div>
       </Form>
