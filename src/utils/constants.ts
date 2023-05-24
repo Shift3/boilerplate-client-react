@@ -98,6 +98,6 @@ export const Constants: IConstant = {
   environmentName: environment.environment,
   creationYear: 2021,
   applicationName: 'BW React Boilerplate',
-  footerCopyright: '&copy; Bitwise Industries',
+  footerCopyright: '© Bitwise Industries',
   SUPPORTED_PROFILE_PICTURE_FORMATS: ['image/jpg', 'image/jpeg', 'image/png'],
 };
