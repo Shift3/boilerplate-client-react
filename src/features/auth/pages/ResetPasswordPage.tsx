@@ -5,8 +5,10 @@ import * as notificationService from 'common/services/notification';
 import { useResetPasswordMutation } from 'common/api/userApi';
 import { FormData, ResetPasswordForm } from '../components/ResetPasswordForm';
 import { FrontPageLayout, Title } from 'common/components/FrontPageLayout';
+import { useTranslation } from 'react-i18next';
 
 export const ResetPasswordPage: FC = () => {
+  const { t } = useTranslation(['translation', 'common']);
   const navigate = useNavigate();
   const { token = '', uid = '' } = useParams<{ token: string; uid: string }>();
   const [resetPassword] = useResetPasswordMutation();
@@ -16,13 +18,13 @@ export const ResetPasswordPage: FC = () => {
 
     try {
       await resetPassword(data).unwrap();
-      notificationService.showSuccessMessage('The password was reset successfully. Please log in.');
+      notificationService.showSuccessMessage(t('resetPasswordPage.passwordResetSuccessful'));
       navigate('/auth/login');
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
         handleApiError(error);
       } else {
-        notificationService.showErrorMessage('Unable to reset password.');
+        notificationService.showErrorMessage(t('resetPasswordPage.unableToResetPassword'));
         throw error;
       }
     }
@@ -30,8 +32,8 @@ export const ResetPasswordPage: FC = () => {
 
   return (
     <FrontPageLayout>
-      <Title>Reset Password</Title>
-      <p className='text-muted'>Enter a new password you would like to use for your account.</p>
+      <Title>{t('resetPasswordPage.resetPassword')}</Title>
+      <p className='text-muted'>{t('resetPasswordPage.resetPasswordDescription')}</p>
       <ResetPasswordForm onSubmit={onSubmit} />
     </FrontPageLayout>
   );

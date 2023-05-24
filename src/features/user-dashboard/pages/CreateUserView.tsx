@@ -10,9 +10,10 @@ import { useRbac } from 'features/rbac';
 import { FC, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormData, UserDetailForm } from '../components/UserDetailForm';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 export const CreateUserView: FC = () => {
+  const { t } = useTranslation(['translation', 'common']);
   const navigate = useNavigate();
   const { userHasPermission } = useRbac();
   const [inviteUser] = useInviteUserMutation();
@@ -24,12 +25,10 @@ export const CreateUserView: FC = () => {
   const handleFormSubmit = async (data: FormData) => {
     try {
       await inviteUser({ ...data }).unwrap();
-      notificationService.showSuccessMessage(
-        `An email has been sent to ${data.email} with instructions to finish activating the account.`,
-      );
+      notificationService.showSuccessMessage(`${t('createUser.emailSentTo')  } ${data.email}`);
       navigate('/users');
     } catch (error) {
-      notificationService.showErrorMessage('Unable to add user.');
+      notificationService.showErrorMessage(t('createUser.unableToAddUser'));
       if (error && isFetchBaseQueryError(error)) {
         if (isObject(error.data)) {
           setFormValidationErrors(error.data);
@@ -67,7 +66,7 @@ export const CreateUserView: FC = () => {
           <UserDetailForm
             availableRoles={availableRoles}
             defaultValues={defaultValues}
-            submitButtonLabel='Create'
+            submitButtonLabel={t('create', { ns: 'common' })!}
             onSubmit={handleFormSubmit}
             serverValidationErrors={formValidationErrors}
           />

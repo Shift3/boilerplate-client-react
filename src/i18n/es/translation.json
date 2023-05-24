@@ -1,58 +1,205 @@
 {
   "farmList": {
-    "heading": "Lista de granjas",
-    "subheading": "Todos las granjas del sistema.",
-    "createButton": "Agregar granga"
+    "heading": "Lista de Fincas",
+    "subheading": "Todas las fincas en el sistema.",
+    "createButton": "Agregar Finca",
+    "getStarted": "Comienza creando una nueva finca."
+  },
+  "farmTable": {
+    "farmDeleted": "Finca Eliminada",
+    "deleteFarm": "Eliminar Finca",
+    "farmName": "Nombre de la Finca",
+    "areYouSureYouWantToDelete": "¿Estás seguro de que quieres eliminar la finca llamada <strong>{{name}}</strong>?"
+  },
+  "createFarm": {
+    "farmCreated": "Finca Creada",
+    "createFarm": "Crear Finca",
+    "unableToAddFarm": "No se pudo crear la finca.",
+    "backToFarmList": "Volver a la Lista de Fincas",
+    "addFarmToSystem": "Agregar una nueva finca al sistema."
+  },
+  "updateFarm": {
+    "unableToLoadFarm": "No se pudo cargar la finca. Volviendo a la lista de fincas.",
+    "unableToLoadHistory": "No se pudo cargar el historial de cambios de la finca.",
+    "farmUpdated": "Finca actualizada.",
+    "unableToUpdate": "No se pudo actualizar la finca.",
+    "backToFarmList": "Volver a la Lista de Fincas",
+    "editFarm": "Editar Finca",
+    "editFarmDescription": "Actualiza los detalles de esta finca aquí."
+  },
+  "farmDetail": {
+    "farmInfo": "Información de la Finca",
+    "namePlaceholder": "Ingrese el nombre de la finca",
+    "emailPlaceholder": "Ingrese el correo electrónico de la finca"
   },
   "userDetail": {
-    "heading": "Perfil",
-    "firstName": "Primer Nombre",
-    "lastName": "Ultimo Nombre",
-    "email": "Correo electrónico",
-    "accessHeading": "Informacion de Acceso"
+    "heading": "Perfil de Usuario",
+    "accessHeading": "Información de Acceso",
+    "selectRole": "Selecciona un rol...",
+    "roleInfo": "Para obtener más información sobre los diferentes roles y lo que pueden hacer, consulta nuestras <strong>Preguntas Frecuentes</strong>"
   },
-  "role": "Rol",
   "createUser": {
-    "back": "Volver a la lista de usuarios",
-    "heading": "Crear usuario",
-    "subheading": "Agregar un nuevo usuario al sistema."
+    "back": "Volver a la Lista de Usuarios",
+    "heading": "Crear Usuario",
+    "subheading": "Agregar un nuevo usuario al sistema.",
+    "emailSentTo": "Se ha enviado un correo electrónico con instrucciones para completar la activación de la cuenta a:",
+    "unableToAddUser": "No se pudo agregar el usuario."
   },
   "updateUser": {
-    "heading": "Actualizar usuario",
-    "subheading": "Actualice los detalles y roles de este usuario aquí."
+    "heading": "Actualizar Usuario",
+    "subheading": "Actualizar los detalles y roles de este usuario.",
+    "unableToLoadUser": "No se puede cargar el usuario. Volviendo a la lista de usuarios.",
+    "unableToLoadHistory": "No se puede cargar el historial de cambios del usuario.",
+    "userUpdated": "Usuario actualizado.",
+    "unableToUpdate": "No se puede actualizar el usuario."
   },
   "userList": {
-    "heading": "Lista de usuarios",
+    "heading": "Lista de Usuarios",
     "subheading": "Usuarios activos e invitados en el sistema.",
-    "createButton": "Agregar usuario"
+    "createButton": "Agregar Usuario"
+  },
+  "userServices": {
+    "emailChangeCancelled": "Solicitud de cambio de correo electrónico cancelada.",
+    "unableToCancel": "No se puede cancelar, inténtalo de nuevo más tarde.",
+    "emailVerificationSent": "Verificación de correo electrónico enviada. Sigue las instrucciones en el correo electrónico para continuar.",
+    "unableToSendVerification": "No se puede enviar la verificación de correo electrónico.",
+    "profilePhotoDeleted": "Foto de perfil eliminada.",
+    "unableToDeletePhoto": "No se puede eliminar la foto de perfil.",
+    "profilePhotoUpdated": "Foto de perfil actualizada.",
+    "fileTooLarge": "El archivo es demasiado grande, por favor sube un archivo más pequeño.",
+    "unableToUploadPhoto": "No se puede subir la foto de perfil.",
+    "profileUpdated": "Perfil actualizado.",
+    "unableToUpdateProfile": "No se puede actualizar el perfil.",
+    "sessionExpired": "Tu sesión ha expirado, por favor intenta iniciar sesión nuevamente."
+  },
+  "userTable": {
+    "userDeleted": "Usuario eliminado.",
+    "deleteUser": "Eliminar Usuario",
+    "areYouSureDelete": "¿Estás seguro de que quieres eliminar a este usuario?",
+    "activationEmailSent": "Se ha enviado el correo de activación.",
+    "resendActivationEmail": "Reenviar Correo de Activación",
+    "sendEmail": "Enviar Correo",
+    "wouldYouLikeToSendActivationEmail": "¿Te gustaría reenviar un correo de activación a <strong>{{user}}</strong>?",
+    "wouldYouLikeToResendActivationEmail": "¿Te gustaría reenviar un correo de activación a <strong>{{user}}</strong>?",
+    "sendResetPasswordEmail": "Enviar Correo de Restablecimiento de Contraseña",
+    "passwordResetEmailSent": "Se ha enviado el correo de restablecimiento de contraseña.",
+    "unableToSendPasswordReset": "No se puede enviar el correo electrónico de restablecimiento de contraseña.",
+    "resetPassword": "Restablecer Contraseña"
+  },
+  "userEmailForm": {
+    "newEmail": "Nuevo Correo Electrónico",
+    "newEmailDescription": "Ingresa una nueva dirección de correo electrónico para usar en tu cuenta. Se enviará un correo electrónico a tu nuevo correo propuesto, con un enlace para confirmar el cambio de correo electrónico.",
+    "changeMyEmail": "Cambiar Mi Dirección de Correo Electrónico"
+  },
+  "confirmEmailChangePage": {
+    "emailChangeSuccessful": "Cambio de correo electrónico exitoso.",
+    "unableToChangeEmail": "No se pudo cambiar el correo electrónico.",
+    "heading": "Verificar Cambio de Correo Electrónico",
+    "subheading": "Has solicitado un cambio de correo electrónico. Haz clic en el botón de abajo para completar el cambio de correo electrónico.",
+    "changeMyEmail": "Cambiar Mi Correo Electrónico"
   },
   "userProfile": {
-    "back": "Volver a la lista de granjas",
-    "subheading": "Configuración de su cuenta",
-    "profile": "Perfil",
+    "heading": "Configuración de la Cuenta",
+    "subheading": "Actualiza tu cuenta y configuración de perfil aquí.",
+    "profile": "Perfil de Usuario",
     "security": "Seguridad y Contraseña",
-    "generalHeading": "Información general",
-    "generalSubheading": "Esta información se utilizará para identificarlo en nuestro sistema.",
-    "email": "Dirección de correo electrónico",
-    "emailDescription": "Su dirección de correo electrónico registrada se utilizará para comunicarnos con usted. Cambiar su correo electrónico requiere que confirme su nueva dirección de correo electrónico.",
-    "changeEmailDescription": "Usted solicitó un cambio de correo electrónico. Se ha enviado un correo electrónico de verificación a <1>{{ email }}</1>. Para confirmar su nuevo correo electrónico, siga las instrucciones en el correo electrónico de verificación.",
-    "resendEmail": "Reenviar correo electrónico de verificación",
-    "photo": "Photo",
+    "themeHeading": "Preferencia de Tema",
+    "themeSubheading": "Selecciona tu modo preferido",
+    "darkMode": "Modo oscuro",
+    "generalHeading": "Información General",
+    "generalSubheading": "Esta información se utilizará para identificarte en nuestro sistema",
+    "languagePreference": "Preferencia de Idioma",
+    "languageSubheading": "Selecciona tu idioma preferido",
+    "changeEmail": "Cambiar Dirección de Correo Electrónico",
+    "changeEmailDescription": "Has solicitado un cambio de correo electrónico. Se ha enviado un correo de verificación a <strong>{{user}}</strong>. Para confirmar tu nueva dirección de correo electrónico, sigue las instrucciones en el correo de verificación.",
+    "emailDescription": "Tu dirección de correo electrónico se utilizará para comunicarnos contigo. Tu dirección de correo electrónico actual registrada es <strong>{{email}}</strong>. Cambiar tu correo electrónico requiere que confirmes tu nueva dirección de correo electrónico.",
+    "resendEmail": "Reenviar Correo de Verificación",
+    "photo": "Foto de Perfil",
+    "deletePhoto": "Eliminar Foto",
     "photoDescription": "Esta es la foto tuya que otros usuarios del sistema podrán ver.",
-    "changePassword": "Cambia la contraseña",
-    "changePasswordDescription": "La contraseña debe tener 8 caracteres o más. La contraseña debe contener un carácter especial en minúsculas, mayúsculas y un número."
+    "changePassword": "Cambiar Mi Contraseña",
+    "changePasswordDescription": "Cambia tu contraseña ingresando tu contraseña actual y tu nueva contraseña.",
+    "settings": "Configuración de la Aplicación",
+    "cancelRequest": "Cancelar Solicitud",
+    "changeMyEmail": "Cambiar Mi Dirección de Correo Electrónico",
+    "changeMyEmailDescription": "Cambiar tu correo electrónico modificará tu correo de inicio de sesión, así como el destino de los correos electrónicos cuando necesites recibir notificaciones.",
+    "uploadPhoto": "Cargar Foto",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "forgotPasswordInstructions": "Haz clic en el botón de abajo para recibir instrucciones sobre cómo restablecer tu contraseña.",
+    "resetMyPassword": "Restablecer Mi Contraseña",
+    "changeEmailVerificationSent": "Se ha enviado un correo electrónico de verificación.",
+    "unableToSendChangeEmailVerification": "No se pudo enviar el correo electrónico de verificación.",
+    "passwordUpdated": "Contraseña actualizada.",
+    "passwordInstructionsSent": "Se han enviado instrucciones sobre cómo restablecer tu contraseña a tu correo electrónico."
   },
-  "delete": "Borrar",
+  "changePasswordPage": {
+    "currentPassword": "Contraseña Actual",
+    "currentPasswordPlaceholder": "Ingresa la contraseña actual",
+    "newPassword": "Nueva Contraseña",
+    "newPasswordPlaceholder": "Ingresa la nueva contraseña",
+    "passwordRequirements": "La contraseña debe tener al menos 8 caracteres. Debe contener una minúscula, una mayúscula, un carácter especial y un número.",
+    "confirmPassword": "Confirmar Contraseña",
+    "confirmPasswordPlaceholder": "Ingresa la nueva contraseña nuevamente",
+    "changeMyPassword": "Cambiar Mi Contraseña"
+  },
   "userHomePage": {
-    "heading": "Página de inicio del usuario",
-    "subheading": "Página de inicio de marcador de posición para usuarios que no son administradores ni editores"
+    "heading": "Página de Inicio del Usuario",
+    "subheading": "Página de inicio de marcador de posición para usuarios que no son administradores ni editores",
+    "placeholder": "Esta es la página de inicio para usuarios <strong>No Administradores</strong> y <strong>No Editores</strong>. Reemplaza este contenido con lo que desees."
   },
   "editorHomePage": {
-    "heading": "Página de inicio del editor",
-    "subheading": "Página de inicio de marcador de posición para editores"
+    "heading": "Página de Inicio del Editor",
+    "subheading": "Página de inicio de marcador de posición para usuarios editores",
+    "placeholder": "Esta es la página de inicio para usuarios <strong>Editor</strong>. Reemplaza este contenido con lo que desees."
   },
   "adminHomePage": {
-    "heading": "Página de inicio de administración",
-    "subheading": "Página de inicio de posición para administradoras"
+    "heading": "Página de Inicio del Administrador",
+    "subheading": "Página de inicio de marcador de posición para usuarios administradores",
+    "placeholder": "Esta es la página de inicio para usuarios <strong>Administrador</strong>. Reemplaza este contenido con lo que desees."
+  },
+  "changeLog": {
+    "latestChanges": "Últimos Cambios",
+    "noChangesFound": "No se encontraron cambios",
+    "showAllNChanges": "Mostrar todos los {{num}} cambios..."
+  },
+  "notifications": {
+    "title": "Mis Notificaciones",
+    "subheading": "Notificaciones que me han sido enviadas.",
+    "newFarmCreated": "Nueva Finca Creada",
+    "farmCreatedBy": "<0>{{userName}}</0> creó una nueva finca llamada <2>{{farmName}}</2>"
+  },
+  "activateAccountPage": {
+    "accountHasBeenActivated": "Esta cuenta ha sido activada. Por favor, inicia sesión.",
+    "unableToActivateAccount": "No se pudo activar la cuenta.",
+    "activateAccount": "Activar cuenta",
+    "activateAccountDescription": "¡Solo un paso más! Elige una contraseña para activar tu cuenta.",
+    "hereByMistake": "¿Llegaste aquí por error?"
+  },
+  "forgotPasswordPage": {
+    "youWillReceiveEmail": "Si el correo electrónico que ingresaste está en nuestro sistema, recibirás un correo electrónico para restablecer tu contraseña.",
+    "unableToResetPassword": "No se pudo realizar la solicitud de restablecimiento de contraseña.",
+    "forgotPassword": "Olvidé mi contraseña",
+    "forgotPasswordDescription": "Ingresa el correo electrónico asociado con tu cuenta y te enviaremos instrucciones sobre cómo restablecer tu contraseña.",
+    "rememberYourPassword": "¿Recuerdas tu contraseña?",
+    "goBackToLogIn": "Volver a iniciar sesión"
+  },
+  "loginPage": {
+    "memberLogIn": "Inicio de sesión de miembro",
+    "memberLogInDescription": "Bienvenido de nuevo a Bitwise Admin, el mejor panel de administración en Internet.",
+    "dontHaveAnAccount": "¿No tienes una cuenta?",
+    "registerForAccount": "¡Regístrate!"
+  },
+  "resetPasswordPage": {
+    "resetPassword": "Restablecer contraseña",
+    "resetPasswordDescription": "Ingresa una nueva contraseña que te gustaría usar para tu cuenta.",
+    "passwordResetSuccessful": "La contraseña se restableció correctamente. Por favor, inicia sesión.",
+    "unableToResetPassword": "No se pudo restablecer la contraseña."
+  },
+  "signUpPage": {
+    "memberRegistration": "Registro de Miembros",
+    "memberRegistrationDescription": "Regístrate en el Panel de Administración de Bitwise para unirte al mejor panel de administración en Internet.",
+    "alreadyHaveAnAccount": "¿Ya tienes una cuenta?",
+    "activationEmailSentTo": "Se ha enviado un correo electrónico de activación a:",
+    "unableToCreateAccount": "No se pudo crear la cuenta."
   }
 }

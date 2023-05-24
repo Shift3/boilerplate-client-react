@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { NotificationContext } from '../context';
 import { renderNotification } from './renderNotification';
+import { useTranslation } from 'react-i18next';
 
 const StyledContainer = styled.div`
   min-width: 420px;
@@ -65,6 +66,7 @@ const StyledContainer = styled.div`
 `;
 
 export const NotificationDropdown: FC = () => {
+  const { t } = useTranslation('common');
   const navigate = useNavigate();
   const {
     notifications: unreadNotifications,
@@ -86,14 +88,14 @@ export const NotificationDropdown: FC = () => {
   return (
     <StyledContainer>
       <div className='header'>
-        <h3>Notifications</h3>
+        <h3>{t('notifications')}</h3>
         <LoadingButton
           variant='link'
           onClick={() => handleMarkAllRead()}
           loading={isLoadingMarkAllRead}
           disabled={unreadNotificationsCount === 0}
         >
-          Mark all as read
+          {t('markAsRead')}
         </LoadingButton>
       </div>
 
@@ -102,7 +104,7 @@ export const NotificationDropdown: FC = () => {
           <Nav.Item>
             <Nav.Link eventKey='unread'>
               <FontAwesomeIcon className='me-2' icon={faEnvelope} />
-              Unread
+              {t('unread')}
               {unreadNotificationsCount > 0 && (
                 <Badge pill bg='danger' className='ms-2'>
                   {unreadNotificationsCount}
@@ -113,7 +115,7 @@ export const NotificationDropdown: FC = () => {
           <Nav.Item className='ms-2'>
             <Nav.Link eventKey='read'>
               <FontAwesomeIcon className='me-2' icon={faEnvelopeOpen} />
-              Read
+              {t('read')}
             </Nav.Link>
           </Nav.Item>
         </Nav>
@@ -121,7 +123,7 @@ export const NotificationDropdown: FC = () => {
         <Tab.Content className='content'>
           <Tab.Pane eventKey='unread'>
             {!isLoadingUnreadNotifications && unreadNotifications.length === 0 ? (
-              <NoContent title='No Notifications' icon={faBell} />
+              <NoContent title={t('noNotifications')} icon={faBell} />
             ) : null}
             {unreadNotifications.map(notification => (
               <div key={notification.id} className='notification-item'>
@@ -132,7 +134,7 @@ export const NotificationDropdown: FC = () => {
 
           <Tab.Pane eventKey='read'>
             {!isLoadingReadNotifications && readNotifications.length === 0 ? (
-              <NoContent title='No Notifications' icon={faBell} />
+              <NoContent title={t('noNotifications')} icon={faBell} />
             ) : null}
             {readNotifications.map(notification => (
               <div key={notification.id} className='notification-item'>
@@ -144,7 +146,7 @@ export const NotificationDropdown: FC = () => {
       </Tab.Container>
 
       <div className='mt-3 d-flex align-items-center justify-content-center'>
-        <Button onClick={() => navigate('/notifications')}>View All Notifications</Button>
+        <Button onClick={() => navigate('/notifications')}>{t('viewAllNotifications')}</Button>
       </div>
     </StyledContainer>
   );

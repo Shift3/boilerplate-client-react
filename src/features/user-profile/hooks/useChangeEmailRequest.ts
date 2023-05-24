@@ -8,10 +8,12 @@ import {
   useCancelChangeEmailMutation,
 } from 'common/api/userApi';
 import * as authLocalStorage from '../../auth/authLocalStorage';
+import { useTranslation } from 'react-i18next';
 
 export const useCancelChangeEmailRequest = () => {
   const dispatch = useAppDispatch();
   const [cancelChangeEmail, { isLoading }] = useCancelChangeEmailMutation();
+  const { t } = useTranslation(['translation', 'common']);
 
   const cancelChangeEmailRequest = useCallback(async () => {
     try {
@@ -21,13 +23,13 @@ export const useCancelChangeEmailRequest = () => {
       if (auth) {
         dispatch(authSlice.actions.userUpdatedProfile(updatedUser));
         authLocalStorage.saveAuthState({ ...auth, user: updatedUser });
-        notificationService.showSuccessMessage('Email change request cancelled.');
+        notificationService.showSuccessMessage(t('userServices.emailChangeCancelled'));
       }
     } catch (error) {
-      notificationService.showErrorMessage('Unable to cancel, try again later.');
+      notificationService.showErrorMessage(t('userServices.unableToCancel'));
       throw error;
     }
-  }, [cancelChangeEmail, dispatch]);
+  }, [cancelChangeEmail, dispatch, t]);
 
   return { cancelChangeEmailRequest, isLoading };
 };
@@ -35,6 +37,7 @@ export const useCancelChangeEmailRequest = () => {
 export const useChangeEmailRequest = () => {
   const dispatch = useAppDispatch();
   const [requestChangeEmail] = useRequestChangeEmailMutation();
+  const { t } = useTranslation(['translation', 'common']);
 
   const changeEmailRequest = useCallback(
     async (data: UserChangeEmailRequest) => {
@@ -45,16 +48,14 @@ export const useChangeEmailRequest = () => {
         if (auth) {
           dispatch(authSlice.actions.userUpdatedProfile(updatedUser));
           authLocalStorage.saveAuthState({ ...auth, user: updatedUser });
-          notificationService.showSuccessMessage(
-            'Email Verification sent. Follow the instructions in the email to proceed.',
-          );
+          notificationService.showSuccessMessage(t('userServices.emailVerificationSent'));
         }
       } catch (error) {
-        notificationService.showErrorMessage('Unable to send email verification.');
+        notificationService.showErrorMessage(t('userServices.unableToSendVerification'));
         throw error;
       }
     },
-    [requestChangeEmail, dispatch],
+    [requestChangeEmail, dispatch, t],
   );
 
   return { changeEmailRequest };

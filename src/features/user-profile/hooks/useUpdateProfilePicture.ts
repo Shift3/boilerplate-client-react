@@ -7,10 +7,12 @@ import { useUpdateProfilePictureMutation, UpdateProfilePictureRequest } from 'co
 import * as authLocalStorage from '../../auth/authLocalStorage';
 import { isObject, isStringArray, isKeyOfObject } from 'common/error/utilities';
 import { StatusCodes } from 'http-status-codes';
+import { useTranslation } from 'react-i18next';
 
 export const useUpdateProfilePicture = () => {
   const dispatch = useAppDispatch();
   const [updateProfilePicture, { isLoading }] = useUpdateProfilePictureMutation();
+  const { t } = useTranslation(['translation', 'common']);
 
   const updateUserProfilePicture = useCallback(
     async (data: UpdateProfilePictureRequest) => {
@@ -22,12 +24,12 @@ export const useUpdateProfilePicture = () => {
         if (profilePicture && auth) {
           dispatch(authSlice.actions.userUpdatedProfilePicture(profilePicture));
           authLocalStorage.saveAuthState({ ...auth, user: updatedUser });
-          notificationService.showSuccessMessage('Profile Photo Updated');
+          notificationService.showSuccessMessage(t('userServices.profilePhotoUpdated'));
         }
       } catch (error) {
         if (isFetchBaseQueryError(error)) {
           if (error.status === StatusCodes.REQUEST_TOO_LONG) {
-            notificationService.showErrorMessage('File is too large, please upload a smaller file.');
+            notificationService.showErrorMessage(t('userServices.fileTooLarge'));
           } else if (error.data && isObject(error.data) && isKeyOfObject('file', error.data)) {
             const fileErrorMessages = error.data.file;
             if (isStringArray(fileErrorMessages)) {
@@ -37,12 +39,12 @@ export const useUpdateProfilePicture = () => {
             handleApiError(error);
           }
         } else {
-          notificationService.showErrorMessage('Unable to upload profile picture.');
+          notificationService.showErrorMessage(t('userServices.unableToUploadPhoto'));
           throw error;
         }
       }
     },
-    [updateProfilePicture, dispatch],
+    [updateProfilePicture, dispatch, t],
   );
 
   return { updateUserProfilePicture, isLoading };

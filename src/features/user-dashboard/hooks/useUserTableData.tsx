@@ -12,6 +12,7 @@ import { UserProfilePicture } from 'features/navbar/components/UserProfilePictur
 import { useRbac } from 'features/rbac';
 import { useMemo } from 'react';
 import { Button } from 'react-bootstrap';
+import { Trans, useTranslation } from 'react-i18next';
 
 export type UserTableItem = {
   id: string;
@@ -28,6 +29,7 @@ export type UserTableItem = {
 };
 export const useUserTableData = (users: User[] = []) => {
   const { userHasPermission } = useRbac();
+  const { t, i18n } = useTranslation(['translation', 'common']);
 
   const [deleteUser] = useDeleteUserMutation();
   const [showDeleteModal, hideDeleteModal] = useModalWithData<User>(
@@ -35,26 +37,28 @@ export const useUserTableData = (users: User[] = []) => {
       ({ in: open, onExited }) => {
         const onConfirm = async () => {
           await deleteUser(user.id);
-          notificationService.showSuccessMessage('User deleted.');
+          notificationService.showSuccessMessage(t('userTable.userDeleted'));
           hideDeleteModal();
         };
 
         return (
           <SimpleConfirmModal
-            title='Delete User'
+            title={t('userTable.deleteUser')}
             show={open}
             onCancel={hideDeleteModal}
             onConfirm={onConfirm}
-            confirmLabel='Delete'
+            confirmLabel={t('delete', { ns: 'common' })!}
             confirmIcon='trash-alt'
             confirmVariant='danger'
             onExited={onExited}
             body={
               <>
                 <p className='m-0'>
-                  Are you sure you want to delete this user?{' '}
+                  {t('userTable.areYouSureDelete')}{' '}
                   <span className='text-danger'>
-                    Note that this action <b>cannot</b> be undone.
+                    <Trans ns='common' i18nKey='actionCannotBeUndone'>
+                      Note that this action <strong>cannot</strong> be undone.
+                    </Trans>
                   </span>
                 </p>
 
@@ -70,7 +74,7 @@ export const useUserTableData = (users: User[] = []) => {
           />
         );
       },
-    [],
+    [i18n.language, t],
   );
 
   const [resendActivationEmail] = useResendActivationEmailMutation();
@@ -79,28 +83,30 @@ export const useUserTableData = (users: User[] = []) => {
       ({ in: open, onExited }) => {
         const onConfirm = async () => {
           await resendActivationEmail({ email: user.email });
-          notificationService.showSuccessMessage('Activation email has been sent.');
+          notificationService.showSuccessMessage(t('userTable.activationEmailSent'));
           hideResendActivationModal();
         };
 
         return (
           <SimpleConfirmModal
-            title='Resend Activation Email'
+            title={t('userTable.resendActivationEmail')}
             show={open}
             onCancel={hideResendActivationModal}
             onConfirm={onConfirm}
-            confirmLabel='Send Email'
+            confirmLabel={t('userTable.sendEmail')!}
             confirmIcon='envelope'
             onExited={onExited}
             body={
               <p className='m-0'>
-                Would you like to resend an activation email to <b>{user.email}</b>?{' '}
+                <Trans i18nKey='userTable.wouldYouLikeToResendActivationEmail' values={{ user: user.email }}>
+                  Would you like to resend an activation email to <strong>{user.email}</strong>?
+                </Trans>{' '}
               </p>
             }
           />
         );
       },
-    [],
+    [i18n.language, t],
   );
 
   const [sendForgotPasswordEmail] = useForgotPasswordMutation();
@@ -110,7 +116,9 @@ export const useUserTableData = (users: User[] = []) => {
         const onConfirm = async () => {
           try {
             await sendForgotPasswordEmail({ email: user.email });
+            notificationService.showSuccessMessage(t('userTable.passwordResetEmailSent'));
           } catch (e) {
+            notificationService.showErrorMessage(t('userTable.unableToSendPasswordReset'));
             if (isFetchBaseQueryError(e)) {
               handleApiError(e);
             } else {
@@ -119,27 +127,28 @@ export const useUserTableData = (users: User[] = []) => {
           } finally {
             hideForgotPasswordModal();
           }
-          notificationService.showSuccessMessage(`Password reset email has been sent to ${user.email}`);
         };
 
         return (
           <SimpleConfirmModal
-            title='Send Reset Password Email'
+            title={t('userTable.sendResetPasswordEmail')}
             show={open}
             onCancel={hideForgotPasswordModal}
             onConfirm={onConfirm}
-            confirmLabel='Send Email'
+            confirmLabel={t('userTable.sendEmail')!}
             confirmIcon='envelope'
             onExited={onExited}
             body={
               <p className='m-0'>
-                Would you like to send a password reset email to <b>{user.email}</b>?{' '}
+                <Trans i18nKey='userTable.wouldYouLikeToSendActivationEmail' values={{ user: user.email }}>
+                  Would you like to send an activation email to <strong>{user.email}</strong>?
+                </Trans>{' '}
               </p>
             }
           />
         );
       },
-    [],
+    [t],
   );
 
   const roleVariant = (role: RoleType) => {
@@ -157,7 +166,7 @@ export const useUserTableData = (users: User[] = []) => {
     () => [
       {
         accessor: 'lastName',
-        Header: 'Name',
+        Header: t('name', { ns: 'common' })!,
         Cell: ({ row }) => (
           <div className='d-flex d-row align-items-center mr-3'>
             <div className='me-2'>
@@ -180,10 +189,10 @@ export const useUserTableData = (users: User[] = []) => {
       },
       {
         accessor: 'role',
-        Header: 'Role',
+        Header: t('role', { ns: 'common' })!,
         Cell: ({ value: role }) => (
           <SubtleBadge pill variant={roleVariant(role)}>
-            {role}
+            {t(role.toLocaleLowerCase(), { ns: 'common' })}
           </SubtleBadge>
         ),
       },
@@ -194,7 +203,7 @@ export const useUserTableData = (users: User[] = []) => {
       },
       {
         accessor: 'activatedAt',
-        Header: 'Activated',
+        Header: t('activatedDate', { ns: 'common' })!,
         responsive: 'md',
         Cell: ({ value: activatedAt }) => (
           <>
@@ -247,7 +256,7 @@ export const useUserTableData = (users: User[] = []) => {
         disableSortBy: true,
       },
     ],
-    [],
+    [t],
   );
 
   // Transform User objects into the data format expected by the table.
@@ -265,7 +274,7 @@ export const useUserTableData = (users: User[] = []) => {
         activatedAt: user.activatedAt
           ? new Date(user.activatedAt)
           : {
-              text: 'Resend Activation Email',
+              text: t('userTable.resendActivationEmail'),
               onClick: e => {
                 e.stopPropagation();
                 showResendActivationModal(user);
@@ -274,7 +283,7 @@ export const useUserTableData = (users: User[] = []) => {
             },
         actions: [
           {
-            text: 'Reset Password',
+            text: t('userTable.resetPassword'),
             onClick: e => {
               e.stopPropagation();
               showForgotPasswordModal(user);
@@ -282,7 +291,7 @@ export const useUserTableData = (users: User[] = []) => {
             show: userHasPermission({ permission: 'user:send-reset-password-email', data: user }),
           },
           {
-            text: 'Delete',
+            text: t('delete', { ns: 'common' }),
             onClick: e => {
               e.stopPropagation();
               showDeleteModal(user);
@@ -291,7 +300,7 @@ export const useUserTableData = (users: User[] = []) => {
           },
         ],
       })),
-    [users, userHasPermission, showDeleteModal, showForgotPasswordModal, showResendActivationModal],
+    [users, userHasPermission, showDeleteModal, showForgotPasswordModal, showResendActivationModal, t],
   );
 
   return { columns, data };

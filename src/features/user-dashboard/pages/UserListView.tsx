@@ -11,7 +11,7 @@ import { PageHeader } from 'common/styles/page';
 import { HasPermission } from 'features/rbac';
 import { FC, useMemo } from 'react';
 import { Button, Container } from 'react-bootstrap';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserTableItem, useUserTableData } from '../hooks/useUserTableData';
 
@@ -33,27 +33,28 @@ export const UserListView: FC = () => {
   } = usePSFQuery<PaginatedResult<User>>(useGetUsersQuery);
   const users = useMemo(() => data?.results ?? [], [data]);
   const { columns, data: tableData } = useUserTableData(users);
+  const { t } = useTranslation(['translation', 'common']);
   const isPageLoading = isLoading;
 
   const filters: FilterInfo[] = useMemo(
     () => [
       {
         attribute: 'firstName',
-        attributeLabel: 'First Name',
+        attributeLabel: t('firstName', { ns: 'common' }),
         FilterUI: StringFilter(),
       },
       {
         attribute: 'lastName',
-        attributeLabel: 'Last Name',
+        attributeLabel: t('lastName', { ns: 'common' }),
         FilterUI: StringFilter(),
       },
       {
         attribute: 'role',
-        attributeLabel: 'Role',
+        attributeLabel: t('role', { ns: 'common' }),
         FilterUI: EnumFilter([
-          { label: 'User', value: 'USER' },
-          { label: 'Editor', value: 'EDITOR' },
-          { label: 'Admin', value: 'ADMIN' },
+          { label: t('user', { ns: 'common' }), value: 'USER' },
+          { label: t('editor', { ns: 'common' }), value: 'EDITOR' },
+          { label: t('admin', { ns: 'common' }), value: 'ADMIN' },
         ]),
       },
       {
@@ -66,7 +67,7 @@ export const UserListView: FC = () => {
       },
       {
         attribute: 'activatedAt',
-        attributeLabel: 'Activated Date',
+        attributeLabel: t('activatedDate', { ns: 'common' }),
         FilterUI: RecentDateFilter([30, 90, 180]),
       },
       {
@@ -75,7 +76,7 @@ export const UserListView: FC = () => {
         FilterUI: RecentDateFilter([30, 90, 180]),
       },
     ],
-    [],
+    [t],
   );
 
   return (

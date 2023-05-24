@@ -7,8 +7,10 @@ import * as notificationService from 'common/services/notification';
 import { FC, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormData, SignUpForm } from '../components/SignUpForm';
+import { useTranslation } from 'react-i18next';
 
 export const SignUpPage: FC = () => {
+  const { t } = useTranslation(['translation', 'common']);
   const navigate = useNavigate();
   const [signUp] = useSignUpMutation();
   const [formValidationErrors, setFormValidationErrors] = useState<ServerValidationErrors<FormData> | null>(null);
@@ -18,10 +20,10 @@ export const SignUpPage: FC = () => {
 
     try {
       await signUp(data);
-      notificationService.showSuccessMessage(`An activation email has been sent to ${data.email}.`);
+      notificationService.showSuccessMessage(`${t('signUpPage.activationEmailSentTo')  } ${data.email}.`);
       navigate('/auth/login');
     } catch (error) {
-      notificationService.showErrorMessage('Unable to create account.');
+      notificationService.showErrorMessage(t('signUpPage.unableToCreateAccount'));
       if (error && isFetchBaseQueryError(error)) {
         if (isObject(error.data)) {
           setFormValidationErrors(error.data);
@@ -36,12 +38,12 @@ export const SignUpPage: FC = () => {
 
   return (
     <FrontPageLayout>
-      <Title>Member Registration</Title>
-      <p className='text-muted'>Register for the Bitwise Admin Panel to join the best admin panel on the internet.</p>
+      <Title>{t('signUpPage.memberRegistration')}</Title>
+      <p className='text-muted'>{t('signUpPage.memberRegistrationDescription')}</p>
       <SignUpForm onSubmit={onSubmit} onCancel={onCancel} serverValidationErrors={formValidationErrors} />
       <div className='mt-2 mb-2'>
         <small>
-          Already have an account? <Link to='/auth/login'>Log In</Link>
+          {t('signUpPage.alreadyHaveAnAccount')} <Link to='/auth/login'>{t('logIn', { ns: 'common' })}</Link>
         </small>
       </div>
     </FrontPageLayout>

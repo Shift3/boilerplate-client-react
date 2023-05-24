@@ -7,8 +7,10 @@ import * as notificationService from 'common/services/notification';
 import { FC, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ForgotPasswordForm, FormData } from '../components/ForgotPasswordForm';
+import { useTranslation } from 'react-i18next';
 
 export const ForgotPasswordPage: FC = () => {
+  const { t } = useTranslation(['translation', 'common']);
   const navigate = useNavigate();
   const [forgotPassword] = useForgotPasswordMutation();
   const [formValidationErrors, setFormValidationErrors] = useState<ServerValidationErrors<FormData> | null>(null);
@@ -16,12 +18,10 @@ export const ForgotPasswordPage: FC = () => {
   const onSubmit = async (formData: FormData) => {
     try {
       await forgotPassword(formData).unwrap();
-      notificationService.showSuccessMessage(
-        'If the email you entered is in our system, you will receive a password reset email.',
-      );
+      notificationService.showSuccessMessage(t('forgotPasswordPage.youWillReceiveEmail'));
       navigate('/auth/login');
     } catch (error) {
-      notificationService.showErrorMessage('Unable to perform forgot password request.');
+      notificationService.showErrorMessage(t('forgotPasswordPage.unableToResetPassword'));
       if (error && isFetchBaseQueryError(error)) {
         if (isObject(error.data)) {
           setFormValidationErrors(error.data);
@@ -34,15 +34,14 @@ export const ForgotPasswordPage: FC = () => {
 
   return (
     <FrontPageLayout>
-      <Title>Forgot Password</Title>
-      <p className='text-muted'>
-        Enter the email associated with your account and we'll send you instruction on how to reset your password.
-      </p>
+      <Title>{t('forgotPasswordPage.forgotPassword')}</Title>
+      <p className='text-muted'>{t('forgotPasswordPage.forgotPasswordDescription')}</p>
       <ForgotPasswordForm onSubmit={onSubmit} serverValidationErrors={formValidationErrors} />
 
       <div className='mt-2 mb-2'>
         <small>
-          Remember your password? <Link to='/auth/login'>Go back to login</Link>
+          {t('forgotPasswordPage.rememberYourPassword')}{' '}
+          <Link to='/auth/login'>{t('forgotPasswordPage.goBackToLogIn')}</Link>
         </small>
       </div>
     </FrontPageLayout>
