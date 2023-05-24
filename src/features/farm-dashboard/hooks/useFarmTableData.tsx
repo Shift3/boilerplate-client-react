@@ -8,6 +8,7 @@ import { ActionButton, ActionButtonProps } from 'common/styles/button';
 import { useRbac } from 'features/rbac';
 import { useMemo } from 'react';
 import { formatPhoneNumber } from 'utils/phone';
+import { Trans, useTranslation } from 'react-i18next';
 
 export type FarmTableItem = {
   id: number;
@@ -19,6 +20,7 @@ export type FarmTableItem = {
 
 export const useFarmTableData = (farms: Farm[] = []) => {
   const { userHasPermission } = useRbac();
+  const { t } = useTranslation(['translation', 'common']);
 
   const [deleteFarm] = useDeleteFarmMutation();
   const [showDeleteModal, hideDeleteModal] = useModalWithData<Farm>(
@@ -26,44 +28,44 @@ export const useFarmTableData = (farms: Farm[] = []) => {
       ({ in: open, onExited }) => {
         const onConfirm = async () => {
           await deleteFarm(farm.id);
-          notificationService.showSuccessMessage('Farm deleted.');
+          notificationService.showSuccessMessage(t('farmTable.farmDeleted'));
           hideDeleteModal();
         };
 
         return (
           <SimpleConfirmModal
-            title='Delete Farm'
+            title={t('farmTable.deleteFarm')}
             show={open}
             onCancel={hideDeleteModal}
             onConfirm={onConfirm}
-            confirmLabel='Delete'
+            confirmLabel={t('delete', { ns: 'common' })!}
             confirmIcon='trash-alt'
             confirmVariant='danger'
             onExited={onExited}
             body={
               <p className='m-0'>
-                Are you sure you want to delete the farm named <b>{farm.name}</b>?{' '}
-                <span className='text-danger'>
-                  Note that this action <b>cannot</b> be undone.
-                </span>
+                <Trans i18nKey='farmTable.areYouSureYouWantToDelete'>
+                  Are you sure you want to delete the farm named <b>{farm.name}</b>?
+                </Trans>
+                <span className='text-danger'>{t('actionCannotBeUndone', { ns: 'common' })}</span>
               </p>
             }
           />
         );
       },
-    [],
+    [t],
   );
 
   // Set up columns and headers
 
   const columns: ResponsiveColumn<FarmTableItem>[] = useMemo(
     () => [
-      { accessor: 'name', Header: 'Farm Name' },
-      { accessor: 'email', responsive: 'sm', Header: 'Email' },
+      { accessor: 'name', Header: t('farmTable.farmName')! },
+      { accessor: 'email', responsive: 'sm', Header: t('email', { ns: 'common' })! },
       {
         accessor: 'phoneNumber',
         responsive: 'md',
-        Header: 'Phone Number',
+        Header: t('phoneNumber', { ns: 'common' })!,
         Cell: ({ value }) => <span>{formatPhoneNumber(value)}</span>,
       },
       {
@@ -79,7 +81,7 @@ export const useFarmTableData = (farms: Farm[] = []) => {
         disableSortBy: true,
       },
     ],
-    [],
+    [t],
   );
 
   // Transform Farm objects into the data format expected by the table.
@@ -92,7 +94,7 @@ export const useFarmTableData = (farms: Farm[] = []) => {
         phoneNumber: farm.phoneNumber,
         actions: [
           {
-            text: 'Delete',
+            text: t('delete', { ns: 'common' }),
             onClick: e => {
               e.stopPropagation();
               showDeleteModal(farm);
@@ -101,7 +103,7 @@ export const useFarmTableData = (farms: Farm[] = []) => {
           },
         ],
       })),
-    [farms, userHasPermission, showDeleteModal],
+    [farms, userHasPermission, showDeleteModal, t],
   );
 
   return {

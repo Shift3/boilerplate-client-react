@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import * as authLocalStorage from '../authLocalStorage';
 import { authSlice } from '../authSlice';
 import * as notificationService from 'common/services/notification';
+import { useTranslation } from 'react-i18next';
 
 export interface Credentials {
   email: string;
@@ -18,6 +19,7 @@ export type UseLoginHook = () => {
 };
 
 export const useLogin: UseLoginHook = () => {
+  const { t } = useTranslation(['translation', 'common']);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [login, { isLoading }] = useLoginMutation();
@@ -34,12 +36,12 @@ export const useLogin: UseLoginHook = () => {
         if (isFetchBaseQueryError(error)) {
           handleApiError(error);
         } else {
-          notificationService.showErrorMessage('Unable to log in.');
+          notificationService.showErrorMessage(t('unableToLogin', { ns: 'common' }));
           throw error;
         }
       }
     },
-    [login, dispatch, navigate],
+    [login, dispatch, navigate, t],
   );
 
   return { login: loginUser, isLoading };

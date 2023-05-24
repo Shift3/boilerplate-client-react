@@ -8,6 +8,7 @@ import { Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Constants } from 'utils/constants';
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 
 export type FormData = {
   currentPassword: string;
@@ -20,26 +21,31 @@ type Props = {
   serverValidationErrors: ServerValidationErrors<FormData> | null;
 };
 
-const schema: yup.SchemaOf<FormData> = yup.object().shape({
-  currentPassword: yup.string().required(Constants.errorMessages.CURRENT_PASSWORD_REQUIRED),
-
-  newPassword: yup
-    .string()
-    .required(Constants.errorMessages.NEW_PASSWORD_REQUIRED)
-    .min(8, Constants.errorMessages.PASSWORD_LENGTH)
-    .matches(Constants.patterns.LOWERCASE_REGEX, Constants.errorMessages.PASSWORD_LOWERCASE)
-    .matches(Constants.patterns.UPPERCASE_REGEX, Constants.errorMessages.PASSWORD_UPPERCASE)
-    .matches(Constants.patterns.SYMBOL_REGEX, Constants.errorMessages.PASSWORD_SPECIAL_CHARACTER)
-    .matches(Constants.patterns.DIGIT_REGEX, Constants.errorMessages.PASSWORD_NUMBER)
-    .notOneOf([yup.ref('currentPassword')], Constants.errorMessages.PASSWORD_MUST_MISMATCH),
-
-  confirmPassword: yup
-    .string()
-    .required(Constants.errorMessages.CONFIRM_PASSWORD_REQUIRED)
-    .oneOf([yup.ref('newPassword')], Constants.errorMessages.PASSWORD_MUST_MATCH),
-});
-
 export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
+  const { t } = useTranslation(['translation', 'common']);
+
+  const schema: yup.SchemaOf<FormData> = yup.object().shape({
+    currentPassword: yup.string().required(t(Constants.validationMessages.currentPasswordRequired, { ns: 'common' })!),
+
+    newPassword: yup
+      .string()
+      .required(t(Constants.validationMessages.newPasswordRequired, { ns: 'common' })!)
+      .min(Constants.passwordMinLength, t(Constants.validationMessages.passwordLength, { ns: 'common' })!)
+      .matches(Constants.patterns.LOWERCASE_REGEX, t(Constants.validationMessages.passwordLowercase, { ns: 'common' })!)
+      .matches(Constants.patterns.UPPERCASE_REGEX, t(Constants.validationMessages.passwordUppercase, { ns: 'common' })!)
+      .matches(
+        Constants.patterns.SYMBOL_REGEX,
+        t(Constants.validationMessages.passwordSpecialCharacter, { ns: 'common' })!,
+      )
+      .matches(Constants.patterns.DIGIT_REGEX, t(Constants.validationMessages.passwordNumber, { ns: 'common' })!)
+      .notOneOf([yup.ref('currentPassword')], t(Constants.validationMessages.passwordMustMismatch, { ns: 'common' })!),
+
+    confirmPassword: yup
+      .string()
+      .required(t(Constants.validationMessages.confirmPasswordRequired, { ns: 'common' })!)
+      .oneOf([yup.ref('newPassword')], t(Constants.validationMessages.passwordMustMatch, { ns: 'common' })!),
+  });
+
   const {
     formState: { errors, isDirty, isSubmitting, isSubmitted, isValid, isSubmitSuccessful },
     handleSubmit,
@@ -65,11 +71,11 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
       <Form name='change-password-form' onSubmit={handleSubmit(onSubmit)}>
         <Form.Group className='mb-2'>
-          <Form.Label htmlFor='currentPassword'>Current Password</Form.Label>
+          <Form.Label htmlFor='currentPassword'>{t('changePasswordPage.currentPassword')}</Form.Label>
           <Form.Control
             id='currentPassword'
             type='password'
-            placeholder='Enter current password'
+            placeholder={t('changePasswordPage.currentPasswordPlaceholder')!}
             isInvalid={!!errors.currentPassword}
             {...register('currentPassword')}
           />
@@ -81,11 +87,11 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors
         </Form.Group>
 
         <Form.Group className='mb-2'>
-          <Form.Label htmlFor='newPassword'>New Password</Form.Label>
+          <Form.Label htmlFor='newPassword'>{t('changePasswordPage.newPassword')}</Form.Label>
           <Form.Control
             id='newPassword'
             type='password'
-            placeholder='Enter new password'
+            placeholder={t('changePasswordPage.newPasswordPlaceholder')!}
             isInvalid={!!errors.newPassword}
             {...register('newPassword')}
           />
@@ -94,18 +100,15 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors
               {errors.newPassword?.message}
             </Form.Control.Feedback>
           )}
-          <Form.Text className='text-muted'>
-            Password must be 8 characters or more. Password must contain a lowercase, uppercase, special character, and
-            a number.
-          </Form.Text>
+          <Form.Text className='text-muted'>{t('changePasswordPage.passwordRequirements')}</Form.Text>
         </Form.Group>
 
         <Form.Group className='mb-2'>
-          <Form.Label htmlFor='confirmPassword'>Confirm Password</Form.Label>
+          <Form.Label htmlFor='confirmPassword'>{t('changePasswordPage.confirmPassword')}</Form.Label>
           <Form.Control
             id='confirmPassword'
             type='password'
-            placeholder='Confirm password'
+            placeholder={t('changePasswordPage.confirmPasswordPlaceholder')!}
             isInvalid={!!errors.confirmPassword}
             {...register('confirmPassword')}
           />
@@ -117,7 +120,7 @@ export const ChangePasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors
         </Form.Group>
         <div className='mt-3'>
           <LoadingButton type='submit' disabled={!isValid} loading={isSubmitting}>
-            Change my Password
+            {t('changePasswordPage.changeMyPassword')}
           </LoadingButton>
         </div>
       </Form>

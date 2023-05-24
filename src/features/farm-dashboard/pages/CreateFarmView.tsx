@@ -9,8 +9,10 @@ import { PageCrumb, PageHeader, SmallContainer } from 'common/styles/page';
 import { FC, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FarmDetailForm, FormData } from 'features/farm-dashboard/components/FarmDetailForm';
+import { useTranslation } from 'react-i18next';
 
 export const CreateFarmView: FC = () => {
+  const { t } = useTranslation(['translation', 'common']);
   const navigate = useNavigate();
   const [createFarm] = useCreateFarmMutation();
   const [formValidationErrors, setFormValidationErrors] = useState<ServerValidationErrors<FormData> | null>(null);
@@ -22,10 +24,10 @@ export const CreateFarmView: FC = () => {
   const handleFormSubmit = async (data: FormData) => {
     try {
       await createFarm({ ...data, thumbnail: 'https://shift3tech.com/images/s3-logo-white.svg' }).unwrap();
-      notificationService.showSuccessMessage('Farm created.');
+      notificationService.showSuccessMessage(t('createFarm.farmCreated'));
       navigate('/farms');
     } catch (error) {
-      notificationService.showErrorMessage('Unable to add farm.');
+      notificationService.showErrorMessage(t('createFarm.unableToAddFarm'));
       if (error && isFetchBaseQueryError(error)) {
         if (isObject(error.data)) {
           setFormValidationErrors(error.data);
@@ -40,20 +42,20 @@ export const CreateFarmView: FC = () => {
     <SmallContainer>
       <PageCrumb>
         <Link to='/farms'>
-          <FontAwesomeIcon icon={['fas', 'chevron-left']} /> Back to Farm List
+          <FontAwesomeIcon icon={['fas', 'chevron-left']} /> {t('createFarm.backToFarmList')}
         </Link>
       </PageCrumb>
       <PageHeader>
         <div>
-          <h1>Create Farm</h1>
-          <p className='text-muted'>Add a new farm to the system.</p>
+          <h1>{t('createFarm.createFarm')}</h1>
+          <p className='text-muted'>{t('createFarm.addFarmToSystem')}</p>
         </div>
       </PageHeader>
 
       <Card>
         <Card.Body>
           <FarmDetailForm
-            submitButtonLabel='Create'
+            submitButtonLabel={t('create', { ns: 'common' })!}
             onCancel={handleFormCancel}
             onSubmit={handleFormSubmit}
             serverValidationErrors={formValidationErrors}

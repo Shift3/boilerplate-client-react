@@ -12,7 +12,7 @@ import { FC, useMemo } from 'react';
 import { Button, Card, Container } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { FarmTableItem, useFarmTableData } from '../hooks/useFarmTableData';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { StringFilter } from 'common/components/DataTable/Filters';
 import { FilterInfo } from 'common/components/DataTable/FilterDropdown';
 import { faStethoscope } from '@fortawesome/free-solid-svg-icons';
@@ -37,6 +37,7 @@ export const FarmListView: FC = () => {
   } = usePSFQuery<PaginatedResult<Farm>>(useGetFarmsQuery);
   const farms = useMemo(() => data?.results ?? [], [data]);
   const { columns, data: tableData } = useFarmTableData(farms);
+  const { t } = useTranslation(['translation', 'common']);
 
   const isSearchingOrFiltering = useMemo(() => {
     return psfFilters.length > 0 || psfSearchText.length > 0;
@@ -46,35 +47,29 @@ export const FarmListView: FC = () => {
     () => [
       {
         attribute: 'name',
-        attributeLabel: 'Name',
+        attributeLabel: t('name', { ns: 'common' }),
         FilterUI: StringFilter(),
       },
       {
         attribute: 'email',
-        attributeLabel: 'Email',
+        attributeLabel: t('email', { ns: 'common' }),
         FilterUI: StringFilter(),
       },
     ],
-    [],
+    [t],
   );
 
   return (
     <Container>
       <PageHeader>
         <div>
-          <h1>
-            <Trans i18nKey='farmList.heading'>Farm List</Trans>
-          </h1>
-          <p>
-            <Trans i18nKey='farmList.subheading'>All Farms in the system.</Trans>
-          </p>
+          <h1>{t('farmList.heading')}</h1>
+          <p>{t('farmList.subheading')}</p>
         </div>
         <HasPermission perform='farm:create'>
           <div>
             <Link to='/farms/create-farm'>
-              <Button>
-                <Trans i18nKey='farmList.createButton'>Add Farm</Trans>
-              </Button>
+              <Button>{t('farmList.createButton')}</Button>
             </Link>
           </div>
         </HasPermission>
@@ -116,10 +111,10 @@ export const FarmListView: FC = () => {
                 icon={faStethoscope}
                 extra={
                   <HasPermission perform='farm:create'>
-                    <p className='text-muted'>Get started by creating a new Farm.</p>
-                    <Link to='/farms/create-farm'>
-                      <Button variant='default'>Add Farm</Button>
-                    </Link>
+                    <p className='text-muted'>
+                      <Trans i18nKey='farmList.getStarted'>Get started by creating a new farm.</Trans>
+                    </p>
+                    <Link to='/farms/create-farm'>{t('farmList.createButton')}</Link>
                   </HasPermission>
                 }
               />

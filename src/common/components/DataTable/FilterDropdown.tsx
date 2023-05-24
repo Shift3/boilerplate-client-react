@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card';
 import styled from 'styled-components';
 import { wasMouseEventOutsideContainer } from 'utils/events';
 import { FilterUI } from './Filters';
+import { useTranslation } from 'react-i18next';
 
 export type FilterInfo = {
   attribute: string;
@@ -158,6 +159,7 @@ export const FilterDropdown: FC<{
 }> = ({ show = false, filters, activeFilters, onClose, setFilter, clearFilters, removeFilter }) => {
   const [openFilter, setOpenFilter] = useState<FilterInfo | null>(null);
   const dropdownContainerRef = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation('common');
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -204,9 +206,9 @@ export const FilterDropdown: FC<{
     <StyledDropdown className={show ? 'show' : ''} ref={dropdownContainerRef}>
       <FilterMenu>
         <FilterHeader>
-          <h1>Filters</h1>
+          <h1>{t('filters')}</h1>
           <a href='#' role='button' tabIndex={-1} hidden={activeFilters.length === 0} onClick={clearFilters}>
-            Clear All
+            {t('clearAll')}
           </a>
         </FilterHeader>
 

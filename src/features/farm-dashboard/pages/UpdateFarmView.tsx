@@ -19,6 +19,7 @@ import { ChangeListGroup } from 'common/components/ChangeLog/ChangeListGroup';
 import { LoadingButton } from 'common/components/LoadingButton';
 import { useModal } from 'react-modal-hook';
 import { DimmableContent } from 'common/styles/utilities';
+import { useTranslation } from 'react-i18next';
 
 export type RouteParams = {
   id: string;
@@ -30,6 +31,7 @@ export const UpdateFarmView: FC = () => {
   const navigate = useNavigate();
   const [updateFarm] = useUpdateFarmMutation();
   const { data: farm, isLoading: isLoadingFarm, isFetching, error } = useGetFarmByIdQuery(id!);
+  const { t } = useTranslation(['translation', 'common']);
 
   const pageSize = 5;
   const queryParams = new QueryParamsBuilder().setPaginationParams(1, pageSize).build();
@@ -52,7 +54,7 @@ export const UpdateFarmView: FC = () => {
       return (
         <Modal show={open} onHide={hideModal} onExited={onExited} centered contentClassName='changelog-modal-content'>
           <Modal.Header closeButton>
-            <Modal.Title>Changes</Modal.Title>
+            <Modal.Title>{t('changes', { ns: 'common' })}</Modal.Title>
           </Modal.Header>
           <Modal.Body className='changelog-modal-body'>
             <DimmableContent dim={isFetchingHistory}>
@@ -67,7 +69,7 @@ export const UpdateFarmView: FC = () => {
                 variant='primary'
                 onClick={() => fetchMore()}
               >
-                Load More
+                {t('loadMore', { ns: 'common' })}
               </LoadingButton>
             )}
           </Modal.Footer>
@@ -79,13 +81,13 @@ export const UpdateFarmView: FC = () => {
 
   useEffect(() => {
     if (error) {
-      notificationService.showErrorMessage('Unable to load Farm. Returning to Farm list.');
+      notificationService.showErrorMessage(t('updateFarm.unableToLoadFarm'));
       navigate('/farms', { replace: true });
     }
     if (farmHistoryError) {
-      notificationService.showErrorMessage("Unable to load the Farm's change history.");
+      notificationService.showErrorMessage(t('updateFarm.unableToLoadHistory'));
     }
-  }, [error, navigate, farmHistoryError]);
+  }, [error, navigate, farmHistoryError, t]);
 
   const handleShowAllChanges = () => {
     showModal();
@@ -99,10 +101,10 @@ export const UpdateFarmView: FC = () => {
     const updateRequest = { id: Number(id), ...data };
     try {
       await updateFarm(updateRequest).unwrap();
-      notificationService.showSuccessMessage('Farm updated.');
+      notificationService.showSuccessMessage(t('updateFarm.farmUpdated'));
       navigate('/farms');
     } catch (error) {
-      notificationService.showErrorMessage('Unable to update farm.');
+      notificationService.showErrorMessage(t('updateFarm.unableToEdit'));
       if (error && isFetchBaseQueryError(error)) {
         if (isObject(error.data)) {
           setFormValidationErrors(error.data);
@@ -117,14 +119,14 @@ export const UpdateFarmView: FC = () => {
     <SmallContainer>
       <PageCrumb>
         <Link to='/farms'>
-          <FontAwesomeIcon icon={['fas', 'chevron-left']} /> Back to Farm List
+          <FontAwesomeIcon icon={['fas', 'chevron-left']} /> {t('updateFarm.backToFarmList')}
         </Link>
       </PageCrumb>
 
       <PageHeader>
         <div>
-          <h1>Edit Farm</h1>
-          <p className='text-muted'>Update this farm's details here.</p>
+          <h1>{t('updateFarm.editFarm')}</h1>
+          <p className='text-muted'>{t('updateFarm.editFarmDescription')}</p>
         </div>
       </PageHeader>
 
@@ -134,7 +136,7 @@ export const UpdateFarmView: FC = () => {
             {!isLoadingFarm ? (
               <FarmDetailForm
                 defaultValues={farm}
-                submitButtonLabel='Save'
+                submitButtonLabel={t('save', { ns: 'common' })!}
                 onSubmit={handleFormSubmit}
                 onCancel={handleFormCancel}
                 serverValidationErrors={formValidationErrors}

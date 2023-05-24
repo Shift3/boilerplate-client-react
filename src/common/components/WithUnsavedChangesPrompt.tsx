@@ -3,6 +3,7 @@ import { FC, PropsWithChildren, useCallback, useContext, useEffect, useState } f
 import { UNSAFE_NavigationContext, useLocation, useNavigate } from 'react-router-dom';
 import { useModal } from 'react-modal-hook';
 import { Button, Modal } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 const useBlocker = (blocker: Blocker, when = true) => {
   // The following cast is necessary because the react-router-dom team has removed
@@ -76,6 +77,7 @@ type WithUnsavedChangesPromptProps = {
 };
 
 const WithUnsavedChangesPrompt: FC<PropsWithChildren<WithUnsavedChangesPromptProps>> = ({ when, children }) => {
+  const { t } = useTranslation('common');
   const { showPrompt, confirmNavigation, cancelNavigation } = usePrompt(when);
   const [showModal, hideModal] = useModal(({ in: open, onExited }) => (
     <Modal
@@ -88,13 +90,10 @@ const WithUnsavedChangesPrompt: FC<PropsWithChildren<WithUnsavedChangesPromptPro
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title>Unsaved Changes</Modal.Title>
+        <Modal.Title>{t('unsavedChanges')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>
-          You have unsaved changes, are you sure you want to navigate away from this page? If you leave this page, you
-          will lose your changes.
-        </p>
+        <p>{t('unsavedChangesDescription')}</p>
       </Modal.Body>
       <Modal.Footer>
         <Button
@@ -104,10 +103,10 @@ const WithUnsavedChangesPrompt: FC<PropsWithChildren<WithUnsavedChangesPromptPro
             hideModal();
           }}
         >
-          Stay on This Page
+          {t('stayOnThisPage')}
         </Button>
         <Button variant='danger' onClick={confirmNavigation}>
-          Leave This Page
+          {t('leaveThisPage')}
         </Button>
       </Modal.Footer>
     </Modal>

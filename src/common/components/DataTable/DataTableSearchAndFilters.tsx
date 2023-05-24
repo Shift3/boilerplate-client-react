@@ -5,6 +5,7 @@ import { FC, useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import styled from 'styled-components';
 import { FilterDropdown, FilterInfo } from './FilterDropdown';
+import { useTranslation } from 'react-i18next';
 
 const ClearSearchButton = styled.span`
   position: absolute;
@@ -41,7 +42,7 @@ export type DataTableSearchAndFilterProps = {
 
 export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
   filters = [],
-  placeholder = 'Search...',
+  placeholder = null,
   onSetFilter,
   onRemoveFilter,
   onClearFilters,
@@ -49,6 +50,11 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
 }) => {
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
   const [activeFilters, setActiveFilters] = useState<Filter[]>([]);
+  const { t } = useTranslation('common');
+
+  if (placeholder === null) {
+    placeholder = t('searchPlaceholder')!;
+  }
 
   const handleDropdownToggle = () => {
     if (filters.length) {
@@ -110,10 +116,10 @@ export const DataTableSearchAndFilters: FC<DataTableSearchAndFilterProps> = ({
       <SearchFilterRow className='mb-3'>
         <InputGroup>
           <Button variant='default' onClick={handleDropdownToggle}>
-            <FontAwesomeIcon icon='filter' /> Filters{' '}
+            <FontAwesomeIcon icon='filter' /> {t('filters')}{' '}
             {activeFilters.length > 0 ? (
               <Badge pill bg='dark'>
-                {activeFilters.length} active
+                {activeFilters.length} {t('active')}
               </Badge>
             ) : (
               ''

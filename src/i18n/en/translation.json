@@ -1,1 +1,206 @@
-{}
+{
+  "farmList": {
+    "heading": "Farm List",
+    "subheading": "All Farms in the system.",
+    "createButton": "Add Farm",
+    "getStarted": "Get started by creating a new farm."
+  },
+  "farmTable": {
+    "farmDeleted": "Farm Deleted",
+    "deleteFarm": "Delete Farm",
+    "farmName": "Farm Name",
+    "areYouSureYouWantToDelete": "Are you sure you want to delete the farm named <strong>{{name}}</strong>?"
+  },
+  "createFarm": {
+    "farmCreated": "Farm Created",
+    "createFarm": "Create Farm",
+    "unableToAddFarm": "Unable to create farm.",
+    "backToFarmList": "Back to farm List",
+    "addFarmToSystem": "Add a new farm to the system."
+  },
+  "updateFarm": {
+    "unableToLoadFarm": "Unable to load Farm. Returning to Farm list.",
+    "unableToLoadHistory": "Unable to load the Farm's change history.",
+    "farmUpdated": "Farm updated.",
+    "unableToUpdate": "Unable to update farm.",
+    "backToFarmList": "Back to Farm List",
+    "editFarm": "Edit Farm",
+    "editFarmDescription": "Update this farm's details here."
+  },
+  "farmDetail": {
+    "farmInfo": "Farm Info",
+    "namePlaceholder": "Enter farm name",
+    "emailPlaceholder": "Enter farm email"
+  },
+  "userDetail": {
+    "heading": "User Profile",
+    "accessHeading": "Access Information",
+    "selectRole": "Select a role...",
+    "roleInfo": "For more information about the different roles and what they can do, see our <strong>FAQ</strong>"
+  },
+  "createUser": {
+    "back": "Back to User List",
+    "heading": "Create User",
+    "subheading": "Add a new user to the system.",
+    "emailSentTo": "An email with instructions to finish activating the account has been sent to:",
+    "unableToAddUser": "Unable to add user."
+  },
+  "updateUser": {
+    "heading": "Update User",
+    "subheading": "Update this user's details and roles.",
+    "unableToLoadUser": "Unable to load user. Returning to user list.",
+    "unableToLoadHistory": "Unable to load the user's change history.",
+    "userUpdated": "User updated.",
+    "unableToUpdate": "Unable to update user."
+  },
+  "userList": {
+    "heading": "User List",
+    "subheading": "Active and invited users in the system.",
+    "createButton": "Add User"
+  },
+  "userServices": {
+    "emailChangeCancelled": "Email change request cancelled.",
+    "unableToCancel": "Unable to cancel, try again later'",
+    "emailVerificationSent": "Email Verification sent. Follow the instructions in the email to proceed.",
+    "unableToSendVerification": "Unable to send email verification.",
+    "profilePhotoDeleted": "Profile Photo Deleted.",
+    "unableToDeletePhoto": "Unable to delete profile picture.",
+    "profilePhotoUpdated": "Profile Photo Updated.",
+    "fileTooLarge": "File is too large, please upload a smaller file.",
+    "unableToUploadPhoto": "Unable to upload profile picture.",
+    "profileUpdated": "Profile updated.",
+    "unableToUpdateProfile": "Unable to update profile.",
+    "sessionExpired": "Your login has expired, please try logging in again."
+  },
+
+  "userTable": {
+    "userDeleted": "User deleted.",
+    "deleteUser": "Delete User",
+    "areYouSureDelete": "Are you sure you want to delete this user?",
+    "activationEmailSent": "Activation email has been sent.",
+    "resendActivationEmail": "Resend Activation Email",
+    "sendEmail": "Send Email",
+    "wouldYouLikeToSendActivationEmail": "Would you like to resend an activation email to <strong>{{user}}</strong>?",
+    "wouldYouLikeToResendActivationEmail": "Would you like to resend an activation email to <strong>{{user}}</strong>?",
+    "sendResetPasswordEmail": "Send Reset Password Email",
+    "passwordResetEmailSent": "Password reset email has been sent.",
+    "unableToSendPasswordReset": "Unable to send password reset email.",
+    "resetPassword": "Reset Password"
+  },
+  "userEmailForm": {
+    "newEmail": "New Email Address",
+    "newEmailDescription": "Enter a new email address to use for your account. An email will be sent to your proposed new email, with a link to confirm the email change.",
+    "changeMyEmail": "Change My Email Address"
+  },
+  "confirmEmailChangePage": {
+    "emailChangeSuccessful": "Email change successful.",
+    "unableToChangeEmail": "Unable to change email.",
+    "heading": "Verify Email Change",
+    "subheading": " You have requested an email change. Click the button below to complete the email change.",
+    "changeMyEmail": "Change My Email"
+  },
+  "userProfile": {
+    "heading": "Account Settings",
+    "subheading": "Update your account and profile settings here.",
+    "profile": "User Profile",
+    "security": "Security and Password",
+    "themeHeading": "Theme Preference",
+    "themeSubheading": "Select your preferred mode",
+    "darkMode": "Dark Mode",
+    "generalHeading": "General Information",
+    "generalSubheading": "This information will be used to identify you in our system",
+    "languagePreference": "Language Preference",
+    "languageSubheading": "Select your preferred language",
+    "changeEmail": "Change Email Address",
+    "changeEmailDescription": "You requested an email change. A verification email has been sent to <strong>{{user}}</strong>. To confirm your new email address, please follow the directions in the verification email.",
+    "emailDescription": "Your email address will be used to communicate with you. Your current email address on record is <strong>{{email}}</strong>. Changing your email requires you to confirm your new email address.",
+    "resendEmail": "Resend Verification Email",
+    "photo": "Profile Photo",
+    "deletePhoto": "Delete Photo",
+    "photoDescription": "This is the photo of you that other users in the system will be able to see.",
+    "changePassword": "Change My Password",
+    "changePasswordDescription": "Change your password by entering your current password, as well as your new password.",
+    "settings": "App Settings",
+    "cancelRequest": "Cancel Request",
+    "changeMyEmail": "Change My Email Address",
+    "changeMyEmailDescription": "Changing your email will change your login email, as well as where emails are sent when you need to be notified.",
+    "uploadPhoto": "Upload Photo",
+    "forgotPassword": "Forgot your password?",
+    "forgotPasswordInstructions": "Click the button below to be sent instructions on how to reset your password.",
+    "resetMyPassword": "Reset My Password",
+    "changeEmailVerificationSent": "A verification email has been sent.",
+    "unableToSendChangeEmailVerification": "Unable to send verification email.",
+    "passwordUpdated": "Password updated.",
+    "passwordInstructionsSent": "Instructions on how to reset your password have been sent to your email."
+  },
+  "changePasswordPage": {
+    "currentPassword": "Current Password",
+    "currentPasswordPlaceholder": "Enter current password",
+    "newPassword": "New Password",
+    "newPasswordPlaceholder": "Enter new password",
+    "passwordRequirements": "Password must be 8 characters or more. Password must contain a lowercase, uppercase, special character, and a number.",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Enter new password again",
+    "changeMyPassword": "Change My Password"
+  },
+  "userHomePage": {
+    "heading": "User Home Page",
+    "subheading": "Placeholder homepage for non-admin and non-editor users",
+    "placeholder": "This is the homepage for <strong>Non-Admin</strong> and <strong>Non-Editor</strong> users. Replace this content with whatever you would like!"
+  },
+  "editorHomePage": {
+    "heading": "Editor Home Page",
+    "subheading": "Placeholder homepage for editor users",
+    "placeholder": "This is the homepage for <strong>Editor</strong> users. Replace this content with whatever you would like!"
+  },
+  "adminHomePage": {
+    "heading": "Admin Home Page",
+    "subheading": "Placeholder homepage for admin users",
+    "placeholder": "This is the homepage for <strong>Admin</strong> users. Replace this content with whatever you would like!"
+  },
+  "changeLog": {
+    "latestChanges": "Latest Changes",
+    "noChangesFound": "No Changes Found",
+    "showAllNChanges": "Show all {{num}} changes..."
+  },
+  "notifications": {
+    "title": "My Notifications",
+    "subheading": "Notifications that have been sent to me.",
+    "newFarmCreated": "New Farm Created",
+    "farmCreatedBy": "<0>{{userName}}</0> created a new Farm named <2>{{farmName}}</2>"
+  },
+  "activateAccountPage": {
+    "accountHasBeenActivated": "This account has been activated. Please log in.",
+    "unableToActivateAccount": "Unable to activate account.",
+    "activateAccount": "Activate Account",
+    "activateAccountDescription": "Just one more step! Choose a password to active your account.",
+    "hereByMistake": "Ended up here by mistake?"
+  },
+  "forgotPasswordPage": {
+    "youWillReceiveEmail": "If the email you entered is in our system, you will receive a password reset email.",
+    "unableToResetPassword": "Unable to perform forgot password request.",
+    "forgotPassword": "Forgot Password",
+    "forgotPasswordDescription": "Enter the email associated with your account and we'll send you instruction on how to reset your password.",
+    "rememberYourPassword": "Remember your password?",
+    "goBackToLogIn": "Go back to login"
+  },
+  "loginPage": {
+    "memberLogIn": "Member Log In",
+    "memberLogInDescription": "Welcome back to Bitwise Admin, the best admin panel on the internet.",
+    "dontHaveAnAccount": "Don't have an account?",
+    "registerForAccount": "Register for one!"
+  },
+  "resetPasswordPage": {
+    "resetPassword": "Reset Password",
+    "resetPasswordDescription": "Enter a new password you would like to use for your account.",
+    "passwordResetSuccessful": "The password was reset successfully. Please log in.",
+    "unableToResetPassword": "Unable to reset password."
+  },
+  "signUpPage": {
+    "memberRegistration": "Member Registration",
+    "memberRegistrationDescription": "Register for the Bitwise Admin Panel to join the best admin panel on the internet.",
+    "alreadyHaveAnAccount": "Already have an account?",
+    "activationEmailSentTo": "An activation email has been sent to:",
+    "unableToCreateAccount": "Unable to create account."
+  }
+}

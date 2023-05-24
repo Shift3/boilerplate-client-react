@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { HistoricalRecord } from 'common/models/historicalRecord';
 import { User } from 'common/models';
 import { format, parseISO } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 
 export type Props = {
   changeList: HistoricalRecord<User>[];
@@ -32,6 +33,8 @@ const StyledListGroupItem = styled.ol`
 `;
 
 export const ChangeListGroup: FC<Props> = ({ changeList }) => {
+  const { t } = useTranslation(['translation', 'common']);
+
   const getShortenedName = (fullName: string): string => {
     const nameArray: string[] = fullName.split(' ');
 
@@ -41,11 +44,11 @@ export const ChangeListGroup: FC<Props> = ({ changeList }) => {
   const getChangeTypeData = (changeType: string): { changeName: string; icon: IconProp } => {
     switch (changeType) {
       case '+':
-        return { changeName: 'Created', icon: 'circle-plus' };
+        return { changeName: t('createdBy', { ns: 'common' }), icon: 'circle-plus' };
       case '~':
-        return { changeName: 'Updated', icon: 'pen' };
+        return { changeName: t('updatedBy', { ns: 'common' }), icon: 'pen' };
       case '-':
-        return { changeName: 'Deleted', icon: 'trash-can' };
+        return { changeName: t('deletedBy', { ns: 'common' }), icon: 'trash-can' };
       default:
         throw Error("Given changeType does not equal '+', '~', or '-'");
     }
@@ -66,11 +69,11 @@ export const ChangeListGroup: FC<Props> = ({ changeList }) => {
               <FontAwesomeIcon icon={changeTypeData.icon} />
             </StyledCircularContainer>
             <div className='ms-3'>
-              <span className='changeTypeName'>{`${changeTypeData.changeName} by `}</span>
+              <span className='changeTypeName'>{`${changeTypeData.changeName}`}</span>{' '}
               <span className='editorName'>
                 {changeItem.historyUser
                   ? getShortenedName(`${changeItem.historyUser.firstName} ${changeItem.historyUser.lastName}`)
-                  : 'System'}
+                  : t('system', { ns: 'common' })}
               </span>
               <span className='text-muted d-block'>{format(parseISO(changeItem.historyDate), 'MMM d, h:mm a')}</span>
             </div>

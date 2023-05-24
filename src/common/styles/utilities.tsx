@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import React, { FC, PropsWithChildren, ReactNode } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { Trans } from 'react-i18next';
 
 export const SubtleBadge = styled(Badge)<{
   variant?: 'warning' | 'danger' | 'secondary' | 'info';
@@ -174,7 +175,9 @@ export const BannerContentWrapper: FC<
   return (
     <BannerWrapper bannerShowing={bannerShowing}>
       <StagingBanner>
-        You are currently on the <b>staging</b> server.
+        <Trans ns='common' i18nKey="stagingBanner">
+          You are currently on the <strong>staging</strong> server.
+        </Trans>
       </StagingBanner>
       {children}
     </BannerWrapper>

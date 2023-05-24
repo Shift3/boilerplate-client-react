@@ -7,6 +7,7 @@ import { Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Constants } from 'utils/constants';
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 
 export type FormData = {
   email: string;
@@ -17,11 +18,16 @@ type Props = {
   serverValidationErrors: ServerValidationErrors<FormData> | null;
 };
 
-const schema: yup.SchemaOf<FormData> = yup.object().shape({
-  email: yup.string().required(Constants.errorMessages.EMAIL_REQUIRED).email(Constants.errorMessages.INVALID_EMAIL),
-});
-
 export const ForgotPasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors }) => {
+  const { t } = useTranslation(['translation', 'common']);
+
+  const schema: yup.SchemaOf<FormData> = yup.object().shape({
+    email: yup
+      .string()
+      .required(t(Constants.validationMessages.emailRequired, { ns: 'common' })!)
+      .email(t(Constants.validationMessages.invalidEmail, { ns: 'common' })!),
+  });
+
   const {
     formState: { errors, isValid, isSubmitting },
     handleSubmit,
@@ -41,12 +47,12 @@ export const ForgotPasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Group>
-        <Form.Label htmlFor='email'>Email</Form.Label>
+        <Form.Label htmlFor='email'>{t('email', { ns: 'common' })}</Form.Label>
         <Form.Control
           id='email'
           type='email'
           {...register('email')}
-          placeholder='Enter email'
+          placeholder={t('email', { ns: 'common' })!}
           isInvalid={!!errors.email}
         />
         <Form.Control.Feedback type='invalid' role='alert'>
@@ -55,7 +61,7 @@ export const ForgotPasswordForm: FC<Props> = ({ onSubmit, serverValidationErrors
       </Form.Group>
       <div className='d-grid gap-2 mt-3'>
         <LoadingButton type='submit' disabled={!isValid} loading={isSubmitting}>
-          Submit
+          {t('submit', { ns: 'common' })}
         </LoadingButton>
       </div>
     </Form>
