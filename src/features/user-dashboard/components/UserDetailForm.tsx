@@ -116,9 +116,7 @@ export const UserDetailForm: FC<Props> = ({
         <Form.Group className='mb-2' controlId='create-user-form-role'>
           <Form.Label>
             {t('role', { ns: 'common' })}
-            {isRoleSelectorDisabled && 
-                <p className='text-danger mb-0'>{t('userDetail.roleRestriction', { ns: 'translation' })}</p>
-            }
+            {isRoleSelectorDisabled && <p className='text-danger mb-0'>{t('userDetail.roleRestriction')}</p>}
           </Form.Label>
           <Controller
             control={control}
@@ -136,7 +134,7 @@ export const UserDetailForm: FC<Props> = ({
           />
           <Form.Control.Feedback type='invalid'>{errors.role?.message}</Form.Control.Feedback>
           <Form.Text className='text-muted'>
-            <Trans i18nKey="userDetail.roleInfo">For more info regarding roles...</Trans>
+            <Trans i18nKey='userDetail.roleInfo'>For more info regarding roles...</Trans>
           </Form.Text>
         </Form.Group>
 
