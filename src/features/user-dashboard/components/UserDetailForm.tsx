@@ -97,8 +97,11 @@ export const UserDetailForm: FC<Props> = ({
             if (isFetchBaseQueryError(error)) {
               handleApiError(error);
             } else {
-              // add Error message for enabling user.
-              notificationService.showErrorMessage('Could not disable user.');
+              if (user.isActive) {
+                notificationService.showErrorMessage('Could not disable user.');
+              } else {
+                notificationService.showErrorMessage('Could not enable user.');
+              }
               throw error;
             }
           }
@@ -127,12 +130,6 @@ export const UserDetailForm: FC<Props> = ({
       },
     [],
   );
-
-  // what's left to do
-  // the button should have 3 states:
-  //   create user - don't show button
-  //   user is disabled - enable user
-  //   user is enabled - disable user
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
