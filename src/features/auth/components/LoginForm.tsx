@@ -82,7 +82,11 @@ export const LogInForm: FC<Props> = ({ onSubmit }) => {
             placeholder={t('passwordPlaceholder', { ns: 'common' })!}
             isInvalid={!!errors.password}
           />
-          <TogglePasswordButton variant='default' onClick={() => setShowingPassword(!showingPassword)}>
+          <TogglePasswordButton
+            variant='default'
+            onClick={() => setShowingPassword(!showingPassword)}
+            aria-label={showingPassword ? 'Hide password' : 'Display password'}
+          >
             <FontAwesomeIcon icon={showingPassword ? faEyeSlash : faEye} />
           </TogglePasswordButton>
           <Form.Control.Feedback type='invalid' role='alert'>

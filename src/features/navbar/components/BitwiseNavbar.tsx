@@ -296,6 +296,7 @@ export const BitwiseNavbar: FC = () => {
             <Nav className='justify-content-end'>
               <NavDropdown
                 className='nocaret navbar-only me-2'
+                aria-label='Notifications'
                 align='end'
                 title={<NotificationButton count={count} />}
               >

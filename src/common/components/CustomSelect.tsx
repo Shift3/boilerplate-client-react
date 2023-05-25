@@ -9,6 +9,7 @@ type Props<T> = {
   isLoading?: boolean;
   isInvalid?: boolean;
   isDisabled?: boolean;
+  accessibilityLabel?: string;
   // Resolves option data to a string to be displayed as the label
   getOptionLabel?: (option: T) => string;
   // Resolves option data to a string to compare options and specify value attributes
@@ -29,6 +30,7 @@ export const CustomSelect = <T,>({
   isLoading,
   isInvalid,
   isDisabled,
+  accessibilityLabel,
   getOptionLabel,
   getOptionValue,
   onChange,
@@ -51,6 +53,7 @@ export const CustomSelect = <T,>({
     <>
       <Select
         tabIndex={0}
+        aria-label={accessibilityLabel}
         classNamePrefix='react-select'
         options={options}
         defaultValue={defaultValue}

@@ -18,8 +18,12 @@ export const ToggleSwitch: FC = () => {
   const { toggleTheme, theme } = useTheme();
 
   return (
-    <div>
-      <Switch onClick={() => toggleTheme()}>{theme === 'light' ? <MoonIcon /> : <SunIcon />}</Switch>
-    </div>
+    <Switch
+      onClick={() => toggleTheme()}
+      aria-label={`Switch to ${theme === 'light' ? 'Dark' : 'Light'} theme`}
+      tabIndex={0}
+    >
+      {theme === 'light' ? <MoonIcon /> : <SunIcon />}
+    </Switch>
   );
 };

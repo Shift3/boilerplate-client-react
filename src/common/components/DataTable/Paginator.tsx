@@ -60,6 +60,7 @@ export const Paginator: FC<Props> = ({
         <Col className='d-flex align-items-center'>
           <div style={{ display: 'inline-block', width: '100px', marginRight: '10px' }}>
             <CustomSelect<PageSizeOption>
+              accessibilityLabel='items per page'
               placeholder=''
               options={__pageSizeOptions}
               defaultValue={defaultOption}
@@ -75,10 +76,10 @@ export const Paginator: FC<Props> = ({
               Showing {{ start: rangeStart }} - {{ end: rangeEnd }} of {{ count }}
             </Trans>
           </span>
-          <Button variant='link' disabled={!hasPreviousPage} onClick={onPreviousPageClick}>
+          <Button variant='link' disabled={!hasPreviousPage} onClick={onPreviousPageClick} aria-label='Previous Page'>
             <FontAwesomeIcon icon={faChevronLeft} />{' '}
           </Button>
-          <Button variant='link' disabled={!hasNextPage} onClick={onNextPageClick}>
+          <Button variant='link' disabled={!hasNextPage} onClick={onNextPageClick} aria-label='Next Page'>
             <FontAwesomeIcon icon={faChevronRight} />
           </Button>
         </Col>
