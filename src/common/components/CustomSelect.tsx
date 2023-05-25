@@ -8,6 +8,7 @@ type Props<T> = {
   placeholder?: string;
   isLoading?: boolean;
   isInvalid?: boolean;
+  isDisabled?: boolean;
   // Resolves option data to a string to be displayed as the label
   getOptionLabel?: (option: T) => string;
   // Resolves option data to a string to compare options and specify value attributes
@@ -27,6 +28,7 @@ export const CustomSelect = <T,>({
   placeholder,
   isLoading,
   isInvalid,
+  isDisabled,
   getOptionLabel,
   getOptionValue,
   onChange,
@@ -54,6 +56,7 @@ export const CustomSelect = <T,>({
         defaultValue={defaultValue}
         placeholder={placeholder}
         isLoading={isLoading}
+        isDisabled={isDisabled}
         getOptionLabel={getOptionLabel}
         getOptionValue={getOptionValue}
         onMenuScrollToBottom={onScrollToBottom}
@@ -61,7 +64,7 @@ export const CustomSelect = <T,>({
       />
       {/* A hidden react-bootstrap select is used for the `isInvalid` state which is required in
       order for the react-bootstram `Form.Control.Feedback` component to work correctly. */}
-      <Form.Select hidden isInvalid={isInvalid} />
+      <Form.Select hidden isInvalid={isInvalid} disabled={isDisabled} />
     </>
   );
 };

@@ -36,7 +36,8 @@
     "heading": "Perfil de Usuario",
     "accessHeading": "Información de Acceso",
     "selectRole": "Selecciona un rol...",
-    "roleInfo": "Para obtener más información sobre los diferentes roles y lo que pueden hacer, consulta nuestras <strong>Preguntas Frecuentes</strong>"
+    "roleInfo": "Para obtener más información sobre los diferentes roles y lo que pueden hacer, consulta nuestras <strong>Preguntas Frecuentes</strong>",
+    "roleRestriction": "No puedes cambiar tu propio rol."
   },
   "createUser": {
     "back": "Volver a la Lista de Usuarios",
