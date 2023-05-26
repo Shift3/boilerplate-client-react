@@ -44,8 +44,8 @@ export const UserDetailForm: FC<Props> = ({
   availableRoles,
   defaultValues = {},
   onSubmit,
-  isRoleSelectorDisabled,
   submitButtonLabel = 'Submit',
+  isRoleSelectorDisabled,
   serverValidationErrors,
 }) => {
   const { t } = useTranslation(['translation', 'common']);
@@ -197,6 +197,7 @@ export const UserDetailForm: FC<Props> = ({
             render={({ field: { onChange } }) => (
               <CustomSelect<RoleOption>
                 placeholder={t('userDetail.selectRole')!}
+                isDisabled={isRoleSelectorDisabled}
                 defaultValue={{ label: defaultValues?.role?.toString() || '', value: defaultValues?.role || Role.USER }}
                 options={options}
                 onChange={option => onChange(option.value)}
