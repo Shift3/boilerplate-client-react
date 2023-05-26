@@ -35,6 +35,7 @@ export interface Props {
   availableRoles: Role[];
   defaultValues?: Partial<FormData>;
   submitButtonLabel?: string;
+  isRoleSelectorDisabled?: boolean;
   onSubmit: (data: FormData) => void;
   serverValidationErrors: ServerValidationErrors<FormData> | null;
 }
