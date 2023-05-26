@@ -10,4 +10,6 @@ export interface User {
   profilePicture: Image | null;
   role: Role;
   newEmail: string | null;
+  isActive: boolean;
+  disabledAt: string | null;
 }

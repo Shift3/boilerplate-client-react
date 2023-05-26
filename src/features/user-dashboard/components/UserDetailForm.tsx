@@ -5,14 +5,31 @@ import WithUnsavedChangesPrompt from 'common/components/WithUnsavedChangesPrompt
 import { addServerErrors } from 'common/error/utilities';
 import { Role, User, RoleOption, ServerValidationErrors } from 'common/models';
 import { FC, useEffect } from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Button, Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
+import styled from 'styled-components';
+import { useModalWithData } from 'common/hooks/useModalWithData';
+import { SimpleConfirmModal } from 'common/components/SimpleConfirmModal';
+import * as notificationService from 'common/services/notification';
+import { useDisableUserMutation, useEnableUserMutation } from 'common/api/userApi';
+import { handleApiError, isFetchBaseQueryError } from 'common/api/handleApiError';
 import { Trans, useTranslation } from 'react-i18next';
 import { Constants } from 'utils/constants';
 
-export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'role'>;
+const DisableButton = styled(Button)`
+  margin-left: 100px;
+  .spinner-container {
+    padding-right: 8px;
+  }
+`;
+
+export type DisableUserRequest = {
+  id: string;
+};
+
+export type FormData = Pick<User, 'email' | 'firstName' | 'lastName' | 'role' | 'id' | 'isActive'>;
 
 export interface Props {
   availableRoles: Role[];
@@ -26,9 +43,9 @@ export interface Props {
 export const UserDetailForm: FC<Props> = ({
   availableRoles,
   defaultValues = {},
-  isRoleSelectorDisabled,
   onSubmit,
   submitButtonLabel = 'Submit',
+  isRoleSelectorDisabled,
   serverValidationErrors,
 }) => {
   const { t } = useTranslation(['translation', 'common']);
@@ -65,6 +82,62 @@ export const UserDetailForm: FC<Props> = ({
       addServerErrors(serverValidationErrors, setError);
     }
   }, [serverValidationErrors, setError]);
+
+  const [disableUser] = useDisableUserMutation();
+  const [enableUser] = useEnableUserMutation();
+
+  const [showDisableModal, hideDisableModal] = useModalWithData<User>(
+    user =>
+      // eslint-disable-next-line react/no-unstable-nested-components
+      ({ in: open, onExited }) => {
+        const onSubmit = async () => {
+          try {
+            if (user.isActive) {
+              await disableUser({ id: user.id }).unwrap();
+              notificationService.showSuccessMessage('User disabled.');
+            } else {
+              await enableUser({ id: user.id }).unwrap();
+              notificationService.showSuccessMessage('User enabled.');
+            }
+
+            hideDisableModal();
+          } catch (error) {
+            if (isFetchBaseQueryError(error)) {
+              handleApiError(error);
+            } else {
+              if (user.isActive) {
+                notificationService.showErrorMessage('Could not disable user.');
+              } else {
+                notificationService.showErrorMessage('Could not enable user.');
+              }
+              throw error;
+            }
+          }
+        };
+
+        return (
+          <SimpleConfirmModal
+            title={user.isActive ? 'Disable User' : 'Enable User'}
+            show={open}
+            onCancel={hideDisableModal}
+            onConfirm={onSubmit}
+            confirmLabel={user.isActive ? 'Disable User' : 'Enable User'}
+            confirmVariant='danger'
+            onExited={onExited}
+            body={
+              <div>
+                <p className='m-0'>
+                  {user.isActive
+                    ? 'Are you sure you want to disable this user?'
+                    : 'Are you sure you want to enable this user?'}
+                </p>
+              </div>
+            }
+          />
+        );
+      },
+    [],
+  );
 
   return (
     <WithUnsavedChangesPrompt when={isDirty && !(isSubmitting || isSubmitted)}>
@@ -138,10 +211,19 @@ export const UserDetailForm: FC<Props> = ({
           </Form.Text>
         </Form.Group>
 
-        <div className='mt-3'>
-          <LoadingButton type='submit' disabled={!isValid} loading={isSubmitting}>
-            {submitButtonLabel}
-          </LoadingButton>
+        <div className='mt-3 d-flex justify-content-between'>
+          <div>
+            <LoadingButton type='submit' disabled={!isValid} loading={isSubmitting}>
+              {submitButtonLabel}
+            </LoadingButton>
+          </div>
+          <div>
+            {defaultValues.id ? (
+              <DisableButton onClick={() => showDisableModal(defaultValues as User)} variant='btn btn-danger'>
+                {defaultValues.isActive ? 'Disable' : 'Enable'}
+              </DisableButton>
+            ) : null}
+          </div>
         </div>
       </Form>
     </WithUnsavedChangesPrompt>

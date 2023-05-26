@@ -23,8 +23,10 @@ export type UserTableItem = {
   role: RoleType;
   profilePicture: Image | null;
   actions: ActionButtonProps[];
+  isActive: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  disabledAt: string | null | any;
 };
-
 export const useUserTableData = (users: User[] = []) => {
   const { userHasPermission } = useRbac();
   const { t, i18n } = useTranslation(['translation', 'common']);
@@ -195,6 +197,11 @@ export const useUserTableData = (users: User[] = []) => {
         ),
       },
       {
+        accessor: 'isActive',
+        Header: 'Account Status',
+        Cell: ({ value: isActive }) => <span>{isActive ? 'Enabled' : 'Disabled'}</span>,
+      },
+      {
         accessor: 'activatedAt',
         Header: t('activatedDate', { ns: 'common' })!,
         responsive: 'md',
@@ -208,6 +215,21 @@ export const useUserTableData = (users: User[] = []) => {
               <>
                 <ActionButton {...activatedAt}>{activatedAt.text}</ActionButton>
               </>
+            )}
+          </>
+        ),
+      },
+      {
+        accessor: 'disabledAt',
+        Header: 'Disabled On',
+        Cell: ({ value: disabledAt }) => (
+          <>
+            {disabledAt instanceof Date ? (
+              <time dateTime={disabledAt.toISOString()}>
+                {new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(disabledAt)}
+              </time>
+            ) : (
+              <></>
             )}
           </>
         ),
@@ -246,7 +268,9 @@ export const useUserTableData = (users: User[] = []) => {
         firstName: user.firstName,
         email: user.email,
         role: user.role,
+        isActive: user.isActive,
         profilePicture: user.profilePicture,
+        disabledAt: user.disabledAt ? new Date(user.disabledAt) : '',
         activatedAt: user.activatedAt
           ? new Date(user.activatedAt)
           : {
