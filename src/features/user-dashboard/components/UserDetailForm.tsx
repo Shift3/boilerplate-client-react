@@ -44,6 +44,7 @@ export const UserDetailForm: FC<Props> = ({
   availableRoles,
   defaultValues = {},
   onSubmit,
+  isRoleSelectorDisabled,
   submitButtonLabel = 'Submit',
   serverValidationErrors,
 }) => {
@@ -186,7 +187,10 @@ export const UserDetailForm: FC<Props> = ({
           <Trans i18nKey='userDetail.accessHeading'>Access Information</Trans>
         </h5>
         <Form.Group className='mb-2' controlId='create-user-form-role'>
-          <Form.Label>{t('role', { ns: 'common' })}</Form.Label>
+          <Form.Label>
+            {t('role', { ns: 'common' })}
+            {isRoleSelectorDisabled && <p className='text-danger mb-0'>{t('userDetail.roleRestriction')}</p>}
+          </Form.Label>
           <Controller
             control={control}
             name='role'
