@@ -41,7 +41,7 @@
     "source-map-explorer": "^2.5.2",
     "styled-components": "^5.3.5",
     "web-vitals": "^3.0.1",
-    "yup": "^0.32.9"
+    "yup": "^1.2.0"
   },
   "scripts": {
     "start": "cross-env PORT=4200 react-scripts start",
